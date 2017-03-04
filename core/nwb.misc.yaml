@@ -1,0 +1,109 @@
+- attributes:
+  - name: help
+    type: text
+    value: Features of an applied stimulus. This is useful when storing the raw stimulus
+      is impractical
+  datasets:
+  - doc: Description of the features represented in TimeSeries::data.
+    name: features
+    type: text
+  - attributes:
+    - name: unit
+      type: None
+      value: see 'feature_units'
+    doc: Values of each feature at each time.
+    name: data
+    type: float32
+  - doc: Units of each feature.
+    name: feature_units^
+    type: text
+  doc: Abstract features, such as quantitative descriptions of sensory stimuli. The
+    TimeSeries::data field is a 2D array, storing those features (e.g., for visual
+    grating stimulus this might be orientation, spatial frequency and contrast). Null
+    stimuli (eg, uniform gray) can be marked as being an independent feature (eg,
+    1.0 for gray, 0.0 for actual stimulus) or by storing NaNs for feature values,
+    or through use of the TimeSeries::control fields. A set of features is considered
+    to persist until the next set of features is defined. The final set of features
+    stored should be the null set.
+  neurodata_type: AbstractFeatureSeries
+- attributes:
+  - name: help
+    type: text
+    value: Time-stamped annotations about an experiment
+  datasets:
+  - attributes:
+    - doc: Value is float('NaN') (const) since this does not apply.
+      name: conversion
+      type: None
+      value: float('NaN')
+    - doc: Value is float('nan') (const) since this does not apply
+      name: resolution
+      type: None
+      value: float('NaN')
+    - doc: Value is "n/a" to indicate that this does not apply
+      name: unit
+      type: None
+      value: n/a
+    doc: Annotations made during an experiment.
+    name: data
+    type: text
+  doc: Stores, eg, user annotations made during an experiment. The TimeSeries::data[]
+    field stores a text array, and timestamps are stored for each annotation (ie,
+    interval=1). This is largely an alias to a standard TimeSeries storing a text
+    array but that is identifiable as storing annotations in a machine-readable way.
+  neurodata_type: AnnotationSeries
+- attributes:
+  - name: help
+    type: text
+    value: Stores the start and stop times for events
+  datasets:
+  - attributes:
+    - name: conversion
+      type: None
+      value: float('NaN')
+    - name: resolution
+      type: None
+      value: float('NaN')
+    - name: unit
+      type: None
+      value: n/a
+    doc: '>0 if interval started, <0 if interval ended.'
+    name: data
+    type: int8
+  doc: Stores intervals of data. The timestamps field stores the beginning and end
+    of intervals. The data field stores whether the interval just started (>0 value)
+    or ended (<0 value). Different interval types can be represented in the same series
+    by using multiple key values (eg, 1 for feature A, 2 for feature B, 3 for feature
+    C, etc). The field data stores an 8-bit integer. This is largely an alias of a
+    standard TimeSeries but that is identifiable as representing time intervals in
+    a machine-readable way.
+  neurodata_type: IntervalSeries
+- attributes:
+  - name: help
+    type: text
+    value: Estimated spike times from a single unit
+  datasets:
+  - doc: List of units present.
+    name: unit_list
+    type: text
+  doc: Event times of observed units (e.g. cell, synapse, etc.). The UnitTimes group
+    contains a group for each unit. The name of the group should match the value in
+    the source module, if that is possible/relevant (e.g., name of ROIs from Segmentation
+    module).
+  groups:
+  - datasets:
+    - doc: Spike time for the units (exact or estimated)
+      name: times
+      type: float64!
+    - doc: Description of the unit (eg, cell type).
+      name: unit_description
+      type: text
+    - doc: Name, path or description of where unit times originated. This is necessary
+        only if the info here differs from or is more fine-grained than the interface's
+        source field
+      name: source^
+      type: text
+    doc: Group storing times for &lt;unit_N&gt;.
+    neurodata_type: SpikeUnit
+  name: UnitTimes
+  neurodata_type: UnitTimes

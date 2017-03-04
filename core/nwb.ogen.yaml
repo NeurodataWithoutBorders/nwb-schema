@@ -1,0 +1,17 @@
+- attributes:
+  - name: help
+    type: text
+    value: Optogenetic stimulus
+  datasets:
+  - attributes:
+    - name: unit
+      type: text
+      value: watt
+    doc: Applied power for optogenetic stimulus.
+    name: data
+    type: float32
+  - doc: Name of site description in general/optogentics.
+    name: site
+    type: text
+  doc: Optogenetic stimulus.  The data[] field is in unit of watts.
+  neurodata_type: OptogeneticSeries
