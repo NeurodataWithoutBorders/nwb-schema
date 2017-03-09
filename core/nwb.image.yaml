@@ -3,19 +3,12 @@
     type: text
     value: Storage object for time-series 2-D image data
   datasets:
+  - doc: Either binary data containing image or empty.
+    name: data
+    type: number
   - doc: Number of pixels on x, y, (and z) axes.
-    name: dimension^
+    name: dimension
     type: int32
-  - doc: Number of bit per image pixel.
-    name: bits_per_pixel^
-    type: int32
-  - doc: Format of image. If this is 'external' then the field external_file contains
-      the path or URL information to that file. For tiff, png, jpg, etc, the binary
-      representation of the image is stored in data. If the format is raw then the
-      fields bit_per_pixel and dimension are used. For raw images, only a single channel
-      is stored (eg, red).
-    name: format^
-    type: text
   - attributes:
     - doc: Each entry is the frame number (within the full ImageSeries) of the first
         frame in the corresponding external_file entry. This serves as an index to
@@ -30,15 +23,23 @@
     name: external_file
     required: false
     type: text
-  - doc: Either binary data containing image or empty.
-    name: data
-    type: number
+  - doc: Number of bit per image pixel.
+    name: bits_per_pixel
+    type: int32
+  - doc: Format of image. If this is 'external' then the field external_file contains
+      the path or URL information to that file. For tiff, png, jpg, etc, the binary
+      representation of the image is stored in data. If the format is raw then the
+      fields bit_per_pixel and dimension are used. For raw images, only a single channel
+      is stored (eg, red).
+    name: format
+    type: text
   doc: 'General image data that is common between acquisition and stimulus time series.
     Sometimes the image data is stored in the HDF5 file in a raw format while other
     times it will be stored as an external image file in the host file system. The
     data field will either be binary data or empty. TimeSeries::data array structure:
     [frame] [y][x] or [frame][z][y][x].'
-  neurodata_type: ImageSeries
+  neurodata_type: TimeSeries
+  neurodata_type_def: ImageSeries
 - attributes:
   - name: help
     type: text
@@ -52,38 +53,33 @@
     values are stored as RGBA. Mask can vary with time. The timestamps array indicates
     the starting time of a mask, and that mask pattern continues until it's explicitly
     changed.
-  groups:
-  - datasets:
-    - name: link
-      type: None
-    doc: Link to ImageSeries that mask is applied to.
-    name: masked_imageseries
   links:
   - name: masked_imageseries
-    target_spec:
-      neurodata_type: ImageSeries
-  neurodata_type: ImageMaskSeries
+    target_type: ImageSeries
+  neurodata_type: ImageSeries
+  neurodata_type_def: ImageMaskSeries
 - attributes:
   - name: help
     type: text
     value: Time-series image stack for optical recording or stimulus
   datasets:
-  - doc: Distance from camera/monitor to target/eye.
-    name: distance^
+  - doc: Width, height and depto of image, or imaged area (meters).
+    name: field_of_view
     type: float32
   - doc: Description of image relative to some reference frame (e.g., which way is
       up). Must also specify frame of reference.
-    name: orientation^
+    name: orientation
     type: text
-  - doc: Width, height and depto of image, or imaged area (meters).
-    name: field_of_view^
+  - doc: Distance from camera/monitor to target/eye.
+    name: distance
     type: float32
   doc: Image data that is presented or recorded. A stimulus template movie will be
     stored only as an image. When the image is presented as stimulus, additional data
     is required, such as field of view (eg, how much of the visual field the image
     covers, or how what is the area of the target being imaged). If the OpticalSeries
     represents acquired imaging data, orientation is also important.
-  neurodata_type: OpticalSeries
+  neurodata_type: ImageSeries
+  neurodata_type_def: OpticalSeries
 - attributes:
   - name: help
     type: text
@@ -93,25 +89,19 @@
   - doc: Signals from ROIs
     name: data
     type: float32
-  - doc: Path to segmentation module.
-    name: segmentation_interface_path
-    type: text
   - doc: List of ROIs represented, one name for each row of data[].
     name: roi_names
     type: text
+  - doc: Path to segmentation module.
+    name: segmentation_interface_path
+    type: text
   doc: ROI responses over an imaging plane. Each row in data[] should correspond to
     the signal from one ROI.
-  groups:
-  - datasets:
-    - name: link
-      type: None
-    doc: HDF5 link to image segmentation module defining ROIs.
-    name: segmentation_interface
   links:
   - name: segmentation_interface
-    target_spec:
-      neurodata_type: ImageSegmentation
-  neurodata_type: RoiResponseSeries
+    target_type: ImageSegmentation
+  neurodata_type: TimeSeries
+  neurodata_type_def: RoiResponseSeries
 - attributes:
   - name: help
     type: text
@@ -131,14 +121,8 @@
     of individual images, or of movie segments (as a movie is simply a series of images).
     The data field stores the index of the frame in the referenced ImageSeries, and
     the timestamps array indicates when that image was displayed.
-  groups:
-  - datasets:
-    - name: link
-      type: None
-    doc: HDF5 link to TimeSeries containing images that are indexed.
-    name: indexed_timeseries
   links:
   - name: indexed_timeseries
-    target_spec:
-      neurodata_type: ImageSeries
-  neurodata_type: IndexSeries
+    target_type: ImageSeries
+  neurodata_type: TimeSeries
+  neurodata_type_def: IndexSeries

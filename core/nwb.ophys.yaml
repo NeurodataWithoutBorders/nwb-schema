@@ -3,54 +3,55 @@
     type: text
     value: Image stack recorded from 2-photon microscope
   datasets:
-  - doc: Photomultiplier gain
-    name: pmt_gain^
-    type: float32
-  - doc: Name of imaging plane description in /general/optophysiology.
-    name: imaging_plane
-    type: text
   - doc: Lines imaged per second. This is also stored in /general/optophysiology but
       is kept here as it is useful information for analysis, and so good to be stored
       w/ the actual data.
-    name: scan_line_rate^
+    name: scan_line_rate
+    type: float32
+  - doc: Photomultiplier gain
+    name: pmt_gain
     type: float32
   - doc: Width, height and depth of image, or imaged area (meters).
-    name: field_of_view^
+    name: field_of_view
     type: float32
   doc: A special case of optical imaging.
-  neurodata_type: TwoPhotonSeries
+  links:
+  - doc: link to ImagingPlane group from which this TimeSeries data was generated
+    name: imaging_plane
+    target_type: ImagingPlane
+  neurodata_type: ImageSeries
+  neurodata_type_def: TwoPhotonSeries
 - attributes:
   - name: help
     type: text
     value: Df/f over time of one or more ROIs. TimeSeries names should correspond
       to imaging plane names
-  datasets:
-  - name: include
-    type: None
   doc: dF/F information about a region of interest (ROI). Storage hierarchy of dF/F
     should be the same as for segmentation (ie, same names for ROIs and for image
     planes).
+  groups:
+  - neurodata_type: RoiResponseSeries
   name: DfOverF
-  neurodata_type: DfOverF
+  neurodata_type: Interface
+  neurodata_type_def: DfOverF
 - attributes:
   - name: help
     type: text
     value: Fluorescence over time of one or more ROIs. TimeSeries names should correspond
       to imaging plane names
-  datasets:
-  - name: include
-    type: None
   doc: Fluorescence information about a region of interest (ROI). Storage hierarchy
     of fluorescence should be the same as for segmentation (ie, same names for ROIs
     and for image planes).
+  groups:
+  - neurodata_type: RoiResponseSeries
   name: Fluorescence
-  neurodata_type: Fluorescence
+  neurodata_type: Interface
+  neurodata_type_def: Fluorescence
 - attributes:
   - name: help
     type: text
-    value:
-    - Stores groups of pixels that define regions of interest from one or more imaging
-      planes
+    value: Stores groups of pixels that define regions of interest from one or more
+      imaging planes
   doc: Stores pixels in an image that represent different regions of interest (ROIs)
     or masks. All segmentation for a given imaging plane is stored together, with
     storage for multiple imaging planes (masks) supported. Each ROI is stored in its
@@ -67,16 +68,17 @@
       name: roi_list
       type: text
     - doc: Description of image plane, recording wavelength, depth, etc
-      name: description^
+      name: description
       type: text
     groups:
     - doc: Stores image stacks segmentation mask apply to.
       groups:
-      - doc: One or more image stacks that the masks apply to (can be one-element
-          stack)
-        name: <image_name>/+
+      - neurodata_type: ImageSeries
       name: reference_images
     - datasets:
+      - doc: Weight of each pixel listed in pix_mask
+        name: pix_mask_weight
+        type: float32
       - doc: Description of this ROI.
         name: roi_description
         type: text
@@ -86,11 +88,9 @@
       - doc: ROI mask, represented in 2D ([y][x]) intensity image
         name: img_mask
         type: float32
-      - doc: Weight of each pixel listed in pix_mask
-        name: pix_mask_weight
-        type: float32
       doc: Name of ROI
-      neurodata_type: ROI
-    neurodata_type: SegmentedImagingPlane
+      neurodata_type_def: ROI
+    neurodata_type_def: PlaneSegmentation
   name: ImageSegmentation
-  neurodata_type: ImageSegmentation
+  neurodata_type: Interface
+  neurodata_type_def: ImageSegmentation

@@ -10,9 +10,6 @@
       to array. '
     name: file_create_date
     type: text
-  - doc: One or two sentences describing the experiment and data in the file.
-    name: session_description
-    type: text
   - doc: 'Time of experiment/session start, UTC.  COMMENT: Date + time, Use ISO format
       (eg, ISO 8601) or an easy-to-read and unambiguous format. All times stored in
       the file use this time as reference (ie, time zero)'
@@ -22,6 +19,9 @@
       file creation date/time and experimentalist, or a hash of these and/or other
       values. The goal is that the string should be unique to all other files.'
     name: identifier
+    type: text
+  - doc: One or two sentences describing the experiment and data in the file.
+    name: session_description
     type: text
   doc: Top level of NWB file.
   groups:
@@ -36,21 +36,14 @@
       being used for processing and analysis.'
     groups:
     - datasets:
-      - name: include
-        type: None
-      doc: 'Acquired TimeSeries.COMMENT: When importing acquisition data to an NWB
-        file, all acquisition/tracking/stimulus data must already be aligned to a
-        common time frame. It is assumed that this task has already been performed.'
-      name: timeseries
-    - datasets:
       - attributes:
+        - doc: 'Format of the image.  COMMENT: eg, jpg, png, mpeg'
+          name: format
+          type: text
         - doc: 'Human description of image. COMMENT: If image is of slice data, include
             slice thickness and orientation, and reference to appropriate entry in
             /general/slices'
           name: description
-          type: text
-        - doc: 'Format of the image.  COMMENT: eg, jpg, png, mpeg'
-          name: format
           type: text
         doc: 'Photograph of experiment or experimental setup (video also OK). COMMENT:
           Name is arbitrary.  Data is stored as a single binary object (HDF5 opaque
@@ -59,6 +52,12 @@
         type: binary
       doc: Acquired images
       name: images
+    - doc: 'Acquired TimeSeries.COMMENT: When importing acquisition data to an NWB
+        file, all acquisition/tracking/stimulus data must already be aligned to a
+        common time frame. It is assumed that this task has already been performed.'
+      groups:
+      - neurodata_type: TimeSeries
+      name: timeseries
     name: acquisition
   - doc: 'Lab-specific and custom scientific analysis of data. There is no defined
       format for the content of this group - the format is up to the individual user/lab.
@@ -108,19 +107,19 @@
       - doc: Start time of epoch, in seconds
         name: start_time
         type: float64!
-      - doc: Description of this epoch (&lt;epoch_X&gt;).
-        name: description
-        required: false
-        type: text
+      - doc: Stop time of epoch, in seconds
+        name: stop_time
+        type: float64!
       - doc: 'User-defined tags used throughout the epochs. Tags are to help identify
           or categorize epochs. COMMENT: E.g., can describe stimulus (if template)
           or behavioral characteristic (e.g., "lick left")'
         name: tags
         required: false
         type: text
-      - doc: Stop time of epoch, in seconds
-        name: stop_time
-        type: float64!
+      - doc: Description of this epoch (&lt;epoch_X&gt;).
+        name: description
+        required: false
+        type: text
       groups:
       - datasets:
         - doc: Number of data samples available in this time series, during this epoch.
@@ -133,18 +132,11 @@
         doc: 'One of possibly many input or output streams recorded during epoch.
           COMMENT: Name is arbitrary and does not have to match the TimeSeries that
           it refers to.'
-        groups:
-        - datasets:
-          - name: link
-            type: None
-          doc: Link to TimeSeries.  An HDF5 soft-link should be used.
-          name: timeseries
         links:
         - name: timeseries
-          target_spec:
-            neurodata_type: TimeSeries
-        neurodata_type: EpochTimeSeries
-      neurodata_type: Epoch
+          target_type: TimeSeries
+        neurodata_type_def: EpochTimeSeries
+      neurodata_type_def: Epoch
     name: epochs
   - doc: "The home for processing Modules. These modules perform intermediate analysis\
       \ of data that is necessary to perform before scientific analysis. Examples\
@@ -171,40 +163,56 @@
       times. These templates can exist in the present file or can be HDF5-linked to
       a remote library file.'
     groups:
-    - datasets:
-      - name: include
-        type: None
-      doc: "Template stimuli. COMMENT: Time stamps in templates are based on stimulus\
+    - doc: "Template stimuli. COMMENT: Time stamps in templates are based on stimulus\
         \ design and are relative to the beginning of the stimulus. When templates\
         \ are used, the stimulus instances must convert presentation times to the\
         \ experiment's time reference frame."
+      groups:
+      - neurodata_type: TimeSeries
       name: templates
-    - datasets:
-      - name: include
-        type: None
-      doc: Stimuli presented during the experiment.
+    - doc: Stimuli presented during the experiment.
+      groups:
+      - neurodata_type: TimeSeries
       name: presentation
     name: stimulus
   - datasets:
-    - doc: Description of slices, including information about preparation thickness,
-        orientation, temperature and bath solution
-      name: slices
-      required: false
-      type: text
-    - doc: 'Experimetnal protocol, if applicable.COMMENT: E.g., include IACUC protocol'
-      name: protocol
-      required: false
-      type: text
-    - doc: Institution(s) where experiment was performed
-      name: institution^
+    - doc: 'Name of person who performed the experiment.COMMENT: More than one person
+        OK. Can specify roles of different people involved.'
+      name: experimenter
       type: text
     - doc: Information about virus(es) used in experiments, including virus ID, source,
         date made, injection location, volume, etc
       name: virus
       required: false
       type: text
-    - doc: 'General description of the experiment.COMMENT: Can be from Methods'
-      name: experiment_description^
+    - doc: Institution(s) where experiment was performed
+      name: institution
+      type: text
+    - doc: Lab where experiment was performed
+      name: lab
+      type: text
+    - doc: 'Lab-specific ID for the session.COMMENT: Only 1 session_id per file, with
+        all time aligned to experiment start time.'
+      name: session_id
+      type: text
+    - doc: 'Notes about stimuli, such as how and where presented.COMMENT: Can be from
+        Methods'
+      name: stimulus
+      required: false
+      type: text
+    - doc: 'Notes about the experiment.  COMMENT: Things particular to this experiment'
+      name: notes
+      required: false
+      type: text
+    - doc: Description of slices, including information about preparation thickness,
+        orientation, temperature and bath solution
+      name: slices
+      required: false
+      type: text
+    - doc: 'Narrative description about surgery/surgeries, including date(s) and who
+        performed surgery. COMMENT: Much can be copied from Methods'
+      name: surgery
+      required: false
       type: text
     - attributes:
       - doc: Name of script file
@@ -215,19 +223,8 @@
       name: source_script
       required: false
       type: text
-    - doc: 'Publication information.COMMENT: PMID, DOI, URL, etc. If multiple, concatenate
-        together and describe which is which. such as PMID, DOI, URL, etc'
-      name: related_publications
-      required: false
-      type: text
-    - doc: 'Notes about stimuli, such as how and where presented.COMMENT: Can be from
-        Methods'
-      name: stimulus
-      required: false
-      type: text
-    - doc: 'Narrative description about surgery/surgeries, including date(s) and who
-        performed surgery. COMMENT: Much can be copied from Methods'
-      name: surgery
+    - doc: 'Notes about data collection and analysis.COMMENT: Can be from Methods'
+      name: data_collection
       required: false
       type: text
     - doc: 'Description of drugs used, including how and when they were administered.
@@ -235,24 +232,17 @@
       name: pharmacology
       required: false
       type: text
-    - doc: Lab where experiment was performed
-      name: lab^
-      type: text
-    - doc: 'Name of person who performed the experiment.COMMENT: More than one person
-        OK. Can specify roles of different people involved.'
-      name: experimenter^
-      type: text
-    - doc: 'Lab-specific ID for the session.COMMENT: Only 1 session_id per file, with
-        all time aligned to experiment start time.'
-      name: session_id^
-      type: text
-    - doc: 'Notes about the experiment.  COMMENT: Things particular to this experiment'
-      name: notes
+    - doc: 'Experimetnal protocol, if applicable.COMMENT: E.g., include IACUC protocol'
+      name: protocol
       required: false
       type: text
-    - doc: 'Notes about data collection and analysis.COMMENT: Can be from Methods'
-      name: data_collection
+    - doc: 'Publication information.COMMENT: PMID, DOI, URL, etc. If multiple, concatenate
+        together and describe which is which. such as PMID, DOI, URL, etc'
+      name: related_publications
       required: false
+      type: text
+    - doc: 'General description of the experiment.COMMENT: Can be from Methods'
+      name: experiment_description
       type: text
     doc: "Experimental metadata, including protocol, notes and description of hardware\
       \ device(s).  COMMENT: The metadata stored in this section should be used to\
@@ -280,39 +270,6 @@
       name: devices
       required: false
     - datasets:
-      - doc: Age of subject
-        name: age
-        required: false
-        type: text
-      - doc: 'Genetic strain COMMENT: If absent, assume Wild Type (WT)'
-        name: genotype
-        required: false
-        type: text
-      - doc: Description of subject and where subject came from (e.g., breeder, if
-          animal)
-        name: description
-        required: false
-        type: text
-      - doc: Gender of subject
-        name: sex
-        required: false
-        type: text
-      - doc: Species of subject
-        name: species
-        required: false
-        type: text
-      - doc: ID of animal/person used/participating in experiment (lab convention)
-        name: subject_id
-        required: false
-        type: text
-      - doc: Weight at time of experiment, at time of surgery and at other important
-          times
-        name: weight
-        required: false
-        type: text
-      name: subject
-      required: false
-    - datasets:
       - attributes:
         - name: help
           type: text
@@ -328,16 +285,49 @@
       name: specifications
       required: false
     - datasets:
+      - doc: 'Genetic strain COMMENT: If absent, assume Wild Type (WT)'
+        name: genotype
+        required: false
+        type: text
+      - doc: Description of subject and where subject came from (e.g., breeder, if
+          animal)
+        name: description
+        required: false
+        type: text
+      - doc: Age of subject
+        name: age
+        required: false
+        type: text
+      - doc: Weight at time of experiment, at time of surgery and at other important
+          times
+        name: weight
+        required: false
+        type: text
+      - doc: ID of animal/person used/participating in experiment (lab convention)
+        name: subject_id
+        required: false
+        type: text
+      - doc: Species of subject
+        name: species
+        required: false
+        type: text
+      - doc: Gender of subject
+        name: sex
+        required: false
+        type: text
+      name: subject
+      required: false
+    - datasets:
+      - doc: "Physical location of electrode, (x,y,z in meters) COMMENT: Location\
+          \ of electrodes relative to one another. This records the points in space.\
+          \ If an electrode is moved, it needs a new entry in the electrode map for\
+          \ its new location. Otherwise format doesn't support using the same electrode\
+          \ in a new location, or processing spikes pre/post drift."
+        name: electrode_map
+        type: number
       - doc: 'Impedence of electrodes listed in electrode_map. COMMENT: Text, in the
           event that impedance is stored as range and not a fixed value'
         name: impedance
-        type: text
-      - doc: 'Description of filtering used. COMMENT: Includes filtering type and
-          parameters, frequency fall- off, etc. If this changes between TimeSeries,
-          filter description should be stored as a text attribute for each TimeSeries.  If
-          this changes between TimeSeries, filter description should be stored as
-          a text attribute for each TimeSeries.'
-        name: filtering
         type: text
       - doc: "Identification string for probe, shank or tetrode each electrode resides\
           \ on. Name should correspond to one of electrode_group_X groups below. COMMENT:\
@@ -346,19 +336,16 @@
           \ all being on the same planar electrode array, or on the same shank."
         name: electrode_group
         type: text
-      - doc: "Physical location of electrode, (x,y,z in meters) COMMENT: Location\
-          \ of electrodes relative to one another. This records the points in space.\
-          \ If an electrode is moved, it needs a new entry in the electrode map for\
-          \ its new location. Otherwise format doesn't support using the same electrode\
-          \ in a new location, or processing spikes pre/post drift."
-        name: electrode_map
-        type: number
+      - doc: 'Description of filtering used. COMMENT: Includes filtering type and
+          parameters, frequency fall- off, etc. If this changes between TimeSeries,
+          filter description should be stored as a text attribute for each TimeSeries.  If
+          this changes between TimeSeries, filter description should be stored as
+          a text attribute for each TimeSeries.'
+        name: filtering
+        type: text
       doc: Metadata related to extracellular electrophysiology.
       groups:
       - datasets:
-        - doc: Name of device(s) in /general/devices
-          name: device
-          type: text
         - doc: Description of probe or shank
           name: description
           type: text
@@ -367,11 +354,14 @@
             location in drive and tetrode depth'
           name: location
           type: text
+        - doc: Name of device(s) in /general/devices
+          name: device
+          type: text
         doc: 'One of possibly many groups, one for each electrode group. If the groups
           have a hierarchy, such as multiple probes each having multiple shanks, that
           hierarchy can be mirrored here, using groups for electrode_probe_X and subgroups
           for electrode_group_X.COMMENT: Name is arbitrary but should be meaningful.'
-        neurodata_type: ElectrodeGroup
+        neurodata_type_def: ElectrodeGroup
       name: extracellular_ephys
       required: false
     - datasets:
@@ -384,93 +374,81 @@
       doc: Metadata related to intracellular electrophysiology
       groups:
       - datasets:
-        - doc: 'Recording description, description of electrode (e.g.,  whole-cell,
-            sharp, etc)COMMENT: Free-form text (can be from Methods)'
-          name: description
-          type: text
-        - doc: Area, layer, comments on estimation, stereotaxis coordinates (if in
-            vivo, etc)
-          name: location
-          required: false
-          type: text
-        - doc: Information about slice used for recording
-          name: slice
-          required: false
-          type: text
-        - doc: Electrode specific filtering.
-          name: filtering
-          required: false
-          type: text
         - doc: Initial access resistance
           name: initial_access_resistance
-          required: false
-          type: text
-        - doc: 'Electrode resistance COMMENT: unit: Ohm'
-          name: resistance
-          required: false
-          type: text
-        - doc: Information about seal used for recording
-          name: seal
           required: false
           type: text
         - doc: Name(s) of devices in general/devices
           name: device
           required: false
           type: text
+        - doc: Information about seal used for recording
+          name: seal
+          required: false
+          type: text
+        - doc: 'Recording description, description of electrode (e.g.,  whole-cell,
+            sharp, etc)COMMENT: Free-form text (can be from Methods)'
+          name: description
+          type: text
+        - doc: Information about slice used for recording
+          name: slice
+          required: false
+          type: text
+        - doc: 'Electrode resistance COMMENT: unit: Ohm'
+          name: resistance
+          required: false
+          type: text
+        - doc: Area, layer, comments on estimation, stereotaxis coordinates (if in
+            vivo, etc)
+          name: location
+          required: false
+          type: text
+        - doc: Electrode specific filtering.
+          name: filtering
+          required: false
+          type: text
         doc: 'One of possibly many. COMMENT: Name should be informative.'
-        neurodata_type: IntracellularElectrode
+        neurodata_type_def: IntracellularElectrode
       name: intracellular_ephys
       required: false
     - doc: Metadata describing optogenetic stimuluation
       groups:
       - datasets:
-        - doc: Excitation wavelength
-          name: excitation_lambda
-          type: text
-        - doc: Name of device in /general/devices
-          name: device
-          type: text
         - doc: Description of site
           name: description
           type: text
         - doc: Location of stimulation site
           name: location
           type: text
+        - doc: Excitation wavelength
+          name: excitation_lambda
+          type: text
+        - doc: Name of device in /general/devices
+          name: device
+          type: text
         doc: 'One of possibly many groups describing an optogenetic stimuluation site.
           COMMENT: Name is arbitrary but should be meaningful. Name is referenced
           by OptogeneticSeries'
-        neurodata_type: OptogeneticStimulusSite
+        neurodata_type_def: OptogeneticStimulusSite
       name: optogenetics
       required: false
     - doc: Metadata related to optophysiology.
       groups:
       - datasets:
         - attributes:
+          - doc: Base unit that coordinates are stored in (e.g., Meters)
+            name: unit
+            type: text
+            value: Meter
           - doc: Multiplier to get from stored values to specified unit (e.g., 1e-3
               for millimeters)
             name: conversion
             type: float
             value: 1.0
-          - doc: Base unit that coordinates are stored in (e.g., Meters)
-            name: unit
-            type: text
-            value: Meter
           doc: 'Physical position of each pixel. COMMENT: "xyz" represents the position
             of the pixel relative to the defined coordinate space'
           name: manifold
           type: float32
-        - doc: Name of device in /general/devices
-          name: device
-          type: text
-        - doc: Calcium indicator
-          name: indicator
-          type: text
-        - doc: Excitation wavelength
-          name: excitation_lambda
-          type: text
-        - doc: Location of image plane
-          name: location
-          type: text
         - doc: Rate images are acquired, in Hz.
           name: imaging_rate
           type: text
@@ -481,27 +459,39 @@
             not present then this field is not required'
           name: reference_frame
           type: text
+        - doc: Location of image plane
+          name: location
+          type: text
+        - doc: Excitation wavelength
+          name: excitation_lambda
+          type: text
+        - doc: Name of device in /general/devices
+          name: device
+          type: text
         - doc: Description of &lt;image_plane_X&gt;
           name: description
           required: false
           type: text
+        - doc: Calcium indicator
+          name: indicator
+          type: text
         groups:
         - datasets:
-          - doc: Emission lambda for channel
-            name: emission_lambda
-            type: text
           - doc: Any notes or comments about the channel
             name: description
             type: text
+          - doc: Emission lambda for channel
+            name: emission_lambda
+            type: text
           doc: 'One of possibly many groups storing channel-specific data COMMENT:
             Name is arbitrary but should be meaningful'
-          neurodata_type: OpticalChannel
-        neurodata_type: ImagingPlane
+          neurodata_type_def: OpticalChannel
+        neurodata_type_def: ImagingPlane
       name: optophysiology
       required: false
     name: general
   name: root
-  neurodata_type: NWBFile
+  neurodata_type_def: NWBFile
 - attributes:
   - doc: Description of Module
     name: description
@@ -511,22 +501,22 @@
       [1]="Clustering", [2]="FeatureExtraction"'
     name: interfaces
     type: text
-  datasets:
-  - name: include
-    type: None
   doc: Module.  Name should be descriptive. Stores a collection of related data organized
     by contained interfaces.  Each interface is a contract specifying content related
     to a particular type of data.
-  neurodata_type: Module
+  groups:
+  - neurodata_type: Interface
+  neurodata_type_def: Module
 - attributes:
   - doc: 'List of fields that are HDF5 external links.COMMENT: Only present if one
       or more datasets is set to an HDF5 external link.'
     name: extern_fields
     type: text
-  - doc: Human-readable comments about the TimeSeries. This second descriptive field
-      can be used to store additional information, or descriptive information if the
-      primary description field is populated with a computer-readable string.
-    name: comments
+  - doc: 'A sorted list of the paths of all TimeSeries that share a link to the same
+      timestamps field.  Example element of list: "/acquisition/timeseries/lick_trace"
+      COMMENT: Attribute is only present if links are present. List should include
+      the path to this TimeSeries also.'
+    name: timestamp_link
     type: text
   - doc: 'The class-hierarchy of this TimeSeries, with one entry in the array for
       each ancestor. An alternative and equivalent description is that this TimeSeries
@@ -537,24 +527,12 @@
       the array should be element N-1'
     name: ancestry
     type: text
-    value:
-    - TimeSeries
-  - doc: Short description indicating what this type of TimeSeries stores.
-    name: help
-    type: text
-    value: General time series object
-  - doc: Name of TimeSeries or Modules that serve as the source for the data contained
-      here. It can also be the name of a device, for stimulus or acquisition data
-    name: source
-    type: text
-  - doc: Description of TimeSeries
-    name: description
-    type: text
+    value: TimeSeries
   - doc: 'A sorted list of the paths of all TimeSeries that share a link to the same
-      timestamps field.  Example element of list: "/acquisition/timeseries/lick_trace"
-      COMMENT: Attribute is only present if links are present. List should include
-      the path to this TimeSeries also.'
-    name: timestamp_link
+      data field. Example element of list: "/stimulus/presentation/Sweep_0"` COMMENT:
+      Attribute is only present if links are present. List should include the path
+      to this TimeSeries also.'
+    name: data_link
     type: text
   - doc: 'List of fields that are not optional (i.e. either required or recommended
       parts of the TimeSeries) that are missing. COMMENT: Only present if one or more
@@ -562,13 +540,34 @@
       (such as data or timestamps) should generate an error by the API'
     name: missing_fields
     type: text
-  - doc: 'A sorted list of the paths of all TimeSeries that share a link to the same
-      data field. Example element of list: "/stimulus/presentation/Sweep_0"` COMMENT:
-      Attribute is only present if links are present. List should include the path
-      to this TimeSeries also.'
-    name: data_link
+  - doc: Name of TimeSeries or Modules that serve as the source for the data contained
+      here. It can also be the name of a device, for stimulus or acquisition data
+    name: source
+    type: text
+  - doc: Human-readable comments about the TimeSeries. This second descriptive field
+      can be used to store additional information, or descriptive information if the
+      primary description field is populated with a computer-readable string.
+    name: comments
+    type: text
+  - doc: Short description indicating what this type of TimeSeries stores.
+    name: help
+    type: text
+    value: General time series object
+  - doc: Description of TimeSeries
+    name: description
     type: text
   datasets:
+  - doc: 'Description of each control value. COMMENT: Array length should be as long
+      as the highest number in control minus one, generating an zero-based indexed
+      array for control values.'
+    name: control_description
+    required: false
+    type: text
+  - doc: 'Number of samples in data, or number of image frames. COMMENT: This is important
+      if the length of timestamp and data are different, such as for externally stored
+      stimulus image stacks'
+    name: num_samples
+    type: int32
   - attributes:
     - doc: 'The number of samples between each timestamp. COMMENT: Presently this
         value is restricted to 1 (ie, a timestamp for each sample)'
@@ -603,11 +602,12 @@
     required: false
     type: float64!
   - attributes:
-    - doc: Scalar to multiply each element in data to convert it to the specified
-        unit
-      name: conversion
-      type: float32!
-      value: 1.0
+    - doc: "The base unit of measure used to store data. This should be in the SI\
+        \ unit. COMMENT: This is the SI unit (when appropriate) of the stored data,\
+        \ such as Volts. If the actual data is stored in millivolts, the field 'conversion'\
+        \ below describes how to convert the data to the specified SI unit."
+      name: unit
+      type: text
     - doc: 'Smallest meaningful difference between values in data, stored in the specified
         by unit. COMMENT: E.g., the change in value of the least significant bit,
         or a larger number if signal noise is known to be present. If unknown, use
@@ -615,34 +615,22 @@
       name: resolution
       type: float32!
       value: 0.0
-    - doc: "The base unit of measure used to store data. This should be in the SI\
-        \ unit. COMMENT: This is the SI unit (when appropriate) of the stored data,\
-        \ such as Volts. If the actual data is stored in millivolts, the field 'conversion'\
-        \ below describes how to convert the data to the specified SI unit."
-      name: unit
-      type: text
+    - doc: Scalar to multiply each element in data to convert it to the specified
+        unit
+      name: conversion
+      type: float32!
+      value: 1.0
     doc: 'Data values. Can also store binary data (eg, image frames) COMMENT: This
       field may be a link to data stored in an external file, especially in the case
       of raw data.'
     name: data
     type: any
-  - doc: 'Number of samples in data, or number of image frames. COMMENT: This is important
-      if the length of timestamp and data are different, such as for externally stored
-      stimulus image stacks'
-    name: num_samples
-    type: int32
   - doc: 'Numerical labels that apply to each element in data[]. COMMENT: Optional
       field. If present, the control array should have the same number of elements
       as data[].'
     name: control
     required: false
     type: uint8
-  - doc: 'Description of each control value. COMMENT: Array length should be as long
-      as the highest number in control minus one, generating an zero-based indexed
-      array for control values.'
-    name: control_description
-    required: false
-    type: text
   doc: General purpose time series.
   groups:
   - doc: "Lab specific time and sync information as provided directly from hardware\
@@ -653,7 +641,7 @@
       \ data is calculated, the contents of 'sync' are mostly for archival purposes."
     name: sync
     required: false
-  neurodata_type: TimeSeries
+  neurodata_type_def: TimeSeries
 - attributes:
   - doc: Short description of what this type of Interface contains.
     name: help
@@ -663,4 +651,4 @@
     name: source
     type: text
   doc: The attributes specified here are included in all interfaces.
-  neurodata_type: Interface
+  neurodata_type_def: Interface

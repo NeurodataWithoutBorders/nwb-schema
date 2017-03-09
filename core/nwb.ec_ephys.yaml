@@ -10,14 +10,16 @@
     doc: Recorded voltage data.
     name: data
     type: number
-  - doc: Indicies (zero-based) to electrodes in general/extracellular_ephys/electrode_map.
-    name: electrode_idx
-    type: int32
   doc: 'Stores acquired voltage data from extracellular recordings. The data field
     of an ElectricalSeries is an int or float array storing data in Volts. TimeSeries::data
     array structure: :blue:`[num times] [num channels] (or [num_times] for single
     electrode).`'
-  neurodata_type: ElectricalSeries
+  links:
+  - doc: link to ElectrodeGroup group that generated this TimeSeries data
+    name: electrode_group
+    target_type: ElectrodeGroup
+  neurodata_type: TimeSeries
+  neurodata_type_def: ElectricalSeries
 - attributes:
   - name: help
     type: text
@@ -37,16 +39,14 @@
     and stored by hardware. All events span the same recording channels and store
     snapshots of equal duration. TimeSeries::data array structure: :blue:`[num events]
     [num channels] [num samples] (or [num events] [num samples] for single electrode)`.'
-  neurodata_type: SpikeEventSeries
+  neurodata_type: ElectricalSeries
+  neurodata_type_def: SpikeEventSeries
 - attributes:
   - name: help
     type: text
     value: Mean waveform shape of clusters. Waveforms should be high-pass filtered
       (ie, not the same bandpass filter used waveform analysis and clustering)
   datasets:
-  - doc: Path to linked clustering interface
-    name: clustering_interface_path
-    type: text
   - doc: The mean waveform for each cluster, using the same indices for each wave
       as cluster numbers in the associated Clustering module (i.e, cluster 3 is in
       array slot [3]). Waveforms corresponding to gaps in cluster sequence should
@@ -56,6 +56,9 @@
   - doc: Stdev of waveforms for each cluster, using the same indices as in mean
     name: waveform_sd
     type: float32
+  - doc: Path to linked clustering interface
+    name: clustering_interface_path
+    type: text
   - doc: Filtering applied to data before generating mean/sd
     name: waveform_filtering
     type: text
@@ -64,18 +67,12 @@
     filtered. This is a separate module because it is expected to require updating.
     For example, IMEC probes may require different storage requirements to store/display
     mean waveforms, requiring a new interface or an extension of this one.
-  groups:
-  - datasets:
-    - name: link
-      type: None
-    doc: HDF5 link to Clustering interface that was the source of the clustered data
-    name: clustering_interface
   links:
   - name: clustering_interface
-    target_spec:
-      neurodata_type: Clustering
+    target_type: Clustering
   name: ClusterWaveforms
-  neurodata_type: ClusterWaveforms
+  neurodata_type: Interface
+  neurodata_type_def: ClusterWaveforms
 - attributes:
   - name: help
     type: text
@@ -86,10 +83,6 @@
       curated using Klusters, etc)
     name: description
     type: text
-  - doc: Times of clustered events, in seconds. This may be a link to times field
-      in associated FeatureExtraction module.
-    name: times
-    type: float64!
   - doc: Cluster number of each event
     name: num
     type: int32
@@ -97,6 +90,10 @@
       a basic clustering metric).
     name: peak_over_rms
     type: float32
+  - doc: Times of clustered events, in seconds. This may be a link to times field
+      in associated FeatureExtraction module.
+    name: times
+    type: float64!
   - doc: List of cluster number that are a part of this set (cluster numbers can be
       non- continuous)
     name: cluster_nums
@@ -104,81 +101,72 @@
   doc: Clustered spike data, whether from automatic clustering tools (e.g., klustakwik)
     or as a result of manual sorting.
   name: Clustering
-  neurodata_type: Clustering
+  neurodata_type: Interface
+  neurodata_type_def: Clustering
 - attributes:
   - name: help
     type: text
     value: Container for salient features of detected events
   datasets:
-  - doc: Multi-dimensional array of features extracted from each event.
-    name: features
-    type: float32
-  - doc: Times of events that features correspond to (can be a link).
-    name: times
-    type: float64!
   - doc: Description of features (eg, "PC1") for each of the extracted features.
     name: description
     type: text
-  - doc: Indices (zero-based) to electrodes described in the experiment's electrode
-      map array (under /general/extracellular_ephys).
-    name: electrode_idx
-    type: int32
-  doc: Features, such as PC1 and PC2, that are extracted from signals stored in a
-    SpikeEvent TimeSeries or other source.
-  name: FeatureExtraction
-  neurodata_type: FeatureExtraction
-- datasets:
-  - doc: Path to linked ElectricalSeries.
-    name: source_electricalseries_path
-    type: text
-  - doc: Timestamps of events, in Seconds
+  - doc: Times of events that features correspond to (can be a link).
     name: times
     type: float64!
+  - doc: Multi-dimensional array of features extracted from each event.
+    name: features
+    type: float32
+  doc: Features, such as PC1 and PC2, that are extracted from signals stored in a
+    SpikeEvent TimeSeries or other source.
+  links:
+  - doc: link to ElectrodeGroup group that generated this TimeSeries data
+    name: electrode_group
+    target_type: ElectrodeGroup
+  name: FeatureExtraction
+  neurodata_type: Interface
+  neurodata_type_def: FeatureExtraction
+- datasets:
   - doc: Indices (zero-based) into source ElectricalSeries::data array corresponding
       to time of event. Module description should define what is meant by time of
       event (e.g., .25msec before action potential peak, zero-crossing time, etc).
       The index points to each event from the raw data
     name: source_idx
     type: int32
+  - doc: Timestamps of events, in Seconds
+    name: times
+    type: float64!
+  - doc: Path to linked ElectricalSeries.
+    name: source_electricalseries_path
+    type: text
   - doc: Description of how events were detected, such as voltage threshold, or dV/dT
       threshold, as well as relevant values.
     name: detection_method
     type: text
   doc: Detected spike events from voltage trace(s).
-  groups:
-  - datasets:
-    - name: link
-      type: None
-    doc: HDF5 link to ElectricalSeries that this data was calculated from. Metadata
-      about electrodes and their position can be read from that ElectricalSeries so
-      it's not necessary to mandate that information be stored here
-    name: source_electricalseries
   links:
   - name: source_electricalseries
-    target_spec:
-      neurodata_type: ElectricalSeries
+    target_type: ElectricalSeries
   name: EventDetection
+  neurodata_type: Interface
 - attributes:
   - name: help
     type: text
     value: Waveform of detected extracellularly recorded spike events
-  datasets:
-  - name: include
-    type: None
   doc: Represents either the waveforms of detected events, as extracted from a raw
     data trace in /acquisition, or the event waveforms that were stored during experiment
     acquisition.
+  groups:
+  - neurodata_type: SpikeEventSeries
   name: EventWaveform
-  neurodata_type: EventWaveform
+  neurodata_type: Interface
+  neurodata_type_def: EventWaveform
 - attributes:
   - name: help
     type: text
     value: Ephys data from one or more channels that is subjected to filtering, such
       as for gamma or theta oscillations (LFP has its own interface). Filter properties
       should be noted in the ElectricalSeries
-  datasets:
-  - name: include
-    type: None
   doc: Ephys data from one or more channels that has been subjected to filtering.
     Examples of filtered data include Theta and Gamma (LFP has its own interface).
     FilteredEphys modules publish an ElectricalSeries for each filtered channel or
@@ -188,33 +176,36 @@
     field. There is no assumed 1::1 correspondence between filtered ephys signals
     and electrodes, as a single signal can apply to many nearby electrodes, and one
     electrode may have different filtered (e.g., theta and/or gamma) signals represented.
+  groups:
+  - neurodata_type: ElectricalSeries
   name: FilteredEphys
-  neurodata_type: FilteredEphys
+  neurodata_type: Interface
+  neurodata_type_def: FilteredEphys
 - datasets:
-  - doc: Multi-dimensional array of features extracted from each event.
-    name: features
-    type: float32
-  - doc: Times of events that features correspond to (can be a link).
-    name: times
-    type: float64!
   - doc: Description of features (eg, "PC1") for each of the extracted features.
     name: description
     type: text
-  - doc: Indices (zero-based) to electrodes described in the experiment's electrode
-      map array (under /general/extracellular_ephys).
-    name: electrode_idx
-    type: int32
+  - doc: Times of events that features correspond to (can be a link).
+    name: times
+    type: float64!
+  - doc: Multi-dimensional array of features extracted from each event.
+    name: features
+    type: float32
+  links:
+  - doc: link to ElectrodeGroup group that generated this TimeSeries data
+    name: electrode_group
+    target_type: ElectrodeGroup
   name: FeatureExtraction
 - attributes:
   - name: help
     type: text
     value: LFP data from one or more channels. Filter properties should be noted in
       the ElectricalSeries
-  datasets:
-  - name: include
-    type: None
   doc: LFP data from one or more channels. The electrode map in each published ElectricalSeries
     will identify which channels are providing LFP data. Filter properties should
     be noted in the ElectricalSeries description or comments field.
+  groups:
+  - neurodata_type: ElectricalSeries
   name: LFP
-  neurodata_type: LFP
+  neurodata_type: Interface
+  neurodata_type_def: LFP

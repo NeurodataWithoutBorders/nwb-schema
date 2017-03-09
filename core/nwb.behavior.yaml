@@ -4,9 +4,6 @@
     value: Stores points in space over time. The data[] array structure is [num samples][num
       spatial dimensions]
   datasets:
-  - doc: Description defining what exactly 'straight-ahead' means.
-    name: reference_frame^
-    type: text
   - attributes:
     - name: unit
       type: text
@@ -14,6 +11,9 @@
     doc: 2-D array storing position or direction relative to some reference frame.
     name: data
     type: number
+  - doc: Description defining what exactly 'straight-ahead' means.
+    name: reference_frame
+    type: text
   doc: 'Direction, e.g., of gaze or travel, or position. The TimeSeries::data field
     is a 2D array storing position or direction relative to some reference frame.
     Array structure: [num measurements] [num dimensions]. Each SpatialSeries has a
@@ -23,14 +23,12 @@
     data, the 0,0 point might be the top-left corner of an enclosure, as viewed from
     the tracking camera. The unit of data will indicate how to interpret SpatialSeries
     values.'
-  neurodata_type: SpatialSeries
+  neurodata_type: TimeSeries
+  neurodata_type_def: SpatialSeries
 - attributes:
   - name: help
     type: text
     value: General container for storing behavorial epochs
-  datasets:
-  - name: include
-    type: None
   doc: TimeSeries for storing behavoioral epochs.  The objective of this and the other
     two Behavioral interfaces (e.g. BehavioralEvents and BehavioralTimeSeries) is
     to provide generic hooks for software tools/scripts. This allows a tool/script
@@ -43,70 +41,73 @@
     TimeSeries defined in the module sub-group "BehavioralTimeSeries". BehavioralEpochs
     should use IntervalSeries. BehavioralEvents is used for irregular events. BehavioralTimeSeries
     is for continuous data.
+  groups:
+  - neurodata_type: IntervalSeries
   name: BehavioralEpochs
-  neurodata_type: BehavioralEpochs
+  neurodata_type: Interface
+  neurodata_type_def: BehavioralEpochs
 - attributes:
   - name: help
     type: text
     value: Position data, whether along the x, xy or xyz axis
-  datasets:
-  - name: include
-    type: None
   doc: TimeSeries for storing behavioral events. See description of <a href="#BehavioralEpochs">BehavioralEpochs</a>
     for more details.
+  groups:
+  - neurodata_type: TimeSeries
   name: BehavioralEvents
-  neurodata_type: BehavioralEvents
-- datasets:
-  - name: include
-    type: None
-  doc: TimeSeries for storing Behavoioral time series data.See description of <a href="#BehavioralEpochs">BehavioralEpochs</a>
+  neurodata_type: Interface
+  neurodata_type_def: BehavioralEvents
+- doc: TimeSeries for storing Behavoioral time series data.See description of <a href="#BehavioralEpochs">BehavioralEpochs</a>
     for more details.
+  groups:
+  - neurodata_type: TimeSeries
   name: BehavioralTimeSeries
+  neurodata_type: Interface
 - attributes:
   - name: help
     type: text
     value: Eye-tracking data, representing pupil size
-  datasets:
-  - name: include
-    type: None
   doc: Eye-tracking data, representing pupil size.
+  groups:
+  - neurodata_type: TimeSeries
   name: PupilTracking
-  neurodata_type: PupilTracking
+  neurodata_type: Interface
+  neurodata_type_def: PupilTracking
 - attributes:
   - name: help
     type: text
     value: Eye-tracking data, representing direction of gaze
-  datasets:
-  - name: include
-    type: None
   doc: Eye-tracking data, representing direction of gaze.
+  groups:
+  - neurodata_type: SpatialSeries
   name: EyeTracking
-  neurodata_type: EyeTracking
+  neurodata_type: Interface
+  neurodata_type_def: EyeTracking
 - attributes:
   - name: help
     type: text
     value: Direction as measured radially. Spatial series reference frame should indicate
       which direction corresponds to zero and what is the direction of positive rotation
-  datasets:
-  - name: include
-    type: None
   doc: With a CompassDirection interface, a module publishes a SpatialSeries object
     representing a floating point value for theta. The SpatialSeries::reference_frame
     field should indicate what direction corresponds to 0 and which is the direction
     of rotation (this should be clockwise). The si_unit for the SpatialSeries should
     be radians or degrees.
+  groups:
+  - neurodata_type: SpatialSeries
   name: CompassDirection
-  neurodata_type: CompassDirection
+  neurodata_type: Interface
+  neurodata_type_def: CompassDirection
 - attributes:
   - name: help
     type: text
     value: Position data, whether along the x, xy or xyz axis
-  datasets:
-  - name: include
-    type: None
   doc: Position data, whether along the x, x/y or x/y/z axis.
+  groups:
+  - neurodata_type: SpatialSeries
   name: Position
-  neurodata_type: Position
+  neurodata_type: Interface
+  neurodata_type_def: Position
 - attributes:
   - name: help
     type: text
@@ -122,24 +123,14 @@
       type: text
     doc: One of possibly many.  Name should be informative.
     groups:
-    - datasets:
-      - doc: TimeSeries for storing x,y offset for each image frame.
-        name: data
-        type: float
-      doc: Stores the x,y delta necessary to align each frame to the common coordinates,
-        for example, to align each frame to a reference image.
-      name: xy_translation
-    - doc: Image stack with frames shifted to the common coordinates.
-      name: corrected
-    - datasets:
-      - name: link
-        type: None
-      doc: HDF5 Link to image series that is being registered.
-      name: original
+    - name: xy_translation
+      neurodata_type: TimeSeries
+    - name: corrected
+      neurodata_type: ImageSeries
     links:
     - name: original
-      target_spec:
-        neurodata_type: ImageSeries
+      target_type: ImageSeries
     name: <image stack name>/+
   name: MotionCorrection
-  neurodata_type: MotionCorrection
+  neurodata_type: Interface
+  neurodata_type_def: MotionCorrection
