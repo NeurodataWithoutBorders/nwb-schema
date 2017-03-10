@@ -1,5 +1,6 @@
 - attributes:
-  - name: help
+  - doc: Value is Superclass definition for patch-clamp data
+    name: help
     type: text
     value: Superclass definition for patch-clamp data
   datasets:
@@ -19,18 +20,19 @@
   neurodata_type: TimeSeries
   neurodata_type_def: PatchClampSeries
 - attributes:
-  - name: help
+  - doc: Value is Voltage recorded from cell during current-clamp recording
+    name: help
     type: text
     value: Voltage recorded from cell during current-clamp recording
   datasets:
+  - doc: 'Unit: Amp'
+    name: bias_current
+    type: float32
   - doc: 'Unit: Ohm'
     name: bridge_balance
     type: float32
   - doc: 'Unit: Farad'
     name: capacitance_compensation
-    type: float32
-  - doc: 'Unit: Amp'
-    name: bias_current
     type: float32
   doc: Stores voltage data recorded from intracellular current-clamp recordings. A
     corresponding CurrentClampStimulusSeries (stored separately as a stimulus) is
@@ -38,7 +40,9 @@
   neurodata_type: PatchClampSeries
   neurodata_type_def: CurrentClampSeries
 - attributes:
-  - name: help
+  - doc: Value is Voltage from intracellular recordings when all current and amplifier
+      settings are off
+    name: help
     type: text
     value: Voltage from intracellular recordings when all current and amplifier settings
       are off
@@ -49,7 +53,8 @@
   neurodata_type: CurrentClampSeries
   neurodata_type_def: IZeroClampSeries
 - attributes:
-  - name: help
+  - doc: Value is Stimulus current applied during current clamp recording
+    name: help
     type: text
     value: Stimulus current applied during current clamp recording
   doc: Aliases to standard PatchClampSeries. Its functionality is to better tag PatchClampSeries
@@ -57,58 +62,66 @@
   neurodata_type: PatchClampSeries
   neurodata_type_def: CurrentClampStimulusSeries
 - attributes:
-  - name: help
+  - doc: Value is Current recorded from cell during voltage-clamp recording
+    name: help
     type: text
     value: Current recorded from cell during voltage-clamp recording
   datasets:
   - attributes:
-    - name: unit
-      type: text
-      value: pecent
-    doc: 'Unit: %'
-    name: resistance_comp_correction
-    type: float32
-  - attributes:
-    - name: unit
+    - doc: Value is Farad
+      name: unit
       type: text
       value: Farad
     doc: 'Unit: Farad'
     name: capacitance_fast
     type: float32
   - attributes:
-    - name: unit
+    - doc: Value is Farad
+      name: unit
       type: text
       value: Farad
     doc: 'Unit: Farad'
     name: capacitance_slow
     type: float32
   - attributes:
-    - name: unit
+    - doc: Value is Farad
+      name: unit
       type: text
-      value: pecent
-    doc: 'Unit: %'
-    name: resistance_comp_prediction
+      value: Farad
+    doc: 'Unit: Farad'
+    name: whole_cell_capacitance_comp
     type: float32
   - attributes:
-    - name: unit
-      type: text
-      value: Hz
-    doc: 'Unit: Hz'
-    name: resistance_comp_bandwidth
-    type: float32
-  - attributes:
-    - name: unit
+    - doc: Value is Ohm
+      name: unit
       type: text
       value: Ohm
     doc: 'Unit: Ohm'
     name: whole_cell_series_resistance_comp
     type: float32
   - attributes:
-    - name: unit
+    - doc: Value is Hz
+      name: unit
       type: text
-      value: Farad
-    doc: 'Unit: Farad'
-    name: whole_cell_capacitance_comp
+      value: Hz
+    doc: 'Unit: Hz'
+    name: resistance_comp_bandwidth
+    type: float32
+  - attributes:
+    - doc: Value is pecent
+      name: unit
+      type: text
+      value: pecent
+    doc: 'Unit: %'
+    name: resistance_comp_correction
+    type: float32
+  - attributes:
+    - doc: Value is pecent
+      name: unit
+      type: text
+      value: pecent
+    doc: 'Unit: %'
+    name: resistance_comp_prediction
     type: float32
   doc: Stores current data recorded from intracellular voltage-clamp recordings. A
     corresponding VoltageClampStimulusSeries (stored separately as a stimulus) is
@@ -116,7 +129,8 @@
   neurodata_type: PatchClampSeries
   neurodata_type_def: VoltageClampSeries
 - attributes:
-  - name: help
+  - doc: Value is Stimulus voltage applied during voltage clamp recording
+    name: help
     type: text
     value: Stimulus voltage applied during voltage clamp recording
   doc: Aliases to standard PatchClampSeries. Its functionality is to better tag PatchClampSeries
