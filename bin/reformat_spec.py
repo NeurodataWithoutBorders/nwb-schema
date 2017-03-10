@@ -247,7 +247,9 @@ def remap_keys(name, d):
     def_doc = None
     ret['doc'] = d.get('description', def_doc)
 
-    if ret['doc'] is None:
+    if ret['value'] is not None:
+        ret['doc'] = "Value is %s" % str(ret['value'])
+    elif ret['doc'] is None:
         ret['doc'] = override_doc.get(ret['name'])
 
     ret['dim'] = d.get('dimensions', None)
