@@ -1,11 +1,11 @@
 import os
 import sys
 import json
-#import yaml
-from ruamel import yaml
+import yaml
+#from ruamel import yaml
 
-import pynwb
-from pynwb.io.spec import Spec, AttributeSpec, BaseStorageSpec, DatasetSpec, GroupSpec, SpecCatalog
+#import pynwb
+from pynwb.spec import Spec, AttributeSpec, DatasetSpec, GroupSpec
 
 
 ndmap = {
@@ -19,7 +19,6 @@ ndmap = {
     "<channel_X>": 'OpticalChannel',
     "<imaging_plane_X>/*": 'ImagingPlane',
     "<unit_N>/+": 'SpikeUnit',
-    #"<image_name>/+": , # TODO: Figure out how to move this to a link to an ImagingPlane neurodata_type
     "<roi_name>/*": 'ROI',
     "<image_plane>/*": 'PlaneSegmentation',
 }
@@ -70,8 +69,8 @@ include_doc = {
 def build_group_helper(**kwargs):
     myname = kwargs.pop('name', '*')
     doc = kwargs.pop('doc')
-    if doc is None:
-        print('no doc for name %s, ndt %s' % (myname, kwargs.get('neurodata_type_def', kwargs.get('neurodata_type'))), file=sys.stderr)
+    #if doc is None:
+    #    print('no doc for name %s, ndt %s' % (myname, kwargs.get('neurodata_type_def', kwargs.get('neurodata_type'))), file=sys.stderr)
     if myname == '*':
         grp_spec = GroupSpec(doc, **kwargs)
     else:
@@ -95,14 +94,14 @@ def build_group(name, d, ndtype=None):
     extends = None
     if 'merge' in d:
         merge = d.pop('merge')
-        print('Found merge directive for %s' % name, file=sys.stderr)
+        #print('Found merge directive for %s' % name, file=sys.stderr)
         base = merge[0]
         end = base.rfind('>')
         base = base[1:end] if end > 0 else base
         #extends = all_specs[base]
         extends = base
-        if len(d) == 0:
-            print('%s - spec empty after popping merge' %  name, file=sys.stderr)
+        #if len(d) == 0:
+        #    print('%s - spec empty after popping merge' %  name, file=sys.stderr)
 
     if myname[0] == '<':
         neurodata_type = ndmap.get(myname)
@@ -117,11 +116,11 @@ def build_group(name, d, ndtype=None):
 
     desc = d.get('description', None)
     if isinstance(desc, dict) or desc is None:
-        print('popping _description ndt=%s, desc=%s' % (neurodata_type, desc), file=sys.stderr)
+        #print('popping _description ndt=%s, desc=%s' % (neurodata_type, desc), file=sys.stderr)
         desc = d.pop('_description', None)
-        print('after popping ndt=%s, desc=%s' % (neurodata_type, desc), file=sys.stderr)
+        #print('after popping ndt=%s, desc=%s' % (neurodata_type, desc), file=sys.stderr)
     else:
-        print('popping description ndt=%s, desc=%s' % (neurodata_type, desc), file=sys.stderr)
+        #print('popping description ndt=%s, desc=%s' % (neurodata_type, desc), file=sys.stderr)
         d.pop('description', None)
 
     if 'attributes' in d:
@@ -419,7 +418,7 @@ def load_spec(spec):
         else:
             ndt = name[0:name.rfind('/')]
             #return build_group(name, spec[name])
-            
+
         return build_group(namearg, spec[name], ndtype=ndt)
 
     #for key in type_specs.keys():
@@ -562,7 +561,34 @@ def represent_str(self, data):
     return s
     #return self.represent_scalar("", '"%s"' % s)
 
+def represent_spec(dumper, data):
+    print('CALLING represent_spec', file=sys.stderr)
+    value = []
+    def add_key(item_key):
+        item_value = data[item_key]
+        node_key = dumper.represent_data(item_key)
+        node_value = dumper.represent_data(item_value)
+        value.append((node_key, node_value))
+    skip = set()
+    order = ('name', 'neurodata_type_def', 'neurodata_type', 'doc', 'attributes', 'datasets', 'groups')
+    add_key('name')
+#    for item_key in order:
+#        if item_key in data:
+#            add_key(item_key)
+#            skip.add(item_key)
+#    for item_key in data.keys():
+#        if item_key in skip:
+#            continue
+#        add_key(item_key)
+    return yaml.nodes.MappingNode(u'tag:yaml.org,2002:map', value)
+
+#yaml.add_representer(Spec, represent_spec)
+#yaml.add_representer(AttributeSpec, represent_spec)
+#yaml.add_representer(DatasetSpec, represent_spec)
+#yaml.add_representer(GroupSpec, represent_spec)
+
 spec_path = sys.argv[1]
+outdir = sys.argv[2] if len(sys.argv) > 2 else "."
 with open(spec_path) as spec_in:
     nwb_spec = load_spec(json.load(spec_in))
     #nwb_spec = load_iface(json.load(spec_in))
@@ -571,7 +597,7 @@ with open(spec_path) as spec_in:
 
 
 for key, value  in nwb_spec.items():
-    with open('nwb.%s.yaml' % key, 'w') as out:
+    with open('%s/nwb.%s.yaml' % (outdir, key), 'w') as out:
         yaml.dump(json.loads(json.dumps(value)), out, default_flow_style=False)
 
 #def quoted_presenter(dumper, data):
