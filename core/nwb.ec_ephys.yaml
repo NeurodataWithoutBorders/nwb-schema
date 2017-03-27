@@ -53,20 +53,20 @@
     value: Mean waveform shape of clusters. Waveforms should be high-pass filtered
       (ie, not the same bandpass filter used waveform analysis and clustering)
   datasets:
-  - doc: Path to linked clustering interface
-    name: clustering_interface_path
-    type: text
+  - doc: Stdev of waveforms for each cluster, using the same indices as in mean
+    name: waveform_sd
+    type: float32
   - doc: Filtering applied to data before generating mean/sd
     name: waveform_filtering
+    type: text
+  - doc: Path to linked clustering interface
+    name: clustering_interface_path
     type: text
   - doc: The mean waveform for each cluster, using the same indices for each wave
       as cluster numbers in the associated Clustering module (i.e, cluster 3 is in
       array slot [3]). Waveforms corresponding to gaps in cluster sequence should
       be empty (e.g., zero- filled)
     name: waveform_mean
-    type: float32
-  - doc: Stdev of waveforms for each cluster, using the same indices as in mean
-    name: waveform_sd
     type: float32
   doc: The mean waveform shape, including standard deviation, of the different clusters.
     Ideally, the waveform analysis should be performed on data that is only high-pass
@@ -88,25 +88,25 @@
     value: Clustered spike data, whether from automatic clustering tools (eg, klustakwik)
       or as a result of manual sorting
   datasets:
-  - doc: List of cluster number that are a part of this set (cluster numbers can be
-      non- continuous)
-    name: cluster_nums
+  - doc: Description of clusters or clustering, (e.g. cluster 0 is noise, clusters
+      curated using Klusters, etc)
+    name: description
+    type: text
+  - doc: Cluster number of each event
+    name: num
     type: int32
   - doc: Times of clustered events, in seconds. This may be a link to times field
       in associated FeatureExtraction module.
     name: times
     type: float64!
-  - doc: Cluster number of each event
-    name: num
+  - doc: List of cluster number that are a part of this set (cluster numbers can be
+      non- continuous)
+    name: cluster_nums
     type: int32
   - doc: Maximum ratio of waveform peak to RMS on any channel in the cluster (provides
       a basic clustering metric).
     name: peak_over_rms
     type: float32
-  - doc: Description of clusters or clustering, (e.g. cluster 0 is noise, clusters
-      curated using Klusters, etc)
-    name: description
-    type: text
   doc: Clustered spike data, whether from automatic clustering tools (e.g., klustakwik)
     or as a result of manual sorting.
   name: Clustering
@@ -118,15 +118,15 @@
     type: text
     value: Container for salient features of detected events
   datasets:
+  - doc: Description of features (eg, "PC1") for each of the extracted features.
+    name: description
+    type: text
   - doc: Multi-dimensional array of features extracted from each event.
     name: features
     type: float32
   - doc: Times of events that features correspond to (can be a link).
     name: times
     type: float64!
-  - doc: Description of features (eg, "PC1") for each of the extracted features.
-    name: description
-    type: text
   doc: Features, such as PC1 and PC2, that are extracted from signals stored in a
     SpikeEvent TimeSeries or other source.
   links:
@@ -141,18 +141,18 @@
       threshold, as well as relevant values.
     name: detection_method
     type: text
-  - doc: Timestamps of events, in Seconds
-    name: times
-    type: float64!
-  - doc: Path to linked ElectricalSeries.
-    name: source_electricalseries_path
-    type: text
   - doc: Indices (zero-based) into source ElectricalSeries::data array corresponding
       to time of event. Module description should define what is meant by time of
       event (e.g., .25msec before action potential peak, zero-crossing time, etc).
       The index points to each event from the raw data
     name: source_idx
     type: int32
+  - doc: Timestamps of events, in Seconds
+    name: times
+    type: float64!
+  - doc: Path to linked ElectricalSeries.
+    name: source_electricalseries_path
+    type: text
   doc: Detected spike events from voltage trace(s).
   links:
   - doc: HDF5 link to ElectricalSeries that this data was calculated from. Metadata

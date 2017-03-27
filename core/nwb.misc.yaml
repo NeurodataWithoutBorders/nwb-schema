@@ -6,11 +6,11 @@
     value: Features of an applied stimulus. This is useful when storing the raw stimulus
       is impractical
   datasets:
-  - doc: Description of the features represented in TimeSeries::data.
-    name: features
-    type: text
   - doc: Units of each feature.
     name: feature_units
+    type: text
+  - doc: Description of the features represented in TimeSeries::data.
+    name: features
     type: text
   - attributes:
     - doc: Value is see 'feature_units'
@@ -37,14 +37,14 @@
     value: Time-stamped annotations about an experiment
   datasets:
   - attributes:
-    - doc: Value is n/a
-      name: unit
-      type: None
-      value: n/a
     - doc: Value is float('NaN')
       name: conversion
       type: None
       value: float('NaN')
+    - doc: Value is n/a
+      name: unit
+      type: None
+      value: n/a
     - doc: Value is float('NaN')
       name: resolution
       type: None
@@ -65,14 +65,14 @@
     value: Stores the start and stop times for events
   datasets:
   - attributes:
-    - doc: Value is n/a
-      name: unit
-      type: None
-      value: n/a
     - doc: Value is float('NaN')
       name: conversion
       type: None
       value: float('NaN')
+    - doc: Value is n/a
+      name: unit
+      type: None
+      value: n/a
     - doc: Value is float('NaN')
       name: resolution
       type: None
@@ -104,13 +104,13 @@
     module).
   groups:
   - datasets:
+    - doc: Description of the unit (eg, cell type).
+      name: unit_description
+      type: text
     - doc: Name, path or description of where unit times originated. This is necessary
         only if the info here differs from or is more fine-grained than the interface's
         source field
       name: source
-      type: text
-    - doc: Description of the unit (eg, cell type).
-      name: unit_description
       type: text
     - doc: Spike time for the units (exact or estimated)
       name: times

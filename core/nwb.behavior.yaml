@@ -6,6 +6,9 @@
     value: Stores points in space over time. The data[] array structure is [num samples][num
       spatial dimensions]
   datasets:
+  - doc: Description defining what exactly 'straight-ahead' means.
+    name: reference_frame
+    type: text
   - attributes:
     - doc: Value is meter
       name: unit
@@ -14,9 +17,6 @@
     doc: 2-D array storing position or direction relative to some reference frame.
     name: data
     type: number
-  - doc: Description defining what exactly 'straight-ahead' means.
-    name: reference_frame
-    type: text
   doc: 'Direction, e.g., of gaze or travel, or position. The TimeSeries::data field
     is a 2D array storing position or direction relative to some reference frame.
     Array structure: [num measurements] [num dimensions]. Each SpatialSeries has a
@@ -144,13 +144,13 @@
       type: text
     doc: One of possibly many.  Name should be informative.
     groups:
-    - doc: Image stack with frames shifted to the common coordinates.
-      name: corrected
-      neurodata_type: ImageSeries
     - doc: Stores the x,y delta necessary to align each frame to the common coordinates,
         for example, to align each frame to a reference image.
       name: xy_translation
       neurodata_type: TimeSeries
+    - doc: Image stack with frames shifted to the common coordinates.
+      name: corrected
+      neurodata_type: ImageSeries
     links:
     - doc: HDF5 Link to image series that is being registered.
       name: original

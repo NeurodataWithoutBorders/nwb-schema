@@ -4,22 +4,6 @@
     type: text
     value: Storage object for time-series 2-D image data
   datasets:
-  - doc: Number of pixels on x, y, (and z) axes.
-    name: dimension
-    type: int32
-  - doc: Format of image. If this is 'external' then the field external_file contains
-      the path or URL information to that file. For tiff, png, jpg, etc, the binary
-      representation of the image is stored in data. If the format is raw then the
-      fields bit_per_pixel and dimension are used. For raw images, only a single channel
-      is stored (eg, red).
-    name: format
-    type: text
-  - doc: Number of bit per image pixel.
-    name: bits_per_pixel
-    type: int32
-  - doc: Either binary data containing image or empty.
-    name: data
-    type: number
   - attributes:
     - doc: Each entry is the frame number (within the full ImageSeries) of the first
         frame in the corresponding external_file entry. This serves as an index to
@@ -34,6 +18,22 @@
     name: external_file
     required: false
     type: text
+  - doc: Format of image. If this is 'external' then the field external_file contains
+      the path or URL information to that file. For tiff, png, jpg, etc, the binary
+      representation of the image is stored in data. If the format is raw then the
+      fields bit_per_pixel and dimension are used. For raw images, only a single channel
+      is stored (eg, red).
+    name: format
+    type: text
+  - doc: Number of pixels on x, y, (and z) axes.
+    name: dimension
+    type: int32
+  - doc: Number of bit per image pixel.
+    name: bits_per_pixel
+    type: int32
+  - doc: Either binary data containing image or empty.
+    name: data
+    type: number
   doc: 'General image data that is common between acquisition and stimulus time series.
     Sometimes the image data is stored in the HDF5 file in a raw format while other
     times it will be stored as an external image file in the host file system. The
@@ -92,14 +92,14 @@
     value: ROI responses over an imaging plane. Each row in data[] should correspond
       to the signal from one ROI
   datasets:
-  - doc: List of ROIs represented, one name for each row of data[].
-    name: roi_names
+  - doc: Path to segmentation module.
+    name: segmentation_interface_path
     type: text
   - doc: Signals from ROIs
     name: data
     type: float32
-  - doc: Path to segmentation module.
-    name: segmentation_interface_path
+  - doc: List of ROIs represented, one name for each row of data[].
+    name: roi_names
     type: text
   doc: ROI responses over an imaging plane. Each row in data[] should correspond to
     the signal from one ROI.
