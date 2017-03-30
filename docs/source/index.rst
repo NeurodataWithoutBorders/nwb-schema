@@ -8,6 +8,8 @@ Welcome to the NWB Format Specification
 
    specification_language
    specification_language_release_notes
+   format
+   format_release_notes
 
 Indices and tables
 ==================

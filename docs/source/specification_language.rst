@@ -1,5 +1,5 @@
-Specification language used for Neurodata Without Borders (NWB) format
-**********************************************************************
+NWB Specification Language
+**************************
 
 Specification Language Version: 1.2a (Mar. 23, 2017) [1]_
 
