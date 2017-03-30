@@ -5,15 +5,25 @@ NWB Specification Language: Release Notes
 Version 1.2a (April, 2017)
 --------------------------
 
-
-* Added new key: ```neurodata_type_def``` (which in compination with ```neurodata_type``` replaces the keys ```include``` and ```merge```)
-* Removed key: ```include```
-* Removed key: ``merge```
-* Removed key: ``merge+```
-* Added new key ```quantity``` (which replaces the ```quantity_flag```)
-* Removed ```quantity_flag``` as part of keys
-* Removed key ```structured_dimensions``` (see below for details)
-* Removed key ```autogen``` (without replacement)
+Summary
+*******
+* Simplify reuse of neurodata_types:
+    * Added new key: ```neurodata_type_def``` (which in compination with ```neurodata_type``` replaces the keys ```include``` and ```merge```)
+    * Removed key: ```include```
+    * Removed key: ``merge```
+    * Removed key: ``merge+```
+* Replace encoding of values in keys:
+    * Added new key ```quantity``` (which replaces the ```quantity_flag```)
+    * Removed ```quantity_flag``` as part of keys
+    * Removed key ```structured_dimensions``` (see below for details)
+    * Removed key ```autogen``` (without replacement)
+    * Added ```name``` key
+    * Removed `<...>` name identifier (replaced by empty ```name``` key)
+    * Added ```groups``` key
+    * Added ```datasets``` key
+    * Removed `/` flag in keys to identify groups (replace by ```groups``` and ```datasets``` keys)
+* Improve human readability:
+    * Add support for YAML in addition to JSON
 
 YAML support
 ************
