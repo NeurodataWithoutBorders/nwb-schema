@@ -7,6 +7,7 @@ Welcome to the NWB Format Specification
    :caption: Basics
 
    specification_language
+   specification_language_release_notes
 
 Indices and tables
 ==================

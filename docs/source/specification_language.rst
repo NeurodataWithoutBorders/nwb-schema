@@ -3,7 +3,10 @@ Specification language used for Neurodata Without Borders (NWB) format
 
 Specification Language Version: 1.2a (Mar. 23, 2017) [1]_
 
-Authors: Jeff Teeters (UCB) ...
+Author Note: The original version (1.1c) of the specification language was created by Jeff Teeters (UCB).
+
+
+**# TODO This document needs to be updated to reflect changes made in version 1.2a**
 
 Introduction
 ============
