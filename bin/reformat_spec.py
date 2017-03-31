@@ -8,19 +8,22 @@ import yaml
 from pynwb.spec import Spec, AttributeSpec, DatasetSpec, GroupSpec
 
 
+NAME_WILDCARD = "*"
+
 ndmap = {
-    "<timeseries_X>/*": 'EpochTimeSeries',
-    "<epoch_X>/*": 'Epoch',
-    "<device_X>*": 'Device',
-    "<specification_file>*": 'SpecFile',
+    "<timeseries_X>": 'EpochTimeSeries',
+    "<epoch_X>": 'Epoch',
+    "<device_X>": 'Device',
+    "<specification_file>": 'SpecFile',
     "<electrode_group_X>": 'ElectrodeGroup',
     "<electrode_X>": 'IntracellularElectrode',
-    "<site_X>/*": 'OptogeneticStimulusSite',
+    "<site_X>": 'OptogeneticStimulusSite',
     "<channel_X>": 'OpticalChannel',
-    "<imaging_plane_X>/*": 'ImagingPlane',
-    "<unit_N>/+": 'SpikeUnit',
-    "<roi_name>/*": 'ROI',
-    "<image_plane>/*": 'PlaneSegmentation',
+    "<imaging_plane_X>": 'ImagingPlane',
+    "<unit_N>": 'SpikeUnit',
+    "<roi_name>": 'ROI',
+    "<image_plane>": 'PlaneSegmentation',
+    "<image stack name>": 'CorrectedImageStack',
 }
 
 metadata_links = {
@@ -52,9 +55,8 @@ include_doc = {
     'PupilTracking/': 'TimeSeries object containing time series data on pupil size',
     'Position/': 'SpatialSeries object containing position data',
     'Fluorescence/': 'RoiResponseSeries object containing fluorescence data for a ROI',
-    '<Module>/*': 'Interface objects containing data output from processing steps',
+    'Module': 'Interface objects containing data output from processing steps',
 
-    #TODO: finish documenting these guys
     'EventWaveform/': 'SpikeEventSeries object containing detected spike event waveforms',
     'EyeTracking/': 'SpatialSeries object containing data measuring direction of gaze',
     'BehavioralEpochs/': 'IntervalSeries object containing start and stop times of epochs',
@@ -67,11 +69,11 @@ include_doc = {
 }
 
 def build_group_helper(**kwargs):
-    myname = kwargs.pop('name', '*')
+    myname = kwargs.pop('name', NAME_WILDCARD)
     doc = kwargs.pop('doc')
     #if doc is None:
     #    print('no doc for name %s, ndt %s' % (myname, kwargs.get('neurodata_type_def', kwargs.get('neurodata_type'))), file=sys.stderr)
-    if myname == '*':
+    if myname == NAME_WILDCARD:
         grp_spec = GroupSpec(doc, **kwargs)
     else:
         grp_spec = GroupSpec(doc, name=myname, **kwargs)
@@ -79,18 +81,15 @@ def build_group_helper(**kwargs):
 
 def build_group(name, d, ndtype=None):
     #print('building %s' % name, file=sys.stderr)
-    required = True
+    #required = True
     myname = name
-    if myname[-1] == '?':
-        required = False
-        myname = myname[:-1]
-    if myname[-1] == '^':
-        required = False
-        myname = myname[:-1]
+    quantity, myname = strip_characters(name)
+    if len(myname) < 1:
+        print('>', myname, '<')
     if myname[-1] == '/':
         myname = myname[:-1]
-    if myname == '*':
-        required = False
+    #if myname == NAME_WILDCARD:
+    #    required = False
     extends = None
     if 'merge' in d:
         merge = d.pop('merge')
@@ -103,15 +102,25 @@ def build_group(name, d, ndtype=None):
         #if len(d) == 0:
         #    print('%s - spec empty after popping merge' %  name, file=sys.stderr)
 
+    #p = 'device' in myname
+    #if p:
+    #    print(myname)
+
     if myname[0] == '<':
+        #if p:
+        #    print('variable name')
         neurodata_type = ndmap.get(myname)
+        #if p:
+        #    print(neurodata_type)
         #print('found neurodata_type %s' % neurodata_type, file=sys.stderr)
         if neurodata_type is None:
             neurodata_type = ndtype
         else:
-            myname = '*'
+            myname = NAME_WILDCARD
         #print('neurodata_type=%s, myname=%s' % (neurodata_type, myname), file=sys.stderr)
     else:
+        #if p:
+        #    print('Not variable')
         neurodata_type = ndtype
 
     desc = d.get('description', None)
@@ -133,15 +142,15 @@ def build_group(name, d, ndtype=None):
         if extends is not None:
             if neurodata_type is None:
                 neurodata_type = myname
-        grp_spec = build_group_helper(name=myname, required=required, doc=desc, neurodata_type_def=neurodata_type, neurodata_type=extends)
+        grp_spec = build_group_helper(name=myname, quantity=quantity, doc=desc, neurodata_type_def=neurodata_type, neurodata_type=extends)
         add_attributes(grp_spec, attributes)
     elif neurodata_type is not None:
-        grp_spec = build_group_helper(name=myname, required=required, doc=desc, neurodata_type_def=neurodata_type, neurodata_type=extends)
+        grp_spec = build_group_helper(name=myname, quantity=quantity, doc=desc, neurodata_type_def=neurodata_type, neurodata_type=extends)
     else:
-        if myname == '*':
-            grp_spec = build_group_helper(doc=desc, required=required, neurodata_type=extends)
+        if myname == NAME_WILDCARD:
+            grp_spec = build_group_helper(doc=desc, quantity=quantity, neurodata_type=extends)
         else:
-            grp_spec = build_group_helper(doc=desc, name=myname, required=required, neurodata_type=extends)
+            grp_spec = build_group_helper(doc=desc, name=myname, quantity=quantity, neurodata_type=extends)
 
     for key, value in d.items():
         tmp_name = key
@@ -201,9 +210,13 @@ def build_group(name, d, ndtype=None):
     #    print('no neurodata_type found for %s' % myname, file=sys.stderr)
     return grp_spec
 
+dataset_ndt = { '<image_X>': 'Image' }
 def build_dataset(name, d):
     kwargs = remap_keys(name, d)
-    #dset_spec = DatasetSpec(kwargs.pop('dtype'), name=myname, **kwargs)
+    if 'name' in kwargs:
+        if kwargs['name'] in dataset_ndt:
+            tmpname = kwargs.pop('name')
+            kwargs['neurodata_type_def'] = dataset_ndt[tmpname]
     dset_spec = DatasetSpec(kwargs.pop('doc'), kwargs.pop('dtype'), **kwargs)
     if 'attributes' in d:
         add_attributes(dset_spec, d['attributes'])
@@ -228,15 +241,49 @@ def build_attribute(name, d):
     attr_spec = AttributeSpec(myname, dtype, doc, **kwargs)
     return attr_spec
 
+def strip_characters(name):
+    flags = ('!', '?', '+', '*', '^')
+    quantity = 1
+    retname = name
+    if retname != NAME_WILDCARD:
+        if name[-1] == '!':
+            retname = name[:-1]
+            quantity = 1
+        elif name[-1] == '?':
+            retname = name[:-1]
+            quantity = '?'
+        elif name[-1] == '+':
+            retname = name[:-1]
+            quantity = '+'
+        elif name[-1] == '*':
+            retname = name[:-1]
+            quantity = '*'
+        elif name[-1] == '^':
+            retname = name[:-1]
+            quantity = '?'
+
+    return (quantity, retname)
+
+
 def remap_keys(name, d):
+    # TODO: add parsing of +/* for 'num_args'
+    # will move to quantity which takes on values *, +, ? , or an integer
     ret = dict()
-    ret['required'] = True
-    ret['name'] = name
-    if name[-1] == '?':
-        ret['required'] = False
-        ret['name'] = name[:-1]
-    elif name[-1] == '^':
-        ret['name'] = name[:-1]
+    quantity, specname = strip_characters(name)
+    if quantity != 1:
+        ret['quantity'] = quantity
+
+    if specname in ndmap:
+        print(specname)
+        ret['neurodata_type_def'] = ndmap[specname]
+    else:
+        ret['name'] = specname
+    #ret['name'] = name
+    #if name[-1] == '?':
+    #    ret['required'] = False
+    #    ret['name'] = name[:-1]
+    #elif name[-1] == '^':
+    #    ret['name'] = name[:-1]
     ret['const'] = d.get('const', None)
     ret['dtype'] = d.get('data_type', 'None')
 
@@ -324,9 +371,10 @@ def load_spec(spec):
     ]
     base = [
         root,
-        build_group("<Module>/*", module_json, ndtype='Module'),
-        build_group('*', spec["<TimeSeries>/"], ndtype='TimeSeries'),
-        build_group('*', spec["<Interface>/"], ndtype='Interface')
+        #build_group("<Module>/*", module_json, ndtype='Module'),
+        build_group(NAME_WILDCARD, module_json, ndtype='Module'),
+        build_group(NAME_WILDCARD, spec["<TimeSeries>/"], ndtype='TimeSeries'),
+        build_group(NAME_WILDCARD, spec["<Interface>/"], ndtype='Interface')
     ]
 
 
@@ -412,9 +460,9 @@ def load_spec(spec):
         namearg = name
         ndt = None
         if name[0] == '<':
-            namearg = '*'
+            namearg = NAME_WILDCARD
             ndt = name[1:name.rfind('>')]
-            #return build_group('*', spec[name])
+            #return build_group(NAME_WILDCARD, spec[name])
         else:
             ndt = name[0:name.rfind('/')]
             #return build_group(name, spec[name])
@@ -488,14 +536,14 @@ def load_spec(spec):
         if not all_bases:
             continue
 
-        ts_spec = build_group('*', ts_dict)
+        ts_spec = build_group(NAME_WILDCARD, ts_dict)
         #for m in merge:
         #    merge_spec(m, ts_spec)
         ts_specs[ts_type] = ts_spec
 
     #print ('created specs for all TimeSeries', file=sys.stderr)
 
-    iface = build_group('*', spec['<Interface>/'])
+    iface = build_group(NAME_WILDCARD, spec['<Interface>/'])
     #print ('created specs for <Interface>', file=sys.stderr)
 
 
@@ -552,7 +600,7 @@ def load_spec(spec):
 
 def load_iface(spec):
     spec = spec['fs']['core']['schema']
-    iface = build_group('*', spec['<Interface>/'])
+    iface = build_group(NAME_WILDCARD, spec['<Interface>/'])
     return iface
 """
 
