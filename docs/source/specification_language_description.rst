@@ -453,8 +453,12 @@ inheritance (*Note:* only groups (or datasets) with a specified type can be reus
   the current group (or dataset).
 
 - ```neurodata_type```: The value of the ``neurodata_type`` key describes the base type
-  of a group (or dataset). The ``neurodata_type`` key provides, hence, a mechanism for reuse
-  of previously specified type.
+  of a group (or dataset). The value must be an existing type.
+
+Both ```neurodata_type_def``` and ```neurodata_type``` are optional keys.
+To enable the unique identification, every group (and dataset) must either have a fixed name and/or a
+unique neurodata_type. This means, any group (or dataset) with a variable name must have a unique neurodata_type.
+
 
 **Reusing existing neurodata_types**
 
@@ -525,9 +529,6 @@ The result of this is that ``MySeries`` now includes a group of type ``Series``,
           datasets:
           - name: A
 
-
-**Comment** To enable the unique identification, every group must be either have a fixed name and/or a
-unique neurodata_type. This means, any group or dataset with a variable name must have a unique neurodata_type.
 
 **Change Note:** The keys ```neurodata_type_def`` and  ```neurodata_type``` were introduced in version 1.2a to
 simplify the concepts of  inclusion and merging of specifications and replaced the keys ```include``` and ```merge```
