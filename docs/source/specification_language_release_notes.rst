@@ -1,4 +1,4 @@
-NWB Specification Language: Release Notes
+Release Notes: NWB Specification Language
 =========================================
 
 
@@ -6,7 +6,7 @@ Version 1.2a (April, 2017)
 --------------------------
 
 Summary
-*******
+^^^^^^^
 * Simplify reuse of neurodata_types:
     * Added new key: ```neurodata_type_def``` (which in compination with ```neurodata_type``` replaces the keys ```include``` and ```merge```)
     * Removed key: ```include```
@@ -26,12 +26,12 @@ Summary
     * Add support for YAML in addition to JSON
 
 YAML support
-************
+^^^^^^^^^^^^
 
 To improve human readability of the specification language, Version 1.2a now allows specifications to be defined in YAML as well as JSON (Version 1.1c allowed only JSON).
 
 ```quantity```
-**************
+^^^^^^^^^^^^^^
 
 
 Version 1.1c of the specification language used a ```quantity_flag``` as part of the name key of groups and datasets to the quantity
@@ -44,21 +44,21 @@ Version 1.1c of the specification language used a ```quantity_flag``` as part of
 
 Version 1.2a replaces the ```quantity_flag``` with a new key ```quantity``` with the following values:
 
-+-------------+------------+-------------------------------------------------------+
-| value       |  required  |  number of instances                                  |
-+=============+============+=======================================================+
-|  `*`        |  optional  |   unlimited                                           |
-+-------------+------------+-------------------------------------------------------+
-|  `+`        |  required  |   1, unlimited                                        |
-+-------------+------------+-------------------------------------------------------+
-|  `?`        |  optional  |   0, unlimited                                        |
-+-------------+------------+-------------------------------------------------------+
-|  `1,2,3...` |  required  |   Fixed number of instances as indicated by the value |
-+-------------+------------+-------------------------------------------------------+
++---------------------------------+------------+-------------------------------------------------------+
+| value                           |  required  |  number of instances                                  |
++=================================+============+=======================================================+
+|  ```zero_or_more``` or ```*```  |  optional  |   unlimited                                           |
++---------------------------------+------------+-------------------------------------------------------+
+|  ```one_or_more``` or ```+```   |  required  |   unlimited but at least 1                            |
++---------------------------------+------------+-------------------------------------------------------+
+|  ```zero_or_one``` or ```?```   |  optional  |   0 or 1                                              |
++---------------------------------+------------+-------------------------------------------------------+
+|  ```1```, ```2```, ```3```, ... |  required  |   Fixed number of instances as indicated by the value |
++---------------------------------+------------+-------------------------------------------------------+
 
 
 ```merge``` and ```include```
-*****************************
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To simplify the concept ```include``` and ```merge```, version 1.2a introduced a new
 key ```neurodata_type_def``` which  describes the creation of a new ```neurodata_type```.
@@ -81,14 +81,14 @@ Here a summary of the basic cases:
 +----------------+--------------------+------------------------------------------------------------------------+
 
 ```structured_dimensions```
-***************************
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The definition of structured dimensions has been removed in version 1.2a. The ```unit``` defined as part of ```structured_dimensions``` in version 1.1c is now an attribute on the corresponding dataset in version 1.2a. The concept of structured_dimensions will likley be implemented in future version of the specification language via support for modeling of relationships.
+The definition of structured dimensions has been removed in version 1.2a. The ```unit``` defined as part of ```structured_dimensions``` in version 1.1c is now an attribute on the corresponding dataset in version 1.2a. The concept of structured_dimensions will likley be implemented in future version of the specification language via support for modeling of relationships or a special table neurodata_type.
 
 ```autogen```
-*************
+^^^^^^^^^^^^^
 
-The ```autogen``` key was removed in 1.2a without replacement.
+The ```autogen``` key has been removed in 1.2a without replacement.
 
 
 Version 1.1c (Oct. 7, 2016)

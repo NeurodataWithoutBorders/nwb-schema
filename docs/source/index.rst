@@ -3,13 +3,14 @@ Welcome to the NWB Format Specification
 
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Basics
+    :numbered:
+    :maxdepth: 6
+    :caption: Table of Contents
 
-   specification_language
-   specification_language_release_notes
-   format
-   format_release_notes
+    intro
+    specification_language
+    format
+    credits
 
 Indices and tables
 ==================

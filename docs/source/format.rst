@@ -1,4 +1,18 @@
-NWB Format
-==========
+.. _nwb_format:
 
-**#TODO Add documentation for the NWB formatand generated detailed docs from YAML specs**
+**********
+NWB Format
+**********
+
+Version |release| |today|
+
+
+.. contents::
+
+.. include:: format_description.rst
+.. include:: format_design_notes.rst
+.. include:: format_extension.rst
+.. include:: format_release_notes.rst
+
+
+
