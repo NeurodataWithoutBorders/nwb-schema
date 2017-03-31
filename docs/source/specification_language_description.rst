@@ -449,21 +449,14 @@ A neurodata_type is a unique identifier for a specific type of group (or dataset
 By assigning a neurodata_type to a group (or dataset) enables others to reuse that type by inclusion or
 inheritance (*Note:* only groups (or datasets) with a specified type can be reused).
 
-```neurodata_type_def```
-""""""""""""""""""""""""
+- ```neurodata_type_def```: This key is used to define (i.e, create) a new neurodata_type and to assign that type to
+  the current group (or dataset).
 
-``neurodata_type_def`` is used to define (i.e, create) a new neurodata_type and to assign that type to
-the current group (or dataset).
+- ```neurodata_type```: The value of the ``neurodata_type`` key describes the base type
+  of a group (or dataset). The ``neurodata_type`` key provides, hence, a mechanism for reuse
+  of previously specified type.
 
-```neurodata_type``
-"""""""""""""""""""
-
-The value of the ``neurodata_type`` key describes the base type
-of a group (or dataset). The ``neurodata_type`` key provides, hence, a mechanism for reuse
-of previously specified type.
-
-Reusing existing neurodata_types
-""""""""""""""""""""""""""""""""
+**Reusing existing neurodata_types**
 
 The combination of ```neurodata_type``` and ```neurodata_type_def``` provides an easy-to-use mechanism for
 reuse of type specifications via inheritance (i.e., merge and extension of specifications) and inclusion (i.e,
