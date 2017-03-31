@@ -4,12 +4,13 @@
     type: text
     value: Superclass definition for patch-clamp data
   datasets:
-  - doc: 'Units: Volt/Amp (v-clamp) or Volt/Volt (c-clamp)'
-    name: gain
-    type: float
   - doc: Recorded voltage or current.
     name: data
     type: number
+  - doc: 'Units: Volt/Amp (v-clamp) or Volt/Volt (c-clamp)'
+    name: gain
+    quantity: '?'
+    type: float
   doc: Stores stimulus or response current or voltage. Superclass definition for patch-clamp
     data (this class should not be instantiated directly).
   links:
@@ -25,14 +26,17 @@
     type: text
     value: Voltage recorded from cell during current-clamp recording
   datasets:
+  - doc: 'Unit: Ohm'
+    name: bridge_balance
+    quantity: '?'
+    type: float32
   - doc: 'Unit: Farad'
     name: capacitance_compensation
+    quantity: '?'
     type: float32
   - doc: 'Unit: Amp'
     name: bias_current
-    type: float32
-  - doc: 'Unit: Ohm'
-    name: bridge_balance
+    quantity: '?'
     type: float32
   doc: Stores voltage data recorded from intracellular current-clamp recordings. A
     corresponding CurrentClampStimulusSeries (stored separately as a stimulus) is
@@ -68,20 +72,13 @@
     value: Current recorded from cell during voltage-clamp recording
   datasets:
   - attributes:
-    - doc: Value is Farad
+    - doc: Value is pecent
       name: unit
       type: text
-      value: Farad
-    doc: 'Unit: Farad'
-    name: capacitance_fast
-    type: float32
-  - attributes:
-    - doc: Value is Farad
-      name: unit
-      type: text
-      value: Farad
-    doc: 'Unit: Farad'
-    name: capacitance_slow
+      value: pecent
+    doc: 'Unit: %'
+    name: resistance_comp_correction
+    quantity: '?'
     type: float32
   - attributes:
     - doc: Value is Ohm
@@ -90,14 +87,7 @@
       value: Ohm
     doc: 'Unit: Ohm'
     name: whole_cell_series_resistance_comp
-    type: float32
-  - attributes:
-    - doc: Value is Hz
-      name: unit
-      type: text
-      value: Hz
-    doc: 'Unit: Hz'
-    name: resistance_comp_bandwidth
+    quantity: '?'
     type: float32
   - attributes:
     - doc: Value is pecent
@@ -106,14 +96,34 @@
       value: pecent
     doc: 'Unit: %'
     name: resistance_comp_prediction
+    quantity: '?'
     type: float32
   - attributes:
-    - doc: Value is pecent
+    - doc: Value is Farad
       name: unit
       type: text
-      value: pecent
-    doc: 'Unit: %'
-    name: resistance_comp_correction
+      value: Farad
+    doc: 'Unit: Farad'
+    name: capacitance_fast
+    quantity: '?'
+    type: float32
+  - attributes:
+    - doc: Value is Farad
+      name: unit
+      type: text
+      value: Farad
+    doc: 'Unit: Farad'
+    name: capacitance_slow
+    quantity: '?'
+    type: float32
+  - attributes:
+    - doc: Value is Hz
+      name: unit
+      type: text
+      value: Hz
+    doc: 'Unit: Hz'
+    name: resistance_comp_bandwidth
+    quantity: '?'
     type: float32
   - attributes:
     - doc: Value is Farad
@@ -122,6 +132,7 @@
       value: Farad
     doc: 'Unit: Farad'
     name: whole_cell_capacitance_comp
+    quantity: '?'
     type: float32
   doc: Stores current data recorded from intracellular voltage-clamp recordings. A
     corresponding VoltageClampStimulusSeries (stored separately as a stimulus) is
