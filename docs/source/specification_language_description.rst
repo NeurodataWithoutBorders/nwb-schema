@@ -463,17 +463,17 @@ reuse of type specifications via inheritance (i.e., merge and extension of speci
 embedding of an existing type as a component, such as a subgroup, of a new specification). Here an overview
 of all relevant cases:
 
-+----------------+--------------------+------------------------------------------------------------------------+
-| neurodata_type | neurodata_type_def |  Description                                                           |
-+================+====================+========================================================================+
-|not set         | not set            |  define a standard dataset or group without a type                     |
-+----------------+--------------------+------------------------------------------------------------------------+
-|not set         | set                |  create a new neurodata_type from scratch                              |
-+----------------+--------------------+------------------------------------------------------------------------+
-|set             | not set            |  include (reuse) neurodata_type without creating a new one (include)   |
-+----------------+--------------------+------------------------------------------------------------------------+
-|set             | set                |  merge/extend neurodata_type and create a new type (inheritance/merge) |
-+----------------+--------------------+------------------------------------------------------------------------+
++--------------------+------------------------+------------------------------------------------------------------------+
+| ``neurodata_type`` | ``neurodata_type_def`` |  Description                                                           |
++====================+========================+========================================================================+
+|not set             | not set                |  define a standard dataset or group without a type                     |
++--------------------+------------------------+------------------------------------------------------------------------+
+|not set             | set                    |  create a new neurodata_type from scratch                              |
++--------------------+------------------------+------------------------------------------------------------------------+
+|set                 | not set                |  include (reuse) neurodata_type without creating a new one (include)   |
++--------------------+------------------------+------------------------------------------------------------------------+
+|set                 | set                    |  merge/extend neurodata_type and create a new type (inheritance/merge) |
++--------------------+------------------------+------------------------------------------------------------------------+
 
 **Example: Reuse by inheritance**
 
