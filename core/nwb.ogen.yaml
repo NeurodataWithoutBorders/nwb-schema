@@ -1,10 +1,12 @@
 - attributes:
-  - name: help
+  - doc: Value is Optogenetic stimulus
+    name: help
     type: text
     value: Optogenetic stimulus
   datasets:
   - attributes:
-    - name: unit
+    - doc: Value is watt
+      name: unit
       type: text
       value: watt
     doc: Applied power for optogenetic stimulus.

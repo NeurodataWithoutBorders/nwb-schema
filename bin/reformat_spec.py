@@ -1,27 +1,29 @@
 import os
 import sys
 import json
-#import yaml
-from ruamel import yaml
+import yaml
+#from ruamel import yaml
 
-import pynwb
-from pynwb.io.spec import Spec, AttributeSpec, BaseStorageSpec, DatasetSpec, GroupSpec, SpecCatalog
+#import pynwb
+from pynwb.spec import Spec, AttributeSpec, DatasetSpec, GroupSpec
 
+
+NAME_WILDCARD = "*"
 
 ndmap = {
-    "<timeseries_X>/*": 'EpochTimeSeries',
-    "<epoch_X>/*": 'Epoch',
-    "<device_X>*": 'Device',
-    "<specification_file>*": 'SpecFile',
+    "<timeseries_X>": 'EpochTimeSeries',
+    "<epoch_X>": 'Epoch',
+    "<device_X>": 'Device',
+    "<specification_file>": 'SpecFile',
     "<electrode_group_X>": 'ElectrodeGroup',
     "<electrode_X>": 'IntracellularElectrode',
-    "<site_X>/*": 'OptogeneticStimulusSite',
+    "<site_X>": 'OptogeneticStimulusSite',
     "<channel_X>": 'OpticalChannel',
-    "<imaging_plane_X>/*": 'ImagingPlane',
-    "<unit_N>/+": 'SpikeUnit',
-    #"<image_name>/+": , # TODO: Figure out how to move this to a link to an ImagingPlane neurodata_type
-    "<roi_name>/*": 'ROI',
-    "<image_plane>/*": 'PlaneSegmentation',
+    "<imaging_plane_X>": 'ImagingPlane',
+    "<unit_N>": 'SpikeUnit',
+    "<roi_name>": 'ROI',
+    "<image_plane>": 'PlaneSegmentation',
+    "<image stack name>": 'CorrectedImageStack',
 }
 
 metadata_links = {
@@ -45,56 +47,91 @@ metadata_links_rename = {
 all_specs = dict()
 
 
+include_doc = {
+    'presentation/': 'TimeSeries objects containing data of presented stimuli',
+    'templates/': 'TimeSeries objects containing template data of presented stimuli',
+    'timeseries/': 'TimeSeries object containing data generated during data acquisition',
+    'FilteredEphys/': 'ElectricalSeries object containing filtered electrophysiology data',
+    'PupilTracking/': 'TimeSeries object containing time series data on pupil size',
+    'Position/': 'SpatialSeries object containing position data',
+    'Fluorescence/': 'RoiResponseSeries object containing fluorescence data for a ROI',
+    'Module': 'Interface objects containing data output from processing steps',
+
+    'EventWaveform/': 'SpikeEventSeries object containing detected spike event waveforms',
+    'EyeTracking/': 'SpatialSeries object containing data measuring direction of gaze',
+    'BehavioralEpochs/': 'IntervalSeries object containing start and stop times of epochs',
+    'DfOverF/': 'RoiResponseSeries object containing dF/F for a ROI',
+    'LFP/': 'ElectricalSeries object containing LFP data for one or channels',
+    'BehavioralTimeSeries/': 'TimeSeries object containing continuous behavioral data',
+    'BehavioralEvents/': 'TimeSeries object containing irregular behavioral events',
+    'CompassDirection/': 'SpatialSeries object containing direction of gaze travel',
+
+}
+
 def build_group_helper(**kwargs):
-    myname = kwargs.pop('name', '*')
-    if myname == '*':
-        grp_spec = GroupSpec(**kwargs)
+    myname = kwargs.pop('name', NAME_WILDCARD)
+    doc = kwargs.pop('doc')
+    #if doc is None:
+    #    print('no doc for name %s, ndt %s' % (myname, kwargs.get('neurodata_type_def', kwargs.get('neurodata_type'))), file=sys.stderr)
+    if myname == NAME_WILDCARD:
+        grp_spec = GroupSpec(doc, **kwargs)
     else:
-        grp_spec = GroupSpec(name=myname, **kwargs)
+        grp_spec = GroupSpec(doc, name=myname, **kwargs)
     return grp_spec
 
 def build_group(name, d, ndtype=None):
     #print('building %s' % name, file=sys.stderr)
-    required = True
+    #required = True
     myname = name
-    if myname[-1] == '?':
-        required = False
-        myname = myname[:-1]
-    if myname[-1] == '^':
-        required = False
-        myname = myname[:-1]
+    quantity, myname = strip_characters(name)
+    if len(myname) < 1:
+        print('>', myname, '<')
     if myname[-1] == '/':
         myname = myname[:-1]
-    if myname == '*':
-        required = False
-    desc = d.get('description', None)
-    if isinstance(desc, dict):
-        desc = d.pop('_description', None)
-    else:
-        desc = d.pop('description', None)
-
+    #if myname == NAME_WILDCARD:
+    #    required = False
     extends = None
     if 'merge' in d:
         merge = d.pop('merge')
-        print('Found merge directive for %s' % name, file=sys.stderr)
+        #print('Found merge directive for %s' % name, file=sys.stderr)
         base = merge[0]
         end = base.rfind('>')
         base = base[1:end] if end > 0 else base
         #extends = all_specs[base]
         extends = base
-        if len(d) == 0:
-            print('%s - spec empty after popping merge' %  name, file=sys.stderr)
+        #if len(d) == 0:
+        #    print('%s - spec empty after popping merge' %  name, file=sys.stderr)
+
+    #p = 'device' in myname
+    #if p:
+    #    print(myname)
 
     if myname[0] == '<':
+        #if p:
+        #    print('variable name')
         neurodata_type = ndmap.get(myname)
+        #if p:
+        #    print(neurodata_type)
         #print('found neurodata_type %s' % neurodata_type, file=sys.stderr)
         if neurodata_type is None:
             neurodata_type = ndtype
         else:
-            myname = '*'
+            myname = NAME_WILDCARD
         #print('neurodata_type=%s, myname=%s' % (neurodata_type, myname), file=sys.stderr)
     else:
+        #if p:
+        #    print('Not variable')
         neurodata_type = ndtype
+
+    desc = d.get('description', None)
+    if isinstance(desc, dict) or desc is None:
+        #print('popping _description ndt=%s, desc=%s' % (neurodata_type, desc), file=sys.stderr)
+        desc = d.pop('_description', None)
+        #print('after popping ndt=%s, desc=%s' % (neurodata_type, desc), file=sys.stderr)
+    else:
+        #print('popping description ndt=%s, desc=%s' % (neurodata_type, desc), file=sys.stderr)
+        d.pop('description', None)
+
     if 'attributes' in d:
         attributes = d.pop('attributes', None)
         if 'neurodata_type' in attributes:
@@ -105,33 +142,36 @@ def build_group(name, d, ndtype=None):
         if extends is not None:
             if neurodata_type is None:
                 neurodata_type = myname
-        grp_spec = build_group_helper(name=myname, required=required, doc=desc, neurodata_type_def=neurodata_type, neurodata_type=extends)
+        grp_spec = build_group_helper(name=myname, quantity=quantity, doc=desc, neurodata_type_def=neurodata_type, neurodata_type=extends)
         add_attributes(grp_spec, attributes)
     elif neurodata_type is not None:
-        grp_spec = build_group_helper(name=myname, required=required, doc=desc, neurodata_type_def=neurodata_type, neurodata_type=extends)
+        grp_spec = build_group_helper(name=myname, quantity=quantity, doc=desc, neurodata_type_def=neurodata_type, neurodata_type=extends)
     else:
-        if myname == '*':
-            grp_spec = GroupSpec(required=required, doc=desc, neurodata_type=extends)
+        if myname == NAME_WILDCARD:
+            grp_spec = build_group_helper(doc=desc, quantity=quantity, neurodata_type=extends)
         else:
-            grp_spec = GroupSpec(name=myname, required=required, doc=desc, neurodata_type=extends)
+            grp_spec = build_group_helper(doc=desc, name=myname, quantity=quantity, neurodata_type=extends)
 
     for key, value in d.items():
-        name = key
-        if name == 'autogen':
+        tmp_name = key
+        if tmp_name == 'autogen':
             continue
-        if name[0] == '_':
+        if tmp_name[0] == '_':
             #TODO: figure out how to deal with these reserved keys
+            print ('found leading underscore: key=%s, ndt=%s, name=%s' % (key, neurodata_type, myname), file=sys.stderr)
             continue
         if isinstance(value, str):
             continue
 
-        if name == 'include':
+        if tmp_name == 'include':
             ndt = next(iter(value.keys()))
             ndt = ndt[1:ndt.rfind('>')]
             #grp_spec.include_neurodata_group(ndt)
-            grp_spec.add_group(neurodata_type=ndt)
+            doc = include_doc.get(name, include_doc.get(neurodata_type))
+            grp_spec.add_group(doc, neurodata_type=ndt)
         elif 'link' in value:
             ndt = value['link']['target_type']
+            doc = value.get('description', None)
             if ndt[0] == '<':
                 ndt = ndt[1:ndt.rfind('>')]
             else:
@@ -140,28 +180,28 @@ def build_group(name, d, ndtype=None):
             if link_name[-1] == '/':
                 link_name = link_name[0:-1]
             #grp_spec.include_neurodata_link(ndt, name=link_name)
-            grp_spec.add_link(ndt, name=link_name)
+            grp_spec.add_link(doc, ndt, name=link_name)
         elif 'merge' in value:
             ndt = value['merge'][0]
             ndt = ndt[1:ndt.rfind('>')]
+            doc = value['description']
             if key[0] == '<':
                 #grp_spec.include_neurodata_group(ndt)
-                grp_spec.add_group(neurodata_type=ndt)
+                grp_spec.add_group(doc, neurodata_type=ndt)
             else:
                 group_name = key
                 if group_name[-1] == '/':
                     group_name = group_name[0:-1]
-                grp_spec.add_group(neurodata_type=ndt, name=group_name)
-        elif name in metadata_links:
-            ndt = metadata_links[name]
-            value.get('description', None)
-            doc = metadata_links_doc[name]
-            grp_spec.add_link(ndt, name=metadata_links_rename.get(name, name), doc=doc)
+                grp_spec.add_group(doc, neurodata_type=ndt, name=group_name)
+        elif tmp_name in metadata_links:
+            ndt = metadata_links[tmp_name]
+            doc = metadata_links_doc[tmp_name]
+            grp_spec.add_link(doc, ndt, name=metadata_links_rename.get(tmp_name, tmp_name))
         else:
             if key.rfind('/') == -1: # forward-slash not found
-                grp_spec.set_dataset(build_dataset(name, value))
+                grp_spec.set_dataset(build_dataset(tmp_name, value))
             else:
-                grp_spec.set_group(build_group(name, value))
+                grp_spec.set_group(build_group(tmp_name, value))
 
     if neurodata_type is not None:
         #print('adding %s to all_specs' % neurodata_type, file=sys.stderr)
@@ -170,42 +210,94 @@ def build_group(name, d, ndtype=None):
     #    print('no neurodata_type found for %s' % myname, file=sys.stderr)
     return grp_spec
 
+dataset_ndt = { '<image_X>': 'Image' }
 def build_dataset(name, d):
     kwargs = remap_keys(name, d)
-    #dset_spec = DatasetSpec(kwargs.pop('dtype'), name=myname, **kwargs)
-    dset_spec = DatasetSpec(kwargs.pop('dtype'), **kwargs)
+    if 'name' in kwargs:
+        if kwargs['name'] in dataset_ndt:
+            tmpname = kwargs.pop('name')
+            kwargs['neurodata_type_def'] = dataset_ndt[tmpname]
+    dset_spec = DatasetSpec(kwargs.pop('doc'), kwargs.pop('dtype'), **kwargs)
     if 'attributes' in d:
         add_attributes(dset_spec, d['attributes'])
     return dset_spec
 
 def add_attributes(parent_spec, attributes):
-    if parent_spec.neurodata_type == 'ElectricalSeries':
-        print(attributes, file=sys.stderr)
     for attr_name, attr_spec in attributes.items():
         parent_spec.set_attribute(build_attribute(attr_name, attr_spec))
 
+override_doc = {
+    'conversion': "Scalar to multiply each element in data to convert it to the specified unit",
+    'unit': "The base unit of measure used to store data. This should be in the SI unit. COMMENT: This is the SI unit (when appropriate) of the stored data, such as Volts. If the actual data is stored in millivolts, the field 'conversion' below describes how to convert the data to the specified SI unit.",
+    'resolution': "Smallest meaningful difference between values in data, stored in the specified by unit. COMMENT: E.g., the change in value of the least significant bit, or a larger number if signal noise is known to be present. If unknown, use NaN",
+    'help': 'A help statement',
+
+}
 def build_attribute(name, d):
     kwargs = remap_keys(name, d)
-    myname = kwargs['name']
-    attr_spec = AttributeSpec(myname, kwargs.pop('dtype'), **kwargs)
+    myname = kwargs.pop('name')
+    doc = kwargs.pop('doc')
+    dtype = kwargs.pop('dtype')
+    attr_spec = AttributeSpec(myname, dtype, doc, **kwargs)
     return attr_spec
 
+def strip_characters(name):
+    flags = ('!', '?', '+', '*', '^')
+    quantity = 1
+    retname = name
+    if retname != NAME_WILDCARD:
+        if name[-1] == '!':
+            retname = name[:-1]
+            quantity = 1
+        elif name[-1] == '?':
+            retname = name[:-1]
+            quantity = '?'
+        elif name[-1] == '+':
+            retname = name[:-1]
+            quantity = '+'
+        elif name[-1] == '*':
+            retname = name[:-1]
+            quantity = '*'
+        elif name[-1] == '^':
+            retname = name[:-1]
+            quantity = '?'
+
+    return (quantity, retname)
+
+
 def remap_keys(name, d):
+    # TODO: add parsing of +/* for 'num_args'
+    # will move to quantity which takes on values *, +, ? , or an integer
     ret = dict()
-    ret['required'] = True
-    ret['name'] = name
-    if name[-1] == '?':
-        ret['required'] = False
-        ret['name'] = name[:-1]
-    elif name[-1] == '^':
-        ret['name'] = name[:-1]
+    quantity, specname = strip_characters(name)
+    if quantity != 1:
+        ret['quantity'] = quantity
+
+    if specname in ndmap:
+        print(specname)
+        ret['neurodata_type_def'] = ndmap[specname]
+    else:
+        ret['name'] = specname
+    #ret['name'] = name
+    #if name[-1] == '?':
+    #    ret['required'] = False
+    #    ret['name'] = name[:-1]
+    #elif name[-1] == '^':
+    #    ret['name'] = name[:-1]
     ret['const'] = d.get('const', None)
     ret['dtype'] = d.get('data_type', 'None')
 
     ret['value'] = d.get('value', None)
     if isinstance(ret['value'], list) and len(ret['value']) == 1:
         ret['value'] = ret['value'][0]
-    ret['doc'] = d.get('description', None)
+    def_doc = None
+    ret['doc'] = d.get('description', def_doc)
+
+    if ret['value'] is not None:
+        ret['doc'] = "Value is %s" % str(ret['value'])
+    elif ret['doc'] is None:
+        ret['doc'] = override_doc.get(ret['name'])
+
     ret['dim'] = d.get('dimensions', None)
 
     return ret
@@ -279,9 +371,10 @@ def load_spec(spec):
     ]
     base = [
         root,
-        build_group('*', module_json, ndtype='Module'),
-        build_group('*', spec["<TimeSeries>/"]),
-        build_group('*', spec["<Interface>/"])
+        #build_group("<Module>/*", module_json, ndtype='Module'),
+        build_group(NAME_WILDCARD, module_json, ndtype='Module'),
+        build_group(NAME_WILDCARD, spec["<TimeSeries>/"], ndtype='TimeSeries'),
+        build_group(NAME_WILDCARD, spec["<Interface>/"], ndtype='Interface')
     ]
 
 
@@ -308,7 +401,6 @@ def load_spec(spec):
         "EventDetection/",
         "EventWaveform/",
         "FilteredEphys/",
-        "FeatureExtraction/",
         "LFP/",
     ]
 
@@ -365,10 +457,17 @@ def load_spec(spec):
     ]
 
     def mapfunc(name):
+        namearg = name
+        ndt = None
         if name[0] == '<':
-            return build_group('*', spec[name])
+            namearg = NAME_WILDCARD
+            ndt = name[1:name.rfind('>')]
+            #return build_group(NAME_WILDCARD, spec[name])
         else:
-            return build_group(name, spec[name])
+            ndt = name[0:name.rfind('/')]
+            #return build_group(name, spec[name])
+
+        return build_group(namearg, spec[name], ndtype=ndt)
 
     #for key in type_specs.keys():
     for key in subspecs:
@@ -437,14 +536,14 @@ def load_spec(spec):
         if not all_bases:
             continue
 
-        ts_spec = build_group('*', ts_dict)
+        ts_spec = build_group(NAME_WILDCARD, ts_dict)
         #for m in merge:
         #    merge_spec(m, ts_spec)
         ts_specs[ts_type] = ts_spec
 
     #print ('created specs for all TimeSeries', file=sys.stderr)
 
-    iface = build_group('*', spec['<Interface>/'])
+    iface = build_group(NAME_WILDCARD, spec['<Interface>/'])
     #print ('created specs for <Interface>', file=sys.stderr)
 
 
@@ -501,7 +600,7 @@ def load_spec(spec):
 
 def load_iface(spec):
     spec = spec['fs']['core']['schema']
-    iface = build_group('*', spec['<Interface>/'])
+    iface = build_group(NAME_WILDCARD, spec['<Interface>/'])
     return iface
 """
 
@@ -510,7 +609,34 @@ def represent_str(self, data):
     return s
     #return self.represent_scalar("", '"%s"' % s)
 
+def represent_spec(dumper, data):
+    print('CALLING represent_spec', file=sys.stderr)
+    value = []
+    def add_key(item_key):
+        item_value = data[item_key]
+        node_key = dumper.represent_data(item_key)
+        node_value = dumper.represent_data(item_value)
+        value.append((node_key, node_value))
+    skip = set()
+    order = ('name', 'neurodata_type_def', 'neurodata_type', 'doc', 'attributes', 'datasets', 'groups')
+    add_key('name')
+#    for item_key in order:
+#        if item_key in data:
+#            add_key(item_key)
+#            skip.add(item_key)
+#    for item_key in data.keys():
+#        if item_key in skip:
+#            continue
+#        add_key(item_key)
+    return yaml.nodes.MappingNode(u'tag:yaml.org,2002:map', value)
+
+#yaml.add_representer(Spec, represent_spec)
+#yaml.add_representer(AttributeSpec, represent_spec)
+#yaml.add_representer(DatasetSpec, represent_spec)
+#yaml.add_representer(GroupSpec, represent_spec)
+
 spec_path = sys.argv[1]
+outdir = sys.argv[2] if len(sys.argv) > 2 else "."
 with open(spec_path) as spec_in:
     nwb_spec = load_spec(json.load(spec_in))
     #nwb_spec = load_iface(json.load(spec_in))
@@ -519,7 +645,7 @@ with open(spec_path) as spec_in:
 
 
 for key, value  in nwb_spec.items():
-    with open('nwb.%s.yaml' % key, 'w') as out:
+    with open('%s/nwb.%s.yaml' % (outdir, key), 'w') as out:
         yaml.dump(json.loads(json.dumps(value)), out, default_flow_style=False)
 
 #def quoted_presenter(dumper, data):

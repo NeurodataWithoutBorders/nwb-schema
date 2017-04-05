@@ -1,11 +1,14 @@
 - attributes:
-  - name: help
+  - doc: Value is Features of an applied stimulus. This is useful when storing the
+      raw stimulus is impractical
+    name: help
     type: text
     value: Features of an applied stimulus. This is useful when storing the raw stimulus
       is impractical
   datasets:
   - attributes:
-    - name: unit
+    - doc: Value is see 'feature_units'
+      name: unit
       type: None
       value: see 'feature_units'
     doc: Values of each feature at each time.
@@ -13,6 +16,7 @@
     type: float32
   - doc: Units of each feature.
     name: feature_units
+    quantity: '?'
     type: text
   - doc: Description of the features represented in TimeSeries::data.
     name: features
@@ -28,21 +32,22 @@
   neurodata_type: TimeSeries
   neurodata_type_def: AbstractFeatureSeries
 - attributes:
-  - name: help
+  - doc: Value is Time-stamped annotations about an experiment
+    name: help
     type: text
     value: Time-stamped annotations about an experiment
   datasets:
   - attributes:
-    - doc: Value is "n/a" to indicate that this does not apply
+    - doc: Value is float('NaN')
+      name: conversion
+      type: None
+      value: float('NaN')
+    - doc: Value is n/a
       name: unit
       type: None
       value: n/a
-    - doc: Value is float('nan') (const) since this does not apply
+    - doc: Value is float('NaN')
       name: resolution
-      type: None
-      value: float('NaN')
-    - doc: Value is float('NaN') (const) since this does not apply.
-      name: conversion
       type: None
       value: float('NaN')
     doc: Annotations made during an experiment.
@@ -55,18 +60,22 @@
   neurodata_type: TimeSeries
   neurodata_type_def: AnnotationSeries
 - attributes:
-  - name: help
+  - doc: Value is Stores the start and stop times for events
+    name: help
     type: text
     value: Stores the start and stop times for events
   datasets:
   - attributes:
-    - name: unit
-      type: None
-      value: n/a
-    - name: resolution
+    - doc: Value is float('NaN')
+      name: conversion
       type: None
       value: float('NaN')
-    - name: conversion
+    - doc: Value is n/a
+      name: unit
+      type: None
+      value: n/a
+    - doc: Value is float('NaN')
+      name: resolution
       type: None
       value: float('NaN')
     doc: '>0 if interval started, <0 if interval ended.'
@@ -82,7 +91,8 @@
   neurodata_type: TimeSeries
   neurodata_type_def: IntervalSeries
 - attributes:
-  - name: help
+  - doc: Value is Estimated spike times from a single unit
+    name: help
     type: text
     value: Estimated spike times from a single unit
   datasets:
@@ -98,16 +108,18 @@
     - doc: Description of the unit (eg, cell type).
       name: unit_description
       type: text
-    - doc: Spike time for the units (exact or estimated)
-      name: times
-      type: float64!
     - doc: Name, path or description of where unit times originated. This is necessary
         only if the info here differs from or is more fine-grained than the interface's
         source field
       name: source
+      quantity: '?'
       type: text
+    - doc: Spike time for the units (exact or estimated)
+      name: times
+      type: float64!
     doc: Group storing times for &lt;unit_N&gt;.
     neurodata_type_def: SpikeUnit
+    quantity: +
   name: UnitTimes
   neurodata_type: Interface
   neurodata_type_def: UnitTimes

@@ -1,8 +1,42 @@
 - attributes:
-  - name: help
+  - doc: Value is Intrinsic signal optical imaging or Widefield imaging for measuring
+      retinotopy
+    name: help
     type: text
     value: Intrinsic signal optical imaging or Widefield imaging for measuring retinotopy
   datasets:
+  - attributes:
+    - doc: 'Number of rows and columns in the image. NOTE: row, column representation
+        is equivalent to height,width.'
+      name: dimension
+      type: int32
+    - doc: Unit that axis data is stored in (e.g., degrees)
+      name: unit
+      type: text
+    - doc: Size of viewing area, in meters
+      name: field_of_view
+      type: float
+    doc: Phase response to stimulus on the first measured axis
+    name: axis_1_phase_map
+    type: float32
+  - attributes:
+    - doc: Number of bits used to represent each value. This is necessary to determine
+        maximum (white) pixel value
+      name: bits_per_pixel
+      type: int32
+    - doc: 'Number of rows and columns in the image. NOTE: row, column representation
+        is equivalent to height,width.'
+      name: dimension
+      type: int32
+    - doc: Format of image. Right now only 'raw' supported
+      name: format
+      type: text
+    - doc: Size of viewing area, in meters
+      name: field_of_view
+      type: float
+    doc: 'Gray-scale anatomical image of cortical surface. Array structure: [rows][columns]'
+    name: vasculature_image
+    type: uint16
   - attributes:
     - doc: 'Number of rows and columns in the image. NOTE: row, column representation
         is equivalent to height,width.'
@@ -19,68 +53,22 @@
         is equivalent to height,width.'
       name: dimension
       type: int32
+    - doc: Unit that axis data is stored in (e.g., degrees)
+      name: unit
+      type: text
+    - doc: Size of viewing area, in meters
+      name: field_of_view
+      type: float
+    doc: Power response on the first measured axis. Response is scaled so 0.0 is no
+      power in the response and 1.0 is maximum relative power.
+    name: axis_1_power_map
+    quantity: '?'
+    type: float32
+  - attributes:
     - doc: Number of bits used to represent each value. This is necessary to determine
         maximum (white) pixel value
       name: bits_per_pixel
       type: int32
-    - doc: Format of image. Right now only 'raw' supported
-      name: format
-      type: text
-    - doc: Size of viewing area, in meters
-      name: field_of_view
-      type: float
-    doc: 'Gray-scale anatomical image of cortical surface. Array structure: [rows][columns]'
-    name: vasculature_image
-    type: uint16
-  - attributes:
-    - doc: Size of viewing area, in meters
-      name: field_of_view
-      type: float
-    - doc: 'Number of rows and columns in the image. NOTE: row, column representation
-        is equivalent to height,width.'
-      name: dimension
-      type: int32
-    - doc: Unit that axis data is stored in (e.g., degrees)
-      name: unit
-      type: text
-    doc: Phase response to stimulus on the first measured axis
-    name: axis_1_phase_map
-    type: float32
-  - attributes:
-    - doc: Size of viewing area, in meters
-      name: field_of_view
-      type: float
-    - doc: 'Number of rows and columns in the image. NOTE: row, column representation
-        is equivalent to height,width.'
-      name: dimension
-      type: int32
-    - doc: Unit that axis data is stored in (e.g., degrees)
-      name: unit
-      type: text
-    doc: Power response on the first measured axis. Response is scaled so 0.0 is no
-      power in the response and 1.0 is maximum relative power.
-    name: axis_1_power_map
-    type: float32
-  - doc: Two-element array describing the contents of the two response axis fields.
-      Description should be something like ['altitude', 'azimuth'] or '['radius',
-      'theta']
-    name: axis_descriptions
-    type: text
-  - attributes:
-    - doc: Size of viewing area, in meters
-      name: field_of_view
-      type: float
-    - doc: 'Number of rows and columns in the image. NOTE: row, column representation
-        is equivalent to height,width.'
-      name: dimension
-      type: int32
-    - doc: Unit that axis data is stored in (e.g., degrees)
-      name: unit
-      type: text
-    doc: Phase response to stimulus on the second measured axis
-    name: axis_2_phase_map
-    type: float32
-  - attributes:
     - doc: 'Number of rows and columns in the image. NOTE: row, column representation
         is equivalent to height,width.'
       name: dimension
@@ -88,10 +76,6 @@
     - doc: Focal depth offset, in meters
       name: focal_depth
       type: float
-    - doc: Number of bits used to represent each value. This is necessary to determine
-        maximum (white) pixel value
-      name: bits_per_pixel
-      type: int32
     - doc: Format of image. Right now only 'raw' supported
       name: format
       type: text
@@ -103,9 +87,6 @@
     name: focal_depth_image
     type: uint16
   - attributes:
-    - doc: Size of viewing area, in meters
-      name: field_of_view
-      type: float
     - doc: 'Number of rows and columns in the image. NOTE: row, column representation
         is equivalent to height,width.'
       name: dimension
@@ -113,10 +94,33 @@
     - doc: Unit that axis data is stored in (e.g., degrees)
       name: unit
       type: text
+    - doc: Size of viewing area, in meters
+      name: field_of_view
+      type: float
+    doc: Phase response to stimulus on the second measured axis
+    name: axis_2_phase_map
+    type: float32
+  - attributes:
+    - doc: 'Number of rows and columns in the image. NOTE: row, column representation
+        is equivalent to height,width.'
+      name: dimension
+      type: int32
+    - doc: Unit that axis data is stored in (e.g., degrees)
+      name: unit
+      type: text
+    - doc: Size of viewing area, in meters
+      name: field_of_view
+      type: float
     doc: Power response on the second measured axis. Response is scaled so 0.0 is
       no power in the response and 1.0 is maximum relative power.
     name: axis_2_power_map
+    quantity: '?'
     type: float32
+  - doc: Two-element array describing the contents of the two response axis fields.
+      Description should be something like ['altitude', 'azimuth'] or '['radius',
+      'theta']
+    name: axis_descriptions
+    type: text
   doc: 'Intrinsic signal optical imaging or widefield imaging for measuring retinotopy.
     Stores orthogonal maps (e.g., altitude/azimuth; radius/theta) of responses to
     specific stimuli and a combined polarity map from which to identify visual areas.<br
