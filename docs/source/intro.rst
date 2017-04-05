@@ -1,15 +1,16 @@
-************
-Introduction
-************
+*****************************************
+Neurodata Without Borders: Neurophysiolgy
+*****************************************
 
+Mission
+=======
 
-Neurodata Without Borders: Neurophysiology is a project to develop a
+Neurodata Without Borders: Neurophysiology (NWB-N) is a project to develop a
 unified data format for cellular-based neurophysiology data, focused on
 the dynamics of groups of neurons measured under a large range of
 experimental conditions. Participating labs provided use cases and
 critical feedback to the effort. The design goals for the NWB format
 included:
-
 
 - Compatibility
     -  Cross-platform
@@ -29,8 +30,18 @@ included:
     -  Data published in the format should be accessible for decades
 
 
+Project Components
+==================
+
+
+.. figure:: figures/project_components.*
+   :scale: 65 %
+   :alt: Components of NWB:Neurophysiology
+
+   Main components of Neurodata Without Borders: Neurophysiolgy (NWB-N).
+
 Data Storage
-============
+------------
 
 The NWB format currently uses HDF5 as primary storage mechanism.
 `Hierarchical Data Format (HDF) <https://www.hdfgroup.org/HDF5/>`__ was
@@ -52,17 +63,34 @@ Finally, ensuring the ongoing accessibility of HDF-stored data is the
 mission of The HDF Group, the nonprofit that is the steward of the
 technology.
 
-Schema
-======
+Specification Language
+----------------------
 
-The NWB format standard is governed by a formal format schema (see :ref:`nwb_format`).
-The schema is formally specified in JSON/YAML file(s) using the
-the NWB specification language (see :ref:`specification_language`).
-The specification language describes the schema, including data types and associations. A
-new schema file will be published for each revision of the NWB format
-standard. Data publishers can use the specification language to extend
-the format in order to store types of data not managed by the base
-format.
+In order to support the formal and verifiable specification of neurodata
+file formats, NWB-N defines and uses the NWB specification
+language (see :ref:`specification_language`). The specification language is
+defined in YAML (or JSON). The specification language defines formal
+structures for describing the organization of complex data using basic
+concepts, e.g., Groups, Datasets, Attributes, and Links.
+Data publishers can use the specification language to extend
+the format in order to store types of data not managed by the base format.
+
+Format Specification / Schema
+-----------------------------
+
+The NWB format standard is governed by a formal format specification,
+the NWB-N schema (see :ref:`nwb_format`). The schema is formally
+specified using the NWB specification language (see :ref:`specification_language`).
+A new schema file will be published for each revision of the NWB format
+standard. Developers can use the schema to validate NWB files or create
+advanced APIs for NWB data.
+
+Data API(s)
+-----------
+
+The role of data API(s) is to facilitate efficient interaction
+with neuroscience data stored in the NWB-N data format
+(e.g,. for reading, writing, querying, and analyzing neuroscience data).
 
 
 
