@@ -45,6 +45,6 @@ for rt in sorted(registered_types):
     doc.add_subsection(rt_title)"""
     doc.add_subsection(rt)
     # Add the description of the current spec
-    doc.add_spec(rt_spec)
+    doc.add_spec(rt_spec, show_json=True)
 doc.write(filename=output_filename, mode='w')
 
