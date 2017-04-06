@@ -9,7 +9,7 @@ AbstractFeatureSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Features of an applied stimulus. This is useful when storing the raw stimulus is impractical",
                 "name": "help",
                 "type": "text",
                 "value": "Features of an applied stimulus. This is useful when storing the raw stimulus is impractical"
@@ -19,7 +19,7 @@ AbstractFeatureSeries
             {
                 "attributes": [
                     {
-                        "doc": "",
+                        "doc": "Value is see 'feature_units'",
                         "name": "unit",
                         "type": "None",
                         "value": "see 'feature_units'"
@@ -32,6 +32,7 @@ AbstractFeatureSeries
             {
                 "doc": "Units of each feature.",
                 "name": "feature_units",
+                "quantity": "?",
                 "type": "text"
             },
             {
@@ -53,7 +54,7 @@ AnnotationSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Time-stamped annotations about an experiment",
                 "name": "help",
                 "type": "text",
                 "value": "Time-stamped annotations about an experiment"
@@ -63,20 +64,20 @@ AnnotationSeries
             {
                 "attributes": [
                     {
-                        "doc": "Value is \"n/a\" to indicate that this does not apply",
+                        "doc": "Value is float('NaN')",
+                        "name": "conversion",
+                        "type": "None",
+                        "value": "float('NaN')"
+                    },
+                    {
+                        "doc": "Value is n/a",
                         "name": "unit",
                         "type": "None",
                         "value": "n/a"
                     },
                     {
-                        "doc": "Value is float('nan') (const) since this does not apply",
+                        "doc": "Value is float('NaN')",
                         "name": "resolution",
-                        "type": "None",
-                        "value": "float('NaN')"
-                    },
-                    {
-                        "doc": "Value is float('NaN') (const) since this does not apply.",
-                        "name": "conversion",
                         "type": "None",
                         "value": "float('NaN')"
                     }
@@ -99,7 +100,7 @@ BehavioralEpochs
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is General container for storing behavorial epochs",
                 "name": "help",
                 "type": "text",
                 "value": "General container for storing behavorial epochs"
@@ -108,7 +109,7 @@ BehavioralEpochs
         "doc": "TimeSeries for storing behavoioral epochs.  The objective of this and the other two Behavioral interfaces (e.g. BehavioralEvents and BehavioralTimeSeries) is to provide generic hooks for software tools/scripts. This allows a tool/script to take the output one specific interface (e.g., UnitTimes) and plot that data relative to another data modality (e.g., behavioral events) without having to define all possible modalities in advance. Declaring one of these interfaces means that one or more TimeSeries of the specified type is published. These TimeSeries should reside in a group having the same name as the interface. For example, if a BehavioralTimeSeries interface is declared, the module will have one or more TimeSeries defined in the module sub-group \"BehavioralTimeSeries\". BehavioralEpochs should use IntervalSeries. BehavioralEvents is used for irregular events. BehavioralTimeSeries is for continuous data.",
         "groups": [
             {
-                "doc": "",
+                "doc": "IntervalSeries object containing start and stop times of epochs",
                 "neurodata_type": "IntervalSeries"
             }
         ],
@@ -125,7 +126,7 @@ BehavioralEvents
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Position data, whether along the x, xy or xyz axis",
                 "name": "help",
                 "type": "text",
                 "value": "Position data, whether along the x, xy or xyz axis"
@@ -134,13 +135,31 @@ BehavioralEvents
         "doc": "TimeSeries for storing behavioral events. See description of <a href=\"#BehavioralEpochs\">BehavioralEpochs</a> for more details.",
         "groups": [
             {
-                "doc": "",
+                "doc": "TimeSeries object containing irregular behavioral events",
                 "neurodata_type": "TimeSeries"
             }
         ],
         "name": "BehavioralEvents",
         "neurodata_type": "Interface",
         "neurodata_type_def": "BehavioralEvents"
+    }
+
+BehavioralTimeSeries
+--------------------
+
+.. code-block:: python
+
+    {
+        "doc": "TimeSeries for storing Behavoioral time series data.See description of <a href=\"#BehavioralEpochs\">BehavioralEpochs</a> for more details.",
+        "groups": [
+            {
+                "doc": "TimeSeries object containing continuous behavioral data",
+                "neurodata_type": "TimeSeries"
+            }
+        ],
+        "name": "BehavioralTimeSeries",
+        "neurodata_type": "Interface",
+        "neurodata_type_def": "BehavioralTimeSeries"
     }
 
 ClusterWaveforms
@@ -151,7 +170,7 @@ ClusterWaveforms
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Mean waveform shape of clusters. Waveforms should be high-pass filtered (ie, not the same bandpass filter used waveform analysis and clustering)",
                 "name": "help",
                 "type": "text",
                 "value": "Mean waveform shape of clusters. Waveforms should be high-pass filtered (ie, not the same bandpass filter used waveform analysis and clustering)"
@@ -182,7 +201,7 @@ ClusterWaveforms
         "doc": "The mean waveform shape, including standard deviation, of the different clusters. Ideally, the waveform analysis should be performed on data that is only high-pass filtered. This is a separate module because it is expected to require updating. For example, IMEC probes may require different storage requirements to store/display mean waveforms, requiring a new interface or an extension of this one.",
         "links": [
             {
-                "doc": "",
+                "doc": "HDF5 link to Clustering interface that was the source of the clustered data",
                 "name": "clustering_interface",
                 "target_type": "Clustering"
             }
@@ -200,13 +219,23 @@ Clustering
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Clustered spike data, whether from automatic clustering tools (eg, klustakwik) or as a result of manual sorting",
                 "name": "help",
                 "type": "text",
                 "value": "Clustered spike data, whether from automatic clustering tools (eg, klustakwik) or as a result of manual sorting"
             }
         ],
         "datasets": [
+            {
+                "doc": "List of cluster number that are a part of this set (cluster numbers can be non- continuous)",
+                "name": "cluster_nums",
+                "type": "int32"
+            },
+            {
+                "doc": "Maximum ratio of waveform peak to RMS on any channel in the cluster (provides a basic clustering metric).",
+                "name": "peak_over_rms",
+                "type": "float32"
+            },
             {
                 "doc": "Description of clusters or clustering, (e.g. cluster 0 is noise, clusters curated using Klusters, etc)",
                 "name": "description",
@@ -218,19 +247,9 @@ Clustering
                 "type": "int32"
             },
             {
-                "doc": "Maximum ratio of waveform peak to RMS on any channel in the cluster (provides a basic clustering metric).",
-                "name": "peak_over_rms",
-                "type": "float32"
-            },
-            {
                 "doc": "Times of clustered events, in seconds. This may be a link to times field in associated FeatureExtraction module.",
                 "name": "times",
                 "type": "float64!"
-            },
-            {
-                "doc": "List of cluster number that are a part of this set (cluster numbers can be non- continuous)",
-                "name": "cluster_nums",
-                "type": "int32"
             }
         ],
         "doc": "Clustered spike data, whether from automatic clustering tools (e.g., klustakwik) or as a result of manual sorting.",
@@ -247,7 +266,7 @@ CompassDirection
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Direction as measured radially. Spatial series reference frame should indicate which direction corresponds to zero and what is the direction of positive rotation",
                 "name": "help",
                 "type": "text",
                 "value": "Direction as measured radially. Spatial series reference frame should indicate which direction corresponds to zero and what is the direction of positive rotation"
@@ -256,13 +275,50 @@ CompassDirection
         "doc": "With a CompassDirection interface, a module publishes a SpatialSeries object representing a floating point value for theta. The SpatialSeries::reference_frame field should indicate what direction corresponds to 0 and which is the direction of rotation (this should be clockwise). The si_unit for the SpatialSeries should be radians or degrees.",
         "groups": [
             {
-                "doc": "",
+                "doc": "SpatialSeries object containing direction of gaze travel",
                 "neurodata_type": "SpatialSeries"
             }
         ],
         "name": "CompassDirection",
         "neurodata_type": "Interface",
         "neurodata_type_def": "CompassDirection"
+    }
+
+CorrectedImageStack
+-------------------
+
+.. code-block:: python
+
+    {
+        "datasets": [
+            {
+                "doc": "Path to linked original timeseries",
+                "name": "original_path",
+                "type": "text"
+            }
+        ],
+        "doc": "One of possibly many.  Name should be informative.",
+        "groups": [
+            {
+                "doc": "Image stack with frames shifted to the common coordinates.",
+                "name": "corrected",
+                "neurodata_type": "ImageSeries"
+            },
+            {
+                "doc": "Stores the x,y delta necessary to align each frame to the common coordinates, for example, to align each frame to a reference image.",
+                "name": "xy_translation",
+                "neurodata_type": "TimeSeries"
+            }
+        ],
+        "links": [
+            {
+                "doc": "HDF5 Link to image series that is being registered.",
+                "name": "original",
+                "target_type": "ImageSeries"
+            }
+        ],
+        "neurodata_type_def": "CorrectedImageStack",
+        "quantity": "+"
     }
 
 CurrentClampSeries
@@ -273,7 +329,7 @@ CurrentClampSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Voltage recorded from cell during current-clamp recording",
                 "name": "help",
                 "type": "text",
                 "value": "Voltage recorded from cell during current-clamp recording"
@@ -283,16 +339,19 @@ CurrentClampSeries
             {
                 "doc": "Unit: Ohm",
                 "name": "bridge_balance",
+                "quantity": "?",
                 "type": "float32"
             },
             {
                 "doc": "Unit: Farad",
                 "name": "capacitance_compensation",
+                "quantity": "?",
                 "type": "float32"
             },
             {
                 "doc": "Unit: Amp",
                 "name": "bias_current",
+                "quantity": "?",
                 "type": "float32"
             }
         ],
@@ -309,7 +368,7 @@ CurrentClampStimulusSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Stimulus current applied during current clamp recording",
                 "name": "help",
                 "type": "text",
                 "value": "Stimulus current applied during current clamp recording"
@@ -320,6 +379,18 @@ CurrentClampStimulusSeries
         "neurodata_type_def": "CurrentClampStimulusSeries"
     }
 
+Device
+------
+
+.. code-block:: python
+
+    {
+        "doc": "One of possibly many. Information about device and device description. COMMENT: Name should be informative. Contents can be from Methods.",
+        "neurodata_type_def": "Device",
+        "quantity": "*",
+        "type": "text"
+    }
+
 DfOverF
 -------
 
@@ -328,7 +399,7 @@ DfOverF
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Df/f over time of one or more ROIs. TimeSeries names should correspond to imaging plane names",
                 "name": "help",
                 "type": "text",
                 "value": "Df/f over time of one or more ROIs. TimeSeries names should correspond to imaging plane names"
@@ -337,7 +408,7 @@ DfOverF
         "doc": "dF/F information about a region of interest (ROI). Storage hierarchy of dF/F should be the same as for segmentation (ie, same names for ROIs and for image planes).",
         "groups": [
             {
-                "doc": "",
+                "doc": "RoiResponseSeries object containing dF/F for a ROI",
                 "neurodata_type": "RoiResponseSeries"
             }
         ],
@@ -354,7 +425,7 @@ ElectricalSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Stores acquired voltage data from extracellular recordings",
                 "name": "help",
                 "type": "text",
                 "value": "Stores acquired voltage data from extracellular recordings"
@@ -364,7 +435,7 @@ ElectricalSeries
             {
                 "attributes": [
                     {
-                        "doc": "",
+                        "doc": "Value is volt",
                         "name": "unit",
                         "type": "text",
                         "value": "volt"
@@ -395,13 +466,13 @@ ElectrodeGroup
     {
         "datasets": [
             {
-                "doc": "Description of probe or shank",
-                "name": "description",
+                "doc": "Description of probe locationCOMMENT: E.g., stereotaxic coordinates and other data, e.g., drive placement, angle and orientation and tetrode location in drive and tetrode depth",
+                "name": "location",
                 "type": "text"
             },
             {
-                "doc": "Description of probe locationCOMMENT: E.g., stereotaxic coordinates and other data, e.g., drive placement, angle and orientation and tetrode location in drive and tetrode depth",
-                "name": "location",
+                "doc": "Description of probe or shank",
+                "name": "description",
                 "type": "text"
             },
             {
@@ -434,22 +505,24 @@ Epoch
                 "type": "float64!"
             },
             {
-                "doc": "Stop time of epoch, in seconds",
-                "name": "stop_time",
-                "type": "float64!"
-            },
-            {
                 "doc": "User-defined tags used throughout the epochs. Tags are to help identify or categorize epochs. COMMENT: E.g., can describe stimulus (if template) or behavioral characteristic (e.g., \"lick left\")",
                 "name": "tags",
+                "quantity": "?",
                 "type": "text"
             },
             {
                 "doc": "Description of this epoch (&lt;epoch_X&gt;).",
                 "name": "description",
+                "quantity": "?",
                 "type": "text"
+            },
+            {
+                "doc": "Stop time of epoch, in seconds",
+                "name": "stop_time",
+                "type": "float64!"
             }
         ],
-        "doc": "",
+        "doc": "One of possibly many different experimental epochCOMMENT: Name is arbitrary but must be unique within the experiment.",
         "groups": [
             {
                 "datasets": [
@@ -467,15 +540,17 @@ Epoch
                 "doc": "One of possibly many input or output streams recorded during epoch. COMMENT: Name is arbitrary and does not have to match the TimeSeries that it refers to.",
                 "links": [
                     {
-                        "doc": "",
+                        "doc": "Link to TimeSeries.  An HDF5 soft-link should be used.",
                         "name": "timeseries",
                         "target_type": "TimeSeries"
                     }
                 ],
-                "neurodata_type_def": "EpochTimeSeries"
+                "neurodata_type_def": "EpochTimeSeries",
+                "quantity": "*"
             }
         ],
-        "neurodata_type_def": "Epoch"
+        "neurodata_type_def": "Epoch",
+        "quantity": "*"
     }
 
 EpochTimeSeries
@@ -499,12 +574,54 @@ EpochTimeSeries
         "doc": "One of possibly many input or output streams recorded during epoch. COMMENT: Name is arbitrary and does not have to match the TimeSeries that it refers to.",
         "links": [
             {
-                "doc": "",
+                "doc": "Link to TimeSeries.  An HDF5 soft-link should be used.",
                 "name": "timeseries",
                 "target_type": "TimeSeries"
             }
         ],
-        "neurodata_type_def": "EpochTimeSeries"
+        "neurodata_type_def": "EpochTimeSeries",
+        "quantity": "*"
+    }
+
+EventDetection
+--------------
+
+.. code-block:: python
+
+    {
+        "datasets": [
+            {
+                "doc": "Path to linked ElectricalSeries.",
+                "name": "source_electricalseries_path",
+                "type": "text"
+            },
+            {
+                "doc": "Description of how events were detected, such as voltage threshold, or dV/dT threshold, as well as relevant values.",
+                "name": "detection_method",
+                "type": "text"
+            },
+            {
+                "doc": "Indices (zero-based) into source ElectricalSeries::data array corresponding to time of event. Module description should define what is meant by time of event (e.g., .25msec before action potential peak, zero-crossing time, etc). The index points to each event from the raw data",
+                "name": "source_idx",
+                "type": "int32"
+            },
+            {
+                "doc": "Timestamps of events, in Seconds",
+                "name": "times",
+                "type": "float64!"
+            }
+        ],
+        "doc": "Detected spike events from voltage trace(s).",
+        "links": [
+            {
+                "doc": "HDF5 link to ElectricalSeries that this data was calculated from. Metadata about electrodes and their position can be read from that ElectricalSeries so it's not necessary to mandate that information be stored here",
+                "name": "source_electricalseries",
+                "target_type": "ElectricalSeries"
+            }
+        ],
+        "name": "EventDetection",
+        "neurodata_type": "Interface",
+        "neurodata_type_def": "EventDetection"
     }
 
 EventWaveform
@@ -515,7 +632,7 @@ EventWaveform
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Waveform of detected extracellularly recorded spike events",
                 "name": "help",
                 "type": "text",
                 "value": "Waveform of detected extracellularly recorded spike events"
@@ -524,7 +641,7 @@ EventWaveform
         "doc": "Represents either the waveforms of detected events, as extracted from a raw data trace in /acquisition, or the event waveforms that were stored during experiment acquisition.",
         "groups": [
             {
-                "doc": "",
+                "doc": "SpikeEventSeries object containing detected spike event waveforms",
                 "neurodata_type": "SpikeEventSeries"
             }
         ],
@@ -541,7 +658,7 @@ EyeTracking
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Eye-tracking data, representing direction of gaze",
                 "name": "help",
                 "type": "text",
                 "value": "Eye-tracking data, representing direction of gaze"
@@ -550,7 +667,7 @@ EyeTracking
         "doc": "Eye-tracking data, representing direction of gaze.",
         "groups": [
             {
-                "doc": "",
+                "doc": "SpatialSeries object containing data measuring direction of gaze",
                 "neurodata_type": "SpatialSeries"
             }
         ],
@@ -567,7 +684,7 @@ FeatureExtraction
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Container for salient features of detected events",
                 "name": "help",
                 "type": "text",
                 "value": "Container for salient features of detected events"
@@ -580,14 +697,14 @@ FeatureExtraction
                 "type": "text"
             },
             {
-                "doc": "Times of events that features correspond to (can be a link).",
-                "name": "times",
-                "type": "float64!"
-            },
-            {
                 "doc": "Multi-dimensional array of features extracted from each event.",
                 "name": "features",
                 "type": "float32"
+            },
+            {
+                "doc": "Times of events that features correspond to (can be a link).",
+                "name": "times",
+                "type": "float64!"
             }
         ],
         "doc": "Features, such as PC1 and PC2, that are extracted from signals stored in a SpikeEvent TimeSeries or other source.",
@@ -611,7 +728,7 @@ FilteredEphys
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Ephys data from one or more channels that is subjected to filtering, such as for gamma or theta oscillations (LFP has its own interface). Filter properties should be noted in the ElectricalSeries",
                 "name": "help",
                 "type": "text",
                 "value": "Ephys data from one or more channels that is subjected to filtering, such as for gamma or theta oscillations (LFP has its own interface). Filter properties should be noted in the ElectricalSeries"
@@ -620,7 +737,7 @@ FilteredEphys
         "doc": "Ephys data from one or more channels that has been subjected to filtering. Examples of filtered data include Theta and Gamma (LFP has its own interface). FilteredEphys modules publish an ElectricalSeries for each filtered channel or set of channels. The name of each ElectricalSeries is arbitrary but should be informative. The source of the filtered data, whether this is from analysis of another time series or as acquired by hardware, should be noted in each's TimeSeries::description field. There is no assumed 1::1 correspondence between filtered ephys signals and electrodes, as a single signal can apply to many nearby electrodes, and one electrode may have different filtered (e.g., theta and/or gamma) signals represented.",
         "groups": [
             {
-                "doc": "",
+                "doc": "ElectricalSeries object containing filtered electrophysiology data",
                 "neurodata_type": "ElectricalSeries"
             }
         ],
@@ -637,7 +754,7 @@ Fluorescence
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Fluorescence over time of one or more ROIs. TimeSeries names should correspond to imaging plane names",
                 "name": "help",
                 "type": "text",
                 "value": "Fluorescence over time of one or more ROIs. TimeSeries names should correspond to imaging plane names"
@@ -646,7 +763,7 @@ Fluorescence
         "doc": "Fluorescence information about a region of interest (ROI). Storage hierarchy of fluorescence should be the same as for segmentation (ie, same names for ROIs and for image planes).",
         "groups": [
             {
-                "doc": "",
+                "doc": "RoiResponseSeries object containing fluorescence data for a ROI",
                 "neurodata_type": "RoiResponseSeries"
             }
         ],
@@ -663,7 +780,7 @@ IZeroClampSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Voltage from intracellular recordings when all current and amplifier settings are off",
                 "name": "help",
                 "type": "text",
                 "value": "Voltage from intracellular recordings when all current and amplifier settings are off"
@@ -674,6 +791,30 @@ IZeroClampSeries
         "neurodata_type_def": "IZeroClampSeries"
     }
 
+Image
+-----
+
+.. code-block:: python
+
+    {
+        "attributes": [
+            {
+                "doc": "Human description of image. COMMENT: If image is of slice data, include slice thickness and orientation, and reference to appropriate entry in /general/slices",
+                "name": "description",
+                "type": "text"
+            },
+            {
+                "doc": "Format of the image.  COMMENT: eg, jpg, png, mpeg",
+                "name": "format",
+                "type": "text"
+            }
+        ],
+        "doc": "Photograph of experiment or experimental setup (video also OK). COMMENT: Name is arbitrary.  Data is stored as a single binary object (HDF5 opaque type).",
+        "neurodata_type_def": "Image",
+        "quantity": "*",
+        "type": "binary"
+    }
+
 ImageMaskSeries
 ---------------
 
@@ -682,7 +823,7 @@ ImageMaskSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is An alpha mask that is applied to a presented visual stimulus",
                 "name": "help",
                 "type": "text",
                 "value": "An alpha mask that is applied to a presented visual stimulus"
@@ -698,7 +839,7 @@ ImageMaskSeries
         "doc": "An alpha mask that is applied to a presented visual stimulus. The data[] array contains an array of mask values that are applied to the displayed image. Mask values are stored as RGBA. Mask can vary with time. The timestamps array indicates the starting time of a mask, and that mask pattern continues until it's explicitly changed.",
         "links": [
             {
-                "doc": "",
+                "doc": "Link to ImageSeries that mask is applied to.",
                 "name": "masked_imageseries",
                 "target_type": "ImageSeries"
             }
@@ -715,7 +856,7 @@ ImageSegmentation
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Stores groups of pixels that define regions of interest from one or more imaging planes",
                 "name": "help",
                 "type": "text",
                 "value": "Stores groups of pixels that define regions of interest from one or more imaging planes"
@@ -726,6 +867,12 @@ ImageSegmentation
             {
                 "datasets": [
                     {
+                        "doc": "Description of image plane, recording wavelength, depth, etc",
+                        "name": "description",
+                        "quantity": "?",
+                        "type": "text"
+                    },
+                    {
                         "doc": "Name of imaging plane under general/optophysiology",
                         "name": "imaging_plane_name",
                         "type": "text"
@@ -734,20 +881,15 @@ ImageSegmentation
                         "doc": "List of ROIs in this imaging plane",
                         "name": "roi_list",
                         "type": "text"
-                    },
-                    {
-                        "doc": "Description of image plane, recording wavelength, depth, etc",
-                        "name": "description",
-                        "type": "text"
                     }
                 ],
-                "doc": "",
+                "doc": "Group name is human-readable description of imaging plane",
                 "groups": [
                     {
                         "doc": "Stores image stacks segmentation mask apply to.",
                         "groups": [
                             {
-                                "doc": "",
+                                "doc": "One or more image stacks that the masks apply to (can be one-element stack)",
                                 "neurodata_type": "ImageSeries"
                             }
                         ],
@@ -756,9 +898,9 @@ ImageSegmentation
                     {
                         "datasets": [
                             {
-                                "doc": "Weight of each pixel listed in pix_mask",
-                                "name": "pix_mask_weight",
-                                "type": "float32"
+                                "doc": "List of pixels (x,y) that compose the mask",
+                                "name": "pix_mask",
+                                "type": "uint16"
                             },
                             {
                                 "doc": "Description of this ROI.",
@@ -766,21 +908,23 @@ ImageSegmentation
                                 "type": "text"
                             },
                             {
-                                "doc": "List of pixels (x,y) that compose the mask",
-                                "name": "pix_mask",
-                                "type": "uint16"
-                            },
-                            {
                                 "doc": "ROI mask, represented in 2D ([y][x]) intensity image",
                                 "name": "img_mask",
+                                "type": "float32"
+                            },
+                            {
+                                "doc": "Weight of each pixel listed in pix_mask",
+                                "name": "pix_mask_weight",
                                 "type": "float32"
                             }
                         ],
                         "doc": "Name of ROI",
-                        "neurodata_type_def": "ROI"
+                        "neurodata_type_def": "ROI",
+                        "quantity": "*"
                     }
                 ],
-                "neurodata_type_def": "PlaneSegmentation"
+                "neurodata_type_def": "PlaneSegmentation",
+                "quantity": "*"
             }
         ],
         "name": "ImageSegmentation",
@@ -796,7 +940,7 @@ ImageSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Storage object for time-series 2-D image data",
                 "name": "help",
                 "type": "text",
                 "value": "Storage object for time-series 2-D image data"
@@ -804,13 +948,15 @@ ImageSeries
         ],
         "datasets": [
             {
-                "doc": "Either binary data containing image or empty.",
-                "name": "data",
-                "type": "number"
+                "doc": "Format of image. If this is 'external' then the field external_file contains the path or URL information to that file. For tiff, png, jpg, etc, the binary representation of the image is stored in data. If the format is raw then the fields bit_per_pixel and dimension are used. For raw images, only a single channel is stored (eg, red).",
+                "name": "format",
+                "quantity": "?",
+                "type": "text"
             },
             {
-                "doc": "Number of pixels on x, y, (and z) axes.",
-                "name": "dimension",
+                "doc": "Number of bit per image pixel.",
+                "name": "bits_per_pixel",
+                "quantity": "?",
                 "type": "int32"
             },
             {
@@ -823,17 +969,19 @@ ImageSeries
                 ],
                 "doc": "Path or URL to one or more external file(s). Field only present if format=external. NOTE: this is only relevant if the image is stored in the file system as one or more image file(s). This field should NOT be used if the image is stored in another HDF5 file and that file is HDF5 linked to this file.",
                 "name": "external_file",
+                "quantity": "?",
                 "type": "text"
             },
             {
-                "doc": "Number of bit per image pixel.",
-                "name": "bits_per_pixel",
+                "doc": "Number of pixels on x, y, (and z) axes.",
+                "name": "dimension",
+                "quantity": "?",
                 "type": "int32"
             },
             {
-                "doc": "Format of image. If this is 'external' then the field external_file contains the path or URL information to that file. For tiff, png, jpg, etc, the binary representation of the image is stored in data. If the format is raw then the fields bit_per_pixel and dimension are used. For raw images, only a single channel is stored (eg, red).",
-                "name": "format",
-                "type": "text"
+                "doc": "Either binary data containing image or empty.",
+                "name": "data",
+                "type": "number"
             }
         ],
         "doc": "General image data that is common between acquisition and stimulus time series. Sometimes the image data is stored in the HDF5 file in a raw format while other times it will be stored as an external image file in the host file system. The data field will either be binary data or empty. TimeSeries::data array structure: [frame] [y][x] or [frame][z][y][x].",
@@ -849,37 +997,9 @@ ImagingPlane
     {
         "datasets": [
             {
-                "attributes": [
-                    {
-                        "doc": "Base unit that coordinates are stored in (e.g., Meters)",
-                        "name": "unit",
-                        "type": "text",
-                        "value": "Meter"
-                    },
-                    {
-                        "doc": "Multiplier to get from stored values to specified unit (e.g., 1e-3 for millimeters)",
-                        "name": "conversion",
-                        "type": "float",
-                        "value": 1.0
-                    }
-                ],
-                "doc": "Physical position of each pixel. COMMENT: \"xyz\" represents the position of the pixel relative to the defined coordinate space",
-                "name": "manifold",
-                "type": "float32"
-            },
-            {
-                "doc": "Rate images are acquired, in Hz.",
-                "name": "imaging_rate",
-                "type": "text"
-            },
-            {
-                "doc": "Describes position and reference frame of manifold based on position of first element in manifold. For example, text description of anotomical location or vectors needed to rotate to common anotomical axis (eg, AP/DV/ML). COMMENT: This field is necessary to interpret manifold. If manifold is not present then this field is not required",
-                "name": "reference_frame",
-                "type": "text"
-            },
-            {
-                "doc": "Location of image plane",
-                "name": "location",
+                "doc": "Description of &lt;image_plane_X&gt;",
+                "name": "description",
+                "quantity": "?",
                 "type": "text"
             },
             {
@@ -888,22 +1008,51 @@ ImagingPlane
                 "type": "text"
             },
             {
-                "doc": "Name of device in /general/devices",
-                "name": "device",
-                "type": "text"
-            },
-            {
-                "doc": "Description of &lt;image_plane_X&gt;",
-                "name": "description",
+                "doc": "Location of image plane",
+                "name": "location",
                 "type": "text"
             },
             {
                 "doc": "Calcium indicator",
                 "name": "indicator",
                 "type": "text"
+            },
+            {
+                "doc": "Rate images are acquired, in Hz.",
+                "name": "imaging_rate",
+                "type": "text"
+            },
+            {
+                "attributes": [
+                    {
+                        "doc": "Value is 1.0",
+                        "name": "conversion",
+                        "type": "float",
+                        "value": 1.0
+                    },
+                    {
+                        "doc": "Value is Meter",
+                        "name": "unit",
+                        "type": "text",
+                        "value": "Meter"
+                    }
+                ],
+                "doc": "Physical position of each pixel. COMMENT: \"xyz\" represents the position of the pixel relative to the defined coordinate space",
+                "name": "manifold",
+                "type": "float32"
+            },
+            {
+                "doc": "Describes position and reference frame of manifold based on position of first element in manifold. For example, text description of anotomical location or vectors needed to rotate to common anotomical axis (eg, AP/DV/ML). COMMENT: This field is necessary to interpret manifold. If manifold is not present then this field is not required",
+                "name": "reference_frame",
+                "type": "text"
+            },
+            {
+                "doc": "Name of device in /general/devices",
+                "name": "device",
+                "type": "text"
             }
         ],
-        "doc": "",
+        "doc": "One of possibly many groups describing an imaging plane. COMMENT: Name is arbitrary but should be meaningful. It is referenced by TwoPhotonSeries and also ImageSegmentation and DfOverF interfaces",
         "groups": [
             {
                 "datasets": [
@@ -922,7 +1071,8 @@ ImagingPlane
                 "neurodata_type_def": "OpticalChannel"
             }
         ],
-        "neurodata_type_def": "ImagingPlane"
+        "neurodata_type_def": "ImagingPlane",
+        "quantity": "*"
     }
 
 ImagingRetinotopy
@@ -933,13 +1083,62 @@ ImagingRetinotopy
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Intrinsic signal optical imaging or Widefield imaging for measuring retinotopy",
                 "name": "help",
                 "type": "text",
                 "value": "Intrinsic signal optical imaging or Widefield imaging for measuring retinotopy"
             }
         ],
         "datasets": [
+            {
+                "attributes": [
+                    {
+                        "doc": "Number of rows and columns in the image. NOTE: row, column representation is equivalent to height,width.",
+                        "name": "dimension",
+                        "type": "int32"
+                    },
+                    {
+                        "doc": "Unit that axis data is stored in (e.g., degrees)",
+                        "name": "unit",
+                        "type": "text"
+                    },
+                    {
+                        "doc": "Size of viewing area, in meters",
+                        "name": "field_of_view",
+                        "type": "float"
+                    }
+                ],
+                "doc": "Phase response to stimulus on the first measured axis",
+                "name": "axis_1_phase_map",
+                "type": "float32"
+            },
+            {
+                "attributes": [
+                    {
+                        "doc": "Number of bits used to represent each value. This is necessary to determine maximum (white) pixel value",
+                        "name": "bits_per_pixel",
+                        "type": "int32"
+                    },
+                    {
+                        "doc": "Number of rows and columns in the image. NOTE: row, column representation is equivalent to height,width.",
+                        "name": "dimension",
+                        "type": "int32"
+                    },
+                    {
+                        "doc": "Format of image. Right now only 'raw' supported",
+                        "name": "format",
+                        "type": "text"
+                    },
+                    {
+                        "doc": "Size of viewing area, in meters",
+                        "name": "field_of_view",
+                        "type": "float"
+                    }
+                ],
+                "doc": "Gray-scale anatomical image of cortical surface. Array structure: [rows][columns]",
+                "name": "vasculature_image",
+                "type": "uint16"
+            },
             {
                 "attributes": [
                     {
@@ -965,98 +1164,28 @@ ImagingRetinotopy
                         "type": "int32"
                     },
                     {
-                        "doc": "Number of bits used to represent each value. This is necessary to determine maximum (white) pixel value",
-                        "name": "bits_per_pixel",
-                        "type": "int32"
-                    },
-                    {
-                        "doc": "Format of image. Right now only 'raw' supported",
-                        "name": "format",
-                        "type": "text"
-                    },
-                    {
-                        "doc": "Size of viewing area, in meters",
-                        "name": "field_of_view",
-                        "type": "float"
-                    }
-                ],
-                "doc": "Gray-scale anatomical image of cortical surface. Array structure: [rows][columns]",
-                "name": "vasculature_image",
-                "type": "uint16"
-            },
-            {
-                "attributes": [
-                    {
-                        "doc": "Size of viewing area, in meters",
-                        "name": "field_of_view",
-                        "type": "float"
-                    },
-                    {
-                        "doc": "Number of rows and columns in the image. NOTE: row, column representation is equivalent to height,width.",
-                        "name": "dimension",
-                        "type": "int32"
-                    },
-                    {
                         "doc": "Unit that axis data is stored in (e.g., degrees)",
                         "name": "unit",
                         "type": "text"
-                    }
-                ],
-                "doc": "Phase response to stimulus on the first measured axis",
-                "name": "axis_1_phase_map",
-                "type": "float32"
-            },
-            {
-                "attributes": [
+                    },
                     {
                         "doc": "Size of viewing area, in meters",
                         "name": "field_of_view",
                         "type": "float"
-                    },
-                    {
-                        "doc": "Number of rows and columns in the image. NOTE: row, column representation is equivalent to height,width.",
-                        "name": "dimension",
-                        "type": "int32"
-                    },
-                    {
-                        "doc": "Unit that axis data is stored in (e.g., degrees)",
-                        "name": "unit",
-                        "type": "text"
                     }
                 ],
                 "doc": "Power response on the first measured axis. Response is scaled so 0.0 is no power in the response and 1.0 is maximum relative power.",
                 "name": "axis_1_power_map",
+                "quantity": "?",
                 "type": "float32"
-            },
-            {
-                "doc": "Two-element array describing the contents of the two response axis fields. Description should be something like ['altitude', 'azimuth'] or '['radius', 'theta']",
-                "name": "axis_descriptions",
-                "type": "text"
             },
             {
                 "attributes": [
                     {
-                        "doc": "Size of viewing area, in meters",
-                        "name": "field_of_view",
-                        "type": "float"
-                    },
-                    {
-                        "doc": "Number of rows and columns in the image. NOTE: row, column representation is equivalent to height,width.",
-                        "name": "dimension",
+                        "doc": "Number of bits used to represent each value. This is necessary to determine maximum (white) pixel value",
+                        "name": "bits_per_pixel",
                         "type": "int32"
                     },
-                    {
-                        "doc": "Unit that axis data is stored in (e.g., degrees)",
-                        "name": "unit",
-                        "type": "text"
-                    }
-                ],
-                "doc": "Phase response to stimulus on the second measured axis",
-                "name": "axis_2_phase_map",
-                "type": "float32"
-            },
-            {
-                "attributes": [
                     {
                         "doc": "Number of rows and columns in the image. NOTE: row, column representation is equivalent to height,width.",
                         "name": "dimension",
@@ -1066,11 +1195,6 @@ ImagingRetinotopy
                         "doc": "Focal depth offset, in meters",
                         "name": "focal_depth",
                         "type": "float"
-                    },
-                    {
-                        "doc": "Number of bits used to represent each value. This is necessary to determine maximum (white) pixel value",
-                        "name": "bits_per_pixel",
-                        "type": "int32"
                     },
                     {
                         "doc": "Format of image. Right now only 'raw' supported",
@@ -1090,10 +1214,27 @@ ImagingRetinotopy
             {
                 "attributes": [
                     {
+                        "doc": "Number of rows and columns in the image. NOTE: row, column representation is equivalent to height,width.",
+                        "name": "dimension",
+                        "type": "int32"
+                    },
+                    {
+                        "doc": "Unit that axis data is stored in (e.g., degrees)",
+                        "name": "unit",
+                        "type": "text"
+                    },
+                    {
                         "doc": "Size of viewing area, in meters",
                         "name": "field_of_view",
                         "type": "float"
-                    },
+                    }
+                ],
+                "doc": "Phase response to stimulus on the second measured axis",
+                "name": "axis_2_phase_map",
+                "type": "float32"
+            },
+            {
+                "attributes": [
                     {
                         "doc": "Number of rows and columns in the image. NOTE: row, column representation is equivalent to height,width.",
                         "name": "dimension",
@@ -1103,11 +1244,22 @@ ImagingRetinotopy
                         "doc": "Unit that axis data is stored in (e.g., degrees)",
                         "name": "unit",
                         "type": "text"
+                    },
+                    {
+                        "doc": "Size of viewing area, in meters",
+                        "name": "field_of_view",
+                        "type": "float"
                     }
                 ],
                 "doc": "Power response on the second measured axis. Response is scaled so 0.0 is no power in the response and 1.0 is maximum relative power.",
                 "name": "axis_2_power_map",
+                "quantity": "?",
                 "type": "float32"
+            },
+            {
+                "doc": "Two-element array describing the contents of the two response axis fields. Description should be something like ['altitude', 'azimuth'] or '['radius', 'theta']",
+                "name": "axis_descriptions",
+                "type": "text"
             }
         ],
         "doc": "Intrinsic signal optical imaging or widefield imaging for measuring retinotopy. Stores orthogonal maps (e.g., altitude/azimuth; radius/theta) of responses to specific stimuli and a combined polarity map from which to identify visual areas.<br />Note: for data consistency, all images and arrays are stored in the format [row][column] and [row, col], which equates to [y][x]. Field of view and dimension arrays may appear backward (i.e., y before x).",
@@ -1124,7 +1276,7 @@ IndexSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is A sequence that is generated from an existing image stack. Frames can be presented in an arbitrary order. The data[] field stores frame number in reference stack",
                 "name": "help",
                 "type": "text",
                 "value": "A sequence that is generated from an existing image stack. Frames can be presented in an arbitrary order. The data[] field stores frame number in reference stack"
@@ -1132,20 +1284,20 @@ IndexSeries
         ],
         "datasets": [
             {
-                "doc": "Index of the frame in the referenced ImageSeries.",
-                "name": "data",
-                "type": "int"
-            },
-            {
                 "doc": "Path to linked TimeSeries",
                 "name": "indexed_timeseries_path",
                 "type": "text"
+            },
+            {
+                "doc": "Index of the frame in the referenced ImageSeries.",
+                "name": "data",
+                "type": "int"
             }
         ],
         "doc": "Stores indices to image frames stored in an ImageSeries. The purpose of the ImageIndexSeries is to allow a static image stack to be stored somewhere, and the images in the stack to be referenced out-of-order. This can be for the display of individual images, or of movie segments (as a movie is simply a series of images). The data field stores the index of the frame in the referenced ImageSeries, and the timestamps array indicates when that image was displayed.",
         "links": [
             {
-                "doc": "",
+                "doc": "HDF5 link to TimeSeries containing images that are indexed.",
                 "name": "indexed_timeseries",
                 "target_type": "ImageSeries"
             }
@@ -1162,14 +1314,13 @@ Interface
     {
         "attributes": [
             {
-                "doc": "Short description of what this type of Interface contains.",
-                "name": "help",
-                "required": false,
+                "doc": "Path to the origin of the data represented in this interface.",
+                "name": "source",
                 "type": "text"
             },
             {
-                "doc": "Path to the origin of the data represented in this interface.",
-                "name": "source",
+                "doc": "Short description of what this type of Interface contains.",
+                "name": "help",
                 "type": "text"
             }
         ],
@@ -1185,7 +1336,7 @@ IntervalSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Stores the start and stop times for events",
                 "name": "help",
                 "type": "text",
                 "value": "Stores the start and stop times for events"
@@ -1195,20 +1346,20 @@ IntervalSeries
             {
                 "attributes": [
                     {
-                        "doc": "",
+                        "doc": "Value is float('NaN')",
+                        "name": "conversion",
+                        "type": "None",
+                        "value": "float('NaN')"
+                    },
+                    {
+                        "doc": "Value is n/a",
                         "name": "unit",
                         "type": "None",
                         "value": "n/a"
                     },
                     {
-                        "doc": "",
+                        "doc": "Value is float('NaN')",
                         "name": "resolution",
-                        "type": "None",
-                        "value": "float('NaN')"
-                    },
-                    {
-                        "doc": "",
-                        "name": "conversion",
                         "type": "None",
                         "value": "float('NaN')"
                     }
@@ -1231,18 +1382,33 @@ IntracellularElectrode
     {
         "datasets": [
             {
+                "doc": "Electrode resistance COMMENT: unit: Ohm",
+                "name": "resistance",
+                "quantity": "?",
+                "type": "text"
+            },
+            {
                 "doc": "Initial access resistance",
                 "name": "initial_access_resistance",
+                "quantity": "?",
                 "type": "text"
             },
             {
-                "doc": "Name(s) of devices in general/devices",
-                "name": "device",
+                "doc": "Area, layer, comments on estimation, stereotaxis coordinates (if in vivo, etc)",
+                "name": "location",
+                "quantity": "?",
                 "type": "text"
             },
             {
-                "doc": "Information about seal used for recording",
-                "name": "seal",
+                "doc": "Electrode specific filtering.",
+                "name": "filtering",
+                "quantity": "?",
+                "type": "text"
+            },
+            {
+                "doc": "Information about slice used for recording",
+                "name": "slice",
+                "quantity": "?",
                 "type": "text"
             },
             {
@@ -1251,23 +1417,15 @@ IntracellularElectrode
                 "type": "text"
             },
             {
-                "doc": "Information about slice used for recording",
-                "name": "slice",
+                "doc": "Information about seal used for recording",
+                "name": "seal",
+                "quantity": "?",
                 "type": "text"
             },
             {
-                "doc": "Electrode resistance COMMENT: unit: Ohm",
-                "name": "resistance",
-                "type": "text"
-            },
-            {
-                "doc": "Area, layer, comments on estimation, stereotaxis coordinates (if in vivo, etc)",
-                "name": "location",
-                "type": "text"
-            },
-            {
-                "doc": "Electrode specific filtering.",
-                "name": "filtering",
+                "doc": "Name(s) of devices in general/devices",
+                "name": "device",
+                "quantity": "?",
                 "type": "text"
             }
         ],
@@ -1283,7 +1441,7 @@ LFP
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is LFP data from one or more channels. Filter properties should be noted in the ElectricalSeries",
                 "name": "help",
                 "type": "text",
                 "value": "LFP data from one or more channels. Filter properties should be noted in the ElectricalSeries"
@@ -1292,7 +1450,7 @@ LFP
         "doc": "LFP data from one or more channels. The electrode map in each published ElectricalSeries will identify which channels are providing LFP data. Filter properties should be noted in the ElectricalSeries description or comments field.",
         "groups": [
             {
-                "doc": "",
+                "doc": "ElectricalSeries object containing LFP data for one or channels",
                 "neurodata_type": "ElectricalSeries"
             }
         ],
@@ -1311,7 +1469,6 @@ Module
             {
                 "doc": "Description of Module",
                 "name": "description",
-                "required": false,
                 "type": "text"
             },
             {
@@ -1323,7 +1480,7 @@ Module
         "doc": "Module.  Name should be descriptive. Stores a collection of related data organized by contained interfaces.  Each interface is a contract specifying content related to a particular type of data.",
         "groups": [
             {
-                "doc": "",
+                "doc": "Interface objects containing data output from processing steps",
                 "neurodata_type": "Interface"
             }
         ],
@@ -1338,7 +1495,7 @@ MotionCorrection
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Image stacks whose frames have been shifted (registered) to account for motion",
                 "name": "help",
                 "type": "text",
                 "value": "Image stacks whose frames have been shifted (registered) to account for motion"
@@ -1357,24 +1514,25 @@ MotionCorrection
                 "doc": "One of possibly many.  Name should be informative.",
                 "groups": [
                     {
-                        "doc": "",
-                        "name": "xy_translation",
-                        "neurodata_type": "TimeSeries"
-                    },
-                    {
-                        "doc": "",
+                        "doc": "Image stack with frames shifted to the common coordinates.",
                         "name": "corrected",
                         "neurodata_type": "ImageSeries"
+                    },
+                    {
+                        "doc": "Stores the x,y delta necessary to align each frame to the common coordinates, for example, to align each frame to a reference image.",
+                        "name": "xy_translation",
+                        "neurodata_type": "TimeSeries"
                     }
                 ],
                 "links": [
                     {
-                        "doc": "",
+                        "doc": "HDF5 Link to image series that is being registered.",
                         "name": "original",
                         "target_type": "ImageSeries"
                     }
                 ],
-                "name": "<image stack name>/+"
+                "neurodata_type_def": "CorrectedImageStack",
+                "quantity": "+"
             }
         ],
         "name": "MotionCorrection",
@@ -1390,13 +1548,18 @@ NWBFile
     {
         "datasets": [
             {
-                "doc": "File version string. COMMENT: Eg, NWB-1.0.0. This will be the name of the format with trailing major, minor and patch numbers.",
-                "name": "nwb_version",
+                "doc": "One or two sentences describing the experiment and data in the file.",
+                "name": "session_description",
                 "type": "text"
             },
             {
                 "doc": "Time file was created, UTC, and subsequent modifications to file. COMMENT: Date + time, Use ISO format (eg, ISO 8601) or a format that is easy to read and unambiguous. File can be created after the experiment was run, so this may differ from experiment start time. Each modifictation to file adds new entry to array. ",
                 "name": "file_create_date",
+                "type": "text"
+            },
+            {
+                "doc": "File version string. COMMENT: Eg, NWB-1.0.0. This will be the name of the format with trailing major, minor and patch numbers.",
+                "name": "nwb_version",
                 "type": "text"
             },
             {
@@ -1408,11 +1571,6 @@ NWBFile
                 "doc": "A unique text identifier for the file. COMMENT: Eg, concatenated lab name, file creation date/time and experimentalist, or a hash of these and/or other values. The goal is that the string should be unique to all other files.",
                 "name": "identifier",
                 "type": "text"
-            },
-            {
-                "doc": "One or two sentences describing the experiment and data in the file.",
-                "name": "session_description",
-                "type": "text"
             }
         ],
         "doc": "Top level of NWB file.",
@@ -1421,37 +1579,38 @@ NWBFile
                 "doc": "Data streams recorded from the system, including ephys, ophys, tracking, etc. COMMENT: This group is read-only after the experiment is completed and timestamps are corrected to a common timebase. The data stored here may be links to raw data stored in external HDF5 files. This will allow keeping bulky raw data out of the file while preserving the option of keeping some/all in the file. MORE_INFO: Acquired data includes tracking and experimental data streams (ie, everything measured from the system).If bulky data is stored in the /acquisition group, the data can exist in a separate HDF5 file that is linked to by the file being used for processing and analysis.",
                 "groups": [
                     {
+                        "doc": "Acquired TimeSeries.COMMENT: When importing acquisition data to an NWB file, all acquisition/tracking/stimulus data must already be aligned to a common time frame. It is assumed that this task has already been performed.",
+                        "groups": [
+                            {
+                                "doc": "TimeSeries object containing data generated during data acquisition",
+                                "neurodata_type": "TimeSeries"
+                            }
+                        ],
+                        "name": "timeseries"
+                    },
+                    {
                         "datasets": [
                             {
                                 "attributes": [
                                     {
-                                        "doc": "Format of the image.  COMMENT: eg, jpg, png, mpeg",
-                                        "name": "format",
+                                        "doc": "Human description of image. COMMENT: If image is of slice data, include slice thickness and orientation, and reference to appropriate entry in /general/slices",
+                                        "name": "description",
                                         "type": "text"
                                     },
                                     {
-                                        "doc": "Human description of image. COMMENT: If image is of slice data, include slice thickness and orientation, and reference to appropriate entry in /general/slices",
-                                        "name": "description",
+                                        "doc": "Format of the image.  COMMENT: eg, jpg, png, mpeg",
+                                        "name": "format",
                                         "type": "text"
                                     }
                                 ],
                                 "doc": "Photograph of experiment or experimental setup (video also OK). COMMENT: Name is arbitrary.  Data is stored as a single binary object (HDF5 opaque type).",
-                                "name": "<image_X>*",
+                                "neurodata_type_def": "Image",
+                                "quantity": "*",
                                 "type": "binary"
                             }
                         ],
                         "doc": "Acquired images",
                         "name": "images"
-                    },
-                    {
-                        "doc": "Acquired TimeSeries.COMMENT: When importing acquisition data to an NWB file, all acquisition/tracking/stimulus data must already be aligned to a common time frame. It is assumed that this task has already been performed.",
-                        "groups": [
-                            {
-                                "doc": "",
-                                "neurodata_type": "TimeSeries"
-                            }
-                        ],
-                        "name": "timeseries"
                     }
                 ],
                 "name": "acquisition"
@@ -1485,22 +1644,24 @@ NWBFile
                                 "type": "float64!"
                             },
                             {
-                                "doc": "Stop time of epoch, in seconds",
-                                "name": "stop_time",
-                                "type": "float64!"
-                            },
-                            {
                                 "doc": "User-defined tags used throughout the epochs. Tags are to help identify or categorize epochs. COMMENT: E.g., can describe stimulus (if template) or behavioral characteristic (e.g., \"lick left\")",
                                 "name": "tags",
+                                "quantity": "?",
                                 "type": "text"
                             },
                             {
                                 "doc": "Description of this epoch (&lt;epoch_X&gt;).",
                                 "name": "description",
+                                "quantity": "?",
                                 "type": "text"
+                            },
+                            {
+                                "doc": "Stop time of epoch, in seconds",
+                                "name": "stop_time",
+                                "type": "float64!"
                             }
                         ],
-                        "doc": "",
+                        "doc": "One of possibly many different experimental epochCOMMENT: Name is arbitrary but must be unique within the experiment.",
                         "groups": [
                             {
                                 "datasets": [
@@ -1518,15 +1679,17 @@ NWBFile
                                 "doc": "One of possibly many input or output streams recorded during epoch. COMMENT: Name is arbitrary and does not have to match the TimeSeries that it refers to.",
                                 "links": [
                                     {
-                                        "doc": "",
+                                        "doc": "Link to TimeSeries.  An HDF5 soft-link should be used.",
                                         "name": "timeseries",
                                         "target_type": "TimeSeries"
                                     }
                                 ],
-                                "neurodata_type_def": "EpochTimeSeries"
+                                "neurodata_type_def": "EpochTimeSeries",
+                                "quantity": "*"
                             }
                         ],
-                        "neurodata_type_def": "Epoch"
+                        "neurodata_type_def": "Epoch",
+                        "quantity": "*"
                     }
                 ],
                 "name": "epochs"
@@ -1539,24 +1702,24 @@ NWBFile
                 "doc": "Data pushed into the system (eg, video stimulus, sound, voltage, etc) and secondary representations of that data (eg, measurements of something used as a stimulus) COMMENT: This group is read-only after experiment complete and timestamps are corrected to common timebase. Stores both presented stimuli and stimulus templates, the latter in case the same stimulus is presented multiple times, or is pulled from an external stimulus library.MORE_INFO: Stimuli are here defined as any signal that is pushed into the system as part of the experiment (eg, sound, video, voltage, etc). Many different experiments can use the same stimuli, and stimuli can be re-used during an experiment. The stimulus group is organized so that one version of template stimuli can be stored and these be used multiple times. These templates can exist in the present file or can be HDF5-linked to a remote library file.",
                 "groups": [
                     {
-                        "doc": "Template stimuli. COMMENT: Time stamps in templates are based on stimulus design and are relative to the beginning of the stimulus. When templates are used, the stimulus instances must convert presentation times to the experiment's time reference frame.",
-                        "groups": [
-                            {
-                                "doc": "",
-                                "neurodata_type": "TimeSeries"
-                            }
-                        ],
-                        "name": "templates"
-                    },
-                    {
                         "doc": "Stimuli presented during the experiment.",
                         "groups": [
                             {
-                                "doc": "",
+                                "doc": "TimeSeries objects containing data of presented stimuli",
                                 "neurodata_type": "TimeSeries"
                             }
                         ],
                         "name": "presentation"
+                    },
+                    {
+                        "doc": "Template stimuli. COMMENT: Time stamps in templates are based on stimulus design and are relative to the beginning of the stimulus. When templates are used, the stimulus instances must convert presentation times to the experiment's time reference frame.",
+                        "groups": [
+                            {
+                                "doc": "TimeSeries objects containing template data of presented stimuli",
+                                "neurodata_type": "TimeSeries"
+                            }
+                        ],
+                        "name": "templates"
                     }
                 ],
                 "name": "stimulus"
@@ -1564,48 +1727,27 @@ NWBFile
             {
                 "datasets": [
                     {
-                        "doc": "Name of person who performed the experiment.COMMENT: More than one person OK. Can specify roles of different people involved.",
-                        "name": "experimenter",
-                        "type": "text"
-                    },
-                    {
-                        "doc": "Information about virus(es) used in experiments, including virus ID, source, date made, injection location, volume, etc",
-                        "name": "virus",
-                        "type": "text"
-                    },
-                    {
-                        "doc": "Institution(s) where experiment was performed",
-                        "name": "institution",
-                        "type": "text"
-                    },
-                    {
                         "doc": "Lab where experiment was performed",
                         "name": "lab",
-                        "type": "text"
-                    },
-                    {
-                        "doc": "Lab-specific ID for the session.COMMENT: Only 1 session_id per file, with all time aligned to experiment start time.",
-                        "name": "session_id",
-                        "type": "text"
-                    },
-                    {
-                        "doc": "Notes about stimuli, such as how and where presented.COMMENT: Can be from Methods",
-                        "name": "stimulus",
+                        "quantity": "?",
                         "type": "text"
                     },
                     {
                         "doc": "Notes about the experiment.  COMMENT: Things particular to this experiment",
                         "name": "notes",
+                        "quantity": "?",
                         "type": "text"
                     },
                     {
-                        "doc": "Description of slices, including information about preparation thickness, orientation, temperature and bath solution",
-                        "name": "slices",
+                        "doc": "Name of person who performed the experiment.COMMENT: More than one person OK. Can specify roles of different people involved.",
+                        "name": "experimenter",
+                        "quantity": "?",
                         "type": "text"
                     },
                     {
-                        "doc": "Narrative description about surgery/surgeries, including date(s) and who performed surgery. COMMENT: Much can be copied from Methods",
-                        "name": "surgery",
+                        "doc": "General description of the experiment.COMMENT: Can be from Methods",
+                        "name": "experiment_description",
+                        "quantity": "?",
                         "type": "text"
                     },
                     {
@@ -1613,37 +1755,72 @@ NWBFile
                             {
                                 "doc": "Name of script file",
                                 "name": "file_name",
-                                "required": false,
                                 "type": "text"
                             }
                         ],
                         "doc": "Script file used to create this NWB file.",
                         "name": "source_script",
-                        "type": "text"
-                    },
-                    {
-                        "doc": "Notes about data collection and analysis.COMMENT: Can be from Methods",
-                        "name": "data_collection",
-                        "type": "text"
-                    },
-                    {
-                        "doc": "Description of drugs used, including how and when they were administered. COMMENT: Anesthesia(s), painkiller(s), etc., plus dosage, concentration, etc.",
-                        "name": "pharmacology",
-                        "type": "text"
-                    },
-                    {
-                        "doc": "Experimetnal protocol, if applicable.COMMENT: E.g., include IACUC protocol",
-                        "name": "protocol",
+                        "quantity": "?",
                         "type": "text"
                     },
                     {
                         "doc": "Publication information.COMMENT: PMID, DOI, URL, etc. If multiple, concatenate together and describe which is which. such as PMID, DOI, URL, etc",
                         "name": "related_publications",
+                        "quantity": "?",
                         "type": "text"
                     },
                     {
-                        "doc": "General description of the experiment.COMMENT: Can be from Methods",
-                        "name": "experiment_description",
+                        "doc": "Experimetnal protocol, if applicable.COMMENT: E.g., include IACUC protocol",
+                        "name": "protocol",
+                        "quantity": "?",
+                        "type": "text"
+                    },
+                    {
+                        "doc": "Institution(s) where experiment was performed",
+                        "name": "institution",
+                        "quantity": "?",
+                        "type": "text"
+                    },
+                    {
+                        "doc": "Lab-specific ID for the session.COMMENT: Only 1 session_id per file, with all time aligned to experiment start time.",
+                        "name": "session_id",
+                        "quantity": "?",
+                        "type": "text"
+                    },
+                    {
+                        "doc": "Notes about stimuli, such as how and where presented.COMMENT: Can be from Methods",
+                        "name": "stimulus",
+                        "quantity": "?",
+                        "type": "text"
+                    },
+                    {
+                        "doc": "Notes about data collection and analysis.COMMENT: Can be from Methods",
+                        "name": "data_collection",
+                        "quantity": "?",
+                        "type": "text"
+                    },
+                    {
+                        "doc": "Narrative description about surgery/surgeries, including date(s) and who performed surgery. COMMENT: Much can be copied from Methods",
+                        "name": "surgery",
+                        "quantity": "?",
+                        "type": "text"
+                    },
+                    {
+                        "doc": "Description of drugs used, including how and when they were administered. COMMENT: Anesthesia(s), painkiller(s), etc., plus dosage, concentration, etc.",
+                        "name": "pharmacology",
+                        "quantity": "?",
+                        "type": "text"
+                    },
+                    {
+                        "doc": "Information about virus(es) used in experiments, including virus ID, source, date made, injection location, volume, etc",
+                        "name": "virus",
+                        "quantity": "?",
+                        "type": "text"
+                    },
+                    {
+                        "doc": "Description of slices, including information about preparation thickness, orientation, temperature and bath solution",
+                        "name": "slices",
+                        "quantity": "?",
                         "type": "text"
                     }
                 ],
@@ -1652,20 +1829,71 @@ NWBFile
                     {
                         "datasets": [
                             {
+                                "doc": "Description of subject and where subject came from (e.g., breeder, if animal)",
+                                "name": "description",
+                                "quantity": "?",
+                                "type": "text"
+                            },
+                            {
+                                "doc": "Species of subject",
+                                "name": "species",
+                                "quantity": "?",
+                                "type": "text"
+                            },
+                            {
+                                "doc": "Gender of subject",
+                                "name": "sex",
+                                "quantity": "?",
+                                "type": "text"
+                            },
+                            {
+                                "doc": "ID of animal/person used/participating in experiment (lab convention)",
+                                "name": "subject_id",
+                                "quantity": "?",
+                                "type": "text"
+                            },
+                            {
+                                "doc": "Age of subject",
+                                "name": "age",
+                                "quantity": "?",
+                                "type": "text"
+                            },
+                            {
+                                "doc": "Genetic strain COMMENT: If absent, assume Wild Type (WT)",
+                                "name": "genotype",
+                                "quantity": "?",
+                                "type": "text"
+                            },
+                            {
+                                "doc": "Weight at time of experiment, at time of surgery and at other important times",
+                                "name": "weight",
+                                "quantity": "?",
+                                "type": "text"
+                            }
+                        ],
+                        "doc": "Information about the animal or person from which the data was measured.",
+                        "name": "subject",
+                        "quantity": "?"
+                    },
+                    {
+                        "datasets": [
+                            {
                                 "doc": "One of possibly many. Information about device and device description. COMMENT: Name should be informative. Contents can be from Methods.",
-                                "name": "<device_X>*",
+                                "neurodata_type_def": "Device",
+                                "quantity": "*",
                                 "type": "text"
                             }
                         ],
                         "doc": "Description of hardware devices used during experiment. COMMENT: Eg, monitors, ADC boards, microscopes, etc",
-                        "name": "devices"
+                        "name": "devices",
+                        "quantity": "?"
                     },
                     {
                         "datasets": [
                             {
                                 "attributes": [
                                     {
-                                        "doc": "",
+                                        "doc": "Value is Contents of format specification file.",
                                         "name": "help",
                                         "type": "text",
                                         "value": "Contents of format specification file."
@@ -1677,56 +1905,27 @@ NWBFile
                                     }
                                 ],
                                 "doc": "Dataset for storing contents of a specification file for either the core format or an extension.  Name should match name of file.`",
-                                "name": "<specification_file>*",
+                                "neurodata_type_def": "SpecFile",
+                                "quantity": "*",
                                 "type": "text"
                             }
                         ],
                         "doc": "Group for storing format specification files.",
-                        "name": "specifications"
+                        "name": "specifications",
+                        "quantity": "?"
                     },
                     {
                         "datasets": [
                             {
-                                "doc": "Genetic strain COMMENT: If absent, assume Wild Type (WT)",
-                                "name": "genotype",
+                                "doc": "Description of filtering used. COMMENT: Includes filtering type and parameters, frequency fall- off, etc. If this changes between TimeSeries, filter description should be stored as a text attribute for each TimeSeries.  If this changes between TimeSeries, filter description should be stored as a text attribute for each TimeSeries.",
+                                "name": "filtering",
                                 "type": "text"
                             },
                             {
-                                "doc": "Description of subject and where subject came from (e.g., breeder, if animal)",
-                                "name": "description",
+                                "doc": "Identification string for probe, shank or tetrode each electrode resides on. Name should correspond to one of electrode_group_X groups below. COMMENT: There's one entry here for each element in electrode_map. All elements in an electrode group should have a functional association, for example all being on the same planar electrode array, or on the same shank.",
+                                "name": "electrode_group",
                                 "type": "text"
                             },
-                            {
-                                "doc": "Age of subject",
-                                "name": "age",
-                                "type": "text"
-                            },
-                            {
-                                "doc": "Weight at time of experiment, at time of surgery and at other important times",
-                                "name": "weight",
-                                "type": "text"
-                            },
-                            {
-                                "doc": "ID of animal/person used/participating in experiment (lab convention)",
-                                "name": "subject_id",
-                                "type": "text"
-                            },
-                            {
-                                "doc": "Species of subject",
-                                "name": "species",
-                                "type": "text"
-                            },
-                            {
-                                "doc": "Gender of subject",
-                                "name": "sex",
-                                "type": "text"
-                            }
-                        ],
-                        "doc": "",
-                        "name": "subject"
-                    },
-                    {
-                        "datasets": [
                             {
                                 "doc": "Physical location of electrode, (x,y,z in meters) COMMENT: Location of electrodes relative to one another. This records the points in space. If an electrode is moved, it needs a new entry in the electrode map for its new location. Otherwise format doesn't support using the same electrode in a new location, or processing spikes pre/post drift.",
                                 "name": "electrode_map",
@@ -1736,16 +1935,6 @@ NWBFile
                                 "doc": "Impedence of electrodes listed in electrode_map. COMMENT: Text, in the event that impedance is stored as range and not a fixed value",
                                 "name": "impedance",
                                 "type": "text"
-                            },
-                            {
-                                "doc": "Identification string for probe, shank or tetrode each electrode resides on. Name should correspond to one of electrode_group_X groups below. COMMENT: There's one entry here for each element in electrode_map. All elements in an electrode group should have a functional association, for example all being on the same planar electrode array, or on the same shank.",
-                                "name": "electrode_group",
-                                "type": "text"
-                            },
-                            {
-                                "doc": "Description of filtering used. COMMENT: Includes filtering type and parameters, frequency fall- off, etc. If this changes between TimeSeries, filter description should be stored as a text attribute for each TimeSeries.  If this changes between TimeSeries, filter description should be stored as a text attribute for each TimeSeries.",
-                                "name": "filtering",
-                                "type": "text"
                             }
                         ],
                         "doc": "Metadata related to extracellular electrophysiology.",
@@ -1753,13 +1942,13 @@ NWBFile
                             {
                                 "datasets": [
                                     {
-                                        "doc": "Description of probe or shank",
-                                        "name": "description",
+                                        "doc": "Description of probe locationCOMMENT: E.g., stereotaxic coordinates and other data, e.g., drive placement, angle and orientation and tetrode location in drive and tetrode depth",
+                                        "name": "location",
                                         "type": "text"
                                     },
                                     {
-                                        "doc": "Description of probe locationCOMMENT: E.g., stereotaxic coordinates and other data, e.g., drive placement, angle and orientation and tetrode location in drive and tetrode depth",
-                                        "name": "location",
+                                        "doc": "Description of probe or shank",
+                                        "name": "description",
                                         "type": "text"
                                     },
                                     {
@@ -1772,13 +1961,15 @@ NWBFile
                                 "neurodata_type_def": "ElectrodeGroup"
                             }
                         ],
-                        "name": "extracellular_ephys"
+                        "name": "extracellular_ephys",
+                        "quantity": "?"
                     },
                     {
                         "datasets": [
                             {
                                 "doc": "Description of filtering used. COMMENT: Includes filtering type and parameters, frequency fall- off, etc. If this changes between TimeSeries, filter description should be stored as a text attribute for each TimeSeries.",
                                 "name": "filtering",
+                                "quantity": "?",
                                 "type": "text"
                             }
                         ],
@@ -1787,18 +1978,33 @@ NWBFile
                             {
                                 "datasets": [
                                     {
+                                        "doc": "Electrode resistance COMMENT: unit: Ohm",
+                                        "name": "resistance",
+                                        "quantity": "?",
+                                        "type": "text"
+                                    },
+                                    {
                                         "doc": "Initial access resistance",
                                         "name": "initial_access_resistance",
+                                        "quantity": "?",
                                         "type": "text"
                                     },
                                     {
-                                        "doc": "Name(s) of devices in general/devices",
-                                        "name": "device",
+                                        "doc": "Area, layer, comments on estimation, stereotaxis coordinates (if in vivo, etc)",
+                                        "name": "location",
+                                        "quantity": "?",
                                         "type": "text"
                                     },
                                     {
-                                        "doc": "Information about seal used for recording",
-                                        "name": "seal",
+                                        "doc": "Electrode specific filtering.",
+                                        "name": "filtering",
+                                        "quantity": "?",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "doc": "Information about slice used for recording",
+                                        "name": "slice",
+                                        "quantity": "?",
                                         "type": "text"
                                     },
                                     {
@@ -1807,23 +2013,15 @@ NWBFile
                                         "type": "text"
                                     },
                                     {
-                                        "doc": "Information about slice used for recording",
-                                        "name": "slice",
+                                        "doc": "Information about seal used for recording",
+                                        "name": "seal",
+                                        "quantity": "?",
                                         "type": "text"
                                     },
                                     {
-                                        "doc": "Electrode resistance COMMENT: unit: Ohm",
-                                        "name": "resistance",
-                                        "type": "text"
-                                    },
-                                    {
-                                        "doc": "Area, layer, comments on estimation, stereotaxis coordinates (if in vivo, etc)",
-                                        "name": "location",
-                                        "type": "text"
-                                    },
-                                    {
-                                        "doc": "Electrode specific filtering.",
-                                        "name": "filtering",
+                                        "doc": "Name(s) of devices in general/devices",
+                                        "name": "device",
+                                        "quantity": "?",
                                         "type": "text"
                                     }
                                 ],
@@ -1831,18 +2029,14 @@ NWBFile
                                 "neurodata_type_def": "IntracellularElectrode"
                             }
                         ],
-                        "name": "intracellular_ephys"
+                        "name": "intracellular_ephys",
+                        "quantity": "?"
                     },
                     {
                         "doc": "Metadata describing optogenetic stimuluation",
                         "groups": [
                             {
                                 "datasets": [
-                                    {
-                                        "doc": "Description of site",
-                                        "name": "description",
-                                        "type": "text"
-                                    },
                                     {
                                         "doc": "Location of stimulation site",
                                         "name": "location",
@@ -1854,16 +2048,23 @@ NWBFile
                                         "type": "text"
                                     },
                                     {
+                                        "doc": "Description of site",
+                                        "name": "description",
+                                        "type": "text"
+                                    },
+                                    {
                                         "doc": "Name of device in /general/devices",
                                         "name": "device",
                                         "type": "text"
                                     }
                                 ],
                                 "doc": "One of possibly many groups describing an optogenetic stimuluation site. COMMENT: Name is arbitrary but should be meaningful. Name is referenced by OptogeneticSeries",
-                                "neurodata_type_def": "OptogeneticStimulusSite"
+                                "neurodata_type_def": "OptogeneticStimulusSite",
+                                "quantity": "*"
                             }
                         ],
-                        "name": "optogenetics"
+                        "name": "optogenetics",
+                        "quantity": "?"
                     },
                     {
                         "doc": "Metadata related to optophysiology.",
@@ -1871,37 +2072,9 @@ NWBFile
                             {
                                 "datasets": [
                                     {
-                                        "attributes": [
-                                            {
-                                                "doc": "Base unit that coordinates are stored in (e.g., Meters)",
-                                                "name": "unit",
-                                                "type": "text",
-                                                "value": "Meter"
-                                            },
-                                            {
-                                                "doc": "Multiplier to get from stored values to specified unit (e.g., 1e-3 for millimeters)",
-                                                "name": "conversion",
-                                                "type": "float",
-                                                "value": 1.0
-                                            }
-                                        ],
-                                        "doc": "Physical position of each pixel. COMMENT: \"xyz\" represents the position of the pixel relative to the defined coordinate space",
-                                        "name": "manifold",
-                                        "type": "float32"
-                                    },
-                                    {
-                                        "doc": "Rate images are acquired, in Hz.",
-                                        "name": "imaging_rate",
-                                        "type": "text"
-                                    },
-                                    {
-                                        "doc": "Describes position and reference frame of manifold based on position of first element in manifold. For example, text description of anotomical location or vectors needed to rotate to common anotomical axis (eg, AP/DV/ML). COMMENT: This field is necessary to interpret manifold. If manifold is not present then this field is not required",
-                                        "name": "reference_frame",
-                                        "type": "text"
-                                    },
-                                    {
-                                        "doc": "Location of image plane",
-                                        "name": "location",
+                                        "doc": "Description of &lt;image_plane_X&gt;",
+                                        "name": "description",
+                                        "quantity": "?",
                                         "type": "text"
                                     },
                                     {
@@ -1910,22 +2083,51 @@ NWBFile
                                         "type": "text"
                                     },
                                     {
-                                        "doc": "Name of device in /general/devices",
-                                        "name": "device",
-                                        "type": "text"
-                                    },
-                                    {
-                                        "doc": "Description of &lt;image_plane_X&gt;",
-                                        "name": "description",
+                                        "doc": "Location of image plane",
+                                        "name": "location",
                                         "type": "text"
                                     },
                                     {
                                         "doc": "Calcium indicator",
                                         "name": "indicator",
                                         "type": "text"
+                                    },
+                                    {
+                                        "doc": "Rate images are acquired, in Hz.",
+                                        "name": "imaging_rate",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "attributes": [
+                                            {
+                                                "doc": "Value is 1.0",
+                                                "name": "conversion",
+                                                "type": "float",
+                                                "value": 1.0
+                                            },
+                                            {
+                                                "doc": "Value is Meter",
+                                                "name": "unit",
+                                                "type": "text",
+                                                "value": "Meter"
+                                            }
+                                        ],
+                                        "doc": "Physical position of each pixel. COMMENT: \"xyz\" represents the position of the pixel relative to the defined coordinate space",
+                                        "name": "manifold",
+                                        "type": "float32"
+                                    },
+                                    {
+                                        "doc": "Describes position and reference frame of manifold based on position of first element in manifold. For example, text description of anotomical location or vectors needed to rotate to common anotomical axis (eg, AP/DV/ML). COMMENT: This field is necessary to interpret manifold. If manifold is not present then this field is not required",
+                                        "name": "reference_frame",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "doc": "Name of device in /general/devices",
+                                        "name": "device",
+                                        "type": "text"
                                     }
                                 ],
-                                "doc": "",
+                                "doc": "One of possibly many groups describing an imaging plane. COMMENT: Name is arbitrary but should be meaningful. It is referenced by TwoPhotonSeries and also ImageSegmentation and DfOverF interfaces",
                                 "groups": [
                                     {
                                         "datasets": [
@@ -1944,10 +2146,12 @@ NWBFile
                                         "neurodata_type_def": "OpticalChannel"
                                     }
                                 ],
-                                "neurodata_type_def": "ImagingPlane"
+                                "neurodata_type_def": "ImagingPlane",
+                                "quantity": "*"
                             }
                         ],
-                        "name": "optophysiology"
+                        "name": "optophysiology",
+                        "quantity": "?"
                     }
                 ],
                 "name": "general"
@@ -1987,7 +2191,7 @@ OpticalSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Time-series image stack for optical recording or stimulus",
                 "name": "help",
                 "type": "text",
                 "value": "Time-series image stack for optical recording or stimulus"
@@ -1995,18 +2199,21 @@ OpticalSeries
         ],
         "datasets": [
             {
-                "doc": "Width, height and depto of image, or imaged area (meters).",
-                "name": "field_of_view",
+                "doc": "Distance from camera/monitor to target/eye.",
+                "name": "distance",
+                "quantity": "?",
                 "type": "float32"
             },
             {
                 "doc": "Description of image relative to some reference frame (e.g., which way is up). Must also specify frame of reference.",
                 "name": "orientation",
+                "quantity": "?",
                 "type": "text"
             },
             {
-                "doc": "Distance from camera/monitor to target/eye.",
-                "name": "distance",
+                "doc": "Width, height and depto of image, or imaged area (meters).",
+                "name": "field_of_view",
+                "quantity": "?",
                 "type": "float32"
             }
         ],
@@ -2023,7 +2230,7 @@ OptogeneticSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Optogenetic stimulus",
                 "name": "help",
                 "type": "text",
                 "value": "Optogenetic stimulus"
@@ -2033,7 +2240,7 @@ OptogeneticSeries
             {
                 "attributes": [
                     {
-                        "doc": "",
+                        "doc": "Value is watt",
                         "name": "unit",
                         "type": "text",
                         "value": "watt"
@@ -2064,11 +2271,6 @@ OptogeneticStimulusSite
     {
         "datasets": [
             {
-                "doc": "Description of site",
-                "name": "description",
-                "type": "text"
-            },
-            {
                 "doc": "Location of stimulation site",
                 "name": "location",
                 "type": "text"
@@ -2079,13 +2281,19 @@ OptogeneticStimulusSite
                 "type": "text"
             },
             {
+                "doc": "Description of site",
+                "name": "description",
+                "type": "text"
+            },
+            {
                 "doc": "Name of device in /general/devices",
                 "name": "device",
                 "type": "text"
             }
         ],
         "doc": "One of possibly many groups describing an optogenetic stimuluation site. COMMENT: Name is arbitrary but should be meaningful. Name is referenced by OptogeneticSeries",
-        "neurodata_type_def": "OptogeneticStimulusSite"
+        "neurodata_type_def": "OptogeneticStimulusSite",
+        "quantity": "*"
     }
 
 PatchClampSeries
@@ -2096,7 +2304,7 @@ PatchClampSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Superclass definition for patch-clamp data",
                 "name": "help",
                 "type": "text",
                 "value": "Superclass definition for patch-clamp data"
@@ -2111,6 +2319,7 @@ PatchClampSeries
             {
                 "doc": "Units: Volt/Amp (v-clamp) or Volt/Volt (c-clamp)",
                 "name": "gain",
+                "quantity": "?",
                 "type": "float"
             }
         ],
@@ -2134,6 +2343,12 @@ PlaneSegmentation
     {
         "datasets": [
             {
+                "doc": "Description of image plane, recording wavelength, depth, etc",
+                "name": "description",
+                "quantity": "?",
+                "type": "text"
+            },
+            {
                 "doc": "Name of imaging plane under general/optophysiology",
                 "name": "imaging_plane_name",
                 "type": "text"
@@ -2142,20 +2357,15 @@ PlaneSegmentation
                 "doc": "List of ROIs in this imaging plane",
                 "name": "roi_list",
                 "type": "text"
-            },
-            {
-                "doc": "Description of image plane, recording wavelength, depth, etc",
-                "name": "description",
-                "type": "text"
             }
         ],
-        "doc": "",
+        "doc": "Group name is human-readable description of imaging plane",
         "groups": [
             {
                 "doc": "Stores image stacks segmentation mask apply to.",
                 "groups": [
                     {
-                        "doc": "",
+                        "doc": "One or more image stacks that the masks apply to (can be one-element stack)",
                         "neurodata_type": "ImageSeries"
                     }
                 ],
@@ -2164,9 +2374,9 @@ PlaneSegmentation
             {
                 "datasets": [
                     {
-                        "doc": "Weight of each pixel listed in pix_mask",
-                        "name": "pix_mask_weight",
-                        "type": "float32"
+                        "doc": "List of pixels (x,y) that compose the mask",
+                        "name": "pix_mask",
+                        "type": "uint16"
                     },
                     {
                         "doc": "Description of this ROI.",
@@ -2174,21 +2384,23 @@ PlaneSegmentation
                         "type": "text"
                     },
                     {
-                        "doc": "List of pixels (x,y) that compose the mask",
-                        "name": "pix_mask",
-                        "type": "uint16"
-                    },
-                    {
                         "doc": "ROI mask, represented in 2D ([y][x]) intensity image",
                         "name": "img_mask",
+                        "type": "float32"
+                    },
+                    {
+                        "doc": "Weight of each pixel listed in pix_mask",
+                        "name": "pix_mask_weight",
                         "type": "float32"
                     }
                 ],
                 "doc": "Name of ROI",
-                "neurodata_type_def": "ROI"
+                "neurodata_type_def": "ROI",
+                "quantity": "*"
             }
         ],
-        "neurodata_type_def": "PlaneSegmentation"
+        "neurodata_type_def": "PlaneSegmentation",
+        "quantity": "*"
     }
 
 Position
@@ -2199,7 +2411,7 @@ Position
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Position data, whether along the x, xy or xyz axis",
                 "name": "help",
                 "type": "text",
                 "value": "Position data, whether along the x, xy or xyz axis"
@@ -2208,7 +2420,7 @@ Position
         "doc": "Position data, whether along the x, x/y or x/y/z axis.",
         "groups": [
             {
-                "doc": "",
+                "doc": "SpatialSeries object containing position data",
                 "neurodata_type": "SpatialSeries"
             }
         ],
@@ -2225,7 +2437,7 @@ PupilTracking
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Eye-tracking data, representing pupil size",
                 "name": "help",
                 "type": "text",
                 "value": "Eye-tracking data, representing pupil size"
@@ -2234,7 +2446,7 @@ PupilTracking
         "doc": "Eye-tracking data, representing pupil size.",
         "groups": [
             {
-                "doc": "",
+                "doc": "TimeSeries object containing time series data on pupil size",
                 "neurodata_type": "TimeSeries"
             }
         ],
@@ -2251,9 +2463,9 @@ ROI
     {
         "datasets": [
             {
-                "doc": "Weight of each pixel listed in pix_mask",
-                "name": "pix_mask_weight",
-                "type": "float32"
+                "doc": "List of pixels (x,y) that compose the mask",
+                "name": "pix_mask",
+                "type": "uint16"
             },
             {
                 "doc": "Description of this ROI.",
@@ -2261,18 +2473,19 @@ ROI
                 "type": "text"
             },
             {
-                "doc": "List of pixels (x,y) that compose the mask",
-                "name": "pix_mask",
-                "type": "uint16"
-            },
-            {
                 "doc": "ROI mask, represented in 2D ([y][x]) intensity image",
                 "name": "img_mask",
+                "type": "float32"
+            },
+            {
+                "doc": "Weight of each pixel listed in pix_mask",
+                "name": "pix_mask_weight",
                 "type": "float32"
             }
         ],
         "doc": "Name of ROI",
-        "neurodata_type_def": "ROI"
+        "neurodata_type_def": "ROI",
+        "quantity": "*"
     }
 
 RoiResponseSeries
@@ -2283,7 +2496,7 @@ RoiResponseSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is ROI responses over an imaging plane. Each row in data[] should correspond to the signal from one ROI",
                 "name": "help",
                 "type": "text",
                 "value": "ROI responses over an imaging plane. Each row in data[] should correspond to the signal from one ROI"
@@ -2309,7 +2522,7 @@ RoiResponseSeries
         "doc": "ROI responses over an imaging plane. Each row in data[] should correspond to the signal from one ROI.",
         "links": [
             {
-                "doc": "",
+                "doc": "HDF5 link to image segmentation module defining ROIs.",
                 "name": "segmentation_interface",
                 "target_type": "ImageSegmentation"
             }
@@ -2326,7 +2539,7 @@ SpatialSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Stores points in space over time. The data[] array structure is [num samples][num spatial dimensions]",
                 "name": "help",
                 "type": "text",
                 "value": "Stores points in space over time. The data[] array structure is [num samples][num spatial dimensions]"
@@ -2336,7 +2549,7 @@ SpatialSeries
             {
                 "attributes": [
                     {
-                        "doc": "",
+                        "doc": "Value is meter",
                         "name": "unit",
                         "type": "text",
                         "value": "meter"
@@ -2349,12 +2562,38 @@ SpatialSeries
             {
                 "doc": "Description defining what exactly 'straight-ahead' means.",
                 "name": "reference_frame",
+                "quantity": "?",
                 "type": "text"
             }
         ],
         "doc": "Direction, e.g., of gaze or travel, or position. The TimeSeries::data field is a 2D array storing position or direction relative to some reference frame. Array structure: [num measurements] [num dimensions]. Each SpatialSeries has a text dataset reference_frame that indicates the zero-position, or the zero-axes for direction. For example, if representing gaze direction, \"straight-ahead\" might be a specific pixel on the monitor, or some other point in space. For position data, the 0,0 point might be the top-left corner of an enclosure, as viewed from the tracking camera. The unit of data will indicate how to interpret SpatialSeries values.",
         "neurodata_type": "TimeSeries",
         "neurodata_type_def": "SpatialSeries"
+    }
+
+SpecFile
+--------
+
+.. code-block:: python
+
+    {
+        "attributes": [
+            {
+                "doc": "Value is Contents of format specification file.",
+                "name": "help",
+                "type": "text",
+                "value": "Contents of format specification file."
+            },
+            {
+                "doc": "Namespaces defined in the file",
+                "name": "namespaces",
+                "type": "text"
+            }
+        ],
+        "doc": "Dataset for storing contents of a specification file for either the core format or an extension.  Name should match name of file.`",
+        "neurodata_type_def": "SpecFile",
+        "quantity": "*",
+        "type": "text"
     }
 
 SpikeEventSeries
@@ -2365,7 +2604,7 @@ SpikeEventSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Snapshots of spike events from data.",
                 "name": "help",
                 "type": "text",
                 "value": "Snapshots of spike events from data."
@@ -2375,7 +2614,7 @@ SpikeEventSeries
             {
                 "attributes": [
                     {
-                        "doc": "",
+                        "doc": "Value is volt",
                         "name": "unit",
                         "type": "text",
                         "value": "volt"
@@ -2404,18 +2643,20 @@ SpikeUnit
                 "type": "text"
             },
             {
+                "doc": "Name, path or description of where unit times originated. This is necessary only if the info here differs from or is more fine-grained than the interface's source field",
+                "name": "source",
+                "quantity": "?",
+                "type": "text"
+            },
+            {
                 "doc": "Spike time for the units (exact or estimated)",
                 "name": "times",
                 "type": "float64!"
-            },
-            {
-                "doc": "Name, path or description of where unit times originated. This is necessary only if the info here differs from or is more fine-grained than the interface's source field",
-                "name": "source",
-                "type": "text"
             }
         ],
         "doc": "Group storing times for &lt;unit_N&gt;.",
-        "neurodata_type_def": "SpikeUnit"
+        "neurodata_type_def": "SpikeUnit",
+        "quantity": "+"
     }
 
 TimeSeries
@@ -2426,24 +2667,8 @@ TimeSeries
     {
         "attributes": [
             {
-                "doc": "List of fields that are HDF5 external links.COMMENT: Only present if one or more datasets is set to an HDF5 external link.",
-                "name": "extern_fields",
-                "type": "text"
-            },
-            {
                 "doc": "A sorted list of the paths of all TimeSeries that share a link to the same timestamps field.  Example element of list: \"/acquisition/timeseries/lick_trace\" COMMENT: Attribute is only present if links are present. List should include the path to this TimeSeries also.",
                 "name": "timestamp_link",
-                "type": "text"
-            },
-            {
-                "doc": "The class-hierarchy of this TimeSeries, with one entry in the array for each ancestor. An alternative and equivalent description is that this TimeSeries object contains the datasets defined for all of the TimeSeries classes listed. The class hierarchy is described more fully below. COMMENT: For example: [0]=TimeSeries, [1]=ElectricalSeries [2]=PatchClampSeries. The hierarchical order should be preserved in the array -- i.e., the parent object of subclassed element N in the array should be element N-1",
-                "name": "ancestry",
-                "type": "text",
-                "value": "TimeSeries"
-            },
-            {
-                "doc": "A sorted list of the paths of all TimeSeries that share a link to the same data field. Example element of list: \"/stimulus/presentation/Sweep_0\"` COMMENT: Attribute is only present if links are present. List should include the path to this TimeSeries also.",
-                "name": "data_link",
                 "type": "text"
             },
             {
@@ -2452,8 +2677,24 @@ TimeSeries
                 "type": "text"
             },
             {
-                "doc": "Name of TimeSeries or Modules that serve as the source for the data contained here. It can also be the name of a device, for stimulus or acquisition data",
-                "name": "source",
+                "doc": "Value is TimeSeries",
+                "name": "ancestry",
+                "type": "text",
+                "value": "TimeSeries"
+            },
+            {
+                "doc": "List of fields that are HDF5 external links.COMMENT: Only present if one or more datasets is set to an HDF5 external link.",
+                "name": "extern_fields",
+                "type": "text"
+            },
+            {
+                "doc": "Description of TimeSeries",
+                "name": "description",
+                "type": "text"
+            },
+            {
+                "doc": "A sorted list of the paths of all TimeSeries that share a link to the same data field. Example element of list: \"/stimulus/presentation/Sweep_0\"` COMMENT: Attribute is only present if links are present. List should include the path to this TimeSeries also.",
+                "name": "data_link",
                 "type": "text"
             },
             {
@@ -2462,22 +2703,42 @@ TimeSeries
                 "type": "text"
             },
             {
-                "doc": "Short description indicating what this type of TimeSeries stores.",
+                "doc": "Name of TimeSeries or Modules that serve as the source for the data contained here. It can also be the name of a device, for stimulus or acquisition data",
+                "name": "source",
+                "type": "text"
+            },
+            {
+                "doc": "Value is General time series object",
                 "name": "help",
                 "type": "text",
                 "value": "General time series object"
-            },
-            {
-                "doc": "Description of TimeSeries",
-                "name": "description",
-                "type": "text"
             }
         ],
         "datasets": [
             {
                 "doc": "Description of each control value. COMMENT: Array length should be as long as the highest number in control minus one, generating an zero-based indexed array for control values.",
                 "name": "control_description",
+                "quantity": "?",
                 "type": "text"
+            },
+            {
+                "attributes": [
+                    {
+                        "doc": "Value is Seconds",
+                        "name": "unit",
+                        "type": "text",
+                        "value": "Seconds"
+                    },
+                    {
+                        "doc": "Sampling rate, in Hz COMMENT: Rate information is stored in Hz",
+                        "name": "rate",
+                        "type": "float32!"
+                    }
+                ],
+                "doc": "The timestamp of the first sample. COMMENT: When timestamps are uniformly spaced, the timestamp of the first sample can be specified and all subsequent ones calculated from the sampling rate.",
+                "name": "starting_time",
+                "quantity": "?",
+                "type": "float64!"
             },
             {
                 "doc": "Number of samples in data, or number of image frames. COMMENT: This is important if the length of timestamp and data are different, such as for externally stored stimulus image stacks",
@@ -2487,16 +2748,16 @@ TimeSeries
             {
                 "attributes": [
                     {
-                        "doc": "The number of samples between each timestamp. COMMENT: Presently this value is restricted to 1 (ie, a timestamp for each sample)",
-                        "name": "interval",
-                        "type": "int32",
-                        "value": 1
-                    },
-                    {
-                        "doc": "The string \"Seconds\" COMMENT: All timestamps in the file are stored in seconds. Specifically, this is the number of seconds since the start of the experiment (i.e., since session_start_time)",
+                        "doc": "Value is Seconds",
                         "name": "unit",
                         "type": "text",
                         "value": "Seconds"
+                    },
+                    {
+                        "doc": "Value is 1",
+                        "name": "interval",
+                        "type": "int32",
+                        "value": 1
                     }
                 ],
                 "doc": "Timestamps for samples stored in data.COMMENT: Timestamps here have all been corrected to the common experiment master-clock. Time is stored as seconds and all timestamps are relative to experiment start time.",
@@ -2506,39 +2767,21 @@ TimeSeries
             {
                 "attributes": [
                     {
-                        "doc": "Sampling rate, in Hz COMMENT: Rate information is stored in Hz",
-                        "name": "rate",
-                        "type": "float32!"
+                        "doc": "Value is 1.0",
+                        "name": "conversion",
+                        "type": "float32!",
+                        "value": 1.0
                     },
-                    {
-                        "doc": "The string \"Seconds\"COMMENT: All timestamps in the file are stored in seconds. Specifically, this is the number of seconds since the start of the experiment (i.e., since session_start_time)",
-                        "name": "unit",
-                        "type": "text",
-                        "value": "Seconds"
-                    }
-                ],
-                "doc": "The timestamp of the first sample. COMMENT: When timestamps are uniformly spaced, the timestamp of the first sample can be specified and all subsequent ones calculated from the sampling rate.",
-                "name": "starting_time",
-                "type": "float64!"
-            },
-            {
-                "attributes": [
                     {
                         "doc": "The base unit of measure used to store data. This should be in the SI unit. COMMENT: This is the SI unit (when appropriate) of the stored data, such as Volts. If the actual data is stored in millivolts, the field 'conversion' below describes how to convert the data to the specified SI unit.",
                         "name": "unit",
                         "type": "text"
                     },
                     {
-                        "doc": "Smallest meaningful difference between values in data, stored in the specified by unit. COMMENT: E.g., the change in value of the least significant bit, or a larger number if signal noise is known to be present. If unknown, use NaN",
+                        "doc": "Value is 0.0",
                         "name": "resolution",
                         "type": "float32!",
                         "value": 0.0
-                    },
-                    {
-                        "doc": "Scalar to multiply each element in data to convert it to the specified unit",
-                        "name": "conversion",
-                        "type": "float32!",
-                        "value": 1.0
                     }
                 ],
                 "doc": "Data values. Can also store binary data (eg, image frames) COMMENT: This field may be a link to data stored in an external file, especially in the case of raw data.",
@@ -2548,6 +2791,7 @@ TimeSeries
             {
                 "doc": "Numerical labels that apply to each element in data[]. COMMENT: Optional field. If present, the control array should have the same number of elements as data[].",
                 "name": "control",
+                "quantity": "?",
                 "type": "uint8"
             }
         ],
@@ -2555,7 +2799,8 @@ TimeSeries
         "groups": [
             {
                 "doc": "Lab specific time and sync information as provided directly from hardware devices and that is necessary for aligning all acquired time information to a common timebase. The timestamp array stores time in the common timebase. COMMENT: This group will usually only be populated in TimeSeries that are stored external to the NWB file, in files storing raw data. Once timestamp data is calculated, the contents of 'sync' are mostly for archival purposes.",
-                "name": "sync"
+                "name": "sync",
+                "quantity": "?"
             }
         ],
         "neurodata_type_def": "TimeSeries"
@@ -2569,7 +2814,7 @@ TwoPhotonSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Image stack recorded from 2-photon microscope",
                 "name": "help",
                 "type": "text",
                 "value": "Image stack recorded from 2-photon microscope"
@@ -2577,18 +2822,21 @@ TwoPhotonSeries
         ],
         "datasets": [
             {
-                "doc": "Lines imaged per second. This is also stored in /general/optophysiology but is kept here as it is useful information for analysis, and so good to be stored w/ the actual data.",
-                "name": "scan_line_rate",
+                "doc": "Photomultiplier gain",
+                "name": "pmt_gain",
+                "quantity": "?",
                 "type": "float32"
             },
             {
-                "doc": "Photomultiplier gain",
-                "name": "pmt_gain",
+                "doc": "Lines imaged per second. This is also stored in /general/optophysiology but is kept here as it is useful information for analysis, and so good to be stored w/ the actual data.",
+                "name": "scan_line_rate",
+                "quantity": "?",
                 "type": "float32"
             },
             {
                 "doc": "Width, height and depth of image, or imaged area (meters).",
                 "name": "field_of_view",
+                "quantity": "?",
                 "type": "float32"
             }
         ],
@@ -2612,7 +2860,7 @@ UnitTimes
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Estimated spike times from a single unit",
                 "name": "help",
                 "type": "text",
                 "value": "Estimated spike times from a single unit"
@@ -2635,18 +2883,20 @@ UnitTimes
                         "type": "text"
                     },
                     {
+                        "doc": "Name, path or description of where unit times originated. This is necessary only if the info here differs from or is more fine-grained than the interface's source field",
+                        "name": "source",
+                        "quantity": "?",
+                        "type": "text"
+                    },
+                    {
                         "doc": "Spike time for the units (exact or estimated)",
                         "name": "times",
                         "type": "float64!"
-                    },
-                    {
-                        "doc": "Name, path or description of where unit times originated. This is necessary only if the info here differs from or is more fine-grained than the interface's source field",
-                        "name": "source",
-                        "type": "text"
                     }
                 ],
                 "doc": "Group storing times for &lt;unit_N&gt;.",
-                "neurodata_type_def": "SpikeUnit"
+                "neurodata_type_def": "SpikeUnit",
+                "quantity": "+"
             }
         ],
         "name": "UnitTimes",
@@ -2662,7 +2912,7 @@ VoltageClampSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Current recorded from cell during voltage-clamp recording",
                 "name": "help",
                 "type": "text",
                 "value": "Current recorded from cell during voltage-clamp recording"
@@ -2672,7 +2922,7 @@ VoltageClampSeries
             {
                 "attributes": [
                     {
-                        "doc": "",
+                        "doc": "Value is pecent",
                         "name": "unit",
                         "type": "text",
                         "value": "pecent"
@@ -2680,64 +2930,13 @@ VoltageClampSeries
                 ],
                 "doc": "Unit: %",
                 "name": "resistance_comp_correction",
+                "quantity": "?",
                 "type": "float32"
             },
             {
                 "attributes": [
                     {
-                        "doc": "",
-                        "name": "unit",
-                        "type": "text",
-                        "value": "Farad"
-                    }
-                ],
-                "doc": "Unit: Farad",
-                "name": "capacitance_fast",
-                "type": "float32"
-            },
-            {
-                "attributes": [
-                    {
-                        "doc": "",
-                        "name": "unit",
-                        "type": "text",
-                        "value": "Farad"
-                    }
-                ],
-                "doc": "Unit: Farad",
-                "name": "capacitance_slow",
-                "type": "float32"
-            },
-            {
-                "attributes": [
-                    {
-                        "doc": "",
-                        "name": "unit",
-                        "type": "text",
-                        "value": "pecent"
-                    }
-                ],
-                "doc": "Unit: %",
-                "name": "resistance_comp_prediction",
-                "type": "float32"
-            },
-            {
-                "attributes": [
-                    {
-                        "doc": "",
-                        "name": "unit",
-                        "type": "text",
-                        "value": "Hz"
-                    }
-                ],
-                "doc": "Unit: Hz",
-                "name": "resistance_comp_bandwidth",
-                "type": "float32"
-            },
-            {
-                "attributes": [
-                    {
-                        "doc": "",
+                        "doc": "Value is Ohm",
                         "name": "unit",
                         "type": "text",
                         "value": "Ohm"
@@ -2745,12 +2944,69 @@ VoltageClampSeries
                 ],
                 "doc": "Unit: Ohm",
                 "name": "whole_cell_series_resistance_comp",
+                "quantity": "?",
                 "type": "float32"
             },
             {
                 "attributes": [
                     {
-                        "doc": "",
+                        "doc": "Value is pecent",
+                        "name": "unit",
+                        "type": "text",
+                        "value": "pecent"
+                    }
+                ],
+                "doc": "Unit: %",
+                "name": "resistance_comp_prediction",
+                "quantity": "?",
+                "type": "float32"
+            },
+            {
+                "attributes": [
+                    {
+                        "doc": "Value is Farad",
+                        "name": "unit",
+                        "type": "text",
+                        "value": "Farad"
+                    }
+                ],
+                "doc": "Unit: Farad",
+                "name": "capacitance_fast",
+                "quantity": "?",
+                "type": "float32"
+            },
+            {
+                "attributes": [
+                    {
+                        "doc": "Value is Farad",
+                        "name": "unit",
+                        "type": "text",
+                        "value": "Farad"
+                    }
+                ],
+                "doc": "Unit: Farad",
+                "name": "capacitance_slow",
+                "quantity": "?",
+                "type": "float32"
+            },
+            {
+                "attributes": [
+                    {
+                        "doc": "Value is Hz",
+                        "name": "unit",
+                        "type": "text",
+                        "value": "Hz"
+                    }
+                ],
+                "doc": "Unit: Hz",
+                "name": "resistance_comp_bandwidth",
+                "quantity": "?",
+                "type": "float32"
+            },
+            {
+                "attributes": [
+                    {
+                        "doc": "Value is Farad",
                         "name": "unit",
                         "type": "text",
                         "value": "Farad"
@@ -2758,6 +3014,7 @@ VoltageClampSeries
                 ],
                 "doc": "Unit: Farad",
                 "name": "whole_cell_capacitance_comp",
+                "quantity": "?",
                 "type": "float32"
             }
         ],
@@ -2774,7 +3031,7 @@ VoltageClampStimulusSeries
     {
         "attributes": [
             {
-                "doc": "",
+                "doc": "Value is Stimulus voltage applied during voltage clamp recording",
                 "name": "help",
                 "type": "text",
                 "value": "Stimulus voltage applied during voltage clamp recording"
