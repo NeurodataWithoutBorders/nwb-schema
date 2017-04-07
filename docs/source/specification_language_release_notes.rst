@@ -21,7 +21,8 @@ Summary
     * Removed `<...>` name identifier (replaced by empty ```name``` key)
     * Added ```groups``` key
     * Added ```datasets``` key
-    * Removed `/` flag in keys to identify groups (replace by ```groups``` and ```datasets``` keys)
+    * Removed `/` flag in keys to identify groups (replaced by ```groups``` and ```datasets``` keys)
+    * Removed ```\_description``` key. The key is no longer need because name conflicts with datasets and groups are no longer possible since the name is no longer encoded in the key.
 * Improve human readability:
     * Add support for YAML in addition to JSON
 

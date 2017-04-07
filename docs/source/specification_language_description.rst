@@ -260,14 +260,6 @@ group specification above (“description”, “\_description”, “attributes
 The value of the group specification “description” key is a string
 describing the group.
 
-``\_description``
-^^^^^^^^^^^^^^^^^
-
-The key “\_description” (has an underscore in front) is used in place of
-“description” in case the key “description” is used to specify a dataset
-in the group named “description”.
-
-
 ``quantity``
 ^^^^^^^^^^^^
 
