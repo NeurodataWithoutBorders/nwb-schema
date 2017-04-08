@@ -1,4 +1,6 @@
-**# TODO This document needs to be updated to reflect changes made in version 1.2a**
+.. attention::
+
+    TODO This document needs to be updated to reflect changes made in version 1.2a**
 
 Introduction
 ============
@@ -16,8 +18,15 @@ JSON-like syntax, which can easily be converted to JSON. Python is used
 rather than pure JSON because python allows inserting comments and also
 provides more readable ways to include long strings.
 
-Schema Id (or ‘namespace’)
---------------------------
+Specification of a schema
+=========================
+
+.. attention::
+
+    TODO: Update description of the use of namespaces
+
+Schema Id: ``namespace``
+------------------------
 
 The top-level of a format specification has the following form:
 
@@ -46,7 +55,7 @@ identifier are passed into the API software when the software is
 initialized.
 
 Top level components
---------------------
+^^^^^^^^^^^^^^^^^^^^
 
 The specification associated with each schema-id is a Python dictionary
 with three keys: info, schema, and doc. e.g.:
@@ -279,81 +288,167 @@ then the group (or dataset) is optional and otherwise it is required.
 |  ```1```, ```2```, ```3```, ... |     ``n``         |  ``n``           |  Exactly ``n`` instances |
 +---------------------------------+-------------------+------------------+--------------------------+
 
-**Change Note:** The ``quantity`` key was added in version 1.2a of the specification language as a replacement of the
-```quantity_flag``` that was used to encode quantity information via a regular expression as part of the
-main key of the group.
+.. note::
+
+    The ``quantity`` key was added in version 1.2a of the specification language as a replacement of the
+    ```quantity_flag``` that was used to encode quantity information via a regular expression as part of the
+    main key of the group.
 
 
 ``\_required``
 ^^^^^^^^^^^^^^
 
-The <required specification> is a dictionary with each key an identifier
-associated with some condition, and each value a list of tuples. First
-element of each tuple is a string (called the “condition string”) that
-contains a logical expression that has variables matching members of the
-group. The condition string specifies which combinations of group
-members are required. The second element of each tuple is an error
-message that is displayed if the requirements of the condition string
-are not met. An example required specification is shown below:
+.. attention::
 
-.. code-block:: python
+   TODO: The ``\_required`` or an improved version, thereof, will be added agai.
 
-    { "start\_time" :
-
-    ["starting\_time XOR timestamps",
-
-    "Either starting\_time or timestamps must be present, but not both."],
-
-    "control":
-
-    ["(control AND control\_description) OR
-
-    (NOT control AND NOT control\_description)",
-
-    ("If either control or control\_description are present, then "
-
-    "both must be present.")]}
-
-``Exclude\_in``
-^^^^^^^^^^^^^^^
-
-The ``exclude\_in`` specification is used to specify locations in the HDF5
-file under which particular members of this group should not be present
-(or be optional). It has the form:
-
-.. code-block:: python
-
-    {"/path1": ["id1", "id2", "id3", ...], "/path2": [<ids for path2], ... }
-
-Each id is the id of a member group or dataset. The id in the list can
-be followed by characters "!”, "^”, "?” to respectively indicate that
-the id must not be present, should not be present or is optional under
-the specified path. If the last character is not “!”, “^” or “?” then
-“!” is assumed. An example is:
-
-.. code-block:: python
-
-    "\_exclude\_in": {
-
-    "/stimulus/templates":
-
-    [ "starting\_time!","timestamps!", "num\_samples?"] },
-
-``\_properties``
-^^^^^^^^^^^^^^^^
-
-The “\_properties” specification is optional. If present, the value must
-be a dictionary containing any combination of the keys: “abstract”,
-“closed” and “create”. The value of included key must be type boolean
-(True or False). “abstract” has value True indicates that this group is
-“abstract” (must be subclassed via the “merge” directive). “closed” is
-True indicates that ” additional members (groups and datasets beyond
-what are defined in the specification) are not allowed in this group.
-“create” is True to indicate that an API should automatically create
-this group if the group is specified as being required.
 
 ``attributes``
 ^^^^^^^^^^^^^^
+
+List of attribute specifications describing the attributes of the group. See Section :ref:`attribute-spec` for details.
+
+.. code-block:: yaml
+
+    attributes:
+    - ...
+
+
+``neurodata_type`` and ``neurodata_type_def``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The concept of a neurodata_type is similar to the concept of Class in object-oriented programming.
+A neurodata_type is a unique identifier for a specific type of group (or dataset) in a specfication.
+By assigning a neurodata_type to a group (or dataset) enables others to reuse that type by inclusion or
+inheritance (*Note:* only groups (or datasets) with a specified type can be reused).
+
+- ```neurodata_type_def```: This key is used to define (i.e, create) a new neurodata_type and to assign that type to
+  the current group (or dataset).
+
+- ```neurodata_type```: The value of the ``neurodata_type`` key describes the base type
+  of a group (or dataset). The value must be an existing type.
+
+Both ```neurodata_type_def``` and ```neurodata_type``` are optional keys.
+To enable the unique identification, every group (and dataset) must either have a fixed name and/or a
+unique neurodata_type. This means, any group (or dataset) with a variable name must have a unique neurodata_type.
+
+
+**Reusing existing neurodata_types**
+
+The combination of ```neurodata_type``` and ```neurodata_type_def``` provides an easy-to-use mechanism for
+reuse of type specifications via inheritance (i.e., merge and extension of specifications) and inclusion (i.e,
+embedding of an existing type as a component, such as a subgroup, of a new specification). Here an overview
+of all relevant cases:
+
++--------------------+------------------------+------------------------------------------------------------------------+
+| ``neurodata_type`` | ``neurodata_type_def`` |  Description                                                           |
++====================+========================+========================================================================+
+|not set             | not set                |  define a standard dataset or group without a type                     |
++--------------------+------------------------+------------------------------------------------------------------------+
+|not set             | set                    |  create a new neurodata_type from scratch                              |
++--------------------+------------------------+------------------------------------------------------------------------+
+|set                 | not set                |  include (reuse) neurodata_type without creating a new one (include)   |
++--------------------+------------------------+------------------------------------------------------------------------+
+|set                 | set                    |  merge/extend neurodata_type and create a new type (inheritance/merge) |
++--------------------+------------------------+------------------------------------------------------------------------+
+
+**Example: Reuse by inheritance**
+
+.. code-block:: yaml
+
+    # Abbreviated YAML specification
+    -   neurodata_type_def: Series
+        datasets:
+        - name: A
+
+    -   neurodata_type_def: MySeries
+        neurodata_type: Series
+        datasets:
+        - name: B
+
+The result of this is that ``MySeries`` inherits dataset ``A`` from ``Series`` and adds its own dataset ``B``, i.e.,
+if we resolve the inheritance, then the above is equivalent to:
+
+.. code-block:: yaml
+
+    # Result:
+    -   neurodata_type_def: MySeries
+        datasets:
+        - name: A
+        - name: B
+
+**Example: Reuse by inclusion**
+
+
+.. code-block:: yaml
+
+    # Abbreviated YAML specification
+    -   neurodata_type_def: Series
+        datasets:
+        - name: A
+
+    -   neurodata_type_def: MySeries
+        groups:
+        - neurodata_type: Series
+
+
+The result of this is that ``MySeries`` now includes a group of type ``Series``, i.e., the above is equivalent to:
+
+.. code-block:: yaml
+
+   -  neurodata_type_def: MySeries
+      groups:
+      - neurodata_type: Series
+        datasets:
+          - name: A
+
+.. note::
+
+    The keys ```neurodata_type_def`` and  ```neurodata_type``` were introduced in version 1.2a to
+    simplify the concepts of  inclusion and merging of specifications and replaced the
+    keys ```include``` and ```merge```(and ```merge+```).
+
+
+``links``
+^^^^^^^^^
+
+List of link specifications describing all links to be stored as part of this group.
+
+.. code-block:: yaml
+
+    links:
+    - doc: Link to target type
+      name: link name
+      target_type: type of target
+    - ...
+
+``datasets``
+^^^^^^^^^^^^
+
+List of dataset specification describing all datasets to be stored as part of this group.
+
+.. code-block:: yaml
+
+    datasets:
+    - name: data1
+      type: number
+      quantity: 'zero_or_one'
+    - name: data2
+      type: text
+      attributes:
+      - ...
+    - ...
+
+
+.. _attribute-spec:
+
+Specification of Attributes
+===========================
+
+.. attention::
+
+    TODO Need to update the description of the specification of attributes
+
 
 The value of the group specification “attributes” key is a Python
 dictionary of the following form:
@@ -432,127 +527,49 @@ The references specification and the *<dimension specification>* are the
 same as that used for datasets. They are respectively described in
 sections 3.2.5 and 3.3.
 
+Attribute specification keys
+----------------------------
 
-``neurodata_type`` and ``neurodata_type_def``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. attention::
 
-The concept of a neurodata_type is similar to the concept of Class in object-oriented programming.
-A neurodata_type is a unique identifier for a specific type of group (or dataset) in a specfication.
-By assigning a neurodata_type to a group (or dataset) enables others to reuse that type by inclusion or
-inheritance (*Note:* only groups (or datasets) with a specified type can be reused).
-
-- ```neurodata_type_def```: This key is used to define (i.e, create) a new neurodata_type and to assign that type to
-  the current group (or dataset).
-
-- ```neurodata_type```: The value of the ``neurodata_type`` key describes the base type
-  of a group (or dataset). The value must be an existing type.
-
-Both ```neurodata_type_def``` and ```neurodata_type``` are optional keys.
-To enable the unique identification, every group (and dataset) must either have a fixed name and/or a
-unique neurodata_type. This means, any group (or dataset) with a variable name must have a unique neurodata_type.
+    TODO Need to add the description of all attribute keys
 
 
-**Reusing existing neurodata_types**
+Specification of links
+======================
 
-The combination of ```neurodata_type``` and ```neurodata_type_def``` provides an easy-to-use mechanism for
-reuse of type specifications via inheritance (i.e., merge and extension of specifications) and inclusion (i.e,
-embedding of an existing type as a component, such as a subgroup, of a new specification). Here an overview
-of all relevant cases:
+The link specification is used to specify links to other groups or datasets.
+In HDF5 it is recommended that links be stored a soft links. The link specification
+is a dictionary with the following form:
 
-+--------------------+------------------------+------------------------------------------------------------------------+
-| ``neurodata_type`` | ``neurodata_type_def`` |  Description                                                           |
-+====================+========================+========================================================================+
-|not set             | not set                |  define a standard dataset or group without a type                     |
-+--------------------+------------------------+------------------------------------------------------------------------+
-|not set             | set                    |  create a new neurodata_type from scratch                              |
-+--------------------+------------------------+------------------------------------------------------------------------+
-|set                 | not set                |  include (reuse) neurodata_type without creating a new one (include)   |
-+--------------------+------------------------+------------------------------------------------------------------------+
-|set                 | set                    |  merge/extend neurodata_type and create a new type (inheritance/merge) |
-+--------------------+------------------------+------------------------------------------------------------------------+
+.. code-block:: yaml
 
-**Example: Reuse by inheritance**
+    links:
+    - doc: Link to target type
+      name: link name
+      target_type: type of target
 
-.. code-block:: python
+Link specification keys
+------------------------
 
-    # Abbreviated YAML specification
-    -   neurodata_type_def: Series
-        datasets:
-        - name: A
+``target_type``
+^^^^^^^^^^^^^^^
 
-    -   neurodata_type_def: MySeries
-        neurodata_type: Series
-        datasets:
-        - name: B
+``target\_type`` specifies the key for a group in the top level structure
+of a namespace. It is used to indicate that the link must be to an
+instance of that structure.
 
-The result of this is that ``MySeries`` inherits dataset ``A`` from ``Series`` and adds its own dataset ``B``, i.e.,
-if we resolve the inheritance, then the above is equivalent to:
+``doc``
+^^^^^^^
 
-.. code-block:: python
+``doc`` specifies the documenation string for the link and  should describe the
+purpose and use of the linked data.
 
-    # Result:
-    -   neurodata_type_def: MySeries
-        datasets:
-        - name: A
-        - name: B
-
-**Example: Reuse by inclusion**
-
-
-.. code-block:: python
-
-    # Abbreviated YAML specification
-    -   neurodata_type_def: Series
-        datasets:
-        - name: A
-
-    -   neurodata_type_def: MySeries
-        groups:
-        - neurodata_type: Series
-
-
-The result of this is that ``MySeries`` now includes a group of type ``Series``, i.e., the above is equivalent to:
-
-.. code-block:: python
-
-   -   neurodata_type_def: MySeries
-        groups:
-        - neurodata_type: Series
-          datasets:
-          - name: A
-
-
-**Change Note:** The keys ```neurodata_type_def`` and  ```neurodata_type``` were introduced in version 1.2a to
-simplify the concepts of  inclusion and merging of specifications and replaced the keys ```include``` and ```merge```
-(and ```merge+```).
-
-
-``link``
+``name``
 ^^^^^^^^
 
-The link specification is used to indicate that the group must be hdf5
-link to another group. (Hard or Soft links can be used, but Soft links
-are recommended). The link specification is a Python dictionary. It has
-the following form:
+Optional key specfying the ``name`` of the link.
 
-.. code-block:: python
-
-    {
-
-    "target\_type": "*<type\_of\_target>*",
-
-    "allow\_subclasses": <True or False>,
-
-    }
-
-“target\_type” specifies the key for a group in the top level structure
-of a namespace. It is used to indicate that the link must be to an
-instance of that structure. “allow\_subclasses” is set to True to
-indicate the link can be to subclasses of the target structure.
-Subclasses are structures that include the target using a “merge”
-specification. Neither of the keys are required. The default value for
-“allow\_subclasses” is “False”. If target type is not specified, then
-the link can be to any group.
 
 Specification of datasets
 =========================
@@ -595,297 +612,46 @@ optional. If the dataset is specified and is an array (not scalar) than
 the dimensions property is required. The autogen specification is
 described in Section 4. Others are described below.
 
-description
------------
+Dataset specification keys
+--------------------------
+
+``description``
+^^^^^^^^^^^^^^^
 
 A string describing the dataset.
 
-data\_type
-----------
+``data\_type``
+^^^^^^^^^^^^^^
 
 A string indicating the type of data stored. This is the same as the
 data type for attributes, described in section 2.2.6.
 
-dimensions
-----------
+``dimensions``
+^^^^^^^^^^^^^^
 
-If present, <dimension\_list> is either a list of named dimensions,
-e.g.: [“dim1”, “dim2”, ...], or a list of lists of named dimensions,
-e.g.: [[“dim1”], [“dim1”, “dim2”]]. The first form is used if there is
-only one possibility for the number of dimensions. The second form is
-used if there are multiple possible number of dimensions. Each dimension
-name is an identifier (giving a dimension name) or a integer (specifying
-the size of the dimension). Dimensions names are used both for
-specifying properties of dimensions (as described below) and for
-specifying relationships between datasets.
+.. note::
 
-Attributes
-----------
+    The ability to further characterize dimensions will be added again in the next iteration.
 
-Dataset attributes are specified in the same was as group attributes,
-described in Section 2.2.6.
+``attributes``
+^^^^^^^^^^^^^^
 
-references
-----------
+List of attribute specifications describing the attributes of the group. See Section :ref:`attribute-spec` for details.
 
-The references property is used to indicate that the values stored in
-the dataset are referencing groups, datasets or parts of other datasets
-in the file. The value of the references property is a reference target
-specification. This has one of the following four forms:
+.. code-block:: yaml
 
-a. <path\_to\_dataset>.dimension
-
-b. <path\_to\_dataset>.dimension.component
-
-c. <path\_to\_group>/<variable\_node\_id>
-
-d. /
-
-“<path\_to\_dataset>” and “<path\_to\_group>” are respectively a path to
-a group or dataset in the file. The path can be absolute (starting with
-“/”) or a relative (not starting with “/”). A relative path references a
-node that is a child of the group containing the references
-specification.
-
-The first form (a) specifies a reference to a particular dimension of a
-dataset. In this case all values in the referencing dataset should be
-integers that are equal to one of the indices in the referenced dataset
-dimension.
-
-The second form (b) specifies a reference to a particular component of a
-structured dimension. Structured dimensions are described in the section
-about dimension specifications. In this case each value in the
-referencing dataset should be equal to a value in the referenced
-component of the referenced dataset and the values of the component in
-the referenced dataset should all be unique. This case corresponds to
-foreign key references in relational databases with the referenced
-component being a column in the referenced table satisfying a uniqueness
-constraint.
-
-The third form (c) allows referencing variable named groups or datasets.
-In this case all values of the referencing dataset should be names of
-groups or datasets that are created with the name specified in the call
-to the API. The value of the reference target specification should
-contain the name of the group or dataset in angle brackets (since the
-name is variable) and have a trailing slash if it is a group (since
-groups are designated by a slash after the name).
-
-The forth form (d) is a single slash. This form is to indicate that the
-values in the referencing dataset must link to a group or dataset
-somewhere in the file, but there are no other constraints.
-
-link
-----
-
-The link specification is used to indicate that the dataset must be
-implemented using a hdf5 link. Either hard or soft links can be used,
-but soft links are recommended because they indicate the source and
-target of the link). The link specification is a Python dictionary. It
-has the following form:
-
-.. code-block:: python
-
-    {
-
-    "target\_type": "*<type\_of\_target>*"
-
-    }
-
-“target\_type” specifies the identifier for a dataset in the top level
-structure of a namespace. It is used to indicate that the link must be
-to an instance of that structure. If target type is not specified, then
-the link can be to any dataset id.
-
-dimension specification
------------------------
-
-Within a dataset specification, there are two types of dimension
-specifications. The first, described in section 3.2.3, provides a list
-of the names of all dimensions in the dataset. The second (described in
-this section) provides a way to describe the properties of each
-dimension. It is not necessary to include the specification for all
-dimensions. Only those dimensions that have structured components (which
-are described below) need to be specified. These dimension
-specifications have a key equal to the name of the dimension, and the
-value is the specification of the properties of the dimension. The
-following format is used:
-
-.. code-block:: python
-
-    {
-
-    "type": "structure",
-
-    # for dimension type structure:
-
-    "components": [
-
-    { "alias": "var1",
-
-    "unit": "<unit>",
-
-    ' "references": "<*reference target specification*>"},
-
-    { "alias": "var2", ... }, ... ]
-
-    }
-
-The type specifies the type of dimension. Currently there is only one
-type implemented, named “structure”. Type structure is a structure type
-which allows storing different types of data into a single array similar
-to columns in a spreadsheet or fields in a relational data base table.
-This is also similar to the “metaarray” described in the SciPy cookbook:
-http://wiki.scipy.org/Cookbook/MetaArray and also Pandas DataFrame:
-http://pandas.pydata.org/pandas-docs/dev/index.html).
-
-The different components are specified using a list of dictionaries, (or
-a list of lists of dictionaries if there are more than one possible
-structure) with each dictionary specifying the properties of the
-corresponding component. The “alias” specifies the component name that
-can be referenced in a <*reference target specification>*
-
-(reference type “b” in section 3.2.5). “unit” allows specifying the unit
-of measure for numeric values. “references” allows specifying that the
-values in the component reference another part of the file using any of
-the methods described in section 3.2.5.
-
-Autogen
-=======
-
-The autogen specification is used to indicate data that are can be
-derived from the structure of the hdf5 file and automatically filled in
-by the API. An API may use the autogen specification to automatically
-generate the values when creating a file, and to ensure that correct
-values are stored when validating a file. The autogen specification has
-the following form:
-
-.. code-block:: python
-
-    { "type": <type of autogen, one of: "links", "link\_path", "names",
-    "values",
-
-    "length", "create", "missing">
-
-    "target": <path\_to\_target>,
-
-    "trim": True or False, default "False"
-
-    "allow\_others": True or False, default "False"
-
-    "qty": Either "!" – exactly one, or "\*" – zero or more. Default "\*".
-
-    "tsig": <Signature of target>
-
-    "include\_empty": True or False. Default False,
-
-    "sort": True or False. Default True
-
-    "format": <link\_path\_format>
-
-    }
-
-The type is the type of autogen. They are described below. For all
-types, except ‘create’ and ‘missing’ the “target” is required. All
-others are optional. For all types except “create”, “<path\_to\_target>”
-is a path of identifiers that specifies one or more groups or datasets
-that are descendant of the group that most directly contains the autogen
-specification). To specify multiple members the target path would have
-one or more variable-named id’s (enclosed in <>). In addition, the
-target “<\*>” indicates any group or dataset. If include\_empty is true,
-then if no values are found that would be used to fill the autogen, the
-value is set to an empty list. Otherwise, the container for the autogen
-values (attribute or dataset) is not created. The “tsig” value is a
-“target signature” which is used to specify properties that must be
-satisfied for matching target(s). It is used to filter the nodes found
-at the target path to only those for which the autogen should apply. The
-format of tsig is:
-
-.. code-block:: python
-
-    { "type": <"group" or "dataset">,
-
-    "attrs": { "key1": <value1>, "key2": <value2, ... },
-
-    }
-
-One of “type” or “attrs” is required (both may be present). “type”
-specifies the type of the target node. If not included, either group or
-dataset match. “attrs” specifies the attribute keys and values that can
-be compared to attributes in the target to detect a match.
-
-‘links’ indicates that the value of autogen is a list of paths that link
-to the group or dataset specified. If “trim” is True then when the paths
-are stored, if they all share the same trailing component of the path,
-e.g. /foo/bar/baz, and /x/y/baz; both share final component “baz”), then
-the common final component is trimmed from the paths before using them
-to fill in the data. If “sort” is true, values must be sorted.
-
-“link\_path” indicates that the value of the autogen is the path of a
-link made from the referenced group or dataset. For example, if there is
-a group “foo” that links to “bar”, and a dataset named “baz” at the same
-level, defined by:
-
-.. code-block:: python
-
-    "baz": {"autogen": {"link\_path": "foo"}}
-
-Then when the file is created by an API that implementing the autogen,
-the value of baz to be the path to bar.
-
-The “format” option allows specifying a formatting string used for
-“link\_path”. It can include strings: “$s” to indicate the source of a
-link and “$t” to indicate the target. If present, the format is used to
-create the “link\_path” entries. Default format is: “$t” (include just
-the target path). Another common format is “$s is $t” which will
-generate strings like: “<source> is <target>. The ‘qty’ for “link\_path”
-is currently not used.
-
-“names” – specify that the names of groups and/or datasets referenced
-are included as an array. If “sort” is True, the values must be sorted.
-
-“values” – specify that values stored in each target data set are to be
-listed as a set (no duplicates) --in sorted order (if sort is True). The
-values in each data set must be an array of strings.
-
-“length” – specifies that the value stored is the length of the target
-which must be a dataset storing a 1-D array.
-
-“create” – is only used within a group. If present, it specifies that if
-the group is required and does not exist, it should be automatically
-created by the API (without requiring an explicit call to create it).
-This type of autogen has been depreciated. Instead, it is recommended to
-use: the group “\_properties” specification containing: {“create”: True}
-as described in section 2.2.5.
-
-“missing” – returns a sorted list of all members within the group which
-are specified as being required or recommended, but are missing. There
-is no target specified. If “allow\_others” is True, then the list can
-also include additional identifiers, as long as they are not present in
-the group, whether or not they are defined in the specification as being
-required or recommended. If present, such additional identifiers should
-be indicated with a warning during validation.
+    attributes:
+    - ...
 
 Relationships
 =============
 
-Relationships are specified in one of two ways:
+.. note::
 
-1. By sharing a common dimension identifier. Two arrays that are in the
-   same group which have a common dimension identifier are related to
-   each through a direct mapping between the two dimensions. This is
-   equivalent to each dimension being a foreign key to the other in a
-   relational database.
+    Future versions will add explicit concepts for modeling of relationships, to replace the
+    implicit relationships encoded via shared dimension descriptions and implicit references in
+    datasets in previous versions of the specification language.
 
-2. Through references specifications in dataset specifications that are
-   described in section 3.2.5.
-
-Default custom location
-=======================
-
-An optional dataset named "\_\_custom" (two leading underscores) is used
-as a flag in the format specification to indicate the location within
-which custom groups and custom datasets are created by default (that if,
-if the path is not specified in the API call).
 
 .. [1]
    The version number given here is for the specification language and
