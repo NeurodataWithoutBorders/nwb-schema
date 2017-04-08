@@ -12,7 +12,7 @@ Version |release| |today|
 .. include:: format_description.rst
 .. include:: format_design_notes.rst
 .. include:: format_extension.rst
-.. include:: format_auto_docs/format_spec_doc.rst
+.. include:: format_auto_docs/format_spec_doc.inc
 .. include:: format_release_notes.rst
 
 

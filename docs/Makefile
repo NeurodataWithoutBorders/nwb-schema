@@ -50,6 +50,7 @@ clean:
 	-rm $(RSTDIR)/format_auto_docs/*.png
 	-rm $(RSTDIR)/format_auto_docs/*.pdf
 	-rm $(RSTDIR)/format_auto_docs/*.rst
+	-rm $(RSTDIR)/format_auto_docs/*.inc
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
