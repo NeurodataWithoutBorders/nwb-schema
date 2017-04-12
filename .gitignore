@@ -4,7 +4,8 @@ __pycache__/
 *$py.class
 
 # Sphinx documentation
-docs/_build/
+format_docs/_build/
+specification_language_docs
 
 # Jupyter Notebook
 .ipynb_checkpoints
