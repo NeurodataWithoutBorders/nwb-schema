@@ -24,6 +24,7 @@ help:
 	@echo "To update documentation sources from the format specification please use \`make apidoc'"
 	@echo ""
 	@echo "To build the documenation please use \`make <target>' where <target> is one of"
+	@echo "  fulldoc    to rebuild the apidoc, html, and latexpdf all at once"
 	@echo "  html       to make standalone HTML files"
 	@echo "  dirhtml    to make HTML files named index.html in directories"
 	@echo "  singlehtml to make a single large HTML file"
@@ -168,3 +169,6 @@ apidoc:
 	@echo
 	@echo "Generate rst source files from NWB spec."
 
+fulldoc: clean apidoc html latexpdf
+	@echo
+	@echo "Rebuilt apidoc, html, latexpdf"
