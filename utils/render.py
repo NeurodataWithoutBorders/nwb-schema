@@ -857,6 +857,16 @@ class RSTDocument(object):
         self.document += self.newline
         self.document += self.newline
 
+    def add_include(self, filename):
+        """
+        Include the file with the given name as part of this RST document
+
+        :param filename: Name of the file to be included
+        :return:
+        """
+        self.document += ".. include:: %s" % filename
+        self.document += self.newline
+
     def add_figure(self,
                    img,
                    caption=None,
