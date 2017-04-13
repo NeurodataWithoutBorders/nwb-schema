@@ -100,15 +100,18 @@ pygments_style = 'sphinx'
 spec_show_yaml_src = True
 
 # Should the JSON sources be included for the different modules
-spec_show_json_src = True
-
-# Should the sources of the neurodata_types (JSON/YAML) be rendered in a separate section (True) or
-# in the same location as the base documentation
-spec_generate_src_file = True
+spec_show_json_src = False
 
 # Show figure of the hierarchy of objects defined by the spec
 spec_show_hierarchy_plots = True
 
+# Should the sources of the neurodata_types (JSON/YAML) be rendered in a separate section (True) or
+# in the same location as the base documentation
+spec_generate_src_file = False
+
+# Should separate .inc reStructuredText files be generated for each neurodata_type (True)
+# or should all text be added to the main file
+spec_file_per_type = True
 
 # -- Options for HTML output ---------------------------------------------------
 
@@ -204,7 +207,9 @@ latex_elements = {
 'pointsize': '10pt',
 
 # Additional stuff for the LaTeX preamble.
-'preamble': '\setcounter{secnumdepth}{6}',
+'preamble': """\setcounter{secnumdepth}{6}
+                \\usepackage{enumitem}
+                \setlistdepth{100}""",
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
