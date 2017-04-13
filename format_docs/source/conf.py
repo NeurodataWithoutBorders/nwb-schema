@@ -94,6 +94,22 @@ pygments_style = 'sphinx'
 #modindex_common_prefix = []
 
 
+# -- Options for the generation of the documenation from source ----------------
+
+# Should the YAML sources be included for the different modules
+spec_show_yaml_src = True
+
+# Should the JSON sources be included for the different modules
+spec_show_json_src = True
+
+# Should the sources of the neurodata_types (JSON/YAML) be rendered in a separate section (True) or
+# in the same location as the base documentation
+spec_generate_src_file = True
+
+# Show figure of the hierarchy of objects defined by the spec
+spec_show_hierarchy_plots = True
+
+
 # -- Options for HTML output ---------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
