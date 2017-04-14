@@ -165,7 +165,7 @@ doctest:
 	      "results in $(BUILDDIR)/doctest/output.txt."
 
 apidoc:
-	python source/generate_format_docs.py
+	python ../utils/generate_format_docs.py
 	@echo
 	@echo "Generate rst source files from NWB spec."
 
