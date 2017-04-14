@@ -558,6 +558,15 @@ class NXGraphHierarchyDescription(object):
         attribute_names = [i['name'] for i in data['attributes']]
         links_names = [i['name'] for i in data['links']]
 
+        # Draw the typed dataset nodes of the network
+        nx.draw_networkx_nodes(graph, pos,
+                               nodelist=typed_dataset_names,
+                               node_color='blue',
+                               node_shape='o',
+                               node_size=node_size,
+                               alpha=1.0,
+                               font_family='STIXGeneral',
+                               label='Typed Dataset (%i)' % len(typed_dataset_names))
         # Draw the untyped dataset nodes of the network
         nx.draw_networkx_nodes(graph, pos,
                                nodelist=untyped_dataset_names,
@@ -567,15 +576,6 @@ class NXGraphHierarchyDescription(object):
                                alpha=1.0,
                                font_family='STIXGeneral',
                                label='Untyped Dataset (%i)' % len(untyped_dataset_names))
-        # Draw the typed dataset nodes of the network
-        nx.draw_networkx_nodes(graph, pos,
-                               nodelist=typed_dataset_names,
-                               node_color='lightblue',
-                               node_shape='o',
-                               node_size=node_size,
-                               alpha=1.0,
-                               font_family='STIXGeneral',
-                               label='Typed Dataset (%i)' % len(typed_dataset_names))
         # Draw all groups with a neurodata type
         nx.draw_networkx_nodes(graph, pos,
                                nodelist=typed_group_names,
