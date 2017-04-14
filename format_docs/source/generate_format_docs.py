@@ -200,7 +200,7 @@ def render_specs(neurodata_types,
                     plt.savefig(os.path.join(file_dir, '%s.pdf' % rt), format='pdf')
                     plt.savefig(os.path.join(file_dir, '%s.png' % rt), format='png')
                     plt.close()
-                    type_desc_doc.add_figure(img='./format_auto_docs/'+rt+".*",
+                    type_desc_doc.add_figure(img='./_format_auto_docs/'+rt+".*",
                                    alt=rt)
                     PrintCol.print("    " + rt + '-- RENDER OK.', PrintCol.OKGREEN)
                 else:
@@ -348,7 +348,9 @@ def print_type_hierarchy(type_hierarchy, depth=0, show_ancestry=False):
 def main():
 
     # Set path to the NWB core spec
-    file_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "format_auto_docs")
+    file_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_format_auto_docs")
+    if not os.path.exists(file_dir):
+        os.mkdir(file_dir)
     spec_dir = os.path.abspath(file_dir+'/../../../core')
     doc_filename = os.path.join(file_dir, 'format_spec_doc.inc')  # Name of the file where the main documentation goes
     srcdoc_filename = os.path.join(file_dir, 'format_spec_sources.inc') if spec_generate_src_file else None  # Name fo the file where the source YAML/JSON of the specifications go
