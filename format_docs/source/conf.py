@@ -107,7 +107,7 @@ spec_show_hierarchy_plots = True
 
 # Should the sources of the neurodata_types (JSON/YAML) be rendered in a separate section (True) or
 # in the same location as the base documentation
-spec_generate_src_file = False
+spec_generate_src_file = True
 
 # Should separate .inc reStructuredText files be generated for each neurodata_type (True)
 # or should all text be added to the main file
