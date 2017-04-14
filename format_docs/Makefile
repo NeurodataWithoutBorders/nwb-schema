@@ -46,12 +46,15 @@ help:
 	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
 	@echo "  apidoc     to to build RST from source code"
 
-clean:
+allclean:
 	-rm -rf $(BUILDDIR)/* $(RSTDIR)/$(PKGNAME)* $(RSTDIR)/modules.rst
 	-rm $(RSTDIR)/_format_auto_docs/*.png
 	-rm $(RSTDIR)/_format_auto_docs/*.pdf
 	-rm $(RSTDIR)/_format_auto_docs/*.rst
 	-rm $(RSTDIR)/_format_auto_docs/*.inc
+
+clean:
+	-rm -rf $(BUILDDIR)/* $(RSTDIR)/$(PKGNAME)* $(RSTDIR)/modules.rst
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
@@ -169,6 +172,6 @@ apidoc:
 	@echo
 	@echo "Generate rst source files from NWB spec."
 
-fulldoc: clean apidoc html latexpdf
+fulldoc: allclean apidoc html latexpdf
 	@echo
 	@echo "Rebuilt apidoc, html, latexpdf"
