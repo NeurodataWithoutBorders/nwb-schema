@@ -48,10 +48,10 @@ help:
 
 clean:
 	-rm -rf $(BUILDDIR)/* $(RSTDIR)/$(PKGNAME)* $(RSTDIR)/modules.rst
-	-rm $(RSTDIR)/format_auto_docs/*.png
-	-rm $(RSTDIR)/format_auto_docs/*.pdf
-	-rm $(RSTDIR)/format_auto_docs/*.rst
-	-rm $(RSTDIR)/format_auto_docs/*.inc
+	-rm $(RSTDIR)/_format_auto_docs/*.png
+	-rm $(RSTDIR)/_format_auto_docs/*.pdf
+	-rm $(RSTDIR)/_format_auto_docs/*.rst
+	-rm $(RSTDIR)/_format_auto_docs/*.inc
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
