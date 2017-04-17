@@ -208,9 +208,8 @@ def render_specs(neurodata_types,
             type_desc_doc.add_text('**Extends:** %s' % type_desc_doc.get_reference(get_section_label(extend_type), extend_type) + type_desc_doc.newline + type_desc_doc.newline)
         if seperate_src_file:
             # Add a link to the source to the main document
-            type_desc_doc.add_text('**Source Specification:** see Section %s' %
-                                   type_desc_doc.get_reference(label=get_src_section_label(rt),
-                                                               link_title=rt))
+            type_desc_doc.add_text('**Source Specification:** see %s' %
+                                   type_desc_doc.get_numbered_reference(label=get_src_section_label(rt)))
             type_desc_doc.add_text(type_desc_doc.newline + type_desc_doc.newline)
 
         type_desc_doc.add_text('**Overview**' + type_desc_doc.newline + type_desc_doc.newline)
@@ -220,9 +219,10 @@ def render_specs(neurodata_types,
         # Add note if necessary to indicate that the following documentation only shows changes to the parent class
         if extend_type is not None:
             extend_type =  rt_spec['neurodata_type']
-            type_desc_doc.add_text("``%s`` extends ``%s`` and includes all elements of %s with the following additions or changes." %
+            type_desc_doc.add_text("``%s`` extends ``%s`` (see %s) and includes all elements of %s with the following additions or changes." %
                          (rt,
                           extend_type,
+                          type_desc_doc.get_numbered_reference(get_section_label(extend_type)),
                           type_desc_doc.get_reference(get_section_label(extend_type), extend_type)))
             type_desc_doc.add_text(type_desc_doc.newline + type_desc_doc.newline)
 
@@ -257,7 +257,7 @@ def render_specs(neurodata_types,
             type_src_doc.add_subsubsection(section_heading)
             if extend_type is not None:
                 type_src_doc.add_text('**Extends:** %s' % type_src_doc.get_reference(get_section_label(extend_type), extend_type) + type_src_doc.newline + type_src_doc.newline)
-            type_src_doc.add_text('**Description:** see Section %s' % type_src_doc.get_reference(get_section_label(rt), rt) + type_src_doc.newline + type_src_doc.newline)
+            type_src_doc.add_text('**Description:** see %s' % type_src_doc.get_numbered_reference(get_section_label(rt)) + type_src_doc.newline + type_src_doc.newline)
 
         # Add the YAML for the current spec
         if show_yaml_src:
@@ -425,7 +425,6 @@ def sort_type_hierarchy_to_sections(type_hierarchy, registered_types):
             analysis_modules_section['neurodata_types'][k] = v
             all_types[k] = True
     sections.append(analysis_modules_section)
-
 
     # Other neurodata types. These are usually embedded types that are neither interfaces nor timeseries
     other_types_section = NeurodataTypeSection('Other Types')
