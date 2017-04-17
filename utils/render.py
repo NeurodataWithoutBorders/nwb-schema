@@ -761,6 +761,9 @@ class RSTDocument(object):
         else:
             return ":ref:`%s`" % label
 
+    def get_numbered_reference(self, label):
+        return ":numref:`%s`" % label
+
     def add_section(self, title):
         """
         Add a document section heading
@@ -989,4 +992,86 @@ class RSTDocument(object):
         outfile.close()
 
 
+class  RSTTable(object):
+    """
+    Helper class to generate RST tables
+    """
+    def __init__(self, cols):
+        """
 
+        :param cols: List of strings with the column labels. Or int with the number of columns
+        :return:
+        """
+        self.__table = []
+        self.__cols = cols if not isinstance(cols, int) else ([''] * cols)
+
+
+    def set_cell(self, row, col, text):
+        if col >= len(self.__cols):
+            raise ValueError('Column index out of bounds: col=%i , max_index=%i' % (col, len(self.__cols)-1))
+        if row >= len(self.__table):
+            raise ValueError('Row index out of bounds: row=%i , max_index=%i' % (row, len(self.__table)-1))
+        self.__table[row][col] = text
+
+    def add_row(self, row_values=None):
+        row_vals = row_values if row_values is not None else ([''] * len(self.__cols))
+        self.__table.append(row_vals)
+
+    def set_col(self, col, text):
+        if col >= len(self.__cols):
+            raise ValueError('Column index out of bounds: col=%i , max_index=%i' % (col, len(self.__cols)-1))
+        self.__cols[col] = text
+
+    def render(self, rst_doc=None):
+
+        def table_row_divider(col_widths, style='='):
+            out=""
+            for cw in col_widths:
+                out += '+' +  (cw+1) * style
+            out += "+\n"
+            return out
+
+        def normalize_cell(cell, col_width):
+            return cell + (col_width  - len(cell) + 1) * " "
+
+        def render_row(col_widths, row, newline='\n'):
+            row_text = '|'
+            for i, cell, in enumerate(row):
+                row_text += normalize_cell(cell, col_width=col_widths[i]) + '|'
+            row_text += newline
+            return row_text
+
+
+        col_widths = [max(out)+2 for out in map(list, zip(*[[len(item) for item in row] for row in ([self.__cols,] + self.__table)]))]
+        rst_doc = rst_doc if rst_doc is not None else RSTDocument()
+        rst_doc.add_text(rst_doc.newline)
+        # Render the table header
+        rst_doc.add_text(table_row_divider(col_widths=col_widths, style='='))
+        rst_doc.add_text(render_row(col_widths, self.__cols, rst_doc.newline))
+        rst_doc.add_text(table_row_divider(col_widths=col_widths, style='='))
+
+        # Render the main table contents
+        for row in self.__table:
+            rst_doc.add_text(render_row(col_widths, row, rst_doc.newline))
+            rst_doc.add_text(table_row_divider(col_widths=col_widths, style='-'))
+
+        # Return the table
+        return rst_doc
+
+"""
+    @staticmethod
+    def test():
+        a = RSTTable(['test1', 'test3', 'asdfsdfer'])
+        a.add_row(['123456789', '12', '1'])
+        a.add_row(['1','1213234', '2234'])
+        b = a.render()
+
+        for i in b.document.split("\n"):
+            print(i)
+
+        return b
+
+
+if __name__ == "__main__":
+    RSTTable.test()
+"""
