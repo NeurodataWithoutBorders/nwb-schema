@@ -23,6 +23,7 @@ autoclass_content = 'both'
 autodoc_docstring_signature = True
 autodoc_member_order = 'bysource'
 add_function_parentheses = False
+numfig = True
 
 # -- General configuration -----------------------------------------------------
 
@@ -121,6 +122,9 @@ spec_file_per_type = True
 #html_theme = "sphinxdoc"
 html_theme = "sphinx_rtd_theme"
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+
+def setup(app):
+   app.add_stylesheet("theme_overrides.css")  # overrides for wide tables in RTD theme
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
