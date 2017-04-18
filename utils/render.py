@@ -749,7 +749,8 @@ class RSTDocument(object):
         self.document += ".. _%s:" % label
         self.document += self.newline + self.newline
 
-    def get_reference(self, label, link_title=None):
+    @staticmethod
+    def get_reference(label, link_title=None):
         """
         Get RST text to create a reference to the given label
         :param label: Name of the lable to link to
@@ -979,6 +980,15 @@ class RSTDocument(object):
         self.document += ".. raw:: latex" + self.newline + self.newline
         self.document += self.default_indent + '\clearpage \\newpage' + self.newline + self.newline
 
+    def add_table(self, rst_table, **kwargs):
+        """
+        Render an RSTtable in this document
+
+        :param rst_table: RSTTable object to be rendered in this document
+        :param kwargs: Arguments to be passed to the RSTTable.render
+        """
+        rst_table.render(self, **kwargs)
+
     def write(self, filename, mode='w'):
         """
         Write the document to file
@@ -1013,8 +1023,21 @@ class  RSTTable(object):
             raise ValueError('Row index out of bounds: row=%i , max_index=%i' % (row, len(self.__table)-1))
         self.__table[row][col] = text
 
-    def add_row(self, row_values=None):
+    def add_row(self, row_values=None, replace_none=None, convert_to_str=True):
+        """
+        Add a row of values to the table
+        :param row_values: List of all values for the current row (or None if an empty row should be added)
+        :param replace_none:  String to be used to replace None values in the row data (default=None, i.e., do not
+                              replace None values)
+        :param convert_to_str: Boolean indicating whether all row values should be converted to strings. (default=True)
+        """
         row_vals = row_values if row_values is not None else ([''] * len(self.__cols))
+        if replace_none:
+            for i, v in enumerate(row_values):
+                if v is None:
+                    row_vals[i] = replace_none
+        if convert_to_str:
+            row_vals = [str(v) for v in row_vals]
         self.__table.append(row_vals)
 
     def set_col(self, col, text):
@@ -1022,31 +1045,47 @@ class  RSTTable(object):
             raise ValueError('Column index out of bounds: col=%i , max_index=%i' % (col, len(self.__cols)-1))
         self.__cols[col] = text
 
-    def render(self, rst_doc=None):
-
+    def render(self, rst_doc=None, title=None, table_class=None, widths=None):
+        """
+        :param table_class: One of 'longtable', 'threeparttable', 'tabular', 'tabulary'
+        """
         def table_row_divider(col_widths, style='='):
-            out=""
+            #out="" if not use_longtable else "    "
+            out="    "
             for cw in col_widths:
-                out += '+' +  (cw+1) * style
+                out += '+' +  (cw+2) * style
             out += "+\n"
             return out
 
         def normalize_cell(cell, col_width):
-            return cell + (col_width  - len(cell) + 1) * " "
+            return " " + cell + (col_width  - len(cell) + 1) * " "
 
         def render_row(col_widths, row, newline='\n'):
-            row_text = '|'
+            #row_text = '|' if not use_longtable else '    |'
+            row_text = '    |'
             for i, cell, in enumerate(row):
                 row_text += normalize_cell(cell, col_width=col_widths[i]) + '|'
             row_text += newline
             return row_text
 
-
         col_widths = [max(out)+2 for out in map(list, zip(*[[len(item) for item in row] for row in ([self.__cols,] + self.__table)]))]
         rst_doc = rst_doc if rst_doc is not None else RSTDocument()
         rst_doc.add_text(rst_doc.newline)
+        rst_doc.add_text('.. table::')
+        if title:
+            rst_doc.add_text(title)
+        rst_doc.add_text(rst_doc.newline)
+        if widths:
+            rst_doc.add_text('    :widths:')
+            for i in widths:
+                rst_doc.add_text(' %i' %i)
+            rst_doc.add_text(rst_doc.newline)
+        if table_class is not None:
+            rst_doc.add_text('    :class: ' + table_class + rst_doc.newline)
+        rst_doc.add_text(rst_doc.newline)
+
         # Render the table header
-        rst_doc.add_text(table_row_divider(col_widths=col_widths, style='='))
+        rst_doc.add_text(table_row_divider(col_widths=col_widths, style='-'))
         rst_doc.add_text(render_row(col_widths, self.__cols, rst_doc.newline))
         rst_doc.add_text(table_row_divider(col_widths=col_widths, style='='))
 
@@ -1054,6 +1093,9 @@ class  RSTTable(object):
         for row in self.__table:
             rst_doc.add_text(render_row(col_widths, row, rst_doc.newline))
             rst_doc.add_text(table_row_divider(col_widths=col_widths, style='-'))
+        rst_doc.add_text(rst_doc.newline)
+        rst_doc.add_text(rst_doc.newline)
+
 
         # Return the table
         return rst_doc

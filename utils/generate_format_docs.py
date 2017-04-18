@@ -2,8 +2,12 @@
 Generate figures and RST documents from the NWB YAML specification for the format specification documentation
 """
 
+# TODO LaTeX mix of regular and longtable. Should use longtbale, however, need to enforce column widht in longtable to avoid vertical spill on page
+# TODO Fix assignement of other types?
+# TODO Check labeling of Reuse Type vs New Type in the tables
+
 #from pynwb.spec import SpecCatalog
-from pynwb.spec.spec import SpecCatalog, GroupSpec
+from pynwb.spec.spec import SpecCatalog, GroupSpec, DatasetSpec, LinkSpec, AttributeSpec
 from collections import OrderedDict
 from itertools import chain
 import warnings
@@ -11,7 +15,7 @@ import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../format_docs/source")))
-from utils.render import RSTDocument, SpecFormatter
+from utils.render import RSTDocument, RSTTable, SpecFormatter
 from conf import spec_show_yaml_src, spec_show_json_src, spec_generate_src_file, spec_show_hierarchy_plots, spec_file_per_type
 
 
@@ -66,6 +70,26 @@ class NeurodataTypeDict(dict):
         self['spec'] = spec
         self['ancestry'] = ancestry
         self['subtypes'] = subtypes
+
+def quantity_to_string(quantity):
+    """
+    Helper function to convert a quantity identifier to a consisten string for the documentation
+    :param quantity: Quantity used in the format specification
+    :return: String describing the quantity
+    """
+    qdict = {
+        '*'            : '0 or more',
+        'zero_or_more' : '0 or more',
+        '+'            : '1 or more',
+        'one_or_more'  : '1 or more',
+        '?'            : '0 or 1',
+        'zero_or_one'  : '0 or 1'
+    }
+    if isinstance(quantity, int):
+        return str(quantity)
+    else:
+        return qdict[quantity]
+
 
 
 class NeurodataTypeSection(dict):
@@ -153,6 +177,86 @@ def render_type_hierarchy(type_hierarchy,
 
     # return the document
     return target_doc
+
+def create_spec_table(spec, rst_table=None, depth=0, show_subgroups=False):
+    """
+    Create and RSTTable with an overview of the specification for the given spec
+
+    :param spec: The specification to be rendered
+    :param rst_table: The RSTTable to be expanded (usually None). This argument is used to recursively fill the table.
+    :param depth: The depth at which the current spec should appear in the table. This argument is used to
+                  recursively fill the table and will typically left as 0 when called externally.
+    :param show_subgroups: Boolean indicating whether to recursively include subgroups (default=False)
+    :return: RSTTable that can be rendered into and RSTDocuement via the RSTTable.render(...) function.
+    """
+
+    # Create a new table if necessary
+    rst_table = rst_table if rst_table is not None else RSTTable(cols=['Name', 'Type', 'Description', ' Quantity'])
+    spec_type = 'group' if isinstance(spec, GroupSpec) else \
+                'dataset'if isinstance(spec, DatasetSpec) else \
+                'attribute' if isinstance(spec, AttributeSpec) else \
+                'link'
+    # Add an entry for the current spec
+    if spec.get('name', None) is not None:
+        spec_name = '.'*depth + spec.name
+    elif spec.get('neurodata_type_def' is not None):
+        spec_name = '.'*depth +  ' **New Type:** <%s>' % spec.neurodata_type_def
+    else:
+        spec_name = '.'*depth +  ' **Reused Type:** <%s>' % RSTDocument.get_reference(get_section_label(spec.neurodata_type), spec.neurodata_type)
+    spec_quantity = quantity_to_string(spec.quantity) if not isinstance(spec, AttributeSpec) else ""
+    spec_doc = spec.doc
+    spec_doc = spec_doc.replace('COMMENT:', ' **Comment:** ')
+    spec_doc = spec_doc.replace('MORE_INFO:', ' **Additional Information:** ')
+    spec_doc = spec_doc.replace('NOTE:', ' **Additional Information:** ')
+    rst_table.add_row(row_values=[spec_name, spec_type, spec_doc, spec_quantity],
+                      replace_none='',
+                      convert_to_str=True)
+    # Recursively add all attributes of the current spec
+    if isinstance(spec, DatasetSpec) or isinstance(spec, GroupSpec):
+        for a in spec.attributes:
+            create_spec_table(a, rst_table, depth=depth+1)
+    # Recurively add all Datasets of the current spec
+    if isinstance(spec, GroupSpec):
+        for d in spec.datasets:
+            create_spec_table(d, rst_table, depth=depth+1)
+    # Recursively add all subgroups if requested
+    if show_subgroups and isinstance(spec, GroupSpec):
+        for g in spec.groups:
+            create_spec_table(g, rst_table, depth=depth+1)
+    return rst_table
+
+def render_group_specs(group_spec, rst_doc, parent=None):
+
+    parent = parent if parent is not None else ''
+    group_name = ''
+    if group_spec.get('name', None) is not None:
+        group_name = group_spec.name
+    elif group_spec.get('neurodata_type', None) is not None:
+        group_name = "<%s>" % group_spec.neurodata_type
+    else:
+        group_name =  "<%s>" % group_spec.neurodata_type_def
+    rst_doc.add_text('**Group:** ```%s%s```' % (parent,group_name))
+    rst_doc.add_text(rst_doc.newline + rst_doc.newline)
+    # if group_spec.get('neurodata_type', None):
+    #     group_extend_type = group_spec.get('neurodata_type', None)
+    #     if group_spec.get('neurodata_type_def', None) is not None:
+    #         item_heading = '*Extends:*'
+    #     else:
+    #         item_heading = '*Reused Neurodata Type:*'
+    #     #if parent == '/acquisition/timeseries/' and group_name == '<TimeSeries>':
+    #     #    print(group_spec, item_heading )
+    #     #    exit(0)
+    #
+    #     rst_doc.add_text(item_heading + rst_doc.get_reference(get_section_label(group_extend_type), group_extend_type))
+    #     rst_doc.add_text(rst_doc.newline + rst_doc.newline)
+    # if group_spec.get('neurodata_type_def', None):
+    #     rst_doc.add_text('*New Neurodata Type:* %s' % group_spec.get('neurodata_type_def', None) + rst_doc.newline + rst_doc.newline)
+    # rst_doc.add_text('*Quantity:*  %s' % quantity_to_string(group_spec.quantity) + rst_doc.newline + rst_doc.newline)
+    rst_doc.add_text(group_spec.doc)
+    rst_doc.add_text(rst_doc.newline)
+    rst_doc.add_table(rst_table=create_spec_table(group_spec, show_subgroups=False)) #, table_class='longtable', widths=[15, 15, 60 ,10])
+    for sg in group_spec.groups:
+        render_group_specs(sg, rst_doc, parent=parent+group_name+'/')
 
 
 def render_specs(neurodata_types,
@@ -268,6 +372,22 @@ def render_specs(neurodata_types,
             type_src_doc.add_text('**JSON Specification:**' + type_src_doc.newline + type_src_doc.newline)
             type_src_doc.add_spec(rt_spec, show_json=True, show_yaml=False)
 
+        #####################################################################
+        #  Add table with group/dataset descriptions for the neurodata_type
+        #####################################################################
+        type_desc_doc.add_text(type_desc_doc.newline)
+        type_desc_doc.add_table(create_spec_table(rt_spec))
+
+        ######################################################
+        # Add tables for all subgroups
+        #####################################################
+        if isinstance(rt_spec, GroupSpec):
+            for g in rt_spec.groups:
+                render_group_specs(group_spec=g, rst_doc=type_desc_doc, parent='' if rt != 'NWBFile' else '/')
+
+        ########################################
+        #  Write the type-sepcific files
+        #########################################
         # Add includes for the type-specific inc files if necessary
         if file_per_type:
             # Write the files for the source and description
@@ -281,7 +401,11 @@ def render_specs(neurodata_types,
             desc_doc.add_include(os.path.basename(file_dir) + "/" + os.path.basename(type_desc_filename))
             src_doc.add_include(os.path.basename(file_dir) + "/" + os.path.basename(type_src_filename))
 
-        # Add a clearpage command for latex to avoid possible troubles with figure placement outside of the current section
+        #####################################
+        # Add a clearpage command for latex
+        # ######################################
+        # to avoid possible troubles with figure placement outside of the current section we add a new page in
+        # LaTeX after each main section
         if seperate_src_file:
             src_doc.add_latex_clearpage()
         desc_doc.add_latex_clearpage()
