@@ -2,13 +2,61 @@ import os
 import sys
 import json
 import yaml
-#from ruamel import yaml
+from ruamel import yaml
 
 #import pynwb
-from pynwb.spec import Spec, AttributeSpec, DatasetSpec, GroupSpec
+from pynwb.spec import Spec, AttributeSpec, DatasetSpec, GroupSpec, LinkSpec
 
+"""
+    stuff to clean up
+
+    - float('NaN') should be just 'NaN'
+"""
+
+metadata_ndts = list()
+
+subspec_locations = {
+    'ElectrodeGroup': 'ec_ephys',
+    'IntracellularElectrode': 'ic_ephys',
+    'ImagingPlane': 'ophys',
+    'OptogeneticStimulusSite': 'ogen',
+    'Epoch': 'epoch',
+
+}
+
+device_spec = LinkSpec('the device that was used to record from this electrode group', 'Device', quantity='?')
+alternate_defs = {
+    'ElectrodeGroup': GroupSpec('One of possibly many groups, one for each electrode group.',
+            neurodata_type_def='ElectrodeGroup',
+            datasets = [
+                DatasetSpec('array with description for each channel', 'text', name='channel_description', shape=(None,), dims=('num_channels',)),
+                DatasetSpec('array with location description for each channel e.g. "CA1"', 'text', name='channel_location',    shape=(None,), dims=('num_channels',)),
+                DatasetSpec('array with description of filtering applied to each channel', 'text', name='channel_filtering',   shape=(None,), dims=('num_channels',)),
+                DatasetSpec('xyz-coordinates for each channel. use NaN for unknown dimensions', 'text', name='channel_coordinates', shape=(None,3), dims=('num_channels', 'dimensions')),
+                DatasetSpec('float array with impedance used on each channel. Can be 2D matrix to store a range', 'text', name='channel_impedance', shape=(None,), dims=('num_channels',)),
+                DatasetSpec('description of this electrode group', 'text', name='description'),
+                DatasetSpec('description of location of this electrode group', 'text', name='location'),
+            ],
+            links = [
+                device_spec
+            ]
+    )
+}
 
 NAME_WILDCARD = "*"
+
+#datasets_to_attrs = {
+#    'file_create_date':
+#    'identifier':
+#    'nwb_version':
+#    'session_description':
+#    'session_start_time':
+#
+#}
+
+ndmap_to_group = {
+    "<device_X>*": 'Device',
+}
 
 ndmap = {
     "<timeseries_X>": 'EpochTimeSeries',
@@ -26,10 +74,14 @@ ndmap = {
     "<image stack name>": 'CorrectedImageStack',
 }
 
+
+
+#ImageSegmentation.image_plane.imaging_plane_name
 metadata_links = {
     'electrode_idx': 'ElectrodeGroup',
     'imaging_plane': 'ImagingPlane',
     'site': 'OptogeneticStimulusSite',
+    'imaging_plane_name': 'ImagingPlane',
     'electrode_name': 'IntracellularElectrode',
 }
 
@@ -38,10 +90,13 @@ metadata_links_doc = {
     'imaging_plane': 'link to ImagingPlane group from which this TimeSeries data was generated',
     'site': 'link to OptogeneticStimulusSite group that describes the site to which this stimulus was applied',
     'electrode_name': 'link to IntracellularElectrode group that describes th electrode that was used to apply or record this data',
+    'imaging_plane_name': 'link to ImagingPlane group from which this TimeSeries data was generated',
+
 }
 metadata_links_rename = {
     'electrode_idx': 'electrode_group',
     'electrode_name': 'electrode',
+    'imaging_plane_name': 'imaging_plane'
 }
 
 all_specs = dict()
@@ -109,7 +164,7 @@ def build_group(name, d, ndtype=None):
     if myname[0] == '<':
         #if p:
         #    print('variable name')
-        neurodata_type = ndmap.get(myname)
+        neurodata_type = ndmap.get(myname, ndmap_to_group.get(myname))
         #if p:
         #    print(neurodata_type)
         #print('found neurodata_type %s' % neurodata_type, file=sys.stderr)
@@ -199,9 +254,20 @@ def build_group(name, d, ndtype=None):
             grp_spec.add_link(doc, ndt, name=metadata_links_rename.get(tmp_name, tmp_name))
         else:
             if key.rfind('/') == -1: # forward-slash not found
-                grp_spec.set_dataset(build_dataset(tmp_name, value))
+                if key in ndmap_to_group:
+                    grp_spec.set_group(build_group(tmp_name, value))
+                else:
+                    grp_spec.set_dataset(build_dataset(tmp_name, value))
             else:
-                grp_spec.set_group(build_group(tmp_name, value))
+                subgrp = build_group(tmp_name, value)
+                if subgrp.neurodata_type_def in subspec_locations:
+                    if subgrp.neurodata_type_def in alternate_defs:
+                        subgrp = alternate_defs[subgrp.neurodata_type_def]
+                    #print('moving %s' % subgrp.neurodata_type_def)
+                    grp_spec.add_group(subgrp.doc, neurodata_type=subgrp.neurodata_type_def, quantity='*')
+                    metadata_ndts.append(subgrp)
+                else:
+                    grp_spec.set_group(subgrp)
 
     if neurodata_type is not None:
         #print('adding %s to all_specs' % neurodata_type, file=sys.stderr)
@@ -238,6 +304,9 @@ def build_attribute(name, d):
     myname = kwargs.pop('name')
     doc = kwargs.pop('doc')
     dtype = kwargs.pop('dtype')
+    if 'value' in kwargs and isinstance(kwargs['value'], str):
+        if 'NaN' in kwargs['value']:
+            kwargs['value'] = 'NaN'
     attr_spec = AttributeSpec(myname, dtype, doc, **kwargs)
     return attr_spec
 
@@ -274,7 +343,8 @@ def remap_keys(name, d):
         ret['quantity'] = quantity
 
     if specname in ndmap:
-        print(specname)
+        ret['neurodata_type_def'] = ndmap[specname]
+    elif specname in ndmap_to_group:
         ret['neurodata_type_def'] = ndmap[specname]
     else:
         ret['name'] = specname
@@ -382,6 +452,7 @@ def load_spec(spec):
 
     type_specs = dict()
     subspecs = [
+        'epoch',
         'ec_ephys',
         'ic_ephys',
         'image',
@@ -391,6 +462,8 @@ def load_spec(spec):
         'misc',
         'retinotopy',
     ]
+
+    type_specs['epoch'] = []
 
     type_specs['ec_ephys'] = [
         "<ElectricalSeries>/",
@@ -417,12 +490,12 @@ def load_spec(spec):
         "<ImageSeries>/",
         "<ImageMaskSeries>/",
         "<OpticalSeries>/",
-        "<RoiResponseSeries>/",
         "<IndexSeries>/",
     ]
 
     type_specs['ophys'] = [
         "<TwoPhotonSeries>/",
+        "<RoiResponseSeries>/",
         "DfOverF/",
         "Fluorescence/",
         "ImageSegmentation/",
@@ -474,135 +547,11 @@ def load_spec(spec):
         type_specs[key] = list(map(mapfunc, type_specs[key]))
 
     type_specs['base'] = base
+    for subspec in metadata_ndts:
+        loc = subspec_locations[subspec.neurodata_type_def]
+        #print('putting %s in %s' % (subspec.neurodata_type_def, loc))
+        type_specs[loc].append(subspec)
     return type_specs
-
-"""
-    mod_types = [
-        "BehavioralEpochs/",
-        "BehavioralEvents/",
-        "BehavioralTimeSeries/",
-        "ClusterWaveforms/",
-        "Clustering/",
-        "CompassDirection/",
-        "DfOverF/",
-        "EventDetection/",
-        "EventWaveform/",
-        "EyeTracking/",
-        "FeatureExtraction/",
-        "FilteredEphys/",
-        "Fluorescence/",
-        "ImageSegmentation/",
-        "ImagingRetinotopy/",
-        "LFP/",
-        "MotionCorrection/",
-        "Position/",
-        "PupilTracking/",
-        "UnitTimes/",
-    ]
-
-    ts_types = [
-        "<TimeSeries>/", #
-        "<PatchClampSeries>/",
-        "<CurrentClampSeries>/", #
-        "<IZeroClampSeries>/", #
-        "<CurrentClampStimulusSeries>/", #
-        "<VoltageClampSeries>/", #
-        "<VoltageClampStimulusSeries>/", #
-        "<ElectricalSeries>/", #
-        "<SpikeEventSeries>/", #
-        "<ImageSeries>/", #
-        "<ImageMaskSeries>/", #
-        "<IndexSeries>/", #
-        "<OpticalSeries>/", #
-        "<OptogeneticSeries>/", #
-        "<RoiResponseSeries>/", #
-        "<SpatialSeries>/", #
-        "<TwoPhotonSeries>/", #
-    ]
-    ts_specs = dict()
-    while ts_types:
-        ts_type = ts_types.pop(0)
-        ts_dict = spec[ts_type]
-        merge = list()
-        all_bases = True
-        for merge_type in ts_dict.pop('merge', list()):
-            tmp = ts_specs.get(merge_type, None)
-            if tmp:
-                merge.append(tmp)
-            else:
-                ts_types.append(ts_type)
-                all_bases = False
-                break
-        if not all_bases:
-            continue
-
-        ts_spec = build_group(NAME_WILDCARD, ts_dict)
-        #for m in merge:
-        #    merge_spec(m, ts_spec)
-        ts_specs[ts_type] = ts_spec
-
-    #print ('created specs for all TimeSeries', file=sys.stderr)
-
-    iface = build_group(NAME_WILDCARD, spec['<Interface>/'])
-    #print ('created specs for <Interface>', file=sys.stderr)
-
-
-    mod_specs = dict()
-
-    mod_types = [
-        "BehavioralEpochs/",
-        "BehavioralEvents/",
-        "BehavioralTimeSeries/",
-        "ClusterWaveforms/",
-        "Clustering/",
-        "CompassDirection/",
-        "DfOverF/",
-        "EventDetection/",
-        "EventWaveform/",
-        "EyeTracking/",
-        "FeatureExtraction/",
-        "FilteredEphys/",
-        "Fluorescence/",
-        "ImageSegmentation/",
-        "ImagingRetinotopy/",
-        "LFP/",
-        "MotionCorrection/",
-        "Position/",
-        "PupilTracking/",
-        "UnitTimes/",
-    ]
-    #print ('creating specs for Modules', file=sys.stderr)
-    for mod in mod_types:
-        mod_spec = spec[mod]
-        #merge = mod_spec.pop('merge')
-        mod_specs[mod] = build_group(mod, mod_spec)
-        #merge_spec(mod_specs[mod], iface)
-    #print ('created specs for all Modules', file=sys.stderr)
-
-    #register with SpecMap
-    #SpecCatalog.register_spec('NWB', root)
-    #SpecCatalog.register_spec('Interface', iface)
-    #for ts_type, ts_spec in ts_specs.items():
-    #    tmp = ts_type[1:len(ts_type)-2]
-    #    SpecCatalog.register_spec(tmp, ts_spec)
-    #for mod_type, mod_spec in mod_specs.items():
-    #    tmp = mod_type[1:len(mod_type)-1]
-    #    SpecCatalog.register_spec(tmp, mod_spec)
-    #    pass
-
-    ret = [root, iface]
-    ret.extend(ts_specs.values())
-    ret.extend(mod_specs.values())
-    ret = {'root': list(root.values()), 'Interface': list(iface.values()), 'modules': list(mod_specs.values()), 'timeseries': list(ts_specs.values())}
-    return ret
-
-
-
-def load_iface(spec):
-    spec = spec['fs']['core']['schema']
-    iface = build_group(NAME_WILDCARD, spec['<Interface>/'])
-    return iface
-"""
 
 def represent_str(self, data):
     s = data.replace('"', '\\"')
@@ -610,7 +559,7 @@ def represent_str(self, data):
     #return self.represent_scalar("", '"%s"' % s)
 
 def represent_spec(dumper, data):
-    print('CALLING represent_spec', file=sys.stderr)
+    #print('CALLING represent_spec', file=sys.stderr)
     value = []
     def add_key(item_key):
         item_value = data[item_key]
@@ -642,18 +591,7 @@ with open(spec_path) as spec_in:
     #nwb_spec = load_iface(json.load(spec_in))
 
 
-
-
 for key, value  in nwb_spec.items():
     with open('%s/nwb.%s.yaml' % (outdir, key), 'w') as out:
         yaml.dump(json.loads(json.dumps(value)), out, default_flow_style=False)
-
-#def quoted_presenter(dumper, data):
-#    return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='"')
-
-#yaml.add_representer(str, quoted_presenter)
-#yaml.add_representer(str, represent_str)
-##print(json.dumps(nwb_spec, indent=4))
-#print(yaml.dump(json.loads(json.dumps(nwb_spec)), default_flow_style=False, default_style='"'))
-#print(yaml.dump(json.loads(json.dumps(nwb_spec)), default_flow_style=False))
 

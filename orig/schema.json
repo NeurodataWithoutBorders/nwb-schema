@@ -175,7 +175,14 @@
                     "include": {
                         "<TimeSeries>/*": {}
                     },
-                    "description": "TimeSeries for storing Behavoioral time series data.See description of <a href=\"#BehavioralEpochs\">BehavioralEpochs</a> for more details."
+                    "description": "TimeSeries for storing Behavoioral time series data.See description of <a href=\"#BehavioralEpochs\">BehavioralEpochs</a> for more details.",
+                    "attributes": {
+                        "help?": {
+                            "const": true,
+                            "value": "General container for storing continuously sampled behavioral data.",
+                            "data_type": "text"
+                        }
+                    }
                 },
                 "UnitTimes/": {
                     "unit_list": {
@@ -461,7 +468,14 @@
                         "data_type": "float64!",
                         "dimensions": [
                             "num_events"
-                        ]
+                        ],
+                        "attributes": {
+                            "unit": {
+                                "value": "Seconds",
+                                "description": "The string \"Seconds\"",
+                                "data_type": "text"
+                            }
+                        }
                     },
                     "merge": [
                         "<Interface>/"
