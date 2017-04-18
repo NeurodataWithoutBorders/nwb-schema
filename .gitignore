@@ -5,7 +5,7 @@ __pycache__/
 
 # Sphinx documentation
 format_docs/_build/
-specification_language_docs
+specification_language_docs/_build/
 format_docs/source/_format_auto_docs/
 
 # Jupyter Notebook
