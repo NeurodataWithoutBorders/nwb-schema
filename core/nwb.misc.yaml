@@ -6,6 +6,9 @@
     value: Features of an applied stimulus. This is useful when storing the raw stimulus
       is impractical
   datasets:
+  - doc: Description of the features represented in TimeSeries::data.
+    name: features
+    type: text
   - attributes:
     - doc: Value is see 'feature_units'
       name: unit
@@ -17,9 +20,6 @@
   - doc: Units of each feature.
     name: feature_units
     quantity: '?'
-    type: text
-  - doc: Description of the features represented in TimeSeries::data.
-    name: features
     type: text
   doc: Abstract features, such as quantitative descriptions of sensory stimuli. The
     TimeSeries::data field is a 2D array, storing those features (e.g., for visual
@@ -38,10 +38,6 @@
     value: Time-stamped annotations about an experiment
   datasets:
   - attributes:
-    - doc: Value is float('NaN')
-      name: conversion
-      type: None
-      value: float('NaN')
     - doc: Value is n/a
       name: unit
       type: None
@@ -49,7 +45,11 @@
     - doc: Value is float('NaN')
       name: resolution
       type: None
-      value: float('NaN')
+      value: NaN
+    - doc: Value is float('NaN')
+      name: conversion
+      type: None
+      value: NaN
     doc: Annotations made during an experiment.
     name: data
     type: text
@@ -66,10 +66,6 @@
     value: Stores the start and stop times for events
   datasets:
   - attributes:
-    - doc: Value is float('NaN')
-      name: conversion
-      type: None
-      value: float('NaN')
     - doc: Value is n/a
       name: unit
       type: None
@@ -77,7 +73,11 @@
     - doc: Value is float('NaN')
       name: resolution
       type: None
-      value: float('NaN')
+      value: NaN
+    - doc: Value is float('NaN')
+      name: conversion
+      type: None
+      value: NaN
     doc: '>0 if interval started, <0 if interval ended.'
     name: data
     type: int8

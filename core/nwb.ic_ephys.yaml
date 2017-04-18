@@ -4,13 +4,13 @@
     type: text
     value: Superclass definition for patch-clamp data
   datasets:
-  - doc: Recorded voltage or current.
-    name: data
-    type: number
   - doc: 'Units: Volt/Amp (v-clamp) or Volt/Volt (c-clamp)'
     name: gain
     quantity: '?'
     type: float
+  - doc: Recorded voltage or current.
+    name: data
+    type: number
   doc: Stores stimulus or response current or voltage. Superclass definition for patch-clamp
     data (this class should not be instantiated directly).
   links:
@@ -26,16 +26,16 @@
     type: text
     value: Voltage recorded from cell during current-clamp recording
   datasets:
+  - doc: 'Unit: Amp'
+    name: bias_current
+    quantity: '?'
+    type: float32
   - doc: 'Unit: Ohm'
     name: bridge_balance
     quantity: '?'
     type: float32
   - doc: 'Unit: Farad'
     name: capacitance_compensation
-    quantity: '?'
-    type: float32
-  - doc: 'Unit: Amp'
-    name: bias_current
     quantity: '?'
     type: float32
   doc: Stores voltage data recorded from intracellular current-clamp recordings. A
@@ -72,6 +72,15 @@
     value: Current recorded from cell during voltage-clamp recording
   datasets:
   - attributes:
+    - doc: Value is Ohm
+      name: unit
+      type: text
+      value: Ohm
+    doc: 'Unit: Ohm'
+    name: whole_cell_series_resistance_comp
+    quantity: '?'
+    type: float32
+  - attributes:
     - doc: Value is pecent
       name: unit
       type: text
@@ -81,12 +90,21 @@
     quantity: '?'
     type: float32
   - attributes:
-    - doc: Value is Ohm
+    - doc: Value is Farad
       name: unit
       type: text
-      value: Ohm
-    doc: 'Unit: Ohm'
-    name: whole_cell_series_resistance_comp
+      value: Farad
+    doc: 'Unit: Farad'
+    name: whole_cell_capacitance_comp
+    quantity: '?'
+    type: float32
+  - attributes:
+    - doc: Value is Hz
+      name: unit
+      type: text
+      value: Hz
+    doc: 'Unit: Hz'
+    name: resistance_comp_bandwidth
     quantity: '?'
     type: float32
   - attributes:
@@ -116,24 +134,6 @@
     name: capacitance_slow
     quantity: '?'
     type: float32
-  - attributes:
-    - doc: Value is Hz
-      name: unit
-      type: text
-      value: Hz
-    doc: 'Unit: Hz'
-    name: resistance_comp_bandwidth
-    quantity: '?'
-    type: float32
-  - attributes:
-    - doc: Value is Farad
-      name: unit
-      type: text
-      value: Farad
-    doc: 'Unit: Farad'
-    name: whole_cell_capacitance_comp
-    quantity: '?'
-    type: float32
   doc: Stores current data recorded from intracellular voltage-clamp recordings. A
     corresponding VoltageClampStimulusSeries (stored separately as a stimulus) is
     used to store the voltage injected.
@@ -148,3 +148,39 @@
     for machine (and human) readability of the file.
   neurodata_type: PatchClampSeries
   neurodata_type_def: VoltageClampStimulusSeries
+- datasets:
+  - doc: Electrode specific filtering.
+    name: filtering
+    quantity: '?'
+    type: text
+  - doc: Initial access resistance
+    name: initial_access_resistance
+    quantity: '?'
+    type: text
+  - doc: Information about slice used for recording
+    name: slice
+    quantity: '?'
+    type: text
+  - doc: 'Recording description, description of electrode (e.g.,  whole-cell, sharp,
+      etc)COMMENT: Free-form text (can be from Methods)'
+    name: description
+    type: text
+  - doc: Information about seal used for recording
+    name: seal
+    quantity: '?'
+    type: text
+  - doc: Area, layer, comments on estimation, stereotaxis coordinates (if in vivo,
+      etc)
+    name: location
+    quantity: '?'
+    type: text
+  - doc: Name(s) of devices in general/devices
+    name: device
+    quantity: '?'
+    type: text
+  - doc: 'Electrode resistance COMMENT: unit: Ohm'
+    name: resistance
+    quantity: '?'
+    type: text
+  doc: 'One of possibly many. COMMENT: Name should be informative.'
+  neurodata_type_def: IntracellularElectrode

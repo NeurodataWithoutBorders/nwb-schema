@@ -6,6 +6,10 @@
     value: Stores points in space over time. The data[] array structure is [num samples][num
       spatial dimensions]
   datasets:
+  - doc: Description defining what exactly 'straight-ahead' means.
+    name: reference_frame
+    quantity: '?'
+    type: text
   - attributes:
     - doc: Value is meter
       name: unit
@@ -14,10 +18,6 @@
     doc: 2-D array storing position or direction relative to some reference frame.
     name: data
     type: number
-  - doc: Description defining what exactly 'straight-ahead' means.
-    name: reference_frame
-    quantity: '?'
-    type: text
   doc: 'Direction, e.g., of gaze or travel, or position. The TimeSeries::data field
     is a 2D array storing position or direction relative to some reference frame.
     Array structure: [num measurements] [num dimensions]. Each SpatialSeries has a
@@ -65,7 +65,12 @@
   name: BehavioralEvents
   neurodata_type: Interface
   neurodata_type_def: BehavioralEvents
-- doc: TimeSeries for storing Behavoioral time series data.See description of <a href="#BehavioralEpochs">BehavioralEpochs</a>
+- attributes:
+  - doc: Value is General container for storing continuously sampled behavioral data.
+    name: help
+    type: text
+    value: General container for storing continuously sampled behavioral data.
+  doc: TimeSeries for storing Behavoioral time series data.See description of <a href="#BehavioralEpochs">BehavioralEpochs</a>
     for more details.
   groups:
   - doc: TimeSeries object containing continuous behavioral data
