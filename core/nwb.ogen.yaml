@@ -20,3 +20,20 @@
     target_type: OptogeneticStimulusSite
   neurodata_type: TimeSeries
   neurodata_type_def: OptogeneticSeries
+- datasets:
+  - doc: Location of stimulation site
+    name: location
+    type: text
+  - doc: Excitation wavelength
+    name: excitation_lambda
+    type: text
+  - doc: Name of device in /general/devices
+    name: device
+    type: text
+  - doc: Description of site
+    name: description
+    type: text
+  doc: 'One of possibly many groups describing an optogenetic stimuluation site. COMMENT:
+    Name is arbitrary but should be meaningful. Name is referenced by OptogeneticSeries'
+  neurodata_type_def: OptogeneticStimulusSite
+  quantity: '*'

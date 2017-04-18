@@ -4,6 +4,14 @@
     type: text
     value: Storage object for time-series 2-D image data
   datasets:
+  - doc: Number of pixels on x, y, (and z) axes.
+    name: dimension
+    quantity: '?'
+    type: int32
+  - doc: Number of bit per image pixel.
+    name: bits_per_pixel
+    quantity: '?'
+    type: int32
   - doc: Format of image. If this is 'external' then the field external_file contains
       the path or URL information to that file. For tiff, png, jpg, etc, the binary
       representation of the image is stored in data. If the format is raw then the
@@ -12,10 +20,9 @@
     name: format
     quantity: '?'
     type: text
-  - doc: Number of bit per image pixel.
-    name: bits_per_pixel
-    quantity: '?'
-    type: int32
+  - doc: Either binary data containing image or empty.
+    name: data
+    type: number
   - attributes:
     - doc: Each entry is the frame number (within the full ImageSeries) of the first
         frame in the corresponding external_file entry. This serves as an index to
@@ -30,13 +37,6 @@
     name: external_file
     quantity: '?'
     type: text
-  - doc: Number of pixels on x, y, (and z) axes.
-    name: dimension
-    quantity: '?'
-    type: int32
-  - doc: Either binary data containing image or empty.
-    name: data
-    type: number
   doc: 'General image data that is common between acquisition and stimulus time series.
     Sometimes the image data is stored in the HDF5 file in a raw format while other
     times it will be stored as an external image file in the host file system. The
@@ -70,8 +70,8 @@
     type: text
     value: Time-series image stack for optical recording or stimulus
   datasets:
-  - doc: Distance from camera/monitor to target/eye.
-    name: distance
+  - doc: Width, height and depto of image, or imaged area (meters).
+    name: field_of_view
     quantity: '?'
     type: float32
   - doc: Description of image relative to some reference frame (e.g., which way is
@@ -79,8 +79,8 @@
     name: orientation
     quantity: '?'
     type: text
-  - doc: Width, height and depto of image, or imaged area (meters).
-    name: field_of_view
+  - doc: Distance from camera/monitor to target/eye.
+    name: distance
     quantity: '?'
     type: float32
   doc: Image data that is presented or recorded. A stimulus template movie will be
@@ -90,31 +90,6 @@
     represents acquired imaging data, orientation is also important.
   neurodata_type: ImageSeries
   neurodata_type_def: OpticalSeries
-- attributes:
-  - doc: Value is ROI responses over an imaging plane. Each row in data[] should correspond
-      to the signal from one ROI
-    name: help
-    type: text
-    value: ROI responses over an imaging plane. Each row in data[] should correspond
-      to the signal from one ROI
-  datasets:
-  - doc: Signals from ROIs
-    name: data
-    type: float32
-  - doc: List of ROIs represented, one name for each row of data[].
-    name: roi_names
-    type: text
-  - doc: Path to segmentation module.
-    name: segmentation_interface_path
-    type: text
-  doc: ROI responses over an imaging plane. Each row in data[] should correspond to
-    the signal from one ROI.
-  links:
-  - doc: HDF5 link to image segmentation module defining ROIs.
-    name: segmentation_interface
-    target_type: ImageSegmentation
-  neurodata_type: TimeSeries
-  neurodata_type_def: RoiResponseSeries
 - attributes:
   - doc: Value is A sequence that is generated from an existing image stack. Frames
       can be presented in an arbitrary order. The data[] field stores frame number
