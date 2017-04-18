@@ -5,6 +5,7 @@ Generate figures and RST documents from the NWB YAML specification for the forma
 # TODO LaTeX mix of regular and longtable. Should use longtbale, however, need to enforce column widht in longtable to avoid vertical spill on page
 # TODO Fix assignement of other types?
 # TODO Check labeling of Reuse Type vs New Type in the tables
+# TODO Create table file for the top-level groups in NWBFile for the Overview of the format section
 
 #from pynwb.spec import SpecCatalog
 from pynwb.spec.spec import SpecCatalog, GroupSpec, DatasetSpec, LinkSpec, AttributeSpec
