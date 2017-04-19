@@ -188,10 +188,14 @@ class HierarchyDescription(dict):
             :param parent_name: String with the full path of the parent in the hierarchy
             """
             obj_main_name = obj.name \
-                if obj.name is not None \
-                else obj.neurodata_type_def \
-                if obj.neurodata_type_def is not None \
-                else obj.neurodata_type
+                if obj.get('name', None) is not None \
+                else obj.get('neurodata_type_def', None) \
+                if obj.get('neurodata_type_def', None) is not None \
+                else obj.get('neurodata_type', None) \
+                if obj.get('neurodata_type', None) is not None \
+                else obj['target_type']
+            if obj.get('name', None) is None:
+                obj_main_name = '<' + obj_main_name + '>'
             obj_name = os.path.join(parent_name, obj_main_name)
 
             if isinstance(obj, GroupSpec):
@@ -206,8 +210,8 @@ class HierarchyDescription(dict):
                 specstats.add_attribute(name=obj_name,
                                         value=obj.value)
             elif isinstance(obj, LinkSpec):
-                specstats.add_link(name=os.path.join(parent_name, obj.name),
-                                   target_type=obj.neurodata_type)
+                specstats.add_link(name=obj_name,
+                                   target_type=obj['target_type'])
 
             # Recursively add all groups and datasets
             if isinstance(obj, GroupSpec):
