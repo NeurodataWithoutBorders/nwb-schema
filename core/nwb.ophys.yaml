@@ -1,23 +1,27 @@
 - attributes:
   - doc: Value is Image stack recorded from 2-photon microscope
+    dtype: text
     name: help
-    type: text
     value: Image stack recorded from 2-photon microscope
   datasets:
+  - dims:
+    - whd
+    doc: Width, height and depth of image, or imaged area (meters).
+    dtype: float32
+    name: field_of_view
+    quantity: '?'
+    shape:
+    - null
   - doc: Lines imaged per second. This is also stored in /general/optophysiology but
       is kept here as it is useful information for analysis, and so good to be stored
       w/ the actual data.
+    dtype: float32
     name: scan_line_rate
     quantity: '?'
-    type: float32
   - doc: Photomultiplier gain
+    dtype: float32
     name: pmt_gain
     quantity: '?'
-    type: float32
-  - doc: Width, height and depth of image, or imaged area (meters).
-    name: field_of_view
-    quantity: '?'
-    type: float32
   doc: A special case of optical imaging.
   links:
   - doc: link to ImagingPlane group from which this TimeSeries data was generated
@@ -28,20 +32,30 @@
 - attributes:
   - doc: Value is ROI responses over an imaging plane. Each row in data[] should correspond
       to the signal from one ROI
+    dtype: text
     name: help
-    type: text
     value: ROI responses over an imaging plane. Each row in data[] should correspond
       to the signal from one ROI
   datasets:
-  - doc: Path to segmentation module.
-    name: segmentation_interface_path
-    type: text
-  - doc: Signals from ROIs
+  - dims:
+    - num_times
+    - num_ROIs
+    doc: Signals from ROIs
+    dtype: float32
     name: data
-    type: float32
-  - doc: List of ROIs represented, one name for each row of data[].
+    shape:
+    - null
+    - null
+  - dims:
+    - num_ROIs
+    doc: List of ROIs represented, one name for each row of data[].
+    dtype: text
     name: roi_names
-    type: text
+    shape:
+    - null
+  - doc: Path to segmentation module.
+    dtype: text
+    name: segmentation_interface_path
   doc: ROI responses over an imaging plane. Each row in data[] should correspond to
     the signal from one ROI.
   links:
@@ -53,8 +67,8 @@
 - attributes:
   - doc: Value is Df/f over time of one or more ROIs. TimeSeries names should correspond
       to imaging plane names
+    dtype: text
     name: help
-    type: text
     value: Df/f over time of one or more ROIs. TimeSeries names should correspond
       to imaging plane names
   doc: dF/F information about a region of interest (ROI). Storage hierarchy of dF/F
@@ -69,8 +83,8 @@
 - attributes:
   - doc: Value is Fluorescence over time of one or more ROIs. TimeSeries names should
       correspond to imaging plane names
+    dtype: text
     name: help
-    type: text
     value: Fluorescence over time of one or more ROIs. TimeSeries names should correspond
       to imaging plane names
   doc: Fluorescence information about a region of interest (ROI). Storage hierarchy
@@ -85,8 +99,8 @@
 - attributes:
   - doc: Value is Stores groups of pixels that define regions of interest from one
       or more imaging planes
+    dtype: text
     name: help
-    type: text
     value: Stores groups of pixels that define regions of interest from one or more
       imaging planes
   doc: Stores pixels in an image that represent different regions of interest (ROIs)
@@ -98,37 +112,57 @@
     ROI names should remain consistent between them.
   groups:
   - datasets:
-    - doc: List of ROIs in this imaging plane
+    - dims:
+      - num_rois
+      doc: List of ROIs in this imaging plane
+      dtype: text
       name: roi_list
-      type: text
+      shape:
+      - null
     - doc: Description of image plane, recording wavelength, depth, etc
+      dtype: text
       name: description
       quantity: '?'
-      type: text
     doc: Group name is human-readable description of imaging plane
     groups:
+    - datasets:
+      - dims:
+        - num_pixels
+        doc: Weight of each pixel listed in pix_mask
+        dtype: float32
+        name: pix_mask_weight
+        shape:
+        - null
+      - dims:
+        - num_pixels
+        - '2'
+        doc: List of pixels (x,y) that compose the mask
+        dtype: uint16
+        name: pix_mask
+        shape:
+        - null
+        - null
+      - dims:
+        - num_x
+        - num_y
+        doc: ROI mask, represented in 2D ([y][x]) intensity image
+        dtype: float32
+        name: img_mask
+        shape:
+        - null
+        - null
+      - doc: Description of this ROI.
+        dtype: text
+        name: roi_description
+      doc: Name of ROI
+      neurodata_type_def: ROI
+      quantity: '*'
     - doc: Stores image stacks segmentation mask apply to.
       groups:
       - doc: One or more image stacks that the masks apply to (can be one-element
           stack)
         neurodata_type: ImageSeries
       name: reference_images
-    - datasets:
-      - doc: List of pixels (x,y) that compose the mask
-        name: pix_mask
-        type: uint16
-      - doc: ROI mask, represented in 2D ([y][x]) intensity image
-        name: img_mask
-        type: float32
-      - doc: Description of this ROI.
-        name: roi_description
-        type: text
-      - doc: Weight of each pixel listed in pix_mask
-        name: pix_mask_weight
-        type: float32
-      doc: Name of ROI
-      neurodata_type_def: ROI
-      quantity: '*'
     links:
     - doc: link to ImagingPlane group from which this TimeSeries data was generated
       name: imaging_plane
@@ -139,56 +173,64 @@
   neurodata_type: Interface
   neurodata_type_def: ImageSegmentation
 - datasets:
-  - doc: Description of &lt;image_plane_X&gt;
-    name: description
-    quantity: '?'
-    type: text
-  - doc: Location of image plane
-    name: location
-    type: text
+  - doc: Calcium indicator
+    dtype: text
+    name: indicator
   - attributes:
-    - doc: Value is Meter
-      name: unit
-      type: text
-      value: Meter
     - doc: Value is 1.0
+      dtype: float
       name: conversion
-      type: float
       value: 1.0
+    - doc: Value is Meter
+      dtype: text
+      name: unit
+      value: Meter
+    dims:
+    - height
+    - weight
+    - xyz
     doc: 'Physical position of each pixel. COMMENT: "xyz" represents the position
       of the pixel relative to the defined coordinate space'
+    dtype: float32
     name: manifold
-    type: float32
+    shape:
+    - null
+    - null
+    - null
+  - doc: Description of &lt;image_plane_X&gt;
+    dtype: text
+    name: description
+    quantity: '?'
+  - doc: Location of image plane
+    dtype: text
+    name: location
+  - doc: Rate images are acquired, in Hz.
+    dtype: text
+    name: imaging_rate
   - doc: Name of device in /general/devices
+    dtype: text
     name: device
-    type: text
+  - doc: Excitation wavelength
+    dtype: text
+    name: excitation_lambda
   - doc: 'Describes position and reference frame of manifold based on position of
       first element in manifold. For example, text description of anotomical location
       or vectors needed to rotate to common anotomical axis (eg, AP/DV/ML). COMMENT:
       This field is necessary to interpret manifold. If manifold is not present then
       this field is not required'
+    dtype: text
     name: reference_frame
-    type: text
-  - doc: Rate images are acquired, in Hz.
-    name: imaging_rate
-    type: text
-  - doc: Excitation wavelength
-    name: excitation_lambda
-    type: text
-  - doc: Calcium indicator
-    name: indicator
-    type: text
   doc: 'One of possibly many groups describing an imaging plane. COMMENT: Name is
     arbitrary but should be meaningful. It is referenced by TwoPhotonSeries and also
     ImageSegmentation and DfOverF interfaces'
   groups:
   - datasets:
     - doc: Any notes or comments about the channel
+      dtype: text
       name: description
-      type: text
     - doc: Emission lambda for channel
+      dtype: text
       name: emission_lambda
-      type: text
     doc: 'One of possibly many groups storing channel-specific data COMMENT: Name
       is arbitrary but should be meaningful'
     neurodata_type_def: OpticalChannel

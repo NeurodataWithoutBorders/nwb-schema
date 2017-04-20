@@ -1,26 +1,40 @@
 - attributes:
   - doc: Value is Features of an applied stimulus. This is useful when storing the
       raw stimulus is impractical
+    dtype: text
     name: help
-    type: text
     value: Features of an applied stimulus. This is useful when storing the raw stimulus
       is impractical
   datasets:
-  - doc: Description of the features represented in TimeSeries::data.
-    name: features
-    type: text
   - attributes:
     - doc: Value is see 'feature_units'
+      dtype: None
       name: unit
-      type: None
       value: see 'feature_units'
+    dims:
+    - num_times
+    - num_features
     doc: Values of each feature at each time.
+    dtype: float32
     name: data
-    type: float32
-  - doc: Units of each feature.
+    shape:
+    - null
+    - null
+  - dims:
+    - num_features
+    doc: Description of the features represented in TimeSeries::data.
+    dtype: text
+    name: features
+    shape:
+    - null
+  - dims:
+    - num_features
+    doc: Units of each feature.
+    dtype: text
     name: feature_units
     quantity: '?'
-    type: text
+    shape:
+    - null
   doc: Abstract features, such as quantitative descriptions of sensory stimuli. The
     TimeSeries::data field is a 2D array, storing those features (e.g., for visual
     grating stimulus this might be orientation, spatial frequency and contrast). Null
@@ -33,26 +47,30 @@
   neurodata_type_def: AbstractFeatureSeries
 - attributes:
   - doc: Value is Time-stamped annotations about an experiment
+    dtype: text
     name: help
-    type: text
     value: Time-stamped annotations about an experiment
   datasets:
   - attributes:
-    - doc: Value is n/a
-      name: unit
-      type: None
-      value: n/a
     - doc: Value is float('NaN')
+      dtype: None
       name: resolution
-      type: None
       value: NaN
     - doc: Value is float('NaN')
+      dtype: None
       name: conversion
-      type: None
       value: NaN
+    - doc: Value is n/a
+      dtype: None
+      name: unit
+      value: n/a
+    dims:
+    - num_times
     doc: Annotations made during an experiment.
+    dtype: text
     name: data
-    type: text
+    shape:
+    - null
   doc: Stores, eg, user annotations made during an experiment. The TimeSeries::data[]
     field stores a text array, and timestamps are stored for each annotation (ie,
     interval=1). This is largely an alias to a standard TimeSeries storing a text
@@ -61,26 +79,30 @@
   neurodata_type_def: AnnotationSeries
 - attributes:
   - doc: Value is Stores the start and stop times for events
+    dtype: text
     name: help
-    type: text
     value: Stores the start and stop times for events
   datasets:
   - attributes:
-    - doc: Value is n/a
-      name: unit
-      type: None
-      value: n/a
     - doc: Value is float('NaN')
+      dtype: None
       name: resolution
-      type: None
       value: NaN
     - doc: Value is float('NaN')
+      dtype: None
       name: conversion
-      type: None
       value: NaN
+    - doc: Value is n/a
+      dtype: None
+      name: unit
+      value: n/a
+    dims:
+    - num_times
     doc: '>0 if interval started, <0 if interval ended.'
+    dtype: int8
     name: data
-    type: int8
+    shape:
+    - null
   doc: Stores intervals of data. The timestamps field stores the beginning and end
     of intervals. The data field stores whether the interval just started (>0 value)
     or ended (<0 value). Different interval types can be represented in the same series
@@ -92,31 +114,39 @@
   neurodata_type_def: IntervalSeries
 - attributes:
   - doc: Value is Estimated spike times from a single unit
+    dtype: text
     name: help
-    type: text
     value: Estimated spike times from a single unit
   datasets:
-  - doc: List of units present.
+  - dims:
+    - num_units
+    doc: List of units present.
+    dtype: text
     name: unit_list
-    type: text
+    shape:
+    - null
   doc: Event times of observed units (e.g. cell, synapse, etc.). The UnitTimes group
     contains a group for each unit. The name of the group should match the value in
     the source module, if that is possible/relevant (e.g., name of ROIs from Segmentation
     module).
   groups:
   - datasets:
-    - doc: Description of the unit (eg, cell type).
-      name: unit_description
-      type: text
     - doc: Name, path or description of where unit times originated. This is necessary
         only if the info here differs from or is more fine-grained than the interface's
         source field
+      dtype: text
       name: source
       quantity: '?'
-      type: text
-    - doc: Spike time for the units (exact or estimated)
+    - dims:
+      - num_events
+      doc: Spike time for the units (exact or estimated)
+      dtype: float64!
       name: times
-      type: float64!
+      shape:
+      - null
+    - doc: Description of the unit (eg, cell type).
+      dtype: text
+      name: unit_description
     doc: Group storing times for &lt;unit_N&gt;.
     neurodata_type_def: SpikeUnit
     quantity: +
