@@ -1027,6 +1027,21 @@ class  RSTTable(object):
             raise ValueError('Row index out of bounds: row=%i , max_index=%i' % (row, len(self.__table)-1))
         self.__table[row][col] = text
 
+    def __len__(self):
+        return self.num_rows()
+
+    def num_rows(self):
+        """
+        :return: Number of rows in the table
+        """
+        return len(self.__table)
+
+    def num_cols(self):
+        """
+        :return: Number of columns in the table
+        """
+        return len(self.__cols)
+
     def add_row(self, row_values=None, replace_none=None, convert_to_str=True):
         """
         Add a row of values to the table
@@ -1049,10 +1064,21 @@ class  RSTTable(object):
             raise ValueError('Column index out of bounds: col=%i , max_index=%i' % (col, len(self.__cols)-1))
         self.__cols[col] = text
 
-    def render(self, rst_doc=None, title=None, table_class=None, widths=None):
+    def render(self, rst_doc=None, title=None, table_class=None, widths=None, ignore_empty=True):
         """
-        :param table_class: One of 'longtable', 'threeparttable', 'tabular', 'tabulary'
+        Render the table to an RSTDocument
+
+        :param rst_doc: RSTDocument where the table should be rendered in or None if a new document should be created
+        :param title: String with the optional title for the table
+        :param table_class: Optional class for the table. One of 'longtable', 'threeparttable', 'tabular', 'tabulary'
+        :param widths: Optional list of width for the columns
+        :param ignore_empty: Boolean indicating whether empty tables should be rendered (i.e., if False then
+                    headings with no additional rows will be rendered) or if no table should be created
+                    if no data rows exists (if set to True). (default=True)
         """
+        if len(self.__table) == 0:
+            return rst_doc if rst_doc is not None else RSTDocument()
+
         def table_row_divider(col_widths, style='='):
             #out="" if not use_longtable else "    "
             out="    "
@@ -1077,7 +1103,7 @@ class  RSTTable(object):
         rst_doc.add_text(rst_doc.newline)
         rst_doc.add_text('.. table::')
         if title:
-            rst_doc.add_text(title)
+            rst_doc.add_text(' ' + title)
         rst_doc.add_text(rst_doc.newline)
         if widths:
             rst_doc.add_text('    :widths:')
