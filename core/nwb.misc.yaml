@@ -6,6 +6,21 @@
     value: Features of an applied stimulus. This is useful when storing the raw stimulus
       is impractical
   datasets:
+  - dims:
+    - num_features
+    doc: Units of each feature.
+    dtype: text
+    name: feature_units
+    quantity: '?'
+    shape:
+    - null
+  - dims:
+    - num_features
+    doc: Description of the features represented in TimeSeries::data.
+    dtype: text
+    name: features
+    shape:
+    - null
   - attributes:
     - doc: Value is see 'feature_units'
       dtype: None
@@ -19,21 +34,6 @@
     name: data
     shape:
     - null
-    - null
-  - dims:
-    - num_features
-    doc: Description of the features represented in TimeSeries::data.
-    dtype: text
-    name: features
-    shape:
-    - null
-  - dims:
-    - num_features
-    doc: Units of each feature.
-    dtype: text
-    name: feature_units
-    quantity: '?'
-    shape:
     - null
   doc: Abstract features, such as quantitative descriptions of sensory stimuli. The
     TimeSeries::data field is a 2D array, storing those features (e.g., for visual
@@ -54,16 +54,16 @@
   - attributes:
     - doc: Value is float('NaN')
       dtype: None
-      name: resolution
-      value: NaN
-    - doc: Value is float('NaN')
-      dtype: None
       name: conversion
       value: NaN
     - doc: Value is n/a
       dtype: None
       name: unit
       value: n/a
+    - doc: Value is float('NaN')
+      dtype: None
+      name: resolution
+      value: NaN
     dims:
     - num_times
     doc: Annotations made during an experiment.
@@ -86,16 +86,16 @@
   - attributes:
     - doc: Value is float('NaN')
       dtype: None
-      name: resolution
-      value: NaN
-    - doc: Value is float('NaN')
-      dtype: None
       name: conversion
       value: NaN
     - doc: Value is n/a
       dtype: None
       name: unit
       value: n/a
+    - doc: Value is float('NaN')
+      dtype: None
+      name: resolution
+      value: NaN
     dims:
     - num_times
     doc: '>0 if interval started, <0 if interval ended.'
@@ -131,12 +131,6 @@
     module).
   groups:
   - datasets:
-    - doc: Name, path or description of where unit times originated. This is necessary
-        only if the info here differs from or is more fine-grained than the interface's
-        source field
-      dtype: text
-      name: source
-      quantity: '?'
     - dims:
       - num_events
       doc: Spike time for the units (exact or estimated)
@@ -144,6 +138,12 @@
       name: times
       shape:
       - null
+    - doc: Name, path or description of where unit times originated. This is necessary
+        only if the info here differs from or is more fine-grained than the interface's
+        source field
+      dtype: text
+      name: source
+      quantity: '?'
     - doc: Description of the unit (eg, cell type).
       dtype: text
       name: unit_description

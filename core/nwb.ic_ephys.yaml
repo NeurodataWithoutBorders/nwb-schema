@@ -30,10 +30,6 @@
     name: help
     value: Voltage recorded from cell during current-clamp recording
   datasets:
-  - doc: 'Unit: Farad'
-    dtype: float32
-    name: capacitance_compensation
-    quantity: '?'
   - doc: 'Unit: Ohm'
     dtype: float32
     name: bridge_balance
@@ -41,6 +37,10 @@
   - doc: 'Unit: Amp'
     dtype: float32
     name: bias_current
+    quantity: '?'
+  - doc: 'Unit: Farad'
+    dtype: float32
+    name: capacitance_compensation
     quantity: '?'
   doc: Stores voltage data recorded from intracellular current-clamp recordings. A
     corresponding CurrentClampStimulusSeries (stored separately as a stimulus) is
@@ -82,7 +82,7 @@
       value: Farad
     doc: 'Unit: Farad'
     dtype: float32
-    name: capacitance_fast
+    name: whole_cell_capacitance_comp
     quantity: '?'
   - attributes:
     - doc: Value is pecent
@@ -91,7 +91,7 @@
       value: pecent
     doc: 'Unit: %'
     dtype: float32
-    name: resistance_comp_prediction
+    name: resistance_comp_correction
     quantity: '?'
   - attributes:
     - doc: Value is Hz
@@ -112,6 +112,15 @@
     name: whole_cell_series_resistance_comp
     quantity: '?'
   - attributes:
+    - doc: Value is pecent
+      dtype: text
+      name: unit
+      value: pecent
+    doc: 'Unit: %'
+    dtype: float32
+    name: resistance_comp_prediction
+    quantity: '?'
+  - attributes:
     - doc: Value is Farad
       dtype: text
       name: unit
@@ -121,22 +130,13 @@
     name: capacitance_slow
     quantity: '?'
   - attributes:
-    - doc: Value is pecent
-      dtype: text
-      name: unit
-      value: pecent
-    doc: 'Unit: %'
-    dtype: float32
-    name: resistance_comp_correction
-    quantity: '?'
-  - attributes:
     - doc: Value is Farad
       dtype: text
       name: unit
       value: Farad
     doc: 'Unit: Farad'
     dtype: float32
-    name: whole_cell_capacitance_comp
+    name: capacitance_fast
     quantity: '?'
   doc: Stores current data recorded from intracellular voltage-clamp recordings. A
     corresponding VoltageClampStimulusSeries (stored separately as a stimulus) is
@@ -153,38 +153,38 @@
   neurodata_type: PatchClampSeries
   neurodata_type_def: VoltageClampStimulusSeries
 - datasets:
-  - doc: Information about seal used for recording
-    dtype: text
-    name: seal
-    quantity: '?'
   - doc: Information about slice used for recording
     dtype: text
     name: slice
     quantity: '?'
-  - doc: Name(s) of devices in general/devices
+  - doc: Information about seal used for recording
     dtype: text
-    name: device
-    quantity: '?'
-  - doc: Initial access resistance
-    dtype: text
-    name: initial_access_resistance
-    quantity: '?'
-  - doc: 'Electrode resistance COMMENT: unit: Ohm'
-    dtype: text
-    name: resistance
+    name: seal
     quantity: '?'
   - doc: 'Recording description, description of electrode (e.g.,  whole-cell, sharp,
       etc)COMMENT: Free-form text (can be from Methods)'
     dtype: text
     name: description
-  - doc: Electrode specific filtering.
-    dtype: text
-    name: filtering
-    quantity: '?'
   - doc: Area, layer, comments on estimation, stereotaxis coordinates (if in vivo,
       etc)
     dtype: text
     name: location
+    quantity: '?'
+  - doc: 'Electrode resistance COMMENT: unit: Ohm'
+    dtype: text
+    name: resistance
+    quantity: '?'
+  - doc: Electrode specific filtering.
+    dtype: text
+    name: filtering
+    quantity: '?'
+  - doc: Initial access resistance
+    dtype: text
+    name: initial_access_resistance
+    quantity: '?'
+  - doc: Name(s) of devices in general/devices
+    dtype: text
+    name: device
     quantity: '?'
   doc: 'One of possibly many. COMMENT: Name should be informative.'
   neurodata_type_def: IntracellularElectrode
