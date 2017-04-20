@@ -6,8 +6,7 @@ NWB Format
 
 Version |release| |today|
 
-
-.. contents::
+.. .. contents::
 
 .. include:: format_description.rst
 .. include:: _format_auto_docs/format_spec_main.inc
