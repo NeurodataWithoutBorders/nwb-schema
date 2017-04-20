@@ -58,8 +58,9 @@ In addition to standard Sphinx options, there are a number of additional options
 * ```spec_generate_src_file``` Boolen indicating whether the YAML/JSON sources of the neurodata_types should be rendered in a separate section (True) or in the same location as the main documentation
 * ```spec_show_hierarchy_plots ``` Boolean indicating whether we should generate and show figures of the hierachy defined by the specifications as part of the documentation
 * ```spec_file_per_type``` Boolean indicating whether we should generate separate .inc reStructuredText for each neurodata_type (True)
-# or should all text be added to the main file
- = True
-
-
+or should all text be added to the main file (False)
+* ```spec_show_subgroups_in_tables``` Should subgroups of the main groups be renderd in the table as well. Usually this is disabled since groups are rendered as separte sections in the tex
+* ```spec_appreviate_main_object_doc_in_tables``` Appreviate the documentation of the main object for which a table is rendered in the table. This is commonly set to True as doc of the main object is alrready rendered as the main intro for the section describing the object
+* ```spec_show_title_for_tables``` Add a title for the table showing the specifications.
+* ```spec_show_subgroups_in_seperate_table``` Should top-level subgroups be listed in a seperate table or as part of the main dataset and attributes table
 
