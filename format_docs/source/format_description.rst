@@ -1,6 +1,43 @@
 Overview
 ========
 
+The NWB format is designed to store general optical and electrical physiology data in a way that
+is both understandable to humans as well as accesible to programmatic interpretation. The format is
+designed to be friendly to and usable by software tools and analysis
+scripts, and to impose few priori assumptions about data
+representation and analysis. Metadata required to understand the data
+itself (core metadata) is generally stored with the data. Information
+required to interpret the experiment (general metadata) is stored in the
+group ``general``. Most general metadata is stored in free-form text
+fields. Machine-readable metadata is stored as attributes on these
+free-form text fields.
+
+Top Level Data Organization
+---------------------------
+
+The high-level data organization of NWB files is described in detail in :numref:`sec-NWBFile`.
+The top-level organization of data into groups is described in :numref:`table-NWBFile-groups`
+and the top-level datasets and attributes are described in :numref:`table-NWBFile-data`.
+
+The NWB format is based on the concept of *TimeSeries* for storing complex temporal series of data
+and *Modules* for defining collections of processed data from common data processing steps where each
+processing step is represented by an *Interface*. All datasets and groups in the format can be
+uniquely identified by either their name and/or their *neurodata_type*. The *neurodata_type* of an
+object is similar to the concept of a Class in object-oriented design, and is used to both uniquly
+identify an object as well to enable the reuse of types. In the following we first define these basics concepts
+in more detail. The NWB format is then described in detail in :numref:`nwb-type-specifications`.
+
+neurodata_type
+--------------
+
+The concept of a ```neurodata_type``` is similar to the concept of a Class in object-oriented programming.
+In the NWB format, groups or datasets may be given a unique ```neurodata_type```. The ```neurodata_type```
+allows the unique identification of the type of objects in the format and also endable the reuse of
+types through the concept of inheritance. A group or dataset may, hence, define a new ```neurodata_type```
+while extending an existing type. E.g., ```AbstractFeatureSeries``` defines a new type that
+inherits from ```TimeSeries```.
+
+
 Time Series
 -----------
 
@@ -11,10 +48,9 @@ and experimental events. To account for different storage requirements
 and different modalities, a *TimeSeries* is defined in a minimal form
 and it can be extended, or subclassed, to account for different
 modalities and data storage requirements. When a *TimeSeries* is
-extended, it means that the 'subclassed' instance maintains or changes
-each of the components (eg, groups and datasets) of its parent and may
-have new groups and/or datasets of its own. The *TimeSeries* makes this
-process of defining such pairs more hierarchical.
+extended, it means that the subclass maintains all components
+(e.g., groups, datasets, and attributes) of its parent while it may modify
+existing components as well as add new ones.
 
 Each *TimeSeries* has its own HDF5 group, and all datasets belonging to
 a *TimeSeries* are in that group. The group contains time and data
@@ -102,64 +138,8 @@ types of Interfaces are described below.
 Interfaces
 ^^^^^^^^^^
 
-.. note::
-
-    # TODO Add documentation to describe the concept of interfaces
-
-
-Top Level Data Organization
----------------------------
-
-Top level groups
-^^^^^^^^^^^^^^^^
-
-.. note::
-
-    # TODO Fix links in this section
-    # TODO Autogenerate the table from the source and then 1) remove the current table and 2) include the file with the autogenrated table here
-
-+-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+
-| Id                                | Description                                                                                                                                                                                                                                                 | Comment                                                                                                                                                                                                                                                                                                                                                                                         | Required   |
-+===================================+=============================================================================================================================================================================================================================================================+=================================================================================================================================================================================================================================================================================================================================================================================================+============+
-| `acquisition <#/acquisition>`__   | Data streams recorded from the system, including ephys, ophys, tracking, etc.                                                                                                                                                                               | This group is read-only after the experiment is completed and timestamps are corrected to a common timebase. The data stored here may be links to raw data stored in external HDF5 files. This will allow keeping bulky raw data out of the file while preserving the option of keeping some/all in the file. <em>(Automatically created)</em>                                                  | yes        |
-+-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+
-| `analysis <#/analysis>`__         | Lab-specific and custom scientific analysis of data. There is no defined format for the content of this group - the format is up to the individual user/lab.                                                                                                | To facilitate sharing analysis data between labs, the contents here should be stored in standard types (eg, INCF types) and appropriately documented. <em>(Automatically created)</em>                                                                                                                                                                                                          | yes        |
-+-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+
-| `epochs <#/epochs>`__             | Experimental intervals, whether that be logically distinct sub-experiments having a particular scientific goal, trials during an experiment, or epochs deriving from analysis of data.                                                                      | Epochs provide pointers to time series that are relevant to the epoch, and windows into the data in those time series (i.e., the start and end indices of TimeSeries::data[] that overlap with the epoch). This allows easy access to a range of data in specific experimental intervals. <em>(Automatically created)</em>                                                                      | yes        |
-+-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+
-| `general <#/general>`__           | Experimental metadata, including protocol, notes and description of hardware device(s).                                                                                                                                                                     | The metadata stored in this section should be used to describe the experiment. Metadata necessary for interpreting the data is stored with the data. <em>(Automatically created)</em>                                                                                                                                                                                                           | yes        |
-+-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+
-| `processing <#/processing>`__     | The home for processing Modules. These modules perform intermediate analysis of data that is necessary to perform before scientific analysis. Examples include spike clustering, extracting position from tracking data, stitching together image slices.   | Modules are defined below. They can be large and express many data sets from relatively complex analysis (e.g., spike detection and clustering) or small, representing extraction of position information from tracking video, or even binary lick/no-lick decisions. Common software tools (e.g., klustakwik, MClust) are expected to read/write data here. <em>(Automatically created)</em>   | yes        |
-+-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+
-| `stimulus <#/stimulus>`__         | Data pushed into the system (eg, video stimulus, sound, voltage, etc) and secondary representations of that data (eg, measurements of something used as a stimulus)                                                                                         | This group is read-only after experiment complete and timestamps are corrected to common timebase. Stores both presented stimuli and stimulus templates, the latter in case the same stimulus is presented multiple times, or is pulled from an external stimulus library. <em>(Automatically created)</em>                                                                                     | yes        |
-+-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+
-
-
-The content of these organizational groups is more fully described in
-the section titled, `File organization <#File_organization>`__. The NWB
-format is based on *`TimeSeries <#TimeSeries>`__* and
-*`Modules <#Modules>`__* and these are defined first.
-
-NWB stores general optical and electrical physiology data in a way that
-should be understandable to a naive user after a few minutes
-looking at the file in an HDF5 browser, such as HDFView. The format is
-designed to be friendly to and usable by software tools and analysis
-scripts, and to impose few a priori assumptions about data
-representation and analysis. Metadata required to understand the data
-itself (core metadata) is generally stored with the data. Information
-required to interpret the experiment (general metadata) is stored in the
-group ``general``. Most general metadata is stored in free-form text
-fields. Machine-readable metadata is stored as attributes on these
-free-form text fields.
-
-.. The only API assumed necessary to read a NWB file is an HDF5 library (e.g., h5py in python, libhdf5 in C, JHI5 in Java).
-
-Top level datasets
-^^^^^^^^^^^^^^^^^^
-
-.. note::
-
-    # TODO Autogenerate table for the top level datasets and include the file here
+*Interface* is used in the format as a common base class for analyses stored in
+*Modules*.
 
 
 .. _sec-extending-the-format:
@@ -174,7 +154,7 @@ There are two ways to document these additions. The first is to add an
 attribute "neurodata\_type" with value the string "Custom" to the
 additional groups or datasets, and provide documentation to describe the
 extra data if it is not clear from the context what the data represent.
-This method is simple but does not include a consistant way to describe
+This method is simple but does not include a consistent way to describe
 the additions. The second method is to write an *extension* to the
 format. With this method, the additions are describe by the extension
 and attribute "schema\_id" is set to the schema\_id associated with the
@@ -191,6 +171,44 @@ without breaking backward compatibility.
 Comments and Definitions
 ========================
 
+Notation
+--------
+
+The description of the format in :numref:`nwb-type-specifications` is
+divided into subsection based on ```neurodata_type```. Each ```neurodata_type``` section includes:
+
+* A basic description of the type
+* An optional figure describing the organization of data within the type
+* A set of tables describing the datasets, attributes and groups contained in the type.
+* An optional set of further subsections describing the content of subgroups contained in the given ```neurdata_type```.
+
+In the tables we use the following notation to uniquely identify datasets, groups, attributes:
+
+* ```name``` desribes the unique name of an object
+* ```<neurodata_type>``` describes the ```neurodata_type``` of the object in case that the object does not have a unique name
+* ```...``` prefix is used to indicate the depth of the object in the hierarchy to allow identification of the parent of the object. E.g., an object with a ```..``` prefix will belong to the previous object with a `.` prefix.
+
+Here a quick example:
+
+.. table:: Example illustrating the description of the contents of ```neurodata_types```.
+
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+-------------+
+    | Name                      | Type        | Description                                                                                             |  Quantity   |
+    +===========================+=============+=========================================================================================================+=============+
+    | <MyTimeSeries>            | group       | Top level group for <MyTimeSeries>                                                                      | 1           |
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+-------------+
+    | .myattr                   | attribute   | Attribute defined on <MyTimeSeries>                                                                     |             |
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+-------------+
+    | .mydata                   | dataset     | Required dataset with a unique name contained in <MyTimeSeries>                                         | 1           |
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+-------------+
+    | ..unit                    | attribute   | Attribute unit defined on the dataset ..mydata                                                          |             |
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+-------------+
+    | .myotherdata              | dataset     | Optional dataset with a unique name contained in <MyTimeSeries>                                         | 0 or 1      |
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+-------------+
+    | .<ElectrialSeries>        | group       | Optional set of groups with the neurodata_type ElectricalSeries that is contained in <MyTimeSeries>     | 0 or more   |
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+-------------+
+
+
 Storing Time Values
 -------------------
 
@@ -205,14 +223,6 @@ size, larger or smaller sizes can be used (and for integer types both
 signed and unsigned), so long as the selected size encompasses the full
 range of data, and for floats, without loss of significant precision.
 Fields that have a minimum size can use larger, but not smaller sizes.
-
-
-Definitions
------------
-
-.. note::
-    **#TODO Add description of all definition needed to understand the format specification**
-
 
 Link types
 ----------
@@ -257,11 +267,3 @@ time series, such as if timeseries A and timeseries B, each having
 different data (or time) share time (or data). This is much more
 important information as it shows structural associations in the data.
 
-
-.. note::
-
-    # TODO Autogenerate tables with a summary of the all the data for each type
-
-.. note::
-
-    # TODO Organize the NWBFile section to include separate descriptions for the high-level groups without neurodata_type to describe the general File Organization similar to the original specification document.
