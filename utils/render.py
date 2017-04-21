@@ -504,6 +504,55 @@ class NXGraphHierarchyDescription(object):
         normlized_layout = {k: np.asarray([(n[0] - xmin) / xr, (n[1] - xmin) / yr]) for k, n in graph_layout.items()}
         return normlized_layout
 
+    def suggest_xlim(self):
+        """
+        Suggest xlimits for plotting
+        :return: Tupple with min/max x values
+        """
+        import numpy as np
+        xpos = np.asarray([i[0] for i in self.pos.values()])
+        xmin = xpos.min()
+        xmax = xpos.max()
+        xrange = np.abs(xmax-xmin)
+        xmin -= xrange*0.2
+        xmax += xrange*0.2
+        return (xmin, xmax)
+
+    def suggest_ylim(self):
+        """
+        Suggest ylimits for plotting
+        :return: Tupple with min/max x values
+        """
+        import numpy as np
+        ypos = np.asarray([i[1] for i in self.pos.values()])
+        ymin = ypos.min()
+        ymax = ypos.max()
+        yrange = np.abs(ymax-ymin)
+        ymin -= yrange*0.1
+        ymax += yrange*0.1
+        return (ymin, ymax)
+
+
+    def suggest_figure_size(self):
+        """
+        Suggest a figure size for a graph based on the number of rows and columns in the hierarchy
+        :param graph: Network X graph of file objects
+        :return: Tuple with the width and height for the figure
+        """
+        allnodes = self.graph.nodes(data=False)
+        nodes_at_level = {}
+        for v in allnodes:
+            xpos = len(v.split('/')) if v != '/' else 1
+            try:
+                nodes_at_level[xpos] += 1
+            except KeyError:
+                nodes_at_level[xpos] = 1
+        num_cols = len(nodes_at_level)
+        num_rows = max([v for v in nodes_at_level.values()])
+        w = 8 # num_cols + 1.5
+        h = min(num_rows*0.75, 8)  #num_rows * 0.5 + 1.5
+        return (w,h)
+
     @staticmethod
     def draw_graph(graph,
                    pos,
@@ -745,7 +794,7 @@ class RSTDocument(object):
         self.document += (heading + self.newline)
         self.document += self.newline
 
-    def add_section_label(self, label):
+    def add_label(self, label):
         """
         Add a section lable
         :param label: name of the lable
@@ -1018,6 +1067,7 @@ class  RSTTable(object):
         """
         self.__table = []
         self.__cols = cols if not isinstance(cols, int) else ([''] * cols)
+        self.newline = "\n"
 
 
     def set_cell(self, row, col, text):
@@ -1045,7 +1095,10 @@ class  RSTTable(object):
     def add_row(self, row_values=None, replace_none=None, convert_to_str=True):
         """
         Add a row of values to the table
-        :param row_values: List of all values for the current row (or None if an empty row should be added)
+        :param row_values: List of all values for the current row (or None if an empty row should be added).
+                           If values in the list contain newline strings then this will result in the creation
+                           of a multiline row with as many lines as the larges cell (i.e. the cell with the largest
+                           number of newline symbols).
         :param replace_none:  String to be used to replace None values in the row data (default=None, i.e., do not
                               replace None values)
         :param convert_to_str: Boolean indicating whether all row values should be converted to strings. (default=True)
@@ -1064,7 +1117,7 @@ class  RSTTable(object):
             raise ValueError('Column index out of bounds: col=%i , max_index=%i' % (col, len(self.__cols)-1))
         self.__cols[col] = text
 
-    def render(self, rst_doc=None, title=None, table_class=None, widths=None, ignore_empty=True):
+    def render(self, rst_doc=None, title=None, table_class=None, widths=None, ignore_empty=True, table_ref=None):
         """
         Render the table to an RSTDocument
 
@@ -1075,8 +1128,9 @@ class  RSTTable(object):
         :param ignore_empty: Boolean indicating whether empty tables should be rendered (i.e., if False then
                     headings with no additional rows will be rendered) or if no table should be created
                     if no data rows exists (if set to True). (default=True)
+        :param table_ref: Name of the reference to be used for the table
         """
-        if len(self.__table) == 0:
+        if len(self.__table) == 0 and ignore_empty:
             return rst_doc if rst_doc is not None else RSTDocument()
 
         def table_row_divider(col_widths, style='='):
@@ -1091,16 +1145,30 @@ class  RSTTable(object):
             return " " + cell + (col_width  - len(cell) + 1) * " "
 
         def render_row(col_widths, row, newline='\n'):
-            #row_text = '|' if not use_longtable else '    |'
-            row_text = '    |'
-            for i, cell, in enumerate(row):
-                row_text += normalize_cell(cell, col_width=col_widths[i]) + '|'
-            row_text += newline
+
+            row_lines = [r.split(newline) for r in row]
+            num_lines = max([len(r) for r in row_lines])
+            for r in row:
+                if newline in r:
+                    max(num_lines, len(r.split(newline)))
+            row_text = ''
+            for l in range(num_lines):
+                row_text += '    |'
+                for ri in range(len(row)):
+                    cell = row_lines[ri][l] if len(row_lines[ri]) > l else ''
+                    row_text += normalize_cell(cell, col_width=col_widths[ri]) + '|'
+                row_text += newline
             return row_text
+            #for i, cell, in enumerate(row):
+            #    row_text += normalize_cell(cell, col_width=col_widths[i]) + '|'
+            #row_text += newline
+            #return row_text
 
         col_widths = [max(out)+2 for out in map(list, zip(*[[len(item) for item in row] for row in ([self.__cols,] + self.__table)]))]
         rst_doc = rst_doc if rst_doc is not None else RSTDocument()
         rst_doc.add_text(rst_doc.newline)
+        if table_ref is not None:
+            rst_doc.add_label(table_ref)
         rst_doc.add_text('.. table::')
         if title:
             rst_doc.add_text(' ' + title)

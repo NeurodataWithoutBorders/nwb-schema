@@ -4,7 +4,6 @@ Generate figures and RST documents from the NWB YAML specification for the forma
 
 # TODO LaTeX mix of regular and longtable. Should use longtbale, however, need to enforce column widht in longtable to avoid vertical spill on page
 # TODO Fix assignement of other types?
-# TODO Create table file for the top-level groups in NWBFile for the Overview of the format section
 
 
 #from pynwb.spec import SpecCatalog
@@ -82,7 +81,7 @@ class NeurodataTypeDict(dict):
         self['subtypes'] = subtypes
 
 
-def clean_doc(doc_str, add_prefix=None, add_postifix=None, rst_format='**'):
+def clean_doc(doc_str, add_prefix=None, add_postifix=None, rst_format='**', remove_html_tags=True):
     """
     Replace COMMENT, NOTE, MORE_INFO etc. qualifieres from the original spec
     with RST-style
@@ -90,12 +89,23 @@ def clean_doc(doc_str, add_prefix=None, add_postifix=None, rst_format='**'):
     :param add_prefix: Prefix string to be added before Comment, Note, etc. substrings.
                     Useful, e.g., to add newlines before the different sections of the doc string.
     :param rst_format: RST formatting to be used for Comment, Note et.c headings. Default='**' for bold text.
+    :param remove_html_tags: Boolean indicating whether the function should try to replace html tags with rst
+                             tags if possible
     :return: New rst string
     """
-    prefix = '' if add_prefix is None else add_prefix
+    prefix = ' ' if add_prefix is None else add_prefix
     temp_str = doc_str
-    temp_str = temp_str.replace('COMMENT:', '%s %sComment:%s ' % (prefix, rst_format, rst_format))
-    temp_str = temp_str.replace('MORE_INFO:','%s %sAdditional Information:%s ' % (prefix, rst_format, rst_format))
+    if remove_html_tags:
+        # temp_str = re.sub('<[^<]+?>', '', temp_str)
+        temp_str = temp_str.replace('&lt;', '<')
+        temp_str = temp_str.replace('&gt;', '>')
+        temp_str = temp_str.replace('<b>', ' **')
+        temp_str = temp_str.replace('</b>', '** ')
+        temp_str = temp_str.replace('<i>', ' *')
+        temp_str = temp_str.replace('</i>', '* ')
+
+    temp_str = temp_str.replace('COMMENT:', '%s%sComment:%s ' % (prefix, rst_format, rst_format))
+    temp_str = temp_str.replace('MORE_INFO:','%s%sAdditional Information:%s ' % (prefix, rst_format, rst_format))
     temp_str = temp_str.replace('NOTE:', '%s %sAdditional Information:%s '% (prefix, rst_format, rst_format))
     if add_postifix is not None:
         temp_str += add_postifix
@@ -157,6 +167,17 @@ def get_src_section_label(neurodata_type):
     else:
         None
 
+def get_group_table_label(parent):
+    """
+    Get the name of the reference for the table listing all subgroups for the parent
+    """
+    return 'table-'+parent+'-groups'
+
+def get_data_table_label(parent):
+    """
+    Get the name of the reference for the table listing all data for the parent
+    """
+    return 'table-'+parent+'-data'
 
 def render_type_hierarchy(type_hierarchy,
                           target_doc=None,
@@ -176,7 +197,7 @@ def render_type_hierarchy(type_hierarchy,
     """
     target_doc = RSTDocument() if target_doc is None else target_doc
     if section_label:
-        target_doc.add_section_label(section_label)
+        target_doc.add_label(section_label)
     if subsection_title:
         target_doc.add_subsection(subsection_title)
 
@@ -214,6 +235,7 @@ def create_spec_table(spec,
                       depth=0,
                       show_subattributes=True,
                       show_subdatasets=True,
+                      show_sublinks=True,
                       show_subgroups=False,
                       recursive=False,
                       appreviate_main_object_doc=True):
@@ -228,28 +250,78 @@ def create_spec_table(spec,
     :return: RSTTable that can be rendered into and RSTDocuement via the RSTTable.render(...) function.
     """
     # Create a new table if necessary
-    rst_table = rst_table if rst_table is not None else RSTTable(cols=['Name', 'Type', 'Description', ' Quantity'])
+    rst_table = rst_table if rst_table is not None else RSTTable(cols=['Id', 'Type', 'Description']) #, ' Quantity'])
+
+    ###########################################
+    #  Render the row for the current object
+    ###########################################
+    # Determine the type of the object
     spec_type = 'group' if isinstance(spec, GroupSpec) else \
                 'dataset'if isinstance(spec, DatasetSpec) else \
                 'attribute' if isinstance(spec, AttributeSpec) else \
                 'link'
-    # Add an entry for the current spec
+    # Determine the name of the object
     if spec.get('name', None) is not None:
         spec_name = '.'*depth + spec.name
     elif spec.get('neurodata_type_def',None) is not None:
         spec_name = '.'*depth +  '<%s>' % spec.neurodata_type_def
     else:
         spec_name = '.'*depth +  '<%s>' % RSTDocument.get_reference(get_section_label(spec.neurodata_type), spec.neurodata_type)
-    spec_quantity = quantity_to_string(spec.quantity) if not isinstance(spec, AttributeSpec) else ""
-    spec_doc = clean_doc(spec.doc)
+    spec_quantity = quantity_to_string(spec.quantity) \
+                    if not (isinstance(spec, AttributeSpec) or isinstance(spec, LinkSpec)) \
+                    else ""
+    # Create the description for the object
+    spec_doc = clean_doc(spec.doc, add_prefix=rst_table.newline+rst_table.newline)
     if appreviate_main_object_doc and depth==0:
         spec_doc = "Top level %s for %s" % (spec_type, spec_name.lstrip('.'))
+    # Create the list of additonal object properties to be added as a list ot the doc
+    # Add link properties
+    spec_prop_list = []
+    if isinstance(spec, LinkSpec):
+        spec_prop_list.append('**Target Type** %s' % RSTDocument.get_reference(get_section_label(spec['target_type']), spec['target_type']))
+    # Add dataset properties
+    if isinstance(spec, DatasetSpec):
+        if spec.get('quantity', None) is not None:
+            spec_prop_list.append('**Quantity** %s' % quantity_to_string(spec['quantity']))
+        if spec.get('type', None) is not None:
+            spec_prop_list.append('**Type:** %s' % str(spec['type']))
+        if spec.get('dims', None) is not None:
+            spec_prop_list.append('**Dimensions:** %s' % str(spec['dims']))
+        if spec.get('shape', None) is not None:
+            spec_prop_list.append('**Shape:** %s' % str(spec['shape']))
+        if spec.get('linkable', None) is not None:
+            spec_prop_list.append('**Linkable:** %s' % str(spec['linkable']))
+        if spec.get('neurodata_type', None) is not None:
+            extend_type = str(spec['neurodata_type'])
+            spec_prop_list.append('**Extends:** %s' %  RSTDocument.get_reference(get_section_label(extend_type), extend_type))
+        if spec.get('neurodata_type_def', None) is not None:
+            spec_prop_list.append('**Neurodata Type:** %s' % str(spec['neurodata_type_def']))
+    # Add group properties
+    if isinstance(spec, GroupSpec):
+        if spec.get('quantity', None) is not None:
+            spec_prop_list.append('**Quantity** %s' % quantity_to_string(spec['quantity']))
+        if spec.get('linkable', None) is not None:
+            spec_prop_list.append('**Linkable:** %s' % str(spec['linkable']))
+        if spec.get('neurodata_type', None) is not None:
+            extend_type = str(spec['neurodata_type'])
+            spec_prop_list.append('**Extends:** %s' %  RSTDocument.get_reference(get_section_label(extend_type), extend_type))
+        if spec.get('neurodata_type_def', None) is not None:
+            spec_prop_list.append('**Neurodata Type:** %s' % str(spec['neurodata_type_def']))
 
-    # Render the main spec if requested
-    rst_table.add_row(row_values=[spec_name, spec_type, spec_doc, spec_quantity],
+    # Render the sepecification propoerties list
+    if len(spec_prop_list) > 0:
+        spec_doc += rst_table.newline
+        for dp in spec_prop_list:
+            spec_doc += rst_table.newline + '- ' + dp
+
+    # Render the object to the table
+    rst_table.add_row(row_values=[spec_name, spec_type, spec_doc], #, spec_quantity],
                       replace_none='',
                       convert_to_str=True)
 
+    ###########################################
+    #  Recursively add the subobject if requested
+    ###########################################
     # Recursively add all attributes of the current spec
     if (isinstance(spec, DatasetSpec) or isinstance(spec, GroupSpec)) and show_subattributes:
         for a in spec.attributes:
@@ -258,6 +330,10 @@ def create_spec_table(spec,
     if isinstance(spec, GroupSpec) and show_subdatasets:
         for d in spec.datasets:
             create_spec_table(d, rst_table, depth=depth+1)
+    # Recursively add all Links for the current spec
+    if isinstance(spec,GroupSpec) and show_sublinks:
+        for l in spec.links:
+            create_spec_table(l, rst_table, depth=depth+1)
     # Recursively add all subgroups if requested
     if show_subgroups and isinstance(spec, GroupSpec):
         if recursive:
@@ -276,6 +352,7 @@ def create_spec_table(spec,
                                   show_subgroups=False,
                                   show_subattributes=False,
                                   show_subdatasets=False)
+    # Return the created table
     return rst_table
 
 def render_group_specs(group_spec, rst_doc, parent=None):
@@ -307,7 +384,7 @@ def render_group_specs(group_spec, rst_doc, parent=None):
     #     rst_doc.add_text('*New Neurodata Type:* %s' % group_spec.get('neurodata_type_def', None) + rst_doc.newline + rst_doc.newline)
     # rst_doc.add_text('*Quantity:*  %s' % quantity_to_string(group_spec.quantity) + rst_doc.newline + rst_doc.newline)
     gdoc = clean_doc(group_spec.doc,
-                     add_prefix=rst_doc.newline+rst_doc.newline,
+                     add_prefix=rst_doc.newline+rst_doc.newline+' ',
                      add_postifix=rst_doc.newline,
                      rst_format='**')
     gdoc += rst_doc.newline+rst_doc.newline + \
@@ -329,10 +406,12 @@ def render_group_specs(group_spec, rst_doc, parent=None):
         group_spec_data_table_title = None
         if spec_show_title_for_tables:
             if not spec_show_subgroups_in_seperate_table:
-                group_spec_data_table_title = "Groups, Datasets, and Attributes contained in <%s>" % group_name
+                group_spec_data_table_title = "Groups, Datasets, and Attributes contained in ``%s%s``" % (parent,group_name)
             else:
-                group_spec_data_table_title = "Datasets, and Attributes contained in <%s>" % group_name
-        rst_doc.add_table(rst_table=group_spec_data_table)
+                group_spec_data_table_title = "Datasets, Links, and Attributes contained in ``%s%s``" % (parent,group_name)
+        rst_doc.add_table(rst_table=group_spec_data_table,
+                          title=group_spec_data_table_title)
+                          # table_ref=get_data_table_label(group_name))
 
     # Add a table with all the subgroups of this group
     if spec_show_subgroups_in_seperate_table:
@@ -347,7 +426,9 @@ def render_group_specs(group_spec, rst_doc, parent=None):
             group_spec_groups_table_title = None
             if spec_show_title_for_tables:
                 group_spec_groups_table_title = "Groups contained in <%s>" % group_name
-            rst_doc.add_table(group_spec_groups_table, title=group_spec_groups_table_title)
+            rst_doc.add_table(group_spec_groups_table,
+                              title=group_spec_groups_table_title)
+                              # table_ref=get_group_table_label(group_name))
 
 
     # Recursively render paragraphs for all the subgroups of this group
@@ -401,7 +482,7 @@ def render_specs(neurodata_types,
         #  Create the base documentation for the current type
         #######################################################
         # Create the section heading and label
-        type_desc_doc.add_section_label(get_section_label(rt))
+        type_desc_doc.add_label(get_section_label(rt))
         section_heading = rt # if extend_type is None else "%s extends %s" % (rt, type_desc_doc.get_reference(get_section_label(extend_type), extend_type))
         type_desc_doc.add_subsubsection(section_heading)
         if extend_type is not None:
@@ -437,13 +518,26 @@ def render_specs(neurodata_types,
             if show_hierarchy_plots:
                 temp = HierarchyDescription.from_spec(rt_spec)
                 temp_graph = NXGraphHierarchyDescription(temp)
+                temp_figsize = temp_graph.suggest_figure_size()
+                temp_xlim = temp_graph.suggest_xlim()
+                temp_ylim = None # temp_graph.suggest_ylim()
                 if len(temp_graph.graph.nodes(data=False)) > 2:
-                    fig = temp_graph.draw(show_plot=False, figsize=None, label_font_size=10)
-                    plt.savefig(os.path.join(file_dir, '%s.pdf' % rt), format='pdf')
-                    plt.savefig(os.path.join(file_dir, '%s.png' % rt), format='png')
+                    fig = temp_graph.draw(show_plot=False,
+                                          figsize=temp_figsize,
+                                          xlim=temp_xlim,
+                                          ylim=temp_ylim,
+                                          label_font_size=10)
+                    print(fig.get_size_inches())
+                    plt.savefig(os.path.join(file_dir, '%s.pdf' % rt),
+                                format='pdf',
+                                bbox_inches='tight',
+                                pad_inches = 0)
+                    plt.savefig(os.path.join(file_dir, '%s.png' % rt),
+                                format='png', dpi=300,
+                                bbox_inches='tight',
+                                pad_inches = 0)
                     plt.close()
-                    type_desc_doc.add_figure(img='./_format_auto_docs/'+rt+".*",
-                                   alt=rt)
+                    type_desc_doc.add_figure(img='./_format_auto_docs/'+rt+".*", alt=rt)
                     PrintCol.print("    " + rt + '-- RENDER OK.', PrintCol.OKGREEN)
                 else:
                    PrintCol.print("    " + rt + '-- SKIPPED RENDER HIERARCHY. TWO OR FEWER NODES.', PrintCol.OKBLUE)
@@ -459,7 +553,7 @@ def render_specs(neurodata_types,
         if seperate_src_file:
             # Add a section to the file for the sources
             src_sec_lable = get_src_section_label(rt)
-            type_src_doc.add_section_label(src_sec_lable)
+            type_src_doc.add_label(src_sec_lable)
             type_src_doc.add_subsubsection(section_heading)
             if extend_type is not None:
                 type_src_doc.add_text('**Extends:** %s' % type_src_doc.get_reference(get_section_label(extend_type), extend_type) + type_src_doc.newline + type_src_doc.newline)
@@ -486,10 +580,12 @@ def render_specs(neurodata_types,
             rt_spec_data_table_title = None
             if spec_show_title_for_tables:
                 if not spec_show_subgroups_in_seperate_table:
-                    rt_spec_data_table_title = "Groups, Datasets, and Attributes contained in <%s>" % rt
+                    rt_spec_data_table_title = "Groups, Datasets, Links, and Attributes contained in <%s>" % rt
                 else:
-                    rt_spec_data_table_title = "Datasets, and Attributes contained in <%s>" % rt
-            type_desc_doc.add_table(rt_spec_data_table, title=rt_spec_data_table_title)
+                    rt_spec_data_table_title = "Datasets, Links, and Attributes contained in <%s>" % rt
+            type_desc_doc.add_table(rt_spec_data_table,
+                                    title=rt_spec_data_table_title,
+                                    table_ref=get_data_table_label(rt))
 
         #############################################################################
         #  Add table with the main subgroups for the neurodata_type
@@ -507,7 +603,9 @@ def render_specs(neurodata_types,
                 rt_spec_group_table_title = None
                 if spec_show_title_for_tables:
                     rt_spec_group_table_title = "Groups contained in <%s>" % rt
-                type_desc_doc.add_table(rt_spec_group_table, title=rt_spec_group_table_title)
+                type_desc_doc.add_table(rt_spec_group_table,
+                                        title=rt_spec_group_table_title,
+                                        table_ref=get_group_table_label(rt))
 
         ######################################################
         # Add tables for all subgroups
@@ -750,11 +848,13 @@ def main():
     # Create the section for the format specification
     print("RENDERING TYPE SPECIFICATIONS")
     desc_doc.add_latex_clearpage() # Add a clearpage command for latex to avoid possible troubles with figure placement outside of the current section
+    desc_doc.add_label("nwb-type-specifications")
     desc_doc.add_section("Type Specifications")
 
     # Create the RST file for source files or use the main document in case sources should be included in the main doc directly
     if spec_generate_src_file:
         src_doc = RSTDocument()
+        src_doc.add_section("nwb-type-specification-sources")
         src_doc.add_section("Type Specifications: Sources")
     else:
         src_doc = None
