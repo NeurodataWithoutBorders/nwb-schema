@@ -527,7 +527,6 @@ def render_specs(neurodata_types,
                                           xlim=temp_xlim,
                                           ylim=temp_ylim,
                                           label_font_size=10)
-                    print(fig.get_size_inches())
                     plt.savefig(os.path.join(file_dir, '%s.pdf' % rt),
                                 format='pdf',
                                 bbox_inches='tight',
