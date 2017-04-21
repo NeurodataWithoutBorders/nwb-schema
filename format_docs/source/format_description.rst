@@ -182,31 +182,33 @@ divided into subsection based on ```neurodata_type```. Each ```neurodata_type```
 * A set of tables describing the datasets, attributes and groups contained in the type.
 * An optional set of further subsections describing the content of subgroups contained in the given ```neurdata_type```.
 
-In the tables we use the following notation to uniquely identify datasets, groups, attributes:
+In the tables we use the following notation in the **Id** column to uniquely identify datasets, groups, attributes:
 
 * ```name``` desribes the unique name of an object
 * ```<neurodata_type>``` describes the ```neurodata_type``` of the object in case that the object does not have a unique name
-* ```...``` prefix is used to indicate the depth of the object in the hierarchy to allow identification of the parent of the object. E.g., an object with a ```..``` prefix will belong to the previous object with a `.` prefix.
+* ```...``` prefixes are used to indicate the depth of the object in the hierarchy to allow identification of the parent of the object. E.g., an object with a ```..``` prefix will belong to the previous object with a `.` prefix.
 
 Here a quick example:
 
+.. tabularcolumns:: |p{4cm}|p{1cm}|p{10cm}|
 .. table:: Example illustrating the description of the contents of ```neurodata_types```.
+    :class: longtable
 
-    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+-------------+
-    | Name                      | Type        | Description                                                                                             |  Quantity   |
-    +===========================+=============+=========================================================================================================+=============+
-    | <MyTimeSeries>            | group       | Top level group for <MyTimeSeries>                                                                      | 1           |
-    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+-------------+
-    | .myattr                   | attribute   | Attribute defined on <MyTimeSeries>                                                                     |             |
-    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+-------------+
-    | .mydata                   | dataset     | Required dataset with a unique name contained in <MyTimeSeries>                                         | 1           |
-    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+-------------+
-    | ..unit                    | attribute   | Attribute unit defined on the dataset ..mydata                                                          |             |
-    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+-------------+
-    | .myotherdata              | dataset     | Optional dataset with a unique name contained in <MyTimeSeries>                                         | 0 or 1      |
-    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+-------------+
-    | .<ElectrialSeries>        | group       | Optional set of groups with the neurodata_type ElectricalSeries that is contained in <MyTimeSeries>     | 0 or more   |
-    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+-------------+
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
+    | Id                        | Type        | Description                                                                                             |
+    +===========================+=============+=========================================================================================================+
+    | <MyTimeSeries>            | group       | Top level group for the neurodata_type. The group the neurodata_type *MyTimeSerie*  but no fixed name   |
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
+    | .myattr                   | attribute   | Attribute with the fixed name myattr defined on <MyTimeSeries>                                          |
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
+    | .mydata                   | dataset     | Required dataset with a unique name contained in <MyTimeSeries>                                         |
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
+    | ..unit                    | attribute   | Attribute unit defined on the dataset .mydata                                                           |
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
+    | .myotherdata              | dataset     | Optional dataset with a unique name contained in <MyTimeSeries>                                         |
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
+    | .<ElectrialSeries>        | group       | Optional set of groups with the neurodata_type ElectricalSeries that are contained in <MyTimeSeries>    |
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
 
 
 Storing Time Values
