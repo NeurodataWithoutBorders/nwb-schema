@@ -172,6 +172,10 @@ apidoc:
 	@echo
 	@echo "Generate rst source files from NWB spec."
 
-fulldoc: allclean apidoc html latexpdf
+fulldoc:
+	$(MAKE) allclean
 	@echo
-	@echo "Rebuilt apidoc, html, latexpdf"
+	@echo "Rebuilding apidoc, html, latexpdf"
+	$(MAKE) apidoc
+	$(MAKE) html
+	$(MAKE) latexpdf
