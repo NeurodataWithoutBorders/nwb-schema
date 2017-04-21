@@ -1117,18 +1117,28 @@ class  RSTTable(object):
             raise ValueError('Column index out of bounds: col=%i , max_index=%i' % (col, len(self.__cols)-1))
         self.__cols[col] = text
 
-    def render(self, rst_doc=None, title=None, table_class=None, widths=None, ignore_empty=True, table_ref=None):
+    def render(self,
+               rst_doc=None,
+               title=None,
+               table_class='longtable',
+               widths=None,
+               ignore_empty=True,
+               table_ref=None,
+               latex_tablecolumns=None):
         """
         Render the table to an RSTDocument
 
         :param rst_doc: RSTDocument where the table should be rendered in or None if a new document should be created
         :param title: String with the optional title for the table
-        :param table_class: Optional class for the table. One of 'longtable', 'threeparttable', 'tabular', 'tabulary'
+        :param table_class: Optional class for the table.  We here use 'longtable' as default. Set to None to use
+                     the Sphinx default. Other table classes are: 'longtable', 'threeparttable', 'tabular', 'tabulary'
         :param widths: Optional list of width for the columns
         :param ignore_empty: Boolean indicating whether empty tables should be rendered (i.e., if False then
                     headings with no additional rows will be rendered) or if no table should be created
                     if no data rows exists (if set to True). (default=True)
         :param table_ref: Name of the reference to be used for the table
+        :param latex_tablecolumns: Latex columns description to be rendered as part of the Sphinx tabularcolumns::
+                    argument. E.g. '|p{3.5cm}|p{1cm}|p{10.5cm}|'
         """
         if len(self.__table) == 0 and ignore_empty:
             return rst_doc if rst_doc is not None else RSTDocument()
@@ -1144,7 +1154,7 @@ class  RSTTable(object):
         def normalize_cell(cell, col_width):
             return " " + cell + (col_width  - len(cell) + 1) * " "
 
-        def render_row(col_widths, row, newline='\n'):
+        def render_row(col_widths, row, newline=self.newline):
 
             row_lines = [r.split(newline) for r in row]
             num_lines = max([len(r) for r in row_lines])
@@ -1164,9 +1174,14 @@ class  RSTTable(object):
             #row_text += newline
             #return row_text
 
-        col_widths = [max(out)+2 for out in map(list, zip(*[[len(item) for item in row] for row in ([self.__cols,] + self.__table)]))]
+        def cell_len(cell, newline=self.newline):
+            return max(len(r) for r in cell.split(newline))
+
+        col_widths = [max(out)+2 for out in map(list, zip(*[[cell_len(item) for item in row] for row in ([self.__cols,] + self.__table)]))]
         rst_doc = rst_doc if rst_doc is not None else RSTDocument()
         rst_doc.add_text(rst_doc.newline)
+        if latex_tablecolumns:
+            rst_doc.add_text('.. tabularcolumns:: %s%s' % (latex_tablecolumns, rst_doc.newline))
         if table_ref is not None:
             rst_doc.add_label(table_ref)
         rst_doc.add_text('.. table::')

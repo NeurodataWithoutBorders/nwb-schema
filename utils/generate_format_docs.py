@@ -45,6 +45,8 @@ from glob import iglob
 import os
 
 
+CUSTOM_LATEX_TABLE_COLUMNS = "|p{4cm}|p{1cm}|p{10cm}|"
+
 class PrintCol:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -261,19 +263,20 @@ def create_spec_table(spec,
                 'attribute' if isinstance(spec, AttributeSpec) else \
                 'link'
     # Determine the name of the object
+    depth_str =  '.'*depth
     if spec.get('name', None) is not None:
-        spec_name = '.'*depth + spec.name
+        spec_name = depth_str + spec.name
     elif spec.get('neurodata_type_def',None) is not None:
-        spec_name = '.'*depth +  '<%s>' % spec.neurodata_type_def
+        spec_name = depth_str +  '<%s>' % spec.neurodata_type_def
     else:
-        spec_name = '.'*depth +  '<%s>' % RSTDocument.get_reference(get_section_label(spec.neurodata_type), spec.neurodata_type)
+        spec_name = depth_str +  '<%s>' % RSTDocument.get_reference(get_section_label(spec.neurodata_type), spec.neurodata_type)
     spec_quantity = quantity_to_string(spec.quantity) \
                     if not (isinstance(spec, AttributeSpec) or isinstance(spec, LinkSpec)) \
                     else ""
     # Create the description for the object
     spec_doc = clean_doc(spec.doc, add_prefix=rst_table.newline+rst_table.newline)
     if appreviate_main_object_doc and depth==0:
-        spec_doc = "Top level %s for %s" % (spec_type, spec_name.lstrip('.'))
+        spec_doc = "Top level %s for %s" % (spec_type, spec_name.lstrip(depth_str))
     # Create the list of additonal object properties to be added as a list ot the doc
     # Add link properties
     spec_prop_list = []
@@ -410,7 +413,8 @@ def render_group_specs(group_spec, rst_doc, parent=None):
             else:
                 group_spec_data_table_title = "Datasets, Links, and Attributes contained in ``%s%s``" % (parent,group_name)
         rst_doc.add_table(rst_table=group_spec_data_table,
-                          title=group_spec_data_table_title)
+                          title=group_spec_data_table_title,
+                          latex_tablecolumns=CUSTOM_LATEX_TABLE_COLUMNS)
                           # table_ref=get_data_table_label(group_name))
 
     # Add a table with all the subgroups of this group
@@ -427,7 +431,8 @@ def render_group_specs(group_spec, rst_doc, parent=None):
             if spec_show_title_for_tables:
                 group_spec_groups_table_title = "Groups contained in <%s>" % group_name
             rst_doc.add_table(group_spec_groups_table,
-                              title=group_spec_groups_table_title)
+                              title=group_spec_groups_table_title,
+                              latex_tablecolumns=CUSTOM_LATEX_TABLE_COLUMNS)
                               # table_ref=get_group_table_label(group_name))
 
 
@@ -584,7 +589,8 @@ def render_specs(neurodata_types,
                     rt_spec_data_table_title = "Datasets, Links, and Attributes contained in <%s>" % rt
             type_desc_doc.add_table(rt_spec_data_table,
                                     title=rt_spec_data_table_title,
-                                    table_ref=get_data_table_label(rt))
+                                    table_ref=get_data_table_label(rt),
+                                    latex_tablecolumns=CUSTOM_LATEX_TABLE_COLUMNS)
 
         #############################################################################
         #  Add table with the main subgroups for the neurodata_type
@@ -604,7 +610,8 @@ def render_specs(neurodata_types,
                     rt_spec_group_table_title = "Groups contained in <%s>" % rt
                 type_desc_doc.add_table(rt_spec_group_table,
                                         title=rt_spec_group_table_title,
-                                        table_ref=get_group_table_label(rt))
+                                        table_ref=get_group_table_label(rt),
+                                        latex_tablecolumns=CUSTOM_LATEX_TABLE_COLUMNS)
 
         ######################################################
         # Add tables for all subgroups
@@ -853,7 +860,7 @@ def main():
     # Create the RST file for source files or use the main document in case sources should be included in the main doc directly
     if spec_generate_src_file:
         src_doc = RSTDocument()
-        src_doc.add_section("nwb-type-specification-sources")
+        src_doc.add_label("nwb-type-specification-sources")
         src_doc.add_section("Type Specifications: Sources")
     else:
         src_doc = None
