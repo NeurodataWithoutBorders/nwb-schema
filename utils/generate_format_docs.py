@@ -116,6 +116,72 @@ def clean_doc(doc_str, add_prefix=None, add_postifix=None, rst_format='**', remo
     return temp_str
 
 
+def spec_prop_doc(spec, newline='\n', ignore_props=None):
+    """
+    Create a list with the properties from the spec rendered as RST
+    :param spec: The GroupSpec, DatasetSpec, AttributeSpec, or LinkSpec object
+    :param newline:
+    :param ignore_props: List of strings of property keys we should ignore
+    :return:
+    """
+
+    spec_prop_list = []
+    ignore_keys = [] if ignore_props is None else ignore_props
+    # Add link properties
+    if isinstance(spec, LinkSpec):
+        spec_prop_list.append('**Target Type** %s' % RSTDocument.get_reference(get_section_label(spec['target_type']), spec['target_type']))
+    # Add dataset properties
+    if isinstance(spec, DatasetSpec):
+        if spec.get('quantity', None) is not None and 'quantity' not in ignore_keys:
+            spec_prop_list.append('**Quantity** %s' % quantity_to_string(spec['quantity']))
+        if spec.get('dtype', None) is not None and 'dtype' not in ignore_keys:
+            spec_prop_list.append('**Data Type:** %s' % str(spec['dtype']))
+        if spec.get('dims', None) is not None and 'dims' not in ignore_keys:
+            spec_prop_list.append('**Dimensions:** %s' % str(spec['dims']))
+        if spec.get('shape', None) is not None  and 'shape' not in ignore_keys:
+            spec_prop_list.append('**Shape:** %s' % str(spec['shape']))
+        if spec.get('linkable', None) is not None  and 'linnkable' not in ignore_keys:
+            spec_prop_list.append('**Linkable:** %s' % str(spec['linkable']))
+        if spec.get('neurodata_type', None) is not None and 'neurodata_type' not in ignore_keys:
+            extend_type = str(spec['neurodata_type'])
+            spec_prop_list.append('**Extends:** %s' %  RSTDocument.get_reference(get_section_label(extend_type), extend_type))
+        if spec.get('neurodata_type_def', None) is not None and 'neurodata_type_def' not in ignore_keys:
+            spec_prop_list.append('**Neurodata Type:** %s' % str(spec['neurodata_type_def']))
+    # Add group properties
+    if isinstance(spec, GroupSpec):
+        if spec.get('quantity', None) is not None and 'quantity' not in ignore_keys:
+            spec_prop_list.append('**Quantity** %s' % quantity_to_string(spec['quantity']))
+        if spec.get('linkable', None) is not None and 'linkable' not in ignore_keys:
+            spec_prop_list.append('**Linkable:** %s' % str(spec['linkable']))
+        if spec.get('neurodata_type', None) is not None and 'neurodata_type' not in ignore_keys:
+            extend_type = str(spec['neurodata_type'])
+            spec_prop_list.append('**Extends:** %s' %  RSTDocument.get_reference(get_section_label(extend_type), extend_type))
+        if spec.get('neurodata_type_def', None) is not None and 'neurodata_type_def' not in ignore_keys:
+            ntype = str(spec['neurodata_type_def'])
+            spec_prop_list.append('**Neurodata Type:** %s' % RSTDocument.get_reference(get_section_label(ntype), ntype))
+    # Add attribute spec properites
+    if isinstance(spec, AttributeSpec):
+        if spec.get('dtype', None) is not None and 'dtype' not in ignore_keys:
+            spec_prop_list.append('**Data Type:** %s' % str(spec['dtype']))
+        if spec.get('dims', None) is not None  and 'dims' not in ignore_keys:
+            spec_prop_list.append('**Dimensions:** %s' % str(spec['dims']))
+        if spec.get('shape', None) is not None  and 'shape' not in ignore_keys:
+            spec_prop_list.append('**Shape:** %s' % str(spec['shape']))
+        if spec.get('required', None) is not None and 'required' not in ignore_keys:
+            spec_prop_list.append('**Reuqired:** %s' % str(spec['required']))
+        if spec.get('value', None) is not None and 'valye' not in ignore_keys:
+            spec_prop_list.append('**Value:** %s' % str(spec['value']))
+    # Render the sepecification propoerties list
+    spec_doc = ''
+    if len(spec_prop_list) > 0:
+        spec_doc += newline
+        for dp in spec_prop_list:
+            spec_doc += newline + '- ' + dp
+        spec_doc += newline
+    # Return the rendered list
+    return spec_doc
+
+
 def quantity_to_string(quantity):
     """
     Helper function to convert a quantity identifier to a consisten string for the documentation
@@ -275,50 +341,16 @@ def create_spec_table(spec,
     spec_quantity = quantity_to_string(spec.quantity) \
                     if not (isinstance(spec, AttributeSpec) or isinstance(spec, LinkSpec)) \
                     else ""
-    # Create the description for the object
-    spec_doc = clean_doc(spec.doc, add_prefix=rst_table.newline+rst_table.newline)
-    if appreviate_main_object_doc and depth==0:
-        spec_doc = "Top level %s for %s" % (spec_type, spec_name.lstrip(depth_str))
-    # Create the list of additonal object properties to be added as a list ot the doc
-    # Add link properties
-    spec_prop_list = []
-    if isinstance(spec, LinkSpec):
-        spec_prop_list.append('**Target Type** %s' % RSTDocument.get_reference(get_section_label(spec['target_type']), spec['target_type']))
-    # Add dataset properties
-    if isinstance(spec, DatasetSpec):
-        if spec.get('quantity', None) is not None:
-            spec_prop_list.append('**Quantity** %s' % quantity_to_string(spec['quantity']))
-        if spec.get('type', None) is not None:
-            spec_prop_list.append('**Type:** %s' % str(spec['type']))
-        if spec.get('dims', None) is not None:
-            spec_prop_list.append('**Dimensions:** %s' % str(spec['dims']))
-        if spec.get('shape', None) is not None:
-            spec_prop_list.append('**Shape:** %s' % str(spec['shape']))
-        if spec.get('linkable', None) is not None:
-            spec_prop_list.append('**Linkable:** %s' % str(spec['linkable']))
-        if spec.get('neurodata_type', None) is not None:
-            extend_type = str(spec['neurodata_type'])
-            spec_prop_list.append('**Extends:** %s' %  RSTDocument.get_reference(get_section_label(extend_type), extend_type))
-        if spec.get('neurodata_type_def', None) is not None:
-            spec_prop_list.append('**Neurodata Type:** %s' % str(spec['neurodata_type_def']))
-    # Add group properties
-    if isinstance(spec, GroupSpec):
-        if spec.get('quantity', None) is not None:
-            spec_prop_list.append('**Quantity** %s' % quantity_to_string(spec['quantity']))
-        if spec.get('linkable', None) is not None:
-            spec_prop_list.append('**Linkable:** %s' % str(spec['linkable']))
-        if spec.get('neurodata_type', None) is not None:
-            extend_type = str(spec['neurodata_type'])
-            spec_prop_list.append('**Extends:** %s' %  RSTDocument.get_reference(get_section_label(extend_type), extend_type))
-        if spec.get('neurodata_type_def', None) is not None:
-            ntype = str(spec['neurodata_type_def'])
-            spec_prop_list.append('**Neurodata Type:** %s' % RSTDocument.get_reference(get_section_label(ntype), ntype))
 
-    # Render the sepecification propoerties list
-    if len(spec_prop_list) > 0:
-        spec_doc += rst_table.newline
-        for dp in spec_prop_list:
-            spec_doc += rst_table.newline + '- ' + dp
+    # Create the doc description of the spec
+    if appreviate_main_object_doc and depth==0:
+        # Create the appreviated descripiton of the main object
+        spec_doc = "Top level %s for %s" % (spec_type, spec_name.lstrip(depth_str))
+    else:
+        # Create the description for the object
+        spec_doc = clean_doc(spec.doc, add_prefix=rst_table.newline+rst_table.newline)
+        # Create the list of additonal object properties to be added as a list ot the doc
+        spec_doc += spec_prop_doc(spec, rst_table.newline)
 
     # Render the object to the table
     rst_table.add_row(row_values=[spec_name, spec_type, spec_doc], #, spec_quantity],
@@ -361,6 +393,7 @@ def create_spec_table(spec,
     # Return the created table
     return rst_table
 
+
 def render_group_specs(group_spec, rst_doc, parent=None):
 
     parent = parent if parent is not None else ''
@@ -371,47 +404,15 @@ def render_group_specs(group_spec, rst_doc, parent=None):
         group_name = "<%s>" % group_spec.neurodata_type
     else:
         group_name =  "<%s>" % group_spec.neurodata_type_def
-    # rst_doc.add_text('**Group:** ```%s%s```' % (parent,group_name))
-    # rst_doc.add_text(rst_doc.newline + rst_doc.newline)
     rst_doc.add_paragraph("Groups: %s%s" % (parent,group_name))
-    # if group_spec.get('neurodata_type', None):
-    #     group_extend_type = group_spec.get('neurodata_type', None)
-    #     if group_spec.get('neurodata_type_def', None) is not None:
-    #         item_heading = '*Extends:*'
-    #     else:
-    #         item_heading = '*Reused Neurodata Type:*'
-    #     #if parent == '/acquisition/timeseries/' and group_name == '<TimeSeries>':
-    #     #    print(group_spec, item_heading )
-    #     #    exit(0)
-    #
-    #     rst_doc.add_text(item_heading + rst_doc.get_reference(get_section_label(group_extend_type), group_extend_type))
-    #     rst_doc.add_text(rst_doc.newline + rst_doc.newline)
-    # if group_spec.get('neurodata_type_def', None):
-    #     rst_doc.add_text('*New Neurodata Type:* %s' % group_spec.get('neurodata_type_def', None) + rst_doc.newline + rst_doc.newline)
-    # rst_doc.add_text('*Quantity:*  %s' % quantity_to_string(group_spec.quantity) + rst_doc.newline + rst_doc.newline)
+    # Compile the documentation for the group
     gdoc = clean_doc(group_spec.doc,
                      add_prefix=rst_doc.newline+rst_doc.newline, #+' ',
                      add_postifix=rst_doc.newline,
                      rst_format='**')
+
     gdoc += rst_doc.newline
-    # Compile the list of additional group properties
-    spec_prop_list = []
-    if group_spec.get('quantity', None) is not None:
-        spec_prop_list.append('**Quantity** %s' % quantity_to_string(group_spec['quantity']))
-    if group_spec.get('linkable', None) is not None:
-        spec_prop_list.append('**Linkable:** %s' % str(group_spec['linkable']))
-    if group_spec.get('neurodata_type', None) is not None:
-        extend_type = str(group_spec['neurodata_type'])
-        spec_prop_list.append('**Extends:** %s' %  RSTDocument.get_reference(get_section_label(extend_type), extend_type))
-    if group_spec.get('neurodata_type_def', None) is not None:
-        ntype = str(group_spec['neurodata_type_def'])
-        spec_prop_list.append('**Neurodata Type:** %s' % RSTDocument.get_reference(get_section_label(ntype), ntype))
-    # Render the sepecification propoerties list
-    if len(spec_prop_list) > 0:
-        gdoc += rst_doc.newline
-        for dp in spec_prop_list:
-            gdoc += rst_doc.newline + '- ' + dp
-        gdoc += rst_doc.newline
+    gdoc += spec_prop_doc(group_spec, rst_doc.newline)
     # Add the group documentation to the RST document
     rst_doc.add_text(gdoc)
     rst_doc.add_text(rst_doc.newline)
@@ -533,6 +534,11 @@ def render_specs(neurodata_types,
                           type_desc_doc.get_numbered_reference(get_section_label(extend_type)),
                           type_desc_doc.get_reference(get_section_label(extend_type), extend_type)))
             type_desc_doc.add_text(type_desc_doc.newline + type_desc_doc.newline)
+        # Add the additional details about the doc
+        type_desc_doc.add_text(spec_prop_doc(rt_spec,
+                                             type_desc_doc.newline,
+                                             ignore_props=['neurodata_type', 'neurodata_type_def']))
+        type_desc_doc.add_text(type_desc_doc.newline)
 
         ##################################################
         # Render the graph for the spec if necessary
