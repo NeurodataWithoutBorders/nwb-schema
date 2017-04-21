@@ -105,6 +105,7 @@ def clean_doc(doc_str, add_prefix=None, add_postifix=None, rst_format='**', remo
         temp_str = temp_str.replace('</b>', '** ')
         temp_str = temp_str.replace('<i>', ' *')
         temp_str = temp_str.replace('</i>', '* ')
+        temp_str = temp_str.replace(':blue:', '')
 
     temp_str = temp_str.replace('COMMENT:', '%s%sComment:%s ' % (prefix, rst_format, rst_format))
     temp_str = temp_str.replace('MORE_INFO:','%s%sAdditional Information:%s ' % (prefix, rst_format, rst_format))
