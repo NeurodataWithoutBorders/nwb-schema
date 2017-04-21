@@ -16,7 +16,6 @@ Summary
     * Removed ```\_properties``` key. The primary use of the key is to define ``abstract`` specifications. However, as format specifications don't implement functions but define a layout of objects, any spec (even if marked abstract) could still be instantiated and used in practice withou limitations. Also, in the curretn instantiation of NWB-N this concept is only used for the ```Interface``` type and it is unclear why a user shoudl not be able to use it.  As such this concept was removed.
     * To imporve compliance of NWB-N inheritance mechanism with establish object-oriented design concepts, the option of restricting the use of subclasses in place of parent classes was removed. A subclass is always also a valid instance of a parent class. This also improves consistentcy with the NWB-N principle of a minimal specification that allows users to add custom data. This change effects the ```allow_subclasses``` key of links and the subclasses option of the removed ```include`` key.
 * Improve readability and avoid collision of keys by replacing values encoded in keys with dedicated key/value pairs:
-    * Removed key ```structured_dimensions``` (see below for details)
     * Explicit encoding of names and types:
         * Added ```name``` key
         * Removed `<...>` name identifier (replaced by empty ```name``` key)
@@ -35,6 +34,13 @@ Summary
     * Values, such as, names, types, quantities etc. are now explicitly encoded in dedicated key/value pairs rather than being encoded as regular expressions in keys.
 * Improve direct interpretation of data:
     * Remove ```references``` key. This key was used in previous versions of NWB to generate implicit data structures where datasets store references to part of other metadata structures. These implicit data structures violate core NWB principles as they hinder the direct interpretation of data and cannot be interpreted (neither by human nor program) based on NWB files alone without having additional informaton about the specification as well. Through simple reorganization of metadata in the file, all instances of these implicit data structures were replaced by simple links that can be interpreted directly.
+* Simplified specification of dimensions for datasets:
+    * Rendamed ```dimensions``` key to ```dims```
+    * Added key ```shape``` to allow the specification of the shape of datasets
+    * Removed custom keys for defining structures as types for dimensions:
+        * ```unit``` keys from previous structured dimensions are now ```unit``` attributes on the datasets (i.e., all values in a dataset have the same units)
+        * The length of the structs are used to define the lenght of the corresponding dimension as part of the ```shape``` key
+        * ```alias``` for components of dimensiosn are currently encoded in the dimensions name.
 * Improved governance and reuse of specifications:
     * The core specification documents are no longer stored as .py files as part of the orignal Python API but are released as separate YAML (or optionally JSON) documents in a seperate repository
     * All documentation has been ported to use reStructuredText (RST) markup that can be easily translated to PDF, HTML, text, and many other forms.
@@ -110,7 +116,14 @@ Here a summary of the basic cases:
 ```structured_dimensions```
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The definition of structured dimensions has been removed in version 1.2a. The ```unit``` defined as part of ```structured_dimensions``` in version 1.1c is now an attribute on the corresponding dataset in version 1.2a. The concept of structured_dimensions will be implemented in future version of the specification language likely via support for modeling of relationships or a special table neurodata_type.
+The definition of structured dimensions has been removed in version 1.2a. The concept of structs as dimensions is
+problematic for several reasons: 1) it implies support for defining general tables with mixed units and data types
+which are currently not supported, 2) they easily allow for colliding specification where mixed units are assigned
+to the same value, 3) they are hard to use and unsupported by HDF5. Currently structured dimensions, however, have
+been used only to encode information about "columns" of a dataset (e.g., to indicate that a dimension stores x,y,z
+values). This information was translated to the ``dims``` and ```shape``` keys and ```unit``` attributes.
+The more general concept of structured dimensions will be implemented in futrue versions of the specification language
+and format likely via support for modeling of relationships or support for table data structures (stay tuned)
 
 ```autogen```
 ^^^^^^^^^^^^^

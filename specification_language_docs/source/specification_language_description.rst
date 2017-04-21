@@ -639,7 +639,7 @@ data type for attributes, described in section 2.2.6.
 
 .. note::
 
-    The ability to further characterize dimensions will be added again in the next iteration.
+    Describe the ```dims``` and ```shape``` keys
 
 ``attributes``
 ^^^^^^^^^^^^^^
