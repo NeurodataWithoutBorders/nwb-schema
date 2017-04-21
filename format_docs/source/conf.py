@@ -128,6 +128,10 @@ spec_show_title_for_tables = True
 # Char to be used as prefix to indicate the depth of an object in the specification hierarchy
 spec_table_depth_char = '.' # '→' '.'
 
+# Add a LaTeX clearpage after each main section describing a neurodata_type. This helps in LaTeX to keep the ordering
+# of figures, tables, and code blocks consistent in particular when the hierarchy_plots are included
+spec_add_latex_clearpage_after_ndt_sections = True
+
 # -- Options for HTML output ---------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for

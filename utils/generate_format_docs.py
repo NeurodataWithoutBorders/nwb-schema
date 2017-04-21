@@ -26,7 +26,8 @@ from conf import spec_show_yaml_src, \
     spec_show_subgroups_in_seperate_table, \
     spec_appreviate_main_object_doc_in_tables, \
     spec_show_title_for_tables, \
-    spec_table_depth_char
+    spec_table_depth_char, \
+    spec_add_latex_clearpage_after_ndt_sections
 
 
 try:
@@ -665,9 +666,10 @@ def render_specs(neurodata_types,
         # ######################################
         # to avoid possible troubles with figure placement outside of the current section we add a new page in
         # LaTeX after each main section
-        if seperate_src_file:
-            src_doc.add_latex_clearpage()
-        desc_doc.add_latex_clearpage()
+        if spec_add_latex_clearpage_after_ndt_sections:
+            if seperate_src_file:
+                src_doc.add_latex_clearpage()
+            desc_doc.add_latex_clearpage()
 
 def compute_neurodata_type_hierarchy(spec_catalog):
     """

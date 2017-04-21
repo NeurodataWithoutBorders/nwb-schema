@@ -64,5 +64,6 @@ or should all text be added to the main file (False)
 * ```spec_show_title_for_tables``` Add a title for the table showing the specifications.
 * ```spec_show_subgroups_in_seperate_table``` Should top-level subgroups be listed in a seperate table or as part of the main dataset and attributes table
 * ```spec_table_depth_char``` Char to be used as prefix to indicate the depth of an object in the specification hierarchy. NOTE: The char used should be supported by LaTeX.
+* ```spec_add_latex_clearpage_after_ndt_sections``` Add a LaTeX clearpage after each main section describing a neurodata_type. This helps in LaTeX to keep the ordering of figures, tables, and code blocks consistent in particular when the hierarchy_plots are included.
 
 
