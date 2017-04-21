@@ -63,4 +63,6 @@ or should all text be added to the main file (False)
 * ```spec_appreviate_main_object_doc_in_tables``` Appreviate the documentation of the main object for which a table is rendered in the table. This is commonly set to True as doc of the main object is alrready rendered as the main intro for the section describing the object
 * ```spec_show_title_for_tables``` Add a title for the table showing the specifications.
 * ```spec_show_subgroups_in_seperate_table``` Should top-level subgroups be listed in a seperate table or as part of the main dataset and attributes table
+* ```spec_table_depth_char``` Char to be used as prefix to indicate the depth of an object in the specification hierarchy. NOTE: The char used should be supported by LaTeX.
+
 

@@ -125,6 +125,9 @@ spec_appreviate_main_object_doc_in_tables = True
 # Show a title for the tables
 spec_show_title_for_tables = True
 
+# Char to be used as prefix to indicate the depth of an object in the specification hierarchy
+spec_table_depth_char = '.' # '→' '.'
+
 # -- Options for HTML output ---------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for

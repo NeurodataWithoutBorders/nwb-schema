@@ -6,6 +6,8 @@ Release Notes: NWB Format
 
 **``#TODO Need to describe the changes made in the new version of the format``**
 
+
+
 - Format specification now released via YAML (rather than via Python .py files)
 - Converted all documentation documents to Sphinx reStructuredText files to ease portability and maintainability
 
