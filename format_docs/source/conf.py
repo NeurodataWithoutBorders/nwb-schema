@@ -224,7 +224,7 @@ latex_elements = {
 # Additional stuff for the LaTeX preamble.
 'preamble':
 """
-\setcounter{tocdepth}{6}
+\setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{6}
 \\usepackage{enumitem}
 \setlistdepth{100}""",
