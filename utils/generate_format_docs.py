@@ -2,7 +2,7 @@
 Generate figures and RST documents from the NWB YAML specification for the format specification documentation
 """
 
-# TODO LaTeX mix of regular and longtable. Should use longtbale, however, need to enforce column widht in longtable to avoid vertical spill on page
+# TODO In the type hierarchy section add a section to order types by their used based on which YAML file they appear in
 # TODO Fix assignement of other types?
 
 
@@ -25,7 +25,8 @@ from conf import spec_show_yaml_src, \
     spec_file_per_type, \
     spec_show_subgroups_in_seperate_table, \
     spec_appreviate_main_object_doc_in_tables, \
-    spec_show_title_for_tables
+    spec_show_title_for_tables, \
+    spec_table_depth_char
 
 
 try:
@@ -264,7 +265,7 @@ def create_spec_table(spec,
                 'attribute' if isinstance(spec, AttributeSpec) else \
                 'link'
     # Determine the name of the object
-    depth_str =  '.'*depth
+    depth_str = spec_table_depth_char * depth
     if spec.get('name', None) is not None:
         spec_name = depth_str + spec.name
     elif spec.get('neurodata_type_def',None) is not None:
@@ -310,7 +311,8 @@ def create_spec_table(spec,
             extend_type = str(spec['neurodata_type'])
             spec_prop_list.append('**Extends:** %s' %  RSTDocument.get_reference(get_section_label(extend_type), extend_type))
         if spec.get('neurodata_type_def', None) is not None:
-            spec_prop_list.append('**Neurodata Type:** %s' % str(spec['neurodata_type_def']))
+            ntype = str(spec['neurodata_type_def'])
+            spec_prop_list.append('**Neurodata Type:** %s' % RSTDocument.get_reference(get_section_label(ntype), ntype))
 
     # Render the sepecification propoerties list
     if len(spec_prop_list) > 0:
@@ -388,17 +390,32 @@ def render_group_specs(group_spec, rst_doc, parent=None):
     #     rst_doc.add_text('*New Neurodata Type:* %s' % group_spec.get('neurodata_type_def', None) + rst_doc.newline + rst_doc.newline)
     # rst_doc.add_text('*Quantity:*  %s' % quantity_to_string(group_spec.quantity) + rst_doc.newline + rst_doc.newline)
     gdoc = clean_doc(group_spec.doc,
-                     add_prefix=rst_doc.newline+rst_doc.newline+' ',
+                     add_prefix=rst_doc.newline+rst_doc.newline, #+' ',
                      add_postifix=rst_doc.newline,
                      rst_format='**')
-    gdoc += rst_doc.newline+rst_doc.newline + \
-            " **Quantity:** %s" % quantity_to_string(group_spec.quantity) + \
-            rst_doc.newline+rst_doc.newline
-    if parent != '':
-        gdoc += " **Parent:** %s" % parent + \
-                rst_doc.newline+rst_doc.newline
+    gdoc += rst_doc.newline
+    # Compile the list of additional group properties
+    spec_prop_list = []
+    if group_spec.get('quantity', None) is not None:
+        spec_prop_list.append('**Quantity** %s' % quantity_to_string(group_spec['quantity']))
+    if group_spec.get('linkable', None) is not None:
+        spec_prop_list.append('**Linkable:** %s' % str(group_spec['linkable']))
+    if group_spec.get('neurodata_type', None) is not None:
+        extend_type = str(group_spec['neurodata_type'])
+        spec_prop_list.append('**Extends:** %s' %  RSTDocument.get_reference(get_section_label(extend_type), extend_type))
+    if group_spec.get('neurodata_type_def', None) is not None:
+        ntype = str(group_spec['neurodata_type_def'])
+        spec_prop_list.append('**Neurodata Type:** %s' % RSTDocument.get_reference(get_section_label(ntype), ntype))
+    # Render the sepecification propoerties list
+    if len(spec_prop_list) > 0:
+        gdoc += rst_doc.newline
+        for dp in spec_prop_list:
+            gdoc += rst_doc.newline + '- ' + dp
+        gdoc += rst_doc.newline
+    # Add the group documentation to the RST document
     rst_doc.add_text(gdoc)
     rst_doc.add_text(rst_doc.newline)
+    # Create the table with the dataset and attributes specifications for the group
     group_spec_data_table = create_spec_table(group_spec,
                                          show_subgroups=not spec_show_subgroups_in_seperate_table,
                                          appreviate_main_object_doc=spec_appreviate_main_object_doc_in_tables)
