@@ -2530,7 +2530,7 @@
                                 },
                                 "description": "A sorted list mapping TimeSeries entries in the epoch to the path of the TimeSeries within the file. Each entry in the list has the following format: \"'<i>&lt;TimeSeries_X&gt;</i>' <b>is</b> '<i>path_to_TimeSeries</i>'\", where <i>&lt;TimeSeries_X&gt;</i> is the name assigned to group  &lt;TimeSeries_X&gt; (below). Note that the name and path are both enclosed in single quotes and the word \"is\" (with a single space before and after) separate them. <b>Example list element:</b> \"'auditory_cue' is '/stimulus/presentation/auditory_cue'\".",
                                 "data_type": "text",
-                                "dimensions": "num_links"
+                                "dimensions": [ "num_links" ]
                             }
                         },
                         "<timeseries_X>/*": {

@@ -1,17 +1,21 @@
 - attributes:
   - doc: Value is Optogenetic stimulus
+    dtype: text
     name: help
-    type: text
     value: Optogenetic stimulus
   datasets:
   - attributes:
     - doc: Value is watt
+      dtype: text
       name: unit
-      type: text
       value: watt
+    dims:
+    - num_times
     doc: Applied power for optogenetic stimulus.
+    dtype: float32
     name: data
-    type: float32
+    shape:
+    - null
   doc: Optogenetic stimulus.  The data[] field is in unit of watts.
   links:
   - doc: link to OptogeneticStimulusSite group that describes the site to which this
@@ -21,18 +25,18 @@
   neurodata_type: TimeSeries
   neurodata_type_def: OptogeneticSeries
 - datasets:
-  - doc: Location of stimulation site
-    name: location
-    type: text
-  - doc: Excitation wavelength
-    name: excitation_lambda
-    type: text
   - doc: Name of device in /general/devices
+    dtype: text
     name: device
-    type: text
   - doc: Description of site
+    dtype: text
     name: description
-    type: text
+  - doc: Excitation wavelength
+    dtype: text
+    name: excitation_lambda
+  - doc: Location of stimulation site
+    dtype: text
+    name: location
   doc: 'One of possibly many groups describing an optogenetic stimuluation site. COMMENT:
     Name is arbitrary but should be meaningful. Name is referenced by OptogeneticSeries'
   neurodata_type_def: OptogeneticStimulusSite
