@@ -69,21 +69,6 @@
     value: Mean waveform shape of clusters. Waveforms should be high-pass filtered
       (ie, not the same bandpass filter used waveform analysis and clustering)
   datasets:
-  - doc: Filtering applied to data before generating mean/sd
-    dtype: text
-    name: waveform_filtering
-  - dims:
-    - num_clusters
-    - num_samples
-    doc: Stdev of waveforms for each cluster, using the same indices as in mean
-    dtype: float32
-    name: waveform_sd
-    shape:
-    - null
-    - null
-  - doc: Path to linked clustering interface
-    dtype: text
-    name: clustering_interface_path
   - dims:
     - num_clusters
     - num_samples
@@ -93,6 +78,21 @@
       be empty (e.g., zero- filled)
     dtype: float32
     name: waveform_mean
+    shape:
+    - null
+    - null
+  - doc: Filtering applied to data before generating mean/sd
+    dtype: text
+    name: waveform_filtering
+  - doc: Path to linked clustering interface
+    dtype: text
+    name: clustering_interface_path
+  - dims:
+    - num_clusters
+    - num_samples
+    doc: Stdev of waveforms for each cluster, using the same indices as in mean
+    dtype: float32
+    name: waveform_sd
     shape:
     - null
     - null
@@ -117,6 +117,21 @@
       or as a result of manual sorting
   datasets:
   - dims:
+    - num_clusters
+    doc: Maximum ratio of waveform peak to RMS on any channel in the cluster (provides
+      a basic clustering metric).
+    dtype: float32
+    name: peak_over_rms
+    shape:
+    - null
+  - dims:
+    - num_events
+    doc: Cluster number of each event
+    dtype: int32
+    name: num
+    shape:
+    - null
+  - dims:
     - num_events
     doc: Times of clustered events, in seconds. This may be a link to times field
       in associated FeatureExtraction module.
@@ -134,21 +149,6 @@
       non- continuous)
     dtype: int32
     name: cluster_nums
-    shape:
-    - null
-  - dims:
-    - num_events
-    doc: Cluster number of each event
-    dtype: int32
-    name: num
-    shape:
-    - null
-  - dims:
-    - num_clusters
-    doc: Maximum ratio of waveform peak to RMS on any channel in the cluster (provides
-      a basic clustering metric).
-    dtype: float32
-    name: peak_over_rms
     shape:
     - null
   doc: Clustered spike data, whether from automatic clustering tools (e.g., klustakwik)
@@ -170,6 +170,13 @@
     shape:
     - null
   - dims:
+    - num_features
+    doc: Description of features (eg, "PC1") for each of the extracted features.
+    dtype: text
+    name: description
+    shape:
+    - null
+  - dims:
     - num_events
     - num_channels
     - num_features
@@ -179,13 +186,6 @@
     shape:
     - null
     - null
-    - null
-  - dims:
-    - num_features
-    doc: Description of features (eg, "PC1") for each of the extracted features.
-    dtype: text
-    name: description
-    shape:
     - null
   doc: Features, such as PC1 and PC2, that are extracted from signals stored in a
     SpikeEvent TimeSeries or other source.
@@ -197,9 +197,16 @@
   neurodata_type: Interface
   neurodata_type_def: FeatureExtraction
 - datasets:
-  - doc: Path to linked ElectricalSeries.
-    dtype: text
-    name: source_electricalseries_path
+  - dims:
+    - num_events
+    doc: Indices (zero-based) into source ElectricalSeries::data array corresponding
+      to time of event. Module description should define what is meant by time of
+      event (e.g., .25msec before action potential peak, zero-crossing time, etc).
+      The index points to each event from the raw data
+    dtype: int32
+    name: source_idx
+    shape:
+    - null
   - attributes:
     - doc: Value is Seconds
       dtype: text
@@ -212,20 +219,13 @@
     name: times
     shape:
     - null
-  - dims:
-    - num_events
-    doc: Indices (zero-based) into source ElectricalSeries::data array corresponding
-      to time of event. Module description should define what is meant by time of
-      event (e.g., .25msec before action potential peak, zero-crossing time, etc).
-      The index points to each event from the raw data
-    dtype: int32
-    name: source_idx
-    shape:
-    - null
   - doc: Description of how events were detected, such as voltage threshold, or dV/dT
       threshold, as well as relevant values.
     dtype: text
     name: detection_method
+  - doc: Path to linked ElectricalSeries.
+    dtype: text
+    name: source_electricalseries_path
   doc: Detected spike events from voltage trace(s).
   links:
   - doc: HDF5 link to ElectricalSeries that this data was calculated from. Metadata
