@@ -1,15 +1,141 @@
 Release Notes: NWB Format
 =========================
 
+Proposed Future Changes
+-----------------------
+- Create new module to store frequency decompositions:
+    - **Reason:** Decomposition of signals via FFT, Wavelet, and other frequency-based analyses are very common and
+      are not well-supported by the NWB core.
+- Create new module to store matrix factorizations:
+    - **Reason:** Factorization of data matrices, e.g., via PCA, SVD, CUR, NMF, etc. are fairly common for data
+      interpretation as well as pre-processing, e.g., for machine-learning applications.
+- Change top-level datasets ``file_create_date``, ``identifier``,  ``nwb_version``,  ``session_description``,
+  ``session_start_time`` from datasets to attributes
+  - **Reason:** Reduce "clutter" in the file hierarchy and improve access to small metadata information
+- Change small metadata datasets to attributes where appropriate:
+    - **Reason:** Storing small metadata as datasets (compared to attributes) can lead to: i) clutter in the file
+      hierarchy making it harder for users to navigate files, ii) makes metadata appear as core data, and iii) causes
+      poor performance when extracting metadata from files (reading attributes is more efficient in many cases).
+
 1.1.0a, May 2017
 ----------------
 
 **``#TODO Need to describe the changes made in the new version of the format``**
 
+Improved organization of electrode metadata
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+...
 
 
-- Format specification now released via YAML (rather than via Python .py files)
+**Reason**
+
+    - This change  allows us to replace arrays with implicit links (define via integer indicies) in, e.g.,
+      ``<ElectricalSeries>`` and ``<FeatureExtraction>`` with a single explicit link to an ``<ElectrodeGroup>``
+    - Avoid explosion of the number of groups and datasets. For example, in the case of an ECoG grid with 128 channels
+      one had to create 128 groups and corresponding datasets to store the required metadata about the electrodes
+      using the original layout.
+    - Avoid mixing of metadata from multiple devices (sessions etc.), e.g., the ``electrode_map`` would store
+      the physical location for all electrodes used in the file (indpendent of which device, subject, etc. the
+      electrodes are associated with).
+    - Simplify access to related metadata. E.g., access to metadata from all electrodes of a single device requires
+      resolution of a potentially large number of implicit links and access to a large number of groups (one per electrode)
+      and datasets.
+    - Improve performance of metadata access operations. E.g., to access the ``location`` of all electrodes corresponding to a
+      single recording in an ``<ElectricalSeries>`` in the original layout required iterating over a potentially large number of
+      groups and datasets (one per electrode), hence, leading to a large number of small, independent read/write/seek operations,
+      causing slow performance on common data accesses. Using the new layout, these kind of common data accesses can often be
+      resolved via a single read/write
+    - Ease maintance, use, and development through consolidation of related metadata
+
+Replaced Implicit with Explicit Links
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Change** Replace implicit links with explicit soft-links to the corresponding HDF5 objects where possible, i.e.,
+use explicit HDF5 mechanisms for expressing basic links between data rather than implicit ones that require
+users/developers to know how to use the specific data.
+
+**Reason** In several places datasets containing arrays of either i) strings with object names, ii) strings with paths,
+or iii) integer indexes are used that implicitly point to other locations in the file. These forms of implicit
+links are not self-describing (e.g., the kind of linking, target location, implicit size and numbering assumptions
+are not easily identified). This hinders human interpretation of the data as well as programmatic resolution of these
+kind of links.
+
+**Format Change**
+
+    - Text dataset ``image_plane`` of ``<TwoPhotonSeries>`` is now a link to the corresponding ``<ImagingPlane>``
+      (which is stored in ``/general/optophysiology``)
+    - Text dataset ``image_plane_name`` of ``<ImageSegmentation>`` is now a link to the corresponding ``<ImagingPlane>``
+      (which is stored in ``/general/optophysiology``). The dataset is also renamed to ``image_plane`` for consistency with ``<TwoPhotonSeries>``
+    - Text dataset ``electrode_name`` of ``<PatchClampSeries>`` is now a link to the corresponding ``<IntracellularElectrode>``
+      (which is stored in ``/general/intracellular_ephys``). The dataset is also renamed to ``electrode`` for consistency.
+    - Text dataset ``site`` in ``<OptogeneticSeries>`` is now a link to the corresponding ``<StimulusSite>``
+      (which is stored in ``/general/optogenetics``).
+    - Integer dataset ``electrode_idx`` of ``FeatureExtraction`` is now a link to the corresponding ``<ElectrodeGroup>``
+      (which is stored in ``/general/extracellular_ephys``). Also, renamed the dataset to ``electrode_group`` for consistency.
+    - Integer array dataset ``electrode_idx`` of ``<ElectricalSeries>`` is now a link to the corresponding ``<ElectrodeGroup>``
+      (which is stored in ``/general/extracellular_ephys``). Also, renamed the dataset to ``electrode_group`` for consistency.
+
+
+Added missing metadata
+^^^^^^^^^^^^^^^^^^^^^^
+
+**Reason:** Ease data interpretation, improve format consistency, and enable storage of additional metadata
+
+**Format Changes:**
+
+    - ``/general/devices`` text dataset becomes group with neurodata type ``Device`` to enable storage of more complex
+      and structured metadata about devices (rather than just a single string)
+    - Added attribute ``unit=Seconds`` to ``<EventDetection>/times`` dataset to explicitly describe time units
+      and improve human and programmatic data interpretation
+    - Added ``filtering`` dataset to type ``<IntracellularElectrode>`` (i.e., ``/general/intracellular_ephys/<electrode_X>``)
+      to enable specification of per-electrode filtering data
+
+
+Improved identifiably of objects
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+All groups and datasets are now required to either have a unique ``name`` or a unique ``neurodata_type`` defined.
+
+**Reason:**  This greatly simplifies the unique identification of objects with variable names.
+
+**Format Changes:** Defined missing neurodata_types for a number of objects, e.g.,:
+
+    - Group ``/general/optophysiology/<imaging_plane_X>`` now has the neurodata type ``ImagingPlane``
+    - Group ``/general/intracellular_ephys/<electrode_X>`` now has the neurodata type ``IntracellularElectrode``
+    - Group ``/general/optogenetics/<site_X>`` now has the neurodata type ``StimulusSite``
+    - ...
+
+Improved Consistency
+^^^^^^^^^^^^^^^^^^^^
+
+**Change:** Rename objects (and add missing objects)
+
+**Reason:** Improve consistency in the naming of data objects that store similar types of information in different
+places and ensure that the same kind of information is available.
+
+**Format Changes:**
+
+    - Added missing ``help`` attribute for ``<BehavioralTimeSeries>`` to improve consistency with other types
+      as well as human data interpretation
+    - Renamed dataset ``image_plan_name`` in ``<ImageSegmentation>`` to ``image_plane``to ensure consistency
+      in naming with ``<TwoPhotonSeries>``
+    - Renamed dataset ``electrode_name`` in ``<PatchClampSeries>`` to ``electrode`` for consistency (and
+      since the dataset is now a link, rather than a text name).
+    - Renamed dataset ``electrode_idx`` in ``<FeatureExtraction>`` to ``electrode_group`` for consistency
+      (and since the dataset is now a link to the ``<ElectrodeGroup>``)
+    - Renamed dataset ``electrode_idx`` in ``<ElectricalSeries>`` to ``electrode_group`` for consistency
+      (and since the dataset is now a link to the ``<ElectrodeGroup>``)
+
+
+Improved governance and accessibility
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+- Specification now released in seperate Git repository
+- Format specification released as YAML files (rather than via Python .py file included in the API)
+- Organized core types into a set of smaller YAML files
 - Converted all documentation documents to Sphinx reStructuredText files to ease portability and maintainability
+- Sphinx documentation for the format are auto-generated from the YAML sources to ensure consistency between the specification and documentation
+
 
 1.0.5g\_beta, Oct 7, 2016
 -------------------------
