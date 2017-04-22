@@ -20,8 +20,6 @@ Proposed Future Changes
 1.1.0a, May 2017
 ----------------
 
-**``#TODO Need to describe the changes made in the new version of the format``**
-
 Improved organization of electrode metadata
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
