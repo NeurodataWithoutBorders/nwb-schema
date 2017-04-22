@@ -20,13 +20,25 @@ Proposed Future Changes
 1.1.0a, May 2017
 ----------------
 
-Improved organization of electrode metadata
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Improved organization of electrode metadata in ``/general/extracellular_ephys``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-...
+**Change:** Consolidate metadata from related electrodes (e.g., from a single device) in a single location.
+
+**Example:** Previous versions of the format specified in ``/general/extracellular_ephys`` for each electrode a
+group ``<electrode_group_X>`` that stores 3 text datastes with a description, device name, and location, respectively.
+The main ``/general/extracellular_ephys group`` then contained in addition the following datasets:
+
+    - ``electrode_group`` text array describing for each electrode_group (implicitly referenced by index)
+      which device (shank, probe, tetrode, etc.) was used,
+    - ``electrode_map`` array with the x,y,z locations of each electrode
+    - ``filtering``, i.e., a single string describing the filtering for all electrodes (even though each
+      electrode might be from different devices), and iv),
+    - ``impedance``, i.e, a single text array for impedance (i.e., the user has to know which format the
+      string has, e.g, a float or a tuple of floats for impedance ranges).
 
 
-**Reason**
+**Reason:**
 
     - This change  allows us to replace arrays with implicit links (define via integer indicies) in, e.g.,
       ``<ElectricalSeries>`` and ``<FeatureExtraction>`` with a single explicit link to an ``<ElectrodeGroup>``
@@ -46,20 +58,44 @@ Improved organization of electrode metadata
       resolved via a single read/write
     - Ease maintance, use, and development through consolidation of related metadata
 
-Replaced Implicit with Explicit Links
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Format Changes**
+
+    - Added specification of a new neurodata type ``<ElectrodeGroup>`` group.
+      Each ``<ElectrodeGroup>`` contains the following datasets to describe the metadata of a set of related
+      electrodes (e.g,. all electrodes from a single device):
+
+        - ``description`` : text dataset (for the group)
+        - ``device``: Soft link to the device in ``/general/devices/``
+        - ``location``: Text description of the location of the device
+        - ``channel_description``: Array with text dataset description of each electrode
+        - ``channel_location``: Array with text description of the location of each channel
+        - ``channel_coordinates`` : Physical location of the electrodes [num_electrodes, x, y, z]
+        - ``channel_filtering`` : Dataset describing the filtering applied
+        - ``channel_impedance`` : Float array with the imedance values for the electrodes. This may be a 2D array
+          of ``[num_electrodes,2]`` in case impedance values are stored as ranges.
+
+    - Updated ``/general/extracellular_ephys`` as follows:
+
+        - Replaced ``/general/extracellular_ephys/<electrode_group_X>`` group (and all its contents) with the new ``<ElectrodeGroup>``
+        - Removed ``/general/extracellular_ephys/electrode_map`` dataset. This information is now stored in ``<ElectrodeGroup>/channel_coordinates``
+        - Removed ``/general/extracellular_ephys/electrode_group`` dataset. This information is now stored in ``<ElectrodeGroup>/device``.
+        - Removed ``/general/extracellular_ephys/impedance`` dataset. This information is now stored in ``<ElectrodeGroup>/impedance``.
+        - Removed ``/general/extracellular_ephys/filtering`` dataset. This information is now stored in ``<ElectrodeGroup>/filtering``.
+
+Replaced Implicit Links/Data-Structures with Explicit Links
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Change** Replace implicit links with explicit soft-links to the corresponding HDF5 objects where possible, i.e.,
 use explicit HDF5 mechanisms for expressing basic links between data rather than implicit ones that require
 users/developers to know how to use the specific data.
 
-**Reason** In several places datasets containing arrays of either i) strings with object names, ii) strings with paths,
+**Reason:** In several places datasets containing arrays of either i) strings with object names, ii) strings with paths,
 or iii) integer indexes are used that implicitly point to other locations in the file. These forms of implicit
 links are not self-describing (e.g., the kind of linking, target location, implicit size and numbering assumptions
 are not easily identified). This hinders human interpretation of the data as well as programmatic resolution of these
 kind of links.
 
-**Format Change**
+**Format Changes:**
 
     - Text dataset ``image_plane`` of ``<TwoPhotonSeries>`` is now a link to the corresponding ``<ImagingPlane>``
       (which is stored in ``/general/optophysiology``)
@@ -73,10 +109,12 @@ kind of links.
       (which is stored in ``/general/extracellular_ephys``). Also, renamed the dataset to ``electrode_group`` for consistency.
     - Integer array dataset ``electrode_idx`` of ``<ElectricalSeries>`` is now a link to the corresponding ``<ElectrodeGroup>``
       (which is stored in ``/general/extracellular_ephys``). Also, renamed the dataset to ``electrode_group`` for consistency.
-
+    - Text dataset ``/general/extracellular_ephys/<electrode_group_X>/device`` is now a link ``<ElectrodeGroup>/device``
 
 Added missing metadata
 ^^^^^^^^^^^^^^^^^^^^^^
+
+**Change:** Add a few missing metadata attributes/datasets.
 
 **Reason:** Ease data interpretation, improve format consistency, and enable storage of additional metadata
 
@@ -125,14 +163,70 @@ places and ensure that the same kind of information is available.
     - Renamed dataset ``electrode_idx`` in ``<ElectricalSeries>`` to ``electrode_group`` for consistency
       (and since the dataset is now a link to the ``<ElectrodeGroup>``)
 
-
 Improved governance and accessibility
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-- Specification now released in seperate Git repository
-- Format specification released as YAML files (rather than via Python .py file included in the API)
-- Organized core types into a set of smaller YAML files
-- Converted all documentation documents to Sphinx reStructuredText files to ease portability and maintainability
-- Sphinx documentation for the format are auto-generated from the YAML sources to ensure consistency between the specification and documentation
+
+**Change:** Updated release and documentation mechanisms for the NWB format sepcification
+
+**Reason:** Imporove governance, ease-of-use, extensibility, and accessibility of the NWB format specification
+
+**Specific Changes**
+
+    - The NWB format specification is now released in seperate Git repository
+    - Format specifications are released as YAML files (rather than via Python .py file included in the API)
+    - Organized core types into a set of smaller YAML files to ease overview and maintenance
+    - Converted all documentation documents to Sphinx reStructuredText to improve portability, maintainability,
+      deployment, and public access
+    - Sphinx documentation for the format are auto-generated from the YAML sources to ensure consistency between
+      the specification and documentation
+    - The pyNWB API now provides dedicated data structured to interact with NWB specifications, enabling users
+      programmatically access and generate format specifications
+
+
+Specification language changes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Change:** Numerous changes have been made to the specification language itself.
+
+**Reason:** Make the specification language and format easier to use and interpret
+
+**Specific Changes:**
+
+    - The specific changes to the specification language are described in the release notes of the documentation of
+      the specification language. Most changes effect mainly how the format is specified rather than how the format
+      actually looks. Some select specific changes that have implications on the format itself are described next.
+
+
+Specification of dataset dimensions
+"""""""""""""""""""""""""""""""""""
+
+**Change:** Updated the specification of the dimenions of dataset
+
+**Reason:** To simplify the specification of dimension of datasets and attribute
+
+**Format Changes:**
+
+    * The shape of various dataset is now specified explicitly for several datasets via the new ``shape`` key
+    * The ``unit`` for values in a dataset are specified via an attribute on the dataset itself rather than via
+      ``unit`` definitions in structs that are available only in the specification itself but not the format.
+    * In some cases the length of a dimension was implicitly described by the length of structs describing the
+      components of a dimension. This information is now explitily described in the ``shape`` of a dataset.
+
+Added ``Link`` type
+"""""""""""""""""""
+
+**Change** Added new type for links
+
+**Reason:**
+
+    - Links are usually a different type than datasets on the storage backend (e.g., HDF5)
+    - Make links more readily identifiable
+    - Avoid special type specification in datasets
+
+**Format Changes:** The format itself is not affected by this change aside from the fact that
+datasets that were links are now explicitly declared as links.
+
+
 
 
 1.0.5g\_beta, Oct 7, 2016
