@@ -24,6 +24,7 @@ help:
 	@echo "To update documentation sources from the format specification please use \`make apidoc'"
 	@echo ""
 	@echo "To build the documenation please use \`make <target>' where <target> is one of"
+	@echo "  fulldoc    to rebuild the html and latexpdf documents all at once"
 	@echo "  html       to make standalone HTML files"
 	@echo "  dirhtml    to make HTML files named index.html in directories"
 	@echo "  singlehtml to make a single large HTML file"
@@ -158,4 +159,9 @@ doctest:
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in $(BUILDDIR)/doctest/output.txt."
 
-
+fulldoc:
+	$(MAKE) clean
+	@echo
+	@echo "Rebuilding html, latexpdf"
+	$(MAKE) html
+	$(MAKE) latexpdf
