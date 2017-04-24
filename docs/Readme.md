@@ -22,4 +22,18 @@ In addition to the above folders, ``/docs`` contains the following additional co
 
 The documentation uses Sphinx and can be compiled using the provided Makefiles in the respective documentation
 directories. The build process for the different documents is further described in the respective Readme.md files
-in the corresponding documentation directories.
+in the corresponding documentation directories. In general, if you want to rebuilt the full HTML and PDF versions
+of the specification documents, simply use the ``make fulldoc`` option, e.g.,
+
+```
+    cd docs/format
+    make fulldoc
+```
+
+**Where are my documents?**
+
+The compiled documents are then located in the corresponding ``_build`` folders, e.g.:
+
+* ``format/_build/html`` and ``format/_build/latex`` for the HTML and PDF of the format specfication
+* ``language/_build/html`` and ``language/_build/latex`` for the HTML and PDF of the specification language
+* ``storage/_build/html`` and ``storage/_build/latex`` for the HTML and PDF of the storage
