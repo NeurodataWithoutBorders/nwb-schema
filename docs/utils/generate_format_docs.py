@@ -14,7 +14,7 @@ import warnings
 import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")))
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../format_docs/source")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../format/source")))
 from utils.render import RSTDocument, RSTTable, SpecFormatter
 
 # Import settings from the configuration file
@@ -840,10 +840,10 @@ def main():
     # Set path to the NWB core spec
     file_dir = os.path.abspath(
         os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                     "../format_docs/source/_format_auto_docs"))
+                     "../format/source/_format_auto_docs"))
     if not os.path.exists(file_dir):
         os.mkdir(file_dir)
-    spec_dir = os.path.abspath(file_dir+'/../../../core')
+    spec_dir = os.path.abspath(file_dir+'/../../../../core')
     doc_filename = os.path.join(file_dir, 'format_spec_doc.inc')  # Name of the file where the main documentation goes
     srcdoc_filename = os.path.join(file_dir, 'format_spec_sources.inc') if spec_generate_src_file else None  # Name fo the file where the source YAML/JSON of the specifications go
     master_filename = os.path.join(file_dir, 'format_spec_main.inc')
