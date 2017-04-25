@@ -6,38 +6,23 @@ NWB Specification Language
 
 Version: |release| |today| [1]_
 
-.. attention::
-
-    * TODO This document needs to be updated to reflect changes made in version 1.2a
-    * The following sections have been updated:
-        * :numref:`sec-group-spec` (Groups) should be mostly up to date
-        * :numref:`sec-link-spec` (Links) should be mostly up to date
-        * :numref:`sec-dataset-spec-form` should be mostly up to date
-
-
-
 Introduction
 ============
 
-Both the Python and MATLAB API for the NWB format are implemented using
-a domain-independent specification language. The specification language
-allows specifying a schema that defines a format. The API software
-automatically provides a write-API based on the specification and also a
-validator that is used validate that data files are consistent with the
-format. The API currently uses HDF5 for storing the data, but other
-storage methods are possible.
+In order to support the formal and verifiable specification of neurodata
+file formats, NWB-N defines and uses the NWB specification language.
+The specification language is defined in YAML (or optionally JSON) and defines formal
+structures for describing the organization of complex data using basic
+concepts, e.g., Groups, Datasets, Attributes, and Links.
+Data publishers can use the specification language to extend
+the format in order to store types of data not supported by the NWB core format.
 
-The specification language is written using a Python dictionary in a
-JSON-like syntax, which can easily be converted to JSON. Python is used
-rather than pure JSON because python allows inserting comments and also
-provides more readable ways to include long strings.
-
-Specification of a schema
-=========================
+Namespaces / Schema
+===================
 
 .. attention::
 
-    TODO: Update description of the use of namespaces
+    TODO: Update this section describing the definition and use of namespaces
 
 Schema Id: ``namespace``
 ------------------------
@@ -120,61 +105,19 @@ by examining this part of the NWB format specification (e.g. file
 Schema specification
 --------------------
 
-The schema specification consist of a Python dictionary where each key
-has the following form:
-
-.. code-block:: python
-
-    [ *absolute\_path* ] *identifier*
-
-*absolute\_path* is optional. If present, it starts with a slash, and
-specifies the absolute location within an HDF5 file of the group or
-dataset. For the root group, the absolute path is empty and the
-identifier is “/”.
-
-*identifier* is required. Identifiers that start with “<” and end with
-“>” or “>/”, e.g. have surrounding angle brackets, indicate that the
-name of the group or dataset is “variable” (that is, specified through
-an API call when creating the group or dataset). If the identifier does
-not have surrounding angle brackets, then the name is fixed and is the
-same as the identifier. If the last character of the identifier is a
-slash “/” (after any angle brackets), then the identifier is associated
-with a group, otherwise a dataset.
-
-Some example identifiers and their meaning are given below:
-
-Unspecified location (no leading slash):
-
-    foo – dataset, name is “foo”
-
-    foo/ – group, name is “foo”
-
-    <foo> – dataset, variable name
-
-    <foo>/ – group, variable name
-
-Specified location (has leading slash). Meaning same as above, but
-location specified.
-
-    /some/path/foo – dataset, name is “foo”, located at /some/path/
-
-    /some/path/foo/ – group, name is “foo”, located at /some/path/
-
-    /some/path/<foo> – dataset, variable name, located at /some/path/
-
-    /some/path/<foo>/ – group, variable name, located at specified path
-
-When an absolute path is specified (or if the identifier is for the root
-group) the identifier is “anchored” to the specified location. If there
-is no absolute path, then the group or dataset associated with the
-identifier can be incorporated into other groups using the “include” or
-“merge” directives that are described below.
+The schema specification consist of a list of Group specifications.
+Schema may be distributed across multiple YAML files to improve
+readability and to support logical organization of types.
 
 Extensions
 ----------
 
+.. note::
+
+    **TODO** Update the description of how extensions are managed
+
 As mentioned, extensions to the core format are specified using
-schema\_ids that are different from the schema\_id used for the core
+``schema_ids`` that are different from the ``schema_id`` used for the core
 format. The way that extensions are implemented is very simple: The
 schema specified in extensions are simply “merged” into the schema
 specified in the core format based on having the same absolute path (if
@@ -221,11 +164,8 @@ File containing specification for extension 2:
 
 .. _sec-group-spec:
 
-Specification of Groups
-=======================
-
-Overall form
-------------
+Groups
+======
 
 Groups are specified as part of the top-level list or via lists stored in the key
 ``groups``. The specification of a group is described in YAML as follows:
@@ -257,7 +197,7 @@ Group specification keys
 
 String with the optional fixed name for the group.
 
-.. attention::
+.. note::
 
     Every group must have either a unique fixed ``name`` or a unique ``neurodata_type`` to enable the unique
     identification of groups when stored on disk.
@@ -265,12 +205,14 @@ String with the optional fixed name for the group.
 ``doc``
 ^^^^^^^
 
-The value of the group specification “description” key is a string
-describing the group.
+The value of the group specification ``doc`` key is a string
+describing the group. The ``doc`` key is required.
 
 .. note::
 
-    In earlier versions (before version 1.2a) this key was called ``description``.
+    In earlier versions (before version 1.2a) this key was called ``description``
+
+.. _sec-neurodata-type:
 
 ``neurodata_type`` and ``neurodata_type_def``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -366,6 +308,8 @@ The result of this is that ``MySeries`` now includes a group of type ``Series``,
     simplify the concepts of  inclusion and merging of specifications and replaced the
     keys ```include``` and ```merge```(and ```merge+```).
 
+
+.. _sec-quantity:
 
 ``quantity``
 ^^^^^^^^^^^^
@@ -464,75 +408,37 @@ List of group specifications describing all groups to be stored as part of this 
    TODO: The ``\_required`` key has been removed in version 1.2.x and later. An improved version will be added again in later version of the specification language.
 
 
-Specification of Attributes
-===========================
+.. _sec-attributes-spec:
+
+Attributes
+==========
 
 .. attention::
 
     TODO Need to update the description of the specification of attributes
 
+Attributes are specified as part of lists stored in the key
+``attributes`` as part of the specifications of ``groups`` and ``datasets``.
+Attributes are typically used to further characterize or store metadata about
+the  group, dataset, or link they are associated with. Similar to datasets, attributes
+can define arbitrary n-dimensional arrays, but are typcially used to store smaller data.
+The specification of an attributes is described in YAML as follows:
 
-The value of the group specification “attributes” key is a Python
-dictionary of the following form:
 
-.. code-block:: python
+.. code-block:: yaml
 
-    {
+    ...
+    attributes:
+    - name: Required string describing the name of the attribute
+      doc: Required string with the description of the attribute
+      dtype: Required string describing the data type of the attribute
+      dims: Optional list describing the names of the dimensions of the data array stored by the attribute (default=None)
+      shape: Optional list describing the allowed shape(s) of the data array stored by the attribute (default=None)
+      required: Optional boolean indicating whether the attribute is required (default=True)
+      value: Optional constant, fixed value for the attribute.
+    -
 
-    "attribute\_name\_1[qty\_flag]": <specification for attribute\_name\_1>,
 
-    "attribute\_name\_2[qty-flag]": <specification for attribute\_name\_2>,
-
-    ... }
-
-The keys are the attribute names, optionally followed by a “qty\_flag.”
-The ‘qty\_flag’ (stands for ‘quantity flag’ is similar to that for
-groups and data sets. It specifies if the attribute is required (“!”) –
-the default, optional (“?”) or recommended (“^”). The value of each key
-is the specification for that attribute. Each attribute specification
-has the following form:
-
-.. code-block:: python
-
-    {
-
-    "data\_type": <float, int, number, or text>,
-
-    "dimensions": <dimensions list>,
-
-    "description": "<description of attribute>",
-
-    "value": <value to store>,
-
-    "const": <True or False>,
-
-    "autogen": <autogen specification>,
-
-    "references": <reference specification>,
-
-    "dim1": *<dimension specification>*,
-
-    "dim2": *<dimension specification>*
-
-    }
-
-Only data\_type is required. The value for data\_type is a string
-specifying the data\_type of the attribute. Allowable values are:
-
-float – indicates a floating point number
-
-int – indicates an integer
-
-uint – unsigned integer
-
-number – indicates either a floating point or an integer
-
-text – a text string
-
-For all of the above types except number, a default size (in bits) can
-be specified by appending the size to the type, e.g., int32. If “!” is
-appended to the default size, e.g. “float64!”, then the default size is
-also the required minimum size.
 
 If the attribute stores an array, the <dimensions list> specifies the
 list of dimensions. The format for this is the same as the <dimensions
@@ -556,11 +462,119 @@ Attribute specification keys
 
     TODO Need to add the description of all attribute keys
 
+``name``
+^^^^^^^^
+
+String with the name for the attribute. The ``name`` key is required and must
+specify a unique attribute on the current parent object (e.g., group or dataset)
+
+
+``doc``
+^^^^^^^
+
+``doc`` specifies the documentation string for the attribute  and should describe the
+purpose and use of the attribute data. The ``doc`` key is required.
+
+.. _sec-dtype:
+
+``dtype``
+^^^^^^^^^
+
+String specifying the data type of the attribute. Allowable values are:
+
+- ``float`` – indicates a floating point number
+- ``int`` – indicates an integer
+- ``uint`` – unsigned integer
+- ``number`` – indicates either a floating point or an integer
+- ``text`` – a text string
+
+For all of the above types (except number and text), a default size (in bits) can
+be specified by appending the size to the type, e.g., int32. If “!” is
+appended to the default size, e.g. “float64!”, then the default size is
+also the required minimum size.
+
+.. attention::
+
+    - **TODO** Check that the list of allowable dtypes is complete
+    - **TODO** Check that the behavior described for type bit lengths is current
+
+.. _sec-dims:
+
+``dims``
+^^^^^^^^
+
+Optional key describing the names of the dimensions of the array stored as value of the attribute.
+In case there is only one option for naming the dimensions, the key defines
+a single list of strings:
+
+.. code-block:: yaml
+
+    ...
+    dims:
+    - dim1
+    - dim2
+
+In case that the attribute may have different forms, this will be a list of lists:
+
+.. code-block:: yaml
+
+    ...
+    dims:
+    - - num_times
+    - - num_times
+      - num_channels
+
+Each entry in the list defines an identifier/name of the corresponding dimension
+of the array data.
+
+.. _sec-shape:
+
+``shape``
+^^^^^^^^^
+
+Optional key describing the shape of the array stored as the valye of the attribute.
+The description of ``shape`` must match the description of dimensions in so far as
+if we name two dimensions in ``dims`` than we must also specify the ``shape`` for
+two dimensions. We may specify ``null`` in case that the length of a dimension is not
+restricted. E.g.:
+
+.. code-block:: yaml
+
+    ...
+    shape:
+    - null
+    - 3
+
+Similar to ``dims`` shape may also be a list of lists in case that the attribute
+may have multiple valid shape options, e.g,:
+
+.. code-block:: yaml
+
+    ...
+    shape:
+    - - 5
+    - - null
+      - 5
+
+
+``required``
+^^^^^^^^^^^^
+
+Optional boolean key describing whether the attribute is required. Default value is True.
+
+
+``value``
+^^^^^^^^^
+
+Optional key specifying a fixed, constant value for the attribute. Default value is None, i.e.,
+the attribute has a variable value to be determined by the user (or API) in accordance with
+the current data.
+
 
 .. _sec-link-spec:
 
-Specification of Links
-======================
+Links
+=====
 
 The link specification is used to specify links to other groups or datasets.
 In HDF5 it is recommended that links be stored a soft links. The link specification
@@ -587,7 +601,7 @@ instance of that structure.
 ^^^^^^^
 
 ``doc`` specifies the documentation string for the link and  should describe the
-purpose and use of the linked data.
+purpose and use of the linked data. The ``doc`` key is required.
 
 ``name``
 ^^^^^^^^
@@ -597,13 +611,9 @@ Optional key specifying the ``name`` of the link.
 
 .. _sec-dataset-spec:
 
-Specification of Datasets
-=========================
+Datasets
+========
 
-.. _sec-dataset-spec-form:
-
-Overall form
-------------
 
 Datasets are specified as part of lists stored in the key ``datasets`` as part of group specifications.
 The specification of a datasets is described in YAML as follows:
@@ -622,7 +632,11 @@ The specification of a datasets is described in YAML as follows:
         shape: Optional list describing the shape (or possibel shapes) of the dataset
         attributes: Optional list of attribute specifications describing the attributes of the group
 
-
+The specification of datasets looks quite similar to attributes and groups. Similar to
+attributes, datasets describe the storage of arbitrary n-dimensional array data.
+However, in conrast to attributes, datasets are not associated with a specific parent
+group or dataset object but are (similar to groups) primary data objects (and as such
+typically manage larger data than attributes).
 The key/value pairs that make up a dataset specification are described in more detail next in Section
 :numref:`sec-dataset-spec-keys`.
 
@@ -632,23 +646,58 @@ The key/value pairs that make up a dataset specification are described in more d
 Dataset specification keys
 --------------------------
 
-``description``
-^^^^^^^^^^^^^^^
 
-A string describing the dataset.
+``name``
+^^^^^^^^
 
-``data\_type``
-^^^^^^^^^^^^^^
-
-A string indicating the type of data stored. This is the same as the
-data type for attributes, described in section 2.2.6.
-
-``dimensions``
-^^^^^^^^^^^^^^
+String with the optional fixed name for the dataset
 
 .. note::
 
-    Describe the ```dims``` and ```shape``` keys
+    Every dataset must have either a unique fixed ``name`` or a unique ``neurodata_type`` to enable the unique
+    identification of datasets when stored on disk.
+
+``doc``
+^^^^^^^
+
+The value of the dataset specification ``doc`` key is a string
+describing the dataset. The ``doc`` key is required.
+
+.. note::
+
+    In earlier versions (before version 1.2a) this key was called ``description``
+
+``neurodata_type`` and ``neurodata_type_def``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Same as for groups. See :numref:`sec-neurodata-type` for details.
+
+
+``quantity``
+^^^^^^^^^^^^
+
+Same as for groups. See :numref:`sec-quantity` for details.
+
+``linkable``
+^^^^^^^^^^^^
+
+Boolean describing whether the this group can be linked.
+
+``dtype``
+^^^^^^^^^
+
+String describing the data type of the dataset. Same as for attributes. See :numref:`sec-dtype` for details.
+
+``shape``
+^^^^^^^^^
+
+List describing the shape of the dataset. Same as for attributes. See :numref:`sec-shape` for details.
+
+``dims``
+^^^^^^^^
+
+List describing the names of the dimensions of the dataset. Same as for attributes. See :numref:`sec-dims` for details.
+
 
 ``attributes``
 ^^^^^^^^^^^^^^
