@@ -1,0 +1,16 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Sphinx documentation
+docs/format/_build/
+docs/language/_build/
+docs/format/source/_format_auto_docs/
+docs/storage/_build/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+#PyCharm
+.idea/
