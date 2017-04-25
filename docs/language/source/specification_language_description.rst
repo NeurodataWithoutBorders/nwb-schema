@@ -8,7 +8,13 @@ Version: |release| |today| [1]_
 
 .. attention::
 
-    TODO This document needs to be updated to reflect changes made in version 1.2a**
+    * TODO This document needs to be updated to reflect changes made in version 1.2a
+    * The following sections have been updated:
+        * :numref:`sec-group-spec` (Groups) should be mostly up to date
+        * :numref:`sec-link-spec` (Links) should be mostly up to date
+        * :numref:`sec-dataset-spec-form` should be mostly up to date
+
+
 
 Introduction
 ============
@@ -213,114 +219,58 @@ File containing specification for extension 2:
 
     }
 
-Specification of groups
+.. _sec-group-spec:
+
+Specification of Groups
 =======================
 
 Overall form
 ------------
 
-The specification of a group (i.e. value of a schema specification
-identifier that has a trailing slash) is a Python dictionary with the
-following form:
+Groups are specified as part of the top-level list or via lists stored in the key
+``groups``. The specification of a group is described in YAML as follows:
 
-.. code-block:: python
+.. code-block:: yaml
 
-    {
 
-    "description": "<description of group>",
+    # Group specification
+    -   name: Optional fixed name for the group. A group must either have a unique neurodata_type or a unique, fixed name.
+        doc: Required description of the group
+        neurodata_type_def: Optional new neurodata_type for the group
+        neurodata_type: Optional neurodata_type the group should inherit from
+        quantity: Optional quantity identifier for the group (default=1).
+        linkable: Boolean indicating whether the group is linkable (default=True)
+        attributes: Optional list of attribute specifications describing the attributes of the group
+        datasets: Optional list of dataset specifications desribing the datasets contained in the group
+        links: Optional list of link specification describing the links contained in the group
+        groups: Optional list of group specifciations describing the sub-groups contained in the group
 
-    "\_description": "<description of group in case there is a dataset named
-    description>",
+The key/value pairs that make up a group specification are described in more detail next in Section :numref:`sec-group-spec-keys`.
 
-    "\_required": "<required specification>",
-
-    "\_exclude\_in": "<exclude\_in specification>",
-
-    "\_properties": <properties specification>,
-
-    "attributes": <attributes specification>,
-
-    "merge": <list of groups to merge>,
-
-    "merge+": <list of group (base class) to merge>,
-
-    "include": <dictionary of structures to include>,
-
-    "link": <link specification>,
-
-    "dataset\_id[qty\_flag]": { <dataset specification> },
-
-    "group\_id/[qty\_flag]": { <group specification> }
-
-    }
-
-None of the key-value pairs are required. All but the last two are
-described in the next section “Group specification keys”. The last two
-("dataset\_id", and "group\_id/") are used to specify a group or dataset
-inside the group. The specification for them is the same as the
-specification for top-level groups (described in this section) and for
-top-level datasets (describe later). There can be any number of groups
-or datasets specified inside a group. The quantity-flag can be specified
-for the groups and datasets and has the same possible values and meaning
-as described in section 1.3.
+.. _sec-group-spec-keys:
 
 Group specification keys
 ------------------------
 
-The following sections describes the first six keys in the illustrated
-group specification above (“description”, “\_description”, “attributes”,
-“merge”, “include”, “link”).
+``name``
+^^^^^^^^
 
-``description``
-^^^^^^^^^^^^^^^
+String with the optional fixed name for the group.
+
+.. attention::
+
+    Every group must have either a unique fixed ``name`` or a unique ``neurodata_type`` to enable the unique
+    identification of groups when stored on disk.
+
+``doc``
+^^^^^^^
 
 The value of the group specification “description” key is a string
 describing the group.
 
-``quantity``
-^^^^^^^^^^^^
-
-The ``quantity`` describes how often the corresponding group (or dataset) can appear. The ``quantity``
-indicates both minimum and maximum number of instances. Hence, if the minimum number of instances is ``0``
-then the group (or dataset) is optional and otherwise it is required.
-
-+---------------------------------+-------------------+------------------+--------------------------+
-| value                           |  minimum quantity | maximum quantity |  Comment                 |
-+=================================+===================+==================+==========================+
-|  ```zero_or_more``` or ```*```  |      ``0``        | ``unlimited``    |  Zero or more instances  |
-+---------------------------------+-------------------+------------------+--------------------------+
-|  ```one_or_more``` or ```+```   |     ``1``         | ``unlimited``    |  One or more instances   |
-+---------------------------------+-------------------+------------------+--------------------------+
-|  ```zero_or_one``` or ```?```   |     ``0``         |  ``1``           |  Zero or one instances   |
-+---------------------------------+-------------------+------------------+--------------------------+
-|  ```1```, ```2```, ```3```, ... |     ``n``         |  ``n``           |  Exactly ``n`` instances |
-+---------------------------------+-------------------+------------------+--------------------------+
-
 .. note::
 
-    The ``quantity`` key was added in version 1.2a of the specification language as a replacement of the
-    ```quantity_flag``` that was used to encode quantity information via a regular expression as part of the
-    main key of the group.
-
-
-``\_required``
-^^^^^^^^^^^^^^
-
-.. attention::
-
-   TODO: The ``\_required`` or an improved version, thereof, will be added agai.
-
-
-``attributes``
-^^^^^^^^^^^^^^
-
-List of attribute specifications describing the attributes of the group. See Section :ref:`attribute-spec` for details.
-
-.. code-block:: yaml
-
-    attributes:
-    - ...
-
+    In earlier versions (before version 1.2a) this key was called ``description``.
 
 ``neurodata_type`` and ``neurodata_type_def``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -417,6 +367,47 @@ The result of this is that ``MySeries`` now includes a group of type ``Series``,
     keys ```include``` and ```merge```(and ```merge+```).
 
 
+``quantity``
+^^^^^^^^^^^^
+
+The ``quantity`` describes how often the corresponding group (or dataset) can appear. The ``quantity``
+indicates both minimum and maximum number of instances. Hence, if the minimum number of instances is ``0``
+then the group (or dataset) is optional and otherwise it is required.
+
++---------------------------------+-------------------+------------------+--------------------------+
+| value                           |  minimum quantity | maximum quantity |  Comment                 |
++=================================+===================+==================+==========================+
+|  ```zero_or_more``` or ```*```  |      ``0``        | ``unlimited``    |  Zero or more instances  |
++---------------------------------+-------------------+------------------+--------------------------+
+|  ```one_or_more``` or ```+```   |     ``1``         | ``unlimited``    |  One or more instances   |
++---------------------------------+-------------------+------------------+--------------------------+
+|  ```zero_or_one``` or ```?```   |     ``0``         |  ``1``           |  Zero or one instances   |
++---------------------------------+-------------------+------------------+--------------------------+
+|  ```1```, ```2```, ```3```, ... |     ``n``         |  ``n``           |  Exactly ``n`` instances |
++---------------------------------+-------------------+------------------+--------------------------+
+
+.. note::
+
+    The ``quantity`` key was added in version 1.2a of the specification language as a replacement of the
+    ```quantity_flag``` that was used to encode quantity information via a regular expression as part of the
+    main key of the group.
+
+``linkable``
+^^^^^^^^^^^^
+
+Boolean describing whether the this group can be linked.
+
+
+``attributes``
+^^^^^^^^^^^^^^
+
+List of attribute specifications describing the attributes of the group. See Section :ref:`attribute-spec` for details.
+
+.. code-block:: yaml
+
+    attributes:
+    - ...
+
 ``links``
 ^^^^^^^^^
 
@@ -433,22 +424,45 @@ List of link specifications describing all links to be stored as part of this gr
 ``datasets``
 ^^^^^^^^^^^^
 
-List of dataset specification describing all datasets to be stored as part of this group.
+List of dataset specifications describing all datasets to be stored as part of this group.
 
 .. code-block:: yaml
 
     datasets:
     - name: data1
+      doc: My data 1
       type: number
       quantity: 'zero_or_one'
     - name: data2
+      doc: My data 2
       type: text
       attributes:
       - ...
     - ...
 
+``groups``
+^^^^^^^^^^
+
+List of group specifications describing all groups to be stored as part of this group
+
+.. code-block:: yaml
+
+    groups:
+    - name: group1
+      quantity: 'zero_or_one'
+    - ...
+
 
 .. _attribute-spec:
+
+
+``\_required``
+^^^^^^^^^^^^^^
+
+.. attention::
+
+   TODO: The ``\_required`` key has been removed in version 1.2.x and later. An improved version will be added again in later version of the specification language.
+
 
 Specification of Attributes
 ===========================
@@ -543,7 +557,9 @@ Attribute specification keys
     TODO Need to add the description of all attribute keys
 
 
-Specification of links
+.. _sec-link-spec:
+
+Specification of Links
 ======================
 
 The link specification is used to specify links to other groups or datasets.
@@ -563,62 +579,55 @@ Link specification keys
 ``target_type``
 ^^^^^^^^^^^^^^^
 
-``target\_type`` specifies the key for a group in the top level structure
+``target_type`` specifies the key for a group in the top level structure
 of a namespace. It is used to indicate that the link must be to an
 instance of that structure.
 
 ``doc``
 ^^^^^^^
 
-``doc`` specifies the documenation string for the link and  should describe the
+``doc`` specifies the documentation string for the link and  should describe the
 purpose and use of the linked data.
 
 ``name``
 ^^^^^^^^
 
-Optional key specfying the ``name`` of the link.
+Optional key specifying the ``name`` of the link.
 
 
-Specification of datasets
+.. _sec-dataset-spec:
+
+Specification of Datasets
 =========================
+
+.. _sec-dataset-spec-form:
 
 Overall form
 ------------
 
-The specification of a dataset (i.e. value associated with an identifier
-described in section 1.3 that does not have a trailing slash) is a
-Python dictionary with the following form:
+Datasets are specified as part of lists stored in the key ``datasets`` as part of group specifications.
+The specification of a datasets is described in YAML as follows:
 
-.. code-block:: python
+.. code-block:: yaml
 
-    {
+    - datasets:
+      - name: of the dataset
+        doc: Required description of the dataset
+        neurodata_type_def: Optional new neurodata_type for the group
+        neurodata_type: Optional neurodata_type the group should inherit from
+        quantity: Optional quantity identifier for the group (default=1).
+        linkable: Boolean indicating whether the group is linkable (default=True)
+        dtype: Required string describing the data type of the dataset
+        dims: Optional list describing the names of the dimensions of the dataset
+        shape: Optional list describing the shape (or possibel shapes) of the dataset
+        attributes: Optional list of attribute specifications describing the attributes of the group
 
-    "description": "*<description>*",
 
-    "data\_type": ("int", "float", "number", or "text"), # required
+The key/value pairs that make up a dataset specification are described in more detail next in Section
+:numref:`sec-dataset-spec-keys`.
 
-    "dimensions": <dimensions list>, # required if not scalar
 
-    "attributes": <attributes specification>,
-
-    "references": "<*reference target specification*>",
-
-    "link": <link specification>,
-
-    "autogen": <autogen specification>,
-
-    "dim1": *<dimension specification>*,
-
-    "dim2": *<dimension specification>*,
-
-    ...
-
-    }
-
-Either the data\_type or link property must be present All others are
-optional. If the dataset is specified and is an array (not scalar) than
-the dimensions property is required. The autogen specification is
-described in Section 4. Others are described below.
+.. _sec-dataset-spec-keys:
 
 Dataset specification keys
 --------------------------
