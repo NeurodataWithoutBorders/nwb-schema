@@ -1,0 +1,14 @@
+namespaces:
+- author:
+  - Keith Godfrey
+  - Jeff Teeters
+  - Oliver Ruebel
+  - Andrew Tritt
+  contact:
+  - keithg@alleninstitute.org
+  - jteeters@berkeley.edu
+  - oruebel@lbl.gov
+  - ajtritt@lbl.gov
+  date: '2017-04-26 16:00:42'
+  doc: NWB namespace
+  full_name: NWB core
