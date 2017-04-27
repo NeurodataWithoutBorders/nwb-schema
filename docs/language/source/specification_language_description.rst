@@ -14,153 +14,145 @@ file formats, NWB-N defines and uses the NWB specification language.
 The specification language is defined in YAML (or optionally JSON) and defines formal
 structures for describing the organization of complex data using basic
 concepts, e.g., Groups, Datasets, Attributes, and Links.
+A specification typically consists of a declaration of a namespace
+and a set of schema specifications.
 Data publishers can use the specification language to extend
-the format in order to store types of data not supported by the NWB core format.
+the format in order to store types of data not supported by the
+NWB core format (:numref:`sec-extensions:`).
 
-Namespaces / Schema
-===================
+
+.. _sec-extensions:
+
+Extensions
+==========
+
+As mentioned, extensions to the core format are specified via custom
+user namespaces. Each namespace must have a unique name (i.e, must be
+different from NWB). The schema of new neurodata_types (groups, datasets etc.)
+are then specified in seperate schema specification files.
+While it’s possible to define multiple namespaces in the same file, most commonly,
+each new namespace will be defined in a separate file with coresponding
+schema specifications being stored in one ore more additional YAML (or JSON) files.
+One or more namespaces can be used simultaneously, so that multiple
+extensions can be used at the same time while avoiding potential
+name and type collisions between extensions (as well as extensions and the NWB core spec).
+
+The specification of namespaces is described in detail next in :numref:`sec-namespace-dec`
+and the specification of schema specifications is described in :numref:`sec-schema-spec`
+and subsequent sections.
+
+
+.. _sec-namespace-dec:
+
+Namespaces
+==========
 
 .. attention::
 
-    TODO: Update this section describing the definition and use of namespaces
+    TODO: Update this section to ensure consitency with the current implementation
 
-Schema Id: ``namespace``
-------------------------
-
-The top-level of a format specification has the following form:
-
-.. code-block:: python
-
-    {"fs": {
-
-    "ns1": <specification for ns1 namespace>,
-
-    "ns2": <specification for ns2 namespace>,
-
-    "ns3": <specification for ns3 namespace>, ... }
-
-
-The top level variable must be “fs”. (This stands for “format
-specification”). The value of variable “fs” is a dictionary with each
-key the “namespace” or “schema-id” of a format specification that is
-associated with that namespace. The namespace identifier can be any
-valid Python identifier (the identifiers are *not* restricted to start
-with ‘ns’). One of the namespaces is designated as the “default”
-namespace and it is associated with the core format. Other namespaces
-(schema-ids) are associated with extensions to the core format.
-Information indicating where to obtain the specifications (usually names
-of files containing the specifications) and the default namespace
-identifier are passed into the API software when the software is
-initialized.
-
-Top level components
-^^^^^^^^^^^^^^^^^^^^
-
-The specification associated with each schema-id is a Python dictionary
-with three keys: info, schema, and doc. e.g.:
+Namespaces are used to define a collections of specifications, to enable
+users to develop extensions in their own namespace and, hence, to avoid
+name/type collisions. Namespaces are defined in seperate YAML files.
+The specification of a namespace looks as follows:
 
 .. code-block:: python
 
-    { "info": <info specification>,
+    namespaces:
+    - doc: NWB namespace
+      name: NWB
+      full_name: NWB core
+      version: 1.2.0
+      date: 2017-04-25 18:05:00
+      author:
+      - Keith Godfrey
+      - Jeff Teeters
+      - Oliver Ruebel
+      - Andrew Tritt
+      contact:
+      - keithg@alleninstitute.org
+      - jteeters@berkeley.edu
+      - oruebel@lbl.gov
+      - ajtritt@lbl.gov
+      schema:
+      - source: nwb.base.yaml
+        neurodata_types: null
+      - ...
 
-    "schema": <schema specification>,
-
-    "doc": <auxiliary documentation>,
-
-    }
+The top-level key must be ``namespaces``. The value of ``namespaces``
+is a list with the specification of one (or more) namespaces.
 
 
-“info” and “schema” are required. “doc” is optional. <info
-specification> has the following form:
+Namespace declaration keys
+--------------------------
+
+``doc``
+^^^^^^^
+
+Text description of the namespace.
+
+``name``
+^^^^^^^^
+
+Unique name used to refer to the namespace
+
+``full_name``
+^^^^^^^^^^^^^
+
+Optional string with extended full name for the namespace.
+
+``version``
+^^^^^^^^^^^
+
+Version string for the namespace
+
+``date``
+^^^^^^^^
+
+Date the namespace has been last modified or released. Formatting is ``%Y-%m-%d %H:%M:%S``, e.g, ``2017-04-25 17:14:13``
+
+``author``
+^^^^^^^^^^
+
+List of strings with the names of the authors of the namespace.
+
+``contact``
+^^^^^^^^^^^
+
+List of strings with the contact information for the authors.
+Ordering of the contacts should match the ordering of the authors.
+
+``schema``
+^^^^^^^^^^
+
+List of the schema to be included in this namespace. The specification looks as follows:
 
 .. code-block:: python
 
-    {
+     - source: nwb.base.yaml
+       neurodata_types: null
+     - source: nwb.ephys.yaml
+       neurodata_types: ElectricalSeries
 
-    "name": "<Name of specification>",
+``source`` indicates the relative path to the YAML (or JSON) files with the schema specifications
+while ``neurodata_types`` is a list of strings indicating the which neurodata_type should be
+included from the given specification. The default is ``neurodata_types: null`` indicating that all
+neurordata_types should be included.
 
-    "version": "<version number>",
 
-    "date": "<date last modified or released>",
-
-    "author": "<author name>",
-
-    "contact": "<author email or other contact info>",
-
-    "description": "<description of the specification>"
-
-    },
-
-The schema specification section defines the groups, datasets and
-relationship that make up the format. This is the main part of the
-format specification. It is described in the following sections.
-
-The <auxiliary documentation> section is for text that is added to
-documentation about the format that is generated from the format
-specification, using the “make\_docs.py” tool. This is not described
-further in this document, but the structure and operation can be deduced
-by examining this part of the NWB format specification (e.g. file
-“nwb\_core.py”) and the generated documentation for the NWB format.
+.. _sec-schema-spec:
 
 Schema specification
---------------------
+====================
 
-The schema specification consist of a list of Group specifications.
+The schema specification section defines the groups, datasets and
+relationship that make up the format. The schema specification consist of a list of Group specifications.
 Schema may be distributed across multiple YAML files to improve
 readability and to support logical organization of types.
-
-Extensions
-----------
-
-.. note::
-
-    **TODO** Update the description of how extensions are managed
-
-As mentioned, extensions to the core format are specified using
-``schema_ids`` that are different from the ``schema_id`` used for the core
-format. The way that extensions are implemented is very simple: The
-schema specified in extensions are simply “merged” into the schema
-specified in the core format based on having the same absolute path (if
-given) and the same identifier. For example, if the core format schema
-includes key “<foo>/” (specifying a group with a variable name “foo”)
-and an extension also includes a key “<foo>/”, the value associated with
-both of these (which must be a dictionary) are combined to form the
-specification of the core format and the extension. While it’s possible
-to define multiple extensions in the same file (as illustrated in
-section 1.1) normally, the specification associated with each schema\_id
-will be in a separate file as illustrated below:
-
-File containing specification for core format:
-
-.. code-block:: python
-
-    {"fs": {
-
-    "core": <specification for core format>
-
-    }
+This is the main part of the
+format specification. It is described in the following sections.
 
 
-File containing specification for extension 1:
-
-.. code-block:: python
-
-    {"fs": {
-
-    "ex1": <specification for extension ex1>
-
-    }
-
-
-File containing specification for extension 2:
-
-.. code-block:: python
-
-    {"fs": {
-
-    "ex2": <specification for extension ex2>
-
-    }
 
 .. _sec-group-spec:
 
@@ -717,6 +709,7 @@ Relationships
     Future versions will add explicit concepts for modeling of relationships, to replace the
     implicit relationships encoded via shared dimension descriptions and implicit references in
     datasets in previous versions of the specification language.
+
 
 
 .. [1]
