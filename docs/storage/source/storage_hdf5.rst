@@ -67,10 +67,10 @@ Groups
     datasets                      HDF5 datasets within the HDF5 group
     attributes                    HDF5 attributes on the HDF5 group
     links                         HDF5 SoftLinks within the HDF5 group
-    linkable                      Not mapped
-    quantity                      Not mapped
-    neurodata_type_def            Attribute ``neurodata_type``
-    neurodata_type                Attribute ``neurodata_type`` if ``neurodata_type_def`` is Null, else not mapped.
+    linkable                      Not mapped; Stored in schema only
+    quantity                      Not mapped; Number of appearances of the dataset.
+    neurodata_type                Attribute ``neurodata_type``
+    namespace ID                  Attribute ``neurodata_namespace``
     ============================  ======================================================================================
 
 
@@ -92,12 +92,16 @@ Datasets
     shape                         Shape of the HDF5 dataset if the shape is fixed, otherwise shape defines the maxshape
     dims                          Not mapped
     attributes                    HDF5 attributes on the HDF5 group
-    linkable                      Not mapped
-    quantity                      Not mapped
-    neurodata_type_def            Attribute ``neurodata_type``
-    neurodata_type                Attribute ``neurodata_type`` if ``neurodata_type_def`` is Null, else not mapped.
+    linkable                      Not mapped; Stored in schema only
+    quantity                      Not mapped; Number of appearances of the dataset.
+    neurodata_type                Attribute ``neurodata_type``
+    namespace ID                  Attribute ``neurodata_namespace``
     ============================  ======================================================================================
 
+.. note::
+
+    * TODO Update mapping of namespace ID
+    * TODO Update mapping of dims
 
 Attriutes
 ---------
@@ -111,12 +115,12 @@ Attriutes
     NWB Key                       HDF5
     ============================  ======================================================================================
     name                          Name of the attribute in HDF5
-    doc                           Not mapped
+    doc                           Not mapped; Stored in schema only
     dtype                         Data type of the HDF5 attribute
     shape                         Shape of the HDF5 dataset if the shape is fixes, otherwise shape defines the maxshape
-    dims                          Not mapped
-    required                      Not mapped
-    parent                        Not mapped. In HDF5 all attributes are explitly tied to the parent.
+    dims                          Not mapped; Reflected by the shape of the attribute data
+    required                      Not mapped; Stored in schema only
+    parent                        Not mapped; In HDF5 all attributes are explicitly tied to the parent.
     value                         Data value of the attribute
     ============================  ======================================================================================
 
@@ -133,6 +137,6 @@ Links
     NWB Key                       HDF5
     ============================  ======================================================================================
     name                          Name of the HDF5 Soft Link
-    doc                           Not mapped
+    doc                           Not mapped; Stored in schema only
     target_type                   Not mapped. The target type is determined by the type of the target of the HDF5 link
     ============================  ======================================================================================
