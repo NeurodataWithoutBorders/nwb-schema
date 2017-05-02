@@ -5,7 +5,9 @@ import yaml
 from ruamel import yaml
 
 #import pynwb
-from pynwb.spec import Spec, AttributeSpec, DatasetSpec, GroupSpec, LinkSpec
+
+from datetime import datetime
+from form.spec import Spec, AttributeSpec, DatasetSpec, GroupSpec, LinkSpec, SpecNamespace
 
 """
     stuff to clean up
@@ -13,6 +15,9 @@ from pynwb.spec import Spec, AttributeSpec, DatasetSpec, GroupSpec, LinkSpec
     - float('NaN') should be just 'NaN'
 """
 
+CORE_NAMESPACE='core'
+
+ignore = {'electrode_group', 'electrode_map', 'filtering', 'impedance'}
 metadata_ndts = list()
 
 subspec_locations = {
@@ -28,6 +33,7 @@ device_spec = LinkSpec('the device that was used to record from this electrode g
 alternate_defs = {
     'ElectrodeGroup': GroupSpec('One of possibly many groups, one for each electrode group.',
             neurodata_type_def='ElectrodeGroup',
+            namespace=CORE_NAMESPACE,
             datasets = [
                 DatasetSpec('array with description for each channel', 'text', name='channel_description', shape=(None,), dims=('num_channels',)),
                 DatasetSpec('array with location description for each channel e.g. "CA1"', 'text', name='channel_location',    shape=(None,), dims=('num_channels',)),
@@ -128,6 +134,9 @@ def build_group_helper(**kwargs):
     doc = kwargs.pop('doc')
     #if doc is None:
     #    print('no doc for name %s, ndt %s' % (myname, kwargs.get('neurodata_type_def', kwargs.get('neurodata_type'))), file=sys.stderr)
+    ndt = kwargs.get('neurodata_type_def')
+    if ndt is not None:
+        kwargs['namespace'] = 'core'
     if myname == NAME_WILDCARD:
         grp_spec = GroupSpec(doc, **kwargs)
     else:
@@ -223,7 +232,10 @@ def build_group(name, d, ndtype=None):
             ndt = ndt[1:ndt.rfind('>')]
             #grp_spec.include_neurodata_group(ndt)
             doc = include_doc.get(name, include_doc.get(neurodata_type))
-            grp_spec.add_group(doc, neurodata_type=ndt)
+            vargs = {'neurodata_type': ndt}
+            if ndt is not None:
+                vargs['namespace'] = CORE_NAMESPACE
+            grp_spec.add_group(doc, **vargs)
         elif 'link' in value:
             ndt = value['link']['target_type']
             doc = value.get('description', None)
@@ -242,12 +254,15 @@ def build_group(name, d, ndtype=None):
             doc = value['description']
             if key[0] == '<':
                 #grp_spec.include_neurodata_group(ndt)
-                grp_spec.add_group(doc, neurodata_type=ndt)
+                grp_spec.add_group(doc, neurodata_type=ndt, namespace=CORE_NAMESPACE)
             else:
                 group_name = key
                 if group_name[-1] == '/':
                     group_name = group_name[0:-1]
-                grp_spec.add_group(doc, neurodata_type=ndt, name=group_name)
+                vargs = {'neurodata_type': ndt, name: group_name}
+                if ndt is not None:
+                    vargs['namespace'] = CORE_NAMESPACE
+                grp_spec.add_group(doc, **vargs)
         elif tmp_name in metadata_links:
             ndt = metadata_links[tmp_name]
             doc = metadata_links_doc[tmp_name]
@@ -257,14 +272,19 @@ def build_group(name, d, ndtype=None):
                 if key in ndmap_to_group:
                     grp_spec.set_group(build_group(tmp_name, value))
                 else:
-                    grp_spec.set_dataset(build_dataset(tmp_name, value))
+                    if tmp_name not in ignore:
+                        grp_spec.set_dataset(build_dataset(tmp_name, value))
+                    else:
+                        print('skipping', tmp_name)
             else:
                 subgrp = build_group(tmp_name, value)
                 if subgrp.neurodata_type_def in subspec_locations:
                     if subgrp.neurodata_type_def in alternate_defs:
+                        print('getting alternate_def for', subgrp.neurodata_type_def)
                         subgrp = alternate_defs[subgrp.neurodata_type_def]
                     #print('moving %s' % subgrp.neurodata_type_def)
-                    grp_spec.add_group(subgrp.doc, neurodata_type=subgrp.neurodata_type_def, quantity='*')
+                    vargs = {'neurodata_type': subgrp.neurodata_type_def, 'namespace': CORE_NAMESPACE, 'quantity': '*'}
+                    grp_spec.add_group(subgrp.doc, **vargs)
                     metadata_ndts.append(subgrp)
                 else:
                     grp_spec.set_group(subgrp)
@@ -283,6 +303,8 @@ def build_dataset(name, d):
         if kwargs['name'] in dataset_ndt:
             tmpname = kwargs.pop('name')
             kwargs['neurodata_type_def'] = dataset_ndt[tmpname]
+    if 'neurodata_type_def' in kwargs or 'neurodata_type' in kwargs:
+        kwargs['namespace'] = CORE_NAMESPACE
     dset_spec = DatasetSpec(kwargs.pop('doc'), kwargs.pop('dtype'), **kwargs)
     if 'attributes' in d:
         add_attributes(dset_spec, d['attributes'])
@@ -368,9 +390,36 @@ def remap_keys(name, d):
     elif ret['doc'] is None:
         ret['doc'] = override_doc.get(ret['name'])
     ret['dims'] = d.get('dimensions', None)
+    ret['shape'] = make_shape(ret['dims'], d)
+    ret['dims'] = get_dimensions(ret['dims'], d)
     return ret
 
 
+def join_components(components):
+    if isinstance(components[0], dict):
+        return "|".join(x['alias'] for x in components)
+    else:
+        return [join_components(c) for c in components]
+
+def get_dimensions(dims, d):
+    if dims is None:
+        return None
+    if isinstance(dims, str):
+        if dims in d and 'components' in d[dims]:
+            return join_components(d[dims]['components'])
+        return dims
+    else:
+        return [ get_dimensions(i, d) for i in dims ]
+
+def make_shape(dims, d):
+    if dims is None:
+        return None
+    if isinstance(dims, str):
+        if dims in d and 'components' in d[dims]:
+            return len(d[dims]['components'])
+        return None
+    else:
+        return [ make_shape(i, d) for i in dims ]
 
 def merge_spec(target, source):
     for grp_spec in source.groups:
@@ -549,7 +598,11 @@ def load_spec(spec):
         loc = subspec_locations[subspec.neurodata_type_def]
         #print('putting %s in %s' % (subspec.neurodata_type_def, loc))
         type_specs[loc].append(subspec)
-    return type_specs
+        #if subspec.neurodata_type_def == 'ElectrodeGroup':
+        #    print ("putting ElectrodeGroup in", loc)
+        #    import json
+        #    print(json.dumps(subspec, indent=2))
+    return { k: {'specs': v} for k, v in type_specs.items() }
 
 def represent_str(self, data):
     s = data.replace('"', '\\"')
@@ -589,7 +642,35 @@ with open(spec_path) as spec_in:
     #nwb_spec = load_iface(json.load(spec_in))
 
 
+schema = list()
 for key, value  in nwb_spec.items():
-    with open('%s/nwb.%s.yaml' % (outdir, key), 'w') as out:
+    filename = 'nwb.%s.yaml' % key
+    with open('%s/%s' % (outdir, filename), 'w') as out:
         yaml.dump(json.loads(json.dumps(value)), out, default_flow_style=False)
+    schema.append({'source': filename})
 
+ns = dict()
+ns['doc'] = 'NWB namespace'
+ns['name'] = CORE_NAMESPACE
+ns['full_name'] = 'NWB core'
+ns['versions'] = '1.2.0'
+ns['date'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+ns['author'] = ['Keith Godfrey', 'Jeff Teeters', 'Oliver Ruebel', 'Andrew Tritt']
+ns['contact'] = ['keithg@alleninstitute.org', 'jteeters@berkeley.edu', 'oruebel@lbl.gov', 'ajtritt@lbl.gov']
+ns['schema'] = schema
+ns = {'namespaces': [SpecNamespace.build_namespace(**ns)]}
+print(ns['namespaces'])
+with open('%s/nwb.namespace.yaml' % outdir, 'w') as out:
+    yaml.dump(json.loads(json.dumps(ns)), out, default_flow_style=False)
+
+
+import tarfile
+cwd = os.getcwd()
+os.chdir(outdir)
+tar = tarfile.open('nwb_core.tar', 'w')
+for key in nwb_spec.keys():
+    specfile = 'nwb.%s.yaml' % (key)
+    tar.add(specfile)
+tar.add('nwb.namespace.yaml')
+tar.close()
+os.chdir(cwd)
