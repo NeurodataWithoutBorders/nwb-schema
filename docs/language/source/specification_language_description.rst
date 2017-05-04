@@ -6,6 +6,10 @@ NWB Specification Language
 
 Version: |release| |today| [1]_
 
+.. attention::
+
+    TODO Change ``neurodata_type` key to ``neurodata_type_inc`` throughout to avoid confusion with the actual type of an object.
+
 Introduction
 ============
 
