@@ -669,7 +669,7 @@ import tarfile
 cwd = os.getcwd()
 os.chdir(outdir)
 tar = tarfile.open('nwb_core.tar', 'w')
-for key in nwb_spec.keys():
+for key in sorted(nwb_spec.keys()):
     specfile = 'nwb.%s.yaml' % (key)
     tar.add(specfile)
 tar.add('nwb.namespace.yaml')
