@@ -13,6 +13,16 @@ specs:
     name: help
     value: Image stack recorded from 2-photon microscope
   datasets:
+  - doc: Lines imaged per second. This is also stored in /general/optophysiology but
+      is kept here as it is useful information for analysis, and so good to be stored
+      w/ the actual data.
+    dtype: float32
+    name: scan_line_rate
+    quantity: '?'
+  - doc: Photomultiplier gain
+    dtype: float32
+    name: pmt_gain
+    quantity: '?'
   - dims:
     - width|height|depth
     doc: Width, height and depth of image, or imaged area (meters).
@@ -21,16 +31,6 @@ specs:
     quantity: '?'
     shape:
     - 3
-  - doc: Photomultiplier gain
-    dtype: float32
-    name: pmt_gain
-    quantity: '?'
-  - doc: Lines imaged per second. This is also stored in /general/optophysiology but
-      is kept here as it is useful information for analysis, and so good to be stored
-      w/ the actual data.
-    dtype: float32
-    name: scan_line_rate
-    quantity: '?'
   doc: A special case of optical imaging.
   links:
   - doc: link to ImagingPlane group from which this TimeSeries data was generated
@@ -56,16 +56,6 @@ specs:
       to the signal from one ROI
   datasets:
   - dims:
-    - num_ROIs
-    doc: List of ROIs represented, one name for each row of data[].
-    dtype: text
-    name: roi_names
-    shape:
-    - null
-  - doc: Path to segmentation module.
-    dtype: text
-    name: segmentation_interface_path
-  - dims:
     - num_times
     - num_ROIs
     doc: Signals from ROIs
@@ -73,6 +63,16 @@ specs:
     name: data
     shape:
     - null
+    - null
+  - doc: Path to segmentation module.
+    dtype: text
+    name: segmentation_interface_path
+  - dims:
+    - num_ROIs
+    doc: List of ROIs represented, one name for each row of data[].
+    dtype: text
+    name: roi_names
+    shape:
     - null
   doc: ROI responses over an imaging plane. Each row in data[] should correspond to
     the signal from one ROI.
@@ -102,9 +102,9 @@ specs:
     should be the same as for segmentation (ie, same names for ROIs and for image
     planes).
   groups:
-  - data_type_inc: RoiResponseSeries
-    doc: RoiResponseSeries object containing dF/F for a ROI
+  - doc: RoiResponseSeries object containing dF/F for a ROI
     namespace: core
+    neurodata_type_inc: RoiResponseSeries
   name: DfOverF
   namespace: core
   neurodata_type_def: DfOverF
@@ -128,9 +128,9 @@ specs:
     of fluorescence should be the same as for segmentation (ie, same names for ROIs
     and for image planes).
   groups:
-  - data_type_inc: RoiResponseSeries
-    doc: RoiResponseSeries object containing fluorescence data for a ROI
+  - doc: RoiResponseSeries object containing fluorescence data for a ROI
     namespace: core
+    neurodata_type_inc: RoiResponseSeries
   name: Fluorescence
   namespace: core
   neurodata_type_def: Fluorescence
@@ -168,6 +168,10 @@ specs:
       name: namespace
       value: core
     datasets:
+    - doc: Description of image plane, recording wavelength, depth, etc
+      dtype: text
+      name: description
+      quantity: '?'
     - dims:
       - num_rois
       doc: List of ROIs in this imaging plane
@@ -175,10 +179,6 @@ specs:
       name: roi_list
       shape:
       - null
-    - doc: Description of image plane, recording wavelength, depth, etc
-      dtype: text
-      name: description
-      quantity: '?'
     doc: Group name is human-readable description of imaging plane
     groups:
     - attributes:
@@ -192,11 +192,11 @@ specs:
         value: core
       datasets:
       - dims:
-        - num_pixels
-        - '2'
-        doc: List of pixels (x,y) that compose the mask
-        dtype: uint16
-        name: pix_mask
+        - num_x
+        - num_y
+        doc: ROI mask, represented in 2D ([y][x]) intensity image
+        dtype: float32
+        name: img_mask
         shape:
         - null
         - null
@@ -211,11 +211,11 @@ specs:
         dtype: text
         name: roi_description
       - dims:
-        - num_x
-        - num_y
-        doc: ROI mask, represented in 2D ([y][x]) intensity image
-        dtype: float32
-        name: img_mask
+        - num_pixels
+        - '2'
+        doc: List of pixels (x,y) that compose the mask
+        dtype: uint16
+        name: pix_mask
         shape:
         - null
         - null
@@ -225,10 +225,10 @@ specs:
       quantity: '*'
     - doc: Stores image stacks segmentation mask apply to.
       groups:
-      - data_type_inc: ImageSeries
-        doc: One or more image stacks that the masks apply to (can be one-element
+      - doc: One or more image stacks that the masks apply to (can be one-element
           stack)
         namespace: core
+        neurodata_type_inc: ImageSeries
       name: reference_images
     links:
     - doc: link to ImagingPlane group from which this TimeSeries data was generated
@@ -251,24 +251,15 @@ specs:
     name: namespace
     value: core
   datasets:
-  - doc: Calcium indicator
-    dtype: text
-    name: indicator
-  - doc: Excitation wavelength
-    dtype: text
-    name: excitation_lambda
-  - doc: Rate images are acquired, in Hz.
-    dtype: text
-    name: imaging_rate
   - attributes:
-    - doc: Value is 1.0
-      dtype: float
-      name: conversion
-      value: 1.0
     - doc: Value is Meter
       dtype: text
       name: unit
       value: Meter
+    - doc: Value is 1.0
+      dtype: float
+      name: conversion
+      value: 1.0
     dims:
     - height
     - weight
@@ -281,16 +272,19 @@ specs:
     - null
     - null
     - 3
-  - doc: Name of device in /general/devices
-    dtype: text
-    name: device
-  - doc: Location of image plane
-    dtype: text
-    name: location
   - doc: Description of &lt;image_plane_X&gt;
     dtype: text
     name: description
     quantity: '?'
+  - doc: Excitation wavelength
+    dtype: text
+    name: excitation_lambda
+  - doc: Calcium indicator
+    dtype: text
+    name: indicator
+  - doc: Location of image plane
+    dtype: text
+    name: location
   - doc: 'Describes position and reference frame of manifold based on position of
       first element in manifold. For example, text description of anotomical location
       or vectors needed to rotate to common anotomical axis (eg, AP/DV/ML). COMMENT:
@@ -298,6 +292,12 @@ specs:
       this field is not required'
     dtype: text
     name: reference_frame
+  - doc: Name of device in /general/devices
+    dtype: text
+    name: device
+  - doc: Rate images are acquired, in Hz.
+    dtype: text
+    name: imaging_rate
   doc: 'One of possibly many groups describing an imaging plane. COMMENT: Name is
     arbitrary but should be meaningful. It is referenced by TwoPhotonSeries and also
     ImageSegmentation and DfOverF interfaces'
@@ -312,12 +312,12 @@ specs:
       name: namespace
       value: core
     datasets:
-    - doc: Emission lambda for channel
-      dtype: text
-      name: emission_lambda
     - doc: Any notes or comments about the channel
       dtype: text
       name: description
+    - doc: Emission lambda for channel
+      dtype: text
+      name: emission_lambda
     doc: 'One of possibly many groups storing channel-specific data COMMENT: Name
       is arbitrary but should be meaningful'
     namespace: core

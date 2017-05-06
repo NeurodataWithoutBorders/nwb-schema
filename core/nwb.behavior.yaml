@@ -71,9 +71,9 @@ specs:
     should use IntervalSeries. BehavioralEvents is used for irregular events. BehavioralTimeSeries
     is for continuous data.
   groups:
-  - data_type_inc: IntervalSeries
-    doc: IntervalSeries object containing start and stop times of epochs
+  - doc: IntervalSeries object containing start and stop times of epochs
     namespace: core
+    neurodata_type_inc: IntervalSeries
   name: BehavioralEpochs
   namespace: core
   neurodata_type_def: BehavioralEpochs
@@ -94,9 +94,9 @@ specs:
   doc: TimeSeries for storing behavioral events. See description of <a href="#BehavioralEpochs">BehavioralEpochs</a>
     for more details.
   groups:
-  - data_type_inc: TimeSeries
-    doc: TimeSeries object containing irregular behavioral events
+  - doc: TimeSeries object containing irregular behavioral events
     namespace: core
+    neurodata_type_inc: TimeSeries
   name: BehavioralEvents
   namespace: core
   neurodata_type_def: BehavioralEvents
@@ -117,9 +117,9 @@ specs:
   doc: TimeSeries for storing Behavoioral time series data.See description of <a href="#BehavioralEpochs">BehavioralEpochs</a>
     for more details.
   groups:
-  - data_type_inc: TimeSeries
-    doc: TimeSeries object containing continuous behavioral data
+  - doc: TimeSeries object containing continuous behavioral data
     namespace: core
+    neurodata_type_inc: TimeSeries
   name: BehavioralTimeSeries
   namespace: core
   neurodata_type_def: BehavioralTimeSeries
@@ -139,9 +139,9 @@ specs:
     value: Eye-tracking data, representing pupil size
   doc: Eye-tracking data, representing pupil size.
   groups:
-  - data_type_inc: TimeSeries
-    doc: TimeSeries object containing time series data on pupil size
+  - doc: TimeSeries object containing time series data on pupil size
     namespace: core
+    neurodata_type_inc: TimeSeries
   name: PupilTracking
   namespace: core
   neurodata_type_def: PupilTracking
@@ -161,9 +161,9 @@ specs:
     value: Eye-tracking data, representing direction of gaze
   doc: Eye-tracking data, representing direction of gaze.
   groups:
-  - data_type_inc: SpatialSeries
-    doc: SpatialSeries object containing data measuring direction of gaze
+  - doc: SpatialSeries object containing data measuring direction of gaze
     namespace: core
+    neurodata_type_inc: SpatialSeries
   name: EyeTracking
   namespace: core
   neurodata_type_def: EyeTracking
@@ -190,9 +190,9 @@ specs:
     of rotation (this should be clockwise). The si_unit for the SpatialSeries should
     be radians or degrees.
   groups:
-  - data_type_inc: SpatialSeries
-    doc: SpatialSeries object containing direction of gaze travel
+  - doc: SpatialSeries object containing direction of gaze travel
     namespace: core
+    neurodata_type_inc: SpatialSeries
   name: CompassDirection
   namespace: core
   neurodata_type_def: CompassDirection
@@ -212,9 +212,9 @@ specs:
     value: Position data, whether along the x, xy or xyz axis
   doc: Position data, whether along the x, x/y or x/y/z axis.
   groups:
-  - data_type_inc: SpatialSeries
-    doc: SpatialSeries object containing position data
+  - doc: SpatialSeries object containing position data
     namespace: core
+    neurodata_type_inc: SpatialSeries
   name: Position
   namespace: core
   neurodata_type_def: Position
@@ -253,13 +253,13 @@ specs:
       name: original_path
     doc: One of possibly many.  Name should be informative.
     groups:
-    - data_type_inc: TimeSeries
-      doc: Stores the x,y delta necessary to align each frame to the common coordinates,
+    - doc: Image stack with frames shifted to the common coordinates.
+      namespace: core
+      neurodata_type_inc: ImageSeries
+    - doc: Stores the x,y delta necessary to align each frame to the common coordinates,
         for example, to align each frame to a reference image.
       namespace: core
-    - data_type_inc: ImageSeries
-      doc: Image stack with frames shifted to the common coordinates.
-      namespace: core
+      neurodata_type_inc: TimeSeries
     links:
     - doc: HDF5 Link to image series that is being registered.
       name: original
