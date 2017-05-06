@@ -145,12 +145,9 @@ def build_group_helper(**kwargs):
     return grp_spec
 
 def build_group(name, d, ndtype=None):
-    #print('building %s' % name, file=sys.stderr)
     #required = True
     myname = name
     quantity, myname = strip_characters(name)
-    if len(myname) < 1:
-        print('>', myname, '<')
     if myname[-1] == '/':
         myname = myname[:-1]
     #if myname == NAME_WILDCARD:
@@ -158,43 +155,26 @@ def build_group(name, d, ndtype=None):
     extends = None
     if 'merge' in d:
         merge = d.pop('merge')
-        #print('Found merge directive for %s' % name, file=sys.stderr)
         base = merge[0]
         end = base.rfind('>')
         base = base[1:end] if end > 0 else base
         #extends = all_specs[base]
         extends = base
-        #if len(d) == 0:
-        #    print('%s - spec empty after popping merge' %  name, file=sys.stderr)
 
-    #p = 'device' in myname
-    #if p:
-    #    print(myname)
 
     if myname[0] == '<':
-        #if p:
-        #    print('variable name')
         neurodata_type = ndmap.get(myname, ndmap_to_group.get(myname))
-        #if p:
-        #    print(neurodata_type)
-        #print('found neurodata_type %s' % neurodata_type, file=sys.stderr)
         if neurodata_type is None:
             neurodata_type = ndtype
         else:
             myname = NAME_WILDCARD
-        #print('neurodata_type=%s, myname=%s' % (neurodata_type, myname), file=sys.stderr)
     else:
-        #if p:
-        #    print('Not variable')
         neurodata_type = ndtype
 
     desc = d.get('description', None)
     if isinstance(desc, dict) or desc is None:
-        #print('popping _description ndt=%s, desc=%s' % (neurodata_type, desc), file=sys.stderr)
         desc = d.pop('_description', None)
-        #print('after popping ndt=%s, desc=%s' % (neurodata_type, desc), file=sys.stderr)
     else:
-        #print('popping description ndt=%s, desc=%s' % (neurodata_type, desc), file=sys.stderr)
         d.pop('description', None)
 
     if 'attributes' in d:
@@ -448,7 +428,6 @@ def load_spec(spec):
     # /processing/
     # /stimulus/
 
-    #root = GroupSpec(neurodata_type='NWBFile')
     root = build_group('root', spec['/'], 'NWBFile')
 
 
@@ -590,28 +569,20 @@ def load_spec(spec):
 
         return build_group(namearg, spec[name], ndtype=ndt)
 
-    #for key in type_specs.keys():
     for key in subspecs:
         type_specs[key] = list(map(mapfunc, type_specs[key]))
 
     type_specs['base'] = base
     for subspec in metadata_ndts:
         loc = subspec_locations[subspec.neurodata_type_def]
-        #print('putting %s in %s' % (subspec.neurodata_type_def, loc))
         type_specs[loc].append(subspec)
-        #if subspec.neurodata_type_def == 'ElectrodeGroup':
-        #    print ("putting ElectrodeGroup in", loc)
-        #    import json
-        #    print(json.dumps(subspec, indent=2))
     return { k: {'specs': v} for k, v in type_specs.items() }
 
 def represent_str(self, data):
     s = data.replace('"', '\\"')
     return s
-    #return self.represent_scalar("", '"%s"' % s)
 
 def represent_spec(dumper, data):
-    #print('CALLING represent_spec', file=sys.stderr)
     value = []
     def add_key(item_key):
         item_value = data[item_key]
@@ -621,20 +592,8 @@ def represent_spec(dumper, data):
     skip = set()
     order = ('name', 'neurodata_type_def', 'neurodata_type', 'doc', 'attributes', 'datasets', 'groups')
     add_key('name')
-#    for item_key in order:
-#        if item_key in data:
-#            add_key(item_key)
-#            skip.add(item_key)
-#    for item_key in data.keys():
-#        if item_key in skip:
-#            continue
-#        add_key(item_key)
     return yaml.nodes.MappingNode(u'tag:yaml.org,2002:map', value)
 
-#yaml.add_representer(Spec, represent_spec)
-#yaml.add_representer(AttributeSpec, represent_spec)
-#yaml.add_representer(DatasetSpec, represent_spec)
-#yaml.add_representer(GroupSpec, represent_spec)
 
 spec_path = sys.argv[1]
 outdir = sys.argv[2] if len(sys.argv) > 2 else "."
@@ -660,7 +619,6 @@ ns['author'] = ['Keith Godfrey', 'Jeff Teeters', 'Oliver Ruebel', 'Andrew Tritt'
 ns['contact'] = ['keithg@alleninstitute.org', 'jteeters@berkeley.edu', 'oruebel@lbl.gov', 'ajtritt@lbl.gov']
 ns['schema'] = schema
 ns = {'namespaces': [SpecNamespace.build_namespace(**ns)]}
-print(ns['namespaces'])
 with open('%s/nwb.namespace.yaml' % outdir, 'w') as out:
     yaml.dump(json.loads(json.dumps(ns)), out, default_flow_style=False)
 
