@@ -7,7 +7,8 @@ Generate figures and RST documents from the NWB YAML specification for the forma
 
 
 #from pynwb.spec import SpecCatalog
-from pynwb.spec.spec import SpecCatalog, GroupSpec, DatasetSpec, LinkSpec, AttributeSpec
+from form.spec.spec import GroupSpec, DatasetSpec, LinkSpec, AttributeSpec
+from form.spec.catalog import SpecCatalog
 from collections import OrderedDict
 from itertools import chain
 import warnings

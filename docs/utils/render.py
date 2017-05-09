@@ -1,7 +1,8 @@
 """
 Module with classes for rendering specifications and object hierarchies
 """
-from pynwb.spec.spec import GroupSpec, DatasetSpec, AttributeSpec, LinkSpec, SpecCatalog
+from form.spec.spec import GroupSpec, DatasetSpec, AttributeSpec, LinkSpec
+from form.spec.catalog import SpecCatalog
 from pynwb.core import docval, getargs
 
 
@@ -76,6 +77,7 @@ class SpecFormatter(object):
         for path in filenames:
             with open(path, 'r') as stream:
                 for obj in yaml.safe_load(stream):
+                    print(obj)
                     spec_obj = GroupSpec.build_spec(obj)
                     spec_catalog.auto_register(spec_obj)
         return spec_catalog
