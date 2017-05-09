@@ -6,10 +6,6 @@ NWB Specification Language
 
 Version: |release| |today| [1]_
 
-.. attention::
-
-    TODO Change ``neurodata_type` key to ``neurodata_type_inc`` throughout to avoid confusion with the actual type of an object.
-
 Introduction
 ============
 
@@ -22,7 +18,7 @@ A specification typically consists of a declaration of a namespace
 and a set of schema specifications.
 Data publishers can use the specification language to extend
 the format in order to store types of data not supported by the
-NWB core format (:numref:`sec-extensions:`).
+NWB core format (:numref:`sec-extensions`).
 
 
 .. _sec-extensions:
@@ -34,8 +30,8 @@ As mentioned, extensions to the core format are specified via custom
 user namespaces. Each namespace must have a unique name (i.e, must be
 different from NWB). The schema of new neurodata_types (groups, datasets etc.)
 are then specified in seperate schema specification files.
-While it’s possible to define multiple namespaces in the same file, most commonly,
-each new namespace will be defined in a separate file with coresponding
+While it is possible to define multiple namespaces in the same file, most commonly,
+each new namespace will be defined in a separate file with corresponding
 schema specifications being stored in one ore more additional YAML (or JSON) files.
 One or more namespaces can be used simultaneously, so that multiple
 extensions can be used at the same time while avoiding potential
@@ -45,15 +41,21 @@ The specification of namespaces is described in detail next in :numref:`sec-name
 and the specification of schema specifications is described in :numref:`sec-schema-spec`
 and subsequent sections.
 
+.. tip::
+
+    The ``form`` package as part of the PyNWB Python API provides dedicated
+    data structures and utilities that support programmatic generation of
+    extensions via Python programs, compared to writing YAML (or JSON)
+    extension documents by hand. One main advantage of using PyNWB is that it
+    is easier to use and maintain. E.g., using PyNWB helps ensure compliance of the
+    generated specification files with the current specification language and
+    the Python programs can often easily be just rerun to generate updated
+    versions of extension files (with little to no changes to the program itself).
 
 .. _sec-namespace-dec:
 
 Namespaces
 ==========
-
-.. attention::
-
-    TODO: Update this section to ensure consitency with the current implementation
 
 Namespaces are used to define a collections of specifications, to enable
 users to develop extensions in their own namespace and, hence, to avoid
@@ -134,12 +136,11 @@ List of the schema to be included in this namespace. The specification looks as 
 .. code-block:: python
 
      - source: nwb.base.yaml
-       neurodata_types: null
      - source: nwb.ephys.yaml
        neurodata_types: ElectricalSeries
 
 ``source`` indicates the relative path to the YAML (or JSON) files with the schema specifications
-while ``neurodata_types`` is a list of strings indicating the which neurodata_type should be
+while ``neurodata_types`` is an optional list of strings indicating which neurodata_type should be
 included from the given specification. The default is ``neurodata_types: null`` indicating that all
 neurordata_types should be included.
 
@@ -149,14 +150,24 @@ neurordata_types should be included.
 Schema specification
 ====================
 
-The schema specification section defines the groups, datasets and
-relationship that make up the format. The schema specification consist of a list of Group specifications.
-Schema may be distributed across multiple YAML files to improve
+The schema specification defines the groups, datasets and
+relationship that make up the format. Schema specifications are stored in dict ``spec`` and
+consist of a list of Group specifications.
+Schemas may be distributed across multiple YAML files to improve
 readability and to support logical organization of types.
-This is the main part of the
-format specification. It is described in the following sections.
+This is the main part of the format specification. It is described in the following sections.
 
+.. code-block:: yaml
 
+    specs:
+    - ...
+
+.. note::
+
+    Schema specifications are agnostic to namespaces, i.e., a schema (or type) becomes
+    part of a namespace by including it in the namespace as part of the ``schema``
+    description of the namespace. Hence, the same schema can be reused across
+    namespaces.
 
 .. _sec-group-spec:
 
@@ -173,7 +184,7 @@ Groups are specified as part of the top-level list or via lists stored in the ke
     -   name: Optional fixed name for the group. A group must either have a unique neurodata_type or a unique, fixed name.
         doc: Required description of the group
         neurodata_type_def: Optional new neurodata_type for the group
-        neurodata_type: Optional neurodata_type the group should inherit from
+        neurodata_type_inc: Optional neurodata_type the group should inherit from
         quantity: Optional quantity identifier for the group (default=1).
         linkable: Boolean indicating whether the group is linkable (default=True)
         attributes: Optional list of attribute specifications describing the attributes of the group
@@ -195,7 +206,8 @@ String with the optional fixed name for the group.
 
 .. note::
 
-    Every group must have either a unique fixed ``name`` or a unique ``neurodata_type`` to enable the unique
+    Every group must have either a unique fixed ``name`` or a unique ``neurodata_type`` determined by
+    (``neurodata_type_def`` and ``neurodata_type_inc``) to enable the unique
     identification of groups when stored on disk.
 
 ``doc``
@@ -210,8 +222,8 @@ describing the group. The ``doc`` key is required.
 
 .. _sec-neurodata-type:
 
-``neurodata_type`` and ``neurodata_type_def``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``neurodata_type_inc`` and ``neurodata_type_def``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The concept of a neurodata_type is similar to the concept of Class in object-oriented programming.
 A neurodata_type is a unique identifier for a specific type of group (or dataset) in a specfication.
@@ -221,32 +233,36 @@ inheritance (*Note:* only groups (or datasets) with a specified type can be reus
 - ```neurodata_type_def```: This key is used to define (i.e, create) a new neurodata_type and to assign that type to
   the current group (or dataset).
 
-- ```neurodata_type```: The value of the ``neurodata_type`` key describes the base type
+- ```neurodata_type_inc```: The value of the ``neurodata_type_inc`` key describes the base type
   of a group (or dataset). The value must be an existing type.
 
-Both ```neurodata_type_def``` and ```neurodata_type``` are optional keys.
+Both ```neurodata_type_def``` and ```neurodata_type_inc``` are optional keys.
 To enable the unique identification, every group (and dataset) must either have a fixed name and/or a
 unique neurodata_type. This means, any group (or dataset) with a variable name must have a unique neurodata_type.
+
+The neurodata_type is determined by the value of the ``neurodata_type_def`` key or if no new
+type is defined then the value of ``neurodata_type_inc`` is used to determine type. Or in other
+words, the neurodata_type is determined by the last type in the ancestry (i.e, inheritance hierarchy) of an object.
 
 
 **Reusing existing neurodata_types**
 
-The combination of ```neurodata_type``` and ```neurodata_type_def``` provides an easy-to-use mechanism for
+The combination of ```neurodata_type_inc``` and ```neurodata_type_def``` provides an easy-to-use mechanism for
 reuse of type specifications via inheritance (i.e., merge and extension of specifications) and inclusion (i.e,
 embedding of an existing type as a component, such as a subgroup, of a new specification). Here an overview
 of all relevant cases:
 
-+--------------------+------------------------+------------------------------------------------------------------------+
-| ``neurodata_type`` | ``neurodata_type_def`` |  Description                                                           |
-+====================+========================+========================================================================+
-|not set             | not set                |  define a standard dataset or group without a type                     |
-+--------------------+------------------------+------------------------------------------------------------------------+
-|not set             | set                    |  create a new neurodata_type from scratch                              |
-+--------------------+------------------------+------------------------------------------------------------------------+
-|set                 | not set                |  include (reuse) neurodata_type without creating a new one (include)   |
-+--------------------+------------------------+------------------------------------------------------------------------+
-|set                 | set                    |  merge/extend neurodata_type and create a new type (inheritance/merge) |
-+--------------------+------------------------+------------------------------------------------------------------------+
++------------------------+------------------------+------------------------------------------------------------------------+
+| ``neurodata_type_inc`` | ``neurodata_type_def`` |  Description                                                           |
++========================+========================+========================================================================+
+|not set                 | not set                |  define a standard dataset or group without a type                     |
++------------------------+------------------------+------------------------------------------------------------------------+
+|not set                 | set                    |  create a new neurodata_type from scratch                              |
++------------------------+------------------------+------------------------------------------------------------------------+
+|set                     | not set                |  include (reuse) neurodata_type without creating a new one (include)   |
++------------------------+------------------------+------------------------------------------------------------------------+
+|set                     | set                    |  merge/extend neurodata_type and create a new type (inheritance/merge) |
++------------------------+------------------------+------------------------------------------------------------------------+
 
 **Example: Reuse by inheritance**
 
@@ -258,7 +274,7 @@ of all relevant cases:
         - name: A
 
     -   neurodata_type_def: MySeries
-        neurodata_type: Series
+        neurodata_type_inc: Series
         datasets:
         - name: B
 
@@ -285,7 +301,7 @@ if we resolve the inheritance, then the above is equivalent to:
 
     -   neurodata_type_def: MySeries
         groups:
-        - neurodata_type: Series
+        - neurodata_type_inc: Series
 
 
 The result of this is that ``MySeries`` now includes a group of type ``Series``, i.e., the above is equivalent to:
@@ -294,13 +310,13 @@ The result of this is that ``MySeries`` now includes a group of type ``Series``,
 
    -  neurodata_type_def: MySeries
       groups:
-      - neurodata_type: Series
+      - neurodata_type_inc: Series
         datasets:
           - name: A
 
 .. note::
 
-    The keys ```neurodata_type_def`` and  ```neurodata_type``` were introduced in version 1.2a to
+    The keys ```neurodata_type_def`` and  ```neurodata_type_inc``` were introduced in version 1.2a to
     simplify the concepts of  inclusion and merging of specifications and replaced the
     keys ```include``` and ```merge```(and ```merge+```).
 
@@ -409,15 +425,11 @@ List of group specifications describing all groups to be stored as part of this 
 Attributes
 ==========
 
-.. attention::
-
-    TODO Need to update the description of the specification of attributes
-
 Attributes are specified as part of lists stored in the key
 ``attributes`` as part of the specifications of ``groups`` and ``datasets``.
 Attributes are typically used to further characterize or store metadata about
 the  group, dataset, or link they are associated with. Similar to datasets, attributes
-can define arbitrary n-dimensional arrays, but are typcially used to store smaller data.
+can define arbitrary n-dimensional arrays, but are typically used to store smaller data.
 The specification of an attributes is described in YAML as follows:
 
 
@@ -434,29 +446,8 @@ The specification of an attributes is described in YAML as follows:
       value: Optional constant, fixed value for the attribute.
     -
 
-
-
-If the attribute stores an array, the <dimensions list> specifies the
-list of dimensions. The format for this is the same as the <dimensions
-list> for data sets which is described in section 3.2.3. If no
-<dimension list> is given, the attribute stores a scalar value.
-
-The description is a text string describing the attribute. The value is
-the value to store in the attribute. If a value is specified and
-“const”:True is specified,, then the value is treated as a constant and
-cannot be changed by the API. The autogen specification is described in
-Section 4.
-
-The references specification and the *<dimension specification>* are the
-same as that used for datasets. They are respectively described in
-sections 3.2.5 and 3.3.
-
 Attribute specification keys
 ----------------------------
-
-.. attention::
-
-    TODO Need to add the description of all attribute keys
 
 ``name``
 ^^^^^^^^
@@ -500,6 +491,9 @@ also the required minimum size.
 ^^^^^^^^
 
 Optional key describing the names of the dimensions of the array stored as value of the attribute.
+If the attribute stores an array, ``dims`` specifies the
+list of dimensions. If no ``dims`` is given, then attribute stores a scalar value.
+
 In case there is only one option for naming the dimensions, the key defines
 a single list of strings:
 
@@ -620,7 +614,7 @@ The specification of a datasets is described in YAML as follows:
       - name: of the dataset
         doc: Required description of the dataset
         neurodata_type_def: Optional new neurodata_type for the group
-        neurodata_type: Optional neurodata_type the group should inherit from
+        neurodata_type_inc: Optional neurodata_type the group should inherit from
         quantity: Optional quantity identifier for the group (default=1).
         linkable: Boolean indicating whether the group is linkable (default=True)
         dtype: Required string describing the data type of the dataset
@@ -663,8 +657,8 @@ describing the dataset. The ``doc`` key is required.
 
     In earlier versions (before version 1.2a) this key was called ``description``
 
-``neurodata_type`` and ``neurodata_type_def``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``neurodata_type_inc`` and ``neurodata_type_def``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Same as for groups. See :numref:`sec-neurodata-type` for details.
 
