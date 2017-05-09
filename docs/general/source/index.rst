@@ -8,6 +8,7 @@ Welcome to NWB-N Storage
     :caption: Table of Contents
 
     nwbintro
+    architecture
     credits
 
 
