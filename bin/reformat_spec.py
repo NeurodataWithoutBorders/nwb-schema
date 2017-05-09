@@ -7,7 +7,8 @@ from ruamel import yaml
 #import pynwb
 
 from datetime import datetime
-from form.spec import Spec, AttributeSpec, DatasetSpec, GroupSpec, LinkSpec, SpecNamespace
+from form.spec import Spec, AttributeSpec, LinkSpec, SpecNamespace
+from pynwb.spec import NWBDatasetSpec, NWBGroupSpec, NWBNamespace
 
 """
     stuff to clean up
@@ -31,17 +32,17 @@ subspec_locations = {
 
 device_spec = LinkSpec('the device that was used to record from this electrode group', 'Device', quantity='?')
 alternate_defs = {
-    'ElectrodeGroup': GroupSpec('One of possibly many groups, one for each electrode group.',
+    'ElectrodeGroup': NWBGroupSpec('One of possibly many groups, one for each electrode group.',
             neurodata_type_def='ElectrodeGroup',
             namespace=CORE_NAMESPACE,
             datasets = [
-                DatasetSpec('array with description for each channel', 'text', name='channel_description', shape=(None,), dims=('num_channels',)),
-                DatasetSpec('array with location description for each channel e.g. "CA1"', 'text', name='channel_location',    shape=(None,), dims=('num_channels',)),
-                DatasetSpec('array with description of filtering applied to each channel', 'text', name='channel_filtering',   shape=(None,), dims=('num_channels',)),
-                DatasetSpec('xyz-coordinates for each channel. use NaN for unknown dimensions', 'text', name='channel_coordinates', shape=(None,3), dims=('num_channels', 'dimensions')),
-                DatasetSpec('float array with impedance used on each channel. Can be 2D matrix to store a range', 'text', name='channel_impedance', shape=(None,), dims=('num_channels',)),
-                DatasetSpec('description of this electrode group', 'text', name='description'),
-                DatasetSpec('description of location of this electrode group', 'text', name='location'),
+                NWBDatasetSpec('array with description for each channel', 'text', name='channel_description', shape=(None,), dims=('num_channels',)),
+                NWBDatasetSpec('array with location description for each channel e.g. "CA1"', 'text', name='channel_location',    shape=(None,), dims=('num_channels',)),
+                NWBDatasetSpec('array with description of filtering applied to each channel', 'text', name='channel_filtering',   shape=(None,), dims=('num_channels',)),
+                NWBDatasetSpec('xyz-coordinates for each channel. use NaN for unknown dimensions', 'text', name='channel_coordinates', shape=(None,3), dims=('num_channels', 'dimensions')),
+                NWBDatasetSpec('float array with impedance used on each channel. Can be 2D matrix to store a range', 'text', name='channel_impedance', shape=(None,), dims=('num_channels',)),
+                NWBDatasetSpec('description of this electrode group', 'text', name='description'),
+                NWBDatasetSpec('description of location of this electrode group', 'text', name='location'),
             ],
             links = [
                 device_spec
@@ -138,18 +139,15 @@ def build_group_helper(**kwargs):
     if ndt is not None:
         kwargs['namespace'] = 'core'
     if myname == NAME_WILDCARD:
-        grp_spec = GroupSpec(doc, **kwargs)
+        grp_spec = NWBGroupSpec(doc, **kwargs)
     else:
-        grp_spec = GroupSpec(doc, name=myname, **kwargs)
+        grp_spec = NWBGroupSpec(doc, name=myname, **kwargs)
     return grp_spec
 
 def build_group(name, d, ndtype=None):
-    #print('building %s' % name, file=sys.stderr)
     #required = True
     myname = name
     quantity, myname = strip_characters(name)
-    if len(myname) < 1:
-        print('>', myname, '<')
     if myname[-1] == '/':
         myname = myname[:-1]
     #if myname == NAME_WILDCARD:
@@ -157,43 +155,26 @@ def build_group(name, d, ndtype=None):
     extends = None
     if 'merge' in d:
         merge = d.pop('merge')
-        #print('Found merge directive for %s' % name, file=sys.stderr)
         base = merge[0]
         end = base.rfind('>')
         base = base[1:end] if end > 0 else base
         #extends = all_specs[base]
         extends = base
-        #if len(d) == 0:
-        #    print('%s - spec empty after popping merge' %  name, file=sys.stderr)
 
-    #p = 'device' in myname
-    #if p:
-    #    print(myname)
 
     if myname[0] == '<':
-        #if p:
-        #    print('variable name')
         neurodata_type = ndmap.get(myname, ndmap_to_group.get(myname))
-        #if p:
-        #    print(neurodata_type)
-        #print('found neurodata_type %s' % neurodata_type, file=sys.stderr)
         if neurodata_type is None:
             neurodata_type = ndtype
         else:
             myname = NAME_WILDCARD
-        #print('neurodata_type=%s, myname=%s' % (neurodata_type, myname), file=sys.stderr)
     else:
-        #if p:
-        #    print('Not variable')
         neurodata_type = ndtype
 
     desc = d.get('description', None)
     if isinstance(desc, dict) or desc is None:
-        #print('popping _description ndt=%s, desc=%s' % (neurodata_type, desc), file=sys.stderr)
         desc = d.pop('_description', None)
-        #print('after popping ndt=%s, desc=%s' % (neurodata_type, desc), file=sys.stderr)
     else:
-        #print('popping description ndt=%s, desc=%s' % (neurodata_type, desc), file=sys.stderr)
         d.pop('description', None)
 
     if 'attributes' in d:
@@ -206,15 +187,15 @@ def build_group(name, d, ndtype=None):
         if extends is not None:
             if neurodata_type is None:
                 neurodata_type = myname
-        grp_spec = build_group_helper(name=myname, quantity=quantity, doc=desc, neurodata_type_def=neurodata_type, neurodata_type=extends)
+        grp_spec = build_group_helper(name=myname, quantity=quantity, doc=desc, neurodata_type_def=neurodata_type, neurodata_type_inc=extends)
         add_attributes(grp_spec, attributes)
     elif neurodata_type is not None:
         grp_spec = build_group_helper(name=myname, quantity=quantity, doc=desc, neurodata_type_def=neurodata_type, neurodata_type=extends)
     else:
         if myname == NAME_WILDCARD:
-            grp_spec = build_group_helper(doc=desc, quantity=quantity, neurodata_type=extends)
+            grp_spec = build_group_helper(doc=desc, quantity=quantity, neurodata_type_inc=extends)
         else:
-            grp_spec = build_group_helper(doc=desc, name=myname, quantity=quantity, neurodata_type=extends)
+            grp_spec = build_group_helper(doc=desc, name=myname, quantity=quantity, neurodata_type_inc=extends)
 
     for key, value in d.items():
         tmp_name = key
@@ -232,7 +213,7 @@ def build_group(name, d, ndtype=None):
             ndt = ndt[1:ndt.rfind('>')]
             #grp_spec.include_neurodata_group(ndt)
             doc = include_doc.get(name, include_doc.get(neurodata_type))
-            vargs = {'neurodata_type': ndt}
+            vargs = {'neurodata_type_inc': ndt}
             if ndt is not None:
                 vargs['namespace'] = CORE_NAMESPACE
             grp_spec.add_group(doc, **vargs)
@@ -254,12 +235,12 @@ def build_group(name, d, ndtype=None):
             doc = value['description']
             if key[0] == '<':
                 #grp_spec.include_neurodata_group(ndt)
-                grp_spec.add_group(doc, neurodata_type=ndt, namespace=CORE_NAMESPACE)
+                grp_spec.add_group(doc, neurodata_type_inc=ndt, namespace=CORE_NAMESPACE)
             else:
                 group_name = key
                 if group_name[-1] == '/':
                     group_name = group_name[0:-1]
-                vargs = {'neurodata_type': ndt, name: group_name}
+                vargs = {'neurodata_type_inc': ndt, name: group_name}
                 if ndt is not None:
                     vargs['namespace'] = CORE_NAMESPACE
                 grp_spec.add_group(doc, **vargs)
@@ -283,7 +264,7 @@ def build_group(name, d, ndtype=None):
                         print('getting alternate_def for', subgrp.neurodata_type_def)
                         subgrp = alternate_defs[subgrp.neurodata_type_def]
                     #print('moving %s' % subgrp.neurodata_type_def)
-                    vargs = {'neurodata_type': subgrp.neurodata_type_def, 'namespace': CORE_NAMESPACE, 'quantity': '*'}
+                    vargs = {'neurodata_type_inc': subgrp.neurodata_type_def, 'namespace': CORE_NAMESPACE, 'quantity': '*'}
                     grp_spec.add_group(subgrp.doc, **vargs)
                     metadata_ndts.append(subgrp)
                 else:
@@ -303,9 +284,9 @@ def build_dataset(name, d):
         if kwargs['name'] in dataset_ndt:
             tmpname = kwargs.pop('name')
             kwargs['neurodata_type_def'] = dataset_ndt[tmpname]
-    if 'neurodata_type_def' in kwargs or 'neurodata_type' in kwargs:
+    if 'neurodata_type_def' in kwargs or 'neurodata_type_inc' in kwargs:
         kwargs['namespace'] = CORE_NAMESPACE
-    dset_spec = DatasetSpec(kwargs.pop('doc'), kwargs.pop('dtype'), **kwargs)
+    dset_spec = NWBDatasetSpec(kwargs.pop('doc'), kwargs.pop('dtype'), **kwargs)
     if 'attributes' in d:
         add_attributes(dset_spec, d['attributes'])
     return dset_spec
@@ -447,7 +428,6 @@ def load_spec(spec):
     # /processing/
     # /stimulus/
 
-    #root = GroupSpec(neurodata_type='NWBFile')
     root = build_group('root', spec['/'], 'NWBFile')
 
 
@@ -589,28 +569,20 @@ def load_spec(spec):
 
         return build_group(namearg, spec[name], ndtype=ndt)
 
-    #for key in type_specs.keys():
     for key in subspecs:
         type_specs[key] = list(map(mapfunc, type_specs[key]))
 
     type_specs['base'] = base
     for subspec in metadata_ndts:
         loc = subspec_locations[subspec.neurodata_type_def]
-        #print('putting %s in %s' % (subspec.neurodata_type_def, loc))
         type_specs[loc].append(subspec)
-        #if subspec.neurodata_type_def == 'ElectrodeGroup':
-        #    print ("putting ElectrodeGroup in", loc)
-        #    import json
-        #    print(json.dumps(subspec, indent=2))
     return { k: {'specs': v} for k, v in type_specs.items() }
 
 def represent_str(self, data):
     s = data.replace('"', '\\"')
     return s
-    #return self.represent_scalar("", '"%s"' % s)
 
 def represent_spec(dumper, data):
-    #print('CALLING represent_spec', file=sys.stderr)
     value = []
     def add_key(item_key):
         item_value = data[item_key]
@@ -620,20 +592,8 @@ def represent_spec(dumper, data):
     skip = set()
     order = ('name', 'neurodata_type_def', 'neurodata_type', 'doc', 'attributes', 'datasets', 'groups')
     add_key('name')
-#    for item_key in order:
-#        if item_key in data:
-#            add_key(item_key)
-#            skip.add(item_key)
-#    for item_key in data.keys():
-#        if item_key in skip:
-#            continue
-#        add_key(item_key)
     return yaml.nodes.MappingNode(u'tag:yaml.org,2002:map', value)
 
-#yaml.add_representer(Spec, represent_spec)
-#yaml.add_representer(AttributeSpec, represent_spec)
-#yaml.add_representer(DatasetSpec, represent_spec)
-#yaml.add_representer(GroupSpec, represent_spec)
 
 spec_path = sys.argv[1]
 outdir = sys.argv[2] if len(sys.argv) > 2 else "."
@@ -659,7 +619,6 @@ ns['author'] = ['Keith Godfrey', 'Jeff Teeters', 'Oliver Ruebel', 'Andrew Tritt'
 ns['contact'] = ['keithg@alleninstitute.org', 'jteeters@berkeley.edu', 'oruebel@lbl.gov', 'ajtritt@lbl.gov']
 ns['schema'] = schema
 ns = {'namespaces': [SpecNamespace.build_namespace(**ns)]}
-print(ns['namespaces'])
 with open('%s/nwb.namespace.yaml' % outdir, 'w') as out:
     yaml.dump(json.loads(json.dumps(ns)), out, default_flow_style=False)
 
@@ -668,7 +627,7 @@ import tarfile
 cwd = os.getcwd()
 os.chdir(outdir)
 tar = tarfile.open('nwb_core.tar', 'w')
-for key in nwb_spec.keys():
+for key in sorted(nwb_spec.keys()):
     specfile = 'nwb.%s.yaml' % (key)
     tar.add(specfile)
 tar.add('nwb.namespace.yaml')
