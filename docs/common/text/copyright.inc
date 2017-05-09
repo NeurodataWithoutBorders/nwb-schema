@@ -1,6 +1,9 @@
 Copyright
 =========
 
-.. note::
+.. include:: ../../../legal.txt
 
-    **#TODO: Add Copyright notice**
+Licence
+=======
+
+.. include:: ../../../license.txt

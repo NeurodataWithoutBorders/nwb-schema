@@ -35,7 +35,7 @@ Project Components
 
 .. _fig-project-components:
 
-.. figure:: ../../common/figures/project_components.*
+.. figure:: figures/project_components.*
    :scale: 65 %
    :alt: Components of NWB:Neurophysiology
 

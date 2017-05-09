@@ -7,7 +7,6 @@ Welcome to the NWB Specification Language
     :maxdepth: 6
     :caption: Table of Contents
 
-    intro
     specification_language_description
     specification_language_release_notes
     credits

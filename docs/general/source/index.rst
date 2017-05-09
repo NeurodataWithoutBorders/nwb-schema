@@ -7,10 +7,9 @@ Welcome to NWB-N Storage
     :maxdepth: 6
     :caption: Table of Contents
 
-    storage_description
-    storage_hdf5
-    storage_release_notes
+    nwbintro
     credits
+
 
 Indices and tables
 ==================

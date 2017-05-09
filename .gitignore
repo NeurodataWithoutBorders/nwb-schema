@@ -8,6 +8,7 @@ docs/format/_build/
 docs/language/_build/
 docs/format/source/_format_auto_docs/
 docs/storage/_build/
+docs/general/_build
 
 # Jupyter Notebook
 .ipynb_checkpoints
