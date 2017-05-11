@@ -22,8 +22,8 @@ ignore = {'electrode_group', 'electrode_map', 'filtering', 'impedance'}
 metadata_ndts = list()
 
 subspec_locations = {
-    'ElectrodeGroup': 'ec_ephys',
-    'IntracellularElectrode': 'ic_ephys',
+    'ElectrodeGroup': 'ecephys',
+    'IntracellularElectrode': 'icephys',
     'ImagingPlane': 'ophys',
     'OptogeneticStimulusSite': 'ogen',
     'Epoch': 'epoch',
@@ -51,15 +51,6 @@ alternate_defs = {
 }
 
 NAME_WILDCARD = "*"
-
-#datasets_to_attrs = {
-#    'file_create_date':
-#    'identifier':
-#    'nwb_version':
-#    'session_description':
-#    'session_start_time':
-#
-#}
 
 ndmap_to_group = {
     "<device_X>*": 'Device',
@@ -467,7 +458,6 @@ def load_spec(spec):
         "<Module>/",
     ]
     base = [
-        root,
         #build_group("<Module>/*", module_json, ndtype='Module'),
         build_group(NAME_WILDCARD, module_json, ndtype='Module'),
         build_group(NAME_WILDCARD, spec["<TimeSeries>/"], ndtype='TimeSeries'),
@@ -480,8 +470,8 @@ def load_spec(spec):
     type_specs = dict()
     subspecs = [
         'epoch',
-        'ec_ephys',
-        'ic_ephys',
+        'ecephys',
+        'icephys',
         'image',
         'ophys',
         'ogen',
@@ -489,10 +479,11 @@ def load_spec(spec):
         'misc',
         'retinotopy',
     ]
+    type_specs['file'] = [root]
 
     type_specs['epoch'] = []
 
-    type_specs['ec_ephys'] = [
+    type_specs['ecephys'] = [
         "<ElectricalSeries>/",
         "<SpikeEventSeries>/",
         "ClusterWaveforms/",
@@ -504,7 +495,7 @@ def load_spec(spec):
         "LFP/",
     ]
 
-    type_specs['ic_ephys'] = [
+    type_specs['icephys'] = [
         "<PatchClampSeries>/",
         "<CurrentClampSeries>/",
         "<IZeroClampSeries>/",
@@ -576,23 +567,8 @@ def load_spec(spec):
     for subspec in metadata_ndts:
         loc = subspec_locations[subspec.neurodata_type_def]
         type_specs[loc].append(subspec)
-    return { k: {'specs': v} for k, v in type_specs.items() }
+    return { k: {'groups': v} for k, v in type_specs.items() }
 
-def represent_str(self, data):
-    s = data.replace('"', '\\"')
-    return s
-
-def represent_spec(dumper, data):
-    value = []
-    def add_key(item_key):
-        item_value = data[item_key]
-        node_key = dumper.represent_data(item_key)
-        node_value = dumper.represent_data(item_value)
-        value.append((node_key, node_value))
-    skip = set()
-    order = ('name', 'neurodata_type_def', 'neurodata_type', 'doc', 'attributes', 'datasets', 'groups')
-    add_key('name')
-    return yaml.nodes.MappingNode(u'tag:yaml.org,2002:map', value)
 
 
 spec_path = sys.argv[1]
@@ -603,7 +579,22 @@ with open(spec_path) as spec_in:
 
 
 schema = list()
-for key, value  in nwb_spec.items():
+
+order = [
+    'base',
+    'epoch',
+    'image',
+    'file',
+    'misc',
+    'behavior',
+    'ecephys',
+    'icephys',
+    'ogen',
+    'ophys',
+    'retinotopy',
+]
+for key  in order:
+    value = nwb_spec[key]
     filename = 'nwb.%s.yaml' % key
     with open('%s/%s' % (outdir, filename), 'w') as out:
         yaml.dump(json.loads(json.dumps(value)), out, default_flow_style=False)
