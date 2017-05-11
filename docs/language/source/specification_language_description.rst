@@ -135,14 +135,21 @@ List of the schema to be included in this namespace. The specification looks as 
 
 .. code-block:: python
 
-     - source: nwb.base.yaml
+     - source: .base.yaml
      - source: nwb.ephys.yaml
        neurodata_types: ElectricalSeries
+     - namespace: core
+       neurodata_types: Interface
 
-``source`` indicates the relative path to the YAML (or JSON) files with the schema specifications
-while ``neurodata_types`` is an optional list of strings indicating which neurodata_type should be
-included from the given specification. The default is ``neurodata_types: null`` indicating that all
-neurordata_types should be included.
+* ``source`` describes the relative path to the YAML (or JSON) files with the schema specifications
+* ``namespace`` describes a named reference to another namespace. In contrast to source, this is a reference by name to a known namespace (i.e., the namespace is resolved during the build and must point to an already existing namespace). This mechanism is used to allow, e.g., extension of a core namespace (here the NWB core namespace) without requiring hard paths to the files describing the core namespace.
+* ``neurodata_types`` then is an optional list of strings indicating which neurodata_types should be
+  included from the given specification source or namespace. The default is ``neurodata_types: null`` indicating that all
+  neurordata_types should be included.
+
+.. attention::
+
+    As with any language, we can only use what is defined. This means that similar to include or import statements in programming languages, e.g., Python, the ``source`` and ``namespace`` keys must be in order of use. E.g., ``nwb.ephys.yaml`` defines ``ElectricalSeries`` which inherits from ``Timeseries`` that is defined in ``nwb.base.yaml``. This means that we have to list ``nwb.base.yaml`` before ``nwb.ephys.yaml`` since otherwise ``Timeseries`` would not be defined when ``nwb.ephys.yaml`` is trying to use it.
 
 
 .. _sec-schema-spec:
