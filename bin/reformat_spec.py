@@ -124,8 +124,6 @@ include_doc = {
 def build_group_helper(**kwargs):
     myname = kwargs.pop('name', NAME_WILDCARD)
     doc = kwargs.pop('doc')
-    #if doc is None:
-    #    print('no doc for name %s, ndt %s' % (myname, kwargs.get('neurodata_type_def', kwargs.get('neurodata_type'))), file=sys.stderr)
     ndt = kwargs.get('neurodata_type_def')
     if ndt is not None:
         kwargs['namespace'] = 'core'
@@ -141,8 +139,6 @@ def build_group(name, d, ndtype=None):
     quantity, myname = strip_characters(name)
     if myname[-1] == '/':
         myname = myname[:-1]
-    #if myname == NAME_WILDCARD:
-    #    required = False
     extends = None
     if 'merge' in d:
         merge = d.pop('merge')
@@ -151,7 +147,6 @@ def build_group(name, d, ndtype=None):
         base = base[1:end] if end > 0 else base
         #extends = all_specs[base]
         extends = base
-
 
     if myname[0] == '<':
         neurodata_type = ndmap.get(myname, ndmap_to_group.get(myname))
@@ -181,7 +176,7 @@ def build_group(name, d, ndtype=None):
         grp_spec = build_group_helper(name=myname, quantity=quantity, doc=desc, neurodata_type_def=neurodata_type, neurodata_type_inc=extends)
         add_attributes(grp_spec, attributes)
     elif neurodata_type is not None:
-        grp_spec = build_group_helper(name=myname, quantity=quantity, doc=desc, neurodata_type_def=neurodata_type, neurodata_type=extends)
+        grp_spec = build_group_helper(name=myname, quantity=quantity, doc=desc, neurodata_type_def=neurodata_type, neurodata_type_inc=extends)
     else:
         if myname == NAME_WILDCARD:
             grp_spec = build_group_helper(doc=desc, quantity=quantity, neurodata_type_inc=extends)
@@ -202,7 +197,6 @@ def build_group(name, d, ndtype=None):
         if tmp_name == 'include':
             ndt = next(iter(value.keys()))
             ndt = ndt[1:ndt.rfind('>')]
-            #grp_spec.include_neurodata_group(ndt)
             doc = include_doc.get(name, include_doc.get(neurodata_type))
             vargs = {'neurodata_type_inc': ndt}
             if ndt is not None:
@@ -262,10 +256,7 @@ def build_group(name, d, ndtype=None):
                     grp_spec.set_group(subgrp)
 
     if neurodata_type is not None:
-        #print('adding %s to all_specs' % neurodata_type, file=sys.stderr)
         all_specs[neurodata_type] = grp_spec
-    #else:
-    #    print('no neurodata_type found for %s' % myname, file=sys.stderr)
     return grp_spec
 
 dataset_ndt = { '<image_X>': 'Image' }
