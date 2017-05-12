@@ -1,13 +1,5 @@
-specs:
+groups:
 - attributes:
-  - doc: the data type of this object
-    dtype: text
-    name: neurodata_type
-    value: Epoch
-  - doc: the namespace for the data type of this object
-    dtype: text
-    name: namespace
-    value: core
   - dims:
     - num_links
     doc: "A sorted list mapping TimeSeries entries in the epoch to the path of the\
@@ -46,16 +38,7 @@ specs:
   doc: 'One of possibly many different experimental epochCOMMENT: Name is arbitrary
     but must be unique within the experiment.'
   groups:
-  - attributes:
-    - doc: the data type of this object
-      dtype: text
-      name: neurodata_type
-      value: EpochTimeSeries
-    - doc: the namespace for the data type of this object
-      dtype: text
-      name: namespace
-      value: core
-    datasets:
+  - datasets:
     - doc: Number of data samples available in this time series, during this epoch.
       dtype: int32
       name: count
@@ -69,9 +52,7 @@ specs:
     - doc: Link to TimeSeries.  An HDF5 soft-link should be used.
       name: timeseries
       target_type: TimeSeries
-    namespace: core
     neurodata_type_def: EpochTimeSeries
     quantity: '*'
-  namespace: core
   neurodata_type_def: Epoch
   quantity: '*'
