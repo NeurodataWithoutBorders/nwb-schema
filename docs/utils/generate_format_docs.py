@@ -8,7 +8,9 @@ Generate figures and RST documents from the NWB YAML specification for the forma
 
 #from pynwb.spec import SpecCatalog
 from form.spec.spec import GroupSpec, DatasetSpec, LinkSpec, AttributeSpec
+from pynwb.spec import NWBGroupSpec, NWBDatasetSpec, NWBNamespace
 from form.spec.catalog import SpecCatalog
+from form.spec.namespace import NamespaceCatalog
 from collections import OrderedDict
 from itertools import chain
 import warnings
@@ -834,6 +836,20 @@ def print_type_hierarchy(type_hierarchy, depth=0, show_ancestry=False):
             msg += '      ancestry=' + str(v['ancestry'])
         PrintCol.print(msg, PrintCol.OKBLUE+PrintCol.BOLD if depth==0 else PrintCol.OKBLUE, depth)
         print_type_hierarchy(v['subtypes'], depth=depth+1, show_ancestry=show_ancestry)
+
+def load_nwb_namespace(namespace_file, default_namespace='core'):
+    """
+    Load an nwb namespace from file
+    :return:
+    """
+    namespace = NamespaceCatalog(default_namespace=default_namespace,
+                                 group_spec_cls=NWBGroupSpec,
+                                 dataset_spec_cls=NWBDatasetSpec,
+                                 spec_namespace_cls=NWBNamespace)
+    namespace.load_namespaces(namespace_file)
+    default_spec_catalog = namespace.get_namespace(default_namespace).catalog
+    return namespace, default_spec_catalog
+
 
 
 def main():
