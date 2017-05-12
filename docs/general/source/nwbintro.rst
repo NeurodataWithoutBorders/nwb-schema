@@ -29,7 +29,6 @@ included:
 - Longevity
     -  Data published in the format should be accessible for decades
 
-
 Project Components
 ==================
 
@@ -42,11 +41,10 @@ Project Components
    Main components of NWB-N
 
 
-The figure :ref:`fig-project-components` provides a high-level overview of the main
+:numref:`fig-project-components` provides a high-level overview of the main
 components of NWB-N. The following subsection provide a high-level overview of the
 problem, approach, description, and function of these components. Further details
 about the specific components are provided in the corresponding documentations.
-
 
 Specification Language
 ----------------------
@@ -67,6 +65,7 @@ the format in order to store types of data not managed by the base format.
 **Function:** The primary function of the specification language is to enable
 the formal specification of data organizations.
 
+**Documentation:** http://schema-language.readthedocs.io
 
 Format Specification:
 ---------------------
@@ -87,6 +86,9 @@ the NWB format describing the organization of neuroscience data. The format spec
 provides a verifiable, computer and human readable document that governs the NWB format.
 The format specification is, hence, central to support development of API's and codes
 compliant with the NWB format and extension of the NWB format.
+
+**Documentation:** http://nwb-schema.readthedocs.io
+
 
 Data Storage
 ------------
@@ -119,6 +121,7 @@ NWB-N primitives (Groups, Datasets, Attributes, Links etc.) to storage.
 In the case of HDF5 this is currently a 1-to-1 mapping as the NWB
 primitives match HDF5 primitives.
 
+**Documentation:** http://nwb-storage.readthedocs.io
 
 
 Data API(s)
@@ -143,6 +146,9 @@ for programmatic use and development of new applications. As such, a
 central function of the API is also to insulate developers and users from
 implementation details regarding the specifciation language, format specification,
 and data storage.
+
+**Documentation:** http://pynwb.readthedocs.io
+
 
 
 

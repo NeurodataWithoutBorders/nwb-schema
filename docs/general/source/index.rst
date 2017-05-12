@@ -1,5 +1,5 @@
-Welcome to NWB-N Storage
-========================
+Welcome to NWB-N
+================
 
 
 .. toctree::
@@ -9,6 +9,7 @@ Welcome to NWB-N Storage
 
     nwbintro
     architecture
+    general
     credits
 
 
