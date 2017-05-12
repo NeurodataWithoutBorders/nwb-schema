@@ -1,9 +1,13 @@
 """
 Module with classes for rendering specifications and object hierarchies
 """
-from form.spec.spec import GroupSpec, DatasetSpec, AttributeSpec, LinkSpec
+from form.spec.spec import AttributeSpec, LinkSpec
+from pynwb.spec import NWBGroupSpec as GroupSpec
+from pynwb.spec import NWBDatasetSpec as DatasetSpec
+from pynwb.spec import NWBNamespace as Namespace
 from form.spec.catalog import SpecCatalog
 from pynwb.core import docval, getargs
+import warnings
 
 
 class SpecFormatter(object):
@@ -61,25 +65,35 @@ class SpecFormatter(object):
         return rst_doc
 
     @staticmethod
-    def spec_from_file(filenames):
+    def spec_from_file(filenames, group_spec_cls=None):
         """
         Generate a SpecCatalog for the fiven list of spec files
 
         :param filenames: List of YAML/JSON specification files
         :type filenames: List of strings
+        :param group_spec_cls: The GroupSpec class to be used for parsing specificationss
         :return: SpecCatalog
         """
         try:
             from ruamel import yaml
         except:
             import yaml
+        group_spec_cls = GroupSpec if group_spec_cls is None else group_spec_cls
         spec_catalog = SpecCatalog()
         for path in filenames:
             with open(path, 'r') as stream:
-                for obj in yaml.safe_load(stream):
-                    print(obj)
-                    spec_obj = GroupSpec.build_spec(obj)
-                    spec_catalog.auto_register(spec_obj)
+                d = yaml.safe_load(stream)
+                specs = d.get('groups')
+                if specs is None:
+                    if d.get('namespaces') is not None:
+                        warnings.warn("%s is a namespace file" % path)
+                    else:
+                        warnings.warn("no 'specs' found in %s" % path)
+                else:
+                    for spec_dict in specs:
+                        print(spec_dict['neurodata_type_def'])
+                        spec_obj = GroupSpec.build_spec(spec_dict)
+                        spec_catalog.auto_register(spec_obj)
         return spec_catalog
 
 
@@ -193,8 +207,8 @@ class HierarchyDescription(dict):
                 if obj.get('name', None) is not None \
                 else obj.get('neurodata_type_def', None) \
                 if obj.get('neurodata_type_def', None) is not None \
-                else obj.get('neurodata_type', None) \
-                if obj.get('neurodata_type', None) is not None \
+                else obj.get('neurodata_type_inc', None) \
+                if obj.get('neurodata_type_inc', None) is not None \
                 else obj['target_type']
             if obj.get('name', None) is None:
                 obj_main_name = '<' + obj_main_name + '>'

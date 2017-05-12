@@ -146,8 +146,8 @@ def spec_prop_doc(spec, newline='\n', ignore_props=None):
             spec_prop_list.append('**Shape:** %s' % str(spec['shape']))
         if spec.get('linkable', None) is not None  and 'linnkable' not in ignore_keys:
             spec_prop_list.append('**Linkable:** %s' % str(spec['linkable']))
-        if spec.get('neurodata_type', None) is not None and 'neurodata_type' not in ignore_keys:
-            extend_type = str(spec['neurodata_type'])
+        if spec.get('neurodata_type_inc', None) is not None and 'neurodata_type_inc' not in ignore_keys:
+            extend_type = str(spec['neurodata_type_inc'])
             spec_prop_list.append('**Extends:** %s' %  RSTDocument.get_reference(get_section_label(extend_type), extend_type))
         if spec.get('neurodata_type_def', None) is not None and 'neurodata_type_def' not in ignore_keys:
             spec_prop_list.append('**Neurodata Type:** %s' % str(spec['neurodata_type_def']))
@@ -157,8 +157,8 @@ def spec_prop_doc(spec, newline='\n', ignore_props=None):
             spec_prop_list.append('**Quantity** %s' % quantity_to_string(spec['quantity']))
         if spec.get('linkable', None) is not None and 'linkable' not in ignore_keys:
             spec_prop_list.append('**Linkable:** %s' % str(spec['linkable']))
-        if spec.get('neurodata_type', None) is not None and 'neurodata_type' not in ignore_keys:
-            extend_type = str(spec['neurodata_type'])
+        if spec.get('neurodata_type_inc', None) is not None and 'neurodata_type_inc' not in ignore_keys:
+            extend_type = str(spec['neurodata_type_inc'])
             spec_prop_list.append('**Extends:** %s' %  RSTDocument.get_reference(get_section_label(extend_type), extend_type))
         if spec.get('neurodata_type_def', None) is not None and 'neurodata_type_def' not in ignore_keys:
             ntype = str(spec['neurodata_type_def'])
@@ -340,6 +340,8 @@ def create_spec_table(spec,
         spec_name = depth_str + spec.name
     elif spec.get('neurodata_type_def',None) is not None:
         spec_name = depth_str +  '<%s>' % spec.neurodata_type_def
+    elif spec_type == 'link':
+        spec_name = depth_str +  '<%s>' % RSTDocument.get_reference(get_section_label(spec.data_type_inc), spec.data_type_inc)
     else:
         spec_name = depth_str +  '<%s>' % RSTDocument.get_reference(get_section_label(spec.neurodata_type), spec.neurodata_type)
     spec_quantity = quantity_to_string(spec.quantity) \
@@ -405,6 +407,7 @@ def render_group_specs(group_spec, rst_doc, parent=None):
     if group_spec.get('name', None) is not None:
         group_name = group_spec.name
     elif group_spec.get('neurodata_type', None) is not None:
+        print("----------------------HERE")
         group_name = "<%s>" % group_spec.neurodata_type
     else:
         group_name =  "<%s>" % group_spec.neurodata_type_def
@@ -501,7 +504,7 @@ def render_specs(neurodata_types,
         # Get the spec
         rt_spec = spec_catalog.get_spec(rt)
         # Check if the spec extends another spec
-        extend_type =   rt_spec.get('neurodata_type', None)
+        extend_type =   rt_spec.get('neurodata_type_inc', None)
         # Define the docs we need to write to
         type_desc_doc = desc_doc if not file_per_type else RSTDocument()
         type_src_doc  = src_doc if not file_per_type else RSTDocument()
@@ -531,7 +534,7 @@ def render_specs(neurodata_types,
         type_desc_doc.add_text(type_desc_doc.newline + type_desc_doc.newline)
         # Add note if necessary to indicate that the following documentation only shows changes to the parent class
         if extend_type is not None:
-            extend_type =  rt_spec['neurodata_type']
+            extend_type =  rt_spec['neurodata_type_inc']
             type_desc_doc.add_text("``%s`` extends ``%s`` (see %s) and includes all elements of %s with the following additions or changes." %
                          (rt,
                           extend_type,
@@ -541,7 +544,7 @@ def render_specs(neurodata_types,
         # Add the additional details about the doc
         type_desc_doc.add_text(spec_prop_doc(rt_spec,
                                              type_desc_doc.newline,
-                                             ignore_props=['neurodata_type', 'neurodata_type_def']))
+                                             ignore_props=['neurodata_type_inc', 'neurodata_type_def']))
         type_desc_doc.add_text(type_desc_doc.newline)
 
         ##################################################
@@ -719,7 +722,7 @@ def compute_neurodata_type_hierarchy(spec_catalog):
         subtypes = OrderedDict()
         for rt in registered_types:
             rt_spec = spec_catalog.get_spec(rt)
-            if rt_spec.neurodata_type == neurodata_type  and rt_spec.neurodata_type_def != neurodata_type:
+            if rt_spec.get('neurodata_type_inc', None) == neurodata_type  and rt_spec.get('neurodata_type_def', None) != neurodata_type:
                 subtypes[rt] = NeurodataTypeDict(neurodata_type=rt,
                                                  spec=rt_spec,
                                                  ancestry=ancestry,
@@ -731,7 +734,8 @@ def compute_neurodata_type_hierarchy(spec_catalog):
 
     for rt in registered_types:
         rt_spec = spec_catalog.get_spec(rt)
-        if rt_spec.neurodata_type == rt:  # This is a primary type not a derived type
+        if rt_spec.get('neurodata_type_inc', None) is None:
+        #if rt_spec.neurodata_type_inc is None or rt_spec.neurodata_type_inc == rt: # This is a primary type not a derived type #TODO Check if need the '==' check. This was added because we get a neurodata_type_inc value where we shouldnt.
             type_hierarchy[rt] = NeurodataTypeDict(neurodata_type=rt,
                                                    spec=spec_catalog.get_spec(rt),
                                                    ancestry=[],
@@ -755,7 +759,7 @@ def compute_neurodata_type_hierarchy(spec_catalog):
     # Check that we actually included all the types. If the above code is correct, we should have captured all types.
     for rt in registered_types:
         if rt not in flat_type_hierarchy:
-            PrintCol.print('ERROR -- Type missing in type hierarchy: %s' %k , PrintCol.FAIL)
+            PrintCol.print('ERROR -- Type missing in type hierarchy: %s' % rt , PrintCol.FAIL)
             type_hierarchy[rt] = NeurodataTypeDict(neurodata_type=rt,
                                                    spec=spec_catalog.get_spec(rt),
                                                    ancestry=[],
@@ -842,12 +846,13 @@ def load_nwb_namespace(namespace_file, default_namespace='core'):
     Load an nwb namespace from file
     :return:
     """
-    namespace = NamespaceCatalog(default_namespace=default_namespace,
+    namespace = NamespaceCatalog(default_namespace,
                                  group_spec_cls=NWBGroupSpec,
                                  dataset_spec_cls=NWBDatasetSpec,
                                  spec_namespace_cls=NWBNamespace)
     namespace.load_namespaces(namespace_file)
-    default_spec_catalog = namespace.get_namespace(default_namespace).catalog
+    print(namespace._NamespaceCatalog__namespaces)
+    default_spec_catalog = namespace.get_namespace('core').catalog
     return namespace, default_spec_catalog
 
 
@@ -865,12 +870,15 @@ def main():
     srcdoc_filename = os.path.join(file_dir, 'format_spec_sources.inc') if spec_generate_src_file else None  # Name fo the file where the source YAML/JSON of the specifications go
     master_filename = os.path.join(file_dir, 'format_spec_main.inc')
     type_hierarchy_doc_filename = os.path.join(file_dir, 'format_spec_type_hierarchy.inc')
+    core_namespace_file = os.path.join(spec_dir, 'nwb.namespace.yaml')
+
+    core_namespace, spec_catalog = load_nwb_namespace(core_namespace_file)
 
     # Generate the spec catalog
-    exts = ['yaml', 'json']
-    glob_str = os.path.join(spec_dir, "*.%s")
-    spec_files = list(chain(*[iglob(glob_str % ext) for ext in exts]))
-    spec_catalog = SpecFormatter.spec_from_file(spec_files)
+    #exts = ['yaml', 'json']
+    #glob_str = os.path.join(spec_dir, "*.%s")
+    #spec_files = list(chain(*[iglob(glob_str % ext) for ext in exts]))
+    #spec_catalog = SpecFormatter.spec_from_file(spec_files)
 
     # Generate the hierarchy of types
     print("BUILDING TYPE HIERARCHY")
