@@ -407,10 +407,11 @@ def render_group_specs(group_spec, rst_doc, parent=None):
     if group_spec.get('name', None) is not None:
         group_name = group_spec.name
     elif group_spec.get('neurodata_type', None) is not None:
-        print("----------------------HERE")
         group_name = "<%s>" % group_spec.neurodata_type
     else:
         group_name =  "<%s>" % group_spec.neurodata_type_def
+    if group_name == '':
+        raise ValueError('Could not determine name of group')
     rst_doc.add_paragraph("Groups: %s%s" % (parent,group_name))
     # Compile the documentation for the group
     gdoc = clean_doc(group_spec.doc,
