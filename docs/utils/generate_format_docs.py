@@ -5,6 +5,9 @@ Generate figures and RST documents from the NWB YAML specification for the forma
 # TODO In the type hierarchy section add a section to order types by their used based on which YAML file they appear in
 # TODO Fix assignement of other types?
 
+# TODO Check how to properly determin the neurodata type across cases
+# TODO Check in figures groups that are included are listed without a neurodata_type even though they are neurodata_type_inc
+
 
 #from pynwb.spec import SpecCatalog
 from form.spec.spec import GroupSpec, DatasetSpec, LinkSpec, AttributeSpec
@@ -342,6 +345,8 @@ def create_spec_table(spec,
         spec_name = depth_str +  '<%s>' % spec.neurodata_type_def
     elif spec_type == 'link':
         spec_name = depth_str +  '<%s>' % RSTDocument.get_reference(get_section_label(spec.data_type_inc), spec.data_type_inc)
+    elif spec.get('neurodata_type_inc', None) is not None:
+        spec_name = depth_str +  '<%s>' % RSTDocument.get_reference(get_section_label(spec.neurodata_type_inc), spec.neurodata_type_inc)
     else:
         spec_name = depth_str +  '<%s>' % RSTDocument.get_reference(get_section_label(spec.neurodata_type), spec.neurodata_type)
     spec_quantity = quantity_to_string(spec.quantity) \
