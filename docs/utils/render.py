@@ -215,22 +215,17 @@ class HierarchyDescription(dict):
             obj_name = os.path.join(parent_name, obj_main_name)
 
             if isinstance(obj, GroupSpec):
-                # TODO Check how to properly determin the neurodata type
-                try:
-                    nd = obj.neurodata_type_def
-                except AttributeError:
+                if obj.get('neurodata_type_def', None) is not None:
+                    nd = obj['neurodata_type_def']
+                else:
                     nd = obj.neurodata_type_inc
-                #print(dir(obj))
-                #nd = obj.get_neurodata_type()
                 specstats.add_group(name=obj_name,
                                     neurodata_type=nd)
             elif isinstance(obj, DatasetSpec):
-                # TODO Check how to properly determin the neurodata type
-                try:
-                    nd = obj.neurodata_type_def
-                except AttributeError:
+                if obj.get('neurodata_type_def', None) is not None:
+                    nd = obj['neurodata_type_def']
+                else:
                     nd = obj.neurodata_type_inc
-                #nd = obj.get_neurodata_type()
                 specstats.add_dataset(name=obj_name,
                                       shape=obj.shape,
                                       dtype=obj['type'] if hasattr(obj, 'type') else None,
