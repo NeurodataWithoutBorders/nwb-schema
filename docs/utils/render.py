@@ -99,9 +99,17 @@ class SpecFormatter(object):
 
 class HierarchyDescription(dict):
     """
-    Dictionary data structure used in combination with the HierarchyRenderer class to describe the contents
-    of the specification or NWB file hierarchy. This simple helper datasstructure was designed to ease the
-    use of HiearchyRendered but may be useful for other purposes as well.
+    Dictionary data structure used to describe the contents of the specification or NWB file hierarchy.
+    This simple helper datas structure was designed to ease rendering of object hierarchies but may
+    be useful for other purposes as well.
+
+    Ultimately, this is a flattened version of a spec or namespace where all datasets, groups, attributes,
+    and links are sorted into flat lists of dicts. The nesting of the objects is then described via
+    a list of relationships between the objects. Each object has a unique name that is determined
+    by the full path to the object plus the actual name or type of the object.
+
+    TODO Instead of using our own dict datastructures to describe datasets, groups etc. we should use
+         the standard spec datastructures provided by PyNWB.
     """
     RELATIONSHIP_TYPES = {'managed_by': 'Object managed by',
                           'attribute_of': 'Object is attribute of'}
@@ -1237,20 +1245,3 @@ class  RSTTable(object):
         # Return the table
         return rst_doc
 
-"""
-    @staticmethod
-    def test():
-        a = RSTTable(['test1', 'test3', 'asdfsdfer'])
-        a.add_row(['123456789', '12', '1'])
-        a.add_row(['1','1213234', '2234'])
-        b = a.render()
-
-        for i in b.document.split("\n"):
-            print(i)
-
-        return b
-
-
-if __name__ == "__main__":
-    RSTTable.test()
-"""
