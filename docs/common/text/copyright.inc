@@ -1,7 +1,7 @@
 Copyright
 =========
 
-.. include:: ../../../legal.txt
+.. include:: ../../../Legal.txt
 
 Licence
 =======
