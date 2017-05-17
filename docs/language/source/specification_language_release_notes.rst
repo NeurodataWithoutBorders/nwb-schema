@@ -46,8 +46,9 @@ Summary
     * The core specification documents are no longer stored as .py files as part of the orignal Python API but are released as separate YAML (or optionally JSON) documents in a seperate repository
     * All documentation has been ported to use reStructuredText (RST) markup that can be easily translated to PDF, HTML, text, and many other forms.
     * Documentation for source codes and the specification are auto-generated from source to ensure consistency between sources and the documentation
-* Others:
+* Avoid mixing of format specification and computations:
     * Removed key ```autogen``` (without replacement). The autogen key was used to describe how to compute certain derived datasets from the file. This feature was problematic with respect to the guiding principles of NWB for a couple of reasons. E.g., the resulting datasets where often not interprepatable without the provenance of the autogeneration procedure and autogeneration itself and often described the generation of derived data structures to ease follow-on computations. Describing computations as part of a format specification is problematic as it creates strong dependencies and often unnecessary restrictions for use and analysis of data stored in the format. Also, the reorganization of metadata has eliminted the need for autogen in many cases. A autogen features is arguably the role of a data API or intermediary derived-quantity API (or specification), rather than a format specification.
+* Others:
     * Removed key ```\_\_custom``` (without replacement). This feature was used only in one location to provide user hints where custom data could be placed, however, since the NWB specification approach explicitly allows users to add custom data in any location, this information was not binding.
 
 
