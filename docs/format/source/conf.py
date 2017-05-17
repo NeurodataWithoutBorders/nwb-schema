@@ -95,7 +95,7 @@ pygments_style = 'sphinx'
 #modindex_common_prefix = []
 
 
-# -- Options for the generation of the documenation from source ----------------
+# -- Options for the generation of the documentation from source ----------------
 
 # Should the YAML sources be included for the different modules
 spec_show_yaml_src = True
@@ -131,6 +131,10 @@ spec_table_depth_char = '.' # '→' '.'
 # Add a LaTeX clearpage after each main section describing a neurodata_type. This helps in LaTeX to keep the ordering
 # of figures, tables, and code blocks consistent in particular when the hierarchy_plots are included
 spec_add_latex_clearpage_after_ndt_sections = True
+
+# Resolve includes to always show the full list of objects that are part of a type (True)
+# or to show only the parts that are actually new to a current type while only linking to base types
+spec_resolve_type_inc = False
 
 # -- Options for HTML output ---------------------------------------------------
 
