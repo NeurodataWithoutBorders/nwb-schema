@@ -11,7 +11,31 @@ Detailed documentation of the various aspects of the NWB-N project are available
 * **Specification Language:** http://schema-language.readthedocs.io
 * **Format Specification:** http://nwb-schema.readthedocs.io
 * **Data Storage:** http://nwb-storage.readthedocs.io
-* **PyNWB (APIs)** http://pynwb.readthedocs.io
+* **PyNWB (APIs):** http://pynwb.readthedocs.io
+
+The documents are also available in PDF, Epub, and zipped HTML form for print and offline browsing:
+
+* **PDF**:
+    * **General Overview** : http://readthedocs.org/projects/nwb-overview/downloads/pdf/latest/
+    * **Specification Language:** http://readthedocs.org/projects/schema-language/downloads/pdf/latest/
+    * **Format Specification:** http://readthedocs.org/projects/nwb-schema/downloads/pdf/latest/
+    * **Data Storage:** http://readthedocs.org/projects/nwb-storage/downloads/pdf/latest/
+    * **PyNWB (APIs):** http://readthedocs.org/projects/pynwb/downloads/pdf/latest/
+* **Epub**:
+    * **General Overview** : http://readthedocs.org/projects/nwb-overview/downloads/epub/latest/
+    * **Specification Language:** http://readthedocs.org/projects/schema-language/downloads/epub/latest/
+    * **Format Specification:** http://readthedocs.org/projects/nwb-schema/downloads/epub/latest/
+    * **Data Storage:** http://readthedocs.org/projects/nwb-storage/downloads/epub/latest/
+    * **PyNWB (APIs):** http://readthedocs.org/projects/pynwb/downloads/epub/latest/
+* **HTML Zip**:
+    * **General Overview** : http://readthedocs.org/projects/nwb-overview/downloads/htmlzip/latest/
+    * **Specification Language:** http://readthedocs.org/projects/schema-language/downloads/htmlzip/latest/
+    * **Format Specification:** http://readthedocs.org/projects/nwb-schema/downloads/htmlzip/latest/
+    * **Data Storage:** http://readthedocs.org/projects/nwb-storage/downloads/htmlzip/latest/
+    * **PyNWB (APIs):** http://readthedocs.org/projects/pynwb/downloads/htmlzip/latest/
+
+Sources
+-------
 
 The sources for the API, format specification, and all documents are available here:
 
