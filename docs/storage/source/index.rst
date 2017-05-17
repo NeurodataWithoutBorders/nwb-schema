@@ -7,7 +7,6 @@ Welcome to NWB-N Storage
     :maxdepth: 6
     :caption: Table of Contents
 
-    intro
     storage_description
     storage_hdf5
     storage_release_notes
