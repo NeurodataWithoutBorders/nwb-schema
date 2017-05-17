@@ -33,7 +33,8 @@ from conf import spec_show_yaml_src, \
     spec_appreviate_main_object_doc_in_tables, \
     spec_show_title_for_tables, \
     spec_table_depth_char, \
-    spec_add_latex_clearpage_after_ndt_sections
+    spec_add_latex_clearpage_after_ndt_sections, \
+    spec_resolve_type_inc
 
 
 try:
@@ -411,10 +412,12 @@ def render_group_specs(group_spec, rst_doc, parent=None):
     group_name = ''
     if group_spec.get('name', None) is not None:
         group_name = group_spec.name
-    elif group_spec.get('neurodata_type', None) is not None:
-        group_name = "<%s>" % group_spec.neurodata_type
+    elif group_spec.get('neurodata_type_def', None) is not None:
+        group_name = "<%s>" % group_spec.neurodata_type_def
+    elif group_spec.get('neurodata_type_inc', None) is not None:
+        group_name =  "<%s>" % group_spec.neurodata_type_inc
     else:
-        group_name =  "<%s>" % group_spec.neurodata_type_def
+        warnings.warn("Could not determine name for group %s" % str(group_spec))
     if group_name == '':
         raise ValueError('Could not determine name of group')
     rst_doc.add_paragraph("Groups: %s%s" % (parent,group_name))
@@ -485,7 +488,8 @@ def render_specs(neurodata_types,
     """
     Render the documentation for a set of neurodata_types defined in a spec_catalog
 
-    :param neurodata_types: List of string with the names of types that should be rendered
+    :param neurodata_types: List of string with the names of types that should be rendered or OrderedDict where
+                          the keys are neurodata_type strings and the values are NeurodataTypeDict
     :param spec_catalog: Catalog of specifications
     :param desc_doc: RSTDocument where the descriptions of the documents should be rendered
     :param src_doc: RSTDocument where the YAML/JSON sources of the neurodata_types should be rendered. Set to None
@@ -504,6 +508,7 @@ def render_specs(neurodata_types,
         src_doc = desc_doc
     else:
         seperate_src_file = True
+
 
     for rt in neurodata_types:
         print("BUILDING %s" % rt)
@@ -541,11 +546,15 @@ def render_specs(neurodata_types,
         # Add note if necessary to indicate that the following documentation only shows changes to the parent class
         if extend_type is not None:
             extend_type =  rt_spec['neurodata_type_inc']
-            type_desc_doc.add_text("``%s`` extends ``%s`` (see %s) and includes all elements of %s with the following additions or changes." %
+            sentence_end = " with the following additions or changes." \
+                if not spec_resolve_type_inc \
+                else ". The following is a description of the complete structure of ``%s`` including all inherited components." % rt
+            type_desc_doc.add_text("``%s`` extends ``%s`` (see %s) and includes all elements of %s%s" %
                          (rt,
                           extend_type,
                           type_desc_doc.get_numbered_reference(get_section_label(extend_type)),
-                          type_desc_doc.get_reference(get_section_label(extend_type), extend_type)))
+                          type_desc_doc.get_reference(get_section_label(extend_type), extend_type),
+                          sentence_end))
             type_desc_doc.add_text(type_desc_doc.newline + type_desc_doc.newline)
         # Add the additional details about the doc
         type_desc_doc.add_text(spec_prop_doc(rt_spec,
@@ -741,7 +750,6 @@ def compute_neurodata_type_hierarchy(spec_catalog):
     for rt in registered_types:
         rt_spec = spec_catalog.get_spec(rt)
         if rt_spec.get('neurodata_type_inc', None) is None:
-        #if rt_spec.neurodata_type_inc is None or rt_spec.neurodata_type_inc == rt: # This is a primary type not a derived type #TODO Check if need the '==' check. This was added because we get a neurodata_type_inc value where we shouldnt.
             type_hierarchy[rt] = NeurodataTypeDict(neurodata_type=rt,
                                                    spec=spec_catalog.get_spec(rt),
                                                    ancestry=[],
@@ -847,7 +855,7 @@ def print_type_hierarchy(type_hierarchy, depth=0, show_ancestry=False):
         PrintCol.print(msg, PrintCol.OKBLUE+PrintCol.BOLD if depth==0 else PrintCol.OKBLUE, depth)
         print_type_hierarchy(v['subtypes'], depth=depth+1, show_ancestry=show_ancestry)
 
-def load_nwb_namespace(namespace_file, default_namespace='core'):
+def load_nwb_namespace(namespace_file, default_namespace='core', resolve=spec_resolve_type_inc):
     """
     Load an nwb namespace from file
     :return:
@@ -856,11 +864,9 @@ def load_nwb_namespace(namespace_file, default_namespace='core'):
                                  group_spec_cls=NWBGroupSpec,
                                  dataset_spec_cls=NWBDatasetSpec,
                                  spec_namespace_cls=NWBNamespace)
-    namespace.load_namespaces(namespace_file)
-    print(namespace._NamespaceCatalog__namespaces)
+    namespace.load_namespaces(namespace_file, resolve=resolve)
     default_spec_catalog = namespace.get_namespace('core').catalog
     return namespace, default_spec_catalog
-
 
 
 def main():
@@ -878,7 +884,9 @@ def main():
     type_hierarchy_doc_filename = os.path.join(file_dir, 'format_spec_type_hierarchy.inc')
     core_namespace_file = os.path.join(spec_dir, 'nwb.namespace.yaml')
 
-    core_namespace, spec_catalog = load_nwb_namespace(core_namespace_file)
+    core_namespace, spec_catalog = load_nwb_namespace(namespace_file=core_namespace_file,
+                                                      default_namespace='core',
+                                                      resolve=spec_resolve_type_inc)
 
     # Generate the spec catalog
     #exts = ['yaml', 'json']
