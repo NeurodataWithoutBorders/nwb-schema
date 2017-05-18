@@ -7,7 +7,6 @@ Welcome to the NWB Format Specification
     :maxdepth: 8
     :caption: Table of Contents
 
-    intro
     format
     credits
 

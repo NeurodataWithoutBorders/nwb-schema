@@ -9,10 +9,11 @@ Version 1.2a (April, 2017)
 Summary
 ^^^^^^^
 * Simplify reuse of neurodata_types:
-    * Added new key: ```neurodata_type_def``` (which in combination with ```neurodata_type``` replaces the keys ```include``` and ```merge``` keys). See below for details.
+    * Added new key: ```neurodata_type_def and  ```neurodata_type_inc``` (which in combination replace the keys ```neurodata_type```, ```include``` and ```merge```). See below for details.
     * Removed key: ```include```
-    * Removed key: ``merge```
-    * Removed key: ``merge+```
+    * Removed key: ```merge```
+    * Removed key: ```merge+```
+    * Removed key: ```neurodata_type``` (replaced by ``neurodata_type_inc`` and ``neurodata_type_def``)
     * Removed ```\_properties``` key. The primary use of the key is to define ``abstract`` specifications. However, as format specifications don't implement functions but define a layout of objects, any spec (even if marked abstract) could still be instantiated and used in practice withou limitations. Also, in the curretn instantiation of NWB-N this concept is only used for the ```Interface``` type and it is unclear why a user shoudl not be able to use it.  As such this concept was removed.
     * To imporve compliance of NWB-N inheritance mechanism with establish object-oriented design concepts, the option of restricting the use of subclasses in place of parent classes was removed. A subclass is always also a valid instance of a parent class. This also improves consistentcy with the NWB-N principle of a minimal specification that allows users to add custom data. This change effects the ```allow_subclasses``` key of links and the subclasses option of the removed ```include`` key.
 * Improve readability and avoid collision of keys by replacing values encoded in keys with dedicated key/value pairs:
@@ -45,8 +46,9 @@ Summary
     * The core specification documents are no longer stored as .py files as part of the orignal Python API but are released as separate YAML (or optionally JSON) documents in a seperate repository
     * All documentation has been ported to use reStructuredText (RST) markup that can be easily translated to PDF, HTML, text, and many other forms.
     * Documentation for source codes and the specification are auto-generated from source to ensure consistency between sources and the documentation
-* Others:
+* Avoid mixing of format specification and computations:
     * Removed key ```autogen``` (without replacement). The autogen key was used to describe how to compute certain derived datasets from the file. This feature was problematic with respect to the guiding principles of NWB for a couple of reasons. E.g., the resulting datasets where often not interprepatable without the provenance of the autogeneration procedure and autogeneration itself and often described the generation of derived data structures to ease follow-on computations. Describing computations as part of a format specification is problematic as it creates strong dependencies and often unnecessary restrictions for use and analysis of data stored in the format. Also, the reorganization of metadata has eliminted the need for autogen in many cases. A autogen features is arguably the role of a data API or intermediary derived-quantity API (or specification), rather than a format specification.
+* Others:
     * Removed key ```\_\_custom``` (without replacement). This feature was used only in one location to provide user hints where custom data could be placed, however, since the NWB specification approach explicitly allows users to add custom data in any location, this information was not binding.
 
 
@@ -94,24 +96,24 @@ Version 1.2a replaces the ```quantity_flag``` with a new key ```quantity``` with
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To simplify the concept ```include``` and ```merge```, version 1.2a introduced a new
-key ```neurodata_type_def``` which  describes the creation of a new ```neurodata_type```.
-The combination ```neurodata_type_def``` and ```neurodata_type``
+key ```neurodata_type_def``` which  describes the creation of a new neurodata_type.
+The combination ```neurodata_type_def``` and ```neurodata_type_inc``
 simplifies the concepts of merge (i.e., inheritance/extension) and inclusion and
 allows us to express the same concepts in an easier-to-use fashion.
 Accordingly, the keys ```include```, ```merge``` and ```merge+``` have been removed in version 1.2a.
 Here a summary of the basic cases:
 
-+----------------+--------------------+------------------------------------------------------------------------+
-| neurodata_type | neurodata_type_def |  Description                                                           |
-+================+====================+========================================================================+
-|not set         | not set            |  define standard dataset or group without a type                       |
-+----------------+--------------------+------------------------------------------------------------------------+
-|not set         | set                |  create a new neurodata_type from scratch                              |
-+----------------+--------------------+------------------------------------------------------------------------+
-|set             | not set            |  include (reuse) neurodata_type without creating a new one (include)   |
-+----------------+--------------------+------------------------------------------------------------------------+
-|set             | set                |  merge/extend neurodata_type and create a new type (merge)             |
-+----------------+--------------------+------------------------------------------------------------------------+
++--------------------+--------------------+------------------------------------------------------------------------+
+| neurodata_type_inc | neurodata_type_def |  Description                                                           |
++====================+====================+========================================================================+
+|not set             | not set            |  define standard dataset or group without a type                       |
++--------------------+--------------------+------------------------------------------------------------------------+
+|not set             | set                |  create a new neurodata_type from scratch                              |
++--------------------+--------------------+------------------------------------------------------------------------+
+|set                 | not set            |  include (reuse) neurodata_type without creating a new one (include)   |
++--------------------+--------------------+------------------------------------------------------------------------+
+|set                 | set                |  merge/extend neurodata_type and create a new type (merge)             |
++--------------------+--------------------+------------------------------------------------------------------------+
 
 ```structured_dimensions```
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
