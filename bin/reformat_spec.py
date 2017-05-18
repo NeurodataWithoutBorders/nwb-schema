@@ -30,7 +30,7 @@ subspec_locations = {
 
 }
 
-device_spec = LinkSpec('the device that was used to record from this electrode group', 'Device', quantity='?')
+device_spec = LinkSpec('the device that was used to record from this electrode group', 'Device', name='device', quantity='?')
 alternate_defs = {
     'ElectrodeGroup': NWBGroupSpec('One of possibly many groups, one for each electrode group.',
             neurodata_type_def='ElectrodeGroup',
@@ -196,9 +196,15 @@ def build_group(name, d, ndtype=None):
 
         if tmp_name == 'include':
             ndt = next(iter(value.keys()))
+            quantity = None
+            if ndt[-1] != '/':
+                quantity = ndt[-1]
+                ndt = ndt[:-1]
             ndt = ndt[1:ndt.rfind('>')]
             doc = include_doc.get(name, include_doc.get(neurodata_type))
             vargs = {'neurodata_type_inc': ndt}
+            if quantity is not None:
+                vargs['quantity'] = quantity
             if ndt is not None:
                 vargs['namespace'] = CORE_NAMESPACE
             grp_spec.add_group(doc, **vargs)
