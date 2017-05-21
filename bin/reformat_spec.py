@@ -7,7 +7,7 @@ from ruamel import yaml
 #import pynwb
 
 from datetime import datetime
-from form.spec import Spec, AttributeSpec, LinkSpec, SpecNamespace
+from form.spec import Spec, AttributeSpec, LinkSpec, SpecNamespace, NamespaceBuilder
 from pynwb.spec import NWBDatasetSpec, NWBGroupSpec, NWBNamespace
 
 """
@@ -575,6 +575,17 @@ with open(spec_path) as spec_in:
     #nwb_spec = load_iface(json.load(spec_in))
 
 
+ns = dict()
+ns['doc'] = 'NWB namespace'
+ns['name'] = CORE_NAMESPACE
+ns['full_name'] = 'NWB core'
+ns['versions'] = '1.2.0'
+ns['date'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+ns['author'] = ['Keith Godfrey', 'Jeff Teeters', 'Oliver Ruebel', 'Andrew Tritt']
+ns['contact'] = ['keithg@alleninstitute.org', 'jteeters@berkeley.edu', 'oruebel@lbl.gov', 'ajtritt@lbl.gov']
+ns['namespace_cls'] = NWBNamespace
+ns_builder = NamespaceBuilder(ns.pop('doc'), ns.pop('name'), **ns)
+
 schema = list()
 
 order = [
@@ -593,22 +604,19 @@ order = [
 for key  in order:
     value = nwb_spec[key]
     filename = 'nwb.%s.yaml' % key
-    with open('%s/%s' % (outdir, filename), 'w') as out:
-        yaml.dump(json.loads(json.dumps(value)), out, default_flow_style=False)
-    schema.append({'source': filename})
+    for spec in value['groups']:
+        ns_builder.add_spec(filename, spec)
+    #with open('%s/%s' % (outdir, filename), 'w') as out:
+    #    yaml.dump(json.loads(json.dumps(value)), out, default_flow_style=False)
+    #schema.append({'source': filename})
 
-ns = dict()
-ns['doc'] = 'NWB namespace'
-ns['name'] = CORE_NAMESPACE
-ns['full_name'] = 'NWB core'
-ns['versions'] = '1.2.0'
-ns['date'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-ns['author'] = ['Keith Godfrey', 'Jeff Teeters', 'Oliver Ruebel', 'Andrew Tritt']
-ns['contact'] = ['keithg@alleninstitute.org', 'jteeters@berkeley.edu', 'oruebel@lbl.gov', 'ajtritt@lbl.gov']
-ns['schema'] = schema
-ns = {'namespaces': [SpecNamespace.build_namespace(**ns)]}
-with open('%s/nwb.namespace.yaml' % outdir, 'w') as out:
-    yaml.dump(json.loads(json.dumps(ns)), out, default_flow_style=False)
+ns_file = '%s/nwb.namespace.yaml' % outdir
+#ns['schema'] = schema
+#ns = {'namespaces': [SpecNamespace.build_namespace(**ns)]}
+#with open(ns_file, 'w') as out:
+#    yaml.dump(json.loads(json.dumps(ns)), out, default_flow_style=False)
+
+ns_builder.export(ns_file)
 
 
 import tarfile
