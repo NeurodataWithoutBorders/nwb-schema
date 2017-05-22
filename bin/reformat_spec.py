@@ -429,6 +429,7 @@ def load_spec(spec):
     module_json =  spec['/processing/'].pop("<Module>/*")
 
     processing = build_group('processing', spec['/processing/'])
+    processing.add_group('Intermediate analysis of acquired data', neurodata_type_inc='Module')
     root.set_group(processing)
 
     stimulus = build_group('stimulus', spec['/stimulus/'])
