@@ -5,8 +5,7 @@ Generate figures and RST documents from the NWB YAML specification for the forma
 # TODO In the type hierarchy section add a section to order types by their used based on which YAML file they appear in
 # TODO Fix assignement of other types?
 
-# TODO Check how to properly determine the neurodata type across cases
-# TODO Check why we now get a list of all datasets and attributes (even for inherited ones that are not modified)
+# TODO Add documentation for and specification of the namespace
 
 
 #from pynwb.spec import SpecCatalog
