@@ -307,14 +307,17 @@ class HierarchyDescription(dict):
             obj_name = os.path.join(root, name)
             # Group and dataset metadata
             if isinstance(obj, h5py.Dataset):
-                filestats.add_dataset(name=obj_name, shape=obj.shape, dtype=obj.dtype)
+                ntype=None
+                if 'neurodata_type' in obj.attrs.keys():
+                    ntype = obj.attrs['neurodata_type'][:]
+                filestats.add_dataset(name=obj_name, shape=obj.shape, dtype=obj.dtype, neurodata_type=ntype)
             elif isinstance(obj, h5py.Group):
                 ntype = None
-                try:
-                    ntype = obj.attrs['neurodata_type'][()]
-                except:
-                    pass
+                if 'neurodata_type' in obj.attrs.keys():
+                    ntype = obj.attrs['neurodata_type'][:]
                 filestats.add_group(name=obj_name, neurodata_type=ntype)
+            # TODO Apperently visititems in h5py does not visit any links!!!!! We need to add logic to find those separately!
+
             # Visit all attributes of the object
             for attr_name, attr_value in obj.attrs.items():
                 attr_path = os.path.join(obj_name, attr_name)
@@ -636,12 +639,13 @@ class NXGraphHierarchyDescription(object):
 
         fig = plt.figure(figsize=figsize)
         # List of object names
-        untyped_group_names = [i['name'] for i in data['groups'] if i['neurodata_type'] is None]
-        typed_group_names = [i['name'] for i in data['groups'] if i['neurodata_type'] is not None]
-        untyped_dataset_names = [i['name'] for i in data['datasets'] if i['neurodata_type'] is None]
-        typed_dataset_names = [i['name'] for i in data['datasets'] if i['neurodata_type'] is not None]
-        attribute_names = [i['name'] for i in data['attributes']]
-        links_names = [i['name'] for i in data['links']]
+        all_nodes = graph.nodes(data=False)
+        untyped_group_names = [i['name'] for i in data['groups'] if i['neurodata_type'] is None and i['name'] in all_nodes]
+        typed_group_names = [i['name'] for i in data['groups'] if i['neurodata_type'] is not None and i['name'] in all_nodes]
+        untyped_dataset_names = [i['name'] for i in data['datasets'] if i['neurodata_type'] is None and i['name'] in all_nodes]
+        typed_dataset_names = [i['name'] for i in data['datasets'] if i['neurodata_type'] is not None and i['name'] in all_nodes]
+        attribute_names = [i['name'] for i in data['attributes'] if i['name'] in all_nodes]
+        links_names = [i['name'] for i in data['links'] if i['name'] in all_nodes]
 
         # Draw the typed dataset nodes of the network
         nx.draw_networkx_nodes(graph, pos,
@@ -725,14 +729,17 @@ class NXGraphHierarchyDescription(object):
 
         for rt, rl in edge_by_type.items():
             if relationship_types is None or rt in relationship_types:
-                nx.draw_networkx_edges(graph,
-                                       pos,
-                                       edgelist=rl,
-                                       width=1.0,
-                                       alpha=0.9 if rt != 'managed_by' else 0.6,
-                                       edge_color=rel_colors[rt],
-                                       label=rt if relationship_counts is None else (rt+' (%i)' % relationship_counts[rt])
-                                       )
+                try:
+                    nx.draw_networkx_edges(graph,
+                                           pos,
+                                           edgelist=rl,
+                                           width=1.0,
+                                           alpha=0.9 if rt != 'managed_by' else 0.6,
+                                           edge_color=rel_colors[rt],
+                                           label=rt if relationship_counts is None else (rt+' (%i)' % relationship_counts[rt])
+                                           )
+                except KeyError:
+                    pass
 
         if show_labels:
             # Create node labels
