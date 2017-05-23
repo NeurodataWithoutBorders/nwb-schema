@@ -1,7 +1,11 @@
+**Source Specification:** see :numref:`nwb-type-namespace-src` 
+ 
 .. _nwb-type-namespace-src:
 
-Namespace: core
----------------
+Namespace: NWB core
+-------------------
+
+**Description:** see :numref:`nwb-type-namespace-doc`
 
 **YAML Specification:**
 

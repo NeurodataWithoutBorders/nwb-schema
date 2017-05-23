@@ -1,7 +1,4 @@
-Type Overview
-=============
-
-.. include:: _format_auto_docs/format_spec_type_hierarchy.inc
+.. include:: _format_auto_docs/core_namespace_description.inc
 
 .. raw:: latex
 
@@ -9,8 +6,8 @@ Type Overview
 
 .. _nwb-type-specifications:
 
-Type Specifications
-===================
+Specifications
+==============
 
 Main Data File
 --------------
@@ -291,31 +288,7 @@ Data Processing Classes
 Other Types
 -----------
 
-.. include:: _format_auto_docs/Image_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/ElectrodeGroup_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/OpticalChannel_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/SpecFile_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/ImagingPlane_description.inc
+.. include:: _format_auto_docs/EventDetection_description.inc
 
 .. raw:: latex
 
@@ -327,19 +300,13 @@ Other Types
 
     \clearpage \newpage
 
-.. include:: _format_auto_docs/SpikeUnit_description.inc
+.. include:: _format_auto_docs/OpticalChannel_description.inc
 
 .. raw:: latex
 
     \clearpage \newpage
 
-.. include:: _format_auto_docs/Device_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/Epoch_description.inc
+.. include:: _format_auto_docs/Image_description.inc
 
 .. raw:: latex
 
@@ -351,19 +318,19 @@ Other Types
 
     \clearpage \newpage
 
-.. include:: _format_auto_docs/EventDetection_description.inc
+.. include:: _format_auto_docs/Epoch_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/Device_description.inc
 
 .. raw:: latex
 
     \clearpage \newpage
 
 .. include:: _format_auto_docs/CorrectedImageStack_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/EpochTimeSeries_description.inc
 
 .. raw:: latex
 
@@ -376,6 +343,36 @@ Other Types
     \clearpage \newpage
 
 .. include:: _format_auto_docs/ROI_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/ElectrodeGroup_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/SpikeUnit_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/EpochTimeSeries_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/SpecFile_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/ImagingPlane_description.inc
 
 .. raw:: latex
 
