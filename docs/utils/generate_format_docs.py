@@ -2,10 +2,8 @@
 Generate figures and RST documents from the NWB YAML specification for the format specification documentation
 """
 
-# TODO In the type hierarchy section add a section to order types by their used based on which YAML file they appear in
-# TODO Fix assignement of other types?
-
-# TODO Add documentation for and specification of the namespace
+# TODO In the type hierarchy section add a section to order types by based on which YAML file they appear in
+# TODO in the sections describing the different types add the name of the source YAML file
 
 
 #from pynwb.spec import SpecCatalog
@@ -270,7 +268,8 @@ def render_namespace(namespace_catalog,
                      show_json_src=True,
                      show_yaml_src=True,
                      file_dir=None,
-                     file_per_type=False):
+                     file_per_type=False,
+                     type_hierarchy_include=None):
     """
     Render the description of the namespace
 
@@ -284,6 +283,7 @@ def render_namespace(namespace_catalog,
     :param file_per_type: Generate a seperate rst files for each neurodata_type and include them
                           in the src_doc and desc_doc (True). If set to False then write the
                           contents to src_doc and desc_doc directly.
+    :param type_hierarchy_include: Optional include file with the hierarchy of types in the namespace
 
     """
     # Determine file settings
@@ -297,20 +297,74 @@ def render_namespace(namespace_catalog,
     # Create target RST files if necessary
     ns_desc_doc = desc_doc if not file_per_type else RSTDocument()
     ns_src_doc  = src_doc if not file_per_type else RSTDocument()
-
+    ns_desc_label = "nwb-type-namespace-doc"
+    ns_src_label = "nwb-type-namespace-src"
     # Create the target doc
     namespace_name = namespace_name if namespace_name is None else namespace_catalog.default_namespace
     curr_namespace = namespace_catalog.get_namespace(namespace_name)
+    # Section heading
+    sec_heading = "Namespace: %s" % curr_namespace['full_name'] if 'full_name' in curr_namespace else curr_namespace['name']
+    # Render the description of the namespace
     if desc_doc:
-        ns_desc_doc.add_label("nwb-type-namespace-doc")
-        ns_desc_doc.add_subsection("Namespace: %s" % namespace_name)
-        pass
-        # TODO Render the description of the namespace
-        # TODO Check what happend to the version number for the namespace
+        # Add a subsection for the Namespace
+        ns_desc_doc.add_label(ns_desc_label)
+        ns_desc_doc.add_section(sec_heading)
+        # Add a link to the source specification
+        if seperate_src_file:
+            ns_src_doc.add_text('**Source Specification:** see %s %s %s' % (ns_src_doc.get_numbered_reference(ns_src_label),
+                                                                            ns_src_doc.newline,
+                                                                            ns_src_doc.newline))
+        # Create a list with further details about the namespace, e.g., name, version, authors etc.
+        desc_list = []
+        if 'doc' in curr_namespace:
+            desc_list.append('**Description:** %s' % str(curr_namespace['doc']))
+        if 'name' in curr_namespace:
+            desc_list.append('**Name:** %s' % str(curr_namespace['name']))
+        if 'full_name' in curr_namespace:
+            desc_list.append('**Full Name:** %s' % str(curr_namespace['full_name']))
+        if 'version' in curr_namespace:
+            desc_list.append('**Version:** %s' % str(curr_namespace['version']))
+        if 'date' in curr_namespace:
+            desc_list.append('**Date:** %s' % str(curr_namespace['date']))
+        if 'author' in curr_namespace:
+            if isinstance(curr_namespace['author'], list):
+                desc_list.append('**Authors:**')
+                desc_list.append(curr_namespace['author'])
+            else:
+                desc_list.append('**Author:** %s' % str(curr_namespace['author']))
+        if 'contact' in curr_namespace:
+            if isinstance(curr_namespace['contact'], list):
+                desc_list.append('**Contacts:**')
+                desc_list.append(curr_namespace['contact'])
+            else:
+                desc_list.append('**Contact:** %s' % str(curr_namespace['contact']))
+        if 'schema' in curr_namespace:
+            desc_list.append('**Schema:**')
+            schema_list =[]
+            for s in curr_namespace['schema']:
+                curr_str = ""
+                if isinstance(s, dict):
+                    for k,v in s.items():
+                        curr_str += '**%s:** %s ' %(str(k), str(v))
+                else:
+                    curr_str = str(s)
+                schema_list.append(curr_str)
+            desc_list.append(schema_list)
+        # Render the list with the descripiton of the namespace
+        if len(desc_list) > 0:
+            ns_desc_doc.add_list(desc_list,
+                                 item_symbol='-'
+                                 )
+    # Include the type hierarchy document if requested
+    if type_hierarchy_include:
+        ns_desc_doc.add_include(type_hierarchy_include)
+
     if src_doc:
         if seperate_src_file:
-            ns_src_doc.add_label("nwb-type-namespace-src")
-            ns_src_doc.add_subsection("Namespace: %s" % namespace_name)
+            ns_src_doc.add_label(ns_src_label)
+            ns_src_doc.add_subsection(sec_heading)
+            ns_src_doc.add_text('**Description:** see %s' % ns_src_doc.get_numbered_reference(ns_desc_label) + ns_src_doc.newline + ns_src_doc.newline)
+
         if show_json_src:
             ns_src_doc.add_text('**JSON Specification:**' + ns_src_doc.newline + ns_src_doc.newline)
             ns_src_doc.add_spec(curr_namespace, show_json=True, show_yaml=False)
@@ -670,8 +724,10 @@ def render_specs(neurodata_types,
                    PrintCol.print("    " + rt + '-- SKIPPED RENDER HIERARCHY. TWO OR FEWER NODES.', PrintCol.OKBLUE)
             else:
                 PrintCol.print("    " + rt + '-- SKIPPED RENDER HIERARCHY. See conf.py', PrintCol.OKBLUE)
+        except (KeyboardInterrupt, SystemExit):
+            raise
         except:
-             PrintCol.print(rt + '-- RENDER HIERARCHY FAILED', PrintCol.FAIL)
+            PrintCol.print(rt + '-- RENDER HIERARCHY FAILED', PrintCol.FAIL)
 
         ####################################################################
         #  Add the YAML and/or JSON sources to the document if requested
@@ -990,7 +1046,7 @@ def main():
     if spec_generate_src_file:
         src_doc = RSTDocument()
         src_doc.add_label("nwb-type-specification-sources")
-        src_doc.add_section("Specifications: Sources")
+        src_doc.add_section("Sources")
     else:
         src_doc = None
 
@@ -1002,17 +1058,12 @@ def main():
 
     # Create type hierarchy document
     print("RENDERING TYPE HIERARCHY")
-    desc_doc.add_section("Type Overview")
+    #desc_doc.add_section("Type Overview")
     type_hierarchy_doc = render_type_hierarchy(type_hierarchy=type_hierarchy)
     type_hierarchy_doc.write(type_hierarchy_doc_filename, 'w')
-    desc_doc.add_include(os.path.basename(file_dir) + "/" + os.path.basename(type_hierarchy_doc_filename))
+    # desc_doc.add_include(os.path.basename(file_dir) + "/" + os.path.basename(type_hierarchy_doc_filename))
 
-    # Create the section for the format specification
-    print("RENDERING TYPE SPECIFICATIONS")
-    desc_doc.add_latex_clearpage() # Add a clearpage command for latex to avoid possible troubles with figure placement outside of the current section
-    desc_doc.add_label("nwb-type-specifications")
-    desc_doc.add_section("Specifications")
-
+    print("RENDERING NAMESPACE SPECIFICATION")
     # Create the namespace document
     render_namespace(namespace_catalog=core_namespace,
                      namespace_name=spec_input_default_namespace,
@@ -1021,7 +1072,14 @@ def main():
                      show_json_src=spec_show_json_src,
                      show_yaml_src=spec_show_yaml_src,
                      file_dir=file_dir,
-                     file_per_type=spec_file_per_type)
+                     file_per_type=spec_file_per_type,
+                     type_hierarchy_include=os.path.basename(file_dir) + "/" + os.path.basename(type_hierarchy_doc_filename))
+
+    # Create the section for the format specification
+    print("RENDERING TYPE SPECIFICATIONS")
+    desc_doc.add_latex_clearpage() # Add a clearpage command for latex to avoid possible troubles with figure placement outside of the current section
+    desc_doc.add_label("nwb-type-specifications")
+    desc_doc.add_section("Specifications")
 
     # Render all the sections with the different types
     sec_index = 0
