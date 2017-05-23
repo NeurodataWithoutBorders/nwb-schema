@@ -33,7 +33,14 @@ from conf import spec_show_yaml_src, \
     spec_show_title_for_tables, \
     spec_table_depth_char, \
     spec_add_latex_clearpage_after_ndt_sections, \
-    spec_resolve_type_inc
+    spec_resolve_type_inc, \
+    spec_output_dir, \
+    spec_input_spec_dir, \
+    spec_output_doc_filename, \
+    spec_output_src_filename, \
+    spec_output_master_filename, \
+    spec_output_doc_type_hierarchy_filename, \
+    spec_input_namespace_filename
 
 
 try:
@@ -870,28 +877,29 @@ def load_nwb_namespace(namespace_file, default_namespace='core', resolve=spec_re
 
 def main():
 
-    # Set path to the NWB core spec
-    file_dir = os.path.abspath(
-        os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                     "../format/source/_format_auto_docs"))
-    if not os.path.exists(file_dir):
-        os.mkdir(file_dir)
-    spec_dir = os.path.abspath(file_dir+'/../../../../core')
-    doc_filename = os.path.join(file_dir, 'format_spec_doc.inc')  # Name of the file where the main documentation goes
-    srcdoc_filename = os.path.join(file_dir, 'format_spec_sources.inc') if spec_generate_src_file else None  # Name fo the file where the source YAML/JSON of the specifications go
-    master_filename = os.path.join(file_dir, 'format_spec_main.inc')
-    type_hierarchy_doc_filename = os.path.join(file_dir, 'format_spec_type_hierarchy.inc')
-    core_namespace_file = os.path.join(spec_dir, 'nwb.namespace.yaml')
 
+    # Set the output path for the doc sources to be generated
+    file_dir = spec_output_dir
+    # Set the dir where the input YAML files are located
+    spec_dir = spec_input_spec_dir
+    # Set the names of the main output files
+    doc_filename = os.path.join(file_dir, spec_output_doc_filename)  # Name of the file where the main documentation goes
+    srcdoc_filename = os.path.join(file_dir, spec_output_src_filename ) if spec_generate_src_file else None  # Name fo the file where the source YAML/JSON of the specifications go
+    master_filename = os.path.join(file_dir, spec_output_master_filename)
+    type_hierarchy_doc_filename = os.path.join(file_dir, spec_output_doc_type_hierarchy_filename)
+    core_namespace_file = os.path.join(spec_dir, spec_input_namespace_filename)
+
+    # Create the ouptu directory if necessary
+    if not os.path.exists(file_dir):
+        PrintCol.print('Generating output directory: %s' % file_dir, col=PrintCol.OKGREEN)
+        os.mkdir(file_dir)
+    else:
+        PrintCol.print('Output directory already exists: %s' % file_dir, col=PrintCol.OKGREEN)
+
+    # Load the core namespace
     core_namespace, spec_catalog = load_nwb_namespace(namespace_file=core_namespace_file,
                                                       default_namespace='core',
                                                       resolve=spec_resolve_type_inc)
-
-    # Generate the spec catalog
-    #exts = ['yaml', 'json']
-    #glob_str = os.path.join(spec_dir, "*.%s")
-    #spec_files = list(chain(*[iglob(glob_str % ext) for ext in exts]))
-    #spec_catalog = SpecFormatter.spec_from_file(spec_files)
 
     # Generate the hierarchy of types
     print("BUILDING TYPE HIERARCHY")
