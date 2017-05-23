@@ -40,8 +40,8 @@ from conf import spec_show_yaml_src, \
     spec_output_src_filename, \
     spec_output_master_filename, \
     spec_output_doc_type_hierarchy_filename, \
-    spec_input_namespace_filename
-
+    spec_input_namespace_filename, \
+    spec_input_default_namespace
 
 try:
     from matplotlib import pyplot as plt
@@ -262,6 +262,78 @@ def get_data_table_label(parent):
     Get the name of the reference for the table listing all data for the parent
     """
     return 'table-'+parent+'-data'
+
+def render_namespace(namespace_catalog,
+                     namespace_name=None,
+                     desc_doc=None,
+                     src_doc=None,
+                     show_json_src=True,
+                     show_yaml_src=True,
+                     file_dir=None,
+                     file_per_type=False):
+    """
+    Render the description of the namespace
+
+    :param namespace_catalog: NamespaceCatalog object with the namespaces
+    :param desc_doc: RSTDocument where the description should be rendered. Set to None to not render a description.
+    :param src_doc: RSTDocument where the sources of the namespace should be rendered. Set to None to not render a namepsace.
+    :param namespace_name: Name of the namespace to be rendered. Set to None if the default namespace should be used
+    :param show_json_src: Boolean indicating that we should render the JSON source in the src_doc
+    :param show_yaml_src: Boolean indicating that we should render the YAML source in the src_doc
+    :param file_dir: Directory where output RST docs should be stored. Required if file_per_type is True.
+    :param file_per_type: Generate a seperate rst files for each neurodata_type and include them
+                          in the src_doc and desc_doc (True). If set to False then write the
+                          contents to src_doc and desc_doc directly.
+
+    """
+    # Determine file settings
+    if src_doc is None:
+        seperate_src_file = False
+        if show_json_src or show_yaml_src:
+            src_doc = desc_doc
+    else:
+        seperate_src_file = True
+
+    # Create target RST files if necessary
+    ns_desc_doc = desc_doc if not file_per_type else RSTDocument()
+    ns_src_doc  = src_doc if not file_per_type else RSTDocument()
+
+    # Create the target doc
+    namespace_name = namespace_name if namespace_name is None else namespace_catalog.default_namespace
+    curr_namespace = namespace_catalog.get_namespace(namespace_name)
+    if desc_doc:
+        ns_desc_doc.add_label("nwb-type-namespace-doc")
+        ns_desc_doc.add_subsection("Namespace: %s" % namespace_name)
+        pass
+        # TODO Render the description of the namespace
+        # TODO Check what happend to the version number for the namespace
+    if src_doc:
+        if seperate_src_file:
+            ns_src_doc.add_label("nwb-type-namespace-src")
+            ns_src_doc.add_subsection("Namespace: %s" % namespace_name)
+        if show_json_src:
+            ns_src_doc.add_text('**JSON Specification:**' + ns_src_doc.newline + ns_src_doc.newline)
+            ns_src_doc.add_spec(curr_namespace, show_json=True, show_yaml=False)
+        if show_yaml_src:
+            ns_src_doc.add_text('**YAML Specification:**' + ns_src_doc.newline + ns_src_doc.newline)
+            ns_src_doc.add_spec(curr_namespace, show_json=False, show_yaml=True)
+
+    # Save the output files if necessary
+    if file_per_type and file_dir is not None:
+        # Write the files for the source and description
+        ns_src_filename = os.path.join(file_dir, '%s_namespace_source.inc' % namespace_name)
+        ns_desc_filename = os.path.join(file_dir, '%s_namespace_description.inc' % namespace_name)
+        if desc_doc:
+            ns_desc_doc.write(ns_desc_filename, 'w')
+            PrintCol.print("    " + namespace_name + '-- WRITE NAMESPACE DESCRIPTION DOC OK.', PrintCol.OKGREEN)
+            # Include the files in the main documents
+            desc_doc.add_include(os.path.basename(file_dir) + "/" + os.path.basename(ns_desc_filename))
+        if src_doc:
+            ns_src_doc.write(ns_src_filename, 'w')
+            PrintCol.print("    " + namespace_name + '-- WRITE NAMESPACE SOURCE DOC OK.', PrintCol.OKGREEN)
+            # Include the files in the main documents
+            src_doc.add_include(os.path.basename(file_dir) + "/" + os.path.basename(ns_src_filename))
+
 
 def render_type_hierarchy(type_hierarchy,
                           target_doc=None,
@@ -500,7 +572,7 @@ def render_specs(neurodata_types,
     :param desc_doc: RSTDocument where the descriptions of the documents should be rendered
     :param src_doc: RSTDocument where the YAML/JSON sources of the neurodata_types should be rendered. Set to None
                     if sources should be rendered in the desc_doc directly.
-    :param file_dir: Directory where figures should be stored
+    :param file_dir: Directory where figures and outpy RST docs should be stored
     :param show_hierarchy_plots: Create figures showing the hierarchy defined by the spec
     :param show_json_src: Boolean indicating that we should render the JSON source in the src_doc
     :param show_yaml_src: Boolean indicating that we should render the YAML source in the src_doc
@@ -514,7 +586,6 @@ def render_specs(neurodata_types,
         src_doc = desc_doc
     else:
         seperate_src_file = True
-
 
     for rt in neurodata_types:
         print("BUILDING %s" % rt)
@@ -877,7 +948,6 @@ def load_nwb_namespace(namespace_file, default_namespace='core', resolve=spec_re
 
 def main():
 
-
     # Set the output path for the doc sources to be generated
     file_dir = spec_output_dir
     # Set the dir where the input YAML files are located
@@ -898,7 +968,7 @@ def main():
 
     # Load the core namespace
     core_namespace, spec_catalog = load_nwb_namespace(namespace_file=core_namespace_file,
-                                                      default_namespace='core',
+                                                      default_namespace=spec_input_default_namespace,
                                                       resolve=spec_resolve_type_inc)
 
     # Generate the hierarchy of types
@@ -916,6 +986,20 @@ def main():
     # Create the documentation RST file
     desc_doc =  RSTDocument()
 
+    # Create the RST file for source files or use the main document in case sources should be included in the main doc directly
+    if spec_generate_src_file:
+        src_doc = RSTDocument()
+        src_doc.add_label("nwb-type-specification-sources")
+        src_doc.add_section("Specifications: Sources")
+    else:
+        src_doc = None
+
+     # Create the master doc
+    masterdoc = RSTDocument()
+    masterdoc.add_include(os.path.basename(file_dir) + "/" + os.path.basename(doc_filename))
+    if src_doc is not None:
+        masterdoc.add_include(os.path.basename(file_dir) + "/" + os.path.basename(srcdoc_filename))
+
     # Create type hierarchy document
     print("RENDERING TYPE HIERARCHY")
     desc_doc.add_section("Type Overview")
@@ -927,21 +1011,17 @@ def main():
     print("RENDERING TYPE SPECIFICATIONS")
     desc_doc.add_latex_clearpage() # Add a clearpage command for latex to avoid possible troubles with figure placement outside of the current section
     desc_doc.add_label("nwb-type-specifications")
-    desc_doc.add_section("Type Specifications")
+    desc_doc.add_section("Specifications")
 
-    # Create the RST file for source files or use the main document in case sources should be included in the main doc directly
-    if spec_generate_src_file:
-        src_doc = RSTDocument()
-        src_doc.add_label("nwb-type-specification-sources")
-        src_doc.add_section("Type Specifications: Sources")
-    else:
-        src_doc = None
-
-    # Create the master doc
-    masterdoc = RSTDocument()
-    masterdoc.add_include(os.path.basename(file_dir) + "/" + os.path.basename(doc_filename))
-    if src_doc is not None:
-        masterdoc.add_include(os.path.basename(file_dir) + "/" + os.path.basename(srcdoc_filename))
+    # Create the namespace document
+    render_namespace(namespace_catalog=core_namespace,
+                     namespace_name=spec_input_default_namespace,
+                     desc_doc=desc_doc,
+                     src_doc=src_doc,
+                     show_json_src=spec_show_json_src,
+                     show_yaml_src=spec_show_yaml_src,
+                     file_dir=file_dir,
+                     file_per_type=spec_file_per_type)
 
     # Render all the sections with the different types
     sec_index = 0

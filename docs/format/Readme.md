@@ -72,6 +72,7 @@ In addition, the location of the input format specification can be customized as
 
 * ```spec_input_spec_dir```  Directory where the YAML files for the namespace to be documented are located
 * ```spec_input_namespace_filename```  Name of the YAML (or JSON) file with the specification of the Namespace to be documented
+* ```spec_input_default_namespace``` Name of the default namespace in the file
 
 Finally, the name and location of output files can be customized as follows:
 

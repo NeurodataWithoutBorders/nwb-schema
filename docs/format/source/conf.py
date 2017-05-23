@@ -102,6 +102,9 @@ spec_input_spec_dir = os.path.abspath(os.path.dirname(os.path.abspath(__file__))
 # Name of the YAML (or JSON) file with the specification of the Namespace to be documented
 spec_input_namespace_filename = 'nwb.namespace.yaml'
 
+# Name of the default namespace in the file
+spec_input_default_namespace = 'core'
+
 
 # -- Options for customizing the locations of output files
 
@@ -121,7 +124,6 @@ spec_output_src_filename  = 'format_spec_sources.inc'
 
 # Name of the file containing the type hierarchy. (Included in spec_output_doc_filename)
 spec_output_doc_type_hierarchy_filename = 'format_spec_type_hierarchy.inc'
-
 
 # -- Options for the generation of the documentation from source ----------------
 
