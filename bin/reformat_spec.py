@@ -345,17 +345,23 @@ def remap_keys(name, d):
     #    ret['name'] = name[:-1]
     #elif name[-1] == '^':
     #    ret['name'] = name[:-1]
-    ret['const'] = d.get('const', None)
     ret['dtype'] = d.get('data_type', 'None')
 
-    ret['value'] = d.get('value', None)
-    if isinstance(ret['value'], list) and len(ret['value']) == 1:
-        ret['value'] = ret['value'][0]
+    value = d.get('value', None)
+    if isinstance(value, list) and len(value) == 1:
+        value = value[0]
+
+    const = d.pop('const', False)
+    if value is not None:
+        if const:
+            ret['value'] = value
+        else:
+            ret['default_value'] = value
     def_doc = None
     ret['doc'] = d.get('description', def_doc)
 
-    if ret['value'] is not None:
-        ret['doc'] = "Value is %s" % str(ret['value'])
+    if 'value' in ret and ret['value'] is not None:
+        ret['doc'] = "Value is '%s'" % str(ret['value'])
     elif ret['doc'] is None:
         ret['doc'] = override_doc.get(ret['name'])
     ret['dims'] = d.get('dimensions', None)
