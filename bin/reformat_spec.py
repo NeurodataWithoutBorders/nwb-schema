@@ -429,7 +429,7 @@ def load_spec(spec):
     module_json =  spec['/processing/'].pop("<Module>/*")
 
     processing = build_group('processing', spec['/processing/'])
-    processing.add_group('Intermediate analysis of acquired data', neurodata_type_inc='Module')
+    processing.add_group('Intermediate analysis of acquired data', neurodata_type_inc='Module', quantity='*')
     root.set_group(processing)
 
     stimulus = build_group('stimulus', spec['/stimulus/'])
@@ -451,15 +451,10 @@ def load_spec(spec):
     general.set_group(optophysiology)
 
     base = [
-        "<TimeSeries>/", #
-        "<Interface>/",
-        "<Module>/",
-    ]
-    base = [
         #build_group("<Module>/*", module_json, ndtype='Module'),
-        build_group(NAME_WILDCARD, module_json, ndtype='Module'),
         build_group(NAME_WILDCARD, spec["<TimeSeries>/"], ndtype='TimeSeries'),
-        build_group(NAME_WILDCARD, spec["<Interface>/"], ndtype='Interface')
+        build_group(NAME_WILDCARD, spec["<Interface>/"], ndtype='Interface'),
+        build_group(NAME_WILDCARD, module_json, ndtype='Module'),
     ]
 
 
@@ -580,7 +575,7 @@ ns = dict()
 ns['doc'] = 'NWB namespace'
 ns['name'] = CORE_NAMESPACE
 ns['full_name'] = 'NWB core'
-ns['versions'] = '1.2.0'
+ns['version'] = '1.2.0'
 ns['date'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 ns['author'] = ['Keith Godfrey', 'Jeff Teeters', 'Oliver Ruebel', 'Andrew Tritt']
 ns['contact'] = ['keithg@alleninstitute.org', 'jteeters@berkeley.edu', 'oruebel@lbl.gov', 'ajtritt@lbl.gov']
