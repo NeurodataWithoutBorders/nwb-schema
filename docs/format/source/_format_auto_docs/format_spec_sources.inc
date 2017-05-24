@@ -1,8 +1,9 @@
 .. _nwb-type-specification-sources:
 
-Type Specifications: Sources
-============================
+Sources
+=======
 
+.. include:: _format_auto_docs/core_namespace_source.inc
 Main Data File
 --------------
 
@@ -267,31 +268,7 @@ Data Processing Classes
 Other Types
 -----------
 
-.. include:: _format_auto_docs/Image_source.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/ElectrodeGroup_source.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/OpticalChannel_source.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/SpecFile_source.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/ImagingPlane_source.inc
+.. include:: _format_auto_docs/EventDetection_source.inc
 
 .. raw:: latex
 
@@ -303,19 +280,13 @@ Other Types
 
     \clearpage \newpage
 
-.. include:: _format_auto_docs/SpikeUnit_source.inc
+.. include:: _format_auto_docs/OpticalChannel_source.inc
 
 .. raw:: latex
 
     \clearpage \newpage
 
-.. include:: _format_auto_docs/Device_source.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/Epoch_source.inc
+.. include:: _format_auto_docs/Image_source.inc
 
 .. raw:: latex
 
@@ -327,19 +298,19 @@ Other Types
 
     \clearpage \newpage
 
-.. include:: _format_auto_docs/EventDetection_source.inc
+.. include:: _format_auto_docs/Epoch_source.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/Device_source.inc
 
 .. raw:: latex
 
     \clearpage \newpage
 
 .. include:: _format_auto_docs/CorrectedImageStack_source.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/EpochTimeSeries_source.inc
 
 .. raw:: latex
 
@@ -352,6 +323,36 @@ Other Types
     \clearpage \newpage
 
 .. include:: _format_auto_docs/ROI_source.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/ElectrodeGroup_source.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/SpikeUnit_source.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/EpochTimeSeries_source.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/SpecFile_source.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/ImagingPlane_source.inc
 
 .. raw:: latex
 

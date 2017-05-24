@@ -307,14 +307,17 @@ class HierarchyDescription(dict):
             obj_name = os.path.join(root, name)
             # Group and dataset metadata
             if isinstance(obj, h5py.Dataset):
-                filestats.add_dataset(name=obj_name, shape=obj.shape, dtype=obj.dtype)
+                ntype=None
+                if 'neurodata_type' in obj.attrs.keys():
+                    ntype = obj.attrs['neurodata_type'][:]
+                filestats.add_dataset(name=obj_name, shape=obj.shape, dtype=obj.dtype, neurodata_type=ntype)
             elif isinstance(obj, h5py.Group):
                 ntype = None
-                try:
-                    ntype = obj.attrs['neurodata_type'][()]
-                except:
-                    pass
+                if 'neurodata_type' in obj.attrs.keys():
+                    ntype = obj.attrs['neurodata_type'][:]
                 filestats.add_group(name=obj_name, neurodata_type=ntype)
+            # TODO Apperently visititems in h5py does not visit any links!!!!! We need to add logic to find those separately!
+
             # Visit all attributes of the object
             for attr_name, attr_value in obj.attrs.items():
                 attr_path = os.path.join(obj_name, attr_name)
@@ -590,17 +593,22 @@ class NXGraphHierarchyDescription(object):
                    pos,
                    data,
                    show_labels=True,
-                   node_size=20,
                    relationship_types=None,
                    figsize=None,
-                   label_offset=(0.0, 0.01),
+                   label_offset=(0.0, 0.012),
                    label_font_size=8,
                    xlim=None,
                    ylim=None,
                    legend_location='lower left',
                    axis_on=False,
                    relationship_counts=True,
-                   show_plot=True):
+                   show_plot=True,
+                   relationship_colors=None,
+                   relationship_alpha=0.7,
+                   node_colors=None,
+                   node_alpha=1.0,
+                   node_shape='o',
+                   node_size=20):
         """
         Helper function used to render the file hierarchy and the inter-object relationships
 
@@ -609,7 +617,6 @@ class NXGraphHierarchyDescription(object):
         :param data: Data about the hierarchy
         :type data: HierarchyDescription
         :param show_labels: Boolean indicating whether we should show the names of the nodes
-        :param node_size: Size of the nodes
         :param relationship_types: List of edge types that should be rendered. If None, then all edges will be rendered.
         :param figsize: The size of the matplotlib figure
         :param label_offset: Offsets for the node lables. This may be either: i) None (default),
@@ -622,6 +629,38 @@ class NXGraphHierarchyDescription(object):
         :param legend_location: The legend location (e.g., 'upper left' , 'lower right')
         :param axis_on: Boolean indicating whether the axes should be turned on or not.
         :param relationship_counts: Boolean indicating if edge/relationship counts should be shown.
+        :param relationship_colors: Optional dict for changing the default colors used for drawing relationship edges.
+            The keys of the dict are the type of relationship and the values are the names of the colors. This may
+            also be a single color string in case that all relationships should be shown in the same color. Default
+            behavior is:
+
+               ```{'shared_encoding': 'magenta',
+                  'indexes_values': 'cyan',
+                  'equivalent': 'gray',
+                  'indexes': 'orange',
+                  'user': 'green',
+                  'shared_ascending_encoding': 'blue',
+                  'order': 'red',
+                  'managed_by': 'steelblue',
+                  'attribute_of': 'black'}```
+
+        :param relationship_alpha: Float alpha value in the range of [0,1] with the alpha value to be used
+            for relationship edges. This may also be a dict of per-relationship-typ alpha values, similar
+            to relationship_colors.
+        :param node_colors: Dict with the color strings of the different node types. This may also be a single
+                string in case that the same color should be used for all node types. Defaul behavior is:
+
+                ```{'typed_dataset': 'blue',
+                    'untyped_dataset': 'lightblue',
+                    'typed_group': 'red',
+                    'untyped_group': 'orange',
+                    'attribute': 'gray',
+                    'link': 'white'}```
+
+        :param node_shape: Dict indicating the shape string for each node type. This may also be a single string
+               if the same shape should be used for all node types. Default='o'
+        :param node_size:  Dict indicating the integer size for each node type. This may also be a single int
+               if the same size should be used for all node types. Default='o'
         :param show_plot: If true call show to display the figure. If False return the matplotlib figure
                           without showing it.
 
@@ -636,69 +675,61 @@ class NXGraphHierarchyDescription(object):
 
         fig = plt.figure(figsize=figsize)
         # List of object names
-        untyped_group_names = [i['name'] for i in data['groups'] if i['neurodata_type'] is None]
-        typed_group_names = [i['name'] for i in data['groups'] if i['neurodata_type'] is not None]
-        untyped_dataset_names = [i['name'] for i in data['datasets'] if i['neurodata_type'] is None]
-        typed_dataset_names = [i['name'] for i in data['datasets'] if i['neurodata_type'] is not None]
-        attribute_names = [i['name'] for i in data['attributes']]
-        links_names = [i['name'] for i in data['links']]
+        all_nodes = graph.nodes(data=False)
+        n_names = {'typed_dataset': [i['name'] for i in data['datasets'] if i['neurodata_type'] is not None and i['name'] in all_nodes],
+                   'untyped_dataset': [i['name'] for i in data['datasets'] if i['neurodata_type'] is None and i['name'] in all_nodes],
+                   'typed_group': [i['name'] for i in data['groups'] if i['neurodata_type'] is not None and i['name'] in all_nodes],
+                   'untyped_group': [i['name'] for i in data['groups'] if i['neurodata_type'] is None and i['name'] in all_nodes],
+                   'attribute': [i['name'] for i in data['attributes'] if i['name'] in all_nodes],
+                   'link': [i['name'] for i in data['links'] if i['name'] in all_nodes]
+                   }
+        # Define the legend labels
+        n_legend = {'typed_dataset': 'Typed Dataset (%i)' % len(n_names['typed_dataset']),
+                    'untyped_dataset': 'Untyped Dataset (%i)' % len(n_names['untyped_dataset']),
+                    'typed_group': 'Typed Group (%i)' % len(n_names['typed_group']),
+                    'untyped_group': 'Untyped Group (%i)' % len(n_names['untyped_group']),
+                    'attribute': 'Attributes (%i)' % len(n_names['attribute']),
+                    'link': 'Links (%i)' % len(n_names['link'])
+        }
+        # Define the node colors
+        n_colors = {'typed_dataset': 'blue',
+                    'untyped_dataset': 'lightblue',
+                    'typed_group': 'red',
+                    'untyped_group': 'orange',
+                    'attribute': 'gray',
+                    'link': 'white'
+        }
+        if node_colors is not None:
+            node_colors.update(node_colors)
+        # Define the node alpha
+        n_alpha_base = node_alpha if isinstance(node_alpha, float) else 1.0
+        n_alpha = {k: n_alpha_base for k in n_colors}
+        if isinstance(node_alpha, dict):
+            n_alpha.update(node_alpha)
+        # Define the shape of each node type
+        n_shape_base = node_shape if isinstance(node_alpha, float) else 'o'
+        n_shape = {k: n_shape_base for k in n_colors}
+        if isinstance(node_shape, dict):
+            n_shape.update(node_shape)
+        # Define the size of each node type
+        n_size_base = node_size if isinstance(node_size, float) or isinstance(node_size, int) else 20
+        n_size = {k: n_size_base for k in n_colors}
+        if isinstance(node_size, dict):
+            n_size.update(node_size)
 
-        # Draw the typed dataset nodes of the network
-        nx.draw_networkx_nodes(graph, pos,
-                               nodelist=typed_dataset_names,
-                               node_color='blue',
-                               node_shape='o',
-                               node_size=node_size,
-                               alpha=1.0,
-                               font_family='STIXGeneral',
-                               label='Typed Dataset (%i)' % len(typed_dataset_names))
-        # Draw the untyped dataset nodes of the network
-        nx.draw_networkx_nodes(graph, pos,
-                               nodelist=untyped_dataset_names,
-                               node_color='lightblue',
-                               node_shape='o',
-                               node_size=node_size,
-                               alpha=1.0,
-                               font_family='STIXGeneral',
-                               label='Untyped Dataset (%i)' % len(untyped_dataset_names))
-        # Draw all groups with a neurodata type
-        nx.draw_networkx_nodes(graph, pos,
-                               nodelist=typed_group_names,
-                               node_color='red',
-                               node_shape='o',
-                               node_size=node_size,
-                               font_family='STIXGeneral',
-                               alpha=1.0,
-                               label='Typed Group (%i)' % len(typed_group_names))
-        # Draw all groups without a neurodata type
-        nx.draw_networkx_nodes(graph, pos,
-                               nodelist=untyped_group_names,
-                               node_color='orange',
-                               node_shape='o',
-                               node_size=node_size,
-                               font_family='STIXGeneral',
-                               alpha=1.0,
-                               label='Untyped Group (%i)' % len(untyped_group_names))
-        # Draw all attributes
-        nx.draw_networkx_nodes(graph, pos,
-                               nodelist=attribute_names,
-                               node_color='gray',
-                               node_shape='o',
-                               node_size=node_size,
-                               font_family='STIXGeneral',
-                               alpha=1.0,
-                               label='Attributes (%i)' % len(attribute_names))
-        # Draw all attributes
-        nx.draw_networkx_nodes(graph, pos,
-                               nodelist=links_names,
-                               node_color='white',
-                               node_shape='o',
-                               node_size=node_size,
-                               font_family='STIXGeneral',
-                               alpha=1.0,
-                               label='Links (%i)' % len(links_names))
+        # Draw all the nodes by type with the type-specific properties
+        for ntype in n_names.keys():
+            # Draw the typed dataset nodes of the network
+            nx.draw_networkx_nodes(graph, pos,
+                                   nodelist=n_names[ntype],
+                                   node_color=n_colors[ntype],
+                                   node_shape=n_shape[ntype],
+                                   node_size=n_size[ntype],
+                                   alpha=n_alpha[ntype],
+                                   font_family='STIXGeneral',
+                                   label=n_legend[ntype])
 
-        # Draw the network edges
+        # Define edge colors and alpha values
         rel_colors = {'shared_encoding': 'magenta',
                       'indexes_values': 'cyan',
                       'equivalent': 'gray',
@@ -706,10 +737,17 @@ class NXGraphHierarchyDescription(object):
                       'user': 'green',
                       'shared_ascending_encoding': 'blue',
                       'order': 'red',
-                      'managed_by': 'black',
-                      'attribute_of': 'steelblue'}
-        # nx.draw_networkx_edges(graph, pos)
-
+                      'managed_by': 'steelblue',
+                      'attribute_of': 'black'}
+        if isinstance(relationship_colors, str):
+            for k in rel_colors:
+                rel_colors[k] = relationship_colors
+        if relationship_colors is not None:
+            rel_colors.update(relationship_colors)
+        rel_base_alpha = 0.6 if not isinstance(relationship_alpha, float) else relationship_alpha
+        rel_alpha = {k: rel_base_alpha for k in rel_colors}
+        if isinstance(relationship_alpha, dict):
+            rel_alpha.update(relationship_alpha)
         # Resort edges by type
         edge_by_type = {}
         for r in data['relationships']:
@@ -717,22 +755,25 @@ class NXGraphHierarchyDescription(object):
                 edge_by_type[r['type']].append((r['source'], r['target']))
             else:
                 edge_by_type[r['type']] = [(r['source'], r['target'])]
-
+        # Determine the counts of relationships, i.e., how many relationships of each type do we have
         if relationship_counts:
             relationship_counts = {rt: len(rl) for rt, rl in edge_by_type.items()}
         else:
             relationship_counts = None
-
+        # Draw the network edges
         for rt, rl in edge_by_type.items():
             if relationship_types is None or rt in relationship_types:
-                nx.draw_networkx_edges(graph,
-                                       pos,
-                                       edgelist=rl,
-                                       width=1.0,
-                                       alpha=0.9 if rt != 'managed_by' else 0.6,
-                                       edge_color=rel_colors[rt],
-                                       label=rt if relationship_counts is None else (rt+' (%i)' % relationship_counts[rt])
-                                       )
+                try:
+                    nx.draw_networkx_edges(graph,
+                                           pos,
+                                           edgelist=rl,
+                                           width=1.0,
+                                           alpha=rel_alpha[rt],
+                                           edge_color=rel_colors[rt],
+                                           label=rt if relationship_counts is None else (rt+' (%i)' % relationship_counts[rt])
+                                           )
+                except KeyError:
+                    pass
 
         if show_labels:
             # Create node labels
@@ -929,6 +970,22 @@ class RSTDocument(object):
         """
         curr_indent = indent if indent is not None else self.default_indent
         return curr_indent + curr_indent.join(text.splitlines(True))
+
+    def add_list(self, content, indent=None, item_symbol='*'):
+        """
+        Recursively add a list with possibly multiple levels to the document
+        :param content: Nested list of strings with the content to be rendered
+        :param indent: Indent to be used for the list. Required for recursive indentation of lists.
+        """
+        indent = '' if indent is None else indent
+        for item in content:
+            if isinstance(item, list) or isinstance(item, tuple):
+                self.add_list(item,
+                              indent=indent+self.default_indent,
+                              item_symbol=item_symbol)
+            else:
+                self.document += ('%s%s %s%s' % (indent, item_symbol, item, self.newline))
+        self.document += self.newline
 
     def add_admonitions(self, atype, text):
         """
