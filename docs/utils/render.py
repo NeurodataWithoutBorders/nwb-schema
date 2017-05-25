@@ -112,6 +112,7 @@ class HierarchyDescription(dict):
          the standard spec datastructures provided by PyNWB.
     """
     RELATIONSHIP_TYPES = {'managed_by': 'Object managed by',
+                          'link': 'Object links to',
                           'attribute_of': 'Object is attribute of'}
 
     def __init__(self):
@@ -316,8 +317,22 @@ class HierarchyDescription(dict):
                 if 'neurodata_type' in obj.attrs.keys():
                     ntype = obj.attrs['neurodata_type'][:]
                 filestats.add_group(name=obj_name, neurodata_type=ntype)
-            # TODO Apperently visititems in h5py does not visit any links!!!!! We need to add logic to find those separately!
-
+                # visititems does not visit any links. We need to add them here
+                for objkey in obj.keys():
+                    objval = obj.get(objkey, getlink=True)
+                    if isinstance(objval, h5py.SoftLink) or isinstance(objval, h5py.ExternalLink):
+                        linktarget = obj[objkey]
+                        if 'neurodata_type' in linktarget.attrs.keys():
+                            targettype = linktarget.attrs['neurodata_type'][:]
+                        else:
+                            targettype = str(type(linktarget))
+                        linkname = os.path.join(obj_name, objkey)
+                        filestats.add_link(linkname, target_type=targettype)
+                        if isinstance(objval, h5py.SoftLink):
+                            filestats.add_relationship(source=linkname,
+                                                       target=objval.path,
+                                                       name=linkname,
+                                                       rtype='link')
             # Visit all attributes of the object
             for attr_name, attr_value in obj.attrs.items():
                 attr_path = os.path.join(obj_name, attr_name)
@@ -736,8 +751,9 @@ class NXGraphHierarchyDescription(object):
                       'indexes': 'orange',
                       'user': 'green',
                       'shared_ascending_encoding': 'blue',
-                      'order': 'red',
+                      'order': 'lightblue',
                       'managed_by': 'steelblue',
+                      'link': 'magenta',
                       'attribute_of': 'black'}
         if isinstance(relationship_colors, str):
             for k in rel_colors:
@@ -770,6 +786,8 @@ class NXGraphHierarchyDescription(object):
                                            width=1.0,
                                            alpha=rel_alpha[rt],
                                            edge_color=rel_colors[rt],
+                                           arrows=False,
+                                           style='solid' if rt != 'link' else 'dashed',
                                            label=rt if relationship_counts is None else (rt+' (%i)' % relationship_counts[rt])
                                            )
                 except KeyError:
