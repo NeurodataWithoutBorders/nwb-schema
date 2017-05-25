@@ -152,8 +152,8 @@ Finally, the name and location of output files can be customized as follows:
 * ```spec_output_src_filename```  Name of the file where the sources of the format spec go. NOTE: This file is only generated if spec_generate_src_file is enabled
 * ```spec_output_doc_type_hierarchy_filename```  Name of the file containing the type hierarchy. (Included in spec_output_doc_filename)
 
-
 """
+    return readme_txt
 
 #####################################################
 #  Create text for file describing RTD theme fixes
@@ -805,9 +805,13 @@ def write_index_rst(output, format_master, master, sphinx_master):
     outfile.write(get_index_rst(format_master=format_master))
     outfile.close()
 
-def write_readme():
-    pass
-    # TODO Add writing of the readme file and instruction of what to do next to the script
+def write_readme(output, custom_description, custom_release_notes, copy_utils):
+    outfilename = os.path.join(output, 'Readme.md')
+    outfile = open(outfilename, 'w')
+    outfile.write(get_readme(custom_description=custom_description,
+                             custom_release_notes=custom_release_notes,
+                             copy_utils=copy_utils))
+    outfile.close()
 
 #######################################
 #  Copy the utils and licences
@@ -869,7 +873,10 @@ def main():
                     sphinx_master=sphinx_master)
     if clargs['copy_utils']:
         copy_utils(output=clargs['output'])
-    write_readme()
+    write_readme(output=clargs['output'],
+                 custom_description=clargs['custom_description'],
+                 custom_release_notes=clargs['custom_release_notes'],
+                 copy_utils=clargs['copy_utils'])
 
 if __name__ == "__main__":
     main()
