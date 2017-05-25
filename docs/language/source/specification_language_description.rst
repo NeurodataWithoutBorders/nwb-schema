@@ -52,6 +52,18 @@ and subsequent sections.
     the Python programs can often easily be just rerun to generate updated
     versions of extension files (with little to no changes to the program itself).
 
+.. tip::
+
+    The ``nwb-schema`` repo includes tools to generate Sphinx documentation from
+    format specifications. In particular the tool ``utils/init_sphinx_extension_doc.py``
+    provides functionality to setup documentation for a format or extension defined
+    by a namespace (similar to the documentation for NWB core namespace at http://nwb-schema.readthedocs.io/en/latest/ ).
+    Use ``python init_sphinx_extension_doc.py --help`` to view the list
+    of options for generating the docs. The repo also includes the tool ``utils/generate_format_docs.py``
+    which is used for generating actual reStructuredText files and figures from YAML/JSON
+    specification sources.
+
+
 .. _sec-namespace-dec:
 
 Namespaces
