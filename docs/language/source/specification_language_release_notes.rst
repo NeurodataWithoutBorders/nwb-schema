@@ -42,6 +42,12 @@ Summary
         * ```unit``` keys from previous structured dimensions are now ```unit``` attributes on the datasets (i.e., all values in a dataset have the same units)
         * The length of the structs are used to define the lenght of the corresponding dimension as part of the ```shape``` key
         * ```alias``` for components of dimensiosn are currently encoded in the dimensions name.
+* Added support for default vs. fixed name for groups and datasets:
+     * Added ``default_name`` key for groups and dataset to allow the specification of default names for objects that can have user-defined names (in addition to fixed names via ``name``). Attributes can only have a fixed name since attributes can not have a neurodata_type and can, hence, only be identified via their fixed name.
+* Updated specification of fixed and default values for attributes to make the behavior of keys explicit:
+    * Specifying attribute values:
+        * Added ``default_value`` key for attributes to specify a default value for attributes
+        * Removed ``const`` key for attributes which was used to control the behavior of the ``value`` key, i.e., depending on the value of ``const`` the ``value`` key would either act as a fixed or default value. By adding the ``default_value`` key this behavior now becomes explicit and the behavior of the ``value`` key no longer depends on the value of another key (i.e., the ``const`` key)
 * Improved governance and reuse of specifications:
     * The core specification documents are no longer stored as .py files as part of the orignal Python API but are released as separate YAML (or optionally JSON) documents in a seperate repository
     * All documentation has been ported to use reStructuredText (RST) markup that can be easily translated to PDF, HTML, text, and many other forms.
