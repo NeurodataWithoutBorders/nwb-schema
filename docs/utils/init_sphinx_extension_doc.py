@@ -681,8 +681,14 @@ def define_cl_args():
                         help="Show the source specification as YAML.")
     parser.add_argument('--custom_description', dest='custom_description', action='store', type=str, required=False, default=None,
                         help="Name of the custom RST file where further text for the description of the extension should be added. If not set then the custom description section will be omitted.")
+    parser.add_argument('--external_description', dest='external_description', action='store', type=str, required=False, default=None,
+                        help='Path to the rst file that should be included via a reference in the description documentation. Typically this file will be provided alongside with the spec_dir.')
     parser.add_argument('--custom_release_notes', dest='custom_release_notes', action='store', type=str, required=False, default=None,
                         help="Name of the custom RST file where further text for release notes for the extension should be added. If not set then the custom release_notes section will be omitted.")
+    parser.add_argument('--external_release_notes', dest='external_release_notes', action='store', type=str, required=False, default=None,
+                        help='Path to the rst file that should be included via a reference in the release notes documentation. Typically this file will be provided alongside with the spec_dir.')
+    parser.add_argument('--build_docs', dest='build_docs', action='store_true', required=False, default=False,
+                        help='Generate the documents from the api and build the html docs immeditly after the repo has been initalized')
     return parser
 
 
@@ -762,8 +768,20 @@ def write_format_rst(output, format_master, project, spec_output_dir, output_mas
 ######################################
 #  Write the custom description file
 ######################################
-def write_custom_description(output, custom_description):
-    custom_description_text = \
+def write_custom_description(output, custom_description, external_description):
+    outfilename = os.path.join(output, 'source/%s' % custom_description if custom_description is not None else "format_description.rst")
+    custom_description_text = None
+    if external_description is not None:
+        custom_description_text = ".. include:: %s\n" % os.path.join(
+            os.path.relpath(os.path.dirname(os.path.abspath(external_description)),
+                            start=os.path.dirname(os.path.abspath(outfilename))),
+            os.path.basename(external_description))
+        #print(os.path.abspath(external_description))
+        #print(os.path.abspath(outfilename))
+        #print(os.path.relpath(os.path.abspath(external_description),
+        #                      start=os.path.dirname(os.path.abspath(outfilename))))
+    elif custom_description is not None:
+        custom_description_text = \
 """
 Overview
 ========
@@ -771,17 +789,27 @@ Overview
 .. note::
     Add the description of your format/extension here
 """
-    if custom_description is not None:
-        outfilename = os.path.join(output, 'source/%s' % custom_description)
+    if custom_description_text is not None:
         outfile = open(outfilename, 'w')
         outfile.write(custom_description_text)
         outfile.close()
+        return os.path.basename(outfilename)
+    else:
+        return None
 
 ######################################
 #  Write the custom description file
 ######################################
-def write_custom_release_notes(output, custom_release_notes):
-    custom_release_notes_text = \
+def write_custom_release_notes(output, custom_release_notes, external_release_notes):
+    outfilename = os.path.join(output, 'source/%s' % custom_release_notes if custom_release_notes is not None else 'format_release_notes.rst')
+    custom_release_notes_text = None
+    if external_release_notes is not None:
+        custom_release_notes_text = ".. include:: %s\n" % os.path.join(
+            os.path.relpath(os.path.dirname(os.path.abspath(external_release_notes)),
+                            start=os.path.dirname(os.path.abspath(outfilename))),
+            os.path.basename(external_release_notes))
+    elif custom_release_notes is not None:
+        custom_release_notes_text = \
 """
 Release Notes
 =============
@@ -789,11 +817,13 @@ Release Notes
 .. note::
     Add the release notes of your format/extension here
 """
-    if custom_release_notes is not None:
-        outfilename = os.path.join(output, 'source/%s' % custom_release_notes)
+    if custom_release_notes_text is not None:
         outfile = open(outfilename, 'w')
         outfile.write(custom_release_notes_text)
         outfile.close()
+        return os.path.basename(outfilename)
+    else:
+        return None
 
 #########################################################################
 #  Write custom index rst and delete the default one created by sphinx
@@ -805,6 +835,9 @@ def write_index_rst(output, format_master, master, sphinx_master):
     outfile.write(get_index_rst(format_master=format_master))
     outfile.close()
 
+#######################################
+#  Write the readme file
+#######################################
 def write_readme(output, custom_description, custom_release_notes, copy_utils):
     outfilename = os.path.join(output, 'Readme.md')
     outfile = open(outfilename, 'w')
@@ -856,17 +889,19 @@ def main():
     write_theme_overwrites(output=clargs['output'])
     write_custom_conf(output=clargs['output'])
     write_makefile(output=clargs['output'], utilsdir=clargs['utilsdir'].rstrip('/'))
-    write_custom_description(output=clargs['output'],
-                             custom_description=clargs['custom_description'])
-    write_custom_release_notes(output=clargs['output'],
-                               custom_release_notes=clargs['custom_release_notes'])
+    custom_description_file = write_custom_description(output=clargs['output'],
+                                                       custom_description=clargs['custom_description'],
+                                                       external_description=clargs['external_description'])
+    custom_release_notes_file = write_custom_release_notes(output=clargs['output'],
+                                                           custom_release_notes=clargs['custom_release_notes'],
+                                                           external_release_notes=clargs['external_release_notes'])
     write_format_rst(output=clargs['output'],
                      format_master=clargs['format_master'],
                      project=clargs['project'],
                      spec_output_dir=clargs['spec_output_dir'],
                      output_master=clargs['output_master'],
-                     custom_description=clargs['custom_description'],
-                     custom_release_notes=clargs['custom_release_notes'])
+                     custom_description=custom_description_file,
+                     custom_release_notes=custom_release_notes_file)
     write_index_rst(output=clargs['output'],
                     format_master=clargs['format_master'],
                     master=clargs['master'],
@@ -882,4 +917,4 @@ if __name__ == "__main__":
     main()
 
 
-#  python init_sphinx_extension_doc.py --project test --author "Oliver Ruebel" --version 1.2.3 --release alpha --master index.rst --output ../testproject --spec_dir ../../core --namespace_filename nwb.namespace.yaml --default_namespace core --custom_description format_description.rst --custom_release_notes format_release_notes.rst
+#  python init_sphinx_extension_doc.py --project test --author "Oliver Ruebel" --version 1.2.3 --release alpha --master index.rst --output ../testproject --spec_dir ../../core --namespace_filename nwb.namespace.yaml --default_namespace core --custom_description format_description.rst --custom_release_notes format_release_notes.rst --external_description ../format/source/format_description.rst --external_release_notes ../format/source/format_release_notes.rst
