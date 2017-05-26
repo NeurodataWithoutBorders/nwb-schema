@@ -1,4 +1,4 @@
-from subprocess import check_call, CalledProcessError, Popen
+from subprocess import check_call, CalledProcessError
 import argparse
 import os
 
