@@ -1,4 +1,4 @@
-from subprocess import check_call, CalledProcessError
+from subprocess import check_call, CalledProcessError, Popen
 import argparse
 import os
 
@@ -687,8 +687,6 @@ def define_cl_args():
                         help="Name of the custom RST file where further text for release notes for the extension should be added. If not set then the custom release_notes section will be omitted.")
     parser.add_argument('--external_release_notes', dest='external_release_notes', action='store', type=str, required=False, default=None,
                         help='Path to the rst file that should be included via a reference in the release notes documentation. Typically this file will be provided alongside with the spec_dir.')
-    parser.add_argument('--build_docs', dest='build_docs', action='store_true', required=False, default=False,
-                        help='Generate the documents from the api and build the html docs immeditly after the repo has been initalized')
     return parser
 
 
@@ -871,6 +869,7 @@ def copy_utils(output):
     except CalledProcessError:
         print("Copy of utils dir failed: " + str(command))
 
+
 #######################################
 #  MAIN
 #######################################
@@ -912,6 +911,7 @@ def main():
                  custom_description=clargs['custom_description'],
                  custom_release_notes=clargs['custom_release_notes'],
                  copy_utils=clargs['copy_utils'])
+
 
 if __name__ == "__main__":
     main()
