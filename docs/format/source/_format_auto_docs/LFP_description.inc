@@ -31,7 +31,7 @@ LFP
     +=========+=============+==============================================================================================================+
     | LFP     | group       | Top level group for LFP                                                                                      |
     +---------+-------------+--------------------------------------------------------------------------------------------------------------+
-    | .help   | attribute   | Value is LFP data from one or more channels. Filter properties should be noted in the ElectricalSeries       |
+    | .help   | attribute   | Value is 'LFP data from one or more channels. Filter properties should be noted in the ElectricalSeries'     |
     |         |             |                                                                                                              |
     |         |             | - **Data Type:** text                                                                                        |
     |         |             | - **Value:** LFP data from one or more channels. Filter properties should be noted in the ElectricalSeries   |
@@ -54,6 +54,7 @@ LFP
     +-----------------------------------------------------+---------+-------------------------------------------------------------------+
     | .<:ref:`ElectricalSeries <sec-ElectricalSeries>`>   | group   | ElectricalSeries object containing LFP data for one or channels   |
     |                                                     |         |                                                                   |
+    |                                                     |         | - **Quantity** 1 or more                                          |
     |                                                     |         | - **Extends:** :ref:`ElectricalSeries <sec-ElectricalSeries>`     |
     |                                                     |         |                                                                   |
     +-----------------------------------------------------+---------+-------------------------------------------------------------------+
@@ -66,5 +67,6 @@ ElectricalSeries object containing LFP data for one or channels
 
 
 
+- **Quantity** 1 or more
 - **Extends:** :ref:`ElectricalSeries <sec-ElectricalSeries>`
 

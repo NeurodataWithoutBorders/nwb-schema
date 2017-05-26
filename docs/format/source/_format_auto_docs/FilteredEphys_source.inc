@@ -13,9 +13,9 @@ FilteredEphys
     :linenos:
 
     attributes:
-    - doc: Value is Ephys data from one or more channels that is subjected to filtering,
+    - doc: Value is 'Ephys data from one or more channels that is subjected to filtering,
         such as for gamma or theta oscillations (LFP has its own interface). Filter properties
-        should be noted in the ElectricalSeries
+        should be noted in the ElectricalSeries'
       dtype: text
       name: help
       value: Ephys data from one or more channels that is subjected to filtering, such
@@ -33,6 +33,7 @@ FilteredEphys
     groups:
     - doc: ElectricalSeries object containing filtered electrophysiology data
       neurodata_type_inc: ElectricalSeries
+      quantity: +
     name: FilteredEphys
     neurodata_type_def: FilteredEphys
     neurodata_type_inc: Interface

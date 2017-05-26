@@ -31,7 +31,7 @@ EyeTracking
     +===============+=============+==================================================================+
     | EyeTracking   | group       | Top level group for EyeTracking                                  |
     +---------------+-------------+------------------------------------------------------------------+
-    | .help         | attribute   | Value is Eye-tracking data, representing direction of gaze       |
+    | .help         | attribute   | Value is 'Eye-tracking data, representing direction of gaze'     |
     |               |             |                                                                  |
     |               |             | - **Data Type:** text                                            |
     |               |             | - **Value:** Eye-tracking data, representing direction of gaze   |
@@ -54,6 +54,7 @@ EyeTracking
     +-----------------------------------------------+---------+--------------------------------------------------------------------+
     | .<:ref:`SpatialSeries <sec-SpatialSeries>`>   | group   | SpatialSeries object containing data measuring direction of gaze   |
     |                                               |         |                                                                    |
+    |                                               |         | - **Quantity** 0 or more                                           |
     |                                               |         | - **Extends:** :ref:`SpatialSeries <sec-SpatialSeries>`            |
     |                                               |         |                                                                    |
     +-----------------------------------------------+---------+--------------------------------------------------------------------+
@@ -66,5 +67,6 @@ SpatialSeries object containing data measuring direction of gaze
 
 
 
+- **Quantity** 0 or more
 - **Extends:** :ref:`SpatialSeries <sec-SpatialSeries>`
 

@@ -13,7 +13,7 @@ Position
     :linenos:
 
     attributes:
-    - doc: Value is Position data, whether along the x, xy or xyz axis
+    - doc: Value is 'Position data, whether along the x, xy or xyz axis'
       dtype: text
       name: help
       value: Position data, whether along the x, xy or xyz axis
@@ -21,6 +21,7 @@ Position
     groups:
     - doc: SpatialSeries object containing position data
       neurodata_type_inc: SpatialSeries
+      quantity: +
     name: Position
     neurodata_type_def: Position
     neurodata_type_inc: Interface

@@ -13,16 +13,19 @@ OptogeneticSeries
     :linenos:
 
     attributes:
-    - doc: Value is Optogenetic stimulus
+    - doc: Value is 'Optogenetic stimulus'
       dtype: text
       name: help
       value: Optogenetic stimulus
     datasets:
     - attributes:
-      - doc: Value is watt
+      - default_value: watt
+        doc: "The base unit of measure used to store data. This should be in the SI unit.\
+          \ COMMENT: This is the SI unit (when appropriate) of the stored data, such as\
+          \ Volts. If the actual data is stored in millivolts, the field 'conversion'\
+          \ below describes how to convert the data to the specified SI unit."
         dtype: text
         name: unit
-        value: watt
       dims:
       - num_times
       doc: Applied power for optogenetic stimulus.

@@ -31,7 +31,7 @@ RoiResponseSeries
     +================================+=============+=====================================================================================================================+
     | <RoiResponseSeries>            | group       | Top level group for <RoiResponseSeries>                                                                             |
     +--------------------------------+-------------+---------------------------------------------------------------------------------------------------------------------+
-    | .help                          | attribute   | Value is ROI responses over an imaging plane. Each row in data[] should correspond to the signal from one ROI       |
+    | .help                          | attribute   | Value is 'ROI responses over an imaging plane. Each row in data[] should correspond to the signal from one ROI'     |
     |                                |             |                                                                                                                     |
     |                                |             | - **Data Type:** text                                                                                               |
     |                                |             | - **Value:** ROI responses over an imaging plane. Each row in data[] should correspond to the signal from one ROI   |
@@ -44,16 +44,16 @@ RoiResponseSeries
     |                                |             | - **Shape:** [None]                                                                                                 |
     |                                |             |                                                                                                                     |
     +--------------------------------+-------------+---------------------------------------------------------------------------------------------------------------------+
+    | .segmentation_interface_path   | dataset     | Path to segmentation module.                                                                                        |
+    |                                |             |                                                                                                                     |
+    |                                |             | - **Data Type:** text                                                                                               |
+    |                                |             |                                                                                                                     |
+    +--------------------------------+-------------+---------------------------------------------------------------------------------------------------------------------+
     | .data                          | dataset     | Signals from ROIs                                                                                                   |
     |                                |             |                                                                                                                     |
     |                                |             | - **Data Type:** float32                                                                                            |
     |                                |             | - **Dimensions:** ['num_times', 'num_ROIs']                                                                         |
     |                                |             | - **Shape:** [None, None]                                                                                           |
-    |                                |             |                                                                                                                     |
-    +--------------------------------+-------------+---------------------------------------------------------------------------------------------------------------------+
-    | .segmentation_interface_path   | dataset     | Path to segmentation module.                                                                                        |
-    |                                |             |                                                                                                                     |
-    |                                |             | - **Data Type:** text                                                                                               |
     |                                |             |                                                                                                                     |
     +--------------------------------+-------------+---------------------------------------------------------------------------------------------------------------------+
     | .segmentation_interface        | link        | HDF5 link to image segmentation module defining ROIs.                                                               |

@@ -31,7 +31,7 @@ Fluorescence
     +================+=============+======================================================================================================================+
     | Fluorescence   | group       | Top level group for Fluorescence                                                                                     |
     +----------------+-------------+----------------------------------------------------------------------------------------------------------------------+
-    | .help          | attribute   | Value is Fluorescence over time of one or more ROIs. TimeSeries names should correspond to imaging plane names       |
+    | .help          | attribute   | Value is 'Fluorescence over time of one or more ROIs. TimeSeries names should correspond to imaging plane names'     |
     |                |             |                                                                                                                      |
     |                |             | - **Data Type:** text                                                                                                |
     |                |             | - **Value:** Fluorescence over time of one or more ROIs. TimeSeries names should correspond to imaging plane names   |
@@ -54,6 +54,7 @@ Fluorescence
     +-------------------------------------------------------+---------+-------------------------------------------------------------------+
     | .<:ref:`RoiResponseSeries <sec-RoiResponseSeries>`>   | group   | RoiResponseSeries object containing fluorescence data for a ROI   |
     |                                                       |         |                                                                   |
+    |                                                       |         | - **Quantity** 1 or more                                          |
     |                                                       |         | - **Extends:** :ref:`RoiResponseSeries <sec-RoiResponseSeries>`   |
     |                                                       |         |                                                                   |
     +-------------------------------------------------------+---------+-------------------------------------------------------------------+
@@ -66,5 +67,6 @@ RoiResponseSeries object containing fluorescence data for a ROI
 
 
 
+- **Quantity** 1 or more
 - **Extends:** :ref:`RoiResponseSeries <sec-RoiResponseSeries>`
 

@@ -31,17 +31,17 @@ FeatureExtraction
     +=====================+=============+===========================================================================+
     | FeatureExtraction   | group       | Top level group for FeatureExtraction                                     |
     +---------------------+-------------+---------------------------------------------------------------------------+
-    | .help               | attribute   | Value is Container for salient features of detected events                |
+    | .help               | attribute   | Value is 'Container for salient features of detected events'              |
     |                     |             |                                                                           |
     |                     |             | - **Data Type:** text                                                     |
     |                     |             | - **Value:** Container for salient features of detected events            |
     |                     |             |                                                                           |
     +---------------------+-------------+---------------------------------------------------------------------------+
-    | .features           | dataset     | Multi-dimensional array of features extracted from each event.            |
+    | .times              | dataset     | Times of events that features correspond to (can be a link).              |
     |                     |             |                                                                           |
-    |                     |             | - **Data Type:** float32                                                  |
-    |                     |             | - **Dimensions:** ['num_events', 'num_channels', 'num_features']          |
-    |                     |             | - **Shape:** [None, None, None]                                           |
+    |                     |             | - **Data Type:** float64!                                                 |
+    |                     |             | - **Dimensions:** ['num_events']                                          |
+    |                     |             | - **Shape:** [None]                                                       |
     |                     |             |                                                                           |
     +---------------------+-------------+---------------------------------------------------------------------------+
     | .description        | dataset     | Description of features (eg, "PC1") for each of the extracted features.   |
@@ -51,11 +51,11 @@ FeatureExtraction
     |                     |             | - **Shape:** [None]                                                       |
     |                     |             |                                                                           |
     +---------------------+-------------+---------------------------------------------------------------------------+
-    | .times              | dataset     | Times of events that features correspond to (can be a link).              |
+    | .features           | dataset     | Multi-dimensional array of features extracted from each event.            |
     |                     |             |                                                                           |
-    |                     |             | - **Data Type:** float64!                                                 |
-    |                     |             | - **Dimensions:** ['num_events']                                          |
-    |                     |             | - **Shape:** [None]                                                       |
+    |                     |             | - **Data Type:** float32                                                  |
+    |                     |             | - **Dimensions:** ['num_events', 'num_channels', 'num_features']          |
+    |                     |             | - **Shape:** [None, None, None]                                           |
     |                     |             |                                                                           |
     +---------------------+-------------+---------------------------------------------------------------------------+
     | .electrode_group    | link        | link to ElectrodeGroup group that generated this TimeSeries data          |

@@ -13,7 +13,7 @@ ImageMaskSeries
     :linenos:
 
     attributes:
-    - doc: Value is An alpha mask that is applied to a presented visual stimulus
+    - doc: Value is 'An alpha mask that is applied to a presented visual stimulus'
       dtype: text
       name: help
       value: An alpha mask that is applied to a presented visual stimulus

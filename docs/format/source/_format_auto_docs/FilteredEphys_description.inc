@@ -31,7 +31,7 @@ FilteredEphys
     +=================+=============+====================================================================================================================================================================================================================+
     | FilteredEphys   | group       | Top level group for FilteredEphys                                                                                                                                                                                  |
     +-----------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-    | .help           | attribute   | Value is Ephys data from one or more channels that is subjected to filtering, such as for gamma or theta oscillations (LFP has its own interface). Filter properties should be noted in the ElectricalSeries       |
+    | .help           | attribute   | Value is 'Ephys data from one or more channels that is subjected to filtering, such as for gamma or theta oscillations (LFP has its own interface). Filter properties should be noted in the ElectricalSeries'     |
     |                 |             |                                                                                                                                                                                                                    |
     |                 |             | - **Data Type:** text                                                                                                                                                                                              |
     |                 |             | - **Value:** Ephys data from one or more channels that is subjected to filtering, such as for gamma or theta oscillations (LFP has its own interface). Filter properties should be noted in the ElectricalSeries   |
@@ -54,6 +54,7 @@ FilteredEphys
     +-----------------------------------------------------+---------+----------------------------------------------------------------------+
     | .<:ref:`ElectricalSeries <sec-ElectricalSeries>`>   | group   | ElectricalSeries object containing filtered electrophysiology data   |
     |                                                     |         |                                                                      |
+    |                                                     |         | - **Quantity** 1 or more                                             |
     |                                                     |         | - **Extends:** :ref:`ElectricalSeries <sec-ElectricalSeries>`        |
     |                                                     |         |                                                                      |
     +-----------------------------------------------------+---------+----------------------------------------------------------------------+
@@ -66,5 +67,6 @@ ElectricalSeries object containing filtered electrophysiology data
 
 
 
+- **Quantity** 1 or more
 - **Extends:** :ref:`ElectricalSeries <sec-ElectricalSeries>`
 

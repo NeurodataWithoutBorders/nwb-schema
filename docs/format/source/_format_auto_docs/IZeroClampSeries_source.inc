@@ -13,8 +13,8 @@ IZeroClampSeries
     :linenos:
 
     attributes:
-    - doc: Value is Voltage from intracellular recordings when all current and amplifier
-        settings are off
+    - doc: Value is 'Voltage from intracellular recordings when all current and amplifier
+        settings are off'
       dtype: text
       name: help
       value: Voltage from intracellular recordings when all current and amplifier settings

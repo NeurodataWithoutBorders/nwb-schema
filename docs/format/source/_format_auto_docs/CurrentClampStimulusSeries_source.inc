@@ -13,7 +13,7 @@ CurrentClampStimulusSeries
     :linenos:
 
     attributes:
-    - doc: Value is Stimulus current applied during current clamp recording
+    - doc: Value is 'Stimulus current applied during current clamp recording'
       dtype: text
       name: help
       value: Stimulus current applied during current clamp recording

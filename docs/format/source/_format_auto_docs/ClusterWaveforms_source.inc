@@ -13,19 +13,13 @@ ClusterWaveforms
     :linenos:
 
     attributes:
-    - doc: Value is Mean waveform shape of clusters. Waveforms should be high-pass filtered
-        (ie, not the same bandpass filter used waveform analysis and clustering)
+    - doc: Value is 'Mean waveform shape of clusters. Waveforms should be high-pass filtered
+        (ie, not the same bandpass filter used waveform analysis and clustering)'
       dtype: text
       name: help
       value: Mean waveform shape of clusters. Waveforms should be high-pass filtered (ie,
         not the same bandpass filter used waveform analysis and clustering)
     datasets:
-    - doc: Filtering applied to data before generating mean/sd
-      dtype: text
-      name: waveform_filtering
-    - doc: Path to linked clustering interface
-      dtype: text
-      name: clustering_interface_path
     - dims:
       - num_clusters
       - num_samples
@@ -35,6 +29,12 @@ ClusterWaveforms
       shape:
       - null
       - null
+    - doc: Filtering applied to data before generating mean/sd
+      dtype: text
+      name: waveform_filtering
+    - doc: Path to linked clustering interface
+      dtype: text
+      name: clustering_interface_path
     - dims:
       - num_clusters
       - num_samples

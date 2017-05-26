@@ -37,7 +37,7 @@ OptogeneticStimulusSite
     |                             |           | - **Data Type:** text                           |
     |                             |           |                                                 |
     +-----------------------------+-----------+-------------------------------------------------+
-    | .excitation_lambda          | dataset   | Excitation wavelength                           |
+    | .location                   | dataset   | Location of stimulation site                    |
     |                             |           |                                                 |
     |                             |           | - **Data Type:** text                           |
     |                             |           |                                                 |
@@ -47,7 +47,7 @@ OptogeneticStimulusSite
     |                             |           | - **Data Type:** text                           |
     |                             |           |                                                 |
     +-----------------------------+-----------+-------------------------------------------------+
-    | .location                   | dataset   | Location of stimulation site                    |
+    | .excitation_lambda          | dataset   | Excitation wavelength                           |
     |                             |           |                                                 |
     |                             |           | - **Data Type:** text                           |
     |                             |           |                                                 |

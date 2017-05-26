@@ -31,7 +31,7 @@ CompassDirection
     +====================+=============+==================================================================================================================================================================================+
     | CompassDirection   | group       | Top level group for CompassDirection                                                                                                                                             |
     +--------------------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-    | .help              | attribute   | Value is Direction as measured radially. Spatial series reference frame should indicate which direction corresponds to zero and what is the direction of positive rotation       |
+    | .help              | attribute   | Value is 'Direction as measured radially. Spatial series reference frame should indicate which direction corresponds to zero and what is the direction of positive rotation'     |
     |                    |             |                                                                                                                                                                                  |
     |                    |             | - **Data Type:** text                                                                                                                                                            |
     |                    |             | - **Value:** Direction as measured radially. Spatial series reference frame should indicate which direction corresponds to zero and what is the direction of positive rotation   |
@@ -54,6 +54,7 @@ CompassDirection
     +-----------------------------------------------+---------+------------------------------------------------------------+
     | .<:ref:`SpatialSeries <sec-SpatialSeries>`>   | group   | SpatialSeries object containing direction of gaze travel   |
     |                                               |         |                                                            |
+    |                                               |         | - **Quantity** 0 or more                                   |
     |                                               |         | - **Extends:** :ref:`SpatialSeries <sec-SpatialSeries>`    |
     |                                               |         |                                                            |
     +-----------------------------------------------+---------+------------------------------------------------------------+
@@ -66,5 +67,6 @@ SpatialSeries object containing direction of gaze travel
 
 
 
+- **Quantity** 0 or more
 - **Extends:** :ref:`SpatialSeries <sec-SpatialSeries>`
 

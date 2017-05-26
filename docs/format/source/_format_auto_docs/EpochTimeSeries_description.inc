@@ -32,14 +32,14 @@ EpochTimeSeries
     +=====================+===========+========================================================================================+
     | <EpochTimeSeries>   | group     | Top level group for <EpochTimeSeries>                                                  |
     +---------------------+-----------+----------------------------------------------------------------------------------------+
-    | .count              | dataset   | Number of data samples available in this time series, during this epoch.               |
+    | .idx_start          | dataset   | Epoch's start index in TimeSeries data[] field.                                        |
+    |                     |           |                                                                                        |
+    |                     |           | **Comment:**  This can be used to calculate location in TimeSeries timestamp[] field   |
     |                     |           |                                                                                        |
     |                     |           | - **Data Type:** int32                                                                 |
     |                     |           |                                                                                        |
     +---------------------+-----------+----------------------------------------------------------------------------------------+
-    | .idx_start          | dataset   | Epoch's start index in TimeSeries data[] field.                                        |
-    |                     |           |                                                                                        |
-    |                     |           | **Comment:**  This can be used to calculate location in TimeSeries timestamp[] field   |
+    | .count              | dataset   | Number of data samples available in this time series, during this epoch.               |
     |                     |           |                                                                                        |
     |                     |           | - **Data Type:** int32                                                                 |
     |                     |           |                                                                                        |

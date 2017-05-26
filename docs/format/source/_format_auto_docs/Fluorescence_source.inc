@@ -13,8 +13,8 @@ Fluorescence
     :linenos:
 
     attributes:
-    - doc: Value is Fluorescence over time of one or more ROIs. TimeSeries names should
-        correspond to imaging plane names
+    - doc: Value is 'Fluorescence over time of one or more ROIs. TimeSeries names should
+        correspond to imaging plane names'
       dtype: text
       name: help
       value: Fluorescence over time of one or more ROIs. TimeSeries names should correspond
@@ -25,6 +25,7 @@ Fluorescence
     groups:
     - doc: RoiResponseSeries object containing fluorescence data for a ROI
       neurodata_type_inc: RoiResponseSeries
+      quantity: +
     name: Fluorescence
     neurodata_type_def: Fluorescence
     neurodata_type_inc: Interface

@@ -13,9 +13,9 @@ IndexSeries
     :linenos:
 
     attributes:
-    - doc: Value is A sequence that is generated from an existing image stack. Frames
+    - doc: Value is 'A sequence that is generated from an existing image stack. Frames
         can be presented in an arbitrary order. The data[] field stores frame number in
-        reference stack
+        reference stack'
       dtype: text
       name: help
       value: A sequence that is generated from an existing image stack. Frames can be

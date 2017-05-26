@@ -13,7 +13,7 @@ PatchClampSeries
     :linenos:
 
     attributes:
-    - doc: Value is Superclass definition for patch-clamp data
+    - doc: Value is 'Superclass definition for patch-clamp data'
       dtype: text
       name: help
       value: Superclass definition for patch-clamp data

@@ -13,20 +13,13 @@ AbstractFeatureSeries
     :linenos:
 
     attributes:
-    - doc: Value is Features of an applied stimulus. This is useful when storing the raw
-        stimulus is impractical
+    - doc: Value is 'Features of an applied stimulus. This is useful when storing the
+        raw stimulus is impractical'
       dtype: text
       name: help
       value: Features of an applied stimulus. This is useful when storing the raw stimulus
         is impractical
     datasets:
-    - dims:
-      - num_features
-      doc: Description of the features represented in TimeSeries::data.
-      dtype: text
-      name: features
-      shape:
-      - null
     - dims:
       - num_features
       doc: Units of each feature.
@@ -35,11 +28,21 @@ AbstractFeatureSeries
       quantity: '?'
       shape:
       - null
+    - dims:
+      - num_features
+      doc: Description of the features represented in TimeSeries::data.
+      dtype: text
+      name: features
+      shape:
+      - null
     - attributes:
-      - doc: Value is see 'feature_units'
+      - default_value: see 'feature_units'
+        doc: "The base unit of measure used to store data. This should be in the SI unit.\
+          \ COMMENT: This is the SI unit (when appropriate) of the stored data, such as\
+          \ Volts. If the actual data is stored in millivolts, the field 'conversion'\
+          \ below describes how to convert the data to the specified SI unit."
         dtype: None
         name: unit
-        value: see 'feature_units'
       dims:
       - num_times
       - num_features

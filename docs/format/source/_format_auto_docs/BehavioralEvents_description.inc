@@ -31,7 +31,7 @@ BehavioralEvents
     +====================+=============+===================================================================+
     | BehavioralEvents   | group       | Top level group for BehavioralEvents                              |
     +--------------------+-------------+-------------------------------------------------------------------+
-    | .help              | attribute   | Value is Position data, whether along the x, xy or xyz axis       |
+    | .help              | attribute   | Value is 'Position data, whether along the x, xy or xyz axis'     |
     |                    |             |                                                                   |
     |                    |             | - **Data Type:** text                                             |
     |                    |             | - **Value:** Position data, whether along the x, xy or xyz axis   |
@@ -54,6 +54,7 @@ BehavioralEvents
     +-----------------------------------------+---------+------------------------------------------------------------+
     | .<:ref:`TimeSeries <sec-TimeSeries>`>   | group   | TimeSeries object containing irregular behavioral events   |
     |                                         |         |                                                            |
+    |                                         |         | - **Quantity** 0 or more                                   |
     |                                         |         | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`          |
     |                                         |         |                                                            |
     +-----------------------------------------+---------+------------------------------------------------------------+
@@ -66,5 +67,6 @@ TimeSeries object containing irregular behavioral events
 
 
 
+- **Quantity** 0 or more
 - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`
 
