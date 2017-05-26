@@ -7,7 +7,7 @@ from ruamel import yaml
 #import pynwb
 
 from datetime import datetime
-from form.spec import Spec, AttributeSpec, LinkSpec, SpecNamespace
+from form.spec import Spec, AttributeSpec, LinkSpec, SpecNamespace, NamespaceBuilder
 from pynwb.spec import NWBDatasetSpec, NWBGroupSpec, NWBNamespace
 
 """
@@ -30,7 +30,7 @@ subspec_locations = {
 
 }
 
-device_spec = LinkSpec('the device that was used to record from this electrode group', 'Device', quantity='?')
+device_spec = LinkSpec('the device that was used to record from this electrode group', 'Device', name='device', quantity='?')
 alternate_defs = {
     'ElectrodeGroup': NWBGroupSpec('One of possibly many groups, one for each electrode group.',
             neurodata_type_def='ElectrodeGroup',
@@ -124,8 +124,6 @@ include_doc = {
 def build_group_helper(**kwargs):
     myname = kwargs.pop('name', NAME_WILDCARD)
     doc = kwargs.pop('doc')
-    #if doc is None:
-    #    print('no doc for name %s, ndt %s' % (myname, kwargs.get('neurodata_type_def', kwargs.get('neurodata_type'))), file=sys.stderr)
     ndt = kwargs.get('neurodata_type_def')
     if ndt is not None:
         kwargs['namespace'] = 'core'
@@ -141,8 +139,6 @@ def build_group(name, d, ndtype=None):
     quantity, myname = strip_characters(name)
     if myname[-1] == '/':
         myname = myname[:-1]
-    #if myname == NAME_WILDCARD:
-    #    required = False
     extends = None
     if 'merge' in d:
         merge = d.pop('merge')
@@ -151,7 +147,6 @@ def build_group(name, d, ndtype=None):
         base = base[1:end] if end > 0 else base
         #extends = all_specs[base]
         extends = base
-
 
     if myname[0] == '<':
         neurodata_type = ndmap.get(myname, ndmap_to_group.get(myname))
@@ -181,7 +176,7 @@ def build_group(name, d, ndtype=None):
         grp_spec = build_group_helper(name=myname, quantity=quantity, doc=desc, neurodata_type_def=neurodata_type, neurodata_type_inc=extends)
         add_attributes(grp_spec, attributes)
     elif neurodata_type is not None:
-        grp_spec = build_group_helper(name=myname, quantity=quantity, doc=desc, neurodata_type_def=neurodata_type, neurodata_type=extends)
+        grp_spec = build_group_helper(name=myname, quantity=quantity, doc=desc, neurodata_type_def=neurodata_type, neurodata_type_inc=extends)
     else:
         if myname == NAME_WILDCARD:
             grp_spec = build_group_helper(doc=desc, quantity=quantity, neurodata_type_inc=extends)
@@ -201,10 +196,15 @@ def build_group(name, d, ndtype=None):
 
         if tmp_name == 'include':
             ndt = next(iter(value.keys()))
+            quantity = None
+            if ndt[-1] != '/':
+                quantity = ndt[-1]
+                ndt = ndt[:-1]
             ndt = ndt[1:ndt.rfind('>')]
-            #grp_spec.include_neurodata_group(ndt)
             doc = include_doc.get(name, include_doc.get(neurodata_type))
             vargs = {'neurodata_type_inc': ndt}
+            if quantity is not None:
+                vargs['quantity'] = quantity
             if ndt is not None:
                 vargs['namespace'] = CORE_NAMESPACE
             grp_spec.add_group(doc, **vargs)
@@ -262,10 +262,7 @@ def build_group(name, d, ndtype=None):
                     grp_spec.set_group(subgrp)
 
     if neurodata_type is not None:
-        #print('adding %s to all_specs' % neurodata_type, file=sys.stderr)
         all_specs[neurodata_type] = grp_spec
-    #else:
-    #    print('no neurodata_type found for %s' % myname, file=sys.stderr)
     return grp_spec
 
 dataset_ndt = { '<image_X>': 'Image' }
@@ -348,17 +345,23 @@ def remap_keys(name, d):
     #    ret['name'] = name[:-1]
     #elif name[-1] == '^':
     #    ret['name'] = name[:-1]
-    ret['const'] = d.get('const', None)
     ret['dtype'] = d.get('data_type', 'None')
 
-    ret['value'] = d.get('value', None)
-    if isinstance(ret['value'], list) and len(ret['value']) == 1:
-        ret['value'] = ret['value'][0]
+    value = d.get('value', None)
+    if isinstance(value, list) and len(value) == 1:
+        value = value[0]
+
+    const = d.pop('const', False)
+    if value is not None:
+        if const:
+            ret['value'] = value
+        else:
+            ret['default_value'] = value
     def_doc = None
     ret['doc'] = d.get('description', def_doc)
 
-    if ret['value'] is not None:
-        ret['doc'] = "Value is %s" % str(ret['value'])
+    if 'value' in ret and ret['value'] is not None:
+        ret['doc'] = "Value is '%s'" % str(ret['value'])
     elif ret['doc'] is None:
         ret['doc'] = override_doc.get(ret['name'])
     ret['dims'] = d.get('dimensions', None)
@@ -432,6 +435,7 @@ def load_spec(spec):
     module_json =  spec['/processing/'].pop("<Module>/*")
 
     processing = build_group('processing', spec['/processing/'])
+    processing.add_group('Intermediate analysis of acquired data', neurodata_type_inc='Module', quantity='*')
     root.set_group(processing)
 
     stimulus = build_group('stimulus', spec['/stimulus/'])
@@ -453,15 +457,10 @@ def load_spec(spec):
     general.set_group(optophysiology)
 
     base = [
-        "<TimeSeries>/", #
-        "<Interface>/",
-        "<Module>/",
-    ]
-    base = [
         #build_group("<Module>/*", module_json, ndtype='Module'),
-        build_group(NAME_WILDCARD, module_json, ndtype='Module'),
         build_group(NAME_WILDCARD, spec["<TimeSeries>/"], ndtype='TimeSeries'),
-        build_group(NAME_WILDCARD, spec["<Interface>/"], ndtype='Interface')
+        build_group(NAME_WILDCARD, spec["<Interface>/"], ndtype='Interface'),
+        build_group(NAME_WILDCARD, module_json, ndtype='Module'),
     ]
 
 
@@ -578,6 +577,17 @@ with open(spec_path) as spec_in:
     #nwb_spec = load_iface(json.load(spec_in))
 
 
+ns = dict()
+ns['doc'] = 'NWB namespace'
+ns['name'] = CORE_NAMESPACE
+ns['full_name'] = 'NWB core'
+ns['version'] = '1.2.0'
+ns['date'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+ns['author'] = ['Keith Godfrey', 'Jeff Teeters', 'Oliver Ruebel', 'Andrew Tritt']
+ns['contact'] = ['keithg@alleninstitute.org', 'jteeters@berkeley.edu', 'oruebel@lbl.gov', 'ajtritt@lbl.gov']
+ns['namespace_cls'] = NWBNamespace
+ns_builder = NamespaceBuilder(ns.pop('doc'), ns.pop('name'), **ns)
+
 schema = list()
 
 order = [
@@ -596,22 +606,19 @@ order = [
 for key  in order:
     value = nwb_spec[key]
     filename = 'nwb.%s.yaml' % key
-    with open('%s/%s' % (outdir, filename), 'w') as out:
-        yaml.dump(json.loads(json.dumps(value)), out, default_flow_style=False)
-    schema.append({'source': filename})
+    for spec in value['groups']:
+        ns_builder.add_spec(filename, spec)
+    #with open('%s/%s' % (outdir, filename), 'w') as out:
+    #    yaml.dump(json.loads(json.dumps(value)), out, default_flow_style=False)
+    #schema.append({'source': filename})
 
-ns = dict()
-ns['doc'] = 'NWB namespace'
-ns['name'] = CORE_NAMESPACE
-ns['full_name'] = 'NWB core'
-ns['versions'] = '1.2.0'
-ns['date'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-ns['author'] = ['Keith Godfrey', 'Jeff Teeters', 'Oliver Ruebel', 'Andrew Tritt']
-ns['contact'] = ['keithg@alleninstitute.org', 'jteeters@berkeley.edu', 'oruebel@lbl.gov', 'ajtritt@lbl.gov']
-ns['schema'] = schema
-ns = {'namespaces': [SpecNamespace.build_namespace(**ns)]}
-with open('%s/nwb.namespace.yaml' % outdir, 'w') as out:
-    yaml.dump(json.loads(json.dumps(ns)), out, default_flow_style=False)
+ns_file = '%s/nwb.namespace.yaml' % outdir
+#ns['schema'] = schema
+#ns = {'namespaces': [SpecNamespace.build_namespace(**ns)]}
+#with open(ns_file, 'w') as out:
+#    yaml.dump(json.loads(json.dumps(ns)), out, default_flow_style=False)
+
+ns_builder.export(ns_file)
 
 
 import tarfile

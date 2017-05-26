@@ -1508,7 +1508,8 @@
                             "unit": {
                                 "value": "Seconds",
                                 "description": "The string \"Seconds\"COMMENT: All timestamps in the file are stored in seconds. Specifically, this is the number of seconds since the start of the experiment (i.e., since session_start_time)",
-                                "data_type": "text"
+                                "data_type": "text",
+                                "const": true
                             }
                         },
                         "description": "The timestamp of the first sample. COMMENT: When timestamps are uniformly spaced, the timestamp of the first sample can be specified and all subsequent ones calculated from the sampling rate.",
@@ -1551,7 +1552,8 @@
                             "unit": {
                                 "value": "Seconds",
                                 "description": "The string \"Seconds\" COMMENT: All timestamps in the file are stored in seconds. Specifically, this is the number of seconds since the start of the experiment (i.e., since session_start_time)",
-                                "data_type": "text"
+                                "data_type": "text",
+                                "const": true
                             }
                         },
                         "description": "Timestamps for samples stored in data.COMMENT: Timestamps here have all been corrected to the common experiment master-clock. Time is stored as seconds and all timestamps are relative to experiment start time.",
