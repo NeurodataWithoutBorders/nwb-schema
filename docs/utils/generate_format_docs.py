@@ -3,7 +3,8 @@ Generate figures and RST documents from the NWB YAML specification for the forma
 """
 
 # TODO In the type hierarchy section add a section to order types by based on which YAML file they appear in
-# TODO in the sections describing the different types add the name of the source YAML file
+# TODO In the sections describing the different types add the name of the source YAML file
+# TODO Add support for default_name once it is supported in the specification language
 
 
 #from pynwb.spec import SpecCatalog
@@ -192,8 +193,10 @@ def spec_prop_doc(spec, newline='\n', ignore_props=None):
             spec_prop_list.append('**Shape:** %s' % str(spec['shape']))
         if spec.get('required', None) is not None and 'required' not in ignore_keys:
             spec_prop_list.append('**Reuqired:** %s' % str(spec['required']))
-        if spec.get('value', None) is not None and 'valye' not in ignore_keys:
+        if spec.get('value', None) is not None and 'value' not in ignore_keys:
             spec_prop_list.append('**Value:** %s' % str(spec['value']))
+        if spec.get('default_value', None) is not None and 'default_value' not in ignore_keys:
+            spec_prop_list.append('**Default Value:** %s' % str(spec['default_value']))
     # Render the sepecification propoerties list
     spec_doc = ''
     if len(spec_prop_list) > 0:
