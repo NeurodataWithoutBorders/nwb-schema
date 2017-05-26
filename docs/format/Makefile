@@ -10,6 +10,8 @@ BUILDDIR       = _build
 SRCDIR         = ../src
 RSTDIR         = source
 PKGNAME        = pynwb
+UTILSDIR      = $(PWD)/../
+CONFDIR       = $(PWD)/source
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
@@ -170,7 +172,7 @@ doctest:
 	      "results in $(BUILDDIR)/doctest/output.txt."
 
 apidoc:
-	python ../utils/generate_format_docs.py
+	PYTHONPATH=$(UTILSDIR):$(CONFDIR):$(PYTHONPATH) python ../utils/generate_format_docs.py
 	@echo
 	@echo "Generate rst source files from NWB spec."
 

@@ -52,6 +52,18 @@ and subsequent sections.
     the Python programs can often easily be just rerun to generate updated
     versions of extension files (with little to no changes to the program itself).
 
+.. tip::
+
+    The ``nwb-schema`` repo includes tools to generate Sphinx documentation from
+    format specifications. In particular the tool ``utils/init_sphinx_extension_doc.py``
+    provides functionality to setup documentation for a format or extension defined
+    by a namespace (similar to the documentation for NWB core namespace at http://nwb-schema.readthedocs.io/en/latest/ ).
+    Use ``python init_sphinx_extension_doc.py --help`` to view the list
+    of options for generating the docs. The repo also includes the tool ``utils/generate_format_docs.py``
+    which is used for generating actual reStructuredText files and figures from YAML/JSON
+    specification sources.
+
+
 .. _sec-namespace-dec:
 
 Namespaces
@@ -189,6 +201,7 @@ Groups are specified as part of the top-level list or via lists stored in the ke
 
     # Group specification
     -   name: Optional fixed name for the group. A group must either have a unique neurodata_type or a unique, fixed name.
+        default_name: Default name for the group
         doc: Required description of the group
         neurodata_type_def: Optional new neurodata_type for the group
         neurodata_type_inc: Optional neurodata_type the group should inherit from
@@ -216,6 +229,16 @@ String with the optional fixed name for the group.
     Every group must have either a unique fixed ``name`` or a unique ``neurodata_type`` determined by
     (``neurodata_type_def`` and ``neurodata_type_inc``) to enable the unique
     identification of groups when stored on disk.
+
+``default_name``
+^^^^^^^^^^^^^^^^
+
+Default name of the group.
+
+.. note::
+
+    Only one of either ``name`` or ``default_name`` (or neither) should be specified as the fixed
+    name given by ``name`` would always overwrite the behavior of ``default_name``.
 
 ``doc``
 ^^^^^^^
@@ -451,6 +474,7 @@ The specification of an attributes is described in YAML as follows:
       shape: Optional list describing the allowed shape(s) of the data array stored by the attribute (default=None)
       required: Optional boolean indicating whether the attribute is required (default=True)
       value: Optional constant, fixed value for the attribute.
+      defautl_value: Optional default value for variable-valued attributes. Only one of value or default_value should be set.
     -
 
 Attribute specification keys
@@ -568,6 +592,17 @@ the attribute has a variable value to be determined by the user (or API) in acco
 the current data.
 
 
+``default_value``
+^^^^^^^^^^^^^^^^^
+
+Optional key specifying a default value for attributes that allow user-defined values. The
+default value is used in case that the user does not specify a specific value for the attribute.
+
+.. note::
+    Only one of either ``value`` or ``default_value`` should be specified (or neither) but never
+    both at the same time, as ``value`` would always overwrite the ``default_value``.
+
+
 .. _sec-link-spec:
 
 Links
@@ -618,7 +653,8 @@ The specification of a datasets is described in YAML as follows:
 .. code-block:: yaml
 
     - datasets:
-      - name: of the dataset
+      - name: fixed name of the dataset
+        default_name: default name of the dataset
         doc: Required description of the dataset
         neurodata_type_def: Optional new neurodata_type for the group
         neurodata_type_inc: Optional neurodata_type the group should inherit from
@@ -653,6 +689,16 @@ String with the optional fixed name for the dataset
 
     Every dataset must have either a unique fixed ``name`` or a unique ``neurodata_type`` to enable the unique
     identification of datasets when stored on disk.
+
+``default_name``
+^^^^^^^^^^^^^^^^
+
+Default name of the group.
+
+.. note::
+
+    Only one of either ``name`` or ``default_name`` (or neither) should be specified as the fixed
+    name given by ``name`` would always overwrite the behavior of ``default_name``.
 
 ``doc``
 ^^^^^^^

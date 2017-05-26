@@ -16,30 +16,41 @@ from itertools import chain
 import warnings
 import os
 import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")))
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../format/source")))
-from utils.render import RSTDocument, RSTTable, SpecFormatter
+#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")))
+#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../format/source")))
+try:
+    from utils.render import RSTDocument, RSTTable, SpecFormatter
+except ImportError:
+    from render import RSTDocument, RSTTable, SpecFormatter
+except ImportError:
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")))
+    from utils.render import RSTDocument, RSTTable, SpecFormatter
+    warnings.warn("The import path for utils/render may not be set properly")
 
 # Import settings from the configuration file
-from conf import spec_show_yaml_src, \
-    spec_show_json_src, \
-    spec_generate_src_file, \
-    spec_show_hierarchy_plots, \
-    spec_file_per_type, \
-    spec_show_subgroups_in_seperate_table, \
-    spec_appreviate_main_object_doc_in_tables, \
-    spec_show_title_for_tables, \
-    spec_table_depth_char, \
-    spec_add_latex_clearpage_after_ndt_sections, \
-    spec_resolve_type_inc, \
-    spec_output_dir, \
-    spec_input_spec_dir, \
-    spec_output_doc_filename, \
-    spec_output_src_filename, \
-    spec_output_master_filename, \
-    spec_output_doc_type_hierarchy_filename, \
-    spec_input_namespace_filename, \
-    spec_input_default_namespace
+try:
+    from conf import spec_show_yaml_src, \
+        spec_show_json_src, \
+        spec_generate_src_file, \
+        spec_show_hierarchy_plots, \
+        spec_file_per_type, \
+        spec_show_subgroups_in_seperate_table, \
+        spec_appreviate_main_object_doc_in_tables, \
+        spec_show_title_for_tables, \
+        spec_table_depth_char, \
+        spec_add_latex_clearpage_after_ndt_sections, \
+        spec_resolve_type_inc, \
+        spec_output_dir, \
+        spec_input_spec_dir, \
+        spec_output_doc_filename, \
+        spec_output_src_filename, \
+        spec_output_master_filename, \
+        spec_output_doc_type_hierarchy_filename, \
+        spec_input_namespace_filename, \
+        spec_input_default_namespace
+except ImportError:
+    print("Could not import SPHINX conf.py file. Please the the PYTHONPATH to the source directory where the conf.py file is located")
+    exit(0)
 
 try:
     from matplotlib import pyplot as plt
