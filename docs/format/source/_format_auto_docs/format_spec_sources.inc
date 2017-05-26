@@ -193,6 +193,12 @@ Data Processing Classes
 
     \clearpage \newpage
 
+.. include:: _format_auto_docs/EventDetection_source.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
 .. include:: _format_auto_docs/EventWaveform_source.inc
 
 .. raw:: latex
@@ -268,13 +274,31 @@ Data Processing Classes
 Other Types
 -----------
 
-.. include:: _format_auto_docs/EventDetection_source.inc
+.. include:: _format_auto_docs/IntracellularElectrode_source.inc
 
 .. raw:: latex
 
     \clearpage \newpage
 
-.. include:: _format_auto_docs/OptogeneticStimulusSite_source.inc
+.. include:: _format_auto_docs/Image_source.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/EpochTimeSeries_source.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/ElectrodeGroup_source.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/Device_source.inc
 
 .. raw:: latex
 
@@ -286,7 +310,25 @@ Other Types
 
     \clearpage \newpage
 
-.. include:: _format_auto_docs/Image_source.inc
+.. include:: _format_auto_docs/OptogeneticStimulusSite_source.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/ROI_source.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/CorrectedImageStack_source.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/SpecFile_source.inc
 
 .. raw:: latex
 
@@ -304,55 +346,13 @@ Other Types
 
     \clearpage \newpage
 
-.. include:: _format_auto_docs/Device_source.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/CorrectedImageStack_source.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/IntracellularElectrode_source.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/ROI_source.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/ElectrodeGroup_source.inc
+.. include:: _format_auto_docs/ImagingPlane_source.inc
 
 .. raw:: latex
 
     \clearpage \newpage
 
 .. include:: _format_auto_docs/SpikeUnit_source.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/EpochTimeSeries_source.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/SpecFile_source.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/ImagingPlane_source.inc
 
 .. raw:: latex
 

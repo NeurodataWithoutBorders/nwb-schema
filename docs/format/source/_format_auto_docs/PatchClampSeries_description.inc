@@ -31,7 +31,7 @@ PatchClampSeries
     +======================+=============+===============================================================================================================+
     | <PatchClampSeries>   | group       | Top level group for <PatchClampSeries>                                                                        |
     +----------------------+-------------+---------------------------------------------------------------------------------------------------------------+
-    | .help                | attribute   | Value is Superclass definition for patch-clamp data                                                           |
+    | .help                | attribute   | Value is 'Superclass definition for patch-clamp data'                                                         |
     |                      |             |                                                                                                               |
     |                      |             | - **Data Type:** text                                                                                         |
     |                      |             | - **Value:** Superclass definition for patch-clamp data                                                       |

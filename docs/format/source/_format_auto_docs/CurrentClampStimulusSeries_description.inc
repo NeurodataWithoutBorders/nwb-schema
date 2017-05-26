@@ -26,7 +26,7 @@ CurrentClampStimulusSeries
     +================================+=============+========================================================================+
     | <CurrentClampStimulusSeries>   | group       | Top level group for <CurrentClampStimulusSeries>                       |
     +--------------------------------+-------------+------------------------------------------------------------------------+
-    | .help                          | attribute   | Value is Stimulus current applied during current clamp recording       |
+    | .help                          | attribute   | Value is 'Stimulus current applied during current clamp recording'     |
     |                                |             |                                                                        |
     |                                |             | - **Data Type:** text                                                  |
     |                                |             | - **Value:** Stimulus current applied during current clamp recording   |

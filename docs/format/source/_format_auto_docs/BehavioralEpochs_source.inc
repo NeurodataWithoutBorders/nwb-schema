@@ -13,7 +13,7 @@ BehavioralEpochs
     :linenos:
 
     attributes:
-    - doc: Value is General container for storing behavorial epochs
+    - doc: Value is 'General container for storing behavorial epochs'
       dtype: text
       name: help
       value: General container for storing behavorial epochs
@@ -32,6 +32,7 @@ BehavioralEpochs
     groups:
     - doc: IntervalSeries object containing start and stop times of epochs
       neurodata_type_inc: IntervalSeries
+      quantity: '*'
     name: BehavioralEpochs
     neurodata_type_def: BehavioralEpochs
     neurodata_type_inc: Interface

@@ -31,7 +31,7 @@ EventWaveform
     +=================+=============+===========================================================================+
     | EventWaveform   | group       | Top level group for EventWaveform                                         |
     +-----------------+-------------+---------------------------------------------------------------------------+
-    | .help           | attribute   | Value is Waveform of detected extracellularly recorded spike events       |
+    | .help           | attribute   | Value is 'Waveform of detected extracellularly recorded spike events'     |
     |                 |             |                                                                           |
     |                 |             | - **Data Type:** text                                                     |
     |                 |             | - **Value:** Waveform of detected extracellularly recorded spike events   |
@@ -54,6 +54,7 @@ EventWaveform
     +-----------------------------------------------------+---------+---------------------------------------------------------------------+
     | .<:ref:`SpikeEventSeries <sec-SpikeEventSeries>`>   | group   | SpikeEventSeries object containing detected spike event waveforms   |
     |                                                     |         |                                                                     |
+    |                                                     |         | - **Quantity** 0 or more                                            |
     |                                                     |         | - **Extends:** :ref:`SpikeEventSeries <sec-SpikeEventSeries>`       |
     |                                                     |         |                                                                     |
     +-----------------------------------------------------+---------+---------------------------------------------------------------------+
@@ -66,5 +67,6 @@ SpikeEventSeries object containing detected spike event waveforms
 
 
 
+- **Quantity** 0 or more
 - **Extends:** :ref:`SpikeEventSeries <sec-SpikeEventSeries>`
 

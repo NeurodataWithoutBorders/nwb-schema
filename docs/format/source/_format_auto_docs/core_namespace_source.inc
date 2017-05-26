@@ -22,7 +22,6 @@ Namespace: NWB core
     - jteeters@berkeley.edu
     - oruebel@lbl.gov
     - ajtritt@lbl.gov
-    date: '2017-05-10 19:55:25'
     doc: NWB namespace
     full_name: NWB core
     name: core
@@ -38,5 +37,6 @@ Namespace: NWB core
     - source: nwb.ogen.yaml
     - source: nwb.ophys.yaml
     - source: nwb.retinotopy.yaml
+    version: 1.2.0
 
 

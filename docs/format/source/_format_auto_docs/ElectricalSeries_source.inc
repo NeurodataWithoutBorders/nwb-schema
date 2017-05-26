@@ -13,16 +13,19 @@ ElectricalSeries
     :linenos:
 
     attributes:
-    - doc: Value is Stores acquired voltage data from extracellular recordings
+    - doc: Value is 'Stores acquired voltage data from extracellular recordings'
       dtype: text
       name: help
       value: Stores acquired voltage data from extracellular recordings
     datasets:
     - attributes:
-      - doc: Value is volt
+      - default_value: volt
+        doc: "The base unit of measure used to store data. This should be in the SI unit.\
+          \ COMMENT: This is the SI unit (when appropriate) of the stored data, such as\
+          \ Volts. If the actual data is stored in millivolts, the field 'conversion'\
+          \ below describes how to convert the data to the specified SI unit."
         dtype: text
         name: unit
-        value: volt
       dims:
       - - num_times
       - - num_times

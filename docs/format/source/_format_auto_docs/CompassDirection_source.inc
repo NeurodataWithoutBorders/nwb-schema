@@ -13,9 +13,9 @@ CompassDirection
     :linenos:
 
     attributes:
-    - doc: Value is Direction as measured radially. Spatial series reference frame should
+    - doc: Value is 'Direction as measured radially. Spatial series reference frame should
         indicate which direction corresponds to zero and what is the direction of positive
-        rotation
+        rotation'
       dtype: text
       name: help
       value: Direction as measured radially. Spatial series reference frame should indicate
@@ -28,6 +28,7 @@ CompassDirection
     groups:
     - doc: SpatialSeries object containing direction of gaze travel
       neurodata_type_inc: SpatialSeries
+      quantity: '*'
     name: CompassDirection
     neurodata_type_def: CompassDirection
     neurodata_type_inc: Interface

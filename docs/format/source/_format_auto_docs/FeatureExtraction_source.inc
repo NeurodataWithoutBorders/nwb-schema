@@ -13,21 +13,17 @@ FeatureExtraction
     :linenos:
 
     attributes:
-    - doc: Value is Container for salient features of detected events
+    - doc: Value is 'Container for salient features of detected events'
       dtype: text
       name: help
       value: Container for salient features of detected events
     datasets:
     - dims:
       - num_events
-      - num_channels
-      - num_features
-      doc: Multi-dimensional array of features extracted from each event.
-      dtype: float32
-      name: features
+      doc: Times of events that features correspond to (can be a link).
+      dtype: float64!
+      name: times
       shape:
-      - null
-      - null
       - null
     - dims:
       - num_features
@@ -38,10 +34,14 @@ FeatureExtraction
       - null
     - dims:
       - num_events
-      doc: Times of events that features correspond to (can be a link).
-      dtype: float64!
-      name: times
+      - num_channels
+      - num_features
+      doc: Multi-dimensional array of features extracted from each event.
+      dtype: float32
+      name: features
       shape:
+      - null
+      - null
       - null
     doc: Features, such as PC1 and PC2, that are extracted from signals stored in a SpikeEvent
       TimeSeries or other source.

@@ -31,7 +31,7 @@ PupilTracking
     +=================+=============+===========================================================+
     | PupilTracking   | group       | Top level group for PupilTracking                         |
     +-----------------+-------------+-----------------------------------------------------------+
-    | .help           | attribute   | Value is Eye-tracking data, representing pupil size       |
+    | .help           | attribute   | Value is 'Eye-tracking data, representing pupil size'     |
     |                 |             |                                                           |
     |                 |             | - **Data Type:** text                                     |
     |                 |             | - **Value:** Eye-tracking data, representing pupil size   |
@@ -54,6 +54,7 @@ PupilTracking
     +-----------------------------------------+---------+---------------------------------------------------------------+
     | .<:ref:`TimeSeries <sec-TimeSeries>`>   | group   | TimeSeries object containing time series data on pupil size   |
     |                                         |         |                                                               |
+    |                                         |         | - **Quantity** 1 or more                                      |
     |                                         |         | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`             |
     |                                         |         |                                                               |
     +-----------------------------------------+---------+---------------------------------------------------------------+
@@ -66,5 +67,6 @@ TimeSeries object containing time series data on pupil size
 
 
 
+- **Quantity** 1 or more
 - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`
 

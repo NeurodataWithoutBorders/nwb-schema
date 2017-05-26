@@ -31,21 +31,30 @@ Clustering
     +==================+=============+================================================================================================================================+
     | Clustering       | group       | Top level group for Clustering                                                                                                 |
     +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------+
-    | .help            | attribute   | Value is Clustered spike data, whether from automatic clustering tools (eg, klustakwik) or as a result of manual sorting       |
+    | .help            | attribute   | Value is 'Clustered spike data, whether from automatic clustering tools (eg, klustakwik) or as a result of manual sorting'     |
     |                  |             |                                                                                                                                |
     |                  |             | - **Data Type:** text                                                                                                          |
     |                  |             | - **Value:** Clustered spike data, whether from automatic clustering tools (eg, klustakwik) or as a result of manual sorting   |
     |                  |             |                                                                                                                                |
     +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------+
-    | .description     | dataset     | Description of clusters or clustering, (e.g. cluster 0 is noise, clusters curated using Klusters, etc)                         |
+    | .num             | dataset     | Cluster number of each event                                                                                                   |
     |                  |             |                                                                                                                                |
-    |                  |             | - **Data Type:** text                                                                                                          |
+    |                  |             | - **Data Type:** int32                                                                                                         |
+    |                  |             | - **Dimensions:** ['num_events']                                                                                               |
+    |                  |             | - **Shape:** [None]                                                                                                            |
     |                  |             |                                                                                                                                |
     +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------+
     | .cluster_nums    | dataset     | List of cluster number that are a part of this set (cluster numbers can be non- continuous)                                    |
     |                  |             |                                                                                                                                |
     |                  |             | - **Data Type:** int32                                                                                                         |
     |                  |             | - **Dimensions:** ['num_clusters']                                                                                             |
+    |                  |             | - **Shape:** [None]                                                                                                            |
+    |                  |             |                                                                                                                                |
+    +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------+
+    | .times           | dataset     | Times of clustered events, in seconds. This may be a link to times field in associated FeatureExtraction module.               |
+    |                  |             |                                                                                                                                |
+    |                  |             | - **Data Type:** float64!                                                                                                      |
+    |                  |             | - **Dimensions:** ['num_events']                                                                                               |
     |                  |             | - **Shape:** [None]                                                                                                            |
     |                  |             |                                                                                                                                |
     +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------+
@@ -56,18 +65,9 @@ Clustering
     |                  |             | - **Shape:** [None]                                                                                                            |
     |                  |             |                                                                                                                                |
     +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------+
-    | .num             | dataset     | Cluster number of each event                                                                                                   |
+    | .description     | dataset     | Description of clusters or clustering, (e.g. cluster 0 is noise, clusters curated using Klusters, etc)                         |
     |                  |             |                                                                                                                                |
-    |                  |             | - **Data Type:** int32                                                                                                         |
-    |                  |             | - **Dimensions:** ['num_events']                                                                                               |
-    |                  |             | - **Shape:** [None]                                                                                                            |
-    |                  |             |                                                                                                                                |
-    +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------+
-    | .times           | dataset     | Times of clustered events, in seconds. This may be a link to times field in associated FeatureExtraction module.               |
-    |                  |             |                                                                                                                                |
-    |                  |             | - **Data Type:** float64!                                                                                                      |
-    |                  |             | - **Dimensions:** ['num_events']                                                                                               |
-    |                  |             | - **Shape:** [None]                                                                                                            |
+    |                  |             | - **Data Type:** text                                                                                                          |
     |                  |             |                                                                                                                                |
     +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------+
 

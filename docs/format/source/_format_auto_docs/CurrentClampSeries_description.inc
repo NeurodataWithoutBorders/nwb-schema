@@ -31,13 +31,13 @@ CurrentClampSeries
     +=============================+=============+==========================================================================+
     | <CurrentClampSeries>        | group       | Top level group for <CurrentClampSeries>                                 |
     +-----------------------------+-------------+--------------------------------------------------------------------------+
-    | .help                       | attribute   | Value is Voltage recorded from cell during current-clamp recording       |
+    | .help                       | attribute   | Value is 'Voltage recorded from cell during current-clamp recording'     |
     |                             |             |                                                                          |
     |                             |             | - **Data Type:** text                                                    |
     |                             |             | - **Value:** Voltage recorded from cell during current-clamp recording   |
     |                             |             |                                                                          |
     +-----------------------------+-------------+--------------------------------------------------------------------------+
-    | .bias_current               | dataset     | Unit: Amp                                                                |
+    | .capacitance_compensation   | dataset     | Unit: Farad                                                              |
     |                             |             |                                                                          |
     |                             |             | - **Quantity** 0 or 1                                                    |
     |                             |             | - **Data Type:** float32                                                 |
@@ -49,7 +49,7 @@ CurrentClampSeries
     |                             |             | - **Data Type:** float32                                                 |
     |                             |             |                                                                          |
     +-----------------------------+-------------+--------------------------------------------------------------------------+
-    | .capacitance_compensation   | dataset     | Unit: Farad                                                              |
+    | .bias_current               | dataset     | Unit: Amp                                                                |
     |                             |             |                                                                          |
     |                             |             | - **Quantity** 0 or 1                                                    |
     |                             |             | - **Data Type:** float32                                                 |

@@ -31,7 +31,7 @@ DfOverF
     +===========+=============+==============================================================================================================+
     | DfOverF   | group       | Top level group for DfOverF                                                                                  |
     +-----------+-------------+--------------------------------------------------------------------------------------------------------------+
-    | .help     | attribute   | Value is Df/f over time of one or more ROIs. TimeSeries names should correspond to imaging plane names       |
+    | .help     | attribute   | Value is 'Df/f over time of one or more ROIs. TimeSeries names should correspond to imaging plane names'     |
     |           |             |                                                                                                              |
     |           |             | - **Data Type:** text                                                                                        |
     |           |             | - **Value:** Df/f over time of one or more ROIs. TimeSeries names should correspond to imaging plane names   |
@@ -54,6 +54,7 @@ DfOverF
     +-------------------------------------------------------+---------+-------------------------------------------------------------------+
     | .<:ref:`RoiResponseSeries <sec-RoiResponseSeries>`>   | group   | RoiResponseSeries object containing dF/F for a ROI                |
     |                                                       |         |                                                                   |
+    |                                                       |         | - **Quantity** 0 or more                                          |
     |                                                       |         | - **Extends:** :ref:`RoiResponseSeries <sec-RoiResponseSeries>`   |
     |                                                       |         |                                                                   |
     +-------------------------------------------------------+---------+-------------------------------------------------------------------+
@@ -66,5 +67,6 @@ RoiResponseSeries object containing dF/F for a ROI
 
 
 
+- **Quantity** 0 or more
 - **Extends:** :ref:`RoiResponseSeries <sec-RoiResponseSeries>`
 

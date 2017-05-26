@@ -31,7 +31,7 @@ MotionCorrection
     +====================+=============+===============================================================================================+
     | MotionCorrection   | group       | Top level group for MotionCorrection                                                          |
     +--------------------+-------------+-----------------------------------------------------------------------------------------------+
-    | .help              | attribute   | Value is Image stacks whose frames have been shifted (registered) to account for motion       |
+    | .help              | attribute   | Value is 'Image stacks whose frames have been shifted (registered) to account for motion'     |
     |                    |             |                                                                                               |
     |                    |             | - **Data Type:** text                                                                         |
     |                    |             | - **Value:** Image stacks whose frames have been shifted (registered) to account for motion   |
@@ -112,26 +112,17 @@ One of possibly many.  Name should be informative.
     |                                           |         | - **Target Type** :ref:`ImageSeries <sec-ImageSeries>`                                                                                 |
     |                                           |         |                                                                                                                                        |
     +-------------------------------------------+---------+----------------------------------------------------------------------------------------------------------------------------------------+
-    | .<:ref:`TimeSeries <sec-TimeSeries>`>     | group   | Stores the x,y delta necessary to align each frame to the common coordinates, for example, to align each frame to a reference image.   |
-    |                                           |         |                                                                                                                                        |
-    |                                           |         | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`                                                                                      |
-    |                                           |         |                                                                                                                                        |
-    +-------------------------------------------+---------+----------------------------------------------------------------------------------------------------------------------------------------+
     | .<:ref:`ImageSeries <sec-ImageSeries>`>   | group   | Image stack with frames shifted to the common coordinates.                                                                             |
     |                                           |         |                                                                                                                                        |
     |                                           |         | - **Extends:** :ref:`ImageSeries <sec-ImageSeries>`                                                                                    |
     |                                           |         |                                                                                                                                        |
     +-------------------------------------------+---------+----------------------------------------------------------------------------------------------------------------------------------------+
+    | .<:ref:`TimeSeries <sec-TimeSeries>`>     | group   | Stores the x,y delta necessary to align each frame to the common coordinates, for example, to align each frame to a reference image.   |
+    |                                           |         |                                                                                                                                        |
+    |                                           |         | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`                                                                                      |
+    |                                           |         |                                                                                                                                        |
+    +-------------------------------------------+---------+----------------------------------------------------------------------------------------------------------------------------------------+
 
-
-Groups: <CorrectedImageStack>/<TimeSeries>
-""""""""""""""""""""""""""""""""""""""""""
-
-Stores the x,y delta necessary to align each frame to the common coordinates, for example, to align each frame to a reference image.
-
-
-
-- **Extends:** :ref:`TimeSeries <sec-TimeSeries>`
 
 Groups: <CorrectedImageStack>/<ImageSeries>
 """""""""""""""""""""""""""""""""""""""""""
@@ -141,4 +132,13 @@ Image stack with frames shifted to the common coordinates.
 
 
 - **Extends:** :ref:`ImageSeries <sec-ImageSeries>`
+
+Groups: <CorrectedImageStack>/<TimeSeries>
+""""""""""""""""""""""""""""""""""""""""""
+
+Stores the x,y delta necessary to align each frame to the common coordinates, for example, to align each frame to a reference image.
+
+
+
+- **Extends:** :ref:`TimeSeries <sec-TimeSeries>`
 

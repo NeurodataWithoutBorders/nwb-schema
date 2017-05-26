@@ -27,20 +27,6 @@ NWBFile
     +========================+===========+====================================================================================================================================================================================================================================================================+
     | root                   | group     | Top level group for root                                                                                                                                                                                                                                           |
     +------------------------+-----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-    | .nwb_version           | dataset   | File version string.                                                                                                                                                                                                                                               |
-    |                        |           |                                                                                                                                                                                                                                                                    |
-    |                        |           | **Comment:**  Eg, NWB-1.0.0. This will be the name of the format with trailing major, minor and patch numbers.                                                                                                                                                     |
-    |                        |           |                                                                                                                                                                                                                                                                    |
-    |                        |           | - **Data Type:** text                                                                                                                                                                                                                                              |
-    |                        |           |                                                                                                                                                                                                                                                                    |
-    +------------------------+-----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-    | .identifier            | dataset   | A unique text identifier for the file.                                                                                                                                                                                                                             |
-    |                        |           |                                                                                                                                                                                                                                                                    |
-    |                        |           | **Comment:**  Eg, concatenated lab name, file creation date/time and experimentalist, or a hash of these and/or other values. The goal is that the string should be unique to all other files.                                                                     |
-    |                        |           |                                                                                                                                                                                                                                                                    |
-    |                        |           | - **Data Type:** text                                                                                                                                                                                                                                              |
-    |                        |           |                                                                                                                                                                                                                                                                    |
-    +------------------------+-----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     | .file_create_date      | dataset   | Time file was created, UTC, and subsequent modifications to file.                                                                                                                                                                                                  |
     |                        |           |                                                                                                                                                                                                                                                                    |
     |                        |           | **Comment:**  Date + time, Use ISO format (eg, ISO 8601) or a format that is easy to read and unambiguous. File can be created after the experiment was run, so this may differ from experiment start time. Each modifictation to file adds new entry to array.    |
@@ -55,9 +41,23 @@ NWBFile
     |                        |           | - **Data Type:** text                                                                                                                                                                                                                                              |
     |                        |           |                                                                                                                                                                                                                                                                    |
     +------------------------+-----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | .nwb_version           | dataset   | File version string.                                                                                                                                                                                                                                               |
+    |                        |           |                                                                                                                                                                                                                                                                    |
+    |                        |           | **Comment:**  Eg, NWB-1.0.0. This will be the name of the format with trailing major, minor and patch numbers.                                                                                                                                                     |
+    |                        |           |                                                                                                                                                                                                                                                                    |
+    |                        |           | - **Data Type:** text                                                                                                                                                                                                                                              |
+    |                        |           |                                                                                                                                                                                                                                                                    |
+    +------------------------+-----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     | .session_start_time    | dataset   | Time of experiment/session start, UTC.                                                                                                                                                                                                                             |
     |                        |           |                                                                                                                                                                                                                                                                    |
     |                        |           | **Comment:**  Date + time, Use ISO format (eg, ISO 8601) or an easy-to-read and unambiguous format. All times stored in the file use this time as reference (ie, time zero)                                                                                        |
+    |                        |           |                                                                                                                                                                                                                                                                    |
+    |                        |           | - **Data Type:** text                                                                                                                                                                                                                                              |
+    |                        |           |                                                                                                                                                                                                                                                                    |
+    +------------------------+-----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | .identifier            | dataset   | A unique text identifier for the file.                                                                                                                                                                                                                             |
+    |                        |           |                                                                                                                                                                                                                                                                    |
+    |                        |           | **Comment:**  Eg, concatenated lab name, file creation date/time and experimentalist, or a hash of these and/or other values. The goal is that the string should be unique to all other files.                                                                     |
     |                        |           |                                                                                                                                                                                                                                                                    |
     |                        |           | - **Data Type:** text                                                                                                                                                                                                                                              |
     |                        |           |                                                                                                                                                                                                                                                                    |
@@ -168,16 +168,16 @@ Acquired images
     |                 |             | - **Neurodata Type:** Image                                                                                                               |
     |                 |             |                                                                                                                                           |
     +-----------------+-------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-    | ..format        | attribute   | Format of the image.                                                                                                                      |
+    | ..description   | attribute   | Human description of image.                                                                                                               |
     |                 |             |                                                                                                                                           |
-    |                 |             | **Comment:**  eg, jpg, png, mpeg                                                                                                          |
+    |                 |             | **Comment:**  If image is of slice data, include slice thickness and orientation, and reference to appropriate entry in /general/slices   |
     |                 |             |                                                                                                                                           |
     |                 |             | - **Data Type:** text                                                                                                                     |
     |                 |             |                                                                                                                                           |
     +-----------------+-------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-    | ..description   | attribute   | Human description of image.                                                                                                               |
+    | ..format        | attribute   | Format of the image.                                                                                                                      |
     |                 |             |                                                                                                                                           |
-    |                 |             | **Comment:**  If image is of slice data, include slice thickness and orientation, and reference to appropriate entry in /general/slices   |
+    |                 |             | **Comment:**  eg, jpg, png, mpeg                                                                                                          |
     |                 |             |                                                                                                                                           |
     |                 |             | - **Data Type:** text                                                                                                                     |
     |                 |             |                                                                                                                                           |
@@ -204,6 +204,7 @@ Acquired TimeSeries.
     +-----------------------------------------+---------+-----------------------------------------------------------------------+
     | .<:ref:`TimeSeries <sec-TimeSeries>`>   | group   | TimeSeries object containing data generated during data acquisition   |
     |                                         |         |                                                                       |
+    |                                         |         | - **Quantity** 0 or more                                              |
     |                                         |         | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`                     |
     |                                         |         |                                                                       |
     +-----------------------------------------+---------+-----------------------------------------------------------------------+
@@ -216,6 +217,7 @@ TimeSeries object containing data generated during data acquisition
 
 
 
+- **Quantity** 0 or more
 - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`
 
 Groups: /analysis
@@ -301,6 +303,34 @@ The home for processing Modules. These modules perform intermediate analysis of 
 **Additional Information:**  'Processing' refers to intermediate analysis of the acquired data to make it more amenable to scientific analysis. These are performed using Modules, as defined above. All modules reside in the processing group.
 
 
+
+.. tabularcolumns:: |p{4cm}|p{1cm}|p{10cm}|
+.. table:: Groups contained in <processing>
+    :class: longtable
+
+    +---------------------------------+---------+---------------------------------------------+
+    | Id                              | Type    | Description                                 |
+    +=================================+=========+=============================================+
+    | processing                      | group   | Top level group for processing              |
+    +---------------------------------+---------+---------------------------------------------+
+    | .<:ref:`Module <sec-Module>`>   | group   | Intermediate analysis of acquired data      |
+    |                                 |         |                                             |
+    |                                 |         | - **Quantity** 0 or more                    |
+    |                                 |         | - **Extends:** :ref:`Module <sec-Module>`   |
+    |                                 |         |                                             |
+    +---------------------------------+---------+---------------------------------------------+
+
+
+Groups: /processing/<Module>
+""""""""""""""""""""""""""""
+
+Intermediate analysis of acquired data
+
+
+
+- **Quantity** 0 or more
+- **Extends:** :ref:`Module <sec-Module>`
+
 Groups: /stimulus
 """""""""""""""""
 
@@ -349,6 +379,7 @@ Template stimuli.
     +-----------------------------------------+---------+--------------------------------------------------------------------+
     | .<:ref:`TimeSeries <sec-TimeSeries>`>   | group   | TimeSeries objects containing template data of presented stimuli   |
     |                                         |         |                                                                    |
+    |                                         |         | - **Quantity** 0 or more                                           |
     |                                         |         | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`                  |
     |                                         |         |                                                                    |
     +-----------------------------------------+---------+--------------------------------------------------------------------+
@@ -361,6 +392,7 @@ TimeSeries objects containing template data of presented stimuli
 
 
 
+- **Quantity** 0 or more
 - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`
 
 Groups: /stimulus/presentation
@@ -381,6 +413,7 @@ Stimuli presented during the experiment.
     +-----------------------------------------+---------+-----------------------------------------------------------+
     | .<:ref:`TimeSeries <sec-TimeSeries>`>   | group   | TimeSeries objects containing data of presented stimuli   |
     |                                         |         |                                                           |
+    |                                         |         | - **Quantity** 0 or more                                  |
     |                                         |         | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`         |
     |                                         |         |                                                           |
     +-----------------------------------------+---------+-----------------------------------------------------------+
@@ -393,6 +426,7 @@ TimeSeries objects containing data of presented stimuli
 
 
 
+- **Quantity** 0 or more
 - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`
 
 Groups: /general
@@ -415,44 +449,6 @@ Experimental metadata, including protocol, notes and description of hardware dev
     +===========================+=============+=================================================================================================================================+
     | general                   | group       | Top level group for general                                                                                                     |
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------------------------------+
-    | .protocol                 | dataset     | Experimetnal protocol, if applicable.                                                                                           |
-    |                           |             |                                                                                                                                 |
-    |                           |             | **Comment:**  E.g., include IACUC protocol                                                                                      |
-    |                           |             |                                                                                                                                 |
-    |                           |             | - **Quantity** 0 or 1                                                                                                           |
-    |                           |             | - **Data Type:** text                                                                                                           |
-    |                           |             |                                                                                                                                 |
-    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------------------------------+
-    | .experiment_description   | dataset     | General description of the experiment.                                                                                          |
-    |                           |             |                                                                                                                                 |
-    |                           |             | **Comment:**  Can be from Methods                                                                                               |
-    |                           |             |                                                                                                                                 |
-    |                           |             | - **Quantity** 0 or 1                                                                                                           |
-    |                           |             | - **Data Type:** text                                                                                                           |
-    |                           |             |                                                                                                                                 |
-    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------------------------------+
-    | .related_publications     | dataset     | Publication information.                                                                                                        |
-    |                           |             |                                                                                                                                 |
-    |                           |             | **Comment:**  PMID, DOI, URL, etc. If multiple, concatenate together and describe which is which. such as PMID, DOI, URL, etc   |
-    |                           |             |                                                                                                                                 |
-    |                           |             | - **Quantity** 0 or 1                                                                                                           |
-    |                           |             | - **Data Type:** text                                                                                                           |
-    |                           |             |                                                                                                                                 |
-    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------------------------------+
-    | .session_id               | dataset     | Lab-specific ID for the session.                                                                                                |
-    |                           |             |                                                                                                                                 |
-    |                           |             | **Comment:**  Only 1 session_id per file, with all time aligned to experiment start time.                                       |
-    |                           |             |                                                                                                                                 |
-    |                           |             | - **Quantity** 0 or 1                                                                                                           |
-    |                           |             | - **Data Type:** text                                                                                                           |
-    |                           |             |                                                                                                                                 |
-    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------------------------------+
-    | .lab                      | dataset     | Lab where experiment was performed                                                                                              |
-    |                           |             |                                                                                                                                 |
-    |                           |             | - **Quantity** 0 or 1                                                                                                           |
-    |                           |             | - **Data Type:** text                                                                                                           |
-    |                           |             |                                                                                                                                 |
-    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------------------------------+
     | .source_script            | dataset     | Script file used to create this NWB file.                                                                                       |
     |                           |             |                                                                                                                                 |
     |                           |             | - **Quantity** 0 or 1                                                                                                           |
@@ -464,7 +460,21 @@ Experimental metadata, including protocol, notes and description of hardware dev
     |                           |             | - **Data Type:** text                                                                                                           |
     |                           |             |                                                                                                                                 |
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------------------------------+
-    | .data_collection          | dataset     | Notes about data collection and analysis.                                                                                       |
+    | .notes                    | dataset     | Notes about the experiment.                                                                                                     |
+    |                           |             |                                                                                                                                 |
+    |                           |             | **Comment:**  Things particular to this experiment                                                                              |
+    |                           |             |                                                                                                                                 |
+    |                           |             | - **Quantity** 0 or 1                                                                                                           |
+    |                           |             | - **Data Type:** text                                                                                                           |
+    |                           |             |                                                                                                                                 |
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------------------------------+
+    | .lab                      | dataset     | Lab where experiment was performed                                                                                              |
+    |                           |             |                                                                                                                                 |
+    |                           |             | - **Quantity** 0 or 1                                                                                                           |
+    |                           |             | - **Data Type:** text                                                                                                           |
+    |                           |             |                                                                                                                                 |
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------------------------------+
+    | .stimulus                 | dataset     | Notes about stimuli, such as how and where presented.                                                                           |
     |                           |             |                                                                                                                                 |
     |                           |             | **Comment:**  Can be from Methods                                                                                               |
     |                           |             |                                                                                                                                 |
@@ -472,9 +482,21 @@ Experimental metadata, including protocol, notes and description of hardware dev
     |                           |             | - **Data Type:** text                                                                                                           |
     |                           |             |                                                                                                                                 |
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------------------------------+
-    | .surgery                  | dataset     | Narrative description about surgery/surgeries, including date(s) and who performed surgery.                                     |
+    | .slices                   | dataset     | Description of slices, including information about preparation thickness, orientation, temperature and bath solution            |
     |                           |             |                                                                                                                                 |
-    |                           |             | **Comment:**  Much can be copied from Methods                                                                                   |
+    |                           |             | - **Quantity** 0 or 1                                                                                                           |
+    |                           |             | - **Data Type:** text                                                                                                           |
+    |                           |             |                                                                                                                                 |
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------------------------------+
+    | .virus                    | dataset     | Information about virus(es) used in experiments, including virus ID, source, date made, injection location, volume, etc         |
+    |                           |             |                                                                                                                                 |
+    |                           |             | - **Quantity** 0 or 1                                                                                                           |
+    |                           |             | - **Data Type:** text                                                                                                           |
+    |                           |             |                                                                                                                                 |
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------------------------------+
+    | .data_collection          | dataset     | Notes about data collection and analysis.                                                                                       |
+    |                           |             |                                                                                                                                 |
+    |                           |             | **Comment:**  Can be from Methods                                                                                               |
     |                           |             |                                                                                                                                 |
     |                           |             | - **Quantity** 0 or 1                                                                                                           |
     |                           |             | - **Data Type:** text                                                                                                           |
@@ -502,15 +524,15 @@ Experimental metadata, including protocol, notes and description of hardware dev
     |                           |             | - **Data Type:** text                                                                                                           |
     |                           |             |                                                                                                                                 |
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------------------------------+
-    | .notes                    | dataset     | Notes about the experiment.                                                                                                     |
+    | .related_publications     | dataset     | Publication information.                                                                                                        |
     |                           |             |                                                                                                                                 |
-    |                           |             | **Comment:**  Things particular to this experiment                                                                              |
+    |                           |             | **Comment:**  PMID, DOI, URL, etc. If multiple, concatenate together and describe which is which. such as PMID, DOI, URL, etc   |
     |                           |             |                                                                                                                                 |
     |                           |             | - **Quantity** 0 or 1                                                                                                           |
     |                           |             | - **Data Type:** text                                                                                                           |
     |                           |             |                                                                                                                                 |
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------------------------------+
-    | .stimulus                 | dataset     | Notes about stimuli, such as how and where presented.                                                                           |
+    | .experiment_description   | dataset     | General description of the experiment.                                                                                          |
     |                           |             |                                                                                                                                 |
     |                           |             | **Comment:**  Can be from Methods                                                                                               |
     |                           |             |                                                                                                                                 |
@@ -518,13 +540,25 @@ Experimental metadata, including protocol, notes and description of hardware dev
     |                           |             | - **Data Type:** text                                                                                                           |
     |                           |             |                                                                                                                                 |
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------------------------------+
-    | .slices                   | dataset     | Description of slices, including information about preparation thickness, orientation, temperature and bath solution            |
+    | .surgery                  | dataset     | Narrative description about surgery/surgeries, including date(s) and who performed surgery.                                     |
+    |                           |             |                                                                                                                                 |
+    |                           |             | **Comment:**  Much can be copied from Methods                                                                                   |
     |                           |             |                                                                                                                                 |
     |                           |             | - **Quantity** 0 or 1                                                                                                           |
     |                           |             | - **Data Type:** text                                                                                                           |
     |                           |             |                                                                                                                                 |
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------------------------------+
-    | .virus                    | dataset     | Information about virus(es) used in experiments, including virus ID, source, date made, injection location, volume, etc         |
+    | .protocol                 | dataset     | Experimetnal protocol, if applicable.                                                                                           |
+    |                           |             |                                                                                                                                 |
+    |                           |             | **Comment:**  E.g., include IACUC protocol                                                                                      |
+    |                           |             |                                                                                                                                 |
+    |                           |             | - **Quantity** 0 or 1                                                                                                           |
+    |                           |             | - **Data Type:** text                                                                                                           |
+    |                           |             |                                                                                                                                 |
+    +---------------------------+-------------+---------------------------------------------------------------------------------------------------------------------------------+
+    | .session_id               | dataset     | Lab-specific ID for the session.                                                                                                |
+    |                           |             |                                                                                                                                 |
+    |                           |             | **Comment:**  Only 1 session_id per file, with all time aligned to experiment start time.                                       |
     |                           |             |                                                                                                                                 |
     |                           |             | - **Quantity** 0 or 1                                                                                                           |
     |                           |             | - **Data Type:** text                                                                                                           |
@@ -547,14 +581,14 @@ Experimental metadata, including protocol, notes and description of hardware dev
     |                        |         | - **Quantity** 0 or 1                                                      |
     |                        |         |                                                                            |
     +------------------------+---------+----------------------------------------------------------------------------+
-    | .specifications        | group   | Group for storing format specification files.                              |
+    | .devices               | group   | Description of hardware devices used during experiment.                    |
+    |                        |         |                                                                            |
+    |                        |         | **Comment:**  Eg, monitors, ADC boards, microscopes, etc                   |
     |                        |         |                                                                            |
     |                        |         | - **Quantity** 0 or 1                                                      |
     |                        |         |                                                                            |
     +------------------------+---------+----------------------------------------------------------------------------+
-    | .devices               | group   | Description of hardware devices used during experiment.                    |
-    |                        |         |                                                                            |
-    |                        |         | **Comment:**  Eg, monitors, ADC boards, microscopes, etc                   |
+    | .specifications        | group   | Group for storing format specification files.                              |
     |                        |         |                                                                            |
     |                        |         | - **Quantity** 0 or 1                                                      |
     |                        |         |                                                                            |
@@ -600,33 +634,13 @@ Information about the animal or person from which the data was measured.
     +================+===========+=================================================================================+
     | subject        | group     | Top level group for subject                                                     |
     +----------------+-----------+---------------------------------------------------------------------------------+
-    | .weight        | dataset   | Weight at time of experiment, at time of surgery and at other important times   |
-    |                |           |                                                                                 |
-    |                |           | - **Quantity** 0 or 1                                                           |
-    |                |           | - **Data Type:** text                                                           |
-    |                |           |                                                                                 |
-    +----------------+-----------+---------------------------------------------------------------------------------+
-    | .genotype      | dataset   | Genetic strain                                                                  |
-    |                |           |                                                                                 |
-    |                |           | **Comment:**  If absent, assume Wild Type (WT)                                  |
-    |                |           |                                                                                 |
-    |                |           | - **Quantity** 0 or 1                                                           |
-    |                |           | - **Data Type:** text                                                           |
-    |                |           |                                                                                 |
-    +----------------+-----------+---------------------------------------------------------------------------------+
     | .description   | dataset   | Description of subject and where subject came from (e.g., breeder, if animal)   |
     |                |           |                                                                                 |
     |                |           | - **Quantity** 0 or 1                                                           |
     |                |           | - **Data Type:** text                                                           |
     |                |           |                                                                                 |
     +----------------+-----------+---------------------------------------------------------------------------------+
-    | .species       | dataset   | Species of subject                                                              |
-    |                |           |                                                                                 |
-    |                |           | - **Quantity** 0 or 1                                                           |
-    |                |           | - **Data Type:** text                                                           |
-    |                |           |                                                                                 |
-    +----------------+-----------+---------------------------------------------------------------------------------+
-    | .subject_id    | dataset   | ID of animal/person used/participating in experiment (lab convention)           |
+    | .weight        | dataset   | Weight at time of experiment, at time of surgery and at other important times   |
     |                |           |                                                                                 |
     |                |           | - **Quantity** 0 or 1                                                           |
     |                |           | - **Data Type:** text                                                           |
@@ -644,47 +658,26 @@ Information about the animal or person from which the data was measured.
     |                |           | - **Data Type:** text                                                           |
     |                |           |                                                                                 |
     +----------------+-----------+---------------------------------------------------------------------------------+
-
-
-Groups: /general/specifications
-"""""""""""""""""""""""""""""""
-
-Group for storing format specification files.
-
-
-
-- **Quantity** 0 or 1
-
-
-.. tabularcolumns:: |p{4cm}|p{1cm}|p{10cm}|
-.. table:: Datasets, Links, and Attributes contained in ``/general/specifications``
-    :class: longtable
-
-    +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-    | Id               | Type        | Description                                                                                                                          |
-    +==================+=============+======================================================================================================================================+
-    | specifications   | group       | Top level group for specifications                                                                                                   |
-    +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-    | .<SpecFile>      | dataset     | Dataset for storing contents of a specification file for either the core format or an extension.  Name should match name of file.`   |
-    |                  |             |                                                                                                                                      |
-    |                  |             | - **Quantity** 0 or more                                                                                                             |
-    |                  |             | - **Data Type:** text                                                                                                                |
-    |                  |             | - **Neurodata Type:** SpecFile                                                                                                       |
-    |                  |             |                                                                                                                                      |
-    +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-    | ..help           | attribute   | Value is Contents of format specification file.                                                                                      |
-    |                  |             |                                                                                                                                      |
-    |                  |             | - **Data Type:** text                                                                                                                |
-    |                  |             | - **Value:** Contents of format specification file.                                                                                  |
-    |                  |             |                                                                                                                                      |
-    +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-    | ..namespaces     | attribute   | Namespaces defined in the file                                                                                                       |
-    |                  |             |                                                                                                                                      |
-    |                  |             | - **Data Type:** text                                                                                                                |
-    |                  |             | - **Dimensions:** ['num_namespaces']                                                                                                 |
-    |                  |             | - **Shape:** (None,)                                                                                                                 |
-    |                  |             |                                                                                                                                      |
-    +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------+
+    | .genotype      | dataset   | Genetic strain                                                                  |
+    |                |           |                                                                                 |
+    |                |           | **Comment:**  If absent, assume Wild Type (WT)                                  |
+    |                |           |                                                                                 |
+    |                |           | - **Quantity** 0 or 1                                                           |
+    |                |           | - **Data Type:** text                                                           |
+    |                |           |                                                                                 |
+    +----------------+-----------+---------------------------------------------------------------------------------+
+    | .subject_id    | dataset   | ID of animal/person used/participating in experiment (lab convention)           |
+    |                |           |                                                                                 |
+    |                |           | - **Quantity** 0 or 1                                                           |
+    |                |           | - **Data Type:** text                                                           |
+    |                |           |                                                                                 |
+    +----------------+-----------+---------------------------------------------------------------------------------+
+    | .species       | dataset   | Species of subject                                                              |
+    |                |           |                                                                                 |
+    |                |           | - **Quantity** 0 or 1                                                           |
+    |                |           | - **Data Type:** text                                                           |
+    |                |           |                                                                                 |
+    +----------------+-----------+---------------------------------------------------------------------------------+
 
 
 Groups: /general/devices
@@ -729,6 +722,47 @@ One of possibly many. Information about device and device description.
 
 - **Quantity** 0 or more
 - **Neurodata Type:** :ref:`Device <sec-Device>`
+
+Groups: /general/specifications
+"""""""""""""""""""""""""""""""
+
+Group for storing format specification files.
+
+
+
+- **Quantity** 0 or 1
+
+
+.. tabularcolumns:: |p{4cm}|p{1cm}|p{10cm}|
+.. table:: Datasets, Links, and Attributes contained in ``/general/specifications``
+    :class: longtable
+
+    +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------+
+    | Id               | Type        | Description                                                                                                                          |
+    +==================+=============+======================================================================================================================================+
+    | specifications   | group       | Top level group for specifications                                                                                                   |
+    +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------+
+    | .<SpecFile>      | dataset     | Dataset for storing contents of a specification file for either the core format or an extension.  Name should match name of file.`   |
+    |                  |             |                                                                                                                                      |
+    |                  |             | - **Quantity** 0 or more                                                                                                             |
+    |                  |             | - **Data Type:** text                                                                                                                |
+    |                  |             | - **Neurodata Type:** SpecFile                                                                                                       |
+    |                  |             |                                                                                                                                      |
+    +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------+
+    | ..help           | attribute   | A help statement                                                                                                                     |
+    |                  |             |                                                                                                                                      |
+    |                  |             | - **Data Type:** text                                                                                                                |
+    |                  |             | - **Default Value:** Contents of format specification file.                                                                          |
+    |                  |             |                                                                                                                                      |
+    +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------+
+    | ..namespaces     | attribute   | Namespaces defined in the file                                                                                                       |
+    |                  |             |                                                                                                                                      |
+    |                  |             | - **Data Type:** text                                                                                                                |
+    |                  |             | - **Dimensions:** ['num_namespaces']                                                                                                 |
+    |                  |             | - **Shape:** (None,)                                                                                                                 |
+    |                  |             |                                                                                                                                      |
+    +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------+
+
 
 Groups: /general/extracellular_ephys
 """"""""""""""""""""""""""""""""""""

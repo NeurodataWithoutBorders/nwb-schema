@@ -33,16 +33,16 @@ Image
     +================+=============+===========================================================================================================================================+
     | <Image>        | dataset     | Top level dataset for <Image>                                                                                                             |
     +----------------+-------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-    | .format        | attribute   | Format of the image.                                                                                                                      |
+    | .description   | attribute   | Human description of image.                                                                                                               |
     |                |             |                                                                                                                                           |
-    |                |             | **Comment:**  eg, jpg, png, mpeg                                                                                                          |
+    |                |             | **Comment:**  If image is of slice data, include slice thickness and orientation, and reference to appropriate entry in /general/slices   |
     |                |             |                                                                                                                                           |
     |                |             | - **Data Type:** text                                                                                                                     |
     |                |             |                                                                                                                                           |
     +----------------+-------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-    | .description   | attribute   | Human description of image.                                                                                                               |
+    | .format        | attribute   | Format of the image.                                                                                                                      |
     |                |             |                                                                                                                                           |
-    |                |             | **Comment:**  If image is of slice data, include slice thickness and orientation, and reference to appropriate entry in /general/slices   |
+    |                |             | **Comment:**  eg, jpg, png, mpeg                                                                                                          |
     |                |             |                                                                                                                                           |
     |                |             | - **Data Type:** text                                                                                                                     |
     |                |             |                                                                                                                                           |

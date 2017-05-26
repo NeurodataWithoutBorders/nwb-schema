@@ -14,15 +14,15 @@ OptogeneticStimulusSite
     - doc: Name of device in /general/devices
       dtype: text
       name: device
-    - doc: Excitation wavelength
-      dtype: text
-      name: excitation_lambda
-    - doc: Description of site
-      dtype: text
-      name: description
     - doc: Location of stimulation site
       dtype: text
       name: location
+    - doc: Description of site
+      dtype: text
+      name: description
+    - doc: Excitation wavelength
+      dtype: text
+      name: excitation_lambda
     doc: 'One of possibly many groups describing an optogenetic stimuluation site. COMMENT:
       Name is arbitrary but should be meaningful. Name is referenced by OptogeneticSeries'
     neurodata_type_def: OptogeneticStimulusSite

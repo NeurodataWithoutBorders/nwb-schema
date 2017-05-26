@@ -13,8 +13,8 @@ LFP
     :linenos:
 
     attributes:
-    - doc: Value is LFP data from one or more channels. Filter properties should be noted
-        in the ElectricalSeries
+    - doc: Value is 'LFP data from one or more channels. Filter properties should be noted
+        in the ElectricalSeries'
       dtype: text
       name: help
       value: LFP data from one or more channels. Filter properties should be noted in
@@ -25,6 +25,7 @@ LFP
     groups:
     - doc: ElectricalSeries object containing LFP data for one or channels
       neurodata_type_inc: ElectricalSeries
+      quantity: +
     name: LFP
     neurodata_type_def: LFP
     neurodata_type_inc: Interface

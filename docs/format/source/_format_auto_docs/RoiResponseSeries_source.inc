@@ -13,8 +13,8 @@ RoiResponseSeries
     :linenos:
 
     attributes:
-    - doc: Value is ROI responses over an imaging plane. Each row in data[] should correspond
-        to the signal from one ROI
+    - doc: Value is 'ROI responses over an imaging plane. Each row in data[] should correspond
+        to the signal from one ROI'
       dtype: text
       name: help
       value: ROI responses over an imaging plane. Each row in data[] should correspond
@@ -27,6 +27,9 @@ RoiResponseSeries
       name: roi_names
       shape:
       - null
+    - doc: Path to segmentation module.
+      dtype: text
+      name: segmentation_interface_path
     - dims:
       - num_times
       - num_ROIs
@@ -36,9 +39,6 @@ RoiResponseSeries
       shape:
       - null
       - null
-    - doc: Path to segmentation module.
-      dtype: text
-      name: segmentation_interface_path
     doc: ROI responses over an imaging plane. Each row in data[] should correspond to
       the signal from one ROI.
     links:

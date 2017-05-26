@@ -58,6 +58,7 @@ Module
     +---------------------------------------+---------+------------------------------------------------------------------+
     | .<:ref:`Interface <sec-Interface>`>   | group   | Interface objects containing data output from processing steps   |
     |                                       |         |                                                                  |
+    |                                       |         | - **Quantity** 0 or more                                         |
     |                                       |         | - **Extends:** :ref:`Interface <sec-Interface>`                  |
     |                                       |         |                                                                  |
     +---------------------------------------+---------+------------------------------------------------------------------+
@@ -70,5 +71,6 @@ Interface objects containing data output from processing steps
 
 
 
+- **Quantity** 0 or more
 - **Extends:** :ref:`Interface <sec-Interface>`
 

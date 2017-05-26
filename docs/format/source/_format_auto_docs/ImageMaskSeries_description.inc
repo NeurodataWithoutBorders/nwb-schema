@@ -31,7 +31,7 @@ ImageMaskSeries
     +============================+=============+=============================================================================+
     | <ImageMaskSeries>          | group       | Top level group for <ImageMaskSeries>                                       |
     +----------------------------+-------------+-----------------------------------------------------------------------------+
-    | .help                      | attribute   | Value is An alpha mask that is applied to a presented visual stimulus       |
+    | .help                      | attribute   | Value is 'An alpha mask that is applied to a presented visual stimulus'     |
     |                            |             |                                                                             |
     |                            |             | - **Data Type:** text                                                       |
     |                            |             | - **Value:** An alpha mask that is applied to a presented visual stimulus   |

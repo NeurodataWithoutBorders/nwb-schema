@@ -31,7 +31,7 @@ BehavioralEpochs
     +====================+=============+================================================================+
     | BehavioralEpochs   | group       | Top level group for BehavioralEpochs                           |
     +--------------------+-------------+----------------------------------------------------------------+
-    | .help              | attribute   | Value is General container for storing behavorial epochs       |
+    | .help              | attribute   | Value is 'General container for storing behavorial epochs'     |
     |                    |             |                                                                |
     |                    |             | - **Data Type:** text                                          |
     |                    |             | - **Value:** General container for storing behavorial epochs   |
@@ -54,6 +54,7 @@ BehavioralEpochs
     +-------------------------------------------------+---------+-------------------------------------------------------------------+
     | .<:ref:`IntervalSeries <sec-IntervalSeries>`>   | group   | IntervalSeries object containing start and stop times of epochs   |
     |                                                 |         |                                                                   |
+    |                                                 |         | - **Quantity** 0 or more                                          |
     |                                                 |         | - **Extends:** :ref:`IntervalSeries <sec-IntervalSeries>`         |
     |                                                 |         |                                                                   |
     +-------------------------------------------------+---------+-------------------------------------------------------------------+
@@ -66,5 +67,6 @@ IntervalSeries object containing start and stop times of epochs
 
 
 
+- **Quantity** 0 or more
 - **Extends:** :ref:`IntervalSeries <sec-IntervalSeries>`
 
