@@ -61,8 +61,8 @@ Summary
 Currently unsupported features that will be added in 1.2.1a
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* ```_required``` : The current API does not yet support specification and verification of
-* Relationships are currently available only through implicit concepts, i.e., by sharing dimension names and through implicite references as part of datasets. The goal is to provide explicit mechanisms for describing these as well as more advanced relationships.
+* ```_required``` : The current API does not yet support specification and verification of constraints expressed via ``_required``.
+* Relationships are currently available only through implicit concepts, i.e., by sharing dimension names and through implicit references as part of datasets. The goal is to provide explicit mechanisms for describing these as well as more advanced relationships.
 * ```dimensions_specification```: This will be implmented in later version likely through the use of relationships.
 
 
