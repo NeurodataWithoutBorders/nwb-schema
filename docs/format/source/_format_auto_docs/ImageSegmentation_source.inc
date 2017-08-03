@@ -13,8 +13,8 @@ ImageSegmentation
     :linenos:
 
     attributes:
-    - doc: Value is Stores groups of pixels that define regions of interest from one or
-        more imaging planes
+    - doc: Value is 'Stores groups of pixels that define regions of interest from one
+        or more imaging planes'
       dtype: text
       name: help
       value: Stores groups of pixels that define regions of interest from one or more
@@ -41,12 +41,16 @@ ImageSegmentation
         - null
       doc: Group name is human-readable description of imaging plane
       groups:
-      - doc: Stores image stacks segmentation mask apply to.
-        groups:
-        - doc: One or more image stacks that the masks apply to (can be one-element stack)
-          neurodata_type_inc: ImageSeries
-        name: reference_images
       - datasets:
+        - dims:
+          - num_x
+          - num_y
+          doc: ROI mask, represented in 2D ([y][x]) intensity image
+          dtype: float32
+          name: img_mask
+          shape:
+          - null
+          - null
         - dims:
           - num_pixels
           - '2'
@@ -66,18 +70,14 @@ ImageSegmentation
         - doc: Description of this ROI.
           dtype: text
           name: roi_description
-        - dims:
-          - num_x
-          - num_y
-          doc: ROI mask, represented in 2D ([y][x]) intensity image
-          dtype: float32
-          name: img_mask
-          shape:
-          - null
-          - null
         doc: Name of ROI
         neurodata_type_def: ROI
         quantity: '*'
+      - doc: Stores image stacks segmentation mask apply to.
+        groups:
+        - doc: One or more image stacks that the masks apply to (can be one-element stack)
+          neurodata_type_inc: ImageSeries
+        name: reference_images
       links:
       - doc: link to ImagingPlane group from which this TimeSeries data was generated
         name: imaging_plane

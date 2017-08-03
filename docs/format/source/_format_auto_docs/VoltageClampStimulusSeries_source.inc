@@ -13,7 +13,7 @@ VoltageClampStimulusSeries
     :linenos:
 
     attributes:
-    - doc: Value is Stimulus voltage applied during voltage clamp recording
+    - doc: Value is 'Stimulus voltage applied during voltage clamp recording'
       dtype: text
       name: help
       value: Stimulus voltage applied during voltage clamp recording

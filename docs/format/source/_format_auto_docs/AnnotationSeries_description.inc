@@ -31,7 +31,7 @@ AnnotationSeries
     +======================+=============+=============================================================+
     | <AnnotationSeries>   | group       | Top level group for <AnnotationSeries>                      |
     +----------------------+-------------+-------------------------------------------------------------+
-    | .help                | attribute   | Value is Time-stamped annotations about an experiment       |
+    | .help                | attribute   | Value is 'Time-stamped annotations about an experiment'     |
     |                      |             |                                                             |
     |                      |             | - **Data Type:** text                                       |
     |                      |             | - **Value:** Time-stamped annotations about an experiment   |
@@ -44,19 +44,19 @@ AnnotationSeries
     |                      |             | - **Shape:** [None]                                         |
     |                      |             |                                                             |
     +----------------------+-------------+-------------------------------------------------------------+
-    | ..resolution         | attribute   | Value is float('NaN')                                       |
+    | ..conversion         | attribute   | Value is 'float('NaN')'                                     |
     |                      |             |                                                             |
     |                      |             | - **Data Type:** None                                       |
     |                      |             | - **Value:** NaN                                            |
     |                      |             |                                                             |
     +----------------------+-------------+-------------------------------------------------------------+
-    | ..unit               | attribute   | Value is n/a                                                |
+    | ..unit               | attribute   | Value is 'n/a'                                              |
     |                      |             |                                                             |
     |                      |             | - **Data Type:** None                                       |
     |                      |             | - **Value:** n/a                                            |
     |                      |             |                                                             |
     +----------------------+-------------+-------------------------------------------------------------+
-    | ..conversion         | attribute   | Value is float('NaN')                                       |
+    | ..resolution         | attribute   | Value is 'float('NaN')'                                     |
     |                      |             |                                                             |
     |                      |             | - **Data Type:** None                                       |
     |                      |             | - **Value:** NaN                                            |

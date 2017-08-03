@@ -14,15 +14,15 @@ Summary
     * Removed key: ```merge```
     * Removed key: ```merge+```
     * Removed key: ```neurodata_type``` (replaced by ``neurodata_type_inc`` and ``neurodata_type_def``)
-    * Removed ```\_properties``` key. The primary use of the key is to define ``abstract`` specifications. However, as format specifications don't implement functions but define a layout of objects, any spec (even if marked abstract) could still be instantiated and used in practice withou limitations. Also, in the curretn instantiation of NWB-N this concept is only used for the ```Interface``` type and it is unclear why a user shoudl not be able to use it.  As such this concept was removed.
-    * To imporve compliance of NWB-N inheritance mechanism with establish object-oriented design concepts, the option of restricting the use of subclasses in place of parent classes was removed. A subclass is always also a valid instance of a parent class. This also improves consistentcy with the NWB-N principle of a minimal specification that allows users to add custom data. This change effects the ```allow_subclasses``` key of links and the subclasses option of the removed ```include`` key.
+    * Removed ```\_properties``` key. The primary use of the key is to define ``abstract`` specifications. However, as format specifications don't implement functions but define a layout of objects, any spec (even if marked abstract) could still be instantiated and used in practice without limitations. Also, in the current instantiation of NWB-N this concept is only used for the ```Interface``` type and it is unclear why a user should not be able to use it.  As such this concept was removed.
+    * To imporve compliance of NWB-N inheritance mechanism with established object-oriented design concepts, the option of restricting the use of subclasses in place of parent classes was removed. A subclass is always also a valid instance of a parent class. This also improves consistency with the NWB-N principle of a minimal specification that allows users to add custom data. This change affects the ```allow_subclasses``` key of links and the subclasses option of the removed ```include`` key.
 * Improve readability and avoid collision of keys by replacing values encoded in keys with dedicated key/value pairs:
     * Explicit encoding of names and types:
         * Added ```name``` key
         * Removed `<...>` name identifier (replaced by empty ```name``` key)
         * Added ```groups``` key  (previously groups were indicated by "/" as part of object's key)
         * Added ```datasets``` key (previously datasets were indicated by missing "/" as part of the object's key)
-        * Added ```links``` key (previously this was a key on the group and dataset specification). The concept of links is with this now  a first-class type (rather than being part of the group and dataset specs).
+        * Added ```links``` key (previously this was a key on the group and dataset specification). The concept of links is with this now a first-class type (rather than being part of the group and dataset specs).
         * Removed ``link`` key on datasets as this functionality is now fully implemented by the ``links`` key on groups.
         * Removed `/` flag in keys to identify groups (replaced by ```groups``` and ```datasets``` keys)
     * Explicit encoding of quantitites:
@@ -36,12 +36,12 @@ Summary
 * Improve direct interpretation of data:
     * Remove ```references``` key. This key was used in previous versions of NWB to generate implicit data structures where datasets store references to part of other metadata structures. These implicit data structures violate core NWB principles as they hinder the direct interpretation of data and cannot be interpreted (neither by human nor program) based on NWB files alone without having additional informaton about the specification as well. Through simple reorganization of metadata in the file, all instances of these implicit data structures were replaced by simple links that can be interpreted directly.
 * Simplified specification of dimensions for datasets:
-    * Rendamed ```dimensions``` key to ```dims```
+    * Renamed ```dimensions``` key to ```dims```
     * Added key ```shape``` to allow the specification of the shape of datasets
     * Removed custom keys for defining structures as types for dimensions:
         * ```unit``` keys from previous structured dimensions are now ```unit``` attributes on the datasets (i.e., all values in a dataset have the same units)
-        * The length of the structs are used to define the lenght of the corresponding dimension as part of the ```shape``` key
-        * ```alias``` for components of dimensiosn are currently encoded in the dimensions name.
+        * The length of the structs are used to define the length of the corresponding dimension as part of the ```shape``` key
+        * ```alias``` for components of dimensions are currently encoded in the dimensions name.
 * Added support for default vs. fixed name for groups and datasets:
      * Added ``default_name`` key for groups and dataset to allow the specification of default names for objects that can have user-defined names (in addition to fixed names via ``name``). Attributes can only have a fixed name since attributes can not have a neurodata_type and can, hence, only be identified via their fixed name.
 * Updated specification of fixed and default values for attributes to make the behavior of keys explicit:
@@ -53,7 +53,7 @@ Summary
     * All documentation has been ported to use reStructuredText (RST) markup that can be easily translated to PDF, HTML, text, and many other forms.
     * Documentation for source codes and the specification are auto-generated from source to ensure consistency between sources and the documentation
 * Avoid mixing of format specification and computations:
-    * Removed key ```autogen``` (without replacement). The autogen key was used to describe how to compute certain derived datasets from the file. This feature was problematic with respect to the guiding principles of NWB for a couple of reasons. E.g., the resulting datasets where often not interprepatable without the provenance of the autogeneration procedure and autogeneration itself and often described the generation of derived data structures to ease follow-on computations. Describing computations as part of a format specification is problematic as it creates strong dependencies and often unnecessary restrictions for use and analysis of data stored in the format. Also, the reorganization of metadata has eliminted the need for autogen in many cases. A autogen features is arguably the role of a data API or intermediary derived-quantity API (or specification), rather than a format specification.
+    * Removed key ```autogen``` (without replacement). The autogen key was used to describe how to compute certain derived datasets from the file. This feature was problematic with respect to the guiding principles of NWB for a couple of reasons. E.g., the resulting datasets were often not interpretable without the provenance of the autogeneration procedure and autogeneration itself and often described the generation of derived data structures to ease follow-on computations. Describing computations as part of a format specification is problematic as it creates strong dependencies and often unnecessary restrictions for use and analysis of data stored in the format. Also, the reorganization of metadata has eliminated the need for autogen in many cases. A autogen features is arguably the role of a data API or intermediary derived-quantity API (or specification), rather than a format specification.
 * Others:
     * Removed key ```\_\_custom``` (without replacement). This feature was used only in one location to provide user hints where custom data could be placed, however, since the NWB specification approach explicitly allows users to add custom data in any location, this information was not binding.
 
@@ -62,7 +62,7 @@ Currently unsupported features that will be added in 1.2.1a
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * ```_required``` : The current API does not yet support specification and verification of
-* Relationships are currently available only through implicit concepts, i.e., by sharing dimension names and through implicite references as part of datasets. The goal is to provide explicit mechanisms for describing these as well as more advanced relationships.
+* Relationships are currently available only through implicit concepts, i.e., by sharing dimension names and through implicit references as part of datasets. The goal is to provide explicit mechanisms for describing these as well as more advanced relationships.
 * ```dimensions_specification```: This will be implmented in later version likely through the use of relationships.
 
 
@@ -77,9 +77,9 @@ To improve human readability of the specification language, Version 1.2a now all
 
 Version 1.1c of the specification language used a ```quantity_flag``` as part of the name key of groups and datasets to the quantity
 
-* `!` – Required (this is the default)
-* `?`– Optional
-* `^` – Recommended
+* `!` - Required (this is the default)
+* `?`- Optional
+* `^` - Recommended
 * `+` - One or more instances of variable-named identifier required
 * `*` - Zero or more instances of variable-named identifier allowed
 
@@ -130,7 +130,7 @@ which are currently not supported, 2) they easily allow for colliding specificat
 to the same value, 3) they are hard to use and unsupported by HDF5. Currently structured dimensions, however, have
 been used only to encode information about "columns" of a dataset (e.g., to indicate that a dimension stores x,y,z
 values). This information was translated to the ``dims``` and ```shape``` keys and ```unit``` attributes.
-The more general concept of structured dimensions will be implemented in futrue versions of the specification language
+The more general concept of structured dimensions will be implemented in future versions of the specification language
 and format likely via support for modeling of relationships or support for table data structures (stay tuned)
 
 ```autogen```

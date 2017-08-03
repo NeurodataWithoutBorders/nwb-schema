@@ -31,7 +31,7 @@ IntervalSeries
     +====================+=============+===========================================================+
     | <IntervalSeries>   | group       | Top level group for <IntervalSeries>                      |
     +--------------------+-------------+-----------------------------------------------------------+
-    | .help              | attribute   | Value is Stores the start and stop times for events       |
+    | .help              | attribute   | Value is 'Stores the start and stop times for events'     |
     |                    |             |                                                           |
     |                    |             | - **Data Type:** text                                     |
     |                    |             | - **Value:** Stores the start and stop times for events   |
@@ -44,19 +44,19 @@ IntervalSeries
     |                    |             | - **Shape:** [None]                                       |
     |                    |             |                                                           |
     +--------------------+-------------+-----------------------------------------------------------+
-    | ..resolution       | attribute   | Value is float('NaN')                                     |
+    | ..conversion       | attribute   | Value is 'float('NaN')'                                   |
     |                    |             |                                                           |
     |                    |             | - **Data Type:** None                                     |
     |                    |             | - **Value:** NaN                                          |
     |                    |             |                                                           |
     +--------------------+-------------+-----------------------------------------------------------+
-    | ..unit             | attribute   | Value is n/a                                              |
+    | ..unit             | attribute   | Value is 'n/a'                                            |
     |                    |             |                                                           |
     |                    |             | - **Data Type:** None                                     |
     |                    |             | - **Value:** n/a                                          |
     |                    |             |                                                           |
     +--------------------+-------------+-----------------------------------------------------------+
-    | ..conversion       | attribute   | Value is float('NaN')                                     |
+    | ..resolution       | attribute   | Value is 'float('NaN')'                                   |
     |                    |             |                                                           |
     |                    |             | - **Data Type:** None                                     |
     |                    |             | - **Value:** NaN                                          |

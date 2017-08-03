@@ -31,7 +31,7 @@ UnitTimes
     +==============+=============+=========================================================+
     | UnitTimes    | group       | Top level group for UnitTimes                           |
     +--------------+-------------+---------------------------------------------------------+
-    | .help        | attribute   | Value is Estimated spike times from a single unit       |
+    | .help        | attribute   | Value is 'Estimated spike times from a single unit'     |
     |              |             |                                                         |
     |              |             | - **Data Type:** text                                   |
     |              |             | - **Value:** Estimated spike times from a single unit   |
@@ -87,9 +87,11 @@ Group storing times for <unit_N>.
     +=====================+===========+============================================================================================================================================================================+
     | <SpikeUnit>         | group     | Top level group for <SpikeUnit>                                                                                                                                            |
     +---------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-    | .unit_description   | dataset   | Description of the unit (eg, cell type).                                                                                                                                   |
+    | .times              | dataset   | Spike time for the units (exact or estimated)                                                                                                                              |
     |                     |           |                                                                                                                                                                            |
-    |                     |           | - **Data Type:** text                                                                                                                                                      |
+    |                     |           | - **Data Type:** float64!                                                                                                                                                  |
+    |                     |           | - **Dimensions:** ['num_events']                                                                                                                                           |
+    |                     |           | - **Shape:** [None]                                                                                                                                                        |
     |                     |           |                                                                                                                                                                            |
     +---------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     | .source             | dataset   | Name, path or description of where unit times originated. This is necessary only if the info here differs from or is more fine-grained than the interface's source field   |
@@ -98,11 +100,9 @@ Group storing times for <unit_N>.
     |                     |           | - **Data Type:** text                                                                                                                                                      |
     |                     |           |                                                                                                                                                                            |
     +---------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-    | .times              | dataset   | Spike time for the units (exact or estimated)                                                                                                                              |
+    | .unit_description   | dataset   | Description of the unit (eg, cell type).                                                                                                                                   |
     |                     |           |                                                                                                                                                                            |
-    |                     |           | - **Data Type:** float64!                                                                                                                                                  |
-    |                     |           | - **Dimensions:** ['num_events']                                                                                                                                           |
-    |                     |           | - **Shape:** [None]                                                                                                                                                        |
+    |                     |           | - **Data Type:** text                                                                                                                                                      |
     |                     |           |                                                                                                                                                                            |
     +---------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 

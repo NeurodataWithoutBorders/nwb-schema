@@ -26,7 +26,7 @@ VoltageClampStimulusSeries
     +================================+=============+========================================================================+
     | <VoltageClampStimulusSeries>   | group       | Top level group for <VoltageClampStimulusSeries>                       |
     +--------------------------------+-------------+------------------------------------------------------------------------+
-    | .help                          | attribute   | Value is Stimulus voltage applied during voltage clamp recording       |
+    | .help                          | attribute   | Value is 'Stimulus voltage applied during voltage clamp recording'     |
     |                                |             |                                                                        |
     |                                |             | - **Data Type:** text                                                  |
     |                                |             | - **Value:** Stimulus voltage applied during voltage clamp recording   |

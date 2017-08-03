@@ -31,7 +31,7 @@ BehavioralTimeSeries
     +========================+=============+====================================================================================+
     | BehavioralTimeSeries   | group       | Top level group for BehavioralTimeSeries                                           |
     +------------------------+-------------+------------------------------------------------------------------------------------+
-    | .help                  | attribute   | Value is General container for storing continuously sampled behavioral data.       |
+    | .help                  | attribute   | Value is 'General container for storing continuously sampled behavioral data.'     |
     |                        |             |                                                                                    |
     |                        |             | - **Data Type:** text                                                              |
     |                        |             | - **Value:** General container for storing continuously sampled behavioral data.   |
@@ -54,6 +54,7 @@ BehavioralTimeSeries
     +-----------------------------------------+---------+-----------------------------------------------------------+
     | .<:ref:`TimeSeries <sec-TimeSeries>`>   | group   | TimeSeries object containing continuous behavioral data   |
     |                                         |         |                                                           |
+    |                                         |         | - **Quantity** 0 or more                                  |
     |                                         |         | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`         |
     |                                         |         |                                                           |
     +-----------------------------------------+---------+-----------------------------------------------------------+
@@ -66,5 +67,6 @@ TimeSeries object containing continuous behavioral data
 
 
 
+- **Quantity** 0 or more
 - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`
 

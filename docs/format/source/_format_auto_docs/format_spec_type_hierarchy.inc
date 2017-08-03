@@ -8,7 +8,6 @@ Type Hierarchy
 * :ref:`ElectrodeGroup <sec-ElectrodeGroup>`
 * :ref:`Epoch <sec-Epoch>`
 * :ref:`EpochTimeSeries <sec-EpochTimeSeries>`
-* :ref:`EventDetection <sec-EventDetection>`
 * :ref:`Image <sec-Image>`
 * :ref:`ImagingPlane <sec-ImagingPlane>`
 * :ref:`Interface <sec-Interface>`
@@ -20,6 +19,7 @@ Type Hierarchy
    * :ref:`Clustering <sec-Clustering>`
    * :ref:`CompassDirection <sec-CompassDirection>`
    * :ref:`DfOverF <sec-DfOverF>`
+   * :ref:`EventDetection <sec-EventDetection>`
    * :ref:`EventWaveform <sec-EventWaveform>`
    * :ref:`EyeTracking <sec-EyeTracking>`
    * :ref:`FeatureExtraction <sec-FeatureExtraction>`

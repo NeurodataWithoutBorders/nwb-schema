@@ -31,18 +31,10 @@ OpticalSeries
     +===================+=============+========================================================================================================================+
     | <OpticalSeries>   | group       | Top level group for <OpticalSeries>                                                                                    |
     +-------------------+-------------+------------------------------------------------------------------------------------------------------------------------+
-    | .help             | attribute   | Value is Time-series image stack for optical recording or stimulus                                                     |
+    | .help             | attribute   | Value is 'Time-series image stack for optical recording or stimulus'                                                   |
     |                   |             |                                                                                                                        |
     |                   |             | - **Data Type:** text                                                                                                  |
     |                   |             | - **Value:** Time-series image stack for optical recording or stimulus                                                 |
-    |                   |             |                                                                                                                        |
-    +-------------------+-------------+------------------------------------------------------------------------------------------------------------------------+
-    | .field_of_view    | dataset     | Width, height and depto of image, or imaged area (meters).                                                             |
-    |                   |             |                                                                                                                        |
-    |                   |             | - **Quantity** 0 or 1                                                                                                  |
-    |                   |             | - **Data Type:** float32                                                                                               |
-    |                   |             | - **Dimensions:** [['width|height', 'width|height|depth']]                                                             |
-    |                   |             | - **Shape:** [2]                                                                                                       |
     |                   |             |                                                                                                                        |
     +-------------------+-------------+------------------------------------------------------------------------------------------------------------------------+
     | .orientation      | dataset     | Description of image relative to some reference frame (e.g., which way is up). Must also specify frame of reference.   |
@@ -55,6 +47,14 @@ OpticalSeries
     |                   |             |                                                                                                                        |
     |                   |             | - **Quantity** 0 or 1                                                                                                  |
     |                   |             | - **Data Type:** float32                                                                                               |
+    |                   |             |                                                                                                                        |
+    +-------------------+-------------+------------------------------------------------------------------------------------------------------------------------+
+    | .field_of_view    | dataset     | Width, height and depto of image, or imaged area (meters).                                                             |
+    |                   |             |                                                                                                                        |
+    |                   |             | - **Quantity** 0 or 1                                                                                                  |
+    |                   |             | - **Data Type:** float32                                                                                               |
+    |                   |             | - **Dimensions:** [['width|height', 'width|height|depth']]                                                             |
+    |                   |             | - **Shape:** [2]                                                                                                       |
     |                   |             |                                                                                                                        |
     +-------------------+-------------+------------------------------------------------------------------------------------------------------------------------+
 

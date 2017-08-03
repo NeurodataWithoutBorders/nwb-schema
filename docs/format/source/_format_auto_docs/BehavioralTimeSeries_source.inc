@@ -13,7 +13,7 @@ BehavioralTimeSeries
     :linenos:
 
     attributes:
-    - doc: Value is General container for storing continuously sampled behavioral data.
+    - doc: Value is 'General container for storing continuously sampled behavioral data.'
       dtype: text
       name: help
       value: General container for storing continuously sampled behavioral data.
@@ -22,6 +22,7 @@ BehavioralTimeSeries
     groups:
     - doc: TimeSeries object containing continuous behavioral data
       neurodata_type_inc: TimeSeries
+      quantity: '*'
     name: BehavioralTimeSeries
     neurodata_type_def: BehavioralTimeSeries
     neurodata_type_inc: Interface

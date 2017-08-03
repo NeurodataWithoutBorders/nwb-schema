@@ -26,24 +26,24 @@ SpecFile
 .. table:: Datasets, Links, and Attributes contained in <SpecFile>
     :class: longtable
 
-    +---------------+-------------+-------------------------------------------------------+
-    | Id            | Type        | Description                                           |
-    +===============+=============+=======================================================+
-    | <SpecFile>    | dataset     | Top level dataset for <SpecFile>                      |
-    +---------------+-------------+-------------------------------------------------------+
-    | .help         | attribute   | Value is Contents of format specification file.       |
-    |               |             |                                                       |
-    |               |             | - **Data Type:** text                                 |
-    |               |             | - **Value:** Contents of format specification file.   |
-    |               |             |                                                       |
-    +---------------+-------------+-------------------------------------------------------+
-    | .namespaces   | attribute   | Namespaces defined in the file                        |
-    |               |             |                                                       |
-    |               |             | - **Data Type:** text                                 |
-    |               |             | - **Dimensions:** ['num_namespaces']                  |
-    |               |             | - **Shape:** (None,)                                  |
-    |               |             |                                                       |
-    +---------------+-------------+-------------------------------------------------------+
+    +---------------+-------------+---------------------------------------------------------------+
+    | Id            | Type        | Description                                                   |
+    +===============+=============+===============================================================+
+    | <SpecFile>    | dataset     | Top level dataset for <SpecFile>                              |
+    +---------------+-------------+---------------------------------------------------------------+
+    | .help         | attribute   | A help statement                                              |
+    |               |             |                                                               |
+    |               |             | - **Data Type:** text                                         |
+    |               |             | - **Default Value:** Contents of format specification file.   |
+    |               |             |                                                               |
+    +---------------+-------------+---------------------------------------------------------------+
+    | .namespaces   | attribute   | Namespaces defined in the file                                |
+    |               |             |                                                               |
+    |               |             | - **Data Type:** text                                         |
+    |               |             | - **Dimensions:** ['num_namespaces']                          |
+    |               |             | - **Shape:** (None,)                                          |
+    |               |             |                                                               |
+    +---------------+-------------+---------------------------------------------------------------+
 
 
 

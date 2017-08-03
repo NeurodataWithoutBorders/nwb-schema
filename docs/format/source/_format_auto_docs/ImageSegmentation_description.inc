@@ -31,7 +31,7 @@ ImageSegmentation
     +=====================+=============+========================================================================================================+
     | ImageSegmentation   | group       | Top level group for ImageSegmentation                                                                  |
     +---------------------+-------------+--------------------------------------------------------------------------------------------------------+
-    | .help               | attribute   | Value is Stores groups of pixels that define regions of interest from one or more imaging planes       |
+    | .help               | attribute   | Value is 'Stores groups of pixels that define regions of interest from one or more imaging planes'     |
     |                     |             |                                                                                                        |
     |                     |             | - **Data Type:** text                                                                                  |
     |                     |             | - **Value:** Stores groups of pixels that define regions of interest from one or more imaging planes   |
@@ -120,14 +120,62 @@ Group name is human-readable description of imaging plane
     |                       |         | - **Target Type** :ref:`ImagingPlane <sec-ImagingPlane>`                   |
     |                       |         |                                                                            |
     +-----------------------+---------+----------------------------------------------------------------------------+
-    | .reference_images     | group   | Stores image stacks segmentation mask apply to.                            |
-    +-----------------------+---------+----------------------------------------------------------------------------+
     | .<ROI>                | group   | Name of ROI                                                                |
     |                       |         |                                                                            |
     |                       |         | - **Quantity** 0 or more                                                   |
     |                       |         | - **Neurodata Type:** :ref:`ROI <sec-ROI>`                                 |
     |                       |         |                                                                            |
     +-----------------------+---------+----------------------------------------------------------------------------+
+    | .reference_images     | group   | Stores image stacks segmentation mask apply to.                            |
+    +-----------------------+---------+----------------------------------------------------------------------------+
+
+
+Groups: <PlaneSegmentation>/<ROI>
+"""""""""""""""""""""""""""""""""
+
+Name of ROI
+
+
+
+- **Quantity** 0 or more
+- **Neurodata Type:** :ref:`ROI <sec-ROI>`
+
+
+.. tabularcolumns:: |p{4cm}|p{1cm}|p{10cm}|
+.. table:: Datasets, Links, and Attributes contained in ``<PlaneSegmentation>/<ROI>``
+    :class: longtable
+
+    +--------------------+-----------+--------------------------------------------------------+
+    | Id                 | Type      | Description                                            |
+    +====================+===========+========================================================+
+    | <ROI>              | group     | Top level group for <ROI>                              |
+    +--------------------+-----------+--------------------------------------------------------+
+    | .img_mask          | dataset   | ROI mask, represented in 2D ([y][x]) intensity image   |
+    |                    |           |                                                        |
+    |                    |           | - **Data Type:** float32                               |
+    |                    |           | - **Dimensions:** ['num_x', 'num_y']                   |
+    |                    |           | - **Shape:** [None, None]                              |
+    |                    |           |                                                        |
+    +--------------------+-----------+--------------------------------------------------------+
+    | .pix_mask          | dataset   | List of pixels (x,y) that compose the mask             |
+    |                    |           |                                                        |
+    |                    |           | - **Data Type:** uint16                                |
+    |                    |           | - **Dimensions:** ['num_pixels', '2']                  |
+    |                    |           | - **Shape:** [None, None]                              |
+    |                    |           |                                                        |
+    +--------------------+-----------+--------------------------------------------------------+
+    | .pix_mask_weight   | dataset   | Weight of each pixel listed in pix_mask                |
+    |                    |           |                                                        |
+    |                    |           | - **Data Type:** float32                               |
+    |                    |           | - **Dimensions:** ['num_pixels']                       |
+    |                    |           | - **Shape:** [None]                                    |
+    |                    |           |                                                        |
+    +--------------------+-----------+--------------------------------------------------------+
+    | .roi_description   | dataset   | Description of this ROI.                               |
+    |                    |           |                                                        |
+    |                    |           | - **Data Type:** text                                  |
+    |                    |           |                                                        |
+    +--------------------+-----------+--------------------------------------------------------+
 
 
 Groups: <PlaneSegmentation>/reference_images
@@ -161,52 +209,4 @@ One or more image stacks that the masks apply to (can be one-element stack)
 
 
 - **Extends:** :ref:`ImageSeries <sec-ImageSeries>`
-
-Groups: <PlaneSegmentation>/<ROI>
-"""""""""""""""""""""""""""""""""
-
-Name of ROI
-
-
-
-- **Quantity** 0 or more
-- **Neurodata Type:** :ref:`ROI <sec-ROI>`
-
-
-.. tabularcolumns:: |p{4cm}|p{1cm}|p{10cm}|
-.. table:: Datasets, Links, and Attributes contained in ``<PlaneSegmentation>/<ROI>``
-    :class: longtable
-
-    +--------------------+-----------+--------------------------------------------------------+
-    | Id                 | Type      | Description                                            |
-    +====================+===========+========================================================+
-    | <ROI>              | group     | Top level group for <ROI>                              |
-    +--------------------+-----------+--------------------------------------------------------+
-    | .pix_mask          | dataset   | List of pixels (x,y) that compose the mask             |
-    |                    |           |                                                        |
-    |                    |           | - **Data Type:** uint16                                |
-    |                    |           | - **Dimensions:** ['num_pixels', '2']                  |
-    |                    |           | - **Shape:** [None, None]                              |
-    |                    |           |                                                        |
-    +--------------------+-----------+--------------------------------------------------------+
-    | .pix_mask_weight   | dataset   | Weight of each pixel listed in pix_mask                |
-    |                    |           |                                                        |
-    |                    |           | - **Data Type:** float32                               |
-    |                    |           | - **Dimensions:** ['num_pixels']                       |
-    |                    |           | - **Shape:** [None]                                    |
-    |                    |           |                                                        |
-    +--------------------+-----------+--------------------------------------------------------+
-    | .roi_description   | dataset   | Description of this ROI.                               |
-    |                    |           |                                                        |
-    |                    |           | - **Data Type:** text                                  |
-    |                    |           |                                                        |
-    +--------------------+-----------+--------------------------------------------------------+
-    | .img_mask          | dataset   | ROI mask, represented in 2D ([y][x]) intensity image   |
-    |                    |           |                                                        |
-    |                    |           | - **Data Type:** float32                               |
-    |                    |           | - **Dimensions:** ['num_x', 'num_y']                   |
-    |                    |           | - **Shape:** [None, None]                              |
-    |                    |           |                                                        |
-    +--------------------+-----------+--------------------------------------------------------+
-
 

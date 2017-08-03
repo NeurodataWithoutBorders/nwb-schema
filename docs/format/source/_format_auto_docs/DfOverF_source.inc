@@ -13,8 +13,8 @@ DfOverF
     :linenos:
 
     attributes:
-    - doc: Value is Df/f over time of one or more ROIs. TimeSeries names should correspond
-        to imaging plane names
+    - doc: Value is 'Df/f over time of one or more ROIs. TimeSeries names should correspond
+        to imaging plane names'
       dtype: text
       name: help
       value: Df/f over time of one or more ROIs. TimeSeries names should correspond to
@@ -24,6 +24,7 @@ DfOverF
     groups:
     - doc: RoiResponseSeries object containing dF/F for a ROI
       neurodata_type_inc: RoiResponseSeries
+      quantity: '*'
     name: DfOverF
     neurodata_type_def: DfOverF
     neurodata_type_inc: Interface

@@ -12,6 +12,15 @@ ROI
 
     datasets:
     - dims:
+      - num_x
+      - num_y
+      doc: ROI mask, represented in 2D ([y][x]) intensity image
+      dtype: float32
+      name: img_mask
+      shape:
+      - null
+      - null
+    - dims:
       - num_pixels
       - '2'
       doc: List of pixels (x,y) that compose the mask
@@ -30,15 +39,6 @@ ROI
     - doc: Description of this ROI.
       dtype: text
       name: roi_description
-    - dims:
-      - num_x
-      - num_y
-      doc: ROI mask, represented in 2D ([y][x]) intensity image
-      dtype: float32
-      name: img_mask
-      shape:
-      - null
-      - null
     doc: Name of ROI
     neurodata_type_def: ROI
     quantity: '*'

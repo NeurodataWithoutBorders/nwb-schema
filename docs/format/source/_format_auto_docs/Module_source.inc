@@ -28,6 +28,7 @@ Module
     groups:
     - doc: Interface objects containing data output from processing steps
       neurodata_type_inc: Interface
+      quantity: '*'
     neurodata_type_def: Module
 
 

@@ -31,7 +31,7 @@ Position
     +============+=============+===================================================================+
     | Position   | group       | Top level group for Position                                      |
     +------------+-------------+-------------------------------------------------------------------+
-    | .help      | attribute   | Value is Position data, whether along the x, xy or xyz axis       |
+    | .help      | attribute   | Value is 'Position data, whether along the x, xy or xyz axis'     |
     |            |             |                                                                   |
     |            |             | - **Data Type:** text                                             |
     |            |             | - **Value:** Position data, whether along the x, xy or xyz axis   |
@@ -54,6 +54,7 @@ Position
     +-----------------------------------------------+---------+-----------------------------------------------------------+
     | .<:ref:`SpatialSeries <sec-SpatialSeries>`>   | group   | SpatialSeries object containing position data             |
     |                                               |         |                                                           |
+    |                                               |         | - **Quantity** 1 or more                                  |
     |                                               |         | - **Extends:** :ref:`SpatialSeries <sec-SpatialSeries>`   |
     |                                               |         |                                                           |
     +-----------------------------------------------+---------+-----------------------------------------------------------+
@@ -66,5 +67,6 @@ SpatialSeries object containing position data
 
 
 
+- **Quantity** 1 or more
 - **Extends:** :ref:`SpatialSeries <sec-SpatialSeries>`
 

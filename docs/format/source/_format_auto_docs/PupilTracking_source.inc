@@ -13,7 +13,7 @@ PupilTracking
     :linenos:
 
     attributes:
-    - doc: Value is Eye-tracking data, representing pupil size
+    - doc: Value is 'Eye-tracking data, representing pupil size'
       dtype: text
       name: help
       value: Eye-tracking data, representing pupil size
@@ -21,6 +21,7 @@ PupilTracking
     groups:
     - doc: TimeSeries object containing time series data on pupil size
       neurodata_type_inc: TimeSeries
+      quantity: +
     name: PupilTracking
     neurodata_type_def: PupilTracking
     neurodata_type_inc: Interface

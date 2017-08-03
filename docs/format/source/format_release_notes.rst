@@ -131,7 +131,7 @@ Added missing metadata
 Improved identifiably of objects
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-All groups and datasets are now required to either have a unique ``name`` or a unique ``neurodata_type`` defined.
+**Change:** All groups and datasets are now required to either have a unique ``name`` or a unique ``neurodata_type`` defined.
 
 **Reason:**  This greatly simplifies the unique identification of objects with variable names.
 
@@ -166,9 +166,9 @@ places and ensure that the same kind of information is available.
 Improved governance and accessibility
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Change:** Updated release and documentation mechanisms for the NWB format sepcification
+**Change:** Updated release and documentation mechanisms for the NWB format specification
 
-**Reason:** Imporove governance, ease-of-use, extensibility, and accessibility of the NWB format specification
+**Reason:** Improve governance, ease-of-use, extensibility, and accessibility of the NWB format specification
 
 **Specific Changes**
 
@@ -181,6 +181,20 @@ Improved governance and accessibility
       the specification and documentation
     - The pyNWB API now provides dedicated data structured to interact with NWB specifications, enabling users
       programmatically access and generate format specifications
+
+
+Ancestry
+^^^^^^^^
+
+**Change:** Removed the explicit specification of ancestry as an attribute as part of the format specification
+
+**Reason:** 1) avoid redundant information as the ancestry is encoded in the inheritance of types, 2) ease maintenance,
+and 3) avoid possible inconsistencies between the ancestry attribute and the true ancestry (i.e., inheritance hierarchy)
+as defined by the spec.
+
+**Note** The new specification API as part of PyNWB/FORM makes the ancestry still easily accessible to users. As
+the ancestry can be easily extracted from the spec, we currently do not write a separate ancestry attribute
+but this could be easily added if needed.
 
 
 Specification language changes

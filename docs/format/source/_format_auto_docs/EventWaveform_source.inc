@@ -13,7 +13,7 @@ EventWaveform
     :linenos:
 
     attributes:
-    - doc: Value is Waveform of detected extracellularly recorded spike events
+    - doc: Value is 'Waveform of detected extracellularly recorded spike events'
       dtype: text
       name: help
       value: Waveform of detected extracellularly recorded spike events
@@ -23,6 +23,7 @@ EventWaveform
     groups:
     - doc: SpikeEventSeries object containing detected spike event waveforms
       neurodata_type_inc: SpikeEventSeries
+      quantity: '*'
     name: EventWaveform
     neurodata_type_def: EventWaveform
     neurodata_type_inc: Interface

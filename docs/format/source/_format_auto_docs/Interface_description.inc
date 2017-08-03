@@ -27,12 +27,12 @@ Interface
     +===============+=============+=================================================================+
     | <Interface>   | group       | Top level group for <Interface>                                 |
     +---------------+-------------+-----------------------------------------------------------------+
-    | .source       | attribute   | Path to the origin of the data represented in this interface.   |
+    | .help         | attribute   | Short description of what this type of Interface contains.      |
     |               |             |                                                                 |
     |               |             | - **Data Type:** text                                           |
     |               |             |                                                                 |
     +---------------+-------------+-----------------------------------------------------------------+
-    | .help         | attribute   | Short description of what this type of Interface contains.      |
+    | .source       | attribute   | Path to the origin of the data represented in this interface.   |
     |               |             |                                                                 |
     |               |             | - **Data Type:** text                                           |
     |               |             |                                                                 |

@@ -13,23 +13,23 @@ IntervalSeries
     :linenos:
 
     attributes:
-    - doc: Value is Stores the start and stop times for events
+    - doc: Value is 'Stores the start and stop times for events'
       dtype: text
       name: help
       value: Stores the start and stop times for events
     datasets:
     - attributes:
-      - doc: Value is float('NaN')
+      - doc: Value is 'float('NaN')'
         dtype: None
-        name: resolution
+        name: conversion
         value: NaN
-      - doc: Value is n/a
+      - doc: Value is 'n/a'
         dtype: None
         name: unit
         value: n/a
-      - doc: Value is float('NaN')
+      - doc: Value is 'float('NaN')'
         dtype: None
-        name: conversion
+        name: resolution
         value: NaN
       dims:
       - num_times

@@ -11,10 +11,10 @@ SpecFile
     :linenos:
 
     attributes:
-    - doc: Value is Contents of format specification file.
+    - default_value: Contents of format specification file.
+      doc: A help statement
       dtype: text
       name: help
-      value: Contents of format specification file.
     - dims:
       - num_namespaces
       doc: Namespaces defined in the file

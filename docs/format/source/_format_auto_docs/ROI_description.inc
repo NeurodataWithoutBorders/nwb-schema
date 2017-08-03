@@ -30,6 +30,13 @@ ROI
     +====================+===========+========================================================+
     | <ROI>              | group     | Top level group for <ROI>                              |
     +--------------------+-----------+--------------------------------------------------------+
+    | .img_mask          | dataset   | ROI mask, represented in 2D ([y][x]) intensity image   |
+    |                    |           |                                                        |
+    |                    |           | - **Data Type:** float32                               |
+    |                    |           | - **Dimensions:** ['num_x', 'num_y']                   |
+    |                    |           | - **Shape:** [None, None]                              |
+    |                    |           |                                                        |
+    +--------------------+-----------+--------------------------------------------------------+
     | .pix_mask          | dataset   | List of pixels (x,y) that compose the mask             |
     |                    |           |                                                        |
     |                    |           | - **Data Type:** uint16                                |
@@ -47,13 +54,6 @@ ROI
     | .roi_description   | dataset   | Description of this ROI.                               |
     |                    |           |                                                        |
     |                    |           | - **Data Type:** text                                  |
-    |                    |           |                                                        |
-    +--------------------+-----------+--------------------------------------------------------+
-    | .img_mask          | dataset   | ROI mask, represented in 2D ([y][x]) intensity image   |
-    |                    |           |                                                        |
-    |                    |           | - **Data Type:** float32                               |
-    |                    |           | - **Dimensions:** ['num_x', 'num_y']                   |
-    |                    |           | - **Shape:** [None, None]                              |
     |                    |           |                                                        |
     +--------------------+-----------+--------------------------------------------------------+
 

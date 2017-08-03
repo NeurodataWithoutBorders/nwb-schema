@@ -13,8 +13,8 @@ MotionCorrection
     :linenos:
 
     attributes:
-    - doc: Value is Image stacks whose frames have been shifted (registered) to account
-        for motion
+    - doc: Value is 'Image stacks whose frames have been shifted (registered) to account
+        for motion'
       dtype: text
       name: help
       value: Image stacks whose frames have been shifted (registered) to account for motion
@@ -28,11 +28,11 @@ MotionCorrection
         name: original_path
       doc: One of possibly many.  Name should be informative.
       groups:
+      - doc: Image stack with frames shifted to the common coordinates.
+        neurodata_type_inc: ImageSeries
       - doc: Stores the x,y delta necessary to align each frame to the common coordinates,
           for example, to align each frame to a reference image.
         neurodata_type_inc: TimeSeries
-      - doc: Image stack with frames shifted to the common coordinates.
-        neurodata_type_inc: ImageSeries
       links:
       - doc: HDF5 Link to image series that is being registered.
         name: original

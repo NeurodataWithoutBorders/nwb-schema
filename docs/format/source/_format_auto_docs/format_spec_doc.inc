@@ -208,6 +208,12 @@ Data Processing Classes
 
     \clearpage \newpage
 
+.. include:: _format_auto_docs/EventDetection_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
 .. include:: _format_auto_docs/EventWaveform_description.inc
 
 .. raw:: latex
@@ -288,13 +294,31 @@ Data Processing Classes
 Other Types
 -----------
 
-.. include:: _format_auto_docs/EventDetection_description.inc
+.. include:: _format_auto_docs/IntracellularElectrode_description.inc
 
 .. raw:: latex
 
     \clearpage \newpage
 
-.. include:: _format_auto_docs/OptogeneticStimulusSite_description.inc
+.. include:: _format_auto_docs/Image_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/EpochTimeSeries_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/ElectrodeGroup_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/Device_description.inc
 
 .. raw:: latex
 
@@ -306,7 +330,25 @@ Other Types
 
     \clearpage \newpage
 
-.. include:: _format_auto_docs/Image_description.inc
+.. include:: _format_auto_docs/OptogeneticStimulusSite_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/ROI_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/CorrectedImageStack_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/SpecFile_description.inc
 
 .. raw:: latex
 
@@ -324,55 +366,13 @@ Other Types
 
     \clearpage \newpage
 
-.. include:: _format_auto_docs/Device_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/CorrectedImageStack_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/IntracellularElectrode_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/ROI_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/ElectrodeGroup_description.inc
+.. include:: _format_auto_docs/ImagingPlane_description.inc
 
 .. raw:: latex
 
     \clearpage \newpage
 
 .. include:: _format_auto_docs/SpikeUnit_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/EpochTimeSeries_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/SpecFile_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/ImagingPlane_description.inc
 
 .. raw:: latex
 

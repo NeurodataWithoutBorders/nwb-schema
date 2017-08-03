@@ -58,6 +58,8 @@ ElectrodeGroup
     doc: One of possibly many groups, one for each electrode group.
     links:
     - doc: the device that was used to record from this electrode group
+      name: device
+      quantity: '?'
       target_type: Device
     neurodata_type_def: ElectrodeGroup
 
