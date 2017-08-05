@@ -39,13 +39,6 @@ groups:
       to the signal from one ROI
   datasets:
   - dims:
-    - num_ROIs
-    doc: List of ROIs represented, one name for each row of data[].
-    dtype: text
-    name: roi_names
-    shape:
-    - null
-  - dims:
     - num_times
     - num_ROIs
     doc: Signals from ROIs
@@ -53,6 +46,13 @@ groups:
     name: data
     shape:
     - null
+    - null
+  - dims:
+    - num_ROIs
+    doc: List of ROIs represented, one name for each row of data[].
+    dtype: text
+    name: roi_names
+    shape:
     - null
   doc: ROI responses over an imaging plane. Each row in data[] should correspond to
     the signal from one ROI.
@@ -137,6 +137,9 @@ groups:
         shape:
         - null
         - null
+      - doc: Description of this ROI.
+        dtype: text
+        name: roi_description
       - dims:
         - num_pixels
         doc: Weight of each pixel listed in pix_mask
@@ -144,9 +147,6 @@ groups:
         name: pix_mask_weight
         shape:
         - null
-      - doc: Description of this ROI.
-        dtype: text
-        name: roi_description
       doc: Name of ROI
       neurodata_type_def: ROI
       neurodata_type_inc: NWBContainer
@@ -168,43 +168,26 @@ groups:
   neurodata_type_def: ImageSegmentation
   neurodata_type_inc: NWBContainer
 - datasets:
-  - doc: Excitation wavelength
-    dtype: text
-    name: excitation_lambda
-  - doc: Calcium indicator
-    dtype: text
-    name: indicator
-  - doc: Name of device in /general/devices
-    dtype: text
-    name: device
-  - doc: 'Describes position and reference frame of manifold based on position of
-      first element in manifold. For example, text description of anotomical location
-      or vectors needed to rotate to common anotomical axis (eg, AP/DV/ML). COMMENT:
-      This field is necessary to interpret manifold. If manifold is not present then
-      this field is not required'
-    dtype: text
-    name: reference_frame
   - doc: Location of image plane
     dtype: text
     name: location
-  - doc: Description of &lt;image_plane_X&gt;
+  - doc: Name of device in /general/devices
     dtype: text
-    name: description
-    quantity: '?'
+    name: device
   - doc: Rate images are acquired, in Hz.
     dtype: text
     name: imaging_rate
   - attributes:
+    - default_value: Meter
+      doc: Base unit that coordinates are stored in (e.g., Meters)
+      dtype: text
+      name: unit
+      required: false
     - default_value: 1.0
       doc: Multiplier to get from stored values to specified unit (e.g., 1e-3 for
         millimeters)
       dtype: float
       name: conversion
-      required: false
-    - default_value: Meter
-      doc: Base unit that coordinates are stored in (e.g., Meters)
-      dtype: text
-      name: unit
       required: false
     dims:
     - height
@@ -218,6 +201,23 @@ groups:
     - null
     - null
     - 3
+  - doc: Description of &lt;image_plane_X&gt;
+    dtype: text
+    name: description
+    quantity: '?'
+  - doc: 'Describes position and reference frame of manifold based on position of
+      first element in manifold. For example, text description of anotomical location
+      or vectors needed to rotate to common anotomical axis (eg, AP/DV/ML). COMMENT:
+      This field is necessary to interpret manifold. If manifold is not present then
+      this field is not required'
+    dtype: text
+    name: reference_frame
+  - doc: Excitation wavelength
+    dtype: text
+    name: excitation_lambda
+  - doc: Calcium indicator
+    dtype: text
+    name: indicator
   doc: 'One of possibly many groups describing an imaging plane. COMMENT: Name is
     arbitrary but should be meaningful. It is referenced by TwoPhotonSeries and also
     ImageSegmentation and DfOverF interfaces'

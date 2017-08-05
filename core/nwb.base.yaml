@@ -1,16 +1,5 @@
 groups:
 - attributes:
-  - doc: Description of TimeSeries
-    dtype: text
-    name: description
-  - doc: Value is 'TimeSeries'
-    dtype: text
-    name: ancestry
-    value: TimeSeries
-  - doc: Value is 'General time series object'
-    dtype: text
-    name: help
-    value: General time series object
   - doc: Name of TimeSeries or Modules that serve as the source for the data contained
       here. It can also be the name of a device, for stimulus or acquisition data
     dtype: text
@@ -20,7 +9,48 @@ groups:
       primary description field is populated with a computer-readable string.
     dtype: text
     name: comments
+  - doc: Value is 'General time series object'
+    dtype: text
+    name: help
+    value: General time series object
+  - doc: Value is 'TimeSeries'
+    dtype: text
+    name: ancestry
+    value: TimeSeries
+  - doc: Description of TimeSeries
+    dtype: text
+    name: description
   datasets:
+  - attributes:
+    - doc: "The base unit of measure used to store data. This should be in the SI\
+        \ unit. COMMENT: This is the SI unit (when appropriate) of the stored data,\
+        \ such as Volts. If the actual data is stored in millivolts, the field 'conversion'\
+        \ below describes how to convert the data to the specified SI unit."
+      dtype: text
+      name: unit
+    - default_value: 0.0
+      doc: 'Smallest meaningful difference between values in data, stored in the specified
+        by unit. COMMENT: E.g., the change in value of the least significant bit,
+        or a larger number if signal noise is known to be present. If unknown, use
+        NaN'
+      dtype: float32!
+      name: resolution
+      required: false
+    - default_value: 1.0
+      doc: Scalar to multiply each element in data to convert it to the specified
+        unit
+      dtype: float32!
+      name: conversion
+      required: false
+    dims:
+    - num_times
+    doc: 'Data values. Can also store binary data (eg, image frames) COMMENT: This
+      field may be a link to data stored in an external file, especially in the case
+      of raw data.'
+    dtype: any
+    name: data
+    shape:
+    - null
   - dims:
     - num_control_values
     doc: 'Description of each control value. COMMENT: Array length should be as long
@@ -32,13 +62,13 @@ groups:
     shape:
     - null
   - attributes:
-    - doc: 'Sampling rate, in Hz COMMENT: Rate information is stored in Hz'
-      dtype: float32!
-      name: rate
     - doc: Value is 'Seconds'
       dtype: text
       name: unit
       value: Seconds
+    - doc: 'Sampling rate, in Hz COMMENT: Rate information is stored in Hz'
+      dtype: float32!
+      name: rate
     doc: 'The timestamp of the first sample. COMMENT: When timestamps are uniformly
       spaced, the timestamp of the first sample can be specified and all subsequent
       ones calculated from the sampling rate.'
@@ -73,36 +103,6 @@ groups:
     name: timestamps
     shape:
     - null
-  - attributes:
-    - default_value: 1.0
-      doc: Scalar to multiply each element in data to convert it to the specified
-        unit
-      dtype: float32!
-      name: conversion
-      required: false
-    - doc: "The base unit of measure used to store data. This should be in the SI\
-        \ unit. COMMENT: This is the SI unit (when appropriate) of the stored data,\
-        \ such as Volts. If the actual data is stored in millivolts, the field 'conversion'\
-        \ below describes how to convert the data to the specified SI unit."
-      dtype: text
-      name: unit
-    - default_value: 0.0
-      doc: 'Smallest meaningful difference between values in data, stored in the specified
-        by unit. COMMENT: E.g., the change in value of the least significant bit,
-        or a larger number if signal noise is known to be present. If unknown, use
-        NaN'
-      dtype: float32!
-      name: resolution
-      required: false
-    dims:
-    - num_times
-    doc: 'Data values. Can also store binary data (eg, image frames) COMMENT: This
-      field may be a link to data stored in an external file, especially in the case
-      of raw data.'
-    dtype: any
-    name: data
-    shape:
-    - null
   doc: General purpose time series.
   groups:
   - doc: "Lab specific time and sync information as provided directly from hardware\
@@ -135,5 +135,5 @@ groups:
   - doc: Interface objects containing data output from processing steps
     neurodata_type_inc: NWBContainer
     quantity: '*'
-  neurodata_type_def: Module
+  neurodata_type_def: ProcessingModule
   neurodata_type_inc: NWBContainer
