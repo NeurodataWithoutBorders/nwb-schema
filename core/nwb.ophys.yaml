@@ -45,9 +45,6 @@ groups:
     name: roi_names
     shape:
     - null
-  - doc: Path to segmentation module.
-    dtype: text
-    name: segmentation_interface_path
   - dims:
     - num_times
     - num_ROIs
@@ -79,7 +76,6 @@ groups:
   - doc: RoiResponseSeries object containing dF/F for a ROI
     neurodata_type_inc: RoiResponseSeries
     quantity: '*'
-  name: DfOverF
   neurodata_type_def: DfOverF
   neurodata_type_inc: Interface
 - attributes:
@@ -96,7 +92,6 @@ groups:
   - doc: RoiResponseSeries object containing fluorescence data for a ROI
     neurodata_type_inc: RoiResponseSeries
     quantity: +
-  name: Fluorescence
   neurodata_type_def: Fluorescence
   neurodata_type_inc: Interface
 - attributes:
@@ -119,25 +114,16 @@ groups:
       dtype: text
       name: description
       quantity: '?'
-    - dims:
-      - num_rois
-      doc: List of ROIs in this imaging plane
-      dtype: text
-      name: roi_list
-      shape:
-      - null
     doc: Group name is human-readable description of imaging plane
     groups:
+    - doc: Stores image stacks segmentation mask apply to.
+      groups:
+      - doc: One or more image stacks that the masks apply to (can be one-element
+          stack)
+        neurodata_type_inc: ImageSeries
+      name: reference_images
+      neurodata_type_inc: NWBContainer
     - datasets:
-      - dims:
-        - num_x
-        - num_y
-        doc: ROI mask, represented in 2D ([y][x]) intensity image
-        dtype: float32
-        name: img_mask
-        shape:
-        - null
-        - null
       - dims:
         - num_pixels
         - '2'
@@ -154,89 +140,24 @@ groups:
         name: pix_mask_weight
         shape:
         - null
+      - dims:
+        - num_x
+        - num_y
+        doc: ROI mask, represented in 2D ([y][x]) intensity image
+        dtype: float32
+        name: img_mask
+        shape:
+        - null
+        - null
       - doc: Description of this ROI.
         dtype: text
         name: roi_description
       doc: Name of ROI
-      neurodata_type_def: ROI
-      quantity: '*'
-    - doc: Stores image stacks segmentation mask apply to.
-      groups:
-      - doc: One or more image stacks that the masks apply to (can be one-element
-          stack)
-        neurodata_type_inc: ImageSeries
-      name: reference_images
+      neurodata_type_inc: NWBContainer
     links:
     - doc: link to ImagingPlane group from which this TimeSeries data was generated
       name: imaging_plane
       target_type: ImagingPlane
-    neurodata_type_def: PlaneSegmentation
-    quantity: '*'
-  name: ImageSegmentation
+    neurodata_type_inc: NWBContainer
   neurodata_type_def: ImageSegmentation
   neurodata_type_inc: Interface
-- datasets:
-  - doc: Name of device in /general/devices
-    dtype: text
-    name: device
-  - doc: Description of &lt;image_plane_X&gt;
-    dtype: text
-    name: description
-    quantity: '?'
-  - attributes:
-    - default_value: 1.0
-      doc: Multiplier to get from stored values to specified unit (e.g., 1e-3 for
-        millimeters)
-      dtype: float
-      name: conversion
-    - default_value: Meter
-      doc: Base unit that coordinates are stored in (e.g., Meters)
-      dtype: text
-      name: unit
-    dims:
-    - height
-    - weight
-    - x|y|z
-    doc: 'Physical position of each pixel. COMMENT: "xyz" represents the position
-      of the pixel relative to the defined coordinate space'
-    dtype: float32
-    name: manifold
-    shape:
-    - null
-    - null
-    - 3
-  - doc: 'Describes position and reference frame of manifold based on position of
-      first element in manifold. For example, text description of anotomical location
-      or vectors needed to rotate to common anotomical axis (eg, AP/DV/ML). COMMENT:
-      This field is necessary to interpret manifold. If manifold is not present then
-      this field is not required'
-    dtype: text
-    name: reference_frame
-  - doc: Calcium indicator
-    dtype: text
-    name: indicator
-  - doc: Location of image plane
-    dtype: text
-    name: location
-  - doc: Rate images are acquired, in Hz.
-    dtype: text
-    name: imaging_rate
-  - doc: Excitation wavelength
-    dtype: text
-    name: excitation_lambda
-  doc: 'One of possibly many groups describing an imaging plane. COMMENT: Name is
-    arbitrary but should be meaningful. It is referenced by TwoPhotonSeries and also
-    ImageSegmentation and DfOverF interfaces'
-  groups:
-  - datasets:
-    - doc: Any notes or comments about the channel
-      dtype: text
-      name: description
-    - doc: Emission lambda for channel
-      dtype: text
-      name: emission_lambda
-    doc: 'One of possibly many groups storing channel-specific data COMMENT: Name
-      is arbitrary but should be meaningful'
-    neurodata_type_def: OpticalChannel
-  neurodata_type_def: ImagingPlane
-  quantity: '*'

@@ -13,6 +13,7 @@ groups:
         \ below describes how to convert the data to the specified SI unit."
       dtype: text
       name: unit
+      required: false
     dims:
     - - num_times
     - - num_times
@@ -48,6 +49,7 @@ groups:
         \ below describes how to convert the data to the specified SI unit."
       dtype: text
       name: unit
+      required: false
     dims:
     - - num_events
       - num_samples
@@ -83,21 +85,6 @@ groups:
   - dims:
     - num_clusters
     - num_samples
-    doc: Stdev of waveforms for each cluster, using the same indices as in mean
-    dtype: float32
-    name: waveform_sd
-    shape:
-    - null
-    - null
-  - doc: Filtering applied to data before generating mean/sd
-    dtype: text
-    name: waveform_filtering
-  - doc: Path to linked clustering interface
-    dtype: text
-    name: clustering_interface_path
-  - dims:
-    - num_clusters
-    - num_samples
     doc: The mean waveform for each cluster, using the same indices for each wave
       as cluster numbers in the associated Clustering module (i.e, cluster 3 is in
       array slot [3]). Waveforms corresponding to gaps in cluster sequence should
@@ -107,6 +94,18 @@ groups:
     shape:
     - null
     - null
+  - dims:
+    - num_clusters
+    - num_samples
+    doc: Stdev of waveforms for each cluster, using the same indices as in mean
+    dtype: float32
+    name: waveform_sd
+    shape:
+    - null
+    - null
+  - doc: Filtering applied to data before generating mean/sd
+    dtype: text
+    name: waveform_filtering
   doc: The mean waveform shape, including standard deviation, of the different clusters.
     Ideally, the waveform analysis should be performed on data that is only high-pass
     filtered. This is a separate module because it is expected to require updating.
@@ -116,7 +115,6 @@ groups:
   - doc: HDF5 link to Clustering interface that was the source of the clustered data
     name: clustering_interface
     target_type: Clustering
-  name: ClusterWaveforms
   neurodata_type_def: ClusterWaveforms
   neurodata_type_inc: Interface
 - attributes:
@@ -127,19 +125,23 @@ groups:
     value: Clustered spike data, whether from automatic clustering tools (eg, klustakwik)
       or as a result of manual sorting
   datasets:
+  - doc: Description of clusters or clustering, (e.g. cluster 0 is noise, clusters
+      curated using Klusters, etc)
+    dtype: text
+    name: description
+  - dims:
+    - num_clusters
+    doc: Maximum ratio of waveform peak to RMS on any channel in the cluster (provides
+      a basic clustering metric).
+    dtype: float32
+    name: peak_over_rms
+    shape:
+    - null
   - dims:
     - num_events
     doc: Cluster number of each event
     dtype: int32
     name: num
-    shape:
-    - null
-  - dims:
-    - num_clusters
-    doc: List of cluster number that are a part of this set (cluster numbers can be
-      non- continuous)
-    dtype: int32
-    name: cluster_nums
     shape:
     - null
   - dims:
@@ -150,21 +152,8 @@ groups:
     name: times
     shape:
     - null
-  - dims:
-    - num_clusters
-    doc: Maximum ratio of waveform peak to RMS on any channel in the cluster (provides
-      a basic clustering metric).
-    dtype: float32
-    name: peak_over_rms
-    shape:
-    - null
-  - doc: Description of clusters or clustering, (e.g. cluster 0 is noise, clusters
-      curated using Klusters, etc)
-    dtype: text
-    name: description
   doc: Clustered spike data, whether from automatic clustering tools (e.g., klustakwik)
     or as a result of manual sorting.
-  name: Clustering
   neurodata_type_def: Clustering
   neurodata_type_inc: Interface
 - attributes:
@@ -204,29 +193,9 @@ groups:
   - doc: link to ElectrodeGroup group that generated this TimeSeries data
     name: electrode_group
     target_type: ElectrodeGroup
-  name: FeatureExtraction
   neurodata_type_def: FeatureExtraction
   neurodata_type_inc: Interface
 - datasets:
-  - doc: Description of how events were detected, such as voltage threshold, or dV/dT
-      threshold, as well as relevant values.
-    dtype: text
-    name: detection_method
-  - attributes:
-    - default_value: Seconds
-      doc: The string "Seconds"
-      dtype: text
-      name: unit
-    dims:
-    - num_events
-    doc: Timestamps of events, in Seconds
-    dtype: float64!
-    name: times
-    shape:
-    - null
-  - doc: Path to linked ElectricalSeries.
-    dtype: text
-    name: source_electricalseries_path
   - dims:
     - num_events
     doc: Indices (zero-based) into source ElectricalSeries::data array corresponding
@@ -237,6 +206,23 @@ groups:
     name: source_idx
     shape:
     - null
+  - attributes:
+    - default_value: Seconds
+      doc: The string "Seconds"
+      dtype: text
+      name: unit
+      required: false
+    dims:
+    - num_events
+    doc: Timestamps of events, in Seconds
+    dtype: float64!
+    name: times
+    shape:
+    - null
+  - doc: Description of how events were detected, such as voltage threshold, or dV/dT
+      threshold, as well as relevant values.
+    dtype: text
+    name: detection_method
   doc: Detected spike events from voltage trace(s).
   links:
   - doc: HDF5 link to ElectricalSeries that this data was calculated from. Metadata
@@ -244,7 +230,6 @@ groups:
       it's not necessary to mandate that information be stored here
     name: source_electricalseries
     target_type: ElectricalSeries
-  name: EventDetection
   neurodata_type_def: EventDetection
   neurodata_type_inc: Interface
 - attributes:
@@ -259,7 +244,6 @@ groups:
   - doc: SpikeEventSeries object containing detected spike event waveforms
     neurodata_type_inc: SpikeEventSeries
     quantity: '*'
-  name: EventWaveform
   neurodata_type_def: EventWaveform
   neurodata_type_inc: Interface
 - attributes:
@@ -284,7 +268,6 @@ groups:
   - doc: ElectricalSeries object containing filtered electrophysiology data
     neurodata_type_inc: ElectricalSeries
     quantity: +
-  name: FilteredEphys
   neurodata_type_def: FilteredEphys
   neurodata_type_inc: Interface
 - attributes:
@@ -301,58 +284,5 @@ groups:
   - doc: ElectricalSeries object containing LFP data for one or channels
     neurodata_type_inc: ElectricalSeries
     quantity: +
-  name: LFP
   neurodata_type_def: LFP
   neurodata_type_inc: Interface
-- datasets:
-  - dims:
-    - num_channels
-    doc: array with description for each channel
-    dtype: text
-    name: channel_description
-    shape:
-    - null
-  - dims:
-    - num_channels
-    doc: array with location description for each channel e.g. "CA1"
-    dtype: text
-    name: channel_location
-    shape:
-    - null
-  - dims:
-    - num_channels
-    doc: array with description of filtering applied to each channel
-    dtype: text
-    name: channel_filtering
-    shape:
-    - null
-  - dims:
-    - num_channels
-    - dimensions
-    doc: xyz-coordinates for each channel. use NaN for unknown dimensions
-    dtype: text
-    name: channel_coordinates
-    shape:
-    - null
-    - 3
-  - dims:
-    - num_channels
-    doc: float array with impedance used on each channel. Can be 2D matrix to store
-      a range
-    dtype: text
-    name: channel_impedance
-    shape:
-    - null
-  - doc: description of this electrode group
-    dtype: text
-    name: description
-  - doc: description of location of this electrode group
-    dtype: text
-    name: location
-  doc: One of possibly many groups, one for each electrode group.
-  links:
-  - doc: the device that was used to record from this electrode group
-    name: device
-    quantity: '?'
-    target_type: Device
-  neurodata_type_def: ElectrodeGroup

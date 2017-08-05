@@ -1,5 +1,10 @@
 groups:
 - datasets:
+  - doc: 'A unique text identifier for the file. COMMENT: Eg, concatenated lab name,
+      file creation date/time and experimentalist, or a hash of these and/or other
+      values. The goal is that the string should be unique to all other files.'
+    dtype: text
+    name: identifier
   - dims:
     - '*unlimited*'
     doc: 'Time file was created, UTC, and subsequent modifications to file. COMMENT:
@@ -23,11 +28,6 @@ groups:
       the file use this time as reference (ie, time zero)'
     dtype: text
     name: session_start_time
-  - doc: 'A unique text identifier for the file. COMMENT: Eg, concatenated lab name,
-      file creation date/time and experimentalist, or a hash of these and/or other
-      values. The goal is that the string should be unique to all other files.'
-    dtype: text
-    name: identifier
   doc: Top level of NWB file.
   groups:
   - doc: 'Data streams recorded from the system, including ephys, ophys, tracking,
@@ -42,14 +42,14 @@ groups:
     groups:
     - datasets:
       - attributes:
+        - doc: 'Format of the image.  COMMENT: eg, jpg, png, mpeg'
+          dtype: text
+          name: format
         - doc: 'Human description of image. COMMENT: If image is of slice data, include
             slice thickness and orientation, and reference to appropriate entry in
             /general/slices'
           dtype: text
           name: description
-        - doc: 'Format of the image.  COMMENT: eg, jpg, png, mpeg'
-          dtype: text
-          name: format
         doc: 'Photograph of experiment or experimental setup (video also OK). COMMENT:
           Name is arbitrary.  Data is stored as a single binary object (HDF5 opaque
           type).'
@@ -58,6 +58,7 @@ groups:
         quantity: '*'
       doc: Acquired images
       name: images
+      neurodata_type_inc: NWBContainer
     - doc: 'Acquired TimeSeries.COMMENT: When importing acquisition data to an NWB
         file, all acquisition/tracking/stimulus data must already be aligned to a
         common time frame. It is assumed that this task has already been performed.'
@@ -66,7 +67,9 @@ groups:
         neurodata_type_inc: TimeSeries
         quantity: '*'
       name: timeseries
+      neurodata_type_inc: NWBContainer
     name: acquisition
+    neurodata_type_inc: NWBContainer
   - doc: 'Lab-specific and custom scientific analysis of data. There is no defined
       format for the content of this group - the format is up to the individual user/lab.
       COMMENT: To facilitate sharing analysis data between labs, the contents here
@@ -76,16 +79,8 @@ groups:
       end users. Such data should be placed in the analysis group. The analysis data
       should be documented so that it is sharable with other labs'
     name: analysis
-  - attributes:
-    - dims:
-      - num_tags
-      doc: A sorted list of the different tags used by epochs. COMMENT:This is a sorted
-        list of all tags that are in any of the &lt;epoch_X&gt;/tags datasets`.
-      dtype: text
-      name: tags
-      shape:
-      - null
-    doc: "Experimental intervals, whether that be logically distinct sub-experiments\
+    neurodata_type_inc: NWBContainer
+  - doc: "Experimental intervals, whether that be logically distinct sub-experiments\
       \ having a particular scientific goal, trials during an experiment, or epochs\
       \ deriving from analysis of data.  COMMENT: Epochs provide pointers to time\
       \ series that are relevant to the epoch, and windows into the data in those\
@@ -109,6 +104,7 @@ groups:
       neurodata_type_inc: Epoch
       quantity: '*'
     name: epochs
+    neurodata_type_inc: NWBContainer
   - doc: "The home for processing Modules. These modules perform intermediate analysis\
       \ of data that is necessary to perform before scientific analysis. Examples\
       \ include spike clustering, extracting position from tracking data, stitching\
@@ -125,6 +121,7 @@ groups:
       neurodata_type_inc: Module
       quantity: '*'
     name: processing
+    neurodata_type_inc: NWBContainer
   - doc: 'Data pushed into the system (eg, video stimulus, sound, voltage, etc) and
       secondary representations of that data (eg, measurements of something used as
       a stimulus) COMMENT: This group is read-only after experiment complete and timestamps
@@ -138,6 +135,13 @@ groups:
       times. These templates can exist in the present file or can be HDF5-linked to
       a remote library file.'
     groups:
+    - doc: Stimuli presented during the experiment.
+      groups:
+      - doc: TimeSeries objects containing data of presented stimuli
+        neurodata_type_inc: TimeSeries
+        quantity: '*'
+      name: presentation
+      neurodata_type_inc: NWBContainer
     - doc: "Template stimuli. COMMENT: Time stamps in templates are based on stimulus\
         \ design and are relative to the beginning of the stimulus. When templates\
         \ are used, the stimulus instances must convert presentation times to the\
@@ -147,14 +151,43 @@ groups:
         neurodata_type_inc: TimeSeries
         quantity: '*'
       name: templates
-    - doc: Stimuli presented during the experiment.
-      groups:
-      - doc: TimeSeries objects containing data of presented stimuli
-        neurodata_type_inc: TimeSeries
-        quantity: '*'
-      name: presentation
+      neurodata_type_inc: NWBContainer
     name: stimulus
+    neurodata_type_inc: NWBContainer
   - datasets:
+    - doc: 'Name of person who performed the experiment.COMMENT: More than one person
+        OK. Can specify roles of different people involved.'
+      dtype: text
+      name: experimenter
+      quantity: '?'
+    - doc: Information about virus(es) used in experiments, including virus ID, source,
+        date made, injection location, volume, etc
+      dtype: text
+      name: virus
+      quantity: '?'
+    - doc: 'Publication information.COMMENT: PMID, DOI, URL, etc. If multiple, concatenate
+        together and describe which is which. such as PMID, DOI, URL, etc'
+      dtype: text
+      name: related_publications
+      quantity: '?'
+    - doc: 'Experimetnal protocol, if applicable.COMMENT: E.g., include IACUC protocol'
+      dtype: text
+      name: protocol
+      quantity: '?'
+    - doc: 'Notes about stimuli, such as how and where presented.COMMENT: Can be from
+        Methods'
+      dtype: text
+      name: stimulus
+      quantity: '?'
+    - doc: 'General description of the experiment.COMMENT: Can be from Methods'
+      dtype: text
+      name: experiment_description
+      quantity: '?'
+    - doc: 'Description of drugs used, including how and when they were administered.
+        COMMENT: Anesthesia(s), painkiller(s), etc., plus dosage, concentration, etc.'
+      dtype: text
+      name: pharmacology
+      quantity: '?'
     - attributes:
       - doc: Name of script file
         dtype: text
@@ -163,69 +196,36 @@ groups:
       dtype: text
       name: source_script
       quantity: '?'
+    - doc: 'Lab-specific ID for the session.COMMENT: Only 1 session_id per file, with
+        all time aligned to experiment start time.'
+      dtype: text
+      name: session_id
+      quantity: '?'
     - doc: 'Notes about the experiment.  COMMENT: Things particular to this experiment'
       dtype: text
       name: notes
-      quantity: '?'
-    - doc: Lab where experiment was performed
-      dtype: text
-      name: lab
-      quantity: '?'
-    - doc: 'Notes about stimuli, such as how and where presented.COMMENT: Can be from
-        Methods'
-      dtype: text
-      name: stimulus
-      quantity: '?'
-    - doc: Description of slices, including information about preparation thickness,
-        orientation, temperature and bath solution
-      dtype: text
-      name: slices
-      quantity: '?'
-    - doc: Information about virus(es) used in experiments, including virus ID, source,
-        date made, injection location, volume, etc
-      dtype: text
-      name: virus
       quantity: '?'
     - doc: 'Notes about data collection and analysis.COMMENT: Can be from Methods'
       dtype: text
       name: data_collection
       quantity: '?'
+    - doc: Lab where experiment was performed
+      dtype: text
+      name: lab
+      quantity: '?'
     - doc: Institution(s) where experiment was performed
       dtype: text
       name: institution
-      quantity: '?'
-    - doc: 'Name of person who performed the experiment.COMMENT: More than one person
-        OK. Can specify roles of different people involved.'
-      dtype: text
-      name: experimenter
-      quantity: '?'
-    - doc: 'Description of drugs used, including how and when they were administered.
-        COMMENT: Anesthesia(s), painkiller(s), etc., plus dosage, concentration, etc.'
-      dtype: text
-      name: pharmacology
-      quantity: '?'
-    - doc: 'Publication information.COMMENT: PMID, DOI, URL, etc. If multiple, concatenate
-        together and describe which is which. such as PMID, DOI, URL, etc'
-      dtype: text
-      name: related_publications
-      quantity: '?'
-    - doc: 'General description of the experiment.COMMENT: Can be from Methods'
-      dtype: text
-      name: experiment_description
       quantity: '?'
     - doc: 'Narrative description about surgery/surgeries, including date(s) and who
         performed surgery. COMMENT: Much can be copied from Methods'
       dtype: text
       name: surgery
       quantity: '?'
-    - doc: 'Experimetnal protocol, if applicable.COMMENT: E.g., include IACUC protocol'
+    - doc: Description of slices, including information about preparation thickness,
+        orientation, temperature and bath solution
       dtype: text
-      name: protocol
-      quantity: '?'
-    - doc: 'Lab-specific ID for the session.COMMENT: Only 1 session_id per file, with
-        all time aligned to experiment start time.'
-      dtype: text
-      name: session_id
+      name: slices
       quantity: '?'
     doc: "Experimental metadata, including protocol, notes and description of hardware\
       \ device(s).  COMMENT: The metadata stored in this section should be used to\
@@ -243,55 +243,52 @@ groups:
       \ groups (e.g., intracellular_ephys in an optophysiology experiment) should\
       \ not be created unless there is data to store within them."
     groups:
-    - datasets:
-      - doc: Description of subject and where subject came from (e.g., breeder, if
-          animal)
-        dtype: text
-        name: description
-        quantity: '?'
-      - doc: Weight at time of experiment, at time of surgery and at other important
-          times
-        dtype: text
-        name: weight
-        quantity: '?'
-      - doc: Age of subject
-        dtype: text
-        name: age
-        quantity: '?'
-      - doc: Gender of subject
-        dtype: text
-        name: sex
-        quantity: '?'
-      - doc: 'Genetic strain COMMENT: If absent, assume Wild Type (WT)'
-        dtype: text
-        name: genotype
-        quantity: '?'
-      - doc: ID of animal/person used/participating in experiment (lab convention)
-        dtype: text
-        name: subject_id
-        quantity: '?'
-      - doc: Species of subject
-        dtype: text
-        name: species
-        quantity: '?'
-      doc: Information about the animal or person from which the data was measured.
-      name: subject
-      quantity: '?'
     - doc: 'Description of hardware devices used during experiment. COMMENT: Eg, monitors,
         ADC boards, microscopes, etc'
       groups:
       - doc: 'One of possibly many. Information about device and device description.
           COMMENT: Name should be informative. Contents can be from Methods.'
-        neurodata_type_def: Device
-        quantity: '*'
+        neurodata_type_inc: NWBContainer
       name: devices
+      neurodata_type_inc: NWBContainer
+      quantity: '?'
+    - datasets:
+      - doc: Weight at time of experiment, at time of surgery and at other important
+          times
+        dtype: text
+        name: weight
+        quantity: '?'
+      - doc: Description of subject and where subject came from (e.g., breeder, if
+          animal)
+        dtype: text
+        name: description
+        quantity: '?'
+      - doc: ID of animal/person used/participating in experiment (lab convention)
+        dtype: text
+        name: subject_id
+        quantity: '?'
+      - doc: Age of subject
+        dtype: text
+        name: age
+        quantity: '?'
+      - doc: Species of subject
+        dtype: text
+        name: species
+        quantity: '?'
+      - doc: 'Genetic strain COMMENT: If absent, assume Wild Type (WT)'
+        dtype: text
+        name: genotype
+        quantity: '?'
+      - doc: Gender of subject
+        dtype: text
+        name: sex
+        quantity: '?'
+      doc: Information about the animal or person from which the data was measured.
+      name: subject
+      neurodata_type_inc: NWBContainer
       quantity: '?'
     - datasets:
       - attributes:
-        - default_value: Contents of format specification file.
-          doc: A help statement
-          dtype: text
-          name: help
         - dims:
           - num_namespaces
           doc: Namespaces defined in the file
@@ -299,6 +296,11 @@ groups:
           name: namespaces
           shape:
           - null
+        - default_value: Contents of format specification file.
+          doc: A help statement
+          dtype: text
+          name: help
+          required: false
         doc: Dataset for storing contents of a specification file for either the core
           format or an extension.  Name should match name of file.`
         dtype: text
@@ -306,13 +308,29 @@ groups:
         quantity: '*'
       doc: Group for storing format specification files.
       name: specifications
+      neurodata_type_inc: NWBContainer
       quantity: '?'
     - doc: Metadata related to extracellular electrophysiology.
       groups:
-      - doc: One of possibly many groups, one for each electrode group.
-        neurodata_type_inc: ElectrodeGroup
-        quantity: '*'
+      - datasets:
+        - doc: 'Description of probe locationCOMMENT: E.g., stereotaxic coordinates
+            and other data, e.g., drive placement, angle and orientation and tetrode
+            location in drive and tetrode depth'
+          dtype: text
+          name: location
+        - doc: Name of device(s) in /general/devices
+          dtype: text
+          name: device
+        - doc: Description of probe or shank
+          dtype: text
+          name: description
+        doc: 'One of possibly many groups, one for each electrode group. If the groups
+          have a hierarchy, such as multiple probes each having multiple shanks, that
+          hierarchy can be mirrored here, using groups for electrode_probe_X and subgroups
+          for electrode_group_X.COMMENT: Name is arbitrary but should be meaningful.'
+        neurodata_type_inc: NWBContainer
       name: extracellular_ephys
+      neurodata_type_inc: NWBContainer
       quantity: '?'
     - datasets:
       - doc: 'Description of filtering used. COMMENT: Includes filtering type and
@@ -323,29 +341,139 @@ groups:
         quantity: '?'
       doc: Metadata related to intracellular electrophysiology
       groups:
-      - doc: 'One of possibly many. COMMENT: Name should be informative.'
-        neurodata_type_inc: IntracellularElectrode
-        quantity: '*'
+      - datasets:
+        - doc: Area, layer, comments on estimation, stereotaxis coordinates (if in
+            vivo, etc)
+          dtype: text
+          name: location
+          quantity: '?'
+        - doc: Name(s) of devices in general/devices
+          dtype: text
+          name: device
+          quantity: '?'
+        - doc: 'Recording description, description of electrode (e.g.,  whole-cell,
+            sharp, etc)COMMENT: Free-form text (can be from Methods)'
+          dtype: text
+          name: description
+        - doc: Information about slice used for recording
+          dtype: text
+          name: slice
+          quantity: '?'
+        - doc: 'Electrode resistance COMMENT: unit: Ohm'
+          dtype: text
+          name: resistance
+          quantity: '?'
+        - doc: Initial access resistance
+          dtype: text
+          name: initial_access_resistance
+          quantity: '?'
+        - doc: Electrode specific filtering.
+          dtype: text
+          name: filtering
+          quantity: '?'
+        - doc: Information about seal used for recording
+          dtype: text
+          name: seal
+          quantity: '?'
+        doc: 'One of possibly many. COMMENT: Name should be informative.'
+        neurodata_type_inc: NWBContainer
       name: intracellular_ephys
+      neurodata_type_inc: NWBContainer
       quantity: '?'
     - doc: Metadata describing optogenetic stimuluation
       groups:
-      - doc: 'One of possibly many groups describing an optogenetic stimuluation site.
+      - datasets:
+        - doc: Location of stimulation site
+          dtype: text
+          name: location
+        - doc: Name of device in /general/devices
+          dtype: text
+          name: device
+        - doc: Excitation wavelength
+          dtype: text
+          name: excitation_lambda
+        - doc: Description of site
+          dtype: text
+          name: description
+        doc: 'One of possibly many groups describing an optogenetic stimuluation site.
           COMMENT: Name is arbitrary but should be meaningful. Name is referenced
           by OptogeneticSeries'
-        neurodata_type_inc: OptogeneticStimulusSite
-        quantity: '*'
+        neurodata_type_inc: NWBContainer
       name: optogenetics
+      neurodata_type_inc: NWBContainer
       quantity: '?'
     - doc: Metadata related to optophysiology.
       groups:
-      - doc: 'One of possibly many groups describing an imaging plane. COMMENT: Name
+      - datasets:
+        - doc: Description of &lt;image_plane_X&gt;
+          dtype: text
+          name: description
+          quantity: '?'
+        - doc: Rate images are acquired, in Hz.
+          dtype: text
+          name: imaging_rate
+        - doc: Excitation wavelength
+          dtype: text
+          name: excitation_lambda
+        - doc: 'Describes position and reference frame of manifold based on position
+            of first element in manifold. For example, text description of anotomical
+            location or vectors needed to rotate to common anotomical axis (eg, AP/DV/ML).
+            COMMENT: This field is necessary to interpret manifold. If manifold is
+            not present then this field is not required'
+          dtype: text
+          name: reference_frame
+        - doc: Location of image plane
+          dtype: text
+          name: location
+        - doc: Calcium indicator
+          dtype: text
+          name: indicator
+        - doc: Name of device in /general/devices
+          dtype: text
+          name: device
+        - attributes:
+          - default_value: Meter
+            doc: Base unit that coordinates are stored in (e.g., Meters)
+            dtype: text
+            name: unit
+            required: false
+          - default_value: 1.0
+            doc: Multiplier to get from stored values to specified unit (e.g., 1e-3
+              for millimeters)
+            dtype: float
+            name: conversion
+            required: false
+          dims:
+          - height
+          - weight
+          - x|y|z
+          doc: 'Physical position of each pixel. COMMENT: "xyz" represents the position
+            of the pixel relative to the defined coordinate space'
+          dtype: float32
+          name: manifold
+          shape:
+          - null
+          - null
+          - 3
+        doc: 'One of possibly many groups describing an imaging plane. COMMENT: Name
           is arbitrary but should be meaningful. It is referenced by TwoPhotonSeries
           and also ImageSegmentation and DfOverF interfaces'
-        neurodata_type_inc: ImagingPlane
-        quantity: '*'
+        groups:
+        - datasets:
+          - doc: Emission lambda for channel
+            dtype: text
+            name: emission_lambda
+          - doc: Any notes or comments about the channel
+            dtype: text
+            name: description
+          doc: 'One of possibly many groups storing channel-specific data COMMENT:
+            Name is arbitrary but should be meaningful'
+          neurodata_type_inc: NWBContainer
+        neurodata_type_inc: NWBContainer
       name: optophysiology
+      neurodata_type_inc: NWBContainer
       quantity: '?'
     name: general
-  name: root
+    neurodata_type_inc: NWBContainer
   neurodata_type_def: NWBFile
+  neurodata_type_inc: NWBContainer

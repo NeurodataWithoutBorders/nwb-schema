@@ -13,6 +13,7 @@ groups:
         \ below describes how to convert the data to the specified SI unit."
       dtype: text
       name: unit
+      required: false
     dims:
     - num_times
     doc: Applied power for optogenetic stimulus.
@@ -28,20 +29,3 @@ groups:
     target_type: OptogeneticStimulusSite
   neurodata_type_def: OptogeneticSeries
   neurodata_type_inc: TimeSeries
-- datasets:
-  - doc: Name of device in /general/devices
-    dtype: text
-    name: device
-  - doc: Location of stimulation site
-    dtype: text
-    name: location
-  - doc: Description of site
-    dtype: text
-    name: description
-  - doc: Excitation wavelength
-    dtype: text
-    name: excitation_lambda
-  doc: 'One of possibly many groups describing an optogenetic stimuluation site. COMMENT:
-    Name is arbitrary but should be meaningful. Name is referenced by OptogeneticSeries'
-  neurodata_type_def: OptogeneticStimulusSite
-  quantity: '*'
