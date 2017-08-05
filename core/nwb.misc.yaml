@@ -7,6 +7,21 @@ groups:
     value: Features of an applied stimulus. This is useful when storing the raw stimulus
       is impractical
   datasets:
+  - dims:
+    - num_features
+    doc: Description of the features represented in TimeSeries::data.
+    dtype: text
+    name: features
+    shape:
+    - null
+  - dims:
+    - num_features
+    doc: Units of each feature.
+    dtype: text
+    name: feature_units
+    quantity: '?'
+    shape:
+    - null
   - attributes:
     - default_value: see 'feature_units'
       doc: "The base unit of measure used to store data. This should be in the SI\
@@ -24,21 +39,6 @@ groups:
     name: data
     shape:
     - null
-    - null
-  - dims:
-    - num_features
-    doc: Description of the features represented in TimeSeries::data.
-    dtype: text
-    name: features
-    shape:
-    - null
-  - dims:
-    - num_features
-    doc: Units of each feature.
-    dtype: text
-    name: feature_units
-    quantity: '?'
-    shape:
     - null
   doc: Abstract features, such as quantitative descriptions of sensory stimuli. The
     TimeSeries::data field is a 2D array, storing those features (e.g., for visual
@@ -59,7 +59,7 @@ groups:
   - attributes:
     - doc: Value is 'float('NaN')'
       dtype: None
-      name: resolution
+      name: conversion
       value: NaN
     - doc: Value is 'n/a'
       dtype: None
@@ -67,7 +67,7 @@ groups:
       value: n/a
     - doc: Value is 'float('NaN')'
       dtype: None
-      name: conversion
+      name: resolution
       value: NaN
     dims:
     - num_times
@@ -91,7 +91,7 @@ groups:
   - attributes:
     - doc: Value is 'float('NaN')'
       dtype: None
-      name: resolution
+      name: conversion
       value: NaN
     - doc: Value is 'n/a'
       dtype: None
@@ -99,7 +99,7 @@ groups:
       value: n/a
     - doc: Value is 'float('NaN')'
       dtype: None
-      name: conversion
+      name: resolution
       value: NaN
     dims:
     - num_times
@@ -128,12 +128,6 @@ groups:
     module).
   groups:
   - datasets:
-    - doc: Name, path or description of where unit times originated. This is necessary
-        only if the info here differs from or is more fine-grained than the interface's
-        source field
-      dtype: text
-      name: source
-      quantity: '?'
     - doc: Description of the unit (eg, cell type).
       dtype: text
       name: unit_description
@@ -144,7 +138,16 @@ groups:
       name: times
       shape:
       - null
+    - doc: Name, path or description of where unit times originated. This is necessary
+        only if the info here differs from or is more fine-grained than the interface's
+        source field
+      dtype: text
+      name: source
+      quantity: '?'
     doc: Group storing times for &lt;unit_N&gt;.
+    neurodata_type_def: SpikeUnit
     neurodata_type_inc: NWBContainer
+    quantity: +
+  name: UnitTimes
   neurodata_type_def: UnitTimes
-  neurodata_type_inc: Interface
+  neurodata_type_inc: NWBContainer

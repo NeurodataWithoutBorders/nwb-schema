@@ -1,9 +1,16 @@
 groups:
 - attributes:
+  - doc: Description of TimeSeries
+    dtype: text
+    name: description
   - doc: Value is 'TimeSeries'
     dtype: text
     name: ancestry
     value: TimeSeries
+  - doc: Value is 'General time series object'
+    dtype: text
+    name: help
+    value: General time series object
   - doc: Name of TimeSeries or Modules that serve as the source for the data contained
       here. It can also be the name of a device, for stimulus or acquisition data
     dtype: text
@@ -13,13 +20,6 @@ groups:
       primary description field is populated with a computer-readable string.
     dtype: text
     name: comments
-  - doc: Value is 'General time series object'
-    dtype: text
-    name: help
-    value: General time series object
-  - doc: Description of TimeSeries
-    dtype: text
-    name: description
   datasets:
   - dims:
     - num_control_values
@@ -45,6 +45,16 @@ groups:
     dtype: float64!
     name: starting_time
     quantity: '?'
+  - dims:
+    - num_times
+    doc: 'Numerical labels that apply to each element in data[]. COMMENT: Optional
+      field. If present, the control array should have the same number of elements
+      as data[].'
+    dtype: uint8
+    name: control
+    quantity: '?'
+    shape:
+    - null
   - attributes:
     - doc: Value is 'Seconds'
       dtype: text
@@ -63,24 +73,12 @@ groups:
     name: timestamps
     shape:
     - null
-  - dims:
-    - num_times
-    doc: 'Numerical labels that apply to each element in data[]. COMMENT: Optional
-      field. If present, the control array should have the same number of elements
-      as data[].'
-    dtype: uint8
-    name: control
-    quantity: '?'
-    shape:
-    - null
   - attributes:
-    - default_value: 0.0
-      doc: 'Smallest meaningful difference between values in data, stored in the specified
-        by unit. COMMENT: E.g., the change in value of the least significant bit,
-        or a larger number if signal noise is known to be present. If unknown, use
-        NaN'
+    - default_value: 1.0
+      doc: Scalar to multiply each element in data to convert it to the specified
+        unit
       dtype: float32!
-      name: resolution
+      name: conversion
       required: false
     - doc: "The base unit of measure used to store data. This should be in the SI\
         \ unit. COMMENT: This is the SI unit (when appropriate) of the stored data,\
@@ -88,11 +86,13 @@ groups:
         \ below describes how to convert the data to the specified SI unit."
       dtype: text
       name: unit
-    - default_value: 1.0
-      doc: Scalar to multiply each element in data to convert it to the specified
-        unit
+    - default_value: 0.0
+      doc: 'Smallest meaningful difference between values in data, stored in the specified
+        by unit. COMMENT: E.g., the change in value of the least significant bit,
+        or a larger number if signal noise is known to be present. If unknown, use
+        NaN'
       dtype: float32!
-      name: conversion
+      name: resolution
       required: false
     dims:
     - num_times
@@ -112,20 +112,18 @@ groups:
       \ stored external to the NWB file, in files storing raw data. Once timestamp\
       \ data is calculated, the contents of 'sync' are mostly for archival purposes."
     name: sync
-    neurodata_type_inc: NWBContainer
     quantity: '?'
   neurodata_type_def: TimeSeries
   neurodata_type_inc: NWBContainer
 - attributes:
-  - doc: Path to the origin of the data represented in this interface.
-    dtype: text
-    name: source
   - doc: Short description of what this type of Interface contains.
     dtype: text
     name: help
+  - doc: Path to the origin of the data represented in this interface.
+    dtype: text
+    name: source
   doc: The attributes specified here are included in all interfaces.
-  neurodata_type_def: Interface
-  neurodata_type_inc: NWBContainer
+  neurodata_type_def: NWBContainer
 - attributes:
   - doc: Description of Module
     dtype: text
@@ -135,7 +133,7 @@ groups:
     to a particular type of data.
   groups:
   - doc: Interface objects containing data output from processing steps
-    neurodata_type_inc: Interface
+    neurodata_type_inc: NWBContainer
     quantity: '*'
   neurodata_type_def: Module
   neurodata_type_inc: NWBContainer

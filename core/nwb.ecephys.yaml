@@ -94,6 +94,9 @@ groups:
     shape:
     - null
     - null
+  - doc: Filtering applied to data before generating mean/sd
+    dtype: text
+    name: waveform_filtering
   - dims:
     - num_clusters
     - num_samples
@@ -103,9 +106,6 @@ groups:
     shape:
     - null
     - null
-  - doc: Filtering applied to data before generating mean/sd
-    dtype: text
-    name: waveform_filtering
   doc: The mean waveform shape, including standard deviation, of the different clusters.
     Ideally, the waveform analysis should be performed on data that is only high-pass
     filtered. This is a separate module because it is expected to require updating.
@@ -115,8 +115,9 @@ groups:
   - doc: HDF5 link to Clustering interface that was the source of the clustered data
     name: clustering_interface
     target_type: Clustering
+  name: ClusterWaveforms
   neurodata_type_def: ClusterWaveforms
-  neurodata_type_inc: Interface
+  neurodata_type_inc: NWBContainer
 - attributes:
   - doc: Value is 'Clustered spike data, whether from automatic clustering tools (eg,
       klustakwik) or as a result of manual sorting'
@@ -139,23 +140,24 @@ groups:
     - null
   - dims:
     - num_events
-    doc: Cluster number of each event
-    dtype: int32
-    name: num
-    shape:
-    - null
-  - dims:
-    - num_events
     doc: Times of clustered events, in seconds. This may be a link to times field
       in associated FeatureExtraction module.
     dtype: float64!
     name: times
     shape:
     - null
+  - dims:
+    - num_events
+    doc: Cluster number of each event
+    dtype: int32
+    name: num
+    shape:
+    - null
   doc: Clustered spike data, whether from automatic clustering tools (e.g., klustakwik)
     or as a result of manual sorting.
+  name: Clustering
   neurodata_type_def: Clustering
-  neurodata_type_inc: Interface
+  neurodata_type_inc: NWBContainer
 - attributes:
   - doc: Value is 'Container for salient features of detected events'
     dtype: text
@@ -170,13 +172,6 @@ groups:
     shape:
     - null
   - dims:
-    - num_features
-    doc: Description of features (eg, "PC1") for each of the extracted features.
-    dtype: text
-    name: description
-    shape:
-    - null
-  - dims:
     - num_events
     - num_channels
     - num_features
@@ -187,15 +182,27 @@ groups:
     - null
     - null
     - null
+  - dims:
+    - num_features
+    doc: Description of features (eg, "PC1") for each of the extracted features.
+    dtype: text
+    name: description
+    shape:
+    - null
   doc: Features, such as PC1 and PC2, that are extracted from signals stored in a
     SpikeEvent TimeSeries or other source.
   links:
   - doc: link to ElectrodeGroup group that generated this TimeSeries data
     name: electrode_group
     target_type: ElectrodeGroup
+  name: FeatureExtraction
   neurodata_type_def: FeatureExtraction
-  neurodata_type_inc: Interface
+  neurodata_type_inc: NWBContainer
 - datasets:
+  - doc: Description of how events were detected, such as voltage threshold, or dV/dT
+      threshold, as well as relevant values.
+    dtype: text
+    name: detection_method
   - dims:
     - num_events
     doc: Indices (zero-based) into source ElectricalSeries::data array corresponding
@@ -219,10 +226,6 @@ groups:
     name: times
     shape:
     - null
-  - doc: Description of how events were detected, such as voltage threshold, or dV/dT
-      threshold, as well as relevant values.
-    dtype: text
-    name: detection_method
   doc: Detected spike events from voltage trace(s).
   links:
   - doc: HDF5 link to ElectricalSeries that this data was calculated from. Metadata
@@ -230,8 +233,9 @@ groups:
       it's not necessary to mandate that information be stored here
     name: source_electricalseries
     target_type: ElectricalSeries
+  name: EventDetection
   neurodata_type_def: EventDetection
-  neurodata_type_inc: Interface
+  neurodata_type_inc: NWBContainer
 - attributes:
   - doc: Value is 'Waveform of detected extracellularly recorded spike events'
     dtype: text
@@ -244,8 +248,9 @@ groups:
   - doc: SpikeEventSeries object containing detected spike event waveforms
     neurodata_type_inc: SpikeEventSeries
     quantity: '*'
+  name: EventWaveform
   neurodata_type_def: EventWaveform
-  neurodata_type_inc: Interface
+  neurodata_type_inc: NWBContainer
 - attributes:
   - doc: Value is 'Ephys data from one or more channels that is subjected to filtering,
       such as for gamma or theta oscillations (LFP has its own interface). Filter
@@ -268,8 +273,9 @@ groups:
   - doc: ElectricalSeries object containing filtered electrophysiology data
     neurodata_type_inc: ElectricalSeries
     quantity: +
+  name: FilteredEphys
   neurodata_type_def: FilteredEphys
-  neurodata_type_inc: Interface
+  neurodata_type_inc: NWBContainer
 - attributes:
   - doc: Value is 'LFP data from one or more channels. Filter properties should be
       noted in the ElectricalSeries'
@@ -284,5 +290,59 @@ groups:
   - doc: ElectricalSeries object containing LFP data for one or channels
     neurodata_type_inc: ElectricalSeries
     quantity: +
+  name: LFP
   neurodata_type_def: LFP
-  neurodata_type_inc: Interface
+  neurodata_type_inc: NWBContainer
+- datasets:
+  - dims:
+    - num_channels
+    doc: array with description for each channel
+    dtype: text
+    name: channel_description
+    shape:
+    - null
+  - dims:
+    - num_channels
+    doc: array with location description for each channel e.g. "CA1"
+    dtype: text
+    name: channel_location
+    shape:
+    - null
+  - dims:
+    - num_channels
+    doc: array with description of filtering applied to each channel
+    dtype: text
+    name: channel_filtering
+    shape:
+    - null
+  - dims:
+    - num_channels
+    - dimensions
+    doc: xyz-coordinates for each channel. use NaN for unknown dimensions
+    dtype: text
+    name: channel_coordinates
+    shape:
+    - null
+    - 3
+  - dims:
+    - num_channels
+    doc: float array with impedance used on each channel. Can be 2D matrix to store
+      a range
+    dtype: text
+    name: channel_impedance
+    shape:
+    - null
+  - doc: description of this electrode group
+    dtype: text
+    name: description
+  - doc: description of location of this electrode group
+    dtype: text
+    name: location
+  doc: One of possibly many groups, one for each electrode group.
+  links:
+  - doc: the device that was used to record from this electrode group
+    name: device
+    quantity: '?'
+    target_type: Device
+  neurodata_type_def: ElectrodeGroup
+  neurodata_type_inc: NWBContainer
