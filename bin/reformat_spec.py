@@ -130,6 +130,7 @@ include_doc = {
     'PupilTracking/': 'TimeSeries object containing time series data on pupil size',
     'Position/': 'SpatialSeries object containing position data',
     'Fluorescence/': 'RoiResponseSeries object containing fluorescence data for a ROI',
+    'ProcessingModule': 'Interface objects containing data output from processing steps',
     'Module': 'Interface objects containing data output from processing steps',
 
     'EventWaveform/': 'SpikeEventSeries object containing detected spike event waveforms',
@@ -143,6 +144,10 @@ include_doc = {
 
 }
 
+nd_rename = {
+    'Interface': 'NWBContainer',
+    'Module': 'ProcessingModule',
+}
 def build_group_helper(**kwargs):
     myname = kwargs.get('name', None)
     if myname == NAME_WILDCARD:
@@ -151,16 +156,15 @@ def build_group_helper(**kwargs):
     ndt = kwargs.get('neurodata_type_def')
     inc = kwargs.get('neurodata_type_inc')
     if ndt is not None:
-        if ndt == 'Interface':
-            kwargs['neurodata_type_def'] = 'NWBContainer'
-        else:
-            if inc is None:
-                kwargs['neurodata_type_inc'] = 'NWBContainer'
-    doc = kwargs.pop('doc')
-    if ndt is not None:
         kwargs['namespace'] = 'core'
-    if inc == 'Interface':
-        kwargs['neurodata_type_inc'] = 'NWBContainer'
+        if ndt in nd_rename:
+            kwargs['neurodata_type_def'] = nd_rename[ndt]
+        if inc is None and ndt != 'Interface':
+            kwargs['neurodata_type_inc'] = 'NWBContainer'
+    if inc is not None:
+        if inc in nd_rename:
+            kwargs['neurodata_type_inc'] = nd_rename[inc]
+    doc = kwargs.pop('doc')
     if myname == None:
         grp_spec = NWBGroupSpec(doc, **kwargs)
     else:
@@ -249,7 +253,6 @@ def build_group(name, d, ndtype=None):
             ndt = ndt[1:ndt.rfind('>')]
             if ndt == 'Interface':
                 ndt = 'NWBContainer'
-                print('found Interface include')
             doc = include_doc.get(name, include_doc.get(neurodata_type))
             vargs = {'neurodata_type_inc': ndt}
             if quantity is not None:
@@ -489,7 +492,7 @@ def load_spec(spec):
     module_json =  spec['/processing/'].pop("<Module>/*")
 
     processing = build_group('processing', spec['/processing/'])
-    processing.add_group('Intermediate analysis of acquired data', neurodata_type_inc='Module', quantity='*')
+    processing.add_group('Intermediate analysis of acquired data', neurodata_type_inc='ProcessingModule', quantity='*')
     root.set_group(processing)
 
     stimulus = build_group('stimulus', spec['/stimulus/'])
@@ -515,7 +518,7 @@ def load_spec(spec):
         #build_group("<Module>/*", module_json, ndtype='Module'),
         build_group("<TimeSeries>/", spec["<TimeSeries>/"], ndtype='TimeSeries'),
         build_group("<NWBContainer>/", spec["<Interface>/"], ndtype='NWBContainer'),
-        build_group('<Module>/', module_json, ndtype='Module'),
+        build_group('<ProcessingModule>/', module_json, ndtype='ProcessingModule'),
     ]
 
 
