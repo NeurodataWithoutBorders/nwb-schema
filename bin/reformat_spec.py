@@ -18,6 +18,27 @@ from pynwb.spec import NWBDatasetSpec, NWBGroupSpec, NWBNamespace
 
 CORE_NAMESPACE='core'
 
+global tree
+tree = list()
+def monitor(func):
+    def _func(name, d, **kwargs):
+
+        nodename = name
+        if '<' in nodename:
+            end = nodename.rfind('>')
+            nodename = nodename[1:end]
+        elif '/' in nodename:
+            nodename = nodename[0:-1]
+
+        tree.append(nodename)
+        ret = func(name, d, **kwargs)
+        tree.pop()
+        return ret
+    return _func
+
+def get_node():
+    return '/'.join(tree)
+
 ignore = {'electrode_group', 'electrode_map', 'filtering', 'impedance'}
 metadata_ndts = list()
 
@@ -125,16 +146,27 @@ def build_group_helper(**kwargs):
     myname = kwargs.pop('name', NAME_WILDCARD)
     doc = kwargs.pop('doc')
     ndt = kwargs.get('neurodata_type_def')
+    if kwargs.get('neurodata_type_inc', None) is None:
+        kwargs['neurodata_type_inc'] = 'NWBContainer'
     if ndt is not None:
         kwargs['namespace'] = 'core'
     if myname == NAME_WILDCARD:
         grp_spec = NWBGroupSpec(doc, **kwargs)
     else:
-        grp_spec = NWBGroupSpec(doc, name=myname, **kwargs)
+        if ndt is not None:
+            kwargs['default_name'] = myname
+            print('setting default_name for %s' % myname)
+        else:
+            kwargs['name'] = myname
+            print('setting name for %s' % myname)
+        grp_spec = NWBGroupSpec(doc, **kwargs)
     return grp_spec
 
+@monitor
 def build_group(name, d, ndtype=None):
     #required = True
+    if name[0] == '<':
+        name = NAME_WILDCARD
     myname = name
     quantity, myname = strip_characters(name)
     if myname[-1] == '/':
@@ -193,6 +225,10 @@ def build_group(name, d, ndtype=None):
             continue
         if isinstance(value, str):
             continue
+        if 'autogen' in value:
+            if value['autogen']['type'] != 'create':
+                print ('skipping autogen: %s/%s' % (get_node(), key))
+                continue
 
         if tmp_name == 'include':
             ndt = next(iter(value.keys()))
@@ -266,6 +302,7 @@ def build_group(name, d, ndtype=None):
     return grp_spec
 
 dataset_ndt = { '<image_X>': 'Image' }
+@monitor
 def build_dataset(name, d):
     kwargs = remap_keys(name, d)
     if 'name' in kwargs:
@@ -281,6 +318,9 @@ def build_dataset(name, d):
 
 def add_attributes(parent_spec, attributes):
     for attr_name, attr_spec in attributes.items():
+        if 'autogen' in attr_spec:
+            print('skipping autogen attribute: %s.%s'  % (get_node(), attr_name))
+            continue
         parent_spec.set_attribute(build_attribute(attr_name, attr_spec))
 
 override_doc = {
@@ -422,9 +462,10 @@ def load_spec(spec):
     # /processing/
     # /stimulus/
 
-    root = build_group('root', spec['/'], 'NWBFile')
+    root = build_group('root', spec['/'], ndtype='NWBFile')
 
 
+    tree.append('NWBFile')
     acquisition = build_group('acquisition', spec['/acquisition/'])
     root.set_group(acquisition)
     analysis = build_group('analysis', spec['/analysis/'])
@@ -455,12 +496,13 @@ def load_spec(spec):
 
     optophysiology = build_group('optophysiology?', spec['/general/optophysiology/?'])
     general.set_group(optophysiology)
+    tree.pop()
 
     base = [
         #build_group("<Module>/*", module_json, ndtype='Module'),
-        build_group(NAME_WILDCARD, spec["<TimeSeries>/"], ndtype='TimeSeries'),
-        build_group(NAME_WILDCARD, spec["<Interface>/"], ndtype='Interface'),
-        build_group(NAME_WILDCARD, module_json, ndtype='Module'),
+        build_group("<TimeSeries>/", spec["<TimeSeries>/"], ndtype='TimeSeries'),
+        build_group("<Interface>/", spec["<Interface>/"], ndtype='Interface'),
+        build_group('<Module>/', module_json, ndtype='Module'),
     ]
 
 
@@ -550,7 +592,7 @@ def load_spec(spec):
         namearg = name
         ndt = None
         if name[0] == '<':
-            namearg = NAME_WILDCARD
+            namearg = name
             ndt = name[1:name.rfind('>')]
             #return build_group(NAME_WILDCARD, spec[name])
         else:
@@ -612,13 +654,13 @@ for key  in order:
     #    yaml.dump(json.loads(json.dumps(value)), out, default_flow_style=False)
     #schema.append({'source': filename})
 
-ns_file = '%s/nwb.namespace.yaml' % outdir
+ns_file = 'nwb.namespace.yaml'
 #ns['schema'] = schema
 #ns = {'namespaces': [SpecNamespace.build_namespace(**ns)]}
 #with open(ns_file, 'w') as out:
 #    yaml.dump(json.loads(json.dumps(ns)), out, default_flow_style=False)
 
-ns_builder.export(ns_file)
+ns_builder.export(ns_file, outdir=outdir)
 
 
 import tarfile
