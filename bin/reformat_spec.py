@@ -55,6 +55,7 @@ device_spec = LinkSpec('the device that was used to record from this electrode g
 alternate_defs = {
     'ElectrodeGroup': NWBGroupSpec('One of possibly many groups, one for each electrode group.',
             neurodata_type_def='ElectrodeGroup',
+            neurodata_type_inc='NWBContainer',
             namespace=CORE_NAMESPACE,
             datasets = [
                 NWBDatasetSpec('array with description for each channel', 'text', name='channel_description', shape=(None,), dims=('num_channels',)),
@@ -143,31 +144,40 @@ include_doc = {
 }
 
 def build_group_helper(**kwargs):
-    myname = kwargs.pop('name', NAME_WILDCARD)
-    doc = kwargs.pop('doc')
+    myname = kwargs.get('name', None)
+    if myname == NAME_WILDCARD:
+        kwargs['name'] = None
+        myname = None
     ndt = kwargs.get('neurodata_type_def')
-    if kwargs.get('neurodata_type_inc', None) is None:
-        kwargs['neurodata_type_inc'] = 'NWBContainer'
+    inc = kwargs.get('neurodata_type_inc')
+    if ndt is not None:
+        if ndt == 'Interface':
+            kwargs['neurodata_type_def'] = 'NWBContainer'
+        else:
+            if inc is None:
+                kwargs['neurodata_type_inc'] = 'NWBContainer'
+    doc = kwargs.pop('doc')
     if ndt is not None:
         kwargs['namespace'] = 'core'
-    if myname == NAME_WILDCARD:
+    if inc == 'Interface':
+        kwargs['neurodata_type_inc'] = 'NWBContainer'
+    if myname == None:
         grp_spec = NWBGroupSpec(doc, **kwargs)
     else:
         if ndt is not None:
             kwargs['default_name'] = myname
-            print('setting default_name for %s' % myname)
         else:
             kwargs['name'] = myname
-            print('setting name for %s' % myname)
         grp_spec = NWBGroupSpec(doc, **kwargs)
     return grp_spec
 
 @monitor
 def build_group(name, d, ndtype=None):
     #required = True
-    if name[0] == '<':
-        name = NAME_WILDCARD
     myname = name
+    if name[0] == '<':
+        if name[1].isupper():
+            name = NAME_WILDCARD
     quantity, myname = strip_characters(name)
     if myname[-1] == '/':
         myname = myname[:-1]
@@ -290,7 +300,6 @@ def build_group(name, d, ndtype=None):
                     if subgrp.neurodata_type_def in alternate_defs:
                         print('getting alternate_def for', subgrp.neurodata_type_def)
                         subgrp = alternate_defs[subgrp.neurodata_type_def]
-                    #print('moving %s' % subgrp.neurodata_type_def)
                     vargs = {'neurodata_type_inc': subgrp.neurodata_type_def, 'namespace': CORE_NAMESPACE, 'quantity': '*'}
                     grp_spec.add_group(subgrp.doc, **vargs)
                     metadata_ndts.append(subgrp)
@@ -309,6 +318,7 @@ def build_dataset(name, d):
         if kwargs['name'] in dataset_ndt:
             tmpname = kwargs.pop('name')
             kwargs['neurodata_type_def'] = dataset_ndt[tmpname]
+            kwargs['neurodata_type_inc'] = 'NWBData'
     if 'neurodata_type_def' in kwargs or 'neurodata_type_inc' in kwargs:
         kwargs['namespace'] = CORE_NAMESPACE
     dset_spec = NWBDatasetSpec(kwargs.pop('doc'), kwargs.pop('dtype'), **kwargs)
@@ -501,7 +511,7 @@ def load_spec(spec):
     base = [
         #build_group("<Module>/*", module_json, ndtype='Module'),
         build_group("<TimeSeries>/", spec["<TimeSeries>/"], ndtype='TimeSeries'),
-        build_group("<Interface>/", spec["<Interface>/"], ndtype='Interface'),
+        build_group("<NWBContainer>/", spec["<Interface>/"], ndtype='NWBContainer'),
         build_group('<Module>/', module_json, ndtype='Module'),
     ]
 
