@@ -126,7 +126,7 @@ class HierarchyDescription(dict):
     def __setitem__(self, key, value):
         raise ValueError("Explicit setting of objects not allowed. Use the add_* functions to add objects")
 
-    def add_dataset(self, name, shape=None, dtype=None, neurodata_type=None):
+    def add_dataset(self, name, shape=None, dtype=None, neurodata_type=None, size=None):
         """
         Add a dataset to the description
 
@@ -139,7 +139,8 @@ class HierarchyDescription(dict):
             'name': name,
             'shape': shape,
             'dtype': dtype,
-            'neurodata_type': neurodata_type
+            'neurodata_type': neurodata_type,
+            'size': size
 
         })
 
@@ -155,7 +156,7 @@ class HierarchyDescription(dict):
             'neurodata_type': neurodata_type
         })
 
-    def add_attribute(self,  name, value):
+    def add_attribute(self,  name, value, size=None):
         """
         Add an attribute
 
@@ -165,7 +166,8 @@ class HierarchyDescription(dict):
         """
         self['attributes'].append({
             'name': name,
-            'value': value
+            'value': value,
+            'size': size
         })
 
     def add_link(self, name, target_type):
@@ -311,7 +313,12 @@ class HierarchyDescription(dict):
                 ntype=None
                 if 'neurodata_type' in obj.attrs.keys():
                     ntype = obj.attrs['neurodata_type'][:]
-                filestats.add_dataset(name=obj_name, shape=obj.shape, dtype=obj.dtype, neurodata_type=ntype)
+
+                filestats.add_dataset(name=obj_name,
+                                      shape=obj.shape,
+                                      dtype=obj.dtype,
+                                      neurodata_type=ntype,
+                                      size=obj.size * obj.dtype.itemsize)
             elif isinstance(obj, h5py.Group):
                 ntype = None
                 if 'neurodata_type' in obj.attrs.keys():
@@ -321,11 +328,15 @@ class HierarchyDescription(dict):
                 for objkey in obj.keys():
                     objval = obj.get(objkey, getlink=True)
                     if isinstance(objval, h5py.SoftLink) or isinstance(objval, h5py.ExternalLink):
-                        linktarget = obj[objkey]
-                        if 'neurodata_type' in linktarget.attrs.keys():
-                            targettype = linktarget.attrs['neurodata_type'][:]
-                        else:
-                            targettype = str(type(linktarget))
+                        try:
+                            linktarget = obj[objkey]
+                            if 'neurodata_type' in linktarget.attrs.keys():
+                                targettype = linktarget.attrs['neurodata_type'][:]
+                            else:
+                                targettype = str(type(linktarget))
+                        except KeyError:
+                            warnings.warn('Unable to determine target type of link %s, %s' % ((obj_name, objkey)))
+                            targettype = 'undefined'
                         linkname = os.path.join(obj_name, objkey)
                         filestats.add_link(linkname, target_type=targettype)
                         if isinstance(objval, h5py.SoftLink):
@@ -336,7 +347,11 @@ class HierarchyDescription(dict):
             # Visit all attributes of the object
             for attr_name, attr_value in obj.attrs.items():
                 attr_path = os.path.join(obj_name, attr_name)
-                filestats.add_attribute(name=attr_path, value=attr_value)
+                try:
+                    size = attr_value.size * attr_value.dtype.itemsize
+                except:
+                    size = None
+                filestats.add_attribute(name=attr_path, value=attr_value, size=size)
                 filestats.add_relationship(source=attr_path,
                                            target=obj_name,
                                            name=attr_name + '_attribute_of_' + obj_name,
