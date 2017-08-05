@@ -247,6 +247,9 @@ def build_group(name, d, ndtype=None):
                 quantity = ndt[-1]
                 ndt = ndt[:-1]
             ndt = ndt[1:ndt.rfind('>')]
+            if ndt == 'Interface':
+                ndt = 'NWBContainer'
+                print('found Interface include')
             doc = include_doc.get(name, include_doc.get(neurodata_type))
             vargs = {'neurodata_type_inc': ndt}
             if quantity is not None:
