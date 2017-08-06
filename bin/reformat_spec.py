@@ -213,6 +213,7 @@ def build_group(name, d, ndtype=None):
         attributes = d.pop('attributes', None)
         if 'neurodata_type' in attributes:
             neurodata_type = attributes.pop('neurodata_type')['value']
+            attributes.pop('ancestry', None)
         elif 'ancestry' in attributes:
             #neurodata_type = attributes['ancestry']['value'][-1]
             neurodata_type = attributes.pop('ancestry')['value'][-1]
