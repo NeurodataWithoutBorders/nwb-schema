@@ -278,6 +278,15 @@ dependencies between data (i.e., datasets havging to be updated due to changes i
     * Clustering/cluster_nums
 
 
+Removed ``'neurodata\_type=Custom'``
+""""""""""""""""""""""""""""""""""""
+
+**Change** The ``'neurodata\_type=Custom'`` has been removed.
+
+**Reason** All additions of data should be governed by extensions. Custom datasets can be identified based on
+the specification, i.e., any objects that are not part of the specification are custom.
+
+
 
 1.0.5g\_beta, Oct 7, 2016
 -------------------------
