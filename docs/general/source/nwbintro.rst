@@ -89,7 +89,7 @@ compliant with the NWB format and extension of the NWB format.
 
 **Documentation:** http://nwb-schema.readthedocs.io
 
-**Sources:** https://bitbucket.org/lblneuro/nwb-schema
+**Sources:** https://github.com/NeurodataWithoutBorders/nwb-schema
 
 
 Data Storage
@@ -151,7 +151,7 @@ and data storage.
 
 **Documentation:** http://pynwb.readthedocs.io
 
-**Sources:** https://bitbucket.org/lblneuro/pynwb
+**Sources:** https://github.com/NeurodataWithoutBorders/pynwb
 
 
 
