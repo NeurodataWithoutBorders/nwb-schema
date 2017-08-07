@@ -41,8 +41,14 @@ in mind, the high-level mapping between the format specification and HDF5 is qui
     Group          Group
     Dataset        Dataset
     Attribute      Attribute
-    Link           Soft Link
+    Link           Soft Link (or External Link)
     =============  ===============================================
+
+
+.. note::
+
+    In HDF5 Links are stored as HDF5 Soft Links (or External Links). Hard Links are not used in NWB as the primary location
+    and, hence, primary ownership and link path for secondary locations,  cannot be determined for Hard Links.
 
 
 Key Mapping
