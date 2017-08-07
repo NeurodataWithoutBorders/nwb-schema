@@ -136,7 +136,35 @@ and format likely via support for modeling of relationships or support for table
 ```autogen```
 ^^^^^^^^^^^^^
 
-The ```autogen``` key has been removed in 1.2a without replacement.
+The ```autogen``` key has been removed without replacement.
+
+**Reason:** The autogen specification was orignially used to specify that the attribute or dataset contents (values)
+can be derived from the contents of the HDF5 file and, hence, generated and validated automatically.
+As such, autogen crossed a broad range of different functionalities, including:
+
+1. Specification of the structure of format datasets/attributes
+2. Description of data constraints (e.g., the shape of the generated dataset directly depends on the structure of the input data consumed by autogen),
+3. Specification of the content (i.e., value) of datasets and attributes,
+4. Description of computations to create derived data, and
+5. Validation of the structure and content of datasets/attributes.
+
+This mixing of functionality in turn led to several concerns:
+
+* autogen exhibited a fairly complex syntax, which made it hard to interpret and use
+* autogen is specifically used to create derived data from information that is already in the NWB file.
+  Attributes/datasets generated via autogen: i) are redundant, ii) often require bookkeeping to ensure data consistency,
+  iii) generate dependencies across data and types, iv) have limited utility as the information can be derived through
+  other means, and v) interpreation of data values may require the provenance of autogen.
+* Description of computations as part of a format specification was seen as problematic.
+* There was potential for collisions between autogen and the specification of the dataset/attribute itself.
+
+**Usage in NWB** autogen was used in NWB V.1.0.6 to generate 17 datasets/attributes primarily to:
+i) store the path of links in separate datasets/attributes or ii) generate lists of datasets/groups of a given type/property.
+The datasets were reviewed at a hackathon and determined to be non-essential and as such removed from the format as well.
+
+
+
+
 
 
 Version 1.1c (Oct. 7, 2016)
