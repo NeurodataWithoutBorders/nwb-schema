@@ -200,21 +200,15 @@ but this could be easily added if needed.
 Specification language changes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Change:** Numerous changes have been made to the specification language itself.
-
-**Reason:** Make the specification language and format easier to use and interpret
-
-**Specific Changes:**
-
-    - The specific changes to the specification language are described in the release notes of the documentation of
-      the specification language. Most changes effect mainly how the format is specified rather than how the format
-      actually looks. Some select specific changes that have implications on the format itself are described next.
-
+**Change:** Numerous changes have been made to the specification language itself in NWB 2.0. Most changes to
+the specification language effect mainly how the format is specified, rather than the actual structure of the format.
+The changes that have implications on the format itself are described next. For an overview and discussion of the
+changes to the specification language see `specification language release notes <http://schema-language.readthedocs.io/en/latest/specification_language_release_notes.html#release-notes>`_.
 
 Specification of dataset dimensions
 """""""""""""""""""""""""""""""""""
 
-**Change:** Updated the specification of the dimenions of dataset
+**Change:** Updated the specification of the dimensions of dataset
 
 **Reason:** To simplify the specification of dimension of datasets and attribute
 
@@ -240,6 +234,48 @@ Added ``Link`` type
 **Format Changes:** The format itself is not affected by this change aside from the fact that
 datasets that were links are now explicitly declared as links.
 
+
+Removed datasets defined via autogen
+""""""""""""""""""""""""""""""""""""
+
+**Change** Support for ``autogen`` has been removed from the specification language. After review
+of all datasets that were produced via autogen it was decided that all autogen datasets should be
+removed from the format.
+
+**Reason** The main reasons for removal of autogen dataset is to ease use and maintance of NWB files by
+i) avoiding redundant storage of information (i.e., improve normalization of data) and ii) avoiding
+dependencies between data (i.e., datasets havging to be updated due to changes in other locations in a file).
+
+**Format Changes**
+
+* Datasets/Attributes that have been removed due to redundant storage of the path of links stored in the same group:
+
+    * IndexSeries/indexed_timeseries_path
+    * RoiResponseSeries/segmentation_interface_path
+    * ImageMaskSeries/masked_imageseries_path
+    * ClusterWaveforms/clustering_interface_path
+    * EventDetection/source_electricalseries_path
+    * MotionCorrection/image_stack_name/original_path
+    * NWBFile/epochs/epoch_X.links
+
+* Datasets//Attributes that have been removed because they stored only a list of groups/datasets (of a given type or property)
+  in the current group.
+
+    * Module.interfaces  (now ProcessingModule)
+    * ImageSegmentation/image_plane/roi_list
+    * UnitTimes/unit_list
+    * TimeSeries.extern_fields
+    * TimeSeries.data_link
+    * TimeSeries.timestamp_link
+    * TimeSeries.missing_fields
+
+
+* Other datasets/attributes that have been removed to ease use and maintance because the data stored is redundant and can be
+  easily extracted from the file:
+
+    * NWBFile/epochs.tags
+    * TimeSeries/num_samples
+    * Clustering/cluster_nums
 
 
 
