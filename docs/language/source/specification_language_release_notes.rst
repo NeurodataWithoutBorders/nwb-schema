@@ -58,12 +58,12 @@ Summary
     * Removed key ```\_\_custom``` (without replacement). This feature was used only in one location to provide user hints where custom data could be placed, however, since the NWB specification approach explicitly allows users to add custom data in any location, this information was not binding.
 
 
-Currently unsupported features that will be added in 1.2.1a
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Currently unsupported features:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* ```_required``` : The current API does not yet support specification and verification of
+* ```_required``` : The current API does not yet support specification and verification of constraints previously expressed via ``_required``.
 * Relationships are currently available only through implicit concepts, i.e., by sharing dimension names and through implicit references as part of datasets. The goal is to provide explicit mechanisms for describing these as well as more advanced relationships.
-* ```dimensions_specification```: This will be implmented in later version likely through the use of relationships.
+* ```dimensions_specification```: This will be implemented in later version likely through the use of relationships.
 
 
 YAML support
