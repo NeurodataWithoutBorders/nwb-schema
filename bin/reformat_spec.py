@@ -5,10 +5,11 @@ import yaml
 from ruamel import yaml
 
 #import pynwb
+from collections import OrderedDict
 
 from datetime import datetime
 from form.spec import Spec, AttributeSpec, LinkSpec, SpecNamespace, NamespaceBuilder
-from pynwb.spec import NWBDatasetSpec, NWBGroupSpec, NWBNamespace
+from pynwb.spec import NWBDatasetSpec, NWBGroupSpec, NWBNamespace, NWBAttributeSpec
 
 """
     stuff to clean up
@@ -18,8 +19,8 @@ from pynwb.spec import NWBDatasetSpec, NWBGroupSpec, NWBNamespace
 
 CORE_NAMESPACE='core'
 
-global tree
-tree = list()
+global stack
+stack = list()
 def monitor(func):
     def _func(name, d, **kwargs):
 
@@ -30,14 +31,14 @@ def monitor(func):
         elif '/' in nodename:
             nodename = nodename[0:-1]
 
-        tree.append(nodename)
+        stack.append(nodename)
         ret = func(name, d, **kwargs)
-        tree.pop()
+        stack.pop()
         return ret
     return _func
 
 def get_node():
-    return '/'.join(tree)
+    return '/'.join(stack)
 
 ignore = {'electrode_group', 'electrode_map', 'filtering', 'impedance'}
 metadata_ndts = list()
@@ -52,11 +53,15 @@ subspec_locations = {
 }
 
 device_spec = LinkSpec('the device that was used to record from this electrode group', 'Device', name='device', quantity='?')
+eg_help = 'A physical grouping of channels'
 alternate_defs = {
     'ElectrodeGroup': NWBGroupSpec('One of possibly many groups, one for each electrode group.',
             neurodata_type_def='ElectrodeGroup',
             neurodata_type_inc='NWBContainer',
             namespace=CORE_NAMESPACE,
+            attributes = [
+                AttributeSpec('help', 'str', "Value is '%s'" % eg_help, value=eg_help)
+            ],
             datasets = [
                 NWBDatasetSpec('array with description for each channel', 'text', name='channel_description', shape=(None,), dims=('num_channels',)),
                 NWBDatasetSpec('array with location description for each channel e.g. "CA1"', 'text', name='channel_location',    shape=(None,), dims=('num_channels',)),
@@ -119,7 +124,7 @@ metadata_links_rename = {
     'imaging_plane_name': 'imaging_plane'
 }
 
-all_specs = dict()
+all_specs = OrderedDict()
 
 
 include_doc = {
@@ -230,7 +235,8 @@ def build_group(name, d, ndtype=None):
         else:
             grp_spec = build_group_helper(doc=desc, name=myname, quantity=quantity, neurodata_type_inc=extends)
 
-    for key, value in d.items():
+    for key in sorted(d.keys()):
+        value = d[key]
         tmp_name = key
         if tmp_name == 'autogen':
             continue
@@ -325,7 +331,7 @@ def build_dataset(name, d):
         if kwargs['name'] in dataset_ndt:
             tmpname = kwargs.pop('name')
             kwargs['neurodata_type_def'] = dataset_ndt[tmpname]
-            kwargs['neurodata_type_inc'] = 'NWBData'
+            #kwargs['neurodata_type_inc'] = 'NWBData'
     if 'neurodata_type_def' in kwargs or 'neurodata_type_inc' in kwargs:
         kwargs['namespace'] = CORE_NAMESPACE
     dset_spec = NWBDatasetSpec(kwargs.pop('doc'), kwargs.pop('dtype'), **kwargs)
@@ -334,7 +340,8 @@ def build_dataset(name, d):
     return dset_spec
 
 def add_attributes(parent_spec, attributes):
-    for attr_name, attr_spec in attributes.items():
+    for attr_name in sorted(attributes.keys()):
+        attr_spec  = attributes[attr_name]
         if 'autogen' in attr_spec:
             print('skipping autogen attribute: %s.%s'  % (get_node(), attr_name))
             continue
@@ -385,7 +392,7 @@ def strip_characters(name):
 def remap_keys(name, d):
     # TODO: add parsing of +/* for 'num_args'
     # will move to quantity which takes on values *, +, ? , or an integer
-    ret = dict()
+    ret = OrderedDict()
     quantity, specname = strip_characters(name)
     if quantity != 1:
         ret['quantity'] = quantity
@@ -481,8 +488,11 @@ def load_spec(spec):
 
     root = build_group('root', spec['/'], ndtype='NWBFile')
 
+    root_help = 'an NWB:N file for storing cellular-based neurophysiology data'
+    root.add_attribute('help', 'str', "Value is '%s'" % root_help, value=root_help)
 
-    tree.append('NWBFile')
+
+    stack.append('NWBFile')
     acquisition = build_group('acquisition', spec['/acquisition/'])
     root.set_group(acquisition)
     analysis = build_group('analysis', spec['/analysis/'])
@@ -513,19 +523,21 @@ def load_spec(spec):
 
     optophysiology = build_group('optophysiology?', spec['/general/optophysiology/?'])
     general.set_group(optophysiology)
-    tree.pop()
+    stack.pop()
 
+    spec["<TimeSeries>/"]["attributes"]["description^"]['value'] = "no description"
+    spec["<TimeSeries>/"]["attributes"]["comments^"]['value'] = "no comments"
     base = [
         #build_group("<Module>/*", module_json, ndtype='Module'),
-        build_group("<TimeSeries>/", spec["<TimeSeries>/"], ndtype='TimeSeries'),
         build_group("<NWBContainer>/", spec["<Interface>/"], ndtype='NWBContainer'),
+        build_group("<TimeSeries>/", spec["<TimeSeries>/"], ndtype='TimeSeries'),
         build_group('<ProcessingModule>/', module_json, ndtype='ProcessingModule'),
     ]
 
 
     # load TimeSeries specs
 
-    type_specs = dict()
+    type_specs = OrderedDict()
     subspecs = [
         'epoch',
         'ecephys',
@@ -636,7 +648,7 @@ with open(spec_path) as spec_in:
     #nwb_spec = load_iface(json.load(spec_in))
 
 
-ns = dict()
+ns = OrderedDict()
 ns['doc'] = 'NWB namespace'
 ns['name'] = CORE_NAMESPACE
 ns['full_name'] = 'NWB core'
