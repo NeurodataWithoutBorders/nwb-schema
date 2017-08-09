@@ -9,14 +9,6 @@ groups:
   datasets:
   - dims:
     - num_features
-    doc: Units of each feature.
-    dtype: text
-    name: feature_units
-    quantity: '?'
-    shape:
-    - null
-  - dims:
-    - num_features
     doc: Description of the features represented in TimeSeries::data.
     dtype: text
     name: features
@@ -30,6 +22,7 @@ groups:
         \ below describes how to convert the data to the specified SI unit."
       dtype: None
       name: unit
+      required: false
     dims:
     - num_times
     - num_features
@@ -38,6 +31,14 @@ groups:
     name: data
     shape:
     - null
+    - null
+  - dims:
+    - num_features
+    doc: Units of each feature.
+    dtype: text
+    name: feature_units
+    quantity: '?'
+    shape:
     - null
   doc: Abstract features, such as quantitative descriptions of sensory stimuli. The
     TimeSeries::data field is a 2D array, storing those features (e.g., for visual
@@ -56,10 +57,6 @@ groups:
     value: Time-stamped annotations about an experiment
   datasets:
   - attributes:
-    - doc: Value is 'float('NaN')'
-      dtype: None
-      name: conversion
-      value: NaN
     - doc: Value is 'n/a'
       dtype: None
       name: unit
@@ -67,6 +64,10 @@ groups:
     - doc: Value is 'float('NaN')'
       dtype: None
       name: resolution
+      value: NaN
+    - doc: Value is 'float('NaN')'
+      dtype: None
+      name: conversion
       value: NaN
     dims:
     - num_times
@@ -88,10 +89,6 @@ groups:
     value: Stores the start and stop times for events
   datasets:
   - attributes:
-    - doc: Value is 'float('NaN')'
-      dtype: None
-      name: conversion
-      value: NaN
     - doc: Value is 'n/a'
       dtype: None
       name: unit
@@ -99,6 +96,10 @@ groups:
     - doc: Value is 'float('NaN')'
       dtype: None
       name: resolution
+      value: NaN
+    - doc: Value is 'float('NaN')'
+      dtype: None
+      name: conversion
       value: NaN
     dims:
     - num_times
@@ -121,20 +122,15 @@ groups:
     dtype: text
     name: help
     value: Estimated spike times from a single unit
-  datasets:
-  - dims:
-    - num_units
-    doc: List of units present.
-    dtype: text
-    name: unit_list
-    shape:
-    - null
   doc: Event times of observed units (e.g. cell, synapse, etc.). The UnitTimes group
     contains a group for each unit. The name of the group should match the value in
     the source module, if that is possible/relevant (e.g., name of ROIs from Segmentation
     module).
   groups:
   - datasets:
+    - doc: Description of the unit (eg, cell type).
+      dtype: text
+      name: unit_description
     - dims:
       - num_events
       doc: Spike time for the units (exact or estimated)
@@ -148,12 +144,10 @@ groups:
       dtype: text
       name: source
       quantity: '?'
-    - doc: Description of the unit (eg, cell type).
-      dtype: text
-      name: unit_description
     doc: Group storing times for &lt;unit_N&gt;.
     neurodata_type_def: SpikeUnit
+    neurodata_type_inc: NWBContainer
     quantity: +
   name: UnitTimes
   neurodata_type_def: UnitTimes
-  neurodata_type_inc: Interface
+  neurodata_type_inc: NWBContainer
