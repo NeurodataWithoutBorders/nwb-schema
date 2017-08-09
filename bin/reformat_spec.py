@@ -537,11 +537,14 @@ def load_spec(spec):
 
     spec["<TimeSeries>/"]["attributes"]["description^"]['value'] = "no description"
     spec["<TimeSeries>/"]["attributes"]["comments^"]['value'] = "no comments"
+    mod_spec = build_group('<ProcessingModule>/', module_json, ndtype='ProcessingModule')
+    mod_help = 'A collection of analysis outputs from processing of data'
+    mod_spec.add_attribute('help', 'text', "Value is '%s'" % mod_help, value=mod_help)
     base = [
         #build_group("<Module>/*", module_json, ndtype='Module'),
         build_group("<NWBContainer>/", spec["<Interface>/"], ndtype='NWBContainer'),
         build_group("<TimeSeries>/", spec["<TimeSeries>/"], ndtype='TimeSeries'),
-        build_group('<ProcessingModule>/', module_json, ndtype='ProcessingModule'),
+        mod_spec,
     ]
 
 
