@@ -54,6 +54,7 @@ subspec_locations = {
 
 device_spec = LinkSpec('the device that was used to record from this electrode group', 'Device', name='device', quantity='?')
 eg_help = 'A physical grouping of channels'
+dev_help = 'A recording device e.g. amplifier'
 alternate_defs = {
     'ElectrodeGroup': NWBGroupSpec('One of possibly many groups, one for each electrode group.',
             neurodata_type_def='ElectrodeGroup',
@@ -73,6 +74,14 @@ alternate_defs = {
             ],
             links = [
                 device_spec
+            ]
+    ),
+    'Device': NWBGroupSpec('One of possibly many. Information about device and device description.',
+            neurodata_type_def='Device',
+            neurodata_type_inc='NWBContainer',
+            namespace=CORE_NAMESPACE,
+            attributes = [
+                AttributeSpec('help', 'str', "Value is '%s'" % dev_help, value=dev_help)
             ]
     )
 }
@@ -153,6 +162,7 @@ nd_rename = {
     'Interface': 'NWBContainer',
     'Module': 'ProcessingModule',
 }
+
 def build_group_helper(**kwargs):
     myname = kwargs.get('name', None)
     if myname == NAME_WILDCARD:
@@ -161,6 +171,8 @@ def build_group_helper(**kwargs):
     ndt = kwargs.get('neurodata_type_def')
     inc = kwargs.get('neurodata_type_inc')
     if ndt is not None:
+        if ndt == 'Device':
+            return alternate_defs[ndt]
         kwargs['namespace'] = 'core'
         if ndt in nd_rename:
             kwargs['neurodata_type_def'] = nd_rename[ndt]
@@ -398,8 +410,6 @@ def remap_keys(name, d):
         ret['quantity'] = quantity
 
     if specname in ndmap:
-        ret['neurodata_type_def'] = ndmap[specname]
-    elif specname in ndmap_to_group:
         ret['neurodata_type_def'] = ndmap[specname]
     else:
         ret['name'] = specname
