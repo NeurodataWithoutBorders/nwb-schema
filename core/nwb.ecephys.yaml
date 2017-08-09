@@ -88,21 +88,21 @@ groups:
   - dims:
     - num_clusters
     - num_samples
-    doc: Stdev of waveforms for each cluster, using the same indices as in mean
-    dtype: float32
-    name: waveform_sd
-    shape:
-    - null
-    - null
-  - dims:
-    - num_clusters
-    - num_samples
     doc: The mean waveform for each cluster, using the same indices for each wave
       as cluster numbers in the associated Clustering module (i.e, cluster 3 is in
       array slot [3]). Waveforms corresponding to gaps in cluster sequence should
       be empty (e.g., zero- filled)
     dtype: float32
     name: waveform_mean
+    shape:
+    - null
+    - null
+  - dims:
+    - num_clusters
+    - num_samples
+    doc: Stdev of waveforms for each cluster, using the same indices as in mean
+    dtype: float32
+    name: waveform_sd
     shape:
     - null
     - null
@@ -293,7 +293,12 @@ groups:
   name: LFP
   neurodata_type_def: LFP
   neurodata_type_inc: NWBContainer
-- datasets:
+- attributes:
+  - doc: Value is 'A physical grouping of channels'
+    dtype: str
+    name: help
+    value: A physical grouping of channels
+  datasets:
   - dims:
     - num_channels
     doc: array with description for each channel
