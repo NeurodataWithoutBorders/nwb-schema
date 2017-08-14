@@ -177,7 +177,12 @@ groups:
   name: ImageSegmentation
   neurodata_type_def: ImageSegmentation
   neurodata_type_inc: NWBContainer
-- datasets:
+- attributes:
+  - doc: Value is 'Metadata about an imaging plane'
+    dtype: text
+    name: help
+    value: Metadata about an imaging plane
+  datasets:
   - doc: Description of &lt;image_plane_X&gt;
     dtype: text
     name: description
@@ -232,7 +237,12 @@ groups:
     arbitrary but should be meaningful. It is referenced by TwoPhotonSeries and also
     ImageSegmentation and DfOverF interfaces'
   groups:
-  - datasets:
+  - attributes:
+    - doc: Value is 'Metadata about an optical channel used to record from an imaging plane'
+      dtype: text
+      name: help
+      value: Metadata about an optical channel used to record from an imaging plane
+    datasets:
     - doc: Any notes or comments about the channel
       dtype: text
       name: description
