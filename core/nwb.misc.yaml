@@ -133,12 +133,6 @@ groups:
       name: help
       value: Times for a particular UnitTime object
     datasets:
-    - doc: Name, path or description of where unit times originated. This is necessary
-        only if the info here differs from or is more fine-grained than the interface's
-        source field
-      dtype: text
-      name: source
-      quantity: '?'
     - dims:
       - num_events
       doc: Spike time for the units (exact or estimated)
