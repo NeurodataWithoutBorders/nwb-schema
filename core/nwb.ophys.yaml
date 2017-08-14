@@ -111,14 +111,24 @@ groups:
     is allowed to change with time, a new imaging plane (or module) is required and
     ROI names should remain consistent between them.
   groups:
-  - datasets:
+  - attributes:
+    - doc: Value is 'Results from segmentation of an imaging plane'
+      dtype: text
+      name: help
+      value: 'Results from segmentation of an imaging plane'
+    datasets:
     - doc: Description of image plane, recording wavelength, depth, etc
       dtype: text
       name: description
       quantity: '?'
     doc: Group name is human-readable description of imaging plane
     groups:
-    - datasets:
+    - attributes:
+      - doc: Value is 'Region of interest, as determined by image segmentation'
+        dtype: text
+        name: help
+        value: 'Region of interest, as determined by image segmentation'
+      datasets:
       - dims:
         - num_x
         - num_y
