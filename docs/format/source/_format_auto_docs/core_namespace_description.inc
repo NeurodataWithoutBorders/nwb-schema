@@ -33,4 +33,7 @@ Namespace: NWB core
     - **source:** nwb.retinotopy.yaml 
 
 
-.. include:: _format_auto_docs/format_spec_type_hierarchy.inc
+.. only:: html 
+
+    .. include:: _format_auto_docs/format_spec_type_hierarchy.inc
+
