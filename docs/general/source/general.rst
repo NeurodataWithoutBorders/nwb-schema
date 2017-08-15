@@ -39,13 +39,13 @@ Sources
 
 The sources for the API, format specification, and all documents are available here:
 
-* **PyNWB (APIs)** https://bitbucket.org/lblneuro/pynwb . The PyNWB repository includes among others:
+* **PyNWB (APIs)** https://github.com/NeurodataWithoutBorders/pynwb . The PyNWB repository includes among others:
     * ``src/pynwb`` : Sources of the PyNWB data API
     * ``src/form`` : Sources of the Flexible Object-Relational Mapping API
     * ``docs/`` : Sphinx documentation of the APIs
     * ``tests/`` : Unit test suite for the APIs
 
-* **NWB Schema** https://bitbucket.org/lblneuro/nwb-schema . The nwb-schema repositry includes among others:
+* **NWB Schema** https://github.com/NeurodataWithoutBorders/nwb-schema . The nwb-schema repository includes among others:
     * ``core`` : YAML specification of the NWB core format
     * ``docs/general`` : Sphinx sources for the general overview documentation
     * ``docs/language`` : Sphinx sources for the specification language documention
