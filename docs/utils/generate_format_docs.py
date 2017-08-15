@@ -283,7 +283,8 @@ def render_namespace(namespace_catalog,
                      show_yaml_src=True,
                      file_dir=None,
                      file_per_type=False,
-                     type_hierarchy_include=None):
+                     type_hierarchy_include=None,
+                     type_hierarchy_include_in_html_only=True):
     """
     Render the description of the namespace
 
@@ -298,6 +299,8 @@ def render_namespace(namespace_catalog,
                           in the src_doc and desc_doc (True). If set to False then write the
                           contents to src_doc and desc_doc directly.
     :param type_hierarchy_include: Optional include file with the hierarchy of types in the namespace
+    :param type_hierarchy_include_in_html_only: Add type hierarchy to html only, e.g., to avoid too deeply nested
+                          errors in the context of LaTeX builds.
 
     """
     # Determine file settings
@@ -371,7 +374,12 @@ def render_namespace(namespace_catalog,
                                  )
     # Include the type hierarchy document if requested
     if type_hierarchy_include:
-        ns_desc_doc.add_include(type_hierarchy_include)
+        if type_hierarchy_include_in_html_only:
+            ns_desc_doc.add_text('.. only:: html %s%s' % (ns_desc_doc.newline, ns_desc_doc.newline))
+            ns_desc_doc.add_include(type_hierarchy_include, indent='    ')
+            ns_desc_doc.add_text(ns_desc_doc.newline)
+        else:
+            ns_desc_doc.add_include(type_hierarchy_include)
 
     if src_doc:
         if seperate_src_file:
@@ -1126,7 +1134,8 @@ def main():
                      show_yaml_src=spec_show_yaml_src,
                      file_dir=file_dir,
                      file_per_type=spec_file_per_type,
-                     type_hierarchy_include=os.path.basename(file_dir) + "/" + os.path.basename(type_hierarchy_doc_filename))
+                     type_hierarchy_include=os.path.basename(file_dir) + "/" + os.path.basename(type_hierarchy_doc_filename),
+                     type_hierarchy_include_in_html_only=True)
 
     # Create the section for the format specification
     print("RENDERING TYPE SPECIFICATIONS")
