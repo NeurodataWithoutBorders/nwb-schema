@@ -941,45 +941,71 @@ def sort_type_hierarchy_to_sections(type_hierarchy, registered_types):
     sections = []
     all_types = {k: False for k in registered_types}
 
-    def get_list_of_subtypes(spec, subtypes=None, include_main_type=True):
-        """Compile a list of all objects of a given type"""
+    def get_list_of_subtypes(spec, subtypes=None, include_main_type=True, exclude=None):
+        """Compile a list of all objects of a given type
+
+        :param spec: Select spec computed via compute_neurodata_type_hierarchy(..)
+        :param subtypes: OrderedDict with already detected subtypes. Used for recursive detection of types.
+                         Usually just left as None.
+        :param include_main_type: Boolean indicating whether the main type given by spec should be added to the list.
+        :param exclude: List of strings with types to be excluded from the list.
+        """
         if subtypes is None:
             subtypes = OrderedDict()
             if include_main_type:
                 subtypes[spec['neurodata_type']] = spec
         for k, v in spec['subtypes'].items():
-            subtypes[k] = v
-            get_list_of_subtypes(spec=v , subtypes=subtypes)
+            if exclude is None or k not in exclude:
+                subtypes[k] = v
+                get_list_of_subtypes(spec=v , subtypes=subtypes, include_main_type=True, exclude=exclude)
         return subtypes
 
     # NWB-File gets its own section
-    if 'NWBFile' in type_hierarchy:
-        nwb_file_subtypes = get_list_of_subtypes(type_hierarchy['NWBFile'])
+    try:
+        nwb_file_subtypes = get_list_of_subtypes(type_hierarchy['NWBContainer']['subtypes']['NWBFile'])
+    except:
+        nwb_file_subtypes = []
+    if len(nwb_file_subtypes) > 0:
         sections.append(NeurodataTypeSection('Main Data File', nwb_file_subtypes))
         for k in nwb_file_subtypes.keys():
             all_types[k] = True
+
     # Time-series get their own section
-    if 'TimeSeries' in type_hierarchy:
-        time_series_subtypes = get_list_of_subtypes(type_hierarchy['TimeSeries'])
-        sections.append(NeurodataTypeSection('TimeSeries Classes', time_series_subtypes))
+    try:
+        time_series_subtypes = get_list_of_subtypes(type_hierarchy['NWBContainer']['subtypes']['TimeSeries'])
+    except:
+        time_series_subtypes = []
+    if len(time_series_subtypes) > 0:
+        sections.append(NeurodataTypeSection('TimeSeries Types', time_series_subtypes))
         for k in time_series_subtypes.keys():
             all_types[k] = True
 
     # Analyse modules get their own section
-    analysis_modules_section = NeurodataTypeSection('Data Processing Classes')
-    if 'Module' in type_hierarchy:
-        module_subtypes = get_list_of_subtypes(type_hierarchy['Module'])
+    analysis_modules_section = NeurodataTypeSection('Data Processing')
+    try:
+        module_subtypes = get_list_of_subtypes(type_hierarchy['NWBContainer']['subtypes']['ProcessingModule'])
+    except:
+        module_subtypes = []
+    if len(module_subtypes) > 0:
         for k, v in module_subtypes.items():
             analysis_modules_section['neurodata_types'][k] = v
             all_types[k] = True
-    if 'Interface' in type_hierarchy:
-        interface_subtypes = get_list_of_subtypes(type_hierarchy['Interface'])
+
+    # NWB Containers get their own section
+    try:
+        interface_subtypes = get_list_of_subtypes(type_hierarchy['NWBContainer'],
+                                                  include_main_type=False,
+                                                  exclude=['Device', 'ElectrodeGroup', 'Epoch']) # 'IntracellularElectrode', 'Image', 'EpochTimeSeries', 'OpticalChannel', 'OptogeneticStimulusSite', 'ROI', 'CorrectedImageStack', 'SpecFile', 'PlaneSegmentation', 'Epoch', 'ImagePlane', 'SpikeUnit'])  # List those types under Others as they are not commonly part of ProcessingModules
+    except:
+        interface_subtypes = []
+    if len(interface_subtypes) > 0:
         for k, v in interface_subtypes.items():
-            analysis_modules_section['neurodata_types'][k] = v
-            all_types[k] = True
+            if not all_types[k]:  # Avoid duplicate listing of types
+                analysis_modules_section['neurodata_types'][k] = v
+                all_types[k] = True
     sections.append(analysis_modules_section)
 
-    # Other neurodata types. These are usually embedded types that are neither interfaces nor timeseries
+    # Section for all other neurodata types that have not been sorted into the hierarchy yet.
     other_types_section = NeurodataTypeSection('Other Types')
     for k, v in all_types.items():
         if not v:
@@ -1001,6 +1027,19 @@ def print_type_hierarchy(type_hierarchy, depth=0, show_ancestry=False):
             msg += '      ancestry=' + str(v['ancestry'])
         PrintCol.print(msg, PrintCol.OKBLUE+PrintCol.BOLD if depth==0 else PrintCol.OKBLUE, depth)
         print_type_hierarchy(v['subtypes'], depth=depth+1, show_ancestry=show_ancestry)
+
+
+def print_sections(type_sections):
+    """
+    Helper function to print sorting of neurodata_type to sections
+
+    :param type_sections: OrderedDict of sections created by the function sort_type_hierarchy_to_sections(...)
+    :return:
+    """
+    for sec in type_sections:
+        PrintCol.print(sec['title'], PrintCol.OKBLUE+PrintCol.BOLD)
+        PrintCol.print(str(list(sec['neurodata_types'].keys())), PrintCol.OKBLUE)
+
 
 def load_nwb_namespace(namespace_file, default_namespace='core', resolve=spec_resolve_type_inc):
     """
@@ -1045,13 +1084,13 @@ def main():
     print("BUILDING TYPE HIERARCHY")
     registered_types = spec_catalog.get_registered_types()
     type_hierarchy, flat_type_hierarchy = compute_neurodata_type_hierarchy(spec_catalog)
-    print_type_hierarchy(type_hierarchy)
+    print_type_hierarchy(type_hierarchy, show_ancestry=False)
 
     # Sorting types into sections
     print("SORTING TYPES INTO SECTIONS")
     type_sections = sort_type_hierarchy_to_sections(type_hierarchy, registered_types)
-    # for i in type_sections:
-    #     print('   ', i['title'] , list(i['neurodata_types'].keys()))
+    print_sections(type_sections)
+
 
     # Create the documentation RST file
     desc_doc =  RSTDocument()
