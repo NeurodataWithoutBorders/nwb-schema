@@ -3,7 +3,7 @@
 LFP
 ^^^
 
-**Extends:** :ref:`Interface <sec-Interface>`
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
 
 **Description:** see :numref:`sec-LFP`
 
@@ -28,6 +28,6 @@ LFP
       quantity: +
     name: LFP
     neurodata_type_def: LFP
-    neurodata_type_inc: Interface
+    neurodata_type_inc: NWBContainer
 
 

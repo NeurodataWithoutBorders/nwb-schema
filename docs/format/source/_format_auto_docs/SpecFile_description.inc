@@ -34,6 +34,7 @@ SpecFile
     | .help         | attribute   | A help statement                                              |
     |               |             |                                                               |
     |               |             | - **Data Type:** text                                         |
+    |               |             | - **Reuqired:** False                                         |
     |               |             | - **Default Value:** Contents of format specification file.   |
     |               |             |                                                               |
     +---------------+-------------+---------------------------------------------------------------+

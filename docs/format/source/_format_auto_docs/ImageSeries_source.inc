@@ -18,26 +18,10 @@ ImageSeries
       name: help
       value: Storage object for time-series 2-D image data
     datasets:
-    - doc: Format of image. If this is 'external' then the field external_file contains
-        the path or URL information to that file. For tiff, png, jpg, etc, the binary
-        representation of the image is stored in data. If the format is raw then the fields
-        bit_per_pixel and dimension are used. For raw images, only a single channel is
-        stored (eg, red).
-      dtype: text
-      name: format
-      quantity: '?'
     - doc: Number of bit per image pixel.
       dtype: int32
       name: bits_per_pixel
       quantity: '?'
-    - dims:
-      - rank
-      doc: Number of pixels on x, y, (and z) axes.
-      dtype: int32
-      name: dimension
-      quantity: '?'
-      shape:
-      - null
     - dims:
       - - x
         - y
@@ -61,6 +45,14 @@ ImageSeries
         - null
         - null
         - null
+    - dims:
+      - rank
+      doc: Number of pixels on x, y, (and z) axes.
+      dtype: int32
+      name: dimension
+      quantity: '?'
+      shape:
+      - null
     - attributes:
       - dims:
         - num_files
@@ -83,6 +75,14 @@ ImageSeries
       quantity: '?'
       shape:
       - null
+    - doc: Format of image. If this is 'external' then the field external_file contains
+        the path or URL information to that file. For tiff, png, jpg, etc, the binary
+        representation of the image is stored in data. If the format is raw then the fields
+        bit_per_pixel and dimension are used. For raw images, only a single channel is
+        stored (eg, red).
+      dtype: text
+      name: format
+      quantity: '?'
     doc: 'General image data that is common between acquisition and stimulus time series.
       Sometimes the image data is stored in the HDF5 file in a raw format while other
       times it will be stored as an external image file in the host file system. The data

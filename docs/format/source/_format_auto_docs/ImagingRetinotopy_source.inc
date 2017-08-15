@@ -3,7 +3,7 @@
 ImagingRetinotopy
 ^^^^^^^^^^^^^^^^^
 
-**Extends:** :ref:`Interface <sec-Interface>`
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
 
 **Description:** see :numref:`sec-ImagingRetinotopy`
 
@@ -19,99 +19,6 @@ ImagingRetinotopy
       name: help
       value: Intrinsic signal optical imaging or Widefield imaging for measuring retinotopy
     datasets:
-    - attributes:
-      - dims:
-        - row_col
-        doc: 'Number of rows and columns in the image. NOTE: row, column representation
-          is equivalent to height,width.'
-        dtype: int32
-        name: dimension
-        shape:
-        - null
-      - dims:
-        - row_col
-        doc: Size of viewing area, in meters.
-        dtype: float
-        name: field_of_view
-        shape:
-        - null
-      dims:
-      - num_rows
-      - num_cols
-      doc: Sine of the angle between the direction of the gradient in axis_1 and axis_2
-      dtype: float32
-      name: sign_map
-      shape:
-      - null
-      - null
-    - attributes:
-      - doc: Number of bits used to represent each value. This is necessary to determine
-          maximum (white) pixel value
-        dtype: int32
-        name: bits_per_pixel
-      - doc: Format of image. Right now only 'raw' supported
-        dtype: text
-        name: format
-      - dims:
-        - row_col
-        doc: 'Number of rows and columns in the image. NOTE: row, column representation
-          is equivalent to height,width.'
-        dtype: int32
-        name: dimension
-        shape:
-        - null
-      - dims:
-        - row_col
-        doc: Size of viewing area, in meters
-        dtype: float
-        name: field_of_view
-        shape:
-        - null
-      dims:
-      - num_rows
-      - num_cols
-      doc: 'Gray-scale anatomical image of cortical surface. Array structure: [rows][columns]'
-      dtype: uint16
-      name: vasculature_image
-      shape:
-      - null
-      - null
-    - attributes:
-      - dims:
-        - row_col
-        doc: 'Number of rows and columns in the image. NOTE: row, column representation
-          is equivalent to height,width.'
-        dtype: int32
-        name: dimension
-        shape:
-        - null
-      - doc: Number of bits used to represent each value. This is necessary to determine
-          maximum (white) pixel value
-        dtype: int32
-        name: bits_per_pixel
-      - doc: Format of image. Right now only 'raw' supported
-        dtype: text
-        name: format
-      - dims:
-        - row_col
-        doc: Size of viewing area, in meters
-        dtype: float
-        name: field_of_view
-        shape:
-        - null
-      - doc: Focal depth offset, in meters
-        dtype: float
-        name: focal_depth
-      dims:
-      - num_rows
-      - num_cols
-      doc: 'Gray-scale image taken with same settings/parameters (e.g., focal depth, wavelength)
-        as data collection. Array format: [rows][columns]'
-      dtype: uint16
-      name: focal_depth_image
-      shape:
-      - null
-      - null
     - attributes:
       - dims:
         - row_col
@@ -139,14 +46,6 @@ ImagingRetinotopy
       name: axis_1_phase_map
       shape:
       - null
-      - null
-    - dims:
-      - '2'
-      doc: Two-element array describing the contents of the two response axis fields.
-        Description should be something like ['altitude', 'azimuth'] or '['radius', 'theta']
-      dtype: text
-      name: axis_descriptions
-      shape:
       - null
     - attributes:
       - dims:
@@ -236,6 +135,107 @@ ImagingRetinotopy
       shape:
       - null
       - null
+    - dims:
+      - '2'
+      doc: Two-element array describing the contents of the two response axis fields.
+        Description should be something like ['altitude', 'azimuth'] or '['radius', 'theta']
+      dtype: text
+      name: axis_descriptions
+      shape:
+      - null
+    - attributes:
+      - doc: Number of bits used to represent each value. This is necessary to determine
+          maximum (white) pixel value
+        dtype: int32
+        name: bits_per_pixel
+      - dims:
+        - row_col
+        doc: 'Number of rows and columns in the image. NOTE: row, column representation
+          is equivalent to height,width.'
+        dtype: int32
+        name: dimension
+        shape:
+        - null
+      - dims:
+        - row_col
+        doc: Size of viewing area, in meters
+        dtype: float
+        name: field_of_view
+        shape:
+        - null
+      - doc: Focal depth offset, in meters
+        dtype: float
+        name: focal_depth
+      - doc: Format of image. Right now only 'raw' supported
+        dtype: text
+        name: format
+      dims:
+      - num_rows
+      - num_cols
+      doc: 'Gray-scale image taken with same settings/parameters (e.g., focal depth, wavelength)
+        as data collection. Array format: [rows][columns]'
+      dtype: uint16
+      name: focal_depth_image
+      shape:
+      - null
+      - null
+    - attributes:
+      - dims:
+        - row_col
+        doc: 'Number of rows and columns in the image. NOTE: row, column representation
+          is equivalent to height,width.'
+        dtype: int32
+        name: dimension
+        shape:
+        - null
+      - dims:
+        - row_col
+        doc: Size of viewing area, in meters.
+        dtype: float
+        name: field_of_view
+        shape:
+        - null
+      dims:
+      - num_rows
+      - num_cols
+      doc: Sine of the angle between the direction of the gradient in axis_1 and axis_2
+      dtype: float32
+      name: sign_map
+      shape:
+      - null
+      - null
+    - attributes:
+      - doc: Number of bits used to represent each value. This is necessary to determine
+          maximum (white) pixel value
+        dtype: int32
+        name: bits_per_pixel
+      - dims:
+        - row_col
+        doc: 'Number of rows and columns in the image. NOTE: row, column representation
+          is equivalent to height,width.'
+        dtype: int32
+        name: dimension
+        shape:
+        - null
+      - dims:
+        - row_col
+        doc: Size of viewing area, in meters
+        dtype: float
+        name: field_of_view
+        shape:
+        - null
+      - doc: Format of image. Right now only 'raw' supported
+        dtype: text
+        name: format
+      dims:
+      - num_rows
+      - num_cols
+      doc: 'Gray-scale anatomical image of cortical surface. Array structure: [rows][columns]'
+      dtype: uint16
+      name: vasculature_image
+      shape:
+      - null
+      - null
     doc: 'Intrinsic signal optical imaging or widefield imaging for measuring retinotopy.
       Stores orthogonal maps (e.g., altitude/azimuth; radius/theta) of responses to specific
       stimuli and a combined polarity map from which to identify visual areas.<br />Note:
@@ -244,6 +244,6 @@ ImagingRetinotopy
       appear backward (i.e., y before x).'
     name: ImagingRetinotopy
     neurodata_type_def: ImagingRetinotopy
-    neurodata_type_inc: Interface
+    neurodata_type_inc: NWBContainer
 
 

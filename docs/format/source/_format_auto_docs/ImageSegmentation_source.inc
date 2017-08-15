@@ -3,7 +3,7 @@
 ImageSegmentation
 ^^^^^^^^^^^^^^^^^
 
-**Extends:** :ref:`Interface <sec-Interface>`
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
 
 **Description:** see :numref:`sec-ImageSegmentation`
 
@@ -27,21 +27,24 @@ ImageSegmentation
       to change with time, a new imaging plane (or module) is required and ROI names should
       remain consistent between them.
     groups:
-    - datasets:
+    - attributes:
+      - doc: Value is 'Results from segmentation of an imaging plane'
+        dtype: text
+        name: help
+        value: Results from segmentation of an imaging plane
+      datasets:
       - doc: Description of image plane, recording wavelength, depth, etc
         dtype: text
         name: description
         quantity: '?'
-      - dims:
-        - num_rois
-        doc: List of ROIs in this imaging plane
-        dtype: text
-        name: roi_list
-        shape:
-        - null
       doc: Group name is human-readable description of imaging plane
       groups:
-      - datasets:
+      - attributes:
+        - doc: Value is 'Region of interest, as determined by image segmentation'
+          dtype: text
+          name: help
+          value: Region of interest, as determined by image segmentation
+        datasets:
         - dims:
           - num_x
           - num_y
@@ -72,6 +75,7 @@ ImageSegmentation
           name: roi_description
         doc: Name of ROI
         neurodata_type_def: ROI
+        neurodata_type_inc: NWBContainer
         quantity: '*'
       - doc: Stores image stacks segmentation mask apply to.
         groups:
@@ -83,9 +87,10 @@ ImageSegmentation
         name: imaging_plane
         target_type: ImagingPlane
       neurodata_type_def: PlaneSegmentation
+      neurodata_type_inc: NWBContainer
       quantity: '*'
     name: ImageSegmentation
     neurodata_type_def: ImageSegmentation
-    neurodata_type_inc: Interface
+    neurodata_type_inc: NWBContainer
 
 

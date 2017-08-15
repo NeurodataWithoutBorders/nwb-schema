@@ -23,14 +23,14 @@ IntervalSeries
         dtype: None
         name: conversion
         value: NaN
-      - doc: Value is 'n/a'
-        dtype: None
-        name: unit
-        value: n/a
       - doc: Value is 'float('NaN')'
         dtype: None
         name: resolution
         value: NaN
+      - doc: Value is 'n/a'
+        dtype: None
+        name: unit
+        value: n/a
       dims:
       - num_times
       doc: '>0 if interval started, <0 if interval ended.'

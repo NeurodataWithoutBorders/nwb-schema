@@ -18,11 +18,6 @@ OpticalSeries
       name: help
       value: Time-series image stack for optical recording or stimulus
     datasets:
-    - doc: Description of image relative to some reference frame (e.g., which way is up).
-        Must also specify frame of reference.
-      dtype: text
-      name: orientation
-      quantity: '?'
     - doc: Distance from camera/monitor to target/eye.
       dtype: float32
       name: distance
@@ -36,6 +31,11 @@ OpticalSeries
       quantity: '?'
       shape:
       - 2
+    - doc: Description of image relative to some reference frame (e.g., which way is up).
+        Must also specify frame of reference.
+      dtype: text
+      name: orientation
+      quantity: '?'
     doc: Image data that is presented or recorded. A stimulus template movie will be stored
       only as an image. When the image is presented as stimulus, additional data is required,
       such as field of view (eg, how much of the visual field the image covers, or how

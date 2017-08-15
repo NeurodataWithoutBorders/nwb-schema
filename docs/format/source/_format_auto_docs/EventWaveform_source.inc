@@ -3,7 +3,7 @@
 EventWaveform
 ^^^^^^^^^^^^^
 
-**Extends:** :ref:`Interface <sec-Interface>`
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
 
 **Description:** see :numref:`sec-EventWaveform`
 
@@ -26,6 +26,6 @@ EventWaveform
       quantity: '*'
     name: EventWaveform
     neurodata_type_def: EventWaveform
-    neurodata_type_inc: Interface
+    neurodata_type_inc: NWBContainer
 
 

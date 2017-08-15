@@ -15,6 +15,7 @@ SpecFile
       doc: A help statement
       dtype: text
       name: help
+      required: false
     - dims:
       - num_namespaces
       doc: Namespaces defined in the file

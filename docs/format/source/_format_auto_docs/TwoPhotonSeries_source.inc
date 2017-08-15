@@ -18,10 +18,6 @@ TwoPhotonSeries
       name: help
       value: Image stack recorded from 2-photon microscope
     datasets:
-    - doc: Photomultiplier gain
-      dtype: float32
-      name: pmt_gain
-      quantity: '?'
     - dims:
       - width|height|depth
       doc: Width, height and depth of image, or imaged area (meters).
@@ -30,6 +26,10 @@ TwoPhotonSeries
       quantity: '?'
       shape:
       - 3
+    - doc: Photomultiplier gain
+      dtype: float32
+      name: pmt_gain
+      quantity: '?'
     - doc: Lines imaged per second. This is also stored in /general/optophysiology but
         is kept here as it is useful information for analysis, and so good to be stored
         w/ the actual data.

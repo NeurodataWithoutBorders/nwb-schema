@@ -3,6 +3,8 @@
 OpticalChannel
 ^^^^^^^^^^^^^^
 
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
+
 **Description:** see :numref:`sec-OpticalChannel`
 
 **YAML Specification:**
@@ -10,6 +12,12 @@ OpticalChannel
 .. code-block:: yaml
     :linenos:
 
+    attributes:
+    - doc: Value is 'Metadata about an optical channel used to record from an imaging
+        plane'
+      dtype: text
+      name: help
+      value: Metadata about an optical channel used to record from an imaging plane
     datasets:
     - doc: Any notes or comments about the channel
       dtype: text
@@ -20,5 +28,6 @@ OpticalChannel
     doc: 'One of possibly many groups storing channel-specific data COMMENT: Name is arbitrary
       but should be meaningful'
     neurodata_type_def: OpticalChannel
+    neurodata_type_inc: NWBContainer
 
 

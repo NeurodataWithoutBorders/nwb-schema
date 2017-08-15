@@ -37,12 +37,6 @@ OpticalSeries
     |                   |             | - **Value:** Time-series image stack for optical recording or stimulus                                                 |
     |                   |             |                                                                                                                        |
     +-------------------+-------------+------------------------------------------------------------------------------------------------------------------------+
-    | .orientation      | dataset     | Description of image relative to some reference frame (e.g., which way is up). Must also specify frame of reference.   |
-    |                   |             |                                                                                                                        |
-    |                   |             | - **Quantity** 0 or 1                                                                                                  |
-    |                   |             | - **Data Type:** text                                                                                                  |
-    |                   |             |                                                                                                                        |
-    +-------------------+-------------+------------------------------------------------------------------------------------------------------------------------+
     | .distance         | dataset     | Distance from camera/monitor to target/eye.                                                                            |
     |                   |             |                                                                                                                        |
     |                   |             | - **Quantity** 0 or 1                                                                                                  |
@@ -55,6 +49,12 @@ OpticalSeries
     |                   |             | - **Data Type:** float32                                                                                               |
     |                   |             | - **Dimensions:** [['width|height', 'width|height|depth']]                                                             |
     |                   |             | - **Shape:** [2]                                                                                                       |
+    |                   |             |                                                                                                                        |
+    +-------------------+-------------+------------------------------------------------------------------------------------------------------------------------+
+    | .orientation      | dataset     | Description of image relative to some reference frame (e.g., which way is up). Must also specify frame of reference.   |
+    |                   |             |                                                                                                                        |
+    |                   |             | - **Quantity** 0 or 1                                                                                                  |
+    |                   |             | - **Data Type:** text                                                                                                  |
     |                   |             |                                                                                                                        |
     +-------------------+-------------+------------------------------------------------------------------------------------------------------------------------+
 

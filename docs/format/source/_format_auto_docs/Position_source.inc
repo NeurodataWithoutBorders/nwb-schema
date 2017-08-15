@@ -3,7 +3,7 @@
 Position
 ^^^^^^^^
 
-**Extends:** :ref:`Interface <sec-Interface>`
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
 
 **Description:** see :numref:`sec-Position`
 
@@ -24,6 +24,6 @@ Position
       quantity: +
     name: Position
     neurodata_type_def: Position
-    neurodata_type_inc: Interface
+    neurodata_type_inc: NWBContainer
 
 

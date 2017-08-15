@@ -3,7 +3,7 @@
 BehavioralTimeSeries
 ^^^^^^^^^^^^^^^^^^^^
 
-**Extends:** :ref:`Interface <sec-Interface>`
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
 
 **Description:** see :numref:`sec-BehavioralTimeSeries`
 
@@ -25,6 +25,6 @@ BehavioralTimeSeries
       quantity: '*'
     name: BehavioralTimeSeries
     neurodata_type_def: BehavioralTimeSeries
-    neurodata_type_inc: Interface
+    neurodata_type_inc: NWBContainer
 
 

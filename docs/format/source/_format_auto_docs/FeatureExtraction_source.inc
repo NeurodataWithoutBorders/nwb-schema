@@ -3,7 +3,7 @@
 FeatureExtraction
 ^^^^^^^^^^^^^^^^^
 
-**Extends:** :ref:`Interface <sec-Interface>`
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
 
 **Description:** see :numref:`sec-FeatureExtraction`
 
@@ -18,13 +18,6 @@ FeatureExtraction
       name: help
       value: Container for salient features of detected events
     datasets:
-    - dims:
-      - num_events
-      doc: Times of events that features correspond to (can be a link).
-      dtype: float64!
-      name: times
-      shape:
-      - null
     - dims:
       - num_features
       doc: Description of features (eg, "PC1") for each of the extracted features.
@@ -43,6 +36,13 @@ FeatureExtraction
       - null
       - null
       - null
+    - dims:
+      - num_events
+      doc: Times of events that features correspond to (can be a link).
+      dtype: float64!
+      name: times
+      shape:
+      - null
     doc: Features, such as PC1 and PC2, that are extracted from signals stored in a SpikeEvent
       TimeSeries or other source.
     links:
@@ -51,6 +51,6 @@ FeatureExtraction
       target_type: ElectrodeGroup
     name: FeatureExtraction
     neurodata_type_def: FeatureExtraction
-    neurodata_type_inc: Interface
+    neurodata_type_inc: NWBContainer
 
 

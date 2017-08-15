@@ -3,7 +3,7 @@
 CompassDirection
 ^^^^^^^^^^^^^^^^
 
-**Extends:** :ref:`Interface <sec-Interface>`
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
 
 **Description:** see :numref:`sec-CompassDirection`
 
@@ -31,6 +31,6 @@ CompassDirection
       quantity: '*'
     name: CompassDirection
     neurodata_type_def: CompassDirection
-    neurodata_type_inc: Interface
+    neurodata_type_inc: NWBContainer
 
 

@@ -37,17 +37,17 @@ PatchClampSeries
     |                      |             | - **Value:** Superclass definition for patch-clamp data                                                       |
     |                      |             |                                                                                                               |
     +----------------------+-------------+---------------------------------------------------------------------------------------------------------------+
-    | .gain                | dataset     | Units: Volt/Amp (v-clamp) or Volt/Volt (c-clamp)                                                              |
-    |                      |             |                                                                                                               |
-    |                      |             | - **Quantity** 0 or 1                                                                                         |
-    |                      |             | - **Data Type:** float                                                                                        |
-    |                      |             |                                                                                                               |
-    +----------------------+-------------+---------------------------------------------------------------------------------------------------------------+
     | .data                | dataset     | Recorded voltage or current.                                                                                  |
     |                      |             |                                                                                                               |
     |                      |             | - **Data Type:** number                                                                                       |
     |                      |             | - **Dimensions:** ['num_times']                                                                               |
     |                      |             | - **Shape:** [None]                                                                                           |
+    |                      |             |                                                                                                               |
+    +----------------------+-------------+---------------------------------------------------------------------------------------------------------------+
+    | .gain                | dataset     | Units: Volt/Amp (v-clamp) or Volt/Volt (c-clamp)                                                              |
+    |                      |             |                                                                                                               |
+    |                      |             | - **Quantity** 0 or 1                                                                                         |
+    |                      |             | - **Data Type:** float                                                                                        |
     |                      |             |                                                                                                               |
     +----------------------+-------------+---------------------------------------------------------------------------------------------------------------+
     | .electrode           | link        | link to IntracellularElectrode group that describes th electrode that was used to apply or record this data   |

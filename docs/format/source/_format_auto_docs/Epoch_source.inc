@@ -3,6 +3,8 @@
 Epoch
 ^^^^^
 
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
+
 **Description:** see :numref:`sec-Epoch`
 
 **YAML Specification:**
@@ -11,19 +13,10 @@ Epoch
     :linenos:
 
     attributes:
-    - dims:
-      - num_links
-      doc: "A sorted list mapping TimeSeries entries in the epoch to the path of the TimeSeries\
-        \ within the file. Each entry in the list has the following format: \"'<i>&lt;TimeSeries_X&gt;</i>'\
-        \ <b>is</b> '<i>path_to_TimeSeries</i>'\", where <i>&lt;TimeSeries_X&gt;</i> is\
-        \ the name assigned to group  &lt;TimeSeries_X&gt; (below). Note that the name\
-        \ and path are both enclosed in single quotes and the word \"is\" (with a single\
-        \ space before and after) separate them. <b>Example list element:</b> \"'auditory_cue'\
-        \ is '/stimulus/presentation/auditory_cue'\"."
+    - doc: Value is 'A general epoch object'
       dtype: text
-      name: links
-      shape:
-      - null
+      name: help
+      value: A general epoch object
     datasets:
     - doc: Description of this epoch (&lt;epoch_X&gt;).
       dtype: text
@@ -48,14 +41,19 @@ Epoch
     doc: 'One of possibly many different experimental epochCOMMENT: Name is arbitrary
       but must be unique within the experiment.'
     groups:
-    - datasets:
+    - attributes:
+      - doc: Value is 'Data on how an epoch applies to a time series'
+        dtype: text
+        name: help
+        value: Data on how an epoch applies to a time series
+      datasets:
+      - doc: Number of data samples available in this time series, during this epoch.
+        dtype: int32
+        name: count
       - doc: "Epoch's start index in TimeSeries data[] field. COMMENT: This can be used\
           \ to calculate location in TimeSeries timestamp[] field"
         dtype: int32
         name: idx_start
-      - doc: Number of data samples available in this time series, during this epoch.
-        dtype: int32
-        name: count
       doc: 'One of possibly many input or output streams recorded during epoch. COMMENT:
         Name is arbitrary and does not have to match the TimeSeries that it refers to.'
       links:
@@ -63,8 +61,10 @@ Epoch
         name: timeseries
         target_type: TimeSeries
       neurodata_type_def: EpochTimeSeries
+      neurodata_type_inc: NWBContainer
       quantity: '*'
     neurodata_type_def: Epoch
+    neurodata_type_inc: NWBContainer
     quantity: '*'
 
 

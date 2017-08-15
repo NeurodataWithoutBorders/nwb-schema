@@ -3,7 +3,7 @@
 BehavioralEvents
 ^^^^^^^^^^^^^^^^
 
-**Extends:** :ref:`Interface <sec-Interface>`
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
 
 **Description:** see :numref:`sec-BehavioralEvents`
 
@@ -25,6 +25,6 @@ BehavioralEvents
       quantity: '*'
     name: BehavioralEvents
     neurodata_type_def: BehavioralEvents
-    neurodata_type_inc: Interface
+    neurodata_type_inc: NWBContainer
 
 

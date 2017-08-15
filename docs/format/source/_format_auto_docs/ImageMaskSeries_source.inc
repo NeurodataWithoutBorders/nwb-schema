@@ -17,10 +17,6 @@ ImageMaskSeries
       dtype: text
       name: help
       value: An alpha mask that is applied to a presented visual stimulus
-    datasets:
-    - doc: Path to linked ImageSeries
-      dtype: text
-      name: masked_imageseries_path
     doc: An alpha mask that is applied to a presented visual stimulus. The data[] array
       contains an array of mask values that are applied to the displayed image. Mask values
       are stored as RGBA. Mask can vary with time. The timestamps array indicates the

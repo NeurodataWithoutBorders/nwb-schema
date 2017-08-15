@@ -3,6 +3,8 @@
 ElectrodeGroup
 ^^^^^^^^^^^^^^
 
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
+
 **Description:** see :numref:`sec-ElectrodeGroup`
 
 **YAML Specification:**
@@ -10,6 +12,11 @@ ElectrodeGroup
 .. code-block:: yaml
     :linenos:
 
+    attributes:
+    - doc: Value is 'A physical grouping of channels'
+      dtype: str
+      name: help
+      value: A physical grouping of channels
     datasets:
     - dims:
       - num_channels
@@ -62,5 +69,6 @@ ElectrodeGroup
       quantity: '?'
       target_type: Device
     neurodata_type_def: ElectrodeGroup
+    neurodata_type_inc: NWBContainer
 
 

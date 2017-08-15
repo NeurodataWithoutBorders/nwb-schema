@@ -3,6 +3,8 @@
 TimeSeries
 ^^^^^^^^^^
 
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
+
 **Description:** see :numref:`sec-TimeSeries`
 
 **YAML Specification:**
@@ -11,65 +13,74 @@ TimeSeries
     :linenos:
 
     attributes:
-    - dims:
-      - num_tslinks
-      doc: 'A sorted list of the paths of all TimeSeries that share a link to the same
-        timestamps field.  Example element of list: "/acquisition/timeseries/lick_trace"
-        COMMENT: Attribute is only present if links are present. List should include the
-        path to this TimeSeries also.'
-      dtype: text
-      name: timestamp_link
-      shape:
-      - null
-    - dims:
-      - num_missing_fields
-      doc: 'List of fields that are not optional (i.e. either required or recommended
-        parts of the TimeSeries) that are missing. COMMENT: Only present if one or more
-        required or recommended fields are missing. Note that a missing required field
-        (such as data or timestamps) should generate an error by the API'
-      dtype: text
-      name: missing_fields
-      shape:
-      - null
-    - dims:
-      - num_dlinks
-      doc: 'A sorted list of the paths of all TimeSeries that share a link to the same
-        data field. Example element of list: "/stimulus/presentation/Sweep_0"` COMMENT:
-        Attribute is only present if links are present. List should include the path to
-        this TimeSeries also.'
-      dtype: text
-      name: data_link
-      shape:
-      - null
-    - doc: Value is 'TimeSeries'
-      dtype: text
-      name: ancestry
-      value: TimeSeries
-    - doc: Human-readable comments about the TimeSeries. This second descriptive field
+    - default_value: no comments
+      doc: Human-readable comments about the TimeSeries. This second descriptive field
         can be used to store additional information, or descriptive information if the
         primary description field is populated with a computer-readable string.
       dtype: text
       name: comments
-    - doc: Name of TimeSeries or Modules that serve as the source for the data contained
-        here. It can also be the name of a device, for stimulus or acquisition data
-      dtype: text
-      name: source
-    - doc: Description of TimeSeries
+      required: false
+    - default_value: no description
+      doc: Description of TimeSeries
       dtype: text
       name: description
+      required: false
     - doc: Value is 'General time series object'
       dtype: text
       name: help
       value: General time series object
-    - dims:
-      - num_extern_fields
-      doc: 'List of fields that are HDF5 external links.COMMENT: Only present if one or
-        more datasets is set to an HDF5 external link.'
+    - doc: Name of TimeSeries or Modules that serve as the source for the data contained
+        here. It can also be the name of a device, for stimulus or acquisition data
       dtype: text
-      name: extern_fields
+      name: source
+    datasets:
+    - dims:
+      - num_times
+      doc: 'Numerical labels that apply to each element in data[]. COMMENT: Optional field.
+        If present, the control array should have the same number of elements as data[].'
+      dtype: uint8
+      name: control
+      quantity: '?'
       shape:
       - null
-    datasets:
+    - dims:
+      - num_control_values
+      doc: 'Description of each control value. COMMENT: Array length should be as long
+        as the highest number in control minus one, generating an zero-based indexed array
+        for control values.'
+      dtype: text
+      name: control_description
+      quantity: '?'
+      shape:
+      - null
+    - attributes:
+      - default_value: 1.0
+        doc: Scalar to multiply each element in data to convert it to the specified unit
+        dtype: float32!
+        name: conversion
+        required: false
+      - default_value: 0.0
+        doc: 'Smallest meaningful difference between values in data, stored in the specified
+          by unit. COMMENT: E.g., the change in value of the least significant bit, or
+          a larger number if signal noise is known to be present. If unknown, use NaN'
+        dtype: float32!
+        name: resolution
+        required: false
+      - doc: "The base unit of measure used to store data. This should be in the SI unit.\
+          \ COMMENT: This is the SI unit (when appropriate) of the stored data, such as\
+          \ Volts. If the actual data is stored in millivolts, the field 'conversion'\
+          \ below describes how to convert the data to the specified SI unit."
+        dtype: text
+        name: unit
+      dims:
+      - num_times
+      doc: 'Data values. Can also store binary data (eg, image frames) COMMENT: This field
+        may be a link to data stored in an external file, especially in the case of raw
+        data.'
+      dtype: any
+      name: data
+      shape:
+      - null
     - attributes:
       - doc: 'Sampling rate, in Hz COMMENT: Rate information is stored in Hz'
         dtype: float32!
@@ -102,56 +113,6 @@ TimeSeries
       name: timestamps
       shape:
       - null
-    - dims:
-      - num_control_values
-      doc: 'Description of each control value. COMMENT: Array length should be as long
-        as the highest number in control minus one, generating an zero-based indexed array
-        for control values.'
-      dtype: text
-      name: control_description
-      quantity: '?'
-      shape:
-      - null
-    - attributes:
-      - default_value: 1.0
-        doc: Scalar to multiply each element in data to convert it to the specified unit
-        dtype: float32!
-        name: conversion
-      - doc: "The base unit of measure used to store data. This should be in the SI unit.\
-          \ COMMENT: This is the SI unit (when appropriate) of the stored data, such as\
-          \ Volts. If the actual data is stored in millivolts, the field 'conversion'\
-          \ below describes how to convert the data to the specified SI unit."
-        dtype: text
-        name: unit
-      - default_value: 0.0
-        doc: 'Smallest meaningful difference between values in data, stored in the specified
-          by unit. COMMENT: E.g., the change in value of the least significant bit, or
-          a larger number if signal noise is known to be present. If unknown, use NaN'
-        dtype: float32!
-        name: resolution
-      dims:
-      - num_times
-      doc: 'Data values. Can also store binary data (eg, image frames) COMMENT: This field
-        may be a link to data stored in an external file, especially in the case of raw
-        data.'
-      dtype: any
-      name: data
-      shape:
-      - null
-    - dims:
-      - num_times
-      doc: 'Numerical labels that apply to each element in data[]. COMMENT: Optional field.
-        If present, the control array should have the same number of elements as data[].'
-      dtype: uint8
-      name: control
-      quantity: '?'
-      shape:
-      - null
-    - doc: 'Number of samples in data, or number of image frames. COMMENT: This is important
-        if the length of timestamp and data are different, such as for externally stored
-        stimulus image stacks'
-      dtype: int32
-      name: num_samples
     doc: General purpose time series.
     groups:
     - doc: "Lab specific time and sync information as provided directly from hardware\
@@ -163,5 +124,6 @@ TimeSeries
       name: sync
       quantity: '?'
     neurodata_type_def: TimeSeries
+    neurodata_type_inc: NWBContainer
 
 
