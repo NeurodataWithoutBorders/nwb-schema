@@ -3,6 +3,8 @@
 SpikeUnit
 ^^^^^^^^^
 
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
+
 **Description:** see :numref:`sec-SpikeUnit`
 
 **YAML Specification:**
@@ -10,6 +12,11 @@ SpikeUnit
 .. code-block:: yaml
     :linenos:
 
+    attributes:
+    - doc: Store times for a particulare UnitTime
+      dtype: text
+      name: help
+      value: Times for a particular UnitTime object
     datasets:
     - dims:
       - num_events
@@ -18,17 +25,12 @@ SpikeUnit
       name: times
       shape:
       - null
-    - doc: Name, path or description of where unit times originated. This is necessary
-        only if the info here differs from or is more fine-grained than the interface's
-        source field
-      dtype: text
-      name: source
-      quantity: '?'
     - doc: Description of the unit (eg, cell type).
       dtype: text
       name: unit_description
     doc: Group storing times for &lt;unit_N&gt;.
     neurodata_type_def: SpikeUnit
+    neurodata_type_inc: NWBContainer
     quantity: +
 
 

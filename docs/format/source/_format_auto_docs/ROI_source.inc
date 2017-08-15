@@ -3,6 +3,8 @@
 ROI
 ^^^
 
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
+
 **Description:** see :numref:`sec-ROI`
 
 **YAML Specification:**
@@ -10,6 +12,11 @@ ROI
 .. code-block:: yaml
     :linenos:
 
+    attributes:
+    - doc: Value is 'Region of interest, as determined by image segmentation'
+      dtype: text
+      name: help
+      value: Region of interest, as determined by image segmentation
     datasets:
     - dims:
       - num_x
@@ -41,6 +48,7 @@ ROI
       name: roi_description
     doc: Name of ROI
     neurodata_type_def: ROI
+    neurodata_type_inc: NWBContainer
     quantity: '*'
 
 

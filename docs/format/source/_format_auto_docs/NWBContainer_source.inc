@@ -1,9 +1,9 @@
-.. _sec-Interface-src:
+.. _sec-NWBContainer-src:
 
-Interface
-^^^^^^^^^
+NWBContainer
+^^^^^^^^^^^^
 
-**Description:** see :numref:`sec-Interface`
+**Description:** see :numref:`sec-NWBContainer`
 
 **YAML Specification:**
 
@@ -18,6 +18,6 @@ Interface
       dtype: text
       name: source
     doc: The attributes specified here are included in all interfaces.
-    neurodata_type_def: Interface
+    neurodata_type_def: NWBContainer
 
 

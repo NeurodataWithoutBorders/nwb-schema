@@ -26,6 +26,7 @@ OptogeneticSeries
           \ below describes how to convert the data to the specified SI unit."
         dtype: text
         name: unit
+        required: false
       dims:
       - num_times
       doc: Applied power for optogenetic stimulus.

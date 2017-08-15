@@ -3,7 +3,7 @@
 ClusterWaveforms
 ^^^^^^^^^^^^^^^^
 
-**Extends:** :ref:`Interface <sec-Interface>`
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
 
 **Description:** see :numref:`sec-ClusterWaveforms`
 
@@ -20,21 +20,9 @@ ClusterWaveforms
       value: Mean waveform shape of clusters. Waveforms should be high-pass filtered (ie,
         not the same bandpass filter used waveform analysis and clustering)
     datasets:
-    - dims:
-      - num_clusters
-      - num_samples
-      doc: Stdev of waveforms for each cluster, using the same indices as in mean
-      dtype: float32
-      name: waveform_sd
-      shape:
-      - null
-      - null
     - doc: Filtering applied to data before generating mean/sd
       dtype: text
       name: waveform_filtering
-    - doc: Path to linked clustering interface
-      dtype: text
-      name: clustering_interface_path
     - dims:
       - num_clusters
       - num_samples
@@ -44,6 +32,15 @@ ClusterWaveforms
         (e.g., zero- filled)
       dtype: float32
       name: waveform_mean
+      shape:
+      - null
+      - null
+    - dims:
+      - num_clusters
+      - num_samples
+      doc: Stdev of waveforms for each cluster, using the same indices as in mean
+      dtype: float32
+      name: waveform_sd
       shape:
       - null
       - null
@@ -58,6 +55,6 @@ ClusterWaveforms
       target_type: Clustering
     name: ClusterWaveforms
     neurodata_type_def: ClusterWaveforms
-    neurodata_type_inc: Interface
+    neurodata_type_inc: NWBContainer
 
 

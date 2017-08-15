@@ -29,9 +29,6 @@ IndexSeries
       name: data
       shape:
       - null
-    - doc: Path to linked TimeSeries
-      dtype: text
-      name: indexed_timeseries_path
     doc: Stores indices to image frames stored in an ImageSeries. The purpose of the ImageIndexSeries
       is to allow a static image stack to be stored somewhere, and the images in the stack
       to be referenced out-of-order. This can be for the display of individual images,

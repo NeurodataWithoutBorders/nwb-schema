@@ -1,9 +1,11 @@
-.. _sec-Module-src:
+.. _sec-ProcessingModule-src:
 
-Module
-^^^^^^
+ProcessingModule
+^^^^^^^^^^^^^^^^
 
-**Description:** see :numref:`sec-Module`
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
+
+**Description:** see :numref:`sec-ProcessingModule`
 
 **YAML Specification:**
 
@@ -14,21 +16,18 @@ Module
     - doc: Description of Module
       dtype: text
       name: description
-    - dims:
-      - num_interfaces
-      doc: 'Names of the data interfaces offered by this module. COMMENT: E.g., [0]="EventDetection",
-        [1]="Clustering", [2]="FeatureExtraction"'
+    - doc: Value is 'A collection of analysis outputs from processing of data'
       dtype: text
-      name: interfaces
-      shape:
-      - null
+      name: help
+      value: A collection of analysis outputs from processing of data
     doc: Module.  Name should be descriptive. Stores a collection of related data organized
       by contained interfaces.  Each interface is a contract specifying content related
       to a particular type of data.
     groups:
     - doc: Interface objects containing data output from processing steps
-      neurodata_type_inc: Interface
+      neurodata_type_inc: NWBContainer
       quantity: '*'
-    neurodata_type_def: Module
+    neurodata_type_def: ProcessingModule
+    neurodata_type_inc: NWBContainer
 
 

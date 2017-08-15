@@ -3,6 +3,8 @@
 ImagingPlane
 ^^^^^^^^^^^^
 
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
+
 **Description:** see :numref:`sec-ImagingPlane`
 
 **YAML Specification:**
@@ -10,23 +12,42 @@ ImagingPlane
 .. code-block:: yaml
     :linenos:
 
-    datasets:
-    - doc: Name of device in /general/devices
+    attributes:
+    - doc: Value is 'Metadata about an imaging plane'
       dtype: text
-      name: device
+      name: help
+      value: Metadata about an imaging plane
+    datasets:
     - doc: Description of &lt;image_plane_X&gt;
       dtype: text
       name: description
       quantity: '?'
+    - doc: Name of device in /general/devices
+      dtype: text
+      name: device
+    - doc: Excitation wavelength
+      dtype: text
+      name: excitation_lambda
+    - doc: Rate images are acquired, in Hz.
+      dtype: text
+      name: imaging_rate
+    - doc: Calcium indicator
+      dtype: text
+      name: indicator
+    - doc: Location of image plane
+      dtype: text
+      name: location
     - attributes:
       - default_value: 1.0
         doc: Multiplier to get from stored values to specified unit (e.g., 1e-3 for millimeters)
         dtype: float
         name: conversion
+        required: false
       - default_value: Meter
         doc: Base unit that coordinates are stored in (e.g., Meters)
         dtype: text
         name: unit
+        required: false
       dims:
       - height
       - weight
@@ -46,23 +67,17 @@ ImagingPlane
         is not required'
       dtype: text
       name: reference_frame
-    - doc: Calcium indicator
-      dtype: text
-      name: indicator
-    - doc: Location of image plane
-      dtype: text
-      name: location
-    - doc: Rate images are acquired, in Hz.
-      dtype: text
-      name: imaging_rate
-    - doc: Excitation wavelength
-      dtype: text
-      name: excitation_lambda
     doc: 'One of possibly many groups describing an imaging plane. COMMENT: Name is arbitrary
       but should be meaningful. It is referenced by TwoPhotonSeries and also ImageSegmentation
       and DfOverF interfaces'
     groups:
-    - datasets:
+    - attributes:
+      - doc: Value is 'Metadata about an optical channel used to record from an imaging
+          plane'
+        dtype: text
+        name: help
+        value: Metadata about an optical channel used to record from an imaging plane
+      datasets:
       - doc: Any notes or comments about the channel
         dtype: text
         name: description
@@ -72,7 +87,9 @@ ImagingPlane
       doc: 'One of possibly many groups storing channel-specific data COMMENT: Name is
         arbitrary but should be meaningful'
       neurodata_type_def: OpticalChannel
+      neurodata_type_inc: NWBContainer
     neurodata_type_def: ImagingPlane
+    neurodata_type_inc: NWBContainer
     quantity: '*'
 
 

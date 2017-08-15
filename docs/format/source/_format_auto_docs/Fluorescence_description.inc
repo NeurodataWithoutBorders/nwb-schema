@@ -3,14 +3,14 @@
 Fluorescence
 ^^^^^^^^^^^^
 
-**Extends:** :ref:`Interface <sec-Interface>`
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
 
 **Source Specification:** see :numref:`sec-Fluorescence-src`
 
 **Overview:** Fluorescence information about a region of interest (ROI). Storage hierarchy of fluorescence should be the same as for segmentation (ie, same names for ROIs and for image planes).
 
 
-``Fluorescence`` extends ``Interface`` (see :numref:`sec-Interface`) and includes all elements of :ref:`Interface <sec-Interface>` with the following additions or changes.
+``Fluorescence`` extends ``NWBContainer`` (see :numref:`sec-NWBContainer`) and includes all elements of :ref:`NWBContainer <sec-NWBContainer>` with the following additions or changes.
 
 
 

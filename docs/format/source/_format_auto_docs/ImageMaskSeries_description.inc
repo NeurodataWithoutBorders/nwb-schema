@@ -26,27 +26,22 @@ ImageMaskSeries
 .. table:: Datasets, Links, and Attributes contained in <ImageMaskSeries>
     :class: longtable
 
-    +----------------------------+-------------+-----------------------------------------------------------------------------+
-    | Id                         | Type        | Description                                                                 |
-    +============================+=============+=============================================================================+
-    | <ImageMaskSeries>          | group       | Top level group for <ImageMaskSeries>                                       |
-    +----------------------------+-------------+-----------------------------------------------------------------------------+
-    | .help                      | attribute   | Value is 'An alpha mask that is applied to a presented visual stimulus'     |
-    |                            |             |                                                                             |
-    |                            |             | - **Data Type:** text                                                       |
-    |                            |             | - **Value:** An alpha mask that is applied to a presented visual stimulus   |
-    |                            |             |                                                                             |
-    +----------------------------+-------------+-----------------------------------------------------------------------------+
-    | .masked_imageseries_path   | dataset     | Path to linked ImageSeries                                                  |
-    |                            |             |                                                                             |
-    |                            |             | - **Data Type:** text                                                       |
-    |                            |             |                                                                             |
-    +----------------------------+-------------+-----------------------------------------------------------------------------+
-    | .masked_imageseries        | link        | Link to ImageSeries that mask is applied to.                                |
-    |                            |             |                                                                             |
-    |                            |             | - **Target Type** :ref:`ImageSeries <sec-ImageSeries>`                      |
-    |                            |             |                                                                             |
-    +----------------------------+-------------+-----------------------------------------------------------------------------+
+    +-----------------------+-------------+-----------------------------------------------------------------------------+
+    | Id                    | Type        | Description                                                                 |
+    +=======================+=============+=============================================================================+
+    | <ImageMaskSeries>     | group       | Top level group for <ImageMaskSeries>                                       |
+    +-----------------------+-------------+-----------------------------------------------------------------------------+
+    | .help                 | attribute   | Value is 'An alpha mask that is applied to a presented visual stimulus'     |
+    |                       |             |                                                                             |
+    |                       |             | - **Data Type:** text                                                       |
+    |                       |             | - **Value:** An alpha mask that is applied to a presented visual stimulus   |
+    |                       |             |                                                                             |
+    +-----------------------+-------------+-----------------------------------------------------------------------------+
+    | .masked_imageseries   | link        | Link to ImageSeries that mask is applied to.                                |
+    |                       |             |                                                                             |
+    |                       |             | - **Target Type** :ref:`ImageSeries <sec-ImageSeries>`                      |
+    |                       |             |                                                                             |
+    +-----------------------+-------------+-----------------------------------------------------------------------------+
 
 
 

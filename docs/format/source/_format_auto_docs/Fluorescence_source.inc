@@ -3,7 +3,7 @@
 Fluorescence
 ^^^^^^^^^^^^
 
-**Extends:** :ref:`Interface <sec-Interface>`
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
 
 **Description:** see :numref:`sec-Fluorescence`
 
@@ -28,6 +28,6 @@ Fluorescence
       quantity: +
     name: Fluorescence
     neurodata_type_def: Fluorescence
-    neurodata_type_inc: Interface
+    neurodata_type_inc: NWBContainer
 
 

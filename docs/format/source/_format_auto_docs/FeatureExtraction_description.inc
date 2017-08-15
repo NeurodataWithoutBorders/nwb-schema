@@ -3,14 +3,14 @@
 FeatureExtraction
 ^^^^^^^^^^^^^^^^^
 
-**Extends:** :ref:`Interface <sec-Interface>`
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
 
 **Source Specification:** see :numref:`sec-FeatureExtraction-src`
 
 **Overview:** Features, such as PC1 and PC2, that are extracted from signals stored in a SpikeEvent TimeSeries or other source.
 
 
-``FeatureExtraction`` extends ``Interface`` (see :numref:`sec-Interface`) and includes all elements of :ref:`Interface <sec-Interface>` with the following additions or changes.
+``FeatureExtraction`` extends ``NWBContainer`` (see :numref:`sec-NWBContainer`) and includes all elements of :ref:`NWBContainer <sec-NWBContainer>` with the following additions or changes.
 
 
 
@@ -37,13 +37,6 @@ FeatureExtraction
     |                     |             | - **Value:** Container for salient features of detected events            |
     |                     |             |                                                                           |
     +---------------------+-------------+---------------------------------------------------------------------------+
-    | .times              | dataset     | Times of events that features correspond to (can be a link).              |
-    |                     |             |                                                                           |
-    |                     |             | - **Data Type:** float64!                                                 |
-    |                     |             | - **Dimensions:** ['num_events']                                          |
-    |                     |             | - **Shape:** [None]                                                       |
-    |                     |             |                                                                           |
-    +---------------------+-------------+---------------------------------------------------------------------------+
     | .description        | dataset     | Description of features (eg, "PC1") for each of the extracted features.   |
     |                     |             |                                                                           |
     |                     |             | - **Data Type:** text                                                     |
@@ -56,6 +49,13 @@ FeatureExtraction
     |                     |             | - **Data Type:** float32                                                  |
     |                     |             | - **Dimensions:** ['num_events', 'num_channels', 'num_features']          |
     |                     |             | - **Shape:** [None, None, None]                                           |
+    |                     |             |                                                                           |
+    +---------------------+-------------+---------------------------------------------------------------------------+
+    | .times              | dataset     | Times of events that features correspond to (can be a link).              |
+    |                     |             |                                                                           |
+    |                     |             | - **Data Type:** float64!                                                 |
+    |                     |             | - **Dimensions:** ['num_events']                                          |
+    |                     |             | - **Shape:** [None]                                                       |
     |                     |             |                                                                           |
     +---------------------+-------------+---------------------------------------------------------------------------+
     | .electrode_group    | link        | link to ElectrodeGroup group that generated this TimeSeries data          |

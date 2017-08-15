@@ -3,7 +3,7 @@
 DfOverF
 ^^^^^^^
 
-**Extends:** :ref:`Interface <sec-Interface>`
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
 
 **Description:** see :numref:`sec-DfOverF`
 
@@ -27,6 +27,6 @@ DfOverF
       quantity: '*'
     name: DfOverF
     neurodata_type_def: DfOverF
-    neurodata_type_inc: Interface
+    neurodata_type_inc: NWBContainer
 
 

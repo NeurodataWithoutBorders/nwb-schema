@@ -3,12 +3,16 @@
 OpticalChannel
 ^^^^^^^^^^^^^^
 
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
+
 **Source Specification:** see :numref:`sec-OpticalChannel-src`
 
 **Overview:** One of possibly many groups storing channel-specific data 
 
 **Comment:**  Name is arbitrary but should be meaningful
 
+
+``OpticalChannel`` extends ``NWBContainer`` (see :numref:`sec-NWBContainer`) and includes all elements of :ref:`NWBContainer <sec-NWBContainer>` with the following additions or changes.
 
 
 
@@ -24,21 +28,27 @@ OpticalChannel
 .. table:: Datasets, Links, and Attributes contained in <OpticalChannel>
     :class: longtable
 
-    +--------------------+-----------+-------------------------------------------+
-    | Id                 | Type      | Description                               |
-    +====================+===========+===========================================+
-    | <OpticalChannel>   | group     | Top level group for <OpticalChannel>      |
-    +--------------------+-----------+-------------------------------------------+
-    | .description       | dataset   | Any notes or comments about the channel   |
-    |                    |           |                                           |
-    |                    |           | - **Data Type:** text                     |
-    |                    |           |                                           |
-    +--------------------+-----------+-------------------------------------------+
-    | .emission_lambda   | dataset   | Emission lambda for channel               |
-    |                    |           |                                           |
-    |                    |           | - **Data Type:** text                     |
-    |                    |           |                                           |
-    +--------------------+-----------+-------------------------------------------+
+    +--------------------+-------------+---------------------------------------------------------------------------------------+
+    | Id                 | Type        | Description                                                                           |
+    +====================+=============+=======================================================================================+
+    | <OpticalChannel>   | group       | Top level group for <OpticalChannel>                                                  |
+    +--------------------+-------------+---------------------------------------------------------------------------------------+
+    | .help              | attribute   | Value is 'Metadata about an optical channel used to record from an imaging plane'     |
+    |                    |             |                                                                                       |
+    |                    |             | - **Data Type:** text                                                                 |
+    |                    |             | - **Value:** Metadata about an optical channel used to record from an imaging plane   |
+    |                    |             |                                                                                       |
+    +--------------------+-------------+---------------------------------------------------------------------------------------+
+    | .description       | dataset     | Any notes or comments about the channel                                               |
+    |                    |             |                                                                                       |
+    |                    |             | - **Data Type:** text                                                                 |
+    |                    |             |                                                                                       |
+    +--------------------+-------------+---------------------------------------------------------------------------------------+
+    | .emission_lambda   | dataset     | Emission lambda for channel                                                           |
+    |                    |             |                                                                                       |
+    |                    |             | - **Data Type:** text                                                                 |
+    |                    |             |                                                                                       |
+    +--------------------+-------------+---------------------------------------------------------------------------------------+
 
 
 

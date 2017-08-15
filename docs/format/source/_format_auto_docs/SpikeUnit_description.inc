@@ -3,10 +3,14 @@
 SpikeUnit
 ^^^^^^^^^
 
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
+
 **Source Specification:** see :numref:`sec-SpikeUnit-src`
 
 **Overview:** Group storing times for <unit_N>.
 
+
+``SpikeUnit`` extends ``NWBContainer`` (see :numref:`sec-NWBContainer`) and includes all elements of :ref:`NWBContainer <sec-NWBContainer>` with the following additions or changes.
 
 
 
@@ -25,29 +29,29 @@ SpikeUnit
 .. table:: Datasets, Links, and Attributes contained in <SpikeUnit>
     :class: longtable
 
-    +---------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-    | Id                  | Type      | Description                                                                                                                                                                |
-    +=====================+===========+============================================================================================================================================================================+
-    | <SpikeUnit>         | group     | Top level group for <SpikeUnit>                                                                                                                                            |
-    +---------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-    | .times              | dataset   | Spike time for the units (exact or estimated)                                                                                                                              |
-    |                     |           |                                                                                                                                                                            |
-    |                     |           | - **Data Type:** float64!                                                                                                                                                  |
-    |                     |           | - **Dimensions:** ['num_events']                                                                                                                                           |
-    |                     |           | - **Shape:** [None]                                                                                                                                                        |
-    |                     |           |                                                                                                                                                                            |
-    +---------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-    | .source             | dataset   | Name, path or description of where unit times originated. This is necessary only if the info here differs from or is more fine-grained than the interface's source field   |
-    |                     |           |                                                                                                                                                                            |
-    |                     |           | - **Quantity** 0 or 1                                                                                                                                                      |
-    |                     |           | - **Data Type:** text                                                                                                                                                      |
-    |                     |           |                                                                                                                                                                            |
-    +---------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-    | .unit_description   | dataset   | Description of the unit (eg, cell type).                                                                                                                                   |
-    |                     |           |                                                                                                                                                                            |
-    |                     |           | - **Data Type:** text                                                                                                                                                      |
-    |                     |           |                                                                                                                                                                            |
-    +---------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    +---------------------+-------------+-------------------------------------------------------+
+    | Id                  | Type        | Description                                           |
+    +=====================+=============+=======================================================+
+    | <SpikeUnit>         | group       | Top level group for <SpikeUnit>                       |
+    +---------------------+-------------+-------------------------------------------------------+
+    | .help               | attribute   | Store times for a particulare UnitTime                |
+    |                     |             |                                                       |
+    |                     |             | - **Data Type:** text                                 |
+    |                     |             | - **Value:** Times for a particular UnitTime object   |
+    |                     |             |                                                       |
+    +---------------------+-------------+-------------------------------------------------------+
+    | .times              | dataset     | Spike time for the units (exact or estimated)         |
+    |                     |             |                                                       |
+    |                     |             | - **Data Type:** float64!                             |
+    |                     |             | - **Dimensions:** ['num_events']                      |
+    |                     |             | - **Shape:** [None]                                   |
+    |                     |             |                                                       |
+    +---------------------+-------------+-------------------------------------------------------+
+    | .unit_description   | dataset     | Description of the unit (eg, cell type).              |
+    |                     |             |                                                       |
+    |                     |             | - **Data Type:** text                                 |
+    |                     |             |                                                       |
+    +---------------------+-------------+-------------------------------------------------------+
 
 
 

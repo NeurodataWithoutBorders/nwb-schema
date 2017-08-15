@@ -20,6 +20,24 @@ AbstractFeatureSeries
       value: Features of an applied stimulus. This is useful when storing the raw stimulus
         is impractical
     datasets:
+    - attributes:
+      - default_value: see 'feature_units'
+        doc: "The base unit of measure used to store data. This should be in the SI unit.\
+          \ COMMENT: This is the SI unit (when appropriate) of the stored data, such as\
+          \ Volts. If the actual data is stored in millivolts, the field 'conversion'\
+          \ below describes how to convert the data to the specified SI unit."
+        dtype: None
+        name: unit
+        required: false
+      dims:
+      - num_times
+      - num_features
+      doc: Values of each feature at each time.
+      dtype: float32
+      name: data
+      shape:
+      - null
+      - null
     - dims:
       - num_features
       doc: Units of each feature.
@@ -34,23 +52,6 @@ AbstractFeatureSeries
       dtype: text
       name: features
       shape:
-      - null
-    - attributes:
-      - default_value: see 'feature_units'
-        doc: "The base unit of measure used to store data. This should be in the SI unit.\
-          \ COMMENT: This is the SI unit (when appropriate) of the stored data, such as\
-          \ Volts. If the actual data is stored in millivolts, the field 'conversion'\
-          \ below describes how to convert the data to the specified SI unit."
-        dtype: None
-        name: unit
-      dims:
-      - num_times
-      - num_features
-      doc: Values of each feature at each time.
-      dtype: float32
-      name: data
-      shape:
-      - null
       - null
     doc: Abstract features, such as quantitative descriptions of sensory stimuli. The
       TimeSeries::data field is a 2D array, storing those features (e.g., for visual grating

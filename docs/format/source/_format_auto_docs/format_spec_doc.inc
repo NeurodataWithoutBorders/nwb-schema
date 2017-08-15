@@ -23,8 +23,8 @@ Main Data File
 
     \clearpage \newpage
 
-TimeSeries Classes
-------------------
+TimeSeries Types
+----------------
 
 .. include:: _format_auto_docs/TimeSeries_description.inc
 
@@ -151,16 +151,10 @@ TimeSeries Classes
 
     \clearpage \newpage
 
-Data Processing Classes
------------------------
+Data Processing
+---------------
 
-.. include:: _format_auto_docs/Module_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/Interface_description.inc
+.. include:: _format_auto_docs/ProcessingModule_description.inc
 
 .. raw:: latex
 
@@ -202,7 +196,19 @@ Data Processing Classes
 
     \clearpage \newpage
 
+.. include:: _format_auto_docs/CorrectedImageStack_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
 .. include:: _format_auto_docs/DfOverF_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/EpochTimeSeries_description.inc
 
 .. raw:: latex
 
@@ -250,7 +256,19 @@ Data Processing Classes
 
     \clearpage \newpage
 
+.. include:: _format_auto_docs/ImagingPlane_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
 .. include:: _format_auto_docs/ImagingRetinotopy_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/IntracellularElectrode_description.inc
 
 .. raw:: latex
 
@@ -268,6 +286,24 @@ Data Processing Classes
 
     \clearpage \newpage
 
+.. include:: _format_auto_docs/OpticalChannel_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/OptogeneticStimulusSite_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/PlaneSegmentation_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
 .. include:: _format_auto_docs/Position_description.inc
 
 .. raw:: latex
@@ -275,6 +311,18 @@ Data Processing Classes
     \clearpage \newpage
 
 .. include:: _format_auto_docs/PupilTracking_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/ROI_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/SpikeUnit_description.inc
 
 .. raw:: latex
 
@@ -294,19 +342,7 @@ Data Processing Classes
 Other Types
 -----------
 
-.. include:: _format_auto_docs/IntracellularElectrode_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/Image_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/EpochTimeSeries_description.inc
+.. include:: _format_auto_docs/Epoch_description.inc
 
 .. raw:: latex
 
@@ -318,31 +354,13 @@ Other Types
 
     \clearpage \newpage
 
+.. include:: _format_auto_docs/Image_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
 .. include:: _format_auto_docs/Device_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/OpticalChannel_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/OptogeneticStimulusSite_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/ROI_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/CorrectedImageStack_description.inc
 
 .. raw:: latex
 
@@ -354,25 +372,7 @@ Other Types
 
     \clearpage \newpage
 
-.. include:: _format_auto_docs/PlaneSegmentation_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/Epoch_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/ImagingPlane_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/SpikeUnit_description.inc
+.. include:: _format_auto_docs/NWBContainer_description.inc
 
 .. raw:: latex
 

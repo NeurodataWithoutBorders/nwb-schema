@@ -20,10 +20,6 @@ SpatialSeries
       value: Stores points in space over time. The data[] array structure is [num samples][num
         spatial dimensions]
     datasets:
-    - doc: Description defining what exactly 'straight-ahead' means.
-      dtype: text
-      name: reference_frame
-      quantity: '?'
     - attributes:
       - default_value: meter
         doc: "The base unit of measure used to store data. This should be in the SI unit.\
@@ -32,6 +28,7 @@ SpatialSeries
           \ below describes how to convert the data to the specified SI unit."
         dtype: text
         name: unit
+        required: false
       dims:
       - num_times
       - num_features
@@ -41,6 +38,10 @@ SpatialSeries
       shape:
       - null
       - null
+    - doc: Description defining what exactly 'straight-ahead' means.
+      dtype: text
+      name: reference_frame
+      quantity: '?'
     doc: 'Direction, e.g., of gaze or travel, or position. The TimeSeries::data field
       is a 2D array storing position or direction relative to some reference frame. Array
       structure: [num measurements] [num dimensions]. Each SpatialSeries has a text dataset

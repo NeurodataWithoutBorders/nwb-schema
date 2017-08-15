@@ -21,16 +21,6 @@ RoiResponseSeries
         to the signal from one ROI
     datasets:
     - dims:
-      - num_ROIs
-      doc: List of ROIs represented, one name for each row of data[].
-      dtype: text
-      name: roi_names
-      shape:
-      - null
-    - doc: Path to segmentation module.
-      dtype: text
-      name: segmentation_interface_path
-    - dims:
       - num_times
       - num_ROIs
       doc: Signals from ROIs
@@ -38,6 +28,13 @@ RoiResponseSeries
       name: data
       shape:
       - null
+      - null
+    - dims:
+      - num_ROIs
+      doc: List of ROIs represented, one name for each row of data[].
+      dtype: text
+      name: roi_names
+      shape:
       - null
     doc: ROI responses over an imaging plane. Each row in data[] should correspond to
       the signal from one ROI.

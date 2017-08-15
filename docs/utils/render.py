@@ -1036,14 +1036,16 @@ class RSTDocument(object):
         self.document += self.newline
         self.document += self.newline
 
-    def add_include(self, filename):
+    def add_include(self, filename, indent=None):
         """
         Include the file with the given name as part of this RST document
 
         :param filename: Name of the file to be included
-        :return:
+        :param indent: Indent to be used for the include.
+
         """
-        self.document += ".. include:: %s" % filename
+        indent = '' if indent is None else indent
+        self.document += "%s.. include:: %s" % (indent, filename)
         self.document += self.newline
 
     def add_figure(self,

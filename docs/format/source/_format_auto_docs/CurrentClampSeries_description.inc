@@ -37,7 +37,7 @@ CurrentClampSeries
     |                             |             | - **Value:** Voltage recorded from cell during current-clamp recording   |
     |                             |             |                                                                          |
     +-----------------------------+-------------+--------------------------------------------------------------------------+
-    | .capacitance_compensation   | dataset     | Unit: Farad                                                              |
+    | .bias_current               | dataset     | Unit: Amp                                                                |
     |                             |             |                                                                          |
     |                             |             | - **Quantity** 0 or 1                                                    |
     |                             |             | - **Data Type:** float32                                                 |
@@ -49,7 +49,7 @@ CurrentClampSeries
     |                             |             | - **Data Type:** float32                                                 |
     |                             |             |                                                                          |
     +-----------------------------+-------------+--------------------------------------------------------------------------+
-    | .bias_current               | dataset     | Unit: Amp                                                                |
+    | .capacitance_compensation   | dataset     | Unit: Farad                                                              |
     |                             |             |                                                                          |
     |                             |             | - **Quantity** 0 or 1                                                    |
     |                             |             | - **Data Type:** float32                                                 |

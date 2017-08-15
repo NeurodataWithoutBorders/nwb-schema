@@ -3,6 +3,8 @@
 PlaneSegmentation
 ^^^^^^^^^^^^^^^^^
 
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
+
 **Description:** see :numref:`sec-PlaneSegmentation`
 
 **YAML Specification:**
@@ -10,21 +12,24 @@ PlaneSegmentation
 .. code-block:: yaml
     :linenos:
 
+    attributes:
+    - doc: Value is 'Results from segmentation of an imaging plane'
+      dtype: text
+      name: help
+      value: Results from segmentation of an imaging plane
     datasets:
     - doc: Description of image plane, recording wavelength, depth, etc
       dtype: text
       name: description
       quantity: '?'
-    - dims:
-      - num_rois
-      doc: List of ROIs in this imaging plane
-      dtype: text
-      name: roi_list
-      shape:
-      - null
     doc: Group name is human-readable description of imaging plane
     groups:
-    - datasets:
+    - attributes:
+      - doc: Value is 'Region of interest, as determined by image segmentation'
+        dtype: text
+        name: help
+        value: Region of interest, as determined by image segmentation
+      datasets:
       - dims:
         - num_x
         - num_y
@@ -55,6 +60,7 @@ PlaneSegmentation
         name: roi_description
       doc: Name of ROI
       neurodata_type_def: ROI
+      neurodata_type_inc: NWBContainer
       quantity: '*'
     - doc: Stores image stacks segmentation mask apply to.
       groups:
@@ -66,6 +72,7 @@ PlaneSegmentation
       name: imaging_plane
       target_type: ImagingPlane
     neurodata_type_def: PlaneSegmentation
+    neurodata_type_inc: NWBContainer
     quantity: '*'
 
 

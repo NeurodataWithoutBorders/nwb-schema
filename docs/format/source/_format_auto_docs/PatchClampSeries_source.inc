@@ -18,10 +18,6 @@ PatchClampSeries
       name: help
       value: Superclass definition for patch-clamp data
     datasets:
-    - doc: 'Units: Volt/Amp (v-clamp) or Volt/Volt (c-clamp)'
-      dtype: float
-      name: gain
-      quantity: '?'
     - dims:
       - num_times
       doc: Recorded voltage or current.
@@ -29,6 +25,10 @@ PatchClampSeries
       name: data
       shape:
       - null
+    - doc: 'Units: Volt/Amp (v-clamp) or Volt/Volt (c-clamp)'
+      dtype: float
+      name: gain
+      quantity: '?'
     doc: Stores stimulus or response current or voltage. Superclass definition for patch-clamp
       data (this class should not be instantiated directly).
     links:

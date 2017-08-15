@@ -3,7 +3,7 @@
 FilteredEphys
 ^^^^^^^^^^^^^
 
-**Extends:** :ref:`Interface <sec-Interface>`
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
 
 **Description:** see :numref:`sec-FilteredEphys`
 
@@ -36,6 +36,6 @@ FilteredEphys
       quantity: +
     name: FilteredEphys
     neurodata_type_def: FilteredEphys
-    neurodata_type_inc: Interface
+    neurodata_type_inc: NWBContainer
 
 

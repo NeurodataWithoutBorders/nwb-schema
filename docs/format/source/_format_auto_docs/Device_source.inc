@@ -3,6 +3,8 @@
 Device
 ^^^^^^
 
+**Extends:** :ref:`NWBContainer <sec-NWBContainer>`
+
 **Description:** see :numref:`sec-Device`
 
 **YAML Specification:**
@@ -10,9 +12,13 @@ Device
 .. code-block:: yaml
     :linenos:
 
-    doc: 'One of possibly many. Information about device and device description. COMMENT:
-      Name should be informative. Contents can be from Methods.'
+    attributes:
+    - doc: Value is 'A recording device e.g. amplifier'
+      dtype: str
+      name: help
+      value: A recording device e.g. amplifier
+    doc: One of possibly many. Information about device and device description.
     neurodata_type_def: Device
-    quantity: '*'
+    neurodata_type_inc: NWBContainer
 
 

@@ -268,9 +268,10 @@ latex_elements = {
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{6}
 \\usepackage{enumitem}
-\setlistdepth{100}""",
+\setlistdepth{100}
+""",
 }
-
+# \\renewlist{itemize}{itemize}{100}
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
