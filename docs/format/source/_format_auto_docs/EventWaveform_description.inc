@@ -33,11 +33,17 @@ EventWaveform
     | Id                | Type        | Description                                                               |
     +===================+=============+===========================================================================+
     | <EventWaveform>   | group       | Top level group for <EventWaveform>                                       |
+    |                   |             |                                                                           |
+    |                   |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                     |
+    |                   |             | - **Neurodata Type:** :ref:`EventWaveform <sec-EventWaveform>`            |
+    |                   |             | - **Default Name:** EventWaveform                                         |
+    |                   |             |                                                                           |
     +-------------------+-------------+---------------------------------------------------------------------------+
     | .help             | attribute   | Value is 'Waveform of detected extracellularly recorded spike events'     |
     |                   |             |                                                                           |
     |                   |             | - **Data Type:** text                                                     |
     |                   |             | - **Value:** Waveform of detected extracellularly recorded spike events   |
+    |                   |             | - **Name:** help                                                          |
     |                   |             |                                                                           |
     +-------------------+-------------+---------------------------------------------------------------------------+
 
@@ -54,6 +60,11 @@ EventWaveform
     | Id                                                  | Type    | Description                                                         |
     +=====================================================+=========+=====================================================================+
     | <EventWaveform>                                     | group   | Top level group for <EventWaveform>                                 |
+    |                                                     |         |                                                                     |
+    |                                                     |         | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`               |
+    |                                                     |         | - **Neurodata Type:** :ref:`EventWaveform <sec-EventWaveform>`      |
+    |                                                     |         | - **Default Name:** EventWaveform                                   |
+    |                                                     |         |                                                                     |
     +-----------------------------------------------------+---------+---------------------------------------------------------------------+
     | .<:ref:`SpikeEventSeries <sec-SpikeEventSeries>`>   | group   | SpikeEventSeries object containing detected spike event waveforms   |
     |                                                     |         |                                                                     |

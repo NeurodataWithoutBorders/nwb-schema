@@ -33,11 +33,17 @@ FeatureExtraction
     | Id                    | Type        | Description                                                               |
     +=======================+=============+===========================================================================+
     | <FeatureExtraction>   | group       | Top level group for <FeatureExtraction>                                   |
+    |                       |             |                                                                           |
+    |                       |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                     |
+    |                       |             | - **Neurodata Type:** :ref:`FeatureExtraction <sec-FeatureExtraction>`    |
+    |                       |             | - **Default Name:** FeatureExtraction                                     |
+    |                       |             |                                                                           |
     +-----------------------+-------------+---------------------------------------------------------------------------+
     | .help                 | attribute   | Value is 'Container for salient features of detected events'              |
     |                       |             |                                                                           |
     |                       |             | - **Data Type:** text                                                     |
     |                       |             | - **Value:** Container for salient features of detected events            |
+    |                       |             | - **Name:** help                                                          |
     |                       |             |                                                                           |
     +-----------------------+-------------+---------------------------------------------------------------------------+
     | .description          | dataset     | Description of features (eg, "PC1") for each of the extracted features.   |
@@ -45,6 +51,7 @@ FeatureExtraction
     |                       |             | - **Data Type:** text                                                     |
     |                       |             | - **Dimensions:** ['num_features']                                        |
     |                       |             | - **Shape:** [None]                                                       |
+    |                       |             | - **Name:** description                                                   |
     |                       |             |                                                                           |
     +-----------------------+-------------+---------------------------------------------------------------------------+
     | .features             | dataset     | Multi-dimensional array of features extracted from each event.            |
@@ -52,6 +59,7 @@ FeatureExtraction
     |                       |             | - **Data Type:** float32                                                  |
     |                       |             | - **Dimensions:** ['num_events', 'num_channels', 'num_features']          |
     |                       |             | - **Shape:** [None, None, None]                                           |
+    |                       |             | - **Name:** features                                                      |
     |                       |             |                                                                           |
     +-----------------------+-------------+---------------------------------------------------------------------------+
     | .times                | dataset     | Times of events that features correspond to (can be a link).              |
@@ -59,11 +67,13 @@ FeatureExtraction
     |                       |             | - **Data Type:** float64!                                                 |
     |                       |             | - **Dimensions:** ['num_events']                                          |
     |                       |             | - **Shape:** [None]                                                       |
+    |                       |             | - **Name:** times                                                         |
     |                       |             |                                                                           |
     +-----------------------+-------------+---------------------------------------------------------------------------+
     | .electrode_group      | link        | link to ElectrodeGroup group that generated this TimeSeries data          |
     |                       |             |                                                                           |
     |                       |             | - **Target Type** :ref:`ElectrodeGroup <sec-ElectrodeGroup>`              |
+    |                       |             | - **Name:** electrode_group                                               |
     |                       |             |                                                                           |
     +-----------------------+-------------+---------------------------------------------------------------------------+
 
@@ -76,15 +86,21 @@ FeatureExtraction
 .. table:: Groups contained in <FeatureExtraction>
     :class: longtable
 
-    +-----------------------+---------+--------------------------------------------------------------------+
-    | Id                    | Type    | Description                                                        |
-    +=======================+=========+====================================================================+
-    | <FeatureExtraction>   | group   | Top level group for <FeatureExtraction>                            |
-    +-----------------------+---------+--------------------------------------------------------------------+
-    | .electrode_group      | link    | link to ElectrodeGroup group that generated this TimeSeries data   |
-    |                       |         |                                                                    |
-    |                       |         | - **Target Type** :ref:`ElectrodeGroup <sec-ElectrodeGroup>`       |
-    |                       |         |                                                                    |
-    +-----------------------+---------+--------------------------------------------------------------------+
+    +-----------------------+---------+--------------------------------------------------------------------------+
+    | Id                    | Type    | Description                                                              |
+    +=======================+=========+==========================================================================+
+    | <FeatureExtraction>   | group   | Top level group for <FeatureExtraction>                                  |
+    |                       |         |                                                                          |
+    |                       |         | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                    |
+    |                       |         | - **Neurodata Type:** :ref:`FeatureExtraction <sec-FeatureExtraction>`   |
+    |                       |         | - **Default Name:** FeatureExtraction                                    |
+    |                       |         |                                                                          |
+    +-----------------------+---------+--------------------------------------------------------------------------+
+    | .electrode_group      | link    | link to ElectrodeGroup group that generated this TimeSeries data         |
+    |                       |         |                                                                          |
+    |                       |         | - **Target Type** :ref:`ElectrodeGroup <sec-ElectrodeGroup>`             |
+    |                       |         | - **Name:** electrode_group                                              |
+    |                       |         |                                                                          |
+    +-----------------------+---------+--------------------------------------------------------------------------+
 
 

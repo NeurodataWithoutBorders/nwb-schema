@@ -35,16 +35,23 @@ EpochTimeSeries
     | Id                  | Type        | Description                                                                            |
     +=====================+=============+========================================================================================+
     | <EpochTimeSeries>   | group       | Top level group for <EpochTimeSeries>                                                  |
+    |                     |             |                                                                                        |
+    |                     |             | - **Quantity** 0 or more                                                               |
+    |                     |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                                  |
+    |                     |             | - **Neurodata Type:** :ref:`EpochTimeSeries <sec-EpochTimeSeries>`                     |
+    |                     |             |                                                                                        |
     +---------------------+-------------+----------------------------------------------------------------------------------------+
     | .help               | attribute   | Value is 'Data on how an epoch applies to a time series'                               |
     |                     |             |                                                                                        |
     |                     |             | - **Data Type:** text                                                                  |
     |                     |             | - **Value:** Data on how an epoch applies to a time series                             |
+    |                     |             | - **Name:** help                                                                       |
     |                     |             |                                                                                        |
     +---------------------+-------------+----------------------------------------------------------------------------------------+
     | .count              | dataset     | Number of data samples available in this time series, during this epoch.               |
     |                     |             |                                                                                        |
     |                     |             | - **Data Type:** int32                                                                 |
+    |                     |             | - **Name:** count                                                                      |
     |                     |             |                                                                                        |
     +---------------------+-------------+----------------------------------------------------------------------------------------+
     | .idx_start          | dataset     | Epoch's start index in TimeSeries data[] field.                                        |
@@ -52,11 +59,13 @@ EpochTimeSeries
     |                     |             | **Comment:**  This can be used to calculate location in TimeSeries timestamp[] field   |
     |                     |             |                                                                                        |
     |                     |             | - **Data Type:** int32                                                                 |
+    |                     |             | - **Name:** idx_start                                                                  |
     |                     |             |                                                                                        |
     +---------------------+-------------+----------------------------------------------------------------------------------------+
     | .timeseries         | link        | Link to TimeSeries.  An HDF5 soft-link should be used.                                 |
     |                     |             |                                                                                        |
     |                     |             | - **Target Type** :ref:`TimeSeries <sec-TimeSeries>`                                   |
+    |                     |             | - **Name:** timeseries                                                                 |
     |                     |             |                                                                                        |
     +---------------------+-------------+----------------------------------------------------------------------------------------+
 
@@ -69,15 +78,21 @@ EpochTimeSeries
 .. table:: Groups contained in <EpochTimeSeries>
     :class: longtable
 
-    +---------------------+---------+----------------------------------------------------------+
-    | Id                  | Type    | Description                                              |
-    +=====================+=========+==========================================================+
-    | <EpochTimeSeries>   | group   | Top level group for <EpochTimeSeries>                    |
-    +---------------------+---------+----------------------------------------------------------+
-    | .timeseries         | link    | Link to TimeSeries.  An HDF5 soft-link should be used.   |
-    |                     |         |                                                          |
-    |                     |         | - **Target Type** :ref:`TimeSeries <sec-TimeSeries>`     |
-    |                     |         |                                                          |
-    +---------------------+---------+----------------------------------------------------------+
+    +---------------------+---------+----------------------------------------------------------------------+
+    | Id                  | Type    | Description                                                          |
+    +=====================+=========+======================================================================+
+    | <EpochTimeSeries>   | group   | Top level group for <EpochTimeSeries>                                |
+    |                     |         |                                                                      |
+    |                     |         | - **Quantity** 0 or more                                             |
+    |                     |         | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                |
+    |                     |         | - **Neurodata Type:** :ref:`EpochTimeSeries <sec-EpochTimeSeries>`   |
+    |                     |         |                                                                      |
+    +---------------------+---------+----------------------------------------------------------------------+
+    | .timeseries         | link    | Link to TimeSeries.  An HDF5 soft-link should be used.               |
+    |                     |         |                                                                      |
+    |                     |         | - **Target Type** :ref:`TimeSeries <sec-TimeSeries>`                 |
+    |                     |         | - **Name:** timeseries                                               |
+    |                     |         |                                                                      |
+    +---------------------+---------+----------------------------------------------------------------------+
 
 

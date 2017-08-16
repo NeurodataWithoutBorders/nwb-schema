@@ -28,68 +28,81 @@ IntracellularElectrode
 .. table:: Datasets, Links, and Attributes contained in <IntracellularElectrode>
     :class: longtable
 
-    +------------------------------+-------------+-----------------------------------------------------------------------------------+
-    | Id                           | Type        | Description                                                                       |
-    +==============================+=============+===================================================================================+
-    | <IntracellularElectrode>     | group       | Top level group for <IntracellularElectrode>                                      |
-    +------------------------------+-------------+-----------------------------------------------------------------------------------+
-    | .help                        | attribute   | Value is 'Metadata about an intracellular electrode'                              |
-    |                              |             |                                                                                   |
-    |                              |             | - **Data Type:** text                                                             |
-    |                              |             | - **Value:** Metadata about an intracellular electrode                            |
-    |                              |             |                                                                                   |
-    +------------------------------+-------------+-----------------------------------------------------------------------------------+
-    | .description                 | dataset     | Recording description, description of electrode (e.g.,  whole-cell, sharp, etc)   |
-    |                              |             |                                                                                   |
-    |                              |             | **Comment:**  Free-form text (can be from Methods)                                |
-    |                              |             |                                                                                   |
-    |                              |             | - **Data Type:** text                                                             |
-    |                              |             |                                                                                   |
-    +------------------------------+-------------+-----------------------------------------------------------------------------------+
-    | .device                      | dataset     | Name(s) of devices in general/devices                                             |
-    |                              |             |                                                                                   |
-    |                              |             | - **Quantity** 0 or 1                                                             |
-    |                              |             | - **Data Type:** text                                                             |
-    |                              |             |                                                                                   |
-    +------------------------------+-------------+-----------------------------------------------------------------------------------+
-    | .filtering                   | dataset     | Electrode specific filtering.                                                     |
-    |                              |             |                                                                                   |
-    |                              |             | - **Quantity** 0 or 1                                                             |
-    |                              |             | - **Data Type:** text                                                             |
-    |                              |             |                                                                                   |
-    +------------------------------+-------------+-----------------------------------------------------------------------------------+
-    | .initial_access_resistance   | dataset     | Initial access resistance                                                         |
-    |                              |             |                                                                                   |
-    |                              |             | - **Quantity** 0 or 1                                                             |
-    |                              |             | - **Data Type:** text                                                             |
-    |                              |             |                                                                                   |
-    +------------------------------+-------------+-----------------------------------------------------------------------------------+
-    | .location                    | dataset     | Area, layer, comments on estimation, stereotaxis coordinates (if in vivo, etc)    |
-    |                              |             |                                                                                   |
-    |                              |             | - **Quantity** 0 or 1                                                             |
-    |                              |             | - **Data Type:** text                                                             |
-    |                              |             |                                                                                   |
-    +------------------------------+-------------+-----------------------------------------------------------------------------------+
-    | .resistance                  | dataset     | Electrode resistance                                                              |
-    |                              |             |                                                                                   |
-    |                              |             | **Comment:**  unit: Ohm                                                           |
-    |                              |             |                                                                                   |
-    |                              |             | - **Quantity** 0 or 1                                                             |
-    |                              |             | - **Data Type:** text                                                             |
-    |                              |             |                                                                                   |
-    +------------------------------+-------------+-----------------------------------------------------------------------------------+
-    | .seal                        | dataset     | Information about seal used for recording                                         |
-    |                              |             |                                                                                   |
-    |                              |             | - **Quantity** 0 or 1                                                             |
-    |                              |             | - **Data Type:** text                                                             |
-    |                              |             |                                                                                   |
-    +------------------------------+-------------+-----------------------------------------------------------------------------------+
-    | .slice                       | dataset     | Information about slice used for recording                                        |
-    |                              |             |                                                                                   |
-    |                              |             | - **Quantity** 0 or 1                                                             |
-    |                              |             | - **Data Type:** text                                                             |
-    |                              |             |                                                                                   |
-    +------------------------------+-------------+-----------------------------------------------------------------------------------+
+    +------------------------------+-------------+------------------------------------------------------------------------------------+
+    | Id                           | Type        | Description                                                                        |
+    +==============================+=============+====================================================================================+
+    | <IntracellularElectrode>     | group       | Top level group for <IntracellularElectrode>                                       |
+    |                              |             |                                                                                    |
+    |                              |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                              |
+    |                              |             | - **Neurodata Type:** :ref:`IntracellularElectrode <sec-IntracellularElectrode>`   |
+    |                              |             |                                                                                    |
+    +------------------------------+-------------+------------------------------------------------------------------------------------+
+    | .help                        | attribute   | Value is 'Metadata about an intracellular electrode'                               |
+    |                              |             |                                                                                    |
+    |                              |             | - **Data Type:** text                                                              |
+    |                              |             | - **Value:** Metadata about an intracellular electrode                             |
+    |                              |             | - **Name:** help                                                                   |
+    |                              |             |                                                                                    |
+    +------------------------------+-------------+------------------------------------------------------------------------------------+
+    | .description                 | dataset     | Recording description, description of electrode (e.g.,  whole-cell, sharp, etc)    |
+    |                              |             |                                                                                    |
+    |                              |             | **Comment:**  Free-form text (can be from Methods)                                 |
+    |                              |             |                                                                                    |
+    |                              |             | - **Data Type:** text                                                              |
+    |                              |             | - **Name:** description                                                            |
+    |                              |             |                                                                                    |
+    +------------------------------+-------------+------------------------------------------------------------------------------------+
+    | .device                      | dataset     | Name(s) of devices in general/devices                                              |
+    |                              |             |                                                                                    |
+    |                              |             | - **Quantity** 0 or 1                                                              |
+    |                              |             | - **Data Type:** text                                                              |
+    |                              |             | - **Name:** device                                                                 |
+    |                              |             |                                                                                    |
+    +------------------------------+-------------+------------------------------------------------------------------------------------+
+    | .filtering                   | dataset     | Electrode specific filtering.                                                      |
+    |                              |             |                                                                                    |
+    |                              |             | - **Quantity** 0 or 1                                                              |
+    |                              |             | - **Data Type:** text                                                              |
+    |                              |             | - **Name:** filtering                                                              |
+    |                              |             |                                                                                    |
+    +------------------------------+-------------+------------------------------------------------------------------------------------+
+    | .initial_access_resistance   | dataset     | Initial access resistance                                                          |
+    |                              |             |                                                                                    |
+    |                              |             | - **Quantity** 0 or 1                                                              |
+    |                              |             | - **Data Type:** text                                                              |
+    |                              |             | - **Name:** initial_access_resistance                                              |
+    |                              |             |                                                                                    |
+    +------------------------------+-------------+------------------------------------------------------------------------------------+
+    | .location                    | dataset     | Area, layer, comments on estimation, stereotaxis coordinates (if in vivo, etc)     |
+    |                              |             |                                                                                    |
+    |                              |             | - **Quantity** 0 or 1                                                              |
+    |                              |             | - **Data Type:** text                                                              |
+    |                              |             | - **Name:** location                                                               |
+    |                              |             |                                                                                    |
+    +------------------------------+-------------+------------------------------------------------------------------------------------+
+    | .resistance                  | dataset     | Electrode resistance                                                               |
+    |                              |             |                                                                                    |
+    |                              |             | **Comment:**  unit: Ohm                                                            |
+    |                              |             |                                                                                    |
+    |                              |             | - **Quantity** 0 or 1                                                              |
+    |                              |             | - **Data Type:** text                                                              |
+    |                              |             | - **Name:** resistance                                                             |
+    |                              |             |                                                                                    |
+    +------------------------------+-------------+------------------------------------------------------------------------------------+
+    | .seal                        | dataset     | Information about seal used for recording                                          |
+    |                              |             |                                                                                    |
+    |                              |             | - **Quantity** 0 or 1                                                              |
+    |                              |             | - **Data Type:** text                                                              |
+    |                              |             | - **Name:** seal                                                                   |
+    |                              |             |                                                                                    |
+    +------------------------------+-------------+------------------------------------------------------------------------------------+
+    | .slice                       | dataset     | Information about slice used for recording                                         |
+    |                              |             |                                                                                    |
+    |                              |             | - **Quantity** 0 or 1                                                              |
+    |                              |             | - **Data Type:** text                                                              |
+    |                              |             | - **Name:** slice                                                                  |
+    |                              |             |                                                                                    |
+    +------------------------------+-------------+------------------------------------------------------------------------------------+
 
 
 

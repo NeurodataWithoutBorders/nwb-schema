@@ -21,17 +21,22 @@ CurrentClampStimulusSeries
 .. table:: Datasets, Links, and Attributes contained in <CurrentClampStimulusSeries>
     :class: longtable
 
-    +--------------------------------+-------------+------------------------------------------------------------------------+
-    | Id                             | Type        | Description                                                            |
-    +================================+=============+========================================================================+
-    | <CurrentClampStimulusSeries>   | group       | Top level group for <CurrentClampStimulusSeries>                       |
-    +--------------------------------+-------------+------------------------------------------------------------------------+
-    | .help                          | attribute   | Value is 'Stimulus current applied during current clamp recording'     |
-    |                                |             |                                                                        |
-    |                                |             | - **Data Type:** text                                                  |
-    |                                |             | - **Value:** Stimulus current applied during current clamp recording   |
-    |                                |             |                                                                        |
-    +--------------------------------+-------------+------------------------------------------------------------------------+
+    +--------------------------------+-------------+--------------------------------------------------------------------------------------------+
+    | Id                             | Type        | Description                                                                                |
+    +================================+=============+============================================================================================+
+    | <CurrentClampStimulusSeries>   | group       | Top level group for <CurrentClampStimulusSeries>                                           |
+    |                                |             |                                                                                            |
+    |                                |             | - **Extends:** :ref:`PatchClampSeries <sec-PatchClampSeries>`                              |
+    |                                |             | - **Neurodata Type:** :ref:`CurrentClampStimulusSeries <sec-CurrentClampStimulusSeries>`   |
+    |                                |             |                                                                                            |
+    +--------------------------------+-------------+--------------------------------------------------------------------------------------------+
+    | .help                          | attribute   | Value is 'Stimulus current applied during current clamp recording'                         |
+    |                                |             |                                                                                            |
+    |                                |             | - **Data Type:** text                                                                      |
+    |                                |             | - **Value:** Stimulus current applied during current clamp recording                       |
+    |                                |             | - **Name:** help                                                                           |
+    |                                |             |                                                                                            |
+    +--------------------------------+-------------+--------------------------------------------------------------------------------------------+
 
 
 

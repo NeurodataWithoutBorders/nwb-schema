@@ -33,11 +33,17 @@ CompassDirection
     | Id                   | Type        | Description                                                                                                                                                                      |
     +======================+=============+==================================================================================================================================================================================+
     | <CompassDirection>   | group       | Top level group for <CompassDirection>                                                                                                                                           |
+    |                      |             |                                                                                                                                                                                  |
+    |                      |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                                                                                                                            |
+    |                      |             | - **Neurodata Type:** :ref:`CompassDirection <sec-CompassDirection>`                                                                                                             |
+    |                      |             | - **Default Name:** CompassDirection                                                                                                                                             |
+    |                      |             |                                                                                                                                                                                  |
     +----------------------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     | .help                | attribute   | Value is 'Direction as measured radially. Spatial series reference frame should indicate which direction corresponds to zero and what is the direction of positive rotation'     |
     |                      |             |                                                                                                                                                                                  |
     |                      |             | - **Data Type:** text                                                                                                                                                            |
     |                      |             | - **Value:** Direction as measured radially. Spatial series reference frame should indicate which direction corresponds to zero and what is the direction of positive rotation   |
+    |                      |             | - **Name:** help                                                                                                                                                                 |
     |                      |             |                                                                                                                                                                                  |
     +----------------------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
@@ -50,17 +56,22 @@ CompassDirection
 .. table:: Groups contained in <CompassDirection>
     :class: longtable
 
-    +-----------------------------------------------+---------+------------------------------------------------------------+
-    | Id                                            | Type    | Description                                                |
-    +===============================================+=========+============================================================+
-    | <CompassDirection>                            | group   | Top level group for <CompassDirection>                     |
-    +-----------------------------------------------+---------+------------------------------------------------------------+
-    | .<:ref:`SpatialSeries <sec-SpatialSeries>`>   | group   | SpatialSeries object containing direction of gaze travel   |
-    |                                               |         |                                                            |
-    |                                               |         | - **Quantity** 0 or more                                   |
-    |                                               |         | - **Extends:** :ref:`SpatialSeries <sec-SpatialSeries>`    |
-    |                                               |         |                                                            |
-    +-----------------------------------------------+---------+------------------------------------------------------------+
+    +-----------------------------------------------+---------+------------------------------------------------------------------------+
+    | Id                                            | Type    | Description                                                            |
+    +===============================================+=========+========================================================================+
+    | <CompassDirection>                            | group   | Top level group for <CompassDirection>                                 |
+    |                                               |         |                                                                        |
+    |                                               |         | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                  |
+    |                                               |         | - **Neurodata Type:** :ref:`CompassDirection <sec-CompassDirection>`   |
+    |                                               |         | - **Default Name:** CompassDirection                                   |
+    |                                               |         |                                                                        |
+    +-----------------------------------------------+---------+------------------------------------------------------------------------+
+    | .<:ref:`SpatialSeries <sec-SpatialSeries>`>   | group   | SpatialSeries object containing direction of gaze travel               |
+    |                                               |         |                                                                        |
+    |                                               |         | - **Quantity** 0 or more                                               |
+    |                                               |         | - **Extends:** :ref:`SpatialSeries <sec-SpatialSeries>`                |
+    |                                               |         |                                                                        |
+    +-----------------------------------------------+---------+------------------------------------------------------------------------+
 
 
 Groups: <SpatialSeries>

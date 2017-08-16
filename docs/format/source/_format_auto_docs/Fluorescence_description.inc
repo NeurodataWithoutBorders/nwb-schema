@@ -33,11 +33,17 @@ Fluorescence
     | Id               | Type        | Description                                                                                                          |
     +==================+=============+======================================================================================================================+
     | <Fluorescence>   | group       | Top level group for <Fluorescence>                                                                                   |
+    |                  |             |                                                                                                                      |
+    |                  |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                                                                |
+    |                  |             | - **Neurodata Type:** :ref:`Fluorescence <sec-Fluorescence>`                                                         |
+    |                  |             | - **Default Name:** Fluorescence                                                                                     |
+    |                  |             |                                                                                                                      |
     +------------------+-------------+----------------------------------------------------------------------------------------------------------------------+
     | .help            | attribute   | Value is 'Fluorescence over time of one or more ROIs. TimeSeries names should correspond to imaging plane names'     |
     |                  |             |                                                                                                                      |
     |                  |             | - **Data Type:** text                                                                                                |
     |                  |             | - **Value:** Fluorescence over time of one or more ROIs. TimeSeries names should correspond to imaging plane names   |
+    |                  |             | - **Name:** help                                                                                                     |
     |                  |             |                                                                                                                      |
     +------------------+-------------+----------------------------------------------------------------------------------------------------------------------+
 
@@ -54,6 +60,11 @@ Fluorescence
     | Id                                                    | Type    | Description                                                       |
     +=======================================================+=========+===================================================================+
     | <Fluorescence>                                        | group   | Top level group for <Fluorescence>                                |
+    |                                                       |         |                                                                   |
+    |                                                       |         | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`             |
+    |                                                       |         | - **Neurodata Type:** :ref:`Fluorescence <sec-Fluorescence>`      |
+    |                                                       |         | - **Default Name:** Fluorescence                                  |
+    |                                                       |         |                                                                   |
     +-------------------------------------------------------+---------+-------------------------------------------------------------------+
     | .<:ref:`RoiResponseSeries <sec-RoiResponseSeries>`>   | group   | RoiResponseSeries object containing fluorescence data for a ROI   |
     |                                                       |         |                                                                   |

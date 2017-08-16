@@ -33,11 +33,17 @@ BehavioralTimeSeries
     | Id                       | Type        | Description                                                                        |
     +==========================+=============+====================================================================================+
     | <BehavioralTimeSeries>   | group       | Top level group for <BehavioralTimeSeries>                                         |
+    |                          |             |                                                                                    |
+    |                          |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                              |
+    |                          |             | - **Neurodata Type:** :ref:`BehavioralTimeSeries <sec-BehavioralTimeSeries>`       |
+    |                          |             | - **Default Name:** BehavioralTimeSeries                                           |
+    |                          |             |                                                                                    |
     +--------------------------+-------------+------------------------------------------------------------------------------------+
     | .help                    | attribute   | Value is 'General container for storing continuously sampled behavioral data.'     |
     |                          |             |                                                                                    |
     |                          |             | - **Data Type:** text                                                              |
     |                          |             | - **Value:** General container for storing continuously sampled behavioral data.   |
+    |                          |             | - **Name:** help                                                                   |
     |                          |             |                                                                                    |
     +--------------------------+-------------+------------------------------------------------------------------------------------+
 
@@ -50,17 +56,22 @@ BehavioralTimeSeries
 .. table:: Groups contained in <BehavioralTimeSeries>
     :class: longtable
 
-    +-----------------------------------------+---------+-----------------------------------------------------------+
-    | Id                                      | Type    | Description                                               |
-    +=========================================+=========+===========================================================+
-    | <BehavioralTimeSeries>                  | group   | Top level group for <BehavioralTimeSeries>                |
-    +-----------------------------------------+---------+-----------------------------------------------------------+
-    | .<:ref:`TimeSeries <sec-TimeSeries>`>   | group   | TimeSeries object containing continuous behavioral data   |
-    |                                         |         |                                                           |
-    |                                         |         | - **Quantity** 0 or more                                  |
-    |                                         |         | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`         |
-    |                                         |         |                                                           |
-    +-----------------------------------------+---------+-----------------------------------------------------------+
+    +-----------------------------------------+---------+--------------------------------------------------------------------------------+
+    | Id                                      | Type    | Description                                                                    |
+    +=========================================+=========+================================================================================+
+    | <BehavioralTimeSeries>                  | group   | Top level group for <BehavioralTimeSeries>                                     |
+    |                                         |         |                                                                                |
+    |                                         |         | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                          |
+    |                                         |         | - **Neurodata Type:** :ref:`BehavioralTimeSeries <sec-BehavioralTimeSeries>`   |
+    |                                         |         | - **Default Name:** BehavioralTimeSeries                                       |
+    |                                         |         |                                                                                |
+    +-----------------------------------------+---------+--------------------------------------------------------------------------------+
+    | .<:ref:`TimeSeries <sec-TimeSeries>`>   | group   | TimeSeries object containing continuous behavioral data                        |
+    |                                         |         |                                                                                |
+    |                                         |         | - **Quantity** 0 or more                                                       |
+    |                                         |         | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`                              |
+    |                                         |         |                                                                                |
+    +-----------------------------------------+---------+--------------------------------------------------------------------------------+
 
 
 Groups: <TimeSeries>

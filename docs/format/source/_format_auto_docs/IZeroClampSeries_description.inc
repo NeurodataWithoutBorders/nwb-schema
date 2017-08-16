@@ -25,11 +25,16 @@ IZeroClampSeries
     | Id                   | Type        | Description                                                                                          |
     +======================+=============+======================================================================================================+
     | <IZeroClampSeries>   | group       | Top level group for <IZeroClampSeries>                                                               |
+    |                      |             |                                                                                                      |
+    |                      |             | - **Extends:** :ref:`CurrentClampSeries <sec-CurrentClampSeries>`                                    |
+    |                      |             | - **Neurodata Type:** :ref:`IZeroClampSeries <sec-IZeroClampSeries>`                                 |
+    |                      |             |                                                                                                      |
     +----------------------+-------------+------------------------------------------------------------------------------------------------------+
     | .help                | attribute   | Value is 'Voltage from intracellular recordings when all current and amplifier settings are off'     |
     |                      |             |                                                                                                      |
     |                      |             | - **Data Type:** text                                                                                |
     |                      |             | - **Value:** Voltage from intracellular recordings when all current and amplifier settings are off   |
+    |                      |             | - **Name:** help                                                                                     |
     |                      |             |                                                                                                      |
     +----------------------+-------------+------------------------------------------------------------------------------------------------------+
 

@@ -26,42 +26,51 @@ IntervalSeries
 .. table:: Datasets, Links, and Attributes contained in <IntervalSeries>
     :class: longtable
 
-    +--------------------+-------------+-----------------------------------------------------------+
-    | Id                 | Type        | Description                                               |
-    +====================+=============+===========================================================+
-    | <IntervalSeries>   | group       | Top level group for <IntervalSeries>                      |
-    +--------------------+-------------+-----------------------------------------------------------+
-    | .help              | attribute   | Value is 'Stores the start and stop times for events'     |
-    |                    |             |                                                           |
-    |                    |             | - **Data Type:** text                                     |
-    |                    |             | - **Value:** Stores the start and stop times for events   |
-    |                    |             |                                                           |
-    +--------------------+-------------+-----------------------------------------------------------+
-    | .data              | dataset     | >0 if interval started, <0 if interval ended.             |
-    |                    |             |                                                           |
-    |                    |             | - **Data Type:** int8                                     |
-    |                    |             | - **Dimensions:** ['num_times']                           |
-    |                    |             | - **Shape:** [None]                                       |
-    |                    |             |                                                           |
-    +--------------------+-------------+-----------------------------------------------------------+
-    | ..conversion       | attribute   | Value is 'float('NaN')'                                   |
-    |                    |             |                                                           |
-    |                    |             | - **Data Type:** None                                     |
-    |                    |             | - **Value:** NaN                                          |
-    |                    |             |                                                           |
-    +--------------------+-------------+-----------------------------------------------------------+
-    | ..resolution       | attribute   | Value is 'float('NaN')'                                   |
-    |                    |             |                                                           |
-    |                    |             | - **Data Type:** None                                     |
-    |                    |             | - **Value:** NaN                                          |
-    |                    |             |                                                           |
-    +--------------------+-------------+-----------------------------------------------------------+
-    | ..unit             | attribute   | Value is 'n/a'                                            |
-    |                    |             |                                                           |
-    |                    |             | - **Data Type:** None                                     |
-    |                    |             | - **Value:** n/a                                          |
-    |                    |             |                                                           |
-    +--------------------+-------------+-----------------------------------------------------------+
+    +--------------------+-------------+--------------------------------------------------------------------+
+    | Id                 | Type        | Description                                                        |
+    +====================+=============+====================================================================+
+    | <IntervalSeries>   | group       | Top level group for <IntervalSeries>                               |
+    |                    |             |                                                                    |
+    |                    |             | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`                  |
+    |                    |             | - **Neurodata Type:** :ref:`IntervalSeries <sec-IntervalSeries>`   |
+    |                    |             |                                                                    |
+    +--------------------+-------------+--------------------------------------------------------------------+
+    | .help              | attribute   | Value is 'Stores the start and stop times for events'              |
+    |                    |             |                                                                    |
+    |                    |             | - **Data Type:** text                                              |
+    |                    |             | - **Value:** Stores the start and stop times for events            |
+    |                    |             | - **Name:** help                                                   |
+    |                    |             |                                                                    |
+    +--------------------+-------------+--------------------------------------------------------------------+
+    | .data              | dataset     | >0 if interval started, <0 if interval ended.                      |
+    |                    |             |                                                                    |
+    |                    |             | - **Data Type:** int8                                              |
+    |                    |             | - **Dimensions:** ['num_times']                                    |
+    |                    |             | - **Shape:** [None]                                                |
+    |                    |             | - **Name:** data                                                   |
+    |                    |             |                                                                    |
+    +--------------------+-------------+--------------------------------------------------------------------+
+    | ..conversion       | attribute   | Value is 'float('NaN')'                                            |
+    |                    |             |                                                                    |
+    |                    |             | - **Data Type:** None                                              |
+    |                    |             | - **Value:** NaN                                                   |
+    |                    |             | - **Name:** conversion                                             |
+    |                    |             |                                                                    |
+    +--------------------+-------------+--------------------------------------------------------------------+
+    | ..resolution       | attribute   | Value is 'float('NaN')'                                            |
+    |                    |             |                                                                    |
+    |                    |             | - **Data Type:** None                                              |
+    |                    |             | - **Value:** NaN                                                   |
+    |                    |             | - **Name:** resolution                                             |
+    |                    |             |                                                                    |
+    +--------------------+-------------+--------------------------------------------------------------------+
+    | ..unit             | attribute   | Value is 'n/a'                                                     |
+    |                    |             |                                                                    |
+    |                    |             | - **Data Type:** None                                              |
+    |                    |             | - **Value:** n/a                                                   |
+    |                    |             | - **Name:** unit                                                   |
+    |                    |             |                                                                    |
+    +--------------------+-------------+--------------------------------------------------------------------+
 
 
 

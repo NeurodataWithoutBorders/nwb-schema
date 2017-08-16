@@ -29,29 +29,37 @@ SpikeUnit
 .. table:: Datasets, Links, and Attributes contained in <SpikeUnit>
     :class: longtable
 
-    +---------------------+-------------+-------------------------------------------------------+
-    | Id                  | Type        | Description                                           |
-    +=====================+=============+=======================================================+
-    | <SpikeUnit>         | group       | Top level group for <SpikeUnit>                       |
-    +---------------------+-------------+-------------------------------------------------------+
-    | .help               | attribute   | Store times for a particulare UnitTime                |
-    |                     |             |                                                       |
-    |                     |             | - **Data Type:** text                                 |
-    |                     |             | - **Value:** Times for a particular UnitTime object   |
-    |                     |             |                                                       |
-    +---------------------+-------------+-------------------------------------------------------+
-    | .times              | dataset     | Spike time for the units (exact or estimated)         |
-    |                     |             |                                                       |
-    |                     |             | - **Data Type:** float64!                             |
-    |                     |             | - **Dimensions:** ['num_events']                      |
-    |                     |             | - **Shape:** [None]                                   |
-    |                     |             |                                                       |
-    +---------------------+-------------+-------------------------------------------------------+
-    | .unit_description   | dataset     | Description of the unit (eg, cell type).              |
-    |                     |             |                                                       |
-    |                     |             | - **Data Type:** text                                 |
-    |                     |             |                                                       |
-    +---------------------+-------------+-------------------------------------------------------+
+    +---------------------+-------------+----------------------------------------------------------+
+    | Id                  | Type        | Description                                              |
+    +=====================+=============+==========================================================+
+    | <SpikeUnit>         | group       | Top level group for <SpikeUnit>                          |
+    |                     |             |                                                          |
+    |                     |             | - **Quantity** 1 or more                                 |
+    |                     |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`    |
+    |                     |             | - **Neurodata Type:** :ref:`SpikeUnit <sec-SpikeUnit>`   |
+    |                     |             |                                                          |
+    +---------------------+-------------+----------------------------------------------------------+
+    | .help               | attribute   | Store times for a particulare UnitTime                   |
+    |                     |             |                                                          |
+    |                     |             | - **Data Type:** text                                    |
+    |                     |             | - **Value:** Times for a particular UnitTime object      |
+    |                     |             | - **Name:** help                                         |
+    |                     |             |                                                          |
+    +---------------------+-------------+----------------------------------------------------------+
+    | .times              | dataset     | Spike time for the units (exact or estimated)            |
+    |                     |             |                                                          |
+    |                     |             | - **Data Type:** float64!                                |
+    |                     |             | - **Dimensions:** ['num_events']                         |
+    |                     |             | - **Shape:** [None]                                      |
+    |                     |             | - **Name:** times                                        |
+    |                     |             |                                                          |
+    +---------------------+-------------+----------------------------------------------------------+
+    | .unit_description   | dataset     | Description of the unit (eg, cell type).                 |
+    |                     |             |                                                          |
+    |                     |             | - **Data Type:** text                                    |
+    |                     |             | - **Name:** unit_description                             |
+    |                     |             |                                                          |
+    +---------------------+-------------+----------------------------------------------------------+
 
 
 

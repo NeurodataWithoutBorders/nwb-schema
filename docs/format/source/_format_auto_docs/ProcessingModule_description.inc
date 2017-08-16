@@ -30,16 +30,22 @@ ProcessingModule
     | Id                   | Type        | Description                                                             |
     +======================+=============+=========================================================================+
     | <ProcessingModule>   | group       | Top level group for <ProcessingModule>                                  |
+    |                      |             |                                                                         |
+    |                      |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                   |
+    |                      |             | - **Neurodata Type:** :ref:`ProcessingModule <sec-ProcessingModule>`    |
+    |                      |             |                                                                         |
     +----------------------+-------------+-------------------------------------------------------------------------+
     | .description         | attribute   | Description of Module                                                   |
     |                      |             |                                                                         |
     |                      |             | - **Data Type:** text                                                   |
+    |                      |             | - **Name:** description                                                 |
     |                      |             |                                                                         |
     +----------------------+-------------+-------------------------------------------------------------------------+
     | .help                | attribute   | Value is 'A collection of analysis outputs from processing of data'     |
     |                      |             |                                                                         |
     |                      |             | - **Data Type:** text                                                   |
     |                      |             | - **Value:** A collection of analysis outputs from processing of data   |
+    |                      |             | - **Name:** help                                                        |
     |                      |             |                                                                         |
     +----------------------+-------------+-------------------------------------------------------------------------+
 
@@ -52,17 +58,21 @@ ProcessingModule
 .. table:: Groups contained in <ProcessingModule>
     :class: longtable
 
-    +---------------------------------------------+---------+------------------------------------------------------------------+
-    | Id                                          | Type    | Description                                                      |
-    +=============================================+=========+==================================================================+
-    | <ProcessingModule>                          | group   | Top level group for <ProcessingModule>                           |
-    +---------------------------------------------+---------+------------------------------------------------------------------+
-    | .<:ref:`NWBContainer <sec-NWBContainer>`>   | group   | Interface objects containing data output from processing steps   |
-    |                                             |         |                                                                  |
-    |                                             |         | - **Quantity** 0 or more                                         |
-    |                                             |         | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`            |
-    |                                             |         |                                                                  |
-    +---------------------------------------------+---------+------------------------------------------------------------------+
+    +---------------------------------------------+---------+------------------------------------------------------------------------+
+    | Id                                          | Type    | Description                                                            |
+    +=============================================+=========+========================================================================+
+    | <ProcessingModule>                          | group   | Top level group for <ProcessingModule>                                 |
+    |                                             |         |                                                                        |
+    |                                             |         | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                  |
+    |                                             |         | - **Neurodata Type:** :ref:`ProcessingModule <sec-ProcessingModule>`   |
+    |                                             |         |                                                                        |
+    +---------------------------------------------+---------+------------------------------------------------------------------------+
+    | .<:ref:`NWBContainer <sec-NWBContainer>`>   | group   | Interface objects containing data output from processing steps         |
+    |                                             |         |                                                                        |
+    |                                             |         | - **Quantity** 0 or more                                               |
+    |                                             |         | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                  |
+    |                                             |         |                                                                        |
+    +---------------------------------------------+---------+------------------------------------------------------------------------+
 
 
 Groups: <NWBContainer>

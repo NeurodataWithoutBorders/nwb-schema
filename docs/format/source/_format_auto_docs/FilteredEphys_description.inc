@@ -33,11 +33,17 @@ FilteredEphys
     | Id                | Type        | Description                                                                                                                                                                                                        |
     +===================+=============+====================================================================================================================================================================================================================+
     | <FilteredEphys>   | group       | Top level group for <FilteredEphys>                                                                                                                                                                                |
+    |                   |             |                                                                                                                                                                                                                    |
+    |                   |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                                                                                                                                                              |
+    |                   |             | - **Neurodata Type:** :ref:`FilteredEphys <sec-FilteredEphys>`                                                                                                                                                     |
+    |                   |             | - **Default Name:** FilteredEphys                                                                                                                                                                                  |
+    |                   |             |                                                                                                                                                                                                                    |
     +-------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     | .help             | attribute   | Value is 'Ephys data from one or more channels that is subjected to filtering, such as for gamma or theta oscillations (LFP has its own interface). Filter properties should be noted in the ElectricalSeries'     |
     |                   |             |                                                                                                                                                                                                                    |
     |                   |             | - **Data Type:** text                                                                                                                                                                                              |
     |                   |             | - **Value:** Ephys data from one or more channels that is subjected to filtering, such as for gamma or theta oscillations (LFP has its own interface). Filter properties should be noted in the ElectricalSeries   |
+    |                   |             | - **Name:** help                                                                                                                                                                                                   |
     |                   |             |                                                                                                                                                                                                                    |
     +-------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
@@ -54,6 +60,11 @@ FilteredEphys
     | Id                                                  | Type    | Description                                                          |
     +=====================================================+=========+======================================================================+
     | <FilteredEphys>                                     | group   | Top level group for <FilteredEphys>                                  |
+    |                                                     |         |                                                                      |
+    |                                                     |         | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                |
+    |                                                     |         | - **Neurodata Type:** :ref:`FilteredEphys <sec-FilteredEphys>`       |
+    |                                                     |         | - **Default Name:** FilteredEphys                                    |
+    |                                                     |         |                                                                      |
     +-----------------------------------------------------+---------+----------------------------------------------------------------------+
     | .<:ref:`ElectricalSeries <sec-ElectricalSeries>`>   | group   | ElectricalSeries object containing filtered electrophysiology data   |
     |                                                     |         |                                                                      |

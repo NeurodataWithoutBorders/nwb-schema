@@ -26,15 +26,20 @@ NWBContainer
     | Id               | Type        | Description                                                     |
     +==================+=============+=================================================================+
     | <NWBContainer>   | group       | Top level group for <NWBContainer>                              |
+    |                  |             |                                                                 |
+    |                  |             | - **Neurodata Type:** :ref:`NWBContainer <sec-NWBContainer>`    |
+    |                  |             |                                                                 |
     +------------------+-------------+-----------------------------------------------------------------+
     | .help            | attribute   | Short description of what this type of Interface contains.      |
     |                  |             |                                                                 |
     |                  |             | - **Data Type:** text                                           |
+    |                  |             | - **Name:** help                                                |
     |                  |             |                                                                 |
     +------------------+-------------+-----------------------------------------------------------------+
     | .source          | attribute   | Path to the origin of the data represented in this interface.   |
     |                  |             |                                                                 |
     |                  |             | - **Data Type:** text                                           |
+    |                  |             | - **Name:** source                                              |
     |                  |             |                                                                 |
     +------------------+-------------+-----------------------------------------------------------------+
 

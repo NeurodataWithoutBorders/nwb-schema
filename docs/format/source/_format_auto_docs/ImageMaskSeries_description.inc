@@ -30,16 +30,22 @@ ImageMaskSeries
     | Id                    | Type        | Description                                                                 |
     +=======================+=============+=============================================================================+
     | <ImageMaskSeries>     | group       | Top level group for <ImageMaskSeries>                                       |
+    |                       |             |                                                                             |
+    |                       |             | - **Extends:** :ref:`ImageSeries <sec-ImageSeries>`                         |
+    |                       |             | - **Neurodata Type:** :ref:`ImageMaskSeries <sec-ImageMaskSeries>`          |
+    |                       |             |                                                                             |
     +-----------------------+-------------+-----------------------------------------------------------------------------+
     | .help                 | attribute   | Value is 'An alpha mask that is applied to a presented visual stimulus'     |
     |                       |             |                                                                             |
     |                       |             | - **Data Type:** text                                                       |
     |                       |             | - **Value:** An alpha mask that is applied to a presented visual stimulus   |
+    |                       |             | - **Name:** help                                                            |
     |                       |             |                                                                             |
     +-----------------------+-------------+-----------------------------------------------------------------------------+
     | .masked_imageseries   | link        | Link to ImageSeries that mask is applied to.                                |
     |                       |             |                                                                             |
     |                       |             | - **Target Type** :ref:`ImageSeries <sec-ImageSeries>`                      |
+    |                       |             | - **Name:** masked_imageseries                                              |
     |                       |             |                                                                             |
     +-----------------------+-------------+-----------------------------------------------------------------------------+
 
@@ -52,15 +58,20 @@ ImageMaskSeries
 .. table:: Groups contained in <ImageMaskSeries>
     :class: longtable
 
-    +-----------------------+---------+----------------------------------------------------------+
-    | Id                    | Type    | Description                                              |
-    +=======================+=========+==========================================================+
-    | <ImageMaskSeries>     | group   | Top level group for <ImageMaskSeries>                    |
-    +-----------------------+---------+----------------------------------------------------------+
-    | .masked_imageseries   | link    | Link to ImageSeries that mask is applied to.             |
-    |                       |         |                                                          |
-    |                       |         | - **Target Type** :ref:`ImageSeries <sec-ImageSeries>`   |
-    |                       |         |                                                          |
-    +-----------------------+---------+----------------------------------------------------------+
+    +-----------------------+---------+----------------------------------------------------------------------+
+    | Id                    | Type    | Description                                                          |
+    +=======================+=========+======================================================================+
+    | <ImageMaskSeries>     | group   | Top level group for <ImageMaskSeries>                                |
+    |                       |         |                                                                      |
+    |                       |         | - **Extends:** :ref:`ImageSeries <sec-ImageSeries>`                  |
+    |                       |         | - **Neurodata Type:** :ref:`ImageMaskSeries <sec-ImageMaskSeries>`   |
+    |                       |         |                                                                      |
+    +-----------------------+---------+----------------------------------------------------------------------+
+    | .masked_imageseries   | link    | Link to ImageSeries that mask is applied to.                         |
+    |                       |         |                                                                      |
+    |                       |         | - **Target Type** :ref:`ImageSeries <sec-ImageSeries>`               |
+    |                       |         | - **Name:** masked_imageseries                                       |
+    |                       |         |                                                                      |
+    +-----------------------+---------+----------------------------------------------------------------------+
 
 

@@ -29,17 +29,23 @@ BehavioralEpochs
 .. table:: Datasets, Links, and Attributes contained in <BehavioralEpochs>
     :class: longtable
 
-    +----------------------+-------------+----------------------------------------------------------------+
-    | Id                   | Type        | Description                                                    |
-    +======================+=============+================================================================+
-    | <BehavioralEpochs>   | group       | Top level group for <BehavioralEpochs>                         |
-    +----------------------+-------------+----------------------------------------------------------------+
-    | .help                | attribute   | Value is 'General container for storing behavorial epochs'     |
-    |                      |             |                                                                |
-    |                      |             | - **Data Type:** text                                          |
-    |                      |             | - **Value:** General container for storing behavorial epochs   |
-    |                      |             |                                                                |
-    +----------------------+-------------+----------------------------------------------------------------+
+    +----------------------+-------------+------------------------------------------------------------------------+
+    | Id                   | Type        | Description                                                            |
+    +======================+=============+========================================================================+
+    | <BehavioralEpochs>   | group       | Top level group for <BehavioralEpochs>                                 |
+    |                      |             |                                                                        |
+    |                      |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                  |
+    |                      |             | - **Neurodata Type:** :ref:`BehavioralEpochs <sec-BehavioralEpochs>`   |
+    |                      |             | - **Default Name:** BehavioralEpochs                                   |
+    |                      |             |                                                                        |
+    +----------------------+-------------+------------------------------------------------------------------------+
+    | .help                | attribute   | Value is 'General container for storing behavorial epochs'             |
+    |                      |             |                                                                        |
+    |                      |             | - **Data Type:** text                                                  |
+    |                      |             | - **Value:** General container for storing behavorial epochs           |
+    |                      |             | - **Name:** help                                                       |
+    |                      |             |                                                                        |
+    +----------------------+-------------+------------------------------------------------------------------------+
 
 
 
@@ -50,17 +56,22 @@ BehavioralEpochs
 .. table:: Groups contained in <BehavioralEpochs>
     :class: longtable
 
-    +-------------------------------------------------+---------+-------------------------------------------------------------------+
-    | Id                                              | Type    | Description                                                       |
-    +=================================================+=========+===================================================================+
-    | <BehavioralEpochs>                              | group   | Top level group for <BehavioralEpochs>                            |
-    +-------------------------------------------------+---------+-------------------------------------------------------------------+
-    | .<:ref:`IntervalSeries <sec-IntervalSeries>`>   | group   | IntervalSeries object containing start and stop times of epochs   |
-    |                                                 |         |                                                                   |
-    |                                                 |         | - **Quantity** 0 or more                                          |
-    |                                                 |         | - **Extends:** :ref:`IntervalSeries <sec-IntervalSeries>`         |
-    |                                                 |         |                                                                   |
-    +-------------------------------------------------+---------+-------------------------------------------------------------------+
+    +-------------------------------------------------+---------+------------------------------------------------------------------------+
+    | Id                                              | Type    | Description                                                            |
+    +=================================================+=========+========================================================================+
+    | <BehavioralEpochs>                              | group   | Top level group for <BehavioralEpochs>                                 |
+    |                                                 |         |                                                                        |
+    |                                                 |         | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                  |
+    |                                                 |         | - **Neurodata Type:** :ref:`BehavioralEpochs <sec-BehavioralEpochs>`   |
+    |                                                 |         | - **Default Name:** BehavioralEpochs                                   |
+    |                                                 |         |                                                                        |
+    +-------------------------------------------------+---------+------------------------------------------------------------------------+
+    | .<:ref:`IntervalSeries <sec-IntervalSeries>`>   | group   | IntervalSeries object containing start and stop times of epochs        |
+    |                                                 |         |                                                                        |
+    |                                                 |         | - **Quantity** 0 or more                                               |
+    |                                                 |         | - **Extends:** :ref:`IntervalSeries <sec-IntervalSeries>`              |
+    |                                                 |         |                                                                        |
+    +-------------------------------------------------+---------+------------------------------------------------------------------------+
 
 
 Groups: <IntervalSeries>

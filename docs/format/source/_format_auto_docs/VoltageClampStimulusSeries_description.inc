@@ -21,17 +21,22 @@ VoltageClampStimulusSeries
 .. table:: Datasets, Links, and Attributes contained in <VoltageClampStimulusSeries>
     :class: longtable
 
-    +--------------------------------+-------------+------------------------------------------------------------------------+
-    | Id                             | Type        | Description                                                            |
-    +================================+=============+========================================================================+
-    | <VoltageClampStimulusSeries>   | group       | Top level group for <VoltageClampStimulusSeries>                       |
-    +--------------------------------+-------------+------------------------------------------------------------------------+
-    | .help                          | attribute   | Value is 'Stimulus voltage applied during voltage clamp recording'     |
-    |                                |             |                                                                        |
-    |                                |             | - **Data Type:** text                                                  |
-    |                                |             | - **Value:** Stimulus voltage applied during voltage clamp recording   |
-    |                                |             |                                                                        |
-    +--------------------------------+-------------+------------------------------------------------------------------------+
+    +--------------------------------+-------------+--------------------------------------------------------------------------------------------+
+    | Id                             | Type        | Description                                                                                |
+    +================================+=============+============================================================================================+
+    | <VoltageClampStimulusSeries>   | group       | Top level group for <VoltageClampStimulusSeries>                                           |
+    |                                |             |                                                                                            |
+    |                                |             | - **Extends:** :ref:`PatchClampSeries <sec-PatchClampSeries>`                              |
+    |                                |             | - **Neurodata Type:** :ref:`VoltageClampStimulusSeries <sec-VoltageClampStimulusSeries>`   |
+    |                                |             |                                                                                            |
+    +--------------------------------+-------------+--------------------------------------------------------------------------------------------+
+    | .help                          | attribute   | Value is 'Stimulus voltage applied during voltage clamp recording'                         |
+    |                                |             |                                                                                            |
+    |                                |             | - **Data Type:** text                                                                      |
+    |                                |             | - **Value:** Stimulus voltage applied during voltage clamp recording                       |
+    |                                |             | - **Name:** help                                                                           |
+    |                                |             |                                                                                            |
+    +--------------------------------+-------------+--------------------------------------------------------------------------------------------+
 
 
 

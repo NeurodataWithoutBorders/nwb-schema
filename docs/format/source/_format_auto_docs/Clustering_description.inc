@@ -33,16 +33,23 @@ Clustering
     | Id               | Type        | Description                                                                                                                    |
     +==================+=============+================================================================================================================================+
     | <Clustering>     | group       | Top level group for <Clustering>                                                                                               |
+    |                  |             |                                                                                                                                |
+    |                  |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                                                                          |
+    |                  |             | - **Neurodata Type:** :ref:`Clustering <sec-Clustering>`                                                                       |
+    |                  |             | - **Default Name:** Clustering                                                                                                 |
+    |                  |             |                                                                                                                                |
     +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------+
     | .help            | attribute   | Value is 'Clustered spike data, whether from automatic clustering tools (eg, klustakwik) or as a result of manual sorting'     |
     |                  |             |                                                                                                                                |
     |                  |             | - **Data Type:** text                                                                                                          |
     |                  |             | - **Value:** Clustered spike data, whether from automatic clustering tools (eg, klustakwik) or as a result of manual sorting   |
+    |                  |             | - **Name:** help                                                                                                               |
     |                  |             |                                                                                                                                |
     +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------+
     | .description     | dataset     | Description of clusters or clustering, (e.g. cluster 0 is noise, clusters curated using Klusters, etc)                         |
     |                  |             |                                                                                                                                |
     |                  |             | - **Data Type:** text                                                                                                          |
+    |                  |             | - **Name:** description                                                                                                        |
     |                  |             |                                                                                                                                |
     +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------+
     | .num             | dataset     | Cluster number of each event                                                                                                   |
@@ -50,6 +57,7 @@ Clustering
     |                  |             | - **Data Type:** int32                                                                                                         |
     |                  |             | - **Dimensions:** ['num_events']                                                                                               |
     |                  |             | - **Shape:** [None]                                                                                                            |
+    |                  |             | - **Name:** num                                                                                                                |
     |                  |             |                                                                                                                                |
     +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------+
     | .peak_over_rms   | dataset     | Maximum ratio of waveform peak to RMS on any channel in the cluster (provides a basic clustering metric).                      |
@@ -57,6 +65,7 @@ Clustering
     |                  |             | - **Data Type:** float32                                                                                                       |
     |                  |             | - **Dimensions:** ['num_clusters']                                                                                             |
     |                  |             | - **Shape:** [None]                                                                                                            |
+    |                  |             | - **Name:** peak_over_rms                                                                                                      |
     |                  |             |                                                                                                                                |
     +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------+
     | .times           | dataset     | Times of clustered events, in seconds. This may be a link to times field in associated FeatureExtraction module.               |
@@ -64,6 +73,7 @@ Clustering
     |                  |             | - **Data Type:** float64!                                                                                                      |
     |                  |             | - **Dimensions:** ['num_events']                                                                                               |
     |                  |             | - **Shape:** [None]                                                                                                            |
+    |                  |             | - **Name:** times                                                                                                              |
     |                  |             |                                                                                                                                |
     +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------+
 
