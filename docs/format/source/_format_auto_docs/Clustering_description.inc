@@ -14,6 +14,9 @@ Clustering
 
 
 
+- **Default Name:** Clustering
+
+
 .. figure:: ./_format_auto_docs/Clustering.*
     :alt: Clustering
 
@@ -29,7 +32,7 @@ Clustering
     +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------+
     | Id               | Type        | Description                                                                                                                    |
     +==================+=============+================================================================================================================================+
-    | Clustering       | group       | Top level group for Clustering                                                                                                 |
+    | <Clustering>     | group       | Top level group for <Clustering>                                                                                               |
     +------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------+
     | .help            | attribute   | Value is 'Clustered spike data, whether from automatic clustering tools (eg, klustakwik) or as a result of manual sorting'     |
     |                  |             |                                                                                                                                |

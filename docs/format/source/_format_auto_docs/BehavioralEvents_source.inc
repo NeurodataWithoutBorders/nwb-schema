@@ -17,13 +17,13 @@ BehavioralEvents
       dtype: text
       name: help
       value: Position data, whether along the x, xy or xyz axis
+    default_name: BehavioralEvents
     doc: TimeSeries for storing behavioral events. See description of <a href="#BehavioralEpochs">BehavioralEpochs</a>
       for more details.
     groups:
     - doc: TimeSeries object containing irregular behavioral events
       neurodata_type_inc: TimeSeries
       quantity: '*'
-    name: BehavioralEvents
     neurodata_type_def: BehavioralEvents
     neurodata_type_inc: NWBContainer
 

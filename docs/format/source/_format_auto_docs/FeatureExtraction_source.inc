@@ -43,13 +43,13 @@ FeatureExtraction
       name: times
       shape:
       - null
+    default_name: FeatureExtraction
     doc: Features, such as PC1 and PC2, that are extracted from signals stored in a SpikeEvent
       TimeSeries or other source.
     links:
     - doc: link to ElectrodeGroup group that generated this TimeSeries data
       name: electrode_group
       target_type: ElectrodeGroup
-    name: FeatureExtraction
     neurodata_type_def: FeatureExtraction
     neurodata_type_inc: NWBContainer
 

@@ -4,7 +4,6 @@ Generate figures and RST documents from the NWB YAML specification for the forma
 
 # TODO In the type hierarchy section add a section to order types by based on which YAML file they appear in
 # TODO In the sections describing the different types add the name of the source YAML file
-# TODO Add support for default_name once it is supported in the specification language
 
 
 #from pynwb.spec import SpecCatalog

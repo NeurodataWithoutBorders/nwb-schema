@@ -17,12 +17,12 @@ EyeTracking
       dtype: text
       name: help
       value: Eye-tracking data, representing direction of gaze
+    default_name: EyeTracking
     doc: Eye-tracking data, representing direction of gaze.
     groups:
     - doc: SpatialSeries object containing data measuring direction of gaze
       neurodata_type_inc: SpatialSeries
       quantity: '*'
-    name: EyeTracking
     neurodata_type_def: EyeTracking
     neurodata_type_inc: NWBContainer
 

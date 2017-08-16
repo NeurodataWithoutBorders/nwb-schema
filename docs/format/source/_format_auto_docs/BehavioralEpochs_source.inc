@@ -17,6 +17,7 @@ BehavioralEpochs
       dtype: text
       name: help
       value: General container for storing behavorial epochs
+    default_name: BehavioralEpochs
     doc: TimeSeries for storing behavoioral epochs.  The objective of this and the other
       two Behavioral interfaces (e.g. BehavioralEvents and BehavioralTimeSeries) is to
       provide generic hooks for software tools/scripts. This allows a tool/script to take
@@ -33,7 +34,6 @@ BehavioralEpochs
     - doc: IntervalSeries object containing start and stop times of epochs
       neurodata_type_inc: IntervalSeries
       quantity: '*'
-    name: BehavioralEpochs
     neurodata_type_def: BehavioralEpochs
     neurodata_type_inc: NWBContainer
 

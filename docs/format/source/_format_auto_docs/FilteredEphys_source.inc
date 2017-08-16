@@ -21,6 +21,7 @@ FilteredEphys
       value: Ephys data from one or more channels that is subjected to filtering, such
         as for gamma or theta oscillations (LFP has its own interface). Filter properties
         should be noted in the ElectricalSeries
+    default_name: FilteredEphys
     doc: Ephys data from one or more channels that has been subjected to filtering. Examples
       of filtered data include Theta and Gamma (LFP has its own interface). FilteredEphys
       modules publish an ElectricalSeries for each filtered channel or set of channels.
@@ -34,7 +35,6 @@ FilteredEphys
     - doc: ElectricalSeries object containing filtered electrophysiology data
       neurodata_type_inc: ElectricalSeries
       quantity: +
-    name: FilteredEphys
     neurodata_type_def: FilteredEphys
     neurodata_type_inc: NWBContainer
 

@@ -236,13 +236,13 @@ ImagingRetinotopy
       shape:
       - null
       - null
+    default_name: ImagingRetinotopy
     doc: 'Intrinsic signal optical imaging or widefield imaging for measuring retinotopy.
       Stores orthogonal maps (e.g., altitude/azimuth; radius/theta) of responses to specific
       stimuli and a combined polarity map from which to identify visual areas.<br />Note:
       for data consistency, all images and arrays are stored in the format [row][column]
       and [row, col], which equates to [y][x]. Field of view and dimension arrays may
       appear backward (i.e., y before x).'
-    name: ImagingRetinotopy
     neurodata_type_def: ImagingRetinotopy
     neurodata_type_inc: NWBContainer
 

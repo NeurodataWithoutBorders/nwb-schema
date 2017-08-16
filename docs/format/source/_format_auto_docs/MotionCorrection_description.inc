@@ -14,6 +14,9 @@ MotionCorrection
 
 
 
+- **Default Name:** MotionCorrection
+
+
 .. figure:: ./_format_auto_docs/MotionCorrection.*
     :alt: MotionCorrection
 
@@ -26,17 +29,17 @@ MotionCorrection
 .. table:: Datasets, Links, and Attributes contained in <MotionCorrection>
     :class: longtable
 
-    +--------------------+-------------+-----------------------------------------------------------------------------------------------+
-    | Id                 | Type        | Description                                                                                   |
-    +====================+=============+===============================================================================================+
-    | MotionCorrection   | group       | Top level group for MotionCorrection                                                          |
-    +--------------------+-------------+-----------------------------------------------------------------------------------------------+
-    | .help              | attribute   | Value is 'Image stacks whose frames have been shifted (registered) to account for motion'     |
-    |                    |             |                                                                                               |
-    |                    |             | - **Data Type:** text                                                                         |
-    |                    |             | - **Value:** Image stacks whose frames have been shifted (registered) to account for motion   |
-    |                    |             |                                                                                               |
-    +--------------------+-------------+-----------------------------------------------------------------------------------------------+
+    +----------------------+-------------+-----------------------------------------------------------------------------------------------+
+    | Id                   | Type        | Description                                                                                   |
+    +======================+=============+===============================================================================================+
+    | <MotionCorrection>   | group       | Top level group for <MotionCorrection>                                                        |
+    +----------------------+-------------+-----------------------------------------------------------------------------------------------+
+    | .help                | attribute   | Value is 'Image stacks whose frames have been shifted (registered) to account for motion'     |
+    |                      |             |                                                                                               |
+    |                      |             | - **Data Type:** text                                                                         |
+    |                      |             | - **Value:** Image stacks whose frames have been shifted (registered) to account for motion   |
+    |                      |             |                                                                                               |
+    +----------------------+-------------+-----------------------------------------------------------------------------------------------+
 
 
 
@@ -50,7 +53,7 @@ MotionCorrection
     +--------------------------+---------+------------------------------------------------------------------------------+
     | Id                       | Type    | Description                                                                  |
     +==========================+=========+==============================================================================+
-    | MotionCorrection         | group   | Top level group for MotionCorrection                                         |
+    | <MotionCorrection>       | group   | Top level group for <MotionCorrection>                                       |
     +--------------------------+---------+------------------------------------------------------------------------------+
     | .<CorrectedImageStack>   | group   | One of possibly many.  Name should be informative.                           |
     |                          |         |                                                                              |

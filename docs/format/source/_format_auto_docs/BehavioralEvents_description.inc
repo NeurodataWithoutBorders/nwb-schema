@@ -14,6 +14,9 @@ BehavioralEvents
 
 
 
+- **Default Name:** BehavioralEvents
+
+
 .. figure:: ./_format_auto_docs/BehavioralEvents.*
     :alt: BehavioralEvents
 
@@ -26,17 +29,17 @@ BehavioralEvents
 .. table:: Datasets, Links, and Attributes contained in <BehavioralEvents>
     :class: longtable
 
-    +--------------------+-------------+-------------------------------------------------------------------+
-    | Id                 | Type        | Description                                                       |
-    +====================+=============+===================================================================+
-    | BehavioralEvents   | group       | Top level group for BehavioralEvents                              |
-    +--------------------+-------------+-------------------------------------------------------------------+
-    | .help              | attribute   | Value is 'Position data, whether along the x, xy or xyz axis'     |
-    |                    |             |                                                                   |
-    |                    |             | - **Data Type:** text                                             |
-    |                    |             | - **Value:** Position data, whether along the x, xy or xyz axis   |
-    |                    |             |                                                                   |
-    +--------------------+-------------+-------------------------------------------------------------------+
+    +----------------------+-------------+-------------------------------------------------------------------+
+    | Id                   | Type        | Description                                                       |
+    +======================+=============+===================================================================+
+    | <BehavioralEvents>   | group       | Top level group for <BehavioralEvents>                            |
+    +----------------------+-------------+-------------------------------------------------------------------+
+    | .help                | attribute   | Value is 'Position data, whether along the x, xy or xyz axis'     |
+    |                      |             |                                                                   |
+    |                      |             | - **Data Type:** text                                             |
+    |                      |             | - **Value:** Position data, whether along the x, xy or xyz axis   |
+    |                      |             |                                                                   |
+    +----------------------+-------------+-------------------------------------------------------------------+
 
 
 
@@ -50,7 +53,7 @@ BehavioralEvents
     +-----------------------------------------+---------+------------------------------------------------------------+
     | Id                                      | Type    | Description                                                |
     +=========================================+=========+============================================================+
-    | BehavioralEvents                        | group   | Top level group for BehavioralEvents                       |
+    | <BehavioralEvents>                      | group   | Top level group for <BehavioralEvents>                     |
     +-----------------------------------------+---------+------------------------------------------------------------+
     | .<:ref:`TimeSeries <sec-TimeSeries>`>   | group   | TimeSeries object containing irregular behavioral events   |
     |                                         |         |                                                            |

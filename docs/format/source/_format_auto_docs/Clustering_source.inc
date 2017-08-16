@@ -47,9 +47,9 @@ Clustering
       name: times
       shape:
       - null
+    default_name: Clustering
     doc: Clustered spike data, whether from automatic clustering tools (e.g., klustakwik)
       or as a result of manual sorting.
-    name: Clustering
     neurodata_type_def: Clustering
     neurodata_type_inc: NWBContainer
 

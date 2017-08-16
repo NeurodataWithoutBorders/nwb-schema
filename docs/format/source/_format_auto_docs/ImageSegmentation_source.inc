@@ -19,6 +19,7 @@ ImageSegmentation
       name: help
       value: Stores groups of pixels that define regions of interest from one or more
         imaging planes
+    default_name: ImageSegmentation
     doc: Stores pixels in an image that represent different regions of interest (ROIs)
       or masks. All segmentation for a given imaging plane is stored together, with storage
       for multiple imaging planes (masks) supported. Each ROI is stored in its own subgroup,
@@ -89,7 +90,6 @@ ImageSegmentation
       neurodata_type_def: PlaneSegmentation
       neurodata_type_inc: NWBContainer
       quantity: '*'
-    name: ImageSegmentation
     neurodata_type_def: ImageSegmentation
     neurodata_type_inc: NWBContainer
 

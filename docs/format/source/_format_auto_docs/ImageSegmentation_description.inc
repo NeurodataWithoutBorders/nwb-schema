@@ -14,6 +14,9 @@ ImageSegmentation
 
 
 
+- **Default Name:** ImageSegmentation
+
+
 .. figure:: ./_format_auto_docs/ImageSegmentation.*
     :alt: ImageSegmentation
 
@@ -26,17 +29,17 @@ ImageSegmentation
 .. table:: Datasets, Links, and Attributes contained in <ImageSegmentation>
     :class: longtable
 
-    +---------------------+-------------+--------------------------------------------------------------------------------------------------------+
-    | Id                  | Type        | Description                                                                                            |
-    +=====================+=============+========================================================================================================+
-    | ImageSegmentation   | group       | Top level group for ImageSegmentation                                                                  |
-    +---------------------+-------------+--------------------------------------------------------------------------------------------------------+
-    | .help               | attribute   | Value is 'Stores groups of pixels that define regions of interest from one or more imaging planes'     |
-    |                     |             |                                                                                                        |
-    |                     |             | - **Data Type:** text                                                                                  |
-    |                     |             | - **Value:** Stores groups of pixels that define regions of interest from one or more imaging planes   |
-    |                     |             |                                                                                                        |
-    +---------------------+-------------+--------------------------------------------------------------------------------------------------------+
+    +-----------------------+-------------+--------------------------------------------------------------------------------------------------------+
+    | Id                    | Type        | Description                                                                                            |
+    +=======================+=============+========================================================================================================+
+    | <ImageSegmentation>   | group       | Top level group for <ImageSegmentation>                                                                |
+    +-----------------------+-------------+--------------------------------------------------------------------------------------------------------+
+    | .help                 | attribute   | Value is 'Stores groups of pixels that define regions of interest from one or more imaging planes'     |
+    |                       |             |                                                                                                        |
+    |                       |             | - **Data Type:** text                                                                                  |
+    |                       |             | - **Value:** Stores groups of pixels that define regions of interest from one or more imaging planes   |
+    |                       |             |                                                                                                        |
+    +-----------------------+-------------+--------------------------------------------------------------------------------------------------------+
 
 
 
@@ -50,7 +53,7 @@ ImageSegmentation
     +------------------------+---------+----------------------------------------------------------------------------+
     | Id                     | Type    | Description                                                                |
     +========================+=========+============================================================================+
-    | ImageSegmentation      | group   | Top level group for ImageSegmentation                                      |
+    | <ImageSegmentation>    | group   | Top level group for <ImageSegmentation>                                    |
     +------------------------+---------+----------------------------------------------------------------------------+
     | .<PlaneSegmentation>   | group   | Group name is human-readable description of imaging plane                  |
     |                        |         |                                                                            |

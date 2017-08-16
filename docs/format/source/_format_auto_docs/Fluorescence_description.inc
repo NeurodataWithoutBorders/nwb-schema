@@ -14,6 +14,9 @@ Fluorescence
 
 
 
+- **Default Name:** Fluorescence
+
+
 .. figure:: ./_format_auto_docs/Fluorescence.*
     :alt: Fluorescence
 
@@ -26,17 +29,17 @@ Fluorescence
 .. table:: Datasets, Links, and Attributes contained in <Fluorescence>
     :class: longtable
 
-    +----------------+-------------+----------------------------------------------------------------------------------------------------------------------+
-    | Id             | Type        | Description                                                                                                          |
-    +================+=============+======================================================================================================================+
-    | Fluorescence   | group       | Top level group for Fluorescence                                                                                     |
-    +----------------+-------------+----------------------------------------------------------------------------------------------------------------------+
-    | .help          | attribute   | Value is 'Fluorescence over time of one or more ROIs. TimeSeries names should correspond to imaging plane names'     |
-    |                |             |                                                                                                                      |
-    |                |             | - **Data Type:** text                                                                                                |
-    |                |             | - **Value:** Fluorescence over time of one or more ROIs. TimeSeries names should correspond to imaging plane names   |
-    |                |             |                                                                                                                      |
-    +----------------+-------------+----------------------------------------------------------------------------------------------------------------------+
+    +------------------+-------------+----------------------------------------------------------------------------------------------------------------------+
+    | Id               | Type        | Description                                                                                                          |
+    +==================+=============+======================================================================================================================+
+    | <Fluorescence>   | group       | Top level group for <Fluorescence>                                                                                   |
+    +------------------+-------------+----------------------------------------------------------------------------------------------------------------------+
+    | .help            | attribute   | Value is 'Fluorescence over time of one or more ROIs. TimeSeries names should correspond to imaging plane names'     |
+    |                  |             |                                                                                                                      |
+    |                  |             | - **Data Type:** text                                                                                                |
+    |                  |             | - **Value:** Fluorescence over time of one or more ROIs. TimeSeries names should correspond to imaging plane names   |
+    |                  |             |                                                                                                                      |
+    +------------------+-------------+----------------------------------------------------------------------------------------------------------------------+
 
 
 
@@ -50,7 +53,7 @@ Fluorescence
     +-------------------------------------------------------+---------+-------------------------------------------------------------------+
     | Id                                                    | Type    | Description                                                       |
     +=======================================================+=========+===================================================================+
-    | Fluorescence                                          | group   | Top level group for Fluorescence                                  |
+    | <Fluorescence>                                        | group   | Top level group for <Fluorescence>                                |
     +-------------------------------------------------------+---------+-------------------------------------------------------------------+
     | .<:ref:`RoiResponseSeries <sec-RoiResponseSeries>`>   | group   | RoiResponseSeries object containing fluorescence data for a ROI   |
     |                                                       |         |                                                                   |

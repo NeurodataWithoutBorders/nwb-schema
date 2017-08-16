@@ -14,6 +14,9 @@ BehavioralTimeSeries
 
 
 
+- **Default Name:** BehavioralTimeSeries
+
+
 .. figure:: ./_format_auto_docs/BehavioralTimeSeries.*
     :alt: BehavioralTimeSeries
 
@@ -26,17 +29,17 @@ BehavioralTimeSeries
 .. table:: Datasets, Links, and Attributes contained in <BehavioralTimeSeries>
     :class: longtable
 
-    +------------------------+-------------+------------------------------------------------------------------------------------+
-    | Id                     | Type        | Description                                                                        |
-    +========================+=============+====================================================================================+
-    | BehavioralTimeSeries   | group       | Top level group for BehavioralTimeSeries                                           |
-    +------------------------+-------------+------------------------------------------------------------------------------------+
-    | .help                  | attribute   | Value is 'General container for storing continuously sampled behavioral data.'     |
-    |                        |             |                                                                                    |
-    |                        |             | - **Data Type:** text                                                              |
-    |                        |             | - **Value:** General container for storing continuously sampled behavioral data.   |
-    |                        |             |                                                                                    |
-    +------------------------+-------------+------------------------------------------------------------------------------------+
+    +--------------------------+-------------+------------------------------------------------------------------------------------+
+    | Id                       | Type        | Description                                                                        |
+    +==========================+=============+====================================================================================+
+    | <BehavioralTimeSeries>   | group       | Top level group for <BehavioralTimeSeries>                                         |
+    +--------------------------+-------------+------------------------------------------------------------------------------------+
+    | .help                    | attribute   | Value is 'General container for storing continuously sampled behavioral data.'     |
+    |                          |             |                                                                                    |
+    |                          |             | - **Data Type:** text                                                              |
+    |                          |             | - **Value:** General container for storing continuously sampled behavioral data.   |
+    |                          |             |                                                                                    |
+    +--------------------------+-------------+------------------------------------------------------------------------------------+
 
 
 
@@ -50,7 +53,7 @@ BehavioralTimeSeries
     +-----------------------------------------+---------+-----------------------------------------------------------+
     | Id                                      | Type    | Description                                               |
     +=========================================+=========+===========================================================+
-    | BehavioralTimeSeries                    | group   | Top level group for BehavioralTimeSeries                  |
+    | <BehavioralTimeSeries>                  | group   | Top level group for <BehavioralTimeSeries>                |
     +-----------------------------------------+---------+-----------------------------------------------------------+
     | .<:ref:`TimeSeries <sec-TimeSeries>`>   | group   | TimeSeries object containing continuous behavioral data   |
     |                                         |         |                                                           |

@@ -14,6 +14,9 @@ ClusterWaveforms
 
 
 
+- **Default Name:** ClusterWaveforms
+
+
 .. figure:: ./_format_auto_docs/ClusterWaveforms.*
     :alt: ClusterWaveforms
 
@@ -29,7 +32,7 @@ ClusterWaveforms
     +-------------------------+-------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     | Id                      | Type        | Description                                                                                                                                                                                                                                                       |
     +=========================+=============+===================================================================================================================================================================================================================================================================+
-    | ClusterWaveforms        | group       | Top level group for ClusterWaveforms                                                                                                                                                                                                                              |
+    | <ClusterWaveforms>      | group       | Top level group for <ClusterWaveforms>                                                                                                                                                                                                                            |
     +-------------------------+-------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     | .help                   | attribute   | Value is 'Mean waveform shape of clusters. Waveforms should be high-pass filtered (ie, not the same bandpass filter used waveform analysis and clustering)'                                                                                                       |
     |                         |             |                                                                                                                                                                                                                                                                   |
@@ -74,7 +77,7 @@ ClusterWaveforms
     +-------------------------+---------+-------------------------------------------------------------------------------+
     | Id                      | Type    | Description                                                                   |
     +=========================+=========+===============================================================================+
-    | ClusterWaveforms        | group   | Top level group for ClusterWaveforms                                          |
+    | <ClusterWaveforms>      | group   | Top level group for <ClusterWaveforms>                                        |
     +-------------------------+---------+-------------------------------------------------------------------------------+
     | .clustering_interface   | link    | HDF5 link to Clustering interface that was the source of the clustered data   |
     |                         |         |                                                                               |

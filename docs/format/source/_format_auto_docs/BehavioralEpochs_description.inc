@@ -14,6 +14,9 @@ BehavioralEpochs
 
 
 
+- **Default Name:** BehavioralEpochs
+
+
 .. figure:: ./_format_auto_docs/BehavioralEpochs.*
     :alt: BehavioralEpochs
 
@@ -26,17 +29,17 @@ BehavioralEpochs
 .. table:: Datasets, Links, and Attributes contained in <BehavioralEpochs>
     :class: longtable
 
-    +--------------------+-------------+----------------------------------------------------------------+
-    | Id                 | Type        | Description                                                    |
-    +====================+=============+================================================================+
-    | BehavioralEpochs   | group       | Top level group for BehavioralEpochs                           |
-    +--------------------+-------------+----------------------------------------------------------------+
-    | .help              | attribute   | Value is 'General container for storing behavorial epochs'     |
-    |                    |             |                                                                |
-    |                    |             | - **Data Type:** text                                          |
-    |                    |             | - **Value:** General container for storing behavorial epochs   |
-    |                    |             |                                                                |
-    +--------------------+-------------+----------------------------------------------------------------+
+    +----------------------+-------------+----------------------------------------------------------------+
+    | Id                   | Type        | Description                                                    |
+    +======================+=============+================================================================+
+    | <BehavioralEpochs>   | group       | Top level group for <BehavioralEpochs>                         |
+    +----------------------+-------------+----------------------------------------------------------------+
+    | .help                | attribute   | Value is 'General container for storing behavorial epochs'     |
+    |                      |             |                                                                |
+    |                      |             | - **Data Type:** text                                          |
+    |                      |             | - **Value:** General container for storing behavorial epochs   |
+    |                      |             |                                                                |
+    +----------------------+-------------+----------------------------------------------------------------+
 
 
 
@@ -50,7 +53,7 @@ BehavioralEpochs
     +-------------------------------------------------+---------+-------------------------------------------------------------------+
     | Id                                              | Type    | Description                                                       |
     +=================================================+=========+===================================================================+
-    | BehavioralEpochs                                | group   | Top level group for BehavioralEpochs                              |
+    | <BehavioralEpochs>                              | group   | Top level group for <BehavioralEpochs>                            |
     +-------------------------------------------------+---------+-------------------------------------------------------------------+
     | .<:ref:`IntervalSeries <sec-IntervalSeries>`>   | group   | IntervalSeries object containing start and stop times of epochs   |
     |                                                 |         |                                                                   |

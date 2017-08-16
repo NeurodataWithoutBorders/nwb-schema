@@ -17,12 +17,12 @@ Position
       dtype: text
       name: help
       value: Position data, whether along the x, xy or xyz axis
+    default_name: Position
     doc: Position data, whether along the x, x/y or x/y/z axis.
     groups:
     - doc: SpatialSeries object containing position data
       neurodata_type_inc: SpatialSeries
       quantity: +
-    name: Position
     neurodata_type_def: Position
     neurodata_type_inc: NWBContainer
 

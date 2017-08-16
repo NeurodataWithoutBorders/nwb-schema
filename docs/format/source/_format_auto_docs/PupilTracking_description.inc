@@ -14,6 +14,9 @@ PupilTracking
 
 
 
+- **Default Name:** PupilTracking
+
+
 .. figure:: ./_format_auto_docs/PupilTracking.*
     :alt: PupilTracking
 
@@ -26,17 +29,17 @@ PupilTracking
 .. table:: Datasets, Links, and Attributes contained in <PupilTracking>
     :class: longtable
 
-    +-----------------+-------------+-----------------------------------------------------------+
-    | Id              | Type        | Description                                               |
-    +=================+=============+===========================================================+
-    | PupilTracking   | group       | Top level group for PupilTracking                         |
-    +-----------------+-------------+-----------------------------------------------------------+
-    | .help           | attribute   | Value is 'Eye-tracking data, representing pupil size'     |
-    |                 |             |                                                           |
-    |                 |             | - **Data Type:** text                                     |
-    |                 |             | - **Value:** Eye-tracking data, representing pupil size   |
-    |                 |             |                                                           |
-    +-----------------+-------------+-----------------------------------------------------------+
+    +-------------------+-------------+-----------------------------------------------------------+
+    | Id                | Type        | Description                                               |
+    +===================+=============+===========================================================+
+    | <PupilTracking>   | group       | Top level group for <PupilTracking>                       |
+    +-------------------+-------------+-----------------------------------------------------------+
+    | .help             | attribute   | Value is 'Eye-tracking data, representing pupil size'     |
+    |                   |             |                                                           |
+    |                   |             | - **Data Type:** text                                     |
+    |                   |             | - **Value:** Eye-tracking data, representing pupil size   |
+    |                   |             |                                                           |
+    +-------------------+-------------+-----------------------------------------------------------+
 
 
 
@@ -50,7 +53,7 @@ PupilTracking
     +-----------------------------------------+---------+---------------------------------------------------------------+
     | Id                                      | Type    | Description                                                   |
     +=========================================+=========+===============================================================+
-    | PupilTracking                           | group   | Top level group for PupilTracking                             |
+    | <PupilTracking>                         | group   | Top level group for <PupilTracking>                           |
     +-----------------------------------------+---------+---------------------------------------------------------------+
     | .<:ref:`TimeSeries <sec-TimeSeries>`>   | group   | TimeSeries object containing time series data on pupil size   |
     |                                         |         |                                                               |

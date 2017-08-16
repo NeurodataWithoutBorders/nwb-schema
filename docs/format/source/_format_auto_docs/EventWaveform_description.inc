@@ -14,6 +14,9 @@ EventWaveform
 
 
 
+- **Default Name:** EventWaveform
+
+
 .. figure:: ./_format_auto_docs/EventWaveform.*
     :alt: EventWaveform
 
@@ -26,17 +29,17 @@ EventWaveform
 .. table:: Datasets, Links, and Attributes contained in <EventWaveform>
     :class: longtable
 
-    +-----------------+-------------+---------------------------------------------------------------------------+
-    | Id              | Type        | Description                                                               |
-    +=================+=============+===========================================================================+
-    | EventWaveform   | group       | Top level group for EventWaveform                                         |
-    +-----------------+-------------+---------------------------------------------------------------------------+
-    | .help           | attribute   | Value is 'Waveform of detected extracellularly recorded spike events'     |
-    |                 |             |                                                                           |
-    |                 |             | - **Data Type:** text                                                     |
-    |                 |             | - **Value:** Waveform of detected extracellularly recorded spike events   |
-    |                 |             |                                                                           |
-    +-----------------+-------------+---------------------------------------------------------------------------+
+    +-------------------+-------------+---------------------------------------------------------------------------+
+    | Id                | Type        | Description                                                               |
+    +===================+=============+===========================================================================+
+    | <EventWaveform>   | group       | Top level group for <EventWaveform>                                       |
+    +-------------------+-------------+---------------------------------------------------------------------------+
+    | .help             | attribute   | Value is 'Waveform of detected extracellularly recorded spike events'     |
+    |                   |             |                                                                           |
+    |                   |             | - **Data Type:** text                                                     |
+    |                   |             | - **Value:** Waveform of detected extracellularly recorded spike events   |
+    |                   |             |                                                                           |
+    +-------------------+-------------+---------------------------------------------------------------------------+
 
 
 
@@ -50,7 +53,7 @@ EventWaveform
     +-----------------------------------------------------+---------+---------------------------------------------------------------------+
     | Id                                                  | Type    | Description                                                         |
     +=====================================================+=========+=====================================================================+
-    | EventWaveform                                       | group   | Top level group for EventWaveform                                   |
+    | <EventWaveform>                                     | group   | Top level group for <EventWaveform>                                 |
     +-----------------------------------------------------+---------+---------------------------------------------------------------------+
     | .<:ref:`SpikeEventSeries <sec-SpikeEventSeries>`>   | group   | SpikeEventSeries object containing detected spike event waveforms   |
     |                                                     |         |                                                                     |

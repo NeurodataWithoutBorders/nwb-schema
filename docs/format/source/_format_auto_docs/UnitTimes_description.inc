@@ -14,6 +14,9 @@ UnitTimes
 
 
 
+- **Default Name:** UnitTimes
+
+
 .. figure:: ./_format_auto_docs/UnitTimes.*
     :alt: UnitTimes
 
@@ -26,17 +29,17 @@ UnitTimes
 .. table:: Datasets, Links, and Attributes contained in <UnitTimes>
     :class: longtable
 
-    +-------------+-------------+---------------------------------------------------------+
-    | Id          | Type        | Description                                             |
-    +=============+=============+=========================================================+
-    | UnitTimes   | group       | Top level group for UnitTimes                           |
-    +-------------+-------------+---------------------------------------------------------+
-    | .help       | attribute   | Value is 'Estimated spike times from a single unit'     |
-    |             |             |                                                         |
-    |             |             | - **Data Type:** text                                   |
-    |             |             | - **Value:** Estimated spike times from a single unit   |
-    |             |             |                                                         |
-    +-------------+-------------+---------------------------------------------------------+
+    +---------------+-------------+---------------------------------------------------------+
+    | Id            | Type        | Description                                             |
+    +===============+=============+=========================================================+
+    | <UnitTimes>   | group       | Top level group for <UnitTimes>                         |
+    +---------------+-------------+---------------------------------------------------------+
+    | .help         | attribute   | Value is 'Estimated spike times from a single unit'     |
+    |               |             |                                                         |
+    |               |             | - **Data Type:** text                                   |
+    |               |             | - **Value:** Estimated spike times from a single unit   |
+    |               |             |                                                         |
+    +---------------+-------------+---------------------------------------------------------+
 
 
 
@@ -50,7 +53,7 @@ UnitTimes
     +----------------+---------+----------------------------------------------------------+
     | Id             | Type    | Description                                              |
     +================+=========+==========================================================+
-    | UnitTimes      | group   | Top level group for UnitTimes                            |
+    | <UnitTimes>    | group   | Top level group for <UnitTimes>                          |
     +----------------+---------+----------------------------------------------------------+
     | .<SpikeUnit>   | group   | Group storing times for <unit_N>.                        |
     |                |         |                                                          |

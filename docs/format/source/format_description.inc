@@ -92,8 +92,7 @@ information beyond what is required by the
 specification. I.e., an end user is free to add additional key/value
 pairs as necessary for their needs via the concept of extensions. It should be noted that such
 lab-specific extensions may not be recognized by analysis tools/scripts
-existing outside the lab. Extensions are described in section (see :ref:`sec-extending-the-format`).
-
+existing outside the lab. Extensions are described in section (see :numref:`sec-extending-the-format`).
 
 
 .. _sec-data-processing-modules
