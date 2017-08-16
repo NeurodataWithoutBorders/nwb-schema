@@ -9,15 +9,11 @@ Generate figures and RST documents from the NWB YAML specification for the forma
 #from pynwb.spec import SpecCatalog
 from form.spec.spec import GroupSpec, DatasetSpec, LinkSpec, AttributeSpec
 from pynwb.spec import NWBGroupSpec, NWBDatasetSpec, NWBNamespace
-from form.spec.catalog import SpecCatalog
 from form.spec.namespace import NamespaceCatalog
 from collections import OrderedDict
-from itertools import chain
 import warnings
 import os
 import sys
-#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")))
-#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../format/source")))
 try:
     from utils.render import RSTDocument, RSTTable, SpecFormatter
 except ImportError:
@@ -170,8 +166,6 @@ def spec_prop_doc(spec, newline='\n', ignore_props=None):
             spec_prop_list.append('**Extends:** %s' %  RSTDocument.get_reference(get_section_label(extend_type), extend_type))
         if spec.get('neurodata_type_def', None) is not None and 'neurodata_type_def' not in ignore_keys:
             spec_prop_list.append('**Neurodata Type:** %s' % str(spec['neurodata_type_def']))
-        if spec.get('default_name', None) is not None:
-            spec_prop_list.append('**Default Name:** %s' % str(spec['default_name']))
     # Add group properties
     if isinstance(spec, GroupSpec):
         if spec.get('quantity', None) is not None and 'quantity' not in ignore_keys:
@@ -184,8 +178,6 @@ def spec_prop_doc(spec, newline='\n', ignore_props=None):
         if spec.get('neurodata_type_def', None) is not None and 'neurodata_type_def' not in ignore_keys:
             ntype = str(spec['neurodata_type_def'])
             spec_prop_list.append('**Neurodata Type:** %s' % RSTDocument.get_reference(get_section_label(ntype), ntype))
-        if spec.get('default_name', None) is not None:
-            spec_prop_list.append('**Default Name:** %s' % str(spec['default_name']))
     # Add attribute spec properites
     if isinstance(spec, AttributeSpec):
         if spec.get('dtype', None) is not None and 'dtype' not in ignore_keys:
@@ -200,8 +192,13 @@ def spec_prop_doc(spec, newline='\n', ignore_props=None):
             spec_prop_list.append('**Value:** %s' % str(spec['value']))
         if spec.get('default_value', None) is not None and 'default_value' not in ignore_keys:
             spec_prop_list.append('**Default Value:** %s' % str(spec['default_value']))
-        if spec.get('default_name', None) is not None:
+
+    # Add common properties
+    if spec.get('default_name', None) is not None:
             spec_prop_list.append('**Default Name:** %s' % str(spec['default_name']))
+    if spec.get('name', None) is not None:
+        spec_prop_list.append('**Name:** %s' % str(spec['name']))
+
     # Render the sepecification propoerties list
     spec_doc = ''
     if len(spec_prop_list) > 0:
@@ -517,6 +514,7 @@ def create_spec_table(spec,
     if appreviate_main_object_doc and depth==0:
         # Create the appreviated descripiton of the main object
         spec_doc = "Top level %s for %s" % (spec_type, spec_name.lstrip(depth_str))
+        spec_doc += spec_prop_doc(spec, rst_table.newline)
     else:
         # Create the description for the object
         spec_doc = clean_doc(spec.doc, add_prefix=rst_table.newline+rst_table.newline)
@@ -717,7 +715,7 @@ def render_specs(neurodata_types,
         # Add the additional details about the doc
         type_desc_doc.add_text(spec_prop_doc(rt_spec,
                                              type_desc_doc.newline,
-                                             ignore_props=['neurodata_type_inc', 'neurodata_type_def']))
+                                             ignore_props=['neurodata_type_inc', 'neurodata_type_def', 'default_name', 'name']))
         type_desc_doc.add_text(type_desc_doc.newline)
 
         ##################################################
