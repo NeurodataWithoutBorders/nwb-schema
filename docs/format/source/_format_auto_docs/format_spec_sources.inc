@@ -4,6 +4,8 @@ Sources
 =======
 
 .. include:: _format_auto_docs/core_namespace_source.inc
+.. _Main_Data_File_src:
+
 Main Data File
 --------------
 
@@ -12,6 +14,8 @@ Main Data File
 .. raw:: latex
 
     \clearpage \newpage
+
+.. _TimeSeries_Types_src:
 
 TimeSeries Types
 ----------------
@@ -135,6 +139,8 @@ TimeSeries Types
 .. raw:: latex
 
     \clearpage \newpage
+
+.. _Data_Processing_src:
 
 Data Processing
 ---------------
@@ -319,22 +325,12 @@ Data Processing
 
     \clearpage \newpage
 
+.. _Other_Types_src:
+
 Other Types
 -----------
 
-.. include:: _format_auto_docs/Epoch_source.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/ElectrodeGroup_source.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/Image_source.inc
+.. include:: _format_auto_docs/SpecFile_source.inc
 
 .. raw:: latex
 
@@ -346,13 +342,25 @@ Other Types
 
     \clearpage \newpage
 
-.. include:: _format_auto_docs/SpecFile_source.inc
+.. include:: _format_auto_docs/NWBContainer_source.inc
 
 .. raw:: latex
 
     \clearpage \newpage
 
-.. include:: _format_auto_docs/NWBContainer_source.inc
+.. include:: _format_auto_docs/ElectrodeGroup_source.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/Epoch_source.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/Image_source.inc
 
 .. raw:: latex
 

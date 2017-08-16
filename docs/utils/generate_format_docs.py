@@ -1148,8 +1148,10 @@ def main():
     for sec in type_sections:
         if sec_index > 0:
             desc_doc.add_latex_clearpage()
+        desc_doc.add_label(sec['title'].replace(' ', '_'))
         desc_doc.add_subsection(sec['title'])
         if src_doc is not None:
+            src_doc.add_label(sec['title'].replace(' ', '_') + '_src')
             src_doc.add_subsection(sec['title'])
 
         # Render all registered documents for the current section
