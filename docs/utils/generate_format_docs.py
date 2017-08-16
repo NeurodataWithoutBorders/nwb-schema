@@ -171,6 +171,8 @@ def spec_prop_doc(spec, newline='\n', ignore_props=None):
             spec_prop_list.append('**Extends:** %s' %  RSTDocument.get_reference(get_section_label(extend_type), extend_type))
         if spec.get('neurodata_type_def', None) is not None and 'neurodata_type_def' not in ignore_keys:
             spec_prop_list.append('**Neurodata Type:** %s' % str(spec['neurodata_type_def']))
+        if spec.get('default_name', None) is not None:
+            spec_prop_list.append('**Default Name:** %s' % str(spec['default_name']))
     # Add group properties
     if isinstance(spec, GroupSpec):
         if spec.get('quantity', None) is not None and 'quantity' not in ignore_keys:
@@ -183,6 +185,8 @@ def spec_prop_doc(spec, newline='\n', ignore_props=None):
         if spec.get('neurodata_type_def', None) is not None and 'neurodata_type_def' not in ignore_keys:
             ntype = str(spec['neurodata_type_def'])
             spec_prop_list.append('**Neurodata Type:** %s' % RSTDocument.get_reference(get_section_label(ntype), ntype))
+        if spec.get('default_name', None) is not None:
+            spec_prop_list.append('**Default Name:** %s' % str(spec['default_name']))
     # Add attribute spec properites
     if isinstance(spec, AttributeSpec):
         if spec.get('dtype', None) is not None and 'dtype' not in ignore_keys:
@@ -197,6 +201,8 @@ def spec_prop_doc(spec, newline='\n', ignore_props=None):
             spec_prop_list.append('**Value:** %s' % str(spec['value']))
         if spec.get('default_value', None) is not None and 'default_value' not in ignore_keys:
             spec_prop_list.append('**Default Value:** %s' % str(spec['default_value']))
+        if spec.get('default_name', None) is not None:
+            spec_prop_list.append('**Default Name:** %s' % str(spec['default_name']))
     # Render the sepecification propoerties list
     spec_doc = ''
     if len(spec_prop_list) > 0:
