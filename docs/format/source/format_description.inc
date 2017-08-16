@@ -30,12 +30,27 @@ in more detail. The NWB format is then described in detail in :numref:`nwb-type-
 neurodata_type
 --------------
 
-The concept of a ```neurodata_type``` is similar to the concept of a Class in object-oriented programming.
-In the NWB format, groups or datasets may be given a unique ```neurodata_type```. The ```neurodata_type```
+The concept of a *neurodata_type* is similar to the concept of a Class in object-oriented programming.
+In the NWB format, groups or datasets may be given a unique *neurodata_type*. The *neurodata_type*
 allows the unique identification of the type of objects in the format and also endable the reuse of
-types through the concept of inheritance. A group or dataset may, hence, define a new ```neurodata_type```
-while extending an existing type. E.g., ```AbstractFeatureSeries``` defines a new type that
-inherits from ```TimeSeries```.
+types through the concept of inheritance. A group or dataset may, hence, define a new *neurodata_type*
+while extending an existing type. E.g., *AbstractFeatureSeries* defines a new type that
+inherits from *TimeSeries*.
+
+NWBContainer
+------------
+
+*NWBContainer* defines a generic container for storing collections of data. *NWBContainer* serves as the base type
+for all main data containers (including *TimeSeries*) of the core NWB data format and allows us to define and
+integrate new common functionality in a central place and via common mechanisms. See also :numref:`sec-NWBContainer`.
+
+.. note::
+
+    The concept of *NWBContainer* (see :numref:`sec-NWBContainer`) has been introduced in NWB 2 and
+    is a generalization of the concept of *Interface* from earlier version of NWB (i.e., 1.0.x and earlier).
+    In contrast to v1.0.x, *Interface* was renamed to *NWBContainer* to ease intuition and
+    the concept was generalized to provide a common base for data containers (rather than
+    being specific to *ProcessingModules*).
 
 
 Time Series
@@ -46,19 +61,25 @@ The file format is designed around a data structure called a
 superset of several INCF types, including signal events, image stacks
 and experimental events. To account for different storage requirements
 and different modalities, a *TimeSeries* is defined in a minimal form
-and it can be extended, or subclassed, to account for different
-modalities and data storage requirements. When a *TimeSeries* is
-extended, it means that the subclass maintains all components
-(e.g., groups, datasets, and attributes) of its parent while it may modify
-existing components as well as add new ones.
+and it can be extended (i.e., subclassed) to account for different
+modalities and data storage requirements (see :numref:`sec-extending-the-format`)
 
 Each *TimeSeries* has its own HDF5 group, and all datasets belonging to
-a *TimeSeries* are in that group. The group contains time and data
-components and users are free to add additional fields as necessary.
-There are two time objects represented. The first, *timestamps*, stores
-time information that is corrected to the experiment's time base (i.e.,
-aligned to a master clock, with time-zero aligned to the starting time
-of the experiment). This field is used for data processing and
+a *TimeSeries* are in that group. In particular, a *TimeSeries* defines
+components to store *data* and *time*.
+
+The *data* element in the *TimeSeries* will typically be an array of any
+valid HDF5 data type (e.g., a multi-dimensional floating point array).
+The data stored can be in any unit. The attributes of the data field
+must indicate the SI unit that the data relates to (or appropriate
+counterpart, such as color-space) and the multiplier necessary to
+convert stored values to the specified SI unit.
+
+*TimeSeries* support provides two time objects representations.
+The first, *timestamps*, stores time information that is corrected
+to the experiment's time base (i.e.,aligned to a master clock,
+with time-zero aligned to the starting time of the experiment).
+This field is used for data processing and
 subsequent scientific analysis. The second, *sync*, is an optional group
 that can be used to store the sample times as reported by the
 acquisition/stimulus hardware, before samples are converted to a common
@@ -66,80 +87,37 @@ timebase and corrected relative to the master clock. This approach
 allows the NWB format to support streaming of data directly from
 hardware sources.
 
-When data is streamed from experiment hardware it should be stored in an
-HDF5 dataset having the same attributes as *data*, with time information
-stored as necessary. This allows the raw data files to be separate
-file-system objects that can be set as read-only once the experiment is
-complete. *TimeSeries* objects in /acquisition will link to the *data*
-field in the raw time series. Hardware-recorded time data must be
-corrected to a common time base (e.g., timestamps from all hardware
-sources aligned) before it can be included in *timestamps*. The
-uncorrected time can be stored in the *sync* group.
-
-The group holding the *TimeSeries* can be used to store additional
-information (HDF5 datasets) beyond what is required by the
+In addition to data and time, the *TimeSeries* group can be used to store additional
+information beyond what is required by the
 specification. I.e., an end user is free to add additional key/value
-pairs as necessary for their needs. It should be noted that such
+pairs as necessary for their needs via the concept of extensions. It should be noted that such
 lab-specific extensions may not be recognized by analysis tools/scripts
 existing outside the lab. Extensions are described in section (see :ref:`sec-extending-the-format`).
 
-The *data* element in the *TimeSeries* will typically be an array of any
-valid HDF5 data type (e.g., a multi-dimentsional floating point array).
-The data stored can be in any unit. The attributes of the data field
-must indicate the SI unit that the data relates to (or appropriate
-counterpart, such as color-space) and the multiplier necessary to
-convert stored values to the specified SI unit.
-
-Extending Time Series
-^^^^^^^^^^^^^^^^^^^^^
-
-The *TimeSeries* is a data structure/object. It can be "subclassed" (or
-extended) to represent more narrowly focused modalities (e.g.,
-electrical versus optical physiology) as well as new modalities (eg,
-video tracking of whisker positions). When it a *TimeSeries* is
-subclassed, new datasets can be added while all datasets of parent
-classes are either preserved as specified in the parent class or
-replaced by a new definition (changed). In the tables that follow,
-identifiers in the "Id" column that change the definition in the parent
-class are underlined. An initial set of subclasses are described here.
-Users are free to define subclasses for their particular requirements.
-This can be done by creating an extension to the format defining a new
-*TimeSeries* subclass (see :ref:`sec-extending-the-format`)
 
 
-All datasets that are defined to be part of TimeSeries have the text
-attribute 'unit' that stores the unit specified in the documentation.
+.. _sec-data-processing-modules
 
+Data Processing Modules
+-----------------------
 
-Data Processing
----------------
-
-Modules
-^^^^^^^
-
-NWB uses *modules* to store data for—and represent the results of—common
+NWB uses *ProcessingModule* to store data for—and represent the results of—common
 data processing steps, such as spike sorting and image segmentation,
-that occur before scientific analysis of the data. Modules store the
+that occur before scientific analysis of the data. Processing modules store the
 data used by software tools to calculate these intermediate results.
-Each module provides a list of the data it makes available, and it is
-free to provide whatever additional data that the module generates.
-Additional documentation is required for data that goes beyond standard
-definitions. All modules are stored directly under group
-`/processing <#/processing>`__. The name of each module is chosen by the
-data provider (i.e. modules have a "variable" name). The particular data
-within each module is specified by one or more *interfaces*, which are
-groups residing directly within a module. Each interface extends
-(contains the attributes in) group `*<Interface>* <#%3CInterface%3E>`__
-and has a fixed name (e.g. *ImageSegmentation*) that suggests the type
-of data it contains. The names of the interfaces within a given module
-are listed in the "interfaces" attribute for the module. The different
-types of Interfaces are described below.
-
-Interfaces
-^^^^^^^^^^
-
-*Interface* is used in the format as a common base class for analyses stored in
-*Modules*.
+All processing modules are stored directly in the group
+`/processing <#groups-processing>`__. The name of each module is chosen by the
+data provider (i.e. processing modules have a "variable" name). The particular data
+within each processing module is specified by one or more *NWBContainers*, which are
+groups residing directly within processing module. Each NWBContainer has a unique
+neurodata_type (e.g., *ImageSegmentation*) that decribes and defines the data
+contained in the NWBContainer. For NWBContainers designed for use with
+processing modules, a default name (usually the same as the neurodata_type) is
+commonly specified to further ease identification of the data in file. However, to
+support storage of multiple instances of the same subtype of NWBContainer in the
+same processing module, NWB allows users to optionally define custom names as well.
+A detailed overview of the main data processing containers is available in
+:numref:`Data_Processing`.
 
 
 .. _sec-extending-the-format:
@@ -148,24 +126,44 @@ Extending the format
 --------------------
 
 The data organization presented in this document constitutes the *core*
-NWB format. Extensibility is handled by allowing users to store
-additional data as necessary using new datasets, attributes or groups.
-There are two ways to document these additions. The first is to add an
-attribute "neurodata\_type" with value the string "Custom" to the
-additional groups or datasets, and provide documentation to describe the
-extra data if it is not clear from the context what the data represent.
-This method is simple but does not include a consistent way to describe
-the additions. The second method is to write an *extension* to the
-format. With this method, the additions are describe by the extension
-and attribute "schema\_id" is set to the schema\_id associated with the
-extension. Extensions to the format are written using the same
-specification language that is used to define the core format. Creating
-an extension allows adding the new data to the file through the API,
-validating files containing extra data, and also generating
-documentation for the additions. Popular extensions can be proposed and
-added to the official format specification. Writing and using extensions
-are described in the API documentation. Both methods allow extensibility
-without breaking backward compatibility.
+NWB format. Extensibility is handled via the concept of extensions,
+allowing users to extend (i.e., add to) existing and create new neurodata_types
+definitions for storing custom data. To avoid collisions between extensions,
+extensions are defined as part of custom namespaces (which typically import
+the core NWB namespace). Extensions to the format are written using the
+`Specification Language <http://schema-language.readthedocs.io/en/latest/>`_ .
+To ease development of extensions, the PyNWB (and FORM) API provides dedicated
+data structures that support programmatic creation and use of extensions. An
+example for extensing NWB using PyNWB is available at
+http://pynwb.readthedocs.io/en/latest/example.html#extending-nwb and
+additional details are also available as part ot the PyNWB tutorials
+at http://pynwb.readthedocs.io/en/latest/tutorials.html#tutorials .
+
+Creating extensions allows adding and documenting new data to NWB, interaction with
+custom data via the API, validation of custom data contents, sharing and collaboration
+of extensions and data. Popular extensions may be proposed and
+added to the official format specification after community discussion and review.
+To propose a new extensions for the NWB core format you may file an issue
+at https://github.com/NeurodataWithoutBorders/nwb-schema/issues .
+
+
+.. _sec-extending-the-ts-and-nc:
+
+Extending Time Series and NWBContainer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Like any other neurodata_type, *TimeSeries* can be extended via extensions
+by defining corresponding derived neurodata_types. This is typically done to
+to represent more narrowly focused modalities (e.g.,
+electrical versus optical physiology) as well as new modalities (e.g.,
+video tracking of whisker positions). When a neurodata_type inherits from *TimeSeries*,
+new data objects (i.e., datasets, attributes, groups, and links)
+can be added while all objects of the parent *TimeSeries* type are
+inherited and, hence, part of the new neurodata_type. Section :numref:`TimeSeries_Types`
+provides detailed definitions for all core *TimeSeries* types.
+
+Extending *NWBContainer* works in the same way, e.g., to create more specific types for
+data processing.
 
 
 Comments and Definitions
@@ -175,12 +173,12 @@ Notation
 --------
 
 The description of the format in :numref:`nwb-type-specifications` is
-divided into subsection based on ```neurodata_type```. Each ```neurodata_type``` section includes:
+divided into subsection based on *neurodata_type*. Each *neurodata_type* section includes:
 
 * A basic description of the type
 * An optional figure describing the organization of data within the type
 * A set of tables describing the datasets, attributes and groups contained in the type.
-* An optional set of further subsections describing the content of subgroups contained in the given ```neurdata_type```.
+* An optional set of further subsections describing the content of subgroups contained in the given *neurodata_type*.
 
 In the tables we use the following notation in the **Id** column to uniquely identify datasets, groups, attributes:
 
