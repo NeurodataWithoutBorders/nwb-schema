@@ -6,7 +6,7 @@ Namespace: NWB core
 - **Description:** NWB namespace
 - **Name:** core
 - **Full Name:** NWB core
-- **Version:** 1.2.0
+- **Version:** 2.0.0
 - **Authors:**
     - Keith Godfrey
     - Jeff Teeters

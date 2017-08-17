@@ -11,13 +11,15 @@ NWBContainer
     :linenos:
 
     attributes:
-    - doc: Short description of what this type of Interface contains.
+    - doc: Short description of what this type of NWBContainer contains.
       dtype: text
       name: help
-    - doc: Path to the origin of the data represented in this interface.
+    - doc: Path to the origin of the data represented in this NWBContainer data container.
       dtype: text
       name: source
-    doc: The attributes specified here are included in all interfaces.
+    doc: Generic container for storing collections of data. NWBContainer serves as the
+      base type for all main data containers of the core NWB data format. The properties
+      defined by this type are inherited by all derived types.
     neurodata_type_def: NWBContainer
 
 
