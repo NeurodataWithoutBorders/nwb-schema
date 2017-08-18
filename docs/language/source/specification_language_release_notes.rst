@@ -3,8 +3,8 @@ Release Notes
 =============
 
 
-Version 1.2a (April, 2017)
---------------------------
+Version 2.0.0alpha (August, 2017)
+----------------------------------
 
 Summary
 ^^^^^^^
@@ -136,7 +136,7 @@ and format likely via support for modeling of relationships or support for table
 ```autogen```
 ^^^^^^^^^^^^^
 
-The ```autogen``` key has been removed in 1.2a without replacement.
+The ```autogen``` key has been removed in 2.0.0beta without replacement.
 
 
 Version 1.1c (Oct. 7, 2016)

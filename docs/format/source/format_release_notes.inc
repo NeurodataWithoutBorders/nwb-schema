@@ -17,8 +17,8 @@ Proposed Future Changes
       hierarchy making it harder for users to navigate files, ii) makes metadata appear as core data, and iii) causes
       poor performance when extracting metadata from files (reading attributes is more efficient in many cases).
 
-1.1.0a, May 2017
-----------------
+2.0.0 Alpha (August 2017)
+-------------------------
 
 Improved organization of electrode metadata in ``/general/extracellular_ephys``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
