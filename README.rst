@@ -1,4 +1,4 @@
-The PyNWB repository has moved to `Github <https://github.com/NeurodataWithoutBorders/nwb-schema>`_
+The PyNWB repository has moved to `Github <https://github.com/NeurodataWithoutBorders/pynwb>`_
 
 NWB Schema Format
 ========================
