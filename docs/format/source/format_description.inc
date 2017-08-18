@@ -1,31 +1,53 @@
 Overview
 ========
 
+The NWB Format is a core component of the
+`Neurodata Without Borders: Neurophysiology (NWB-N) <http://nwb-overview.readthedocs.io/en/latest/nwbintro.html>`_  project.
 The NWB format is designed to store general optical and electrical physiology data in a way that
-is both understandable to humans as well as accesible to programmatic interpretation. The format is
+is both understandable to humans as well as accessible to programmatic interpretation. The format is
 designed to be friendly to and usable by software tools and analysis
-scripts, and to impose few priori assumptions about data
-representation and analysis. Metadata required to understand the data
-itself (core metadata) is generally stored with the data. Information
-required to interpret the experiment (general metadata) is stored in the
-group ``general``. Most general metadata is stored in free-form text
-fields. Machine-readable metadata is stored as attributes on these
-free-form text fields.
+scripts, and to impose few a priori assumptions about data
+representation and analysis.
 
-Top Level Data Organization
----------------------------
+The NWB format uses the following main primitives to hierarchically organize neuroscience data :
+
+* A *Group* is similar to a folder and may contain an arbitrary number of other groups and datasets,
+* A *Dataset* describes an n-dimensional array and provides the primary means for storing data,
+* An *Attribute** is a small dataset that is attached to a specific group or dataset and is typically used to
+  store metadata specific to the object they are associated with, and
+* A *Links* is references to another groups are datasets.
+
+The NWB format is formally described via formal specification documents using the `NWB specification language <http://schema-language.readthedocs.io/en/latest/>`_ .
+HDF5 currently serves as the main format for storing data in the NWB format (see http://nwb-storage.readthedocs.io/en/latest/ for details).
+The `PyNWB <http://pynwb.readthedocs.io/en/latest/>` API is available to enable users to efficiently interact with NWB format files.
+
+The NWB format uses a modular design in which all main semantic components of the format have
+a unique *neurodata_type* (similar to a Class in object-oriented design)(:numref:`sec_neurodata_type_intro`).
+This allows for reuse and extension of types through inclusion and inheritance. All datasets and groups
+in the format can be uniquely identified by either their name and/or *neurodata_type*
+
+Two important base types in the NWB format are *NWBContainer* and *TimeSeries*. *NWBContainer* defines a
+generic container for storing colleciton of data and is used to define common features and functionality
+across data containers (see :numref:`sec_nwbcontainer_intro`). *TimeSeries* is a central component in
+the NWB format for storing complex temporal series (see :numref:`sec_timeseries_intro`). In the format,
+these types are then extended to define more specialized types. To organize and define collections of processed data
+from common data processing steps, the NWB format then defines the concept of *ProcessingModule* where each processing
+step is represented by a corresponding *NWBContainer* (see :numref:`sec-data-processing-modules` for details).
+
+At a high level, data is organized into the following main groups:
+
+* *acquistion/* : For storage of data streams recorded from the system, including ephys, ophys, tracking, etc.
+* *epochs/* : For storage of experimental intervals,
+* *stimulus/* : For storage of stimulus data,
+* *general/* : For storage of experimental metadata, including protocol, notes and description of hardware device(s).
+* *processing/* : For storage of standardized processing modules, often as part of intermediate analysis of data that is necessary to perform before scientific analysis,
+* *analysis/* : For storage of lab-specific and custom scientific analysis of data,
 
 The high-level data organization of NWB files is described in detail in :numref:`sec-NWBFile`.
-The top-level organization of data into groups is described in :numref:`table-NWBFile-groups`
-and the top-level datasets and attributes are described in :numref:`table-NWBFile-data`.
+The top-level datasets and attributes are described in :numref:`table-NWBFile-data` and
+the top-level organization of data into groups is described in :numref:`table-NWBFile-groups`.
 
-The NWB format is based on the concept of *TimeSeries* for storing complex temporal series of data
-and *Modules* for defining collections of processed data from common data processing steps where each
-processing step is represented by an *Interface*. All datasets and groups in the format can be
-uniquely identified by either their name and/or their *neurodata_type*. The *neurodata_type* of an
-object is similar to the concept of a Class in object-oriented design, and is used to both uniquly
-identify an object as well to enable the reuse of types. In the following we first define these basics concepts
-in more detail. The NWB format is then described in detail in :numref:`nwb-type-specifications`.
+.. _sec_neurodata_type_intro:
 
 neurodata_type
 --------------
@@ -36,6 +58,8 @@ allows the unique identification of the type of objects in the format and also e
 types through the concept of inheritance. A group or dataset may, hence, define a new *neurodata_type*
 while extending an existing type. E.g., *AbstractFeatureSeries* defines a new type that
 inherits from *TimeSeries*.
+
+.. _sec_nwbcontainer_intro:
 
 NWBContainer
 ------------
@@ -52,6 +76,7 @@ integrate new common functionality in a central place and via common mechanisms.
     the concept was generalized to provide a common base for data containers (rather than
     being specific to *ProcessingModules*).
 
+.. _sec_timeseries_intro:
 
 Time Series
 -----------
@@ -95,7 +120,7 @@ lab-specific extensions may not be recognized by analysis tools/scripts
 existing outside the lab. Extensions are described in section (see :numref:`sec-extending-the-format`).
 
 
-.. _sec-data-processing-modules
+.. _sec-data-processing-modules:
 
 Data Processing Modules
 -----------------------
@@ -226,14 +251,13 @@ Fields that have a minimum size can use larger, but not smaller sizes.
 Link types
 ----------
 
-In some instances, the specification refers to HDF5 links. When links
-are made within the file, HDF5 soft-links (and not hard-links) should be
-used. This is because soft-links distinguish between the link and the
+In some instances, the specification refers to links. When links
+are made within a file, NWB uses soft-links and not hard-links.
+This is because soft-links distinguish between the link and the
 target of the link, whereas hard-links cause multiple names (paths) to
 be created for the target, and there is no way to determine which of
 these names are preferable in a given situation. If the target of a soft
-link is removed (or moved to another location in the HDF5 file)—both of
-which can be done using the HDF5 API—then the soft link will "dangle,"
+link is removed (or moved to another location), then the soft link will "dangle,"
 that is point to a target that no longer exists. For this reason, moving
 or removing targets of soft links should be avoided unless the links are
 updated to point to the new location.
@@ -253,7 +277,7 @@ well.
 **Why do timestamps\_link and data\_link record linking between
 datasets, but links between epochs and timeseries are not recorded?**
 
-Epochs have a hardlink to entire timeseries (ie, the HDF5 group). If 100
+Epochs have a link to entire timeseries (i.e., the HDF5 group). If 100
 epochs link to a time series, there is only one time series. The data
 and timestamps within it are not shared anywhere (at least from the
 epoch linking). An epoch is an entity that is put in for convenience and

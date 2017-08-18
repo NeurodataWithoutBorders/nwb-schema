@@ -182,6 +182,26 @@ Improved governance and accessibility
     - The pyNWB API now provides dedicated data structured to interact with NWB specifications, enabling users
       programmatically access and generate format specifications
 
+Improved organization of processed data
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Change:** Relaxed requirements and renamed core types used for storage of processed data.
+
+**Reason:** Ease user intuition and provide greater flexibility for users.
+
+**Specific Changes:** The following changes have been made to the organization of processed data:
+
+    * *Module* has been renamed to *ProcessingModule* to avoid possible confusion and to clarify its purpose
+    * *Interface* has been renamed to *NWBContainer* to avoid confusion and ease intuition
+    * *NWBContainer* is now the base type of all main data storage types in the NWB format, including *TimeSeries.
+      This also means that all data storage types now inherit the required *help* and *source* attribute from
+      *NWBContainer*. Another implication of this change is that it is now possible to define data processing
+      types that directly inherit from *TimeSeries*.
+    * All *Interface* types in the orignal format had fixed names. The fixed names have been replaced by
+      specification of corresponding default names in the current format. This changes enables storage of
+      multiple instances of the same analysis type in the same *ProcessingModule* by allowing users to
+      customize the name of the data processing types, whereas in version 1.0.x only a single instance of
+      each analysis could be stored in a *ProcessingModule* due to the requirement for fixed names.
 
 Ancestry
 ^^^^^^^^
