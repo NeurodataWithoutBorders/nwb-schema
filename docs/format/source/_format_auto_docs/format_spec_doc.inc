@@ -350,13 +350,7 @@ Data Processing
 Other Types
 -----------
 
-.. include:: _format_auto_docs/NWBContainer_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/Image_description.inc
+.. include:: _format_auto_docs/ElectrodeGroup_description.inc
 
 .. raw:: latex
 
@@ -368,19 +362,25 @@ Other Types
 
     \clearpage \newpage
 
+.. include:: _format_auto_docs/Epoch_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/NWBContainer_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
 .. include:: _format_auto_docs/Device_description.inc
 
 .. raw:: latex
 
     \clearpage \newpage
 
-.. include:: _format_auto_docs/ElectrodeGroup_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/Epoch_description.inc
+.. include:: _format_auto_docs/Image_description.inc
 
 .. raw:: latex
 
