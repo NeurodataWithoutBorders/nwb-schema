@@ -14,6 +14,9 @@ DfOverF
 
 
 
+- **Default Name:** DfOverF
+
+
 .. figure:: ./_format_auto_docs/DfOverF.*
     :alt: DfOverF
 
@@ -26,17 +29,23 @@ DfOverF
 .. table:: Datasets, Links, and Attributes contained in <DfOverF>
     :class: longtable
 
-    +-----------+-------------+--------------------------------------------------------------------------------------------------------------+
-    | Id        | Type        | Description                                                                                                  |
-    +===========+=============+==============================================================================================================+
-    | DfOverF   | group       | Top level group for DfOverF                                                                                  |
-    +-----------+-------------+--------------------------------------------------------------------------------------------------------------+
-    | .help     | attribute   | Value is 'Df/f over time of one or more ROIs. TimeSeries names should correspond to imaging plane names'     |
-    |           |             |                                                                                                              |
-    |           |             | - **Data Type:** text                                                                                        |
-    |           |             | - **Value:** Df/f over time of one or more ROIs. TimeSeries names should correspond to imaging plane names   |
-    |           |             |                                                                                                              |
-    +-----------+-------------+--------------------------------------------------------------------------------------------------------------+
+    +-------------+-------------+--------------------------------------------------------------------------------------------------------------+
+    | Id          | Type        | Description                                                                                                  |
+    +=============+=============+==============================================================================================================+
+    | <DfOverF>   | group       | Top level group for <DfOverF>                                                                                |
+    |             |             |                                                                                                              |
+    |             |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                                                        |
+    |             |             | - **Neurodata Type:** :ref:`DfOverF <sec-DfOverF>`                                                           |
+    |             |             | - **Default Name:** DfOverF                                                                                  |
+    |             |             |                                                                                                              |
+    +-------------+-------------+--------------------------------------------------------------------------------------------------------------+
+    | .help       | attribute   | Value is 'Df/f over time of one or more ROIs. TimeSeries names should correspond to imaging plane names'     |
+    |             |             |                                                                                                              |
+    |             |             | - **Data Type:** text                                                                                        |
+    |             |             | - **Value:** Df/f over time of one or more ROIs. TimeSeries names should correspond to imaging plane names   |
+    |             |             | - **Name:** help                                                                                             |
+    |             |             |                                                                                                              |
+    +-------------+-------------+--------------------------------------------------------------------------------------------------------------+
 
 
 
@@ -50,7 +59,12 @@ DfOverF
     +-------------------------------------------------------+---------+-------------------------------------------------------------------+
     | Id                                                    | Type    | Description                                                       |
     +=======================================================+=========+===================================================================+
-    | DfOverF                                               | group   | Top level group for DfOverF                                       |
+    | <DfOverF>                                             | group   | Top level group for <DfOverF>                                     |
+    |                                                       |         |                                                                   |
+    |                                                       |         | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`             |
+    |                                                       |         | - **Neurodata Type:** :ref:`DfOverF <sec-DfOverF>`                |
+    |                                                       |         | - **Default Name:** DfOverF                                       |
+    |                                                       |         |                                                                   |
     +-------------------------------------------------------+---------+-------------------------------------------------------------------+
     | .<:ref:`RoiResponseSeries <sec-RoiResponseSeries>`>   | group   | RoiResponseSeries object containing dF/F for a ROI                |
     |                                                       |         |                                                                   |

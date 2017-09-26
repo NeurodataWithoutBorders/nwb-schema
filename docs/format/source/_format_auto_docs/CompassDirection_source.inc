@@ -20,6 +20,7 @@ CompassDirection
       name: help
       value: Direction as measured radially. Spatial series reference frame should indicate
         which direction corresponds to zero and what is the direction of positive rotation
+    default_name: CompassDirection
     doc: With a CompassDirection interface, a module publishes a SpatialSeries object
       representing a floating point value for theta. The SpatialSeries::reference_frame
       field should indicate what direction corresponds to 0 and which is the direction
@@ -29,7 +30,6 @@ CompassDirection
     - doc: SpatialSeries object containing direction of gaze travel
       neurodata_type_inc: SpatialSeries
       quantity: '*'
-    name: CompassDirection
     neurodata_type_def: CompassDirection
     neurodata_type_inc: NWBContainer
 

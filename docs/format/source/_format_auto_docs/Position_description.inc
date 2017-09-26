@@ -14,6 +14,9 @@ Position
 
 
 
+- **Default Name:** Position
+
+
 .. figure:: ./_format_auto_docs/Position.*
     :alt: Position
 
@@ -26,17 +29,23 @@ Position
 .. table:: Datasets, Links, and Attributes contained in <Position>
     :class: longtable
 
-    +------------+-------------+-------------------------------------------------------------------+
-    | Id         | Type        | Description                                                       |
-    +============+=============+===================================================================+
-    | Position   | group       | Top level group for Position                                      |
-    +------------+-------------+-------------------------------------------------------------------+
-    | .help      | attribute   | Value is 'Position data, whether along the x, xy or xyz axis'     |
-    |            |             |                                                                   |
-    |            |             | - **Data Type:** text                                             |
-    |            |             | - **Value:** Position data, whether along the x, xy or xyz axis   |
-    |            |             |                                                                   |
-    +------------+-------------+-------------------------------------------------------------------+
+    +--------------+-------------+-------------------------------------------------------------------+
+    | Id           | Type        | Description                                                       |
+    +==============+=============+===================================================================+
+    | <Position>   | group       | Top level group for <Position>                                    |
+    |              |             |                                                                   |
+    |              |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`             |
+    |              |             | - **Neurodata Type:** :ref:`Position <sec-Position>`              |
+    |              |             | - **Default Name:** Position                                      |
+    |              |             |                                                                   |
+    +--------------+-------------+-------------------------------------------------------------------+
+    | .help        | attribute   | Value is 'Position data, whether along the x, xy or xyz axis'     |
+    |              |             |                                                                   |
+    |              |             | - **Data Type:** text                                             |
+    |              |             | - **Value:** Position data, whether along the x, xy or xyz axis   |
+    |              |             | - **Name:** help                                                  |
+    |              |             |                                                                   |
+    +--------------+-------------+-------------------------------------------------------------------+
 
 
 
@@ -50,7 +59,12 @@ Position
     +-----------------------------------------------+---------+-----------------------------------------------------------+
     | Id                                            | Type    | Description                                               |
     +===============================================+=========+===========================================================+
-    | Position                                      | group   | Top level group for Position                              |
+    | <Position>                                    | group   | Top level group for <Position>                            |
+    |                                               |         |                                                           |
+    |                                               |         | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`     |
+    |                                               |         | - **Neurodata Type:** :ref:`Position <sec-Position>`      |
+    |                                               |         | - **Default Name:** Position                              |
+    |                                               |         |                                                           |
     +-----------------------------------------------+---------+-----------------------------------------------------------+
     | .<:ref:`SpatialSeries <sec-SpatialSeries>`>   | group   | SpatialSeries object containing position data             |
     |                                               |         |                                                           |

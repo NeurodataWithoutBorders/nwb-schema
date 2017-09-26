@@ -4,21 +4,16 @@ Generate figures and RST documents from the NWB YAML specification for the forma
 
 # TODO In the type hierarchy section add a section to order types by based on which YAML file they appear in
 # TODO In the sections describing the different types add the name of the source YAML file
-# TODO Add support for default_name once it is supported in the specification language
 
 
 #from pynwb.spec import SpecCatalog
 from form.spec.spec import GroupSpec, DatasetSpec, LinkSpec, AttributeSpec
 from pynwb.spec import NWBGroupSpec, NWBDatasetSpec, NWBNamespace
-from form.spec.catalog import SpecCatalog
 from form.spec.namespace import NamespaceCatalog
 from collections import OrderedDict
-from itertools import chain
 import warnings
 import os
 import sys
-#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")))
-#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../format/source")))
 try:
     from utils.render import RSTDocument, RSTTable, SpecFormatter
 except ImportError:
@@ -197,6 +192,13 @@ def spec_prop_doc(spec, newline='\n', ignore_props=None):
             spec_prop_list.append('**Value:** %s' % str(spec['value']))
         if spec.get('default_value', None) is not None and 'default_value' not in ignore_keys:
             spec_prop_list.append('**Default Value:** %s' % str(spec['default_value']))
+
+    # Add common properties
+    if spec.get('default_name', None) is not None:
+            spec_prop_list.append('**Default Name:** %s' % str(spec['default_name']))
+    if spec.get('name', None) is not None:
+        spec_prop_list.append('**Name:** %s' % str(spec['name']))
+
     # Render the sepecification propoerties list
     spec_doc = ''
     if len(spec_prop_list) > 0:
@@ -512,6 +514,7 @@ def create_spec_table(spec,
     if appreviate_main_object_doc and depth==0:
         # Create the appreviated descripiton of the main object
         spec_doc = "Top level %s for %s" % (spec_type, spec_name.lstrip(depth_str))
+        spec_doc += spec_prop_doc(spec, rst_table.newline)
     else:
         # Create the description for the object
         spec_doc = clean_doc(spec.doc, add_prefix=rst_table.newline+rst_table.newline)
@@ -712,7 +715,7 @@ def render_specs(neurodata_types,
         # Add the additional details about the doc
         type_desc_doc.add_text(spec_prop_doc(rt_spec,
                                              type_desc_doc.newline,
-                                             ignore_props=['neurodata_type_inc', 'neurodata_type_def']))
+                                             ignore_props=['neurodata_type_inc', 'neurodata_type_def', 'default_name', 'name']))
         type_desc_doc.add_text(type_desc_doc.newline)
 
         ##################################################
@@ -1148,8 +1151,10 @@ def main():
     for sec in type_sections:
         if sec_index > 0:
             desc_doc.add_latex_clearpage()
+        desc_doc.add_label(sec['title'].replace(' ', '_'))
         desc_doc.add_subsection(sec['title'])
         if src_doc is not None:
+            src_doc.add_label(sec['title'].replace(' ', '_') + '_src')
             src_doc.add_subsection(sec['title'])
 
         # Render all registered documents for the current section

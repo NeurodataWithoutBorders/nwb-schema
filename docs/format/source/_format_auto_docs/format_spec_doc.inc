@@ -9,6 +9,8 @@
 Specifications
 ==============
 
+.. _Main_Data_File:
+
 Main Data File
 --------------
 
@@ -22,6 +24,8 @@ Main Data File
 .. raw:: latex
 
     \clearpage \newpage
+
+.. _TimeSeries_Types:
 
 TimeSeries Types
 ----------------
@@ -150,6 +154,8 @@ TimeSeries Types
 .. raw:: latex
 
     \clearpage \newpage
+
+.. _Data_Processing:
 
 Data Processing
 ---------------
@@ -339,28 +345,12 @@ Data Processing
 
     \clearpage \newpage
 
+.. _Other_Types:
+
 Other Types
 -----------
 
-.. include:: _format_auto_docs/Epoch_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
 .. include:: _format_auto_docs/ElectrodeGroup_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/Image_description.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/Device_description.inc
 
 .. raw:: latex
 
@@ -372,7 +362,25 @@ Other Types
 
     \clearpage \newpage
 
+.. include:: _format_auto_docs/Epoch_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
 .. include:: _format_auto_docs/NWBContainer_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/Device_description.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/Image_description.inc
 
 .. raw:: latex
 

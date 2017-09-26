@@ -19,6 +19,7 @@ LFP
       name: help
       value: LFP data from one or more channels. Filter properties should be noted in
         the ElectricalSeries
+    default_name: LFP
     doc: LFP data from one or more channels. The electrode map in each published ElectricalSeries
       will identify which channels are providing LFP data. Filter properties should be
       noted in the ElectricalSeries description or comments field.
@@ -26,7 +27,6 @@ LFP
     - doc: ElectricalSeries object containing LFP data for one or channels
       neurodata_type_inc: ElectricalSeries
       quantity: +
-    name: LFP
     neurodata_type_def: LFP
     neurodata_type_inc: NWBContainer
 

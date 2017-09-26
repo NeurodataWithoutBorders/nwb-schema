@@ -14,6 +14,9 @@ LFP
 
 
 
+- **Default Name:** LFP
+
+
 .. figure:: ./_format_auto_docs/LFP.*
     :alt: LFP
 
@@ -29,12 +32,18 @@ LFP
     +---------+-------------+--------------------------------------------------------------------------------------------------------------+
     | Id      | Type        | Description                                                                                                  |
     +=========+=============+==============================================================================================================+
-    | LFP     | group       | Top level group for LFP                                                                                      |
+    | <LFP>   | group       | Top level group for <LFP>                                                                                    |
+    |         |             |                                                                                                              |
+    |         |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                                                        |
+    |         |             | - **Neurodata Type:** :ref:`LFP <sec-LFP>`                                                                   |
+    |         |             | - **Default Name:** LFP                                                                                      |
+    |         |             |                                                                                                              |
     +---------+-------------+--------------------------------------------------------------------------------------------------------------+
     | .help   | attribute   | Value is 'LFP data from one or more channels. Filter properties should be noted in the ElectricalSeries'     |
     |         |             |                                                                                                              |
     |         |             | - **Data Type:** text                                                                                        |
     |         |             | - **Value:** LFP data from one or more channels. Filter properties should be noted in the ElectricalSeries   |
+    |         |             | - **Name:** help                                                                                             |
     |         |             |                                                                                                              |
     +---------+-------------+--------------------------------------------------------------------------------------------------------------+
 
@@ -50,7 +59,12 @@ LFP
     +-----------------------------------------------------+---------+-------------------------------------------------------------------+
     | Id                                                  | Type    | Description                                                       |
     +=====================================================+=========+===================================================================+
-    | LFP                                                 | group   | Top level group for LFP                                           |
+    | <LFP>                                               | group   | Top level group for <LFP>                                         |
+    |                                                     |         |                                                                   |
+    |                                                     |         | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`             |
+    |                                                     |         | - **Neurodata Type:** :ref:`LFP <sec-LFP>`                        |
+    |                                                     |         | - **Default Name:** LFP                                           |
+    |                                                     |         |                                                                   |
     +-----------------------------------------------------+---------+-------------------------------------------------------------------+
     | .<:ref:`ElectricalSeries <sec-ElectricalSeries>`>   | group   | ElectricalSeries object containing LFP data for one or channels   |
     |                                                     |         |                                                                   |

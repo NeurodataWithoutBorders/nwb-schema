@@ -26,35 +26,43 @@ CurrentClampSeries
 .. table:: Datasets, Links, and Attributes contained in <CurrentClampSeries>
     :class: longtable
 
-    +-----------------------------+-------------+--------------------------------------------------------------------------+
-    | Id                          | Type        | Description                                                              |
-    +=============================+=============+==========================================================================+
-    | <CurrentClampSeries>        | group       | Top level group for <CurrentClampSeries>                                 |
-    +-----------------------------+-------------+--------------------------------------------------------------------------+
-    | .help                       | attribute   | Value is 'Voltage recorded from cell during current-clamp recording'     |
-    |                             |             |                                                                          |
-    |                             |             | - **Data Type:** text                                                    |
-    |                             |             | - **Value:** Voltage recorded from cell during current-clamp recording   |
-    |                             |             |                                                                          |
-    +-----------------------------+-------------+--------------------------------------------------------------------------+
-    | .bias_current               | dataset     | Unit: Amp                                                                |
-    |                             |             |                                                                          |
-    |                             |             | - **Quantity** 0 or 1                                                    |
-    |                             |             | - **Data Type:** float32                                                 |
-    |                             |             |                                                                          |
-    +-----------------------------+-------------+--------------------------------------------------------------------------+
-    | .bridge_balance             | dataset     | Unit: Ohm                                                                |
-    |                             |             |                                                                          |
-    |                             |             | - **Quantity** 0 or 1                                                    |
-    |                             |             | - **Data Type:** float32                                                 |
-    |                             |             |                                                                          |
-    +-----------------------------+-------------+--------------------------------------------------------------------------+
-    | .capacitance_compensation   | dataset     | Unit: Farad                                                              |
-    |                             |             |                                                                          |
-    |                             |             | - **Quantity** 0 or 1                                                    |
-    |                             |             | - **Data Type:** float32                                                 |
-    |                             |             |                                                                          |
-    +-----------------------------+-------------+--------------------------------------------------------------------------+
+    +-----------------------------+-------------+----------------------------------------------------------------------------+
+    | Id                          | Type        | Description                                                                |
+    +=============================+=============+============================================================================+
+    | <CurrentClampSeries>        | group       | Top level group for <CurrentClampSeries>                                   |
+    |                             |             |                                                                            |
+    |                             |             | - **Extends:** :ref:`PatchClampSeries <sec-PatchClampSeries>`              |
+    |                             |             | - **Neurodata Type:** :ref:`CurrentClampSeries <sec-CurrentClampSeries>`   |
+    |                             |             |                                                                            |
+    +-----------------------------+-------------+----------------------------------------------------------------------------+
+    | .help                       | attribute   | Value is 'Voltage recorded from cell during current-clamp recording'       |
+    |                             |             |                                                                            |
+    |                             |             | - **Data Type:** text                                                      |
+    |                             |             | - **Value:** Voltage recorded from cell during current-clamp recording     |
+    |                             |             | - **Name:** help                                                           |
+    |                             |             |                                                                            |
+    +-----------------------------+-------------+----------------------------------------------------------------------------+
+    | .bias_current               | dataset     | Unit: Amp                                                                  |
+    |                             |             |                                                                            |
+    |                             |             | - **Quantity** 0 or 1                                                      |
+    |                             |             | - **Data Type:** float32                                                   |
+    |                             |             | - **Name:** bias_current                                                   |
+    |                             |             |                                                                            |
+    +-----------------------------+-------------+----------------------------------------------------------------------------+
+    | .bridge_balance             | dataset     | Unit: Ohm                                                                  |
+    |                             |             |                                                                            |
+    |                             |             | - **Quantity** 0 or 1                                                      |
+    |                             |             | - **Data Type:** float32                                                   |
+    |                             |             | - **Name:** bridge_balance                                                 |
+    |                             |             |                                                                            |
+    +-----------------------------+-------------+----------------------------------------------------------------------------+
+    | .capacitance_compensation   | dataset     | Unit: Farad                                                                |
+    |                             |             |                                                                            |
+    |                             |             | - **Quantity** 0 or 1                                                      |
+    |                             |             | - **Data Type:** float32                                                   |
+    |                             |             | - **Name:** capacitance_compensation                                       |
+    |                             |             |                                                                            |
+    +-----------------------------+-------------+----------------------------------------------------------------------------+
 
 
 

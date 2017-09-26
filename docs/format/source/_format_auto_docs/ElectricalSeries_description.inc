@@ -30,11 +30,16 @@ ElectricalSeries
     | Id                   | Type        | Description                                                                                                                                                                                                                    |
     +======================+=============+================================================================================================================================================================================================================================+
     | <ElectricalSeries>   | group       | Top level group for <ElectricalSeries>                                                                                                                                                                                         |
+    |                      |             |                                                                                                                                                                                                                                |
+    |                      |             | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`                                                                                                                                                                              |
+    |                      |             | - **Neurodata Type:** :ref:`ElectricalSeries <sec-ElectricalSeries>`                                                                                                                                                           |
+    |                      |             |                                                                                                                                                                                                                                |
     +----------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     | .help                | attribute   | Value is 'Stores acquired voltage data from extracellular recordings'                                                                                                                                                          |
     |                      |             |                                                                                                                                                                                                                                |
     |                      |             | - **Data Type:** text                                                                                                                                                                                                          |
     |                      |             | - **Value:** Stores acquired voltage data from extracellular recordings                                                                                                                                                        |
+    |                      |             | - **Name:** help                                                                                                                                                                                                               |
     |                      |             |                                                                                                                                                                                                                                |
     +----------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     | .data                | dataset     | Recorded voltage data.                                                                                                                                                                                                         |
@@ -42,6 +47,7 @@ ElectricalSeries
     |                      |             | - **Data Type:** number                                                                                                                                                                                                        |
     |                      |             | - **Dimensions:** [['num_times'], ['num_times', 'num_channels']]                                                                                                                                                               |
     |                      |             | - **Shape:** [[None], [None, None]]                                                                                                                                                                                            |
+    |                      |             | - **Name:** data                                                                                                                                                                                                               |
     |                      |             |                                                                                                                                                                                                                                |
     +----------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     | ..unit               | attribute   | The base unit of measure used to store data. This should be in the SI unit.                                                                                                                                                    |
@@ -51,11 +57,13 @@ ElectricalSeries
     |                      |             | - **Data Type:** text                                                                                                                                                                                                          |
     |                      |             | - **Reuqired:** False                                                                                                                                                                                                          |
     |                      |             | - **Default Value:** volt                                                                                                                                                                                                      |
+    |                      |             | - **Name:** unit                                                                                                                                                                                                               |
     |                      |             |                                                                                                                                                                                                                                |
     +----------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     | .electrode_group     | link        | link to ElectrodeGroup group that generated this TimeSeries data                                                                                                                                                               |
     |                      |             |                                                                                                                                                                                                                                |
     |                      |             | - **Target Type** :ref:`ElectrodeGroup <sec-ElectrodeGroup>`                                                                                                                                                                   |
+    |                      |             | - **Name:** electrode_group                                                                                                                                                                                                    |
     |                      |             |                                                                                                                                                                                                                                |
     +----------------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
@@ -68,15 +76,20 @@ ElectricalSeries
 .. table:: Groups contained in <ElectricalSeries>
     :class: longtable
 
-    +----------------------+---------+--------------------------------------------------------------------+
-    | Id                   | Type    | Description                                                        |
-    +======================+=========+====================================================================+
-    | <ElectricalSeries>   | group   | Top level group for <ElectricalSeries>                             |
-    +----------------------+---------+--------------------------------------------------------------------+
-    | .electrode_group     | link    | link to ElectrodeGroup group that generated this TimeSeries data   |
-    |                      |         |                                                                    |
-    |                      |         | - **Target Type** :ref:`ElectrodeGroup <sec-ElectrodeGroup>`       |
-    |                      |         |                                                                    |
-    +----------------------+---------+--------------------------------------------------------------------+
+    +----------------------+---------+------------------------------------------------------------------------+
+    | Id                   | Type    | Description                                                            |
+    +======================+=========+========================================================================+
+    | <ElectricalSeries>   | group   | Top level group for <ElectricalSeries>                                 |
+    |                      |         |                                                                        |
+    |                      |         | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`                      |
+    |                      |         | - **Neurodata Type:** :ref:`ElectricalSeries <sec-ElectricalSeries>`   |
+    |                      |         |                                                                        |
+    +----------------------+---------+------------------------------------------------------------------------+
+    | .electrode_group     | link    | link to ElectrodeGroup group that generated this TimeSeries data       |
+    |                      |         |                                                                        |
+    |                      |         | - **Target Type** :ref:`ElectrodeGroup <sec-ElectrodeGroup>`           |
+    |                      |         | - **Name:** electrode_group                                            |
+    |                      |         |                                                                        |
+    +----------------------+---------+------------------------------------------------------------------------+
 
 

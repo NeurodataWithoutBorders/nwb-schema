@@ -30,12 +30,18 @@ SpecFile
     | Id            | Type        | Description                                                   |
     +===============+=============+===============================================================+
     | <SpecFile>    | dataset     | Top level dataset for <SpecFile>                              |
+    |               |             |                                                               |
+    |               |             | - **Quantity** 0 or more                                      |
+    |               |             | - **Data Type:** text                                         |
+    |               |             | - **Neurodata Type:** SpecFile                                |
+    |               |             |                                                               |
     +---------------+-------------+---------------------------------------------------------------+
     | .help         | attribute   | A help statement                                              |
     |               |             |                                                               |
     |               |             | - **Data Type:** text                                         |
     |               |             | - **Reuqired:** False                                         |
     |               |             | - **Default Value:** Contents of format specification file.   |
+    |               |             | - **Name:** help                                              |
     |               |             |                                                               |
     +---------------+-------------+---------------------------------------------------------------+
     | .namespaces   | attribute   | Namespaces defined in the file                                |
@@ -43,6 +49,7 @@ SpecFile
     |               |             | - **Data Type:** text                                         |
     |               |             | - **Dimensions:** ['num_namespaces']                          |
     |               |             | - **Shape:** (None,)                                          |
+    |               |             | - **Name:** namespaces                                        |
     |               |             |                                                               |
     +---------------+-------------+---------------------------------------------------------------+
 

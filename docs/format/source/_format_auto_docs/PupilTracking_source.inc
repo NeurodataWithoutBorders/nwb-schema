@@ -17,12 +17,12 @@ PupilTracking
       dtype: text
       name: help
       value: Eye-tracking data, representing pupil size
+    default_name: PupilTracking
     doc: Eye-tracking data, representing pupil size.
     groups:
     - doc: TimeSeries object containing time series data on pupil size
       neurodata_type_inc: TimeSeries
       quantity: +
-    name: PupilTracking
     neurodata_type_def: PupilTracking
     neurodata_type_inc: NWBContainer
 

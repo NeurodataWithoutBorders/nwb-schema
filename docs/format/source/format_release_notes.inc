@@ -3,22 +3,19 @@ Release Notes: NWB Format
 
 Proposed Future Changes
 -----------------------
-- Create new module to store frequency decompositions:
-    - **Reason:** Decomposition of signals via FFT, Wavelet, and other frequency-based analyses are very common and
-      are not well-supported by the NWB core.
-- Create new module to store matrix factorizations:
-    - **Reason:** Factorization of data matrices, e.g., via PCA, SVD, CUR, NMF, etc. are fairly common for data
-      interpretation as well as pre-processing, e.g., for machine-learning applications.
-- Change top-level datasets ``file_create_date``, ``identifier``,  ``nwb_version``,  ``session_description``,
-  ``session_start_time`` from datasets to attributes
-  - **Reason:** Reduce "clutter" in the file hierarchy and improve access to small metadata information
-- Change small metadata datasets to attributes where appropriate:
-    - **Reason:** Storing small metadata as datasets (compared to attributes) can lead to: i) clutter in the file
-      hierarchy making it harder for users to navigate files, ii) makes metadata appear as core data, and iii) causes
-      poor performance when extracting metadata from files (reading attributes is more efficient in many cases).
+Issue for proposed enhancements for NWB 2.x are managed in the GitHub project https://github.com/orgs/NeurodataWithoutBorders/projects/2 .
 
-1.1.0a, May 2017
-----------------
+Proposals for future enhancements are currently managed via issues on GitHub https://github.com/NeurodataWithoutBorders/nwb-schema/issues
+and should be assigned to the project ``NWB 2.x Proposed Enhancements``. Here a few format-specific enhancements that have been proposed:
+
+    - Create new module to store frequency decompositions: see https://github.com/NeurodataWithoutBorders/nwb-schema/issues/46
+    - Create new module to store matrix factorizations: see https://github.com/NeurodataWithoutBorders/nwb-schema/issues/47
+    - Change small metadata datasets to attributes where approbritate: see https://github.com/NeurodataWithoutBorders/nwb-schema/issues/48
+    - Addition of Interval series to SpikeWaveform and ElectrodeGroup objects: https://github.com/NeurodataWithoutBorders/nwb-schema/issues/2
+
+
+2.0.0 Alpha (August 2017)
+-------------------------
 
 Improved organization of electrode metadata in ``/general/extracellular_ephys``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -182,6 +179,26 @@ Improved governance and accessibility
     - The pyNWB API now provides dedicated data structured to interact with NWB specifications, enabling users
       programmatically access and generate format specifications
 
+Improved organization of processed data
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Change:** Relaxed requirements and renamed core types used for storage of processed data.
+
+**Reason:** Ease user intuition and provide greater flexibility for users.
+
+**Specific Changes:** The following changes have been made to the organization of processed data:
+
+    * *Module* has been renamed to *ProcessingModule* to avoid possible confusion and to clarify its purpose
+    * *Interface* has been renamed to *NWBContainer* to avoid confusion and ease intuition
+    * *NWBContainer* is now the base type of all main data storage types in the NWB format, including *TimeSeries.
+      This also means that all data storage types now inherit the required *help* and *source* attribute from
+      *NWBContainer*. Another implication of this change is that it is now possible to define data processing
+      types that directly inherit from *TimeSeries*.
+    * All *Interface* types in the orignal format had fixed names. The fixed names have been replaced by
+      specification of corresponding default names in the current format. This changes enables storage of
+      multiple instances of the same analysis type in the same *ProcessingModule* by allowing users to
+      customize the name of the data processing types, whereas in version 1.0.x only a single instance of
+      each analysis could be stored in a *ProcessingModule* due to the requirement for fixed names.
 
 Ancestry
 ^^^^^^^^

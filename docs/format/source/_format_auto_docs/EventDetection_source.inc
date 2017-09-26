@@ -45,6 +45,7 @@ EventDetection
       name: times
       shape:
       - null
+    default_name: EventDetection
     doc: Detected spike events from voltage trace(s).
     links:
     - doc: HDF5 link to ElectricalSeries that this data was calculated from. Metadata
@@ -52,7 +53,6 @@ EventDetection
         it's not necessary to mandate that information be stored here
       name: source_electricalseries
       target_type: ElectricalSeries
-    name: EventDetection
     neurodata_type_def: EventDetection
     neurodata_type_inc: NWBContainer
 

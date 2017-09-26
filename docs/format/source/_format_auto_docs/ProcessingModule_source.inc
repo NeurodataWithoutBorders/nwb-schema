@@ -24,7 +24,8 @@ ProcessingModule
       by contained interfaces.  Each interface is a contract specifying content related
       to a particular type of data.
     groups:
-    - doc: Interface objects containing data output from processing steps
+    - doc: NWBContainer data container objects containing data output from processing
+        steps
       neurodata_type_inc: NWBContainer
       quantity: '*'
     neurodata_type_def: ProcessingModule

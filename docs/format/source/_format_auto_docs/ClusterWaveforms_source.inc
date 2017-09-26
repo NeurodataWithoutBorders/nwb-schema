@@ -44,6 +44,7 @@ ClusterWaveforms
       shape:
       - null
       - null
+    default_name: ClusterWaveforms
     doc: The mean waveform shape, including standard deviation, of the different clusters.
       Ideally, the waveform analysis should be performed on data that is only high-pass
       filtered. This is a separate module because it is expected to require updating.
@@ -53,7 +54,6 @@ ClusterWaveforms
     - doc: HDF5 link to Clustering interface that was the source of the clustered data
       name: clustering_interface
       target_type: Clustering
-    name: ClusterWaveforms
     neurodata_type_def: ClusterWaveforms
     neurodata_type_inc: NWBContainer
 

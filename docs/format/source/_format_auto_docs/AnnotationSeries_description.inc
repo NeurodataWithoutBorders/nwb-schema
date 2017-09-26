@@ -26,42 +26,51 @@ AnnotationSeries
 .. table:: Datasets, Links, and Attributes contained in <AnnotationSeries>
     :class: longtable
 
-    +----------------------+-------------+-------------------------------------------------------------+
-    | Id                   | Type        | Description                                                 |
-    +======================+=============+=============================================================+
-    | <AnnotationSeries>   | group       | Top level group for <AnnotationSeries>                      |
-    +----------------------+-------------+-------------------------------------------------------------+
-    | .help                | attribute   | Value is 'Time-stamped annotations about an experiment'     |
-    |                      |             |                                                             |
-    |                      |             | - **Data Type:** text                                       |
-    |                      |             | - **Value:** Time-stamped annotations about an experiment   |
-    |                      |             |                                                             |
-    +----------------------+-------------+-------------------------------------------------------------+
-    | .data                | dataset     | Annotations made during an experiment.                      |
-    |                      |             |                                                             |
-    |                      |             | - **Data Type:** text                                       |
-    |                      |             | - **Dimensions:** ['num_times']                             |
-    |                      |             | - **Shape:** [None]                                         |
-    |                      |             |                                                             |
-    +----------------------+-------------+-------------------------------------------------------------+
-    | ..conversion         | attribute   | Value is 'float('NaN')'                                     |
-    |                      |             |                                                             |
-    |                      |             | - **Data Type:** None                                       |
-    |                      |             | - **Value:** NaN                                            |
-    |                      |             |                                                             |
-    +----------------------+-------------+-------------------------------------------------------------+
-    | ..resolution         | attribute   | Value is 'float('NaN')'                                     |
-    |                      |             |                                                             |
-    |                      |             | - **Data Type:** None                                       |
-    |                      |             | - **Value:** NaN                                            |
-    |                      |             |                                                             |
-    +----------------------+-------------+-------------------------------------------------------------+
-    | ..unit               | attribute   | Value is 'n/a'                                              |
-    |                      |             |                                                             |
-    |                      |             | - **Data Type:** None                                       |
-    |                      |             | - **Value:** n/a                                            |
-    |                      |             |                                                             |
-    +----------------------+-------------+-------------------------------------------------------------+
+    +----------------------+-------------+------------------------------------------------------------------------+
+    | Id                   | Type        | Description                                                            |
+    +======================+=============+========================================================================+
+    | <AnnotationSeries>   | group       | Top level group for <AnnotationSeries>                                 |
+    |                      |             |                                                                        |
+    |                      |             | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`                      |
+    |                      |             | - **Neurodata Type:** :ref:`AnnotationSeries <sec-AnnotationSeries>`   |
+    |                      |             |                                                                        |
+    +----------------------+-------------+------------------------------------------------------------------------+
+    | .help                | attribute   | Value is 'Time-stamped annotations about an experiment'                |
+    |                      |             |                                                                        |
+    |                      |             | - **Data Type:** text                                                  |
+    |                      |             | - **Value:** Time-stamped annotations about an experiment              |
+    |                      |             | - **Name:** help                                                       |
+    |                      |             |                                                                        |
+    +----------------------+-------------+------------------------------------------------------------------------+
+    | .data                | dataset     | Annotations made during an experiment.                                 |
+    |                      |             |                                                                        |
+    |                      |             | - **Data Type:** text                                                  |
+    |                      |             | - **Dimensions:** ['num_times']                                        |
+    |                      |             | - **Shape:** [None]                                                    |
+    |                      |             | - **Name:** data                                                       |
+    |                      |             |                                                                        |
+    +----------------------+-------------+------------------------------------------------------------------------+
+    | ..conversion         | attribute   | Value is 'float('NaN')'                                                |
+    |                      |             |                                                                        |
+    |                      |             | - **Data Type:** None                                                  |
+    |                      |             | - **Value:** NaN                                                       |
+    |                      |             | - **Name:** conversion                                                 |
+    |                      |             |                                                                        |
+    +----------------------+-------------+------------------------------------------------------------------------+
+    | ..resolution         | attribute   | Value is 'float('NaN')'                                                |
+    |                      |             |                                                                        |
+    |                      |             | - **Data Type:** None                                                  |
+    |                      |             | - **Value:** NaN                                                       |
+    |                      |             | - **Name:** resolution                                                 |
+    |                      |             |                                                                        |
+    +----------------------+-------------+------------------------------------------------------------------------+
+    | ..unit               | attribute   | Value is 'n/a'                                                         |
+    |                      |             |                                                                        |
+    |                      |             | - **Data Type:** None                                                  |
+    |                      |             | - **Value:** n/a                                                       |
+    |                      |             | - **Name:** unit                                                       |
+    |                      |             |                                                                        |
+    +----------------------+-------------+------------------------------------------------------------------------+
 
 
 

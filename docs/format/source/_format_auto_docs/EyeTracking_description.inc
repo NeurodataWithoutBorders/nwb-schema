@@ -14,6 +14,9 @@ EyeTracking
 
 
 
+- **Default Name:** EyeTracking
+
+
 .. figure:: ./_format_auto_docs/EyeTracking.*
     :alt: EyeTracking
 
@@ -26,17 +29,23 @@ EyeTracking
 .. table:: Datasets, Links, and Attributes contained in <EyeTracking>
     :class: longtable
 
-    +---------------+-------------+------------------------------------------------------------------+
-    | Id            | Type        | Description                                                      |
-    +===============+=============+==================================================================+
-    | EyeTracking   | group       | Top level group for EyeTracking                                  |
-    +---------------+-------------+------------------------------------------------------------------+
-    | .help         | attribute   | Value is 'Eye-tracking data, representing direction of gaze'     |
-    |               |             |                                                                  |
-    |               |             | - **Data Type:** text                                            |
-    |               |             | - **Value:** Eye-tracking data, representing direction of gaze   |
-    |               |             |                                                                  |
-    +---------------+-------------+------------------------------------------------------------------+
+    +-----------------+-------------+------------------------------------------------------------------+
+    | Id              | Type        | Description                                                      |
+    +=================+=============+==================================================================+
+    | <EyeTracking>   | group       | Top level group for <EyeTracking>                                |
+    |                 |             |                                                                  |
+    |                 |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`            |
+    |                 |             | - **Neurodata Type:** :ref:`EyeTracking <sec-EyeTracking>`       |
+    |                 |             | - **Default Name:** EyeTracking                                  |
+    |                 |             |                                                                  |
+    +-----------------+-------------+------------------------------------------------------------------+
+    | .help           | attribute   | Value is 'Eye-tracking data, representing direction of gaze'     |
+    |                 |             |                                                                  |
+    |                 |             | - **Data Type:** text                                            |
+    |                 |             | - **Value:** Eye-tracking data, representing direction of gaze   |
+    |                 |             | - **Name:** help                                                 |
+    |                 |             |                                                                  |
+    +-----------------+-------------+------------------------------------------------------------------+
 
 
 
@@ -50,7 +59,12 @@ EyeTracking
     +-----------------------------------------------+---------+--------------------------------------------------------------------+
     | Id                                            | Type    | Description                                                        |
     +===============================================+=========+====================================================================+
-    | EyeTracking                                   | group   | Top level group for EyeTracking                                    |
+    | <EyeTracking>                                 | group   | Top level group for <EyeTracking>                                  |
+    |                                               |         |                                                                    |
+    |                                               |         | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`              |
+    |                                               |         | - **Neurodata Type:** :ref:`EyeTracking <sec-EyeTracking>`         |
+    |                                               |         | - **Default Name:** EyeTracking                                    |
+    |                                               |         |                                                                    |
     +-----------------------------------------------+---------+--------------------------------------------------------------------+
     | .<:ref:`SpatialSeries <sec-SpatialSeries>`>   | group   | SpatialSeries object containing data measuring direction of gaze   |
     |                                               |         |                                                                    |

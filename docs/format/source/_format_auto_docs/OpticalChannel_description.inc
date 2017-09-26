@@ -32,21 +32,28 @@ OpticalChannel
     | Id                 | Type        | Description                                                                           |
     +====================+=============+=======================================================================================+
     | <OpticalChannel>   | group       | Top level group for <OpticalChannel>                                                  |
+    |                    |             |                                                                                       |
+    |                    |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                                 |
+    |                    |             | - **Neurodata Type:** :ref:`OpticalChannel <sec-OpticalChannel>`                      |
+    |                    |             |                                                                                       |
     +--------------------+-------------+---------------------------------------------------------------------------------------+
     | .help              | attribute   | Value is 'Metadata about an optical channel used to record from an imaging plane'     |
     |                    |             |                                                                                       |
     |                    |             | - **Data Type:** text                                                                 |
     |                    |             | - **Value:** Metadata about an optical channel used to record from an imaging plane   |
+    |                    |             | - **Name:** help                                                                      |
     |                    |             |                                                                                       |
     +--------------------+-------------+---------------------------------------------------------------------------------------+
     | .description       | dataset     | Any notes or comments about the channel                                               |
     |                    |             |                                                                                       |
     |                    |             | - **Data Type:** text                                                                 |
+    |                    |             | - **Name:** description                                                               |
     |                    |             |                                                                                       |
     +--------------------+-------------+---------------------------------------------------------------------------------------+
     | .emission_lambda   | dataset     | Emission lambda for channel                                                           |
     |                    |             |                                                                                       |
     |                    |             | - **Data Type:** text                                                                 |
+    |                    |             | - **Name:** emission_lambda                                                           |
     |                    |             |                                                                                       |
     +--------------------+-------------+---------------------------------------------------------------------------------------+
 

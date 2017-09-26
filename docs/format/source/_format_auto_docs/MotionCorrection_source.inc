@@ -18,6 +18,7 @@ MotionCorrection
       dtype: text
       name: help
       value: Image stacks whose frames have been shifted (registered) to account for motion
+    default_name: MotionCorrection
     doc: 'An image stack where all frames are shifted (registered) to a common coordinate
       system, to account for movement and drift between frames. Note: each frame at each
       point in time is assumed to be 2-D (has only x & y dimensions).'
@@ -43,7 +44,6 @@ MotionCorrection
       neurodata_type_def: CorrectedImageStack
       neurodata_type_inc: NWBContainer
       quantity: +
-    name: MotionCorrection
     neurodata_type_def: MotionCorrection
     neurodata_type_inc: NWBContainer
 

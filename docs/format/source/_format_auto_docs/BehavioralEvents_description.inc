@@ -14,6 +14,9 @@ BehavioralEvents
 
 
 
+- **Default Name:** BehavioralEvents
+
+
 .. figure:: ./_format_auto_docs/BehavioralEvents.*
     :alt: BehavioralEvents
 
@@ -26,17 +29,23 @@ BehavioralEvents
 .. table:: Datasets, Links, and Attributes contained in <BehavioralEvents>
     :class: longtable
 
-    +--------------------+-------------+-------------------------------------------------------------------+
-    | Id                 | Type        | Description                                                       |
-    +====================+=============+===================================================================+
-    | BehavioralEvents   | group       | Top level group for BehavioralEvents                              |
-    +--------------------+-------------+-------------------------------------------------------------------+
-    | .help              | attribute   | Value is 'Position data, whether along the x, xy or xyz axis'     |
-    |                    |             |                                                                   |
-    |                    |             | - **Data Type:** text                                             |
-    |                    |             | - **Value:** Position data, whether along the x, xy or xyz axis   |
-    |                    |             |                                                                   |
-    +--------------------+-------------+-------------------------------------------------------------------+
+    +----------------------+-------------+------------------------------------------------------------------------+
+    | Id                   | Type        | Description                                                            |
+    +======================+=============+========================================================================+
+    | <BehavioralEvents>   | group       | Top level group for <BehavioralEvents>                                 |
+    |                      |             |                                                                        |
+    |                      |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                  |
+    |                      |             | - **Neurodata Type:** :ref:`BehavioralEvents <sec-BehavioralEvents>`   |
+    |                      |             | - **Default Name:** BehavioralEvents                                   |
+    |                      |             |                                                                        |
+    +----------------------+-------------+------------------------------------------------------------------------+
+    | .help                | attribute   | Value is 'Position data, whether along the x, xy or xyz axis'          |
+    |                      |             |                                                                        |
+    |                      |             | - **Data Type:** text                                                  |
+    |                      |             | - **Value:** Position data, whether along the x, xy or xyz axis        |
+    |                      |             | - **Name:** help                                                       |
+    |                      |             |                                                                        |
+    +----------------------+-------------+------------------------------------------------------------------------+
 
 
 
@@ -47,17 +56,22 @@ BehavioralEvents
 .. table:: Groups contained in <BehavioralEvents>
     :class: longtable
 
-    +-----------------------------------------+---------+------------------------------------------------------------+
-    | Id                                      | Type    | Description                                                |
-    +=========================================+=========+============================================================+
-    | BehavioralEvents                        | group   | Top level group for BehavioralEvents                       |
-    +-----------------------------------------+---------+------------------------------------------------------------+
-    | .<:ref:`TimeSeries <sec-TimeSeries>`>   | group   | TimeSeries object containing irregular behavioral events   |
-    |                                         |         |                                                            |
-    |                                         |         | - **Quantity** 0 or more                                   |
-    |                                         |         | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`          |
-    |                                         |         |                                                            |
-    +-----------------------------------------+---------+------------------------------------------------------------+
+    +-----------------------------------------+---------+------------------------------------------------------------------------+
+    | Id                                      | Type    | Description                                                            |
+    +=========================================+=========+========================================================================+
+    | <BehavioralEvents>                      | group   | Top level group for <BehavioralEvents>                                 |
+    |                                         |         |                                                                        |
+    |                                         |         | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`                  |
+    |                                         |         | - **Neurodata Type:** :ref:`BehavioralEvents <sec-BehavioralEvents>`   |
+    |                                         |         | - **Default Name:** BehavioralEvents                                   |
+    |                                         |         |                                                                        |
+    +-----------------------------------------+---------+------------------------------------------------------------------------+
+    | .<:ref:`TimeSeries <sec-TimeSeries>`>   | group   | TimeSeries object containing irregular behavioral events               |
+    |                                         |         |                                                                        |
+    |                                         |         | - **Quantity** 0 or more                                               |
+    |                                         |         | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`                      |
+    |                                         |         |                                                                        |
+    +-----------------------------------------+---------+------------------------------------------------------------------------+
 
 
 Groups: <TimeSeries>

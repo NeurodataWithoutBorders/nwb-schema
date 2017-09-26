@@ -37,6 +37,6 @@ Namespace: NWB core
     - source: nwb.ogen.yaml
     - source: nwb.ophys.yaml
     - source: nwb.retinotopy.yaml
-    version: 1.2.0
+    version: 2.0.0
 
 

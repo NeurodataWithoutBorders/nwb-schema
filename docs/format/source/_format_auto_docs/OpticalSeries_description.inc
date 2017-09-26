@@ -30,17 +30,23 @@ OpticalSeries
     | Id                | Type        | Description                                                                                                            |
     +===================+=============+========================================================================================================================+
     | <OpticalSeries>   | group       | Top level group for <OpticalSeries>                                                                                    |
+    |                   |             |                                                                                                                        |
+    |                   |             | - **Extends:** :ref:`ImageSeries <sec-ImageSeries>`                                                                    |
+    |                   |             | - **Neurodata Type:** :ref:`OpticalSeries <sec-OpticalSeries>`                                                         |
+    |                   |             |                                                                                                                        |
     +-------------------+-------------+------------------------------------------------------------------------------------------------------------------------+
     | .help             | attribute   | Value is 'Time-series image stack for optical recording or stimulus'                                                   |
     |                   |             |                                                                                                                        |
     |                   |             | - **Data Type:** text                                                                                                  |
     |                   |             | - **Value:** Time-series image stack for optical recording or stimulus                                                 |
+    |                   |             | - **Name:** help                                                                                                       |
     |                   |             |                                                                                                                        |
     +-------------------+-------------+------------------------------------------------------------------------------------------------------------------------+
     | .distance         | dataset     | Distance from camera/monitor to target/eye.                                                                            |
     |                   |             |                                                                                                                        |
     |                   |             | - **Quantity** 0 or 1                                                                                                  |
     |                   |             | - **Data Type:** float32                                                                                               |
+    |                   |             | - **Name:** distance                                                                                                   |
     |                   |             |                                                                                                                        |
     +-------------------+-------------+------------------------------------------------------------------------------------------------------------------------+
     | .field_of_view    | dataset     | Width, height and depto of image, or imaged area (meters).                                                             |
@@ -49,12 +55,14 @@ OpticalSeries
     |                   |             | - **Data Type:** float32                                                                                               |
     |                   |             | - **Dimensions:** [['width|height', 'width|height|depth']]                                                             |
     |                   |             | - **Shape:** [2]                                                                                                       |
+    |                   |             | - **Name:** field_of_view                                                                                              |
     |                   |             |                                                                                                                        |
     +-------------------+-------------+------------------------------------------------------------------------------------------------------------------------+
     | .orientation      | dataset     | Description of image relative to some reference frame (e.g., which way is up). Must also specify frame of reference.   |
     |                   |             |                                                                                                                        |
     |                   |             | - **Quantity** 0 or 1                                                                                                  |
     |                   |             | - **Data Type:** text                                                                                                  |
+    |                   |             | - **Name:** orientation                                                                                                |
     |                   |             |                                                                                                                        |
     +-------------------+-------------+------------------------------------------------------------------------------------------------------------------------+
 

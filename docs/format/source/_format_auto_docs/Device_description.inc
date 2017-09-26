@@ -21,17 +21,22 @@ Device
 .. table:: Datasets, Links, and Attributes contained in <Device>
     :class: longtable
 
-    +------------+-------------+--------------------------------------------------+
-    | Id         | Type        | Description                                      |
-    +============+=============+==================================================+
-    | <Device>   | group       | Top level group for <Device>                     |
-    +------------+-------------+--------------------------------------------------+
-    | .help      | attribute   | Value is 'A recording device e.g. amplifier'     |
-    |            |             |                                                  |
-    |            |             | - **Data Type:** str                             |
-    |            |             | - **Value:** A recording device e.g. amplifier   |
-    |            |             |                                                  |
-    +------------+-------------+--------------------------------------------------+
+    +------------+-------------+---------------------------------------------------------+
+    | Id         | Type        | Description                                             |
+    +============+=============+=========================================================+
+    | <Device>   | group       | Top level group for <Device>                            |
+    |            |             |                                                         |
+    |            |             | - **Extends:** :ref:`NWBContainer <sec-NWBContainer>`   |
+    |            |             | - **Neurodata Type:** :ref:`Device <sec-Device>`        |
+    |            |             |                                                         |
+    +------------+-------------+---------------------------------------------------------+
+    | .help      | attribute   | Value is 'A recording device e.g. amplifier'            |
+    |            |             |                                                         |
+    |            |             | - **Data Type:** str                                    |
+    |            |             | - **Value:** A recording device e.g. amplifier          |
+    |            |             | - **Name:** help                                        |
+    |            |             |                                                         |
+    +------------+-------------+---------------------------------------------------------+
 
 
 

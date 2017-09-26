@@ -30,11 +30,16 @@ PatchClampSeries
     | Id                   | Type        | Description                                                                                                   |
     +======================+=============+===============================================================================================================+
     | <PatchClampSeries>   | group       | Top level group for <PatchClampSeries>                                                                        |
+    |                      |             |                                                                                                               |
+    |                      |             | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`                                                             |
+    |                      |             | - **Neurodata Type:** :ref:`PatchClampSeries <sec-PatchClampSeries>`                                          |
+    |                      |             |                                                                                                               |
     +----------------------+-------------+---------------------------------------------------------------------------------------------------------------+
     | .help                | attribute   | Value is 'Superclass definition for patch-clamp data'                                                         |
     |                      |             |                                                                                                               |
     |                      |             | - **Data Type:** text                                                                                         |
     |                      |             | - **Value:** Superclass definition for patch-clamp data                                                       |
+    |                      |             | - **Name:** help                                                                                              |
     |                      |             |                                                                                                               |
     +----------------------+-------------+---------------------------------------------------------------------------------------------------------------+
     | .data                | dataset     | Recorded voltage or current.                                                                                  |
@@ -42,17 +47,20 @@ PatchClampSeries
     |                      |             | - **Data Type:** number                                                                                       |
     |                      |             | - **Dimensions:** ['num_times']                                                                               |
     |                      |             | - **Shape:** [None]                                                                                           |
+    |                      |             | - **Name:** data                                                                                              |
     |                      |             |                                                                                                               |
     +----------------------+-------------+---------------------------------------------------------------------------------------------------------------+
     | .gain                | dataset     | Units: Volt/Amp (v-clamp) or Volt/Volt (c-clamp)                                                              |
     |                      |             |                                                                                                               |
     |                      |             | - **Quantity** 0 or 1                                                                                         |
     |                      |             | - **Data Type:** float                                                                                        |
+    |                      |             | - **Name:** gain                                                                                              |
     |                      |             |                                                                                                               |
     +----------------------+-------------+---------------------------------------------------------------------------------------------------------------+
     | .electrode           | link        | link to IntracellularElectrode group that describes th electrode that was used to apply or record this data   |
     |                      |             |                                                                                                               |
     |                      |             | - **Target Type** :ref:`IntracellularElectrode <sec-IntracellularElectrode>`                                  |
+    |                      |             | - **Name:** electrode                                                                                         |
     |                      |             |                                                                                                               |
     +----------------------+-------------+---------------------------------------------------------------------------------------------------------------+
 
@@ -69,10 +77,15 @@ PatchClampSeries
     | Id                   | Type    | Description                                                                                                   |
     +======================+=========+===============================================================================================================+
     | <PatchClampSeries>   | group   | Top level group for <PatchClampSeries>                                                                        |
+    |                      |         |                                                                                                               |
+    |                      |         | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`                                                             |
+    |                      |         | - **Neurodata Type:** :ref:`PatchClampSeries <sec-PatchClampSeries>`                                          |
+    |                      |         |                                                                                                               |
     +----------------------+---------+---------------------------------------------------------------------------------------------------------------+
     | .electrode           | link    | link to IntracellularElectrode group that describes th electrode that was used to apply or record this data   |
     |                      |         |                                                                                                               |
     |                      |         | - **Target Type** :ref:`IntracellularElectrode <sec-IntracellularElectrode>`                                  |
+    |                      |         | - **Name:** electrode                                                                                         |
     |                      |         |                                                                                                               |
     +----------------------+---------+---------------------------------------------------------------------------------------------------------------+
 

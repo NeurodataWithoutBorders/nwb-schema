@@ -17,6 +17,7 @@ UnitTimes
       dtype: text
       name: help
       value: Estimated spike times from a single unit
+    default_name: UnitTimes
     doc: Event times of observed units (e.g. cell, synapse, etc.). The UnitTimes group
       contains a group for each unit. The name of the group should match the value in
       the source module, if that is possible/relevant (e.g., name of ROIs from Segmentation
@@ -42,7 +43,6 @@ UnitTimes
       neurodata_type_def: SpikeUnit
       neurodata_type_inc: NWBContainer
       quantity: +
-    name: UnitTimes
     neurodata_type_def: UnitTimes
     neurodata_type_inc: NWBContainer
 

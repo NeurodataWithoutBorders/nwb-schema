@@ -30,11 +30,16 @@ IndexSeries
     | Id                    | Type        | Description                                                                                                                                                                      |
     +=======================+=============+==================================================================================================================================================================================+
     | <IndexSeries>         | group       | Top level group for <IndexSeries>                                                                                                                                                |
+    |                       |             |                                                                                                                                                                                  |
+    |                       |             | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`                                                                                                                                |
+    |                       |             | - **Neurodata Type:** :ref:`IndexSeries <sec-IndexSeries>`                                                                                                                       |
+    |                       |             |                                                                                                                                                                                  |
     +-----------------------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     | .help                 | attribute   | Value is 'A sequence that is generated from an existing image stack. Frames can be presented in an arbitrary order. The data[] field stores frame number in reference stack'     |
     |                       |             |                                                                                                                                                                                  |
     |                       |             | - **Data Type:** text                                                                                                                                                            |
     |                       |             | - **Value:** A sequence that is generated from an existing image stack. Frames can be presented in an arbitrary order. The data[] field stores frame number in reference stack   |
+    |                       |             | - **Name:** help                                                                                                                                                                 |
     |                       |             |                                                                                                                                                                                  |
     +-----------------------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     | .data                 | dataset     | Index of the frame in the referenced ImageSeries.                                                                                                                                |
@@ -42,11 +47,13 @@ IndexSeries
     |                       |             | - **Data Type:** int                                                                                                                                                             |
     |                       |             | - **Dimensions:** ['num_times']                                                                                                                                                  |
     |                       |             | - **Shape:** [None]                                                                                                                                                              |
+    |                       |             | - **Name:** data                                                                                                                                                                 |
     |                       |             |                                                                                                                                                                                  |
     +-----------------------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     | .indexed_timeseries   | link        | HDF5 link to TimeSeries containing images that are indexed.                                                                                                                      |
     |                       |             |                                                                                                                                                                                  |
     |                       |             | - **Target Type** :ref:`ImageSeries <sec-ImageSeries>`                                                                                                                           |
+    |                       |             | - **Name:** indexed_timeseries                                                                                                                                                   |
     |                       |             |                                                                                                                                                                                  |
     +-----------------------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
@@ -63,10 +70,15 @@ IndexSeries
     | Id                    | Type    | Description                                                   |
     +=======================+=========+===============================================================+
     | <IndexSeries>         | group   | Top level group for <IndexSeries>                             |
+    |                       |         |                                                               |
+    |                       |         | - **Extends:** :ref:`TimeSeries <sec-TimeSeries>`             |
+    |                       |         | - **Neurodata Type:** :ref:`IndexSeries <sec-IndexSeries>`    |
+    |                       |         |                                                               |
     +-----------------------+---------+---------------------------------------------------------------+
     | .indexed_timeseries   | link    | HDF5 link to TimeSeries containing images that are indexed.   |
     |                       |         |                                                               |
     |                       |         | - **Target Type** :ref:`ImageSeries <sec-ImageSeries>`        |
+    |                       |         | - **Name:** indexed_timeseries                                |
     |                       |         |                                                               |
     +-----------------------+---------+---------------------------------------------------------------+
 
