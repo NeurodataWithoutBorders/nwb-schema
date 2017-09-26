@@ -13,6 +13,9 @@ def local_install_pynwb():
     # Unzip the file
     with zipfile.ZipFile("pynwb-dev.zip","r") as zip_ref:
         zip_ref.extractall(".")
+    # Remove the PyNWB docs in order not to confuse ReadTheDocs
+    import shutil
+    shutil.rmtree('pynwb-dev/docs')
     # Add FORM and PyNWB to the path
     sys.path.append(os.path.abspath("pynwb-dev/src"))
 
