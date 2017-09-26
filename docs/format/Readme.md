@@ -90,3 +90,9 @@ In the regular Sphinx ```source/conf.py``` file we can then also set:
 
 * ```spec_doc_rebuild_always``` Boolean to define to always rebuild the source docs from YAML when doing a regular build of the sources (e.g., via ```make html```) even if the folder with the source files already exists
 
+
+## Dependencies
+
+The generation of the format docs requires the PyNWB and FORM packages. Since these packages are not available via pip yet, the script ```conf_get_pynwb.py``` is used to install the packages via python on ReadTheDocs (RTD) to enable RTD to build the docs automatically.
+
+
