@@ -25,7 +25,7 @@ except ImportError:
 
 # Import settings from the configuration file
 try:
-    from conf import spec_show_yaml_src, \
+    from conf_doc_autogen import spec_show_yaml_src, \
         spec_show_json_src, \
         spec_generate_src_file, \
         spec_show_hierarchy_plots, \
@@ -45,7 +45,7 @@ try:
         spec_input_namespace_filename, \
         spec_input_default_namespace
 except ImportError:
-    print("Could not import SPHINX conf.py file. Please the the PYTHONPATH to the source directory where the conf.py file is located")
+    print("Could not import SPHINX conf_doc_autogen.py file. Please add the PYTHONPATH to the source directory where the conf.py file is located")
     exit(0)
 
 try:
