@@ -330,19 +330,25 @@ Data Processing
 Other Types
 -----------
 
-.. include:: _format_auto_docs/ElectrodeGroup_source.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
 .. include:: _format_auto_docs/SpecFile_source.inc
 
 .. raw:: latex
 
     \clearpage \newpage
 
+.. include:: _format_auto_docs/Image_source.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
 .. include:: _format_auto_docs/Epoch_source.inc
+
+.. raw:: latex
+
+    \clearpage \newpage
+
+.. include:: _format_auto_docs/ElectrodeGroup_source.inc
 
 .. raw:: latex
 
@@ -355,12 +361,6 @@ Other Types
     \clearpage \newpage
 
 .. include:: _format_auto_docs/Device_source.inc
-
-.. raw:: latex
-
-    \clearpage \newpage
-
-.. include:: _format_auto_docs/Image_source.inc
 
 .. raw:: latex
 
