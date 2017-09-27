@@ -753,6 +753,7 @@ def render_specs(neurodata_types,
             raise
         except:
             PrintCol.print(rt + '-- RENDER HIERARCHY FAILED', PrintCol.FAIL)
+            raise
 
         ####################################################################
         #  Add the YAML and/or JSON sources to the document if requested
