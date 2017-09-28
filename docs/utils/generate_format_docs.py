@@ -48,21 +48,21 @@ except ImportError:
     print("Could not import SPHINX conf_doc_autogen.py file. Please add the PYTHONPATH to the source directory where the conf.py file is located")
     exit(0)
 
+#try:
+from matplotlib import pyplot as plt
+import networkx
 try:
-    from matplotlib import pyplot as plt
-    import networkx
-    try:
-        from utils.render import NXGraphHierarchyDescription, HierarchyDescription
-    except ImportError:
-        from render import NXGraphHierarchyDescription, HierarchyDescription
-    except ImportError:
-        sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")))
-        from utils.render import NXGraphHierarchyDescription, HierarchyDescription
-        warnings.warn("The import path for utils/render may not be set properly")
-    INCLUDE_GRAPHS = True
+    from utils.render import NXGraphHierarchyDescription, HierarchyDescription
 except ImportError:
-    INCLUDE_GRAPHS = False
-    warnings.warn('DISABLING RENDERING OF SPEC GRAPHS DUE TO IMPORT ERROR')
+    from render import NXGraphHierarchyDescription, HierarchyDescription
+except ImportError:
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")))
+    from utils.render import NXGraphHierarchyDescription, HierarchyDescription
+    warnings.warn("The import path for utils/render may not be set properly")
+INCLUDE_GRAPHS = True
+#except ImportError:
+#    INCLUDE_GRAPHS = False
+#    warnings.warn('DISABLING RENDERING OF SPEC GRAPHS DUE TO IMPORT ERROR')
 
 try:
     import ruamel.yaml as yaml
