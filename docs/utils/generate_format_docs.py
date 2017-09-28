@@ -59,7 +59,6 @@ try:
         sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")))
         from utils.render import NXGraphHierarchyDescription, HierarchyDescription
         warnings.warn("The import path for utils/render may not be set properly")
-
     INCLUDE_GRAPHS = True
 except ImportError:
     INCLUDE_GRAPHS = False
@@ -762,6 +761,7 @@ def render_specs(neurodata_types,
                 raise
             except:
                 PrintCol.print(rt + '-- RENDER HIERARCHY FAILED', PrintCol.FAIL)
+                raise
         else:
             if show_hierarchy_plots:
                 PrintCol.print(rt + '-- RENDER HIERARCHY FAILED DUE TO MISSING PACKAGES', PrintCol.FAIL)
@@ -1195,4 +1195,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
 
