@@ -768,7 +768,6 @@ def render_specs(neurodata_types,
                 raise
             except:
                 PrintCol.print(rt + '-- RENDER HIERARCHY FAILED', PrintCol.FAIL)
-                raise
         else:
             if show_hierarchy_plots:
                 PrintCol.print(rt + '-- RENDER HIERARCHY FAILED DUE TO MISSING PACKAGES', PrintCol.FAIL)
