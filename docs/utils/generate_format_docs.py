@@ -25,7 +25,7 @@ except ImportError:
 
 # Import settings from the configuration file
 try:
-    from conf import spec_show_yaml_src, \
+    from conf_doc_autogen import spec_show_yaml_src, \
         spec_show_json_src, \
         spec_generate_src_file, \
         spec_show_hierarchy_plots, \
@@ -37,6 +37,8 @@ try:
         spec_add_latex_clearpage_after_ndt_sections, \
         spec_resolve_type_inc, \
         spec_output_dir, \
+        spec_clean_output_dir_if_old_git_hash, \
+        spec_skip_doc_autogen_if_current_git_hash, \
         spec_input_spec_dir, \
         spec_output_doc_filename, \
         spec_output_src_filename, \
@@ -45,15 +47,29 @@ try:
         spec_input_namespace_filename, \
         spec_input_default_namespace
 except ImportError:
-    print("Could not import SPHINX conf.py file. Please the the PYTHONPATH to the source directory where the conf.py file is located")
+    print("Could not import SPHINX conf_doc_autogen.py file. Please add the PYTHONPATH to the source directory where the conf.py file is located")
     exit(0)
 
 try:
+    # Force matplotlib to use Agg backend. Added to make the build work on ReadTheDocs
+    import matplotlib
+    matplotlib.use('Agg')
+    # make sure that we can import pyplot an networkX
     from matplotlib import pyplot as plt
     import networkx
-    from utils.render import NXGraphHierarchyDescription, HierarchyDescription
+    # Try our best to get the other rendering helper functions imported
+    try:
+        from utils.render import NXGraphHierarchyDescription, HierarchyDescription
+    except ImportError:
+        from render import NXGraphHierarchyDescription, HierarchyDescription
+    except ImportError:
+        sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")))
+        from utils.render import NXGraphHierarchyDescription, HierarchyDescription
+        warnings.warn("The import path for utils/render may not be set properly")
+    # If all the imports worked then we can render the plots
     INCLUDE_GRAPHS = True
 except ImportError:
+    # Some import failed so disable rendering of plots
     INCLUDE_GRAPHS = False
     warnings.warn('DISABLING RENDERING OF SPEC GRAPHS DUE TO IMPORT ERROR')
 
@@ -721,38 +737,42 @@ def render_specs(neurodata_types,
         ##################################################
         # Render the graph for the spec if necessary
         #################################################
-        try:
-            if show_hierarchy_plots:
-                temp = HierarchyDescription.from_spec(rt_spec)
-                temp_graph = NXGraphHierarchyDescription(temp)
-                temp_figsize = temp_graph.suggest_figure_size()
-                temp_xlim = temp_graph.suggest_xlim()
-                temp_ylim = None # temp_graph.suggest_ylim()
-                if len(temp_graph.graph.nodes(data=False)) > 2:
-                    fig = temp_graph.draw(show_plot=False,
-                                          figsize=temp_figsize,
-                                          xlim=temp_xlim,
-                                          ylim=temp_ylim,
-                                          label_font_size=10)
-                    plt.savefig(os.path.join(file_dir, '%s.pdf' % rt),
-                                format='pdf',
-                                bbox_inches='tight',
-                                pad_inches = 0)
-                    plt.savefig(os.path.join(file_dir, '%s.png' % rt),
-                                format='png', dpi=300,
-                                bbox_inches='tight',
-                                pad_inches = 0)
-                    plt.close()
-                    type_desc_doc.add_figure(img='./_format_auto_docs/'+rt+".*", alt=rt)
-                    PrintCol.print("    " + rt + '-- RENDER OK.', PrintCol.OKGREEN)
+        if INCLUDE_GRAPHS:
+            try:
+                if show_hierarchy_plots:
+                    temp = HierarchyDescription.from_spec(rt_spec)
+                    temp_graph = NXGraphHierarchyDescription(temp)
+                    temp_figsize = temp_graph.suggest_figure_size()
+                    temp_xlim = temp_graph.suggest_xlim()
+                    temp_ylim = None # temp_graph.suggest_ylim()
+                    if len(temp_graph.graph.nodes(data=False)) > 2:
+                        fig = temp_graph.draw(show_plot=False,
+                                              figsize=temp_figsize,
+                                              xlim=temp_xlim,
+                                              ylim=temp_ylim,
+                                              label_font_size=10)
+                        plt.savefig(os.path.join(file_dir, '%s.pdf' % rt),
+                                    format='pdf',
+                                    bbox_inches='tight',
+                                    pad_inches = 0)
+                        plt.savefig(os.path.join(file_dir, '%s.png' % rt),
+                                    format='png', dpi=300,
+                                    bbox_inches='tight',
+                                    pad_inches = 0)
+                        plt.close()
+                        type_desc_doc.add_figure(img='./_format_auto_docs/'+rt+".*", alt=rt)
+                        PrintCol.print("    " + rt + '-- RENDER OK.', PrintCol.OKGREEN)
+                    else:
+                       PrintCol.print("    " + rt + '-- SKIPPED RENDER HIERARCHY. TWO OR FEWER NODES.', PrintCol.OKBLUE)
                 else:
-                   PrintCol.print("    " + rt + '-- SKIPPED RENDER HIERARCHY. TWO OR FEWER NODES.', PrintCol.OKBLUE)
-            else:
-                PrintCol.print("    " + rt + '-- SKIPPED RENDER HIERARCHY. See conf.py', PrintCol.OKBLUE)
-        except (KeyboardInterrupt, SystemExit):
-            raise
-        except:
-            PrintCol.print(rt + '-- RENDER HIERARCHY FAILED', PrintCol.FAIL)
+                    PrintCol.print("    " + rt + '-- SKIPPED RENDER HIERARCHY. See conf.py', PrintCol.OKBLUE)
+            except (KeyboardInterrupt, SystemExit):
+                raise
+            except:
+                PrintCol.print(rt + '-- RENDER HIERARCHY FAILED', PrintCol.FAIL)
+        else:
+            if show_hierarchy_plots:
+                PrintCol.print(rt + '-- RENDER HIERARCHY FAILED DUE TO MISSING PACKAGES', PrintCol.FAIL)
 
         ####################################################################
         #  Add the YAML and/or JSON sources to the document if requested
@@ -1066,6 +1086,28 @@ def load_nwb_namespace(namespace_file, default_namespace='core', resolve=spec_re
     return namespace, default_spec_catalog
 
 
+def get_git_revision_hash():
+    """
+    Helper function used to retrieve the git hash from the repo
+    :return: String with the git hash
+    """
+    import subprocess
+    return subprocess.check_output(['git', 'rev-parse', 'HEAD'])
+
+def git_hash_match(hashfilename):
+    """
+    Helper function used to check if the current git hash matches the version of the files
+    :return: True if match
+    """
+    if os.path.exists(hashfilename):
+        f = open(hashfilename, 'rb')
+        prev_hash = f.read()
+        f.close()
+        curr_hash = get_git_revision_hash()
+        return curr_hash == prev_hash
+    else:
+        return False
+
 def main():
 
     # Set the output path for the doc sources to be generated
@@ -1078,13 +1120,30 @@ def main():
     master_filename = os.path.join(file_dir, spec_output_master_filename)
     type_hierarchy_doc_filename = os.path.join(file_dir, spec_output_doc_type_hierarchy_filename)
     core_namespace_file = os.path.join(spec_dir, spec_input_namespace_filename)
+    git_hash_filename = os.path.join(file_dir, 'git_hash.txt')
 
-    # Create the ouptu directory if necessary
+    # Clean up the output directory if necessary
+    if spec_clean_output_dir_if_old_git_hash:
+        if os.path.exists(file_dir):
+            if not git_hash_match(git_hash_filename):
+                import shutil
+                shutil.rmtree(file_dir)
+                PrintCol.print('Removed old sources at: %s' % file_dir, col=PrintCol.OKGREEN)
+
+    # Create the output directory if necessary
     if not os.path.exists(file_dir):
         PrintCol.print('Generating output directory: %s' % file_dir, col=PrintCol.OKGREEN)
         os.mkdir(file_dir)
+        git_hash_file = open(git_hash_filename, 'wb')
+        git_hash_file.write(get_git_revision_hash())
+        git_hash_file.close()
     else:
         PrintCol.print('Output directory already exists: %s' % file_dir, col=PrintCol.OKGREEN)
+        if spec_skip_doc_autogen_if_current_git_hash:
+            if git_hash_match(git_hash_filename):
+                PrintCol.print('Git hash of sources already up-to-date. Skip autogenerate of sources.',
+                               col=PrintCol.OKGREEN)
+                return
 
     # Load the core namespace
     core_namespace, spec_catalog = load_nwb_namespace(namespace_file=core_namespace_file,
@@ -1183,4 +1242,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
 
