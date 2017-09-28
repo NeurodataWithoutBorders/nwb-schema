@@ -49,6 +49,8 @@ except ImportError:
     exit(0)
 
 #try:
+import matplotlib
+matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 import networkx
 try:
