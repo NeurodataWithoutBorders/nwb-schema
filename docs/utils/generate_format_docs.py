@@ -48,23 +48,28 @@ except ImportError:
     print("Could not import SPHINX conf_doc_autogen.py file. Please add the PYTHONPATH to the source directory where the conf.py file is located")
     exit(0)
 
-#try:
-import matplotlib
-matplotlib.use('Agg')
-from matplotlib import pyplot as plt
-import networkx
 try:
-    from utils.render import NXGraphHierarchyDescription, HierarchyDescription
+    # Force matplotlib to use Agg backend. Added to make the build work on ReadTheDocs
+    import matplotlib
+    matplotlib.use('Agg')
+    # make sure that we can import pyplot an networkX
+    from matplotlib import pyplot as plt
+    import networkx
+    # Try our best to get the other rendering helper functions imported
+    try:
+        from utils.render import NXGraphHierarchyDescription, HierarchyDescription
+    except ImportError:
+        from render import NXGraphHierarchyDescription, HierarchyDescription
+    except ImportError:
+        sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")))
+        from utils.render import NXGraphHierarchyDescription, HierarchyDescription
+        warnings.warn("The import path for utils/render may not be set properly")
+    # If all the imports worked then we can render the plots
+    INCLUDE_GRAPHS = True
 except ImportError:
-    from render import NXGraphHierarchyDescription, HierarchyDescription
-except ImportError:
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")))
-    from utils.render import NXGraphHierarchyDescription, HierarchyDescription
-    warnings.warn("The import path for utils/render may not be set properly")
-INCLUDE_GRAPHS = True
-#except ImportError:
-#    INCLUDE_GRAPHS = False
-#    warnings.warn('DISABLING RENDERING OF SPEC GRAPHS DUE TO IMPORT ERROR')
+    # Some import failed so disable rendering of plots
+    INCLUDE_GRAPHS = False
+    warnings.warn('DISABLING RENDERING OF SPEC GRAPHS DUE TO IMPORT ERROR')
 
 try:
     import ruamel.yaml as yaml
