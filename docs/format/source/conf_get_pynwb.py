@@ -12,12 +12,12 @@ def local_install_pynwb():
     urlretrieve("https://github.com/NeurodataWithoutBorders/pynwb/archive/dev.zip", "pynwb-dev.zip")
     # Unzip the file
     with zipfile.ZipFile("pynwb-dev.zip","r") as zip_ref:
-        zip_ref.extractall(".")
+        zip_ref.extractall("../")
     # Remove the PyNWB docs in order not to confuse ReadTheDocs
     import shutil
-    shutil.rmtree('pynwb-dev/docs')
+    shutil.rmtree('../pynwb-dev/docs')
     # Add FORM and PyNWB to the path
-    sys.path.append(os.path.abspath("pynwb-dev/src"))
+    sys.path.append(os.path.abspath("../pynwb-dev/src"))
 
 
 def pynwb_available():
