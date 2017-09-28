@@ -85,6 +85,11 @@ Finally, the name and location of output files can be customized as follows:
 * ```spec_output_src_filename```  Name of the file where the sources of the format spec go. NOTE: This file is only generated if spec_generate_src_file is enabled
 * ```spec_output_doc_type_hierarchy_filename```  Name of the file containing the type hierarchy. (Included in spec_output_doc_filename)
 
+To speed up the build of the format docs we can prevent the ``generate_format_docs.py`` script from regenerating the sources from YAML if the git-hash from the previous build is still current. This is controlled via the following options:
+
+* ``spec_clean_output_dir_if_old_git_hash`` Clean up the output directory before we generate the source if the git hash is out of date
+
+* ``spec_skip_doc_autogen_if_current_git_hash`` Do not rebuild the format sources if we have previously build the sources and the git hash matches
 
 In the regular Sphinx ```source/conf.py``` file we can then also set:
 

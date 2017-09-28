@@ -37,6 +37,8 @@ try:
         spec_add_latex_clearpage_after_ndt_sections, \
         spec_resolve_type_inc, \
         spec_output_dir, \
+        spec_clean_output_dir_if_old_git_hash, \
+        spec_skip_doc_autogen_if_current_git_hash, \
         spec_input_spec_dir, \
         spec_output_doc_filename, \
         spec_output_src_filename, \
@@ -1084,6 +1086,28 @@ def load_nwb_namespace(namespace_file, default_namespace='core', resolve=spec_re
     return namespace, default_spec_catalog
 
 
+def get_git_revision_hash():
+    """
+    Helper function used to retrieve the git hash from the repo
+    :return: String with the git hash
+    """
+    import subprocess
+    return subprocess.check_output(['git', 'rev-parse', 'HEAD'])
+
+def git_hash_match(hashfilename):
+    """
+    Helper function used to check if the current git hash matches the version of the files
+    :return: True if match
+    """
+    if os.path.exists(hashfilename):
+        f = open(hashfilename, 'rb')
+        prev_hash = f.read()
+        f.close()
+        curr_hash = get_git_revision_hash()
+        return curr_hash == prev_hash
+    else:
+        return False
+
 def main():
 
     # Set the output path for the doc sources to be generated
@@ -1096,13 +1120,30 @@ def main():
     master_filename = os.path.join(file_dir, spec_output_master_filename)
     type_hierarchy_doc_filename = os.path.join(file_dir, spec_output_doc_type_hierarchy_filename)
     core_namespace_file = os.path.join(spec_dir, spec_input_namespace_filename)
+    git_hash_filename = os.path.join(file_dir, 'git_hash.txt')
 
-    # Create the ouptu directory if necessary
+    # Clean up the output directory if necessary
+    if spec_clean_output_dir_if_old_git_hash:
+        if os.path.exists(file_dir):
+            if not git_hash_match(git_hash_filename):
+                import shutil
+                shutil.rmtree(file_dir)
+                PrintCol.print('Removed old sources at: %s' % file_dir, col=PrintCol.OKGREEN)
+
+    # Create the output directory if necessary
     if not os.path.exists(file_dir):
         PrintCol.print('Generating output directory: %s' % file_dir, col=PrintCol.OKGREEN)
         os.mkdir(file_dir)
+        git_hash_file = open(git_hash_filename, 'wb')
+        git_hash_file.write(get_git_revision_hash())
+        git_hash_file.close()
     else:
         PrintCol.print('Output directory already exists: %s' % file_dir, col=PrintCol.OKGREEN)
+        if spec_skip_doc_autogen_if_current_git_hash:
+            if git_hash_match(git_hash_filename):
+                PrintCol.print('Git hash of sources already up-to-date. Skip autogenerate of sources.',
+                               col=PrintCol.OKGREEN)
+                return
 
     # Load the core namespace
     core_namespace, spec_catalog = load_nwb_namespace(namespace_file=core_namespace_file,
