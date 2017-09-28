@@ -51,7 +51,15 @@ except ImportError:
 try:
     from matplotlib import pyplot as plt
     import networkx
-    from utils.render import NXGraphHierarchyDescription, HierarchyDescription
+    try:
+        from utils.render import NXGraphHierarchyDescription, HierarchyDescription
+    except ImportError:
+        from render import NXGraphHierarchyDescription, HierarchyDescription
+    except ImportError:
+        sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")))
+        from utils.render import NXGraphHierarchyDescription, HierarchyDescription
+        warnings.warn("The import path for utils/render may not be set properly")
+
     INCLUDE_GRAPHS = True
 except ImportError:
     INCLUDE_GRAPHS = False
@@ -721,39 +729,42 @@ def render_specs(neurodata_types,
         ##################################################
         # Render the graph for the spec if necessary
         #################################################
-        try:
-            if show_hierarchy_plots:
-                temp = HierarchyDescription.from_spec(rt_spec)
-                temp_graph = NXGraphHierarchyDescription(temp)
-                temp_figsize = temp_graph.suggest_figure_size()
-                temp_xlim = temp_graph.suggest_xlim()
-                temp_ylim = None # temp_graph.suggest_ylim()
-                if len(temp_graph.graph.nodes(data=False)) > 2:
-                    fig = temp_graph.draw(show_plot=False,
-                                          figsize=temp_figsize,
-                                          xlim=temp_xlim,
-                                          ylim=temp_ylim,
-                                          label_font_size=10)
-                    plt.savefig(os.path.join(file_dir, '%s.pdf' % rt),
-                                format='pdf',
-                                bbox_inches='tight',
-                                pad_inches = 0)
-                    plt.savefig(os.path.join(file_dir, '%s.png' % rt),
-                                format='png', dpi=300,
-                                bbox_inches='tight',
-                                pad_inches = 0)
-                    plt.close()
-                    type_desc_doc.add_figure(img='./_format_auto_docs/'+rt+".*", alt=rt)
-                    PrintCol.print("    " + rt + '-- RENDER OK.', PrintCol.OKGREEN)
+        if INCLUDE_GRAPHS:
+            try:
+                if show_hierarchy_plots:
+                    temp = HierarchyDescription.from_spec(rt_spec)
+                    temp_graph = NXGraphHierarchyDescription(temp)
+                    temp_figsize = temp_graph.suggest_figure_size()
+                    temp_xlim = temp_graph.suggest_xlim()
+                    temp_ylim = None # temp_graph.suggest_ylim()
+                    if len(temp_graph.graph.nodes(data=False)) > 2:
+                        fig = temp_graph.draw(show_plot=False,
+                                              figsize=temp_figsize,
+                                              xlim=temp_xlim,
+                                              ylim=temp_ylim,
+                                              label_font_size=10)
+                        plt.savefig(os.path.join(file_dir, '%s.pdf' % rt),
+                                    format='pdf',
+                                    bbox_inches='tight',
+                                    pad_inches = 0)
+                        plt.savefig(os.path.join(file_dir, '%s.png' % rt),
+                                    format='png', dpi=300,
+                                    bbox_inches='tight',
+                                    pad_inches = 0)
+                        plt.close()
+                        type_desc_doc.add_figure(img='./_format_auto_docs/'+rt+".*", alt=rt)
+                        PrintCol.print("    " + rt + '-- RENDER OK.', PrintCol.OKGREEN)
+                    else:
+                       PrintCol.print("    " + rt + '-- SKIPPED RENDER HIERARCHY. TWO OR FEWER NODES.', PrintCol.OKBLUE)
                 else:
-                   PrintCol.print("    " + rt + '-- SKIPPED RENDER HIERARCHY. TWO OR FEWER NODES.', PrintCol.OKBLUE)
-            else:
-                PrintCol.print("    " + rt + '-- SKIPPED RENDER HIERARCHY. See conf.py', PrintCol.OKBLUE)
-        except (KeyboardInterrupt, SystemExit):
-            raise
-        except:
-            PrintCol.print(rt + '-- RENDER HIERARCHY FAILED', PrintCol.FAIL)
-            raise
+                    PrintCol.print("    " + rt + '-- SKIPPED RENDER HIERARCHY. See conf.py', PrintCol.OKBLUE)
+            except (KeyboardInterrupt, SystemExit):
+                raise
+            except:
+                PrintCol.print(rt + '-- RENDER HIERARCHY FAILED', PrintCol.FAIL)
+        else:
+            if show_hierarchy_plots:
+                PrintCol.print(rt + '-- RENDER HIERARCHY FAILED DUE TO MISSING PACKAGES', PrintCol.FAIL)
 
         ####################################################################
         #  Add the YAML and/or JSON sources to the document if requested
