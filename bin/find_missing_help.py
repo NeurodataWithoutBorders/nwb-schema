@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import ruamel.yaml as yaml
 import sys
 
