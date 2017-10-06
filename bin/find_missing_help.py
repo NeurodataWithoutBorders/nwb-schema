@@ -28,7 +28,7 @@ def find_missing_help(d):
 for curr_file in sys.argv[1:]:
     with open(curr_file) as fin:
         fd = yaml.safe_load(fin)
-        for d in fd['groups']:
+        for d in fd.get('groups', []):
             find_missing_help(d)
 
 if len(missing) > 0:
