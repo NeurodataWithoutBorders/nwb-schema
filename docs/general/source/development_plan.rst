@@ -54,7 +54,7 @@ New features for this release:
         * Nicholas Chain (Allen Institute for Brain Science) and Andrew Tritt (LBNL) : Port to Python 2 and legacy read for Allen data
         * Bug fixes, feedback and suggestions have also been contributed by numerous users and developers from the NWB:N community
 
-* **PyNWB testing, continuous integration, deployment** We have developed an extensive set of unit tests for PyNWB. We have also created base infrastructure for integration tests to test end-to-end read/write of NWB:N files and data objects. While coverage of the tests is already quite good (>80%) coverage of the integration test suite is expected to be incomplete. We have also setup infrastructure for continues integration to execute all tests on a broad range of platforms as well as defined software deployment paths (e.g., via PIP, CONDA)
+* **PyNWB testing, continuous integration, deployment** We have developed an extensive set of unit tests for PyNWB. We have also created base infrastructure for integration tests to test end-to-end read/write of NWB:N files and data objects. While coverage of the tests is already quite good (>80%) coverage of the integration test suite is expected to be incomplete. We have also setup infrastructure for continuous integration to execute all tests on a broad range of platforms as well as defined software deployment paths (e.g., via PIP, CONDA)
 
     * **Available online:** For an overview of the various software health checks and tests being perfomred regulalary on PyNWB, see https://github.com/NeurodataWithoutBorders/pynwb
 
