@@ -5,15 +5,15 @@ Development Plan
 
 .. todo::
 
-    Add links to release notes for the specifciation language, format etc.
+    This is a first draft. Check completeness and consistency of all items. Check and approbriateness of  timelines for the release.
+
+.. todo::
+
+    Oliver: Create list of all GitHub isses relevant to the different milestones. In particular create a list of issues that we plan to implement for the full release of NWB.
 
 .. todo::
 
     Check and complete list of contributors for the various items
-
-.. todo::
-
-    This is a first draft. Check completeness, consistency, and approbriateness of timelines for the release.
 
 
 The following sections provide an overview of various development targets for NWB:N and what they entail.
@@ -31,9 +31,9 @@ New features for this release:
 
 * **PyNWB:** A new advanced python API for the new version of NWB:N 2.0. PyNWB defines a new modular software architecture and API to enable users/developers to efficiently interact with the NWB:N data format, format files, and specifications. The new software architecture  decouples the various aspects of NWB:N (i.e. the specification language, format specification, storage, and API) to allow each to be used and maintained more independently. PyNWB also provides and API for interacting with NWB:N format specifications and provides mechanisms to easily create and use format extensions.
 
-    * **Available online:**
+    * **Available online:** https://github.com/NeurodataWithoutBorders/pynwb
 
-        * https://github.com/NeurodataWithoutBorders/pynwb
+    * **Documentation:** http://pynwb.readthedocs.io
 
     * **Supported Languages** :
         * Python >2.7.x
@@ -44,7 +44,8 @@ New features for this release:
         * Write NWB:N HDF5 files
         * Read NWB:N files (base round-trip read/write)
         * Validate NWB:N files
-        * Create and use new format extensions
+        * Create new format extensions
+        * Read/Write data using extensions
         * Read legacy NWB 1.0x files from the Allen Institute for Brain Science
 
     * **Main contributors for this release** :
@@ -73,11 +74,32 @@ New features for this release:
         * Andrew Tritt (LBNL) : Lead for design and implementation of the Python test suites
         * Jean-Christophe Fillion-Robin, Doruk Ozturk, Chris Kotfila Michael Grauer, Will Schroeder (Kitware) : Lead development team for creation of continuous integration, testing, and deployment mechanisms
 
-* **nwb-schema** nwb-schema is available on GitHub at https://github.com/NeurodataWithoutBorders/nwb-schema
 
 * **Specification Language** We have simplified and extended the specification language used to describe the NWB:N format to ease readability, interpretability and expressiveness.
 
+    * **Documentation:** http://schema-language.readthedocs.io
+
+    * **Release Notes:** http://schema-language.readthedocs.io/en/latest/specification_language_release_notes.html
+
+    * **Main contributors for this release** :
+
+        * Andrew Tritt, Oliver Ruebel, Kris Bouchard (LBNL) : Development leads
+        * Changes to the specification language have also been reviewed and new changes have been proposed at a community hackathon at Janelia Farms HHMI in August 2017. Many users have also contributed via GitHub issues.
+
+
 * **Format Specification** Changes to the format have focused mainly on improving the structure and usability of NWB:N rather than adding new features to the format itself. Updates to the NWB:N format include among others extensions to clarify and extend the concept of NWBContainer (previously Interface), avoid implicit links, and improve consistency and ease-of-use.
+
+    * **Available online:** nwb-schema is available on GitHub at https://github.com/NeurodataWithoutBorders/nwb-schema
+
+    * **Documentation:** http://nwb-schema.readthedocs.io
+
+    * **Release Notes:** http://nwb-schema.readthedocs.io/en/latest/format.html#release-notes-nwb-format
+
+    * **Main contributors for this release** :
+
+        * Andrew Tritt, Oliver Ruebel (LBNL) : Implementation and documentation leads
+        * Changes to the format specification have also been reviewed and new changes have been proposed at a community hackathon at Janelia Farms HHMI in August 2017. Many users have also contributed via GitHub issues.
+
 
 * **Documentation** We have created dedicated online documentations for the various aspects of NWB:N. While the documents are quite extensive, completeness and consistency of the documents is not guaranteed for the beta release and examples, tutorials and release notes (i.e., changes), may be a bit out of date given pace of development.
 
@@ -91,12 +113,23 @@ New features for this release:
     * **Format Documentation Tools** To ensure consistency between the NWB:N format specification and documentation we have developed a set of tools generate Sphinx RST documents from the YAML specification sources. The tools are available in `docs/utils` as part of the nwb-schema repository for Python 2/3.
 
     * **Main contributors for this release** :
-        * Oliver Ruebel and Andrew Tritt (LBNL)
+        * Oliver Ruebel and Andrew Tritt (LBNL) : Documentation leads
         * Several of the documents have been ported from NWB:N 1.x, which were originally created by Jeff Teeters (UCB) et al.
         * Other teams have also contributed bug fixes
-* **Matlab API** A separate Matlab API is also currently being developed. Full functionality of the Matlab API nor full consistency with the PyNWB API can be guaranteed at this point.
 
-    * **Main developers for this release:**  Nathan Clack and Lawrence Niu (Vidriotech)
+* **MatNWB** MatNWB is a Matlab API for NWB:N. MatNWB generates Matlab classes for representing NWB:N neurodata_type directly from the YAML specification.
+
+    * **Core features**:
+
+        * Write NWB:N HDF5 files
+        * Read NWB:N HDF5 files
+        * Read/Write data for custom extensions
+
+    * **Main contributors for this release:**
+        * Nathan Clack and Lawrence Niu (Vidriotech) : Software design and development lead
+        * Karel Svoboda : Project Lead
+        * Andrew Tritt and Oliver Ruebel : Review and discussion
+
 
 
 .. _dev-nwb2:
@@ -141,6 +174,7 @@ Planed new features (beyond NWB:N 2.0 beta)
 
     * Ensure complete coverage and support for read and write of NWB:N HDF5 files
     * Ensure consistency between files generated by the Matlab and Python APIs
+    * Add support for the above-described changes to the specification language and schema
     * Add further documentation
 
 
