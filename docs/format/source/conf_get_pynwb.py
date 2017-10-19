@@ -1,5 +1,5 @@
 try:  #Python 2
-    from urlib import urlretrieve
+    from urllib import urlretrieve
 except ImportError:   # Python 3
     from urllib.request import urlretrieve
 

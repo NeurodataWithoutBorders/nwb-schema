@@ -5,8 +5,9 @@ Generate figures and RST documents from the NWB YAML specification for the forma
 # TODO In the type hierarchy section add a section to order types by based on which YAML file they appear in
 # TODO In the sections describing the different types add the name of the source YAML file
 
+# Python 2/3 compatibility
+from __future__ import print_function
 
-#from pynwb.spec import SpecCatalog
 from form.spec.spec import GroupSpec, DatasetSpec, LinkSpec, AttributeSpec
 from pynwb.spec import NWBGroupSpec, NWBDatasetSpec, NWBNamespace
 from form.spec.namespace import NamespaceCatalog
@@ -47,7 +48,7 @@ try:
         spec_input_namespace_filename, \
         spec_input_default_namespace
 except ImportError:
-    print("Could not import SPHINX conf_doc_autogen.py file. Please add the PYTHONPATH to the source directory where the conf.py file is located")
+    print("Could not import SPHINX conf_doc_autogen.py file. Please add the PYTHONPATH to the source directory where the conf_doc_autogen.py file is located")
     exit(0)
 
 try:

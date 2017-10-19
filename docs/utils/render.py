@@ -43,12 +43,16 @@ class SpecFormatter(object):
         :return: YAML string for the current specification
         """
         import json
+        import sys
         try:
             from ruamel import yaml
         except:
             import yaml
         clean_spec = json.loads(SpecFormatter.spec_to_json(spec, pretty=True))
-        return yaml.dump(clean_spec, default_flow_style=False)
+        if sys.version_info[0] == 3:
+            return yaml.dump(clean_spec, default_flow_style=False)
+        else:
+            return yaml.safe_dump(clean_spec, default_flow_style=False)
 
     @classmethod
     def spec_to_rst(cls, spec):
