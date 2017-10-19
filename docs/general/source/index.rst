@@ -10,6 +10,7 @@ Welcome to NWB-N
     nwbintro
     architecture
     general
+    development_plan
     credits
 
 
