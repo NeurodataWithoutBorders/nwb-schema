@@ -180,11 +180,25 @@ Planed new features (beyond NWB:N 2.0 beta)
     * Add support for the above-described changes to the specification language and schema
     * Add further documentation
 
+
 Open GitHub Issues for this release
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * **PyNWB:** https://github.com/NeurodataWithoutBorders/pynwb/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22NWB+2.0+Full%22
 * **nwb-schema:** https://github.com/NeurodataWithoutBorders/nwb-schema/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22NWB+2.0+Full%22
+
+
+Internal GitHub Project Board
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The following project board organizes issues related to NWB 2.0 from the various repos: https://github.com/orgs/NeurodataWithoutBorders/projects/1  Note, as this is an organization-level project board, this is unfortunately only available to members of the NeurodataWithoutBorders GitHub organization.
+
+
+.. figure:: figures/nwb_2_project_board_Oct23_2017.png
+   :scale: 100 %
+   :alt: NWB:N 2.0 project board
+
+   Screenshot of the NWB:N project board as of Oct. 23, 2017
 
 
 NWB:N 2.x
@@ -205,5 +219,9 @@ Open GitHub Issues for Future items
 * **nwb-schema:** https://github.com/NeurodataWithoutBorders/nwb-schema/issues?q=is%3Aopen+is%3Aissue+milestone%3AFuture
 
 
+Internal GitHub Project Board
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The following project board organizes issues related to NWB 2.x from the various repos: https://github.com/orgs/NeurodataWithoutBorders/projects/2  Note, as this is an organization-level project board, this is unfortunately only available to members of the NeurodataWithoutBorders GitHub organization. Note, until work begins on the NWB:N 2.x we may occasionally add nodes and tickets to this board to help with the planning and organization for NWB 2.x later on, however, this board is currently not activily maintained and may not reflect actual future plans for NWB 2.x.
 
 
