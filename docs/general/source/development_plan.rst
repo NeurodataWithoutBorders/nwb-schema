@@ -9,10 +9,6 @@ Development Plan
 
 .. todo::
 
-    Oliver: Create list of all GitHub isses relevant to the different milestones. In particular create a list of issues that we plan to implement for the full release of NWB.
-
-.. todo::
-
     Check and complete list of contributors for the various items
 
 
@@ -131,6 +127,12 @@ New features for this release:
         * Andrew Tritt and Oliver Ruebel : Review and discussion
 
 
+Open GitHub Issues for this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* **PyNWB:** https://github.com/NeurodataWithoutBorders/pynwb/issues?q=is%3Aopen+is%3Aissue+milestone%3Asfn_release
+* **nwb-schema:** https://github.com/NeurodataWithoutBorders/nwb-schema/issues?q=is%3Aopen+is%3Aissue+milestone%3Asfn_release
+
 
 .. _dev-nwb2:
 
@@ -177,6 +179,29 @@ Planed new features (beyond NWB:N 2.0 beta)
     * Add support for the above-described changes to the specification language and schema
     * Add further documentation
 
+Open GitHub Issues for this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* **PyNWB:** https://github.com/NeurodataWithoutBorders/pynwb/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22NWB+2.0+Full%22
+* **nwb-schema:** https://github.com/NeurodataWithoutBorders/nwb-schema/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22NWB+2.0+Full%22
+
+
+NWB:N 2.x
+---------
+
+NWB:N 2.x refers to the next major feature release of NWB:N beyond the main release of NWB:N 2. The features to be included and target release date for NWB 2.x  will be decided on after the NWB 2.0 release is complete.
+
+Open GitHub Issues for NWB:N 2.x
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* **PyNWB:** https://github.com/NeurodataWithoutBorders/pynwb/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22NWB+2.x%22
+* **nwb-schema:** https://github.com/NeurodataWithoutBorders/nwb-schema/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22NWB+2.x%22
+
+Open GitHub Issues for Future items
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* **PyNWB:** https://github.com/NeurodataWithoutBorders/pynwb/issues?q=is%3Aopen+is%3Aissue+milestone%3AFuture
+* **nwb-schema:** https://github.com/NeurodataWithoutBorders/nwb-schema/issues?q=is%3Aopen+is%3Aissue+milestone%3AFuture
 
 
 
