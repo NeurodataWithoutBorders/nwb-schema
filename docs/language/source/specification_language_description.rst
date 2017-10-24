@@ -569,6 +569,80 @@ reference types.
 |                          | ``target_type``                     |
 +--------------------------+-------------------------------------+
 
+Compound ``dtype``
+""""""""""""""""""
+
+Compound data types are essentially a ``struct``, i.e., the data type is a composition of several primitive types.
+This is useful to specify complex types, e.g., for storage of complex numbers consisting of a real and imaginary components,
+vectors or tensors, as well to create table-like data structures. Compond data types are created by defining a list of
+the form:
+
+.. code-block:: yaml
+
+    dtype:
+    - name: <name of the data value>
+      dtype: <one of the above basic dtype stings or references>
+      doc: <description of the data>
+   - name: ....
+     .
+     .
+     .
+
+.. note::
+
+    Currently only "flat" compound types are allowed, i.e., a compound type may not contain other compound types
+    but may itself only consist of basic dtypes, e.g,. float, string, etc. or reference dtypes.
+
+
+Below and example form the NWB:N format specification showing the use of compound data types to create a table-like
+data structur for storing metadata about electrodes.
+
+
+.. code-block:: yaml
+
+    datasets:
+    - doc: 'a table for storing queryable information about electrodes in a single table'
+      dtype:
+      - name: id
+        dtype: int
+        doc: a user-specified unique identifier
+      - name: x
+        dtype: float
+        doc: the x coordinate of the channels location
+      - name: y
+        dtype: float
+        doc: the y coordinate of the channels location
+      - name: z
+        dtype: float
+        doc: the z coordinate of the channels location
+      - name: imp
+        dtype: float
+        doc: the impedance of the channel
+      - name: location
+        dtype: ascii
+        doc: the location of channel within the subject e.g. brain region
+      - name: filtering
+        dtype: ascii
+        doc: description of hardware filtering
+      - name: description
+        dtype: utf8
+        doc: a brief description of what this electrode is
+      - name: group
+        dtype: ascii
+        doc: the name of the ElectrodeGroup this electrode is a part of
+      - name: group_ref
+        dtype:
+            target_type: ElectrodeGroup
+            reftype: object
+        doc: a reference to the ElectrodeGroup this electrode is a part of
+      attributes:
+        - doc: Value is 'a table for storing data about extracellular electrodes'
+          dtype: text
+          name: help
+          value: a table for storing data about extracellular electrodes
+      neurodata_type_inc: NWBData
+    neurodata_type_def: ElectrodeTable
+
 
 .. _sec-dims:
 

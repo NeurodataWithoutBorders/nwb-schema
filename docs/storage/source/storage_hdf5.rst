@@ -187,3 +187,5 @@ The mappings of data types is as follows
     |  * region                | Reference to a region            |                |
     |                          | of another dataset               |                |
     +--------------------------+----------------------------------+----------------+
+    |  compound dtype          + HDF5 compound data type          |                |
+    +--------------------------+----------------------------------+----------------+
