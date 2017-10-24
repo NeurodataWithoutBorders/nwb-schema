@@ -500,21 +500,75 @@ purpose and use of the attribute data. The ``doc`` key is required.
 
 String specifying the data type of the attribute. Allowable values are:
 
-- ``float`` – indicates a floating point number
-- ``int`` – indicates an integer
-- ``uint`` – unsigned integer
-- ``number`` – indicates either a floating point or an integer
-- ``text`` – a text string
++--------------------------+----------------------------------+----------------+
+| ``dtype`` **spec value** | **storage type**                 | **size**       |
++--------------------------+----------------------------------+----------------+
+|  * "float"               | single precision floating point  |  32 bit        |
+|  * "float32"             |                                  |                |
++--------------------------+----------------------------------+----------------+
+|  * "double"              | double precision floating point  | 64 bit         |
+|  * "float64"             |                                  |                |
++--------------------------+----------------------------------+----------------+
+|  * "long"                | signed 64 bit integer            | 64 bit         |
+|  * "int64"               |                                  |                |
++--------------------------+----------------------------------+----------------+
+|  * "int"                 | signed 32 bit integer            | 32 bit         |
+|  * "int32"               |                                  |                |
++--------------------------+----------------------------------+----------------+
+|  * "int16"               | signed 16 bit integer            | 16 bit         |
++--------------------------+----------------------------------+----------------+
+|  * "int8"                | signed 8 bit integer             | 8 bit          |
++--------------------------+----------------------------------+----------------+
+| * "uint32"               | unsigned 32 bit integer          | 32 bit         |
++--------------------------+----------------------------------+----------------+
+| * "uint16"               | unsigned 16 bit integer          | 16 bit         |
++--------------------------+----------------------------------+----------------+
+| * "uint8"                | unsigned 8 bit integer           | 8 bit          |
++--------------------------+----------------------------------+----------------+
+|  * "text"                | unicode                          | variable       |
+|  * "utf"                 |                                  |                |
+|  * "utf8"                |                                  |                |
+|  * "utf-8"               |                                  |                |
++--------------------------+----------------------------------+----------------+
+|  * "ascii"               | ascii                            | variable       |
+|  * "str"                 |                                  |                |
++--------------------------+----------------------------------+----------------+
 
-For all of the above types (except number and text), a default size (in bits) can
-be specified by appending the size to the type, e.g., int32. If “!” is
-appended to the default size, e.g. “float64!”, then the default size is
-also the required minimum size.
+.. note::
 
-.. attention::
+    The precision indicated in the specification is generally interpreted as a minimum precision.
+    Higher precisions may be used if required by the particular data.
 
-    - **TODO** Check that the list of allowable dtypes is complete
-    - **TODO** Check that the behavior described for type bit lengths is current
+Reference ``dtype``
+"""""""""""""""""""
+
+In additon to the above basic data types, an attribute or dataset may also store references to other
+data objects. Reference ``dtypes`` are described via a dictionary. E.g.:
+
+.. code-block:: yaml
+
+  dtype:
+        target_type: ElectrodeGroup
+        reftype: object
+
+
+``target_type`` here describes the ``neurodata_type`` of the target that the reference points to and
+``reftype`` describes the kind of reference. Currently the specification language supports two main
+reference types.
+
+
++--------------------------+-------------------------------------+
+| ``reftype`` **value**    | **Reference type description**      |
++--------------------------+-------------------------------------+
+|  * "ref"                 | Reference to another group or       |
+|  * "reference"           | dataset of the given `              |
+|  * "object"              | ``target_type``                     |
++--------------------------+-------------------------------------+
+|  * region                | Reference to a region (i.e. subset) |
+|                          | of another dataset of the given     |
+|                          | ``target_type``                     |
++--------------------------+-------------------------------------+
+
 
 .. _sec-dims:
 
