@@ -71,7 +71,7 @@ New features for this release:
         * Jean-Christophe Fillion-Robin, Doruk Ozturk, Chris Kotfila Michael Grauer, Will Schroeder (Kitware) : Lead development team for creation of continuous integration, testing, and deployment mechanisms
 
 
-* **Specification Language** We have simplified and extended the specification language used to describe the NWB:N format to ease readability, interpretability and expressiveness.
+* **Specification Language** We have simplified and extended the specification language used to describe the NWB:N format to ease readability, interpretability and expressiveness as well as added support for compound data types and references among others.
 
     * **Documentation:** http://schema-language.readthedocs.io
 
@@ -83,7 +83,7 @@ New features for this release:
         * Changes to the specification language have also been reviewed and new changes have been proposed at a community hackathon at Janelia Farms HHMI in August 2017. Many users have also contributed via GitHub issues.
 
 
-* **Format Specification** Changes to the format have focused mainly on improving the structure and usability of NWB:N rather than adding new features to the format itself. Updates to the NWB:N format include among others extensions to clarify and extend the concept of NWBContainer (previously Interface), avoid implicit links, and improve consistency and ease-of-use.
+* **Format Specification** Changes to the format have focused mainly on improving the structure and usability of NWB:N rather than adding new features to the format itself. Updates to the NWB:N format include among others: 1) extensions to clarify and extend the concept of NWBContainer (previously Interface), 2) avoid implicit links, 3)  improve consistency and ease-of-use, 4) refactor of ``/general/extracellular_ephys`` and ``ElectrodeGroup`` to use data tables via compound data types.
 
     * **Available online:** nwb-schema is available on GitHub at https://github.com/NeurodataWithoutBorders/nwb-schema
 
@@ -147,13 +147,11 @@ Planed new features (beyond NWB:N 2.0 beta)
 * **NWB:N Format Specification (and PyNWB API)**
 
     * Support saving of NWB:N specifications in NWB:N HDF5 files as part of the ``/general/specifications``. Support use of these cached specification for data read.
-    * Refactor ``/general/extracellular_ephys`` and ``ElectrodeGroup`` to use data tables via compound data types
     * Reorganize ``/general`` to ease additiona and management of custom, lab-specific metadata via extensions
 
 * **NWB:N Specification Language (and PyNWB API)**
 
-    * Add support for specification of compound data types
-    * Add support for specification of references as part of data dtype
+*   * No major new features are planned for the specification language itself that have not been added in NWB:N 2.0 beta.
 
 * **PyNWB**
 
