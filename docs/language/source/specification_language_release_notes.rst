@@ -54,6 +54,10 @@ Summary
     * Documentation for source codes and the specification are auto-generated from source to ensure consistency between sources and the documentation
 * Avoid mixing of format specification and computations:
     * Removed key ```autogen``` (without replacement). The autogen key was used to describe how to compute certain derived datasets from the file. This feature was problematic with respect to the guiding principles of NWB for a couple of reasons. E.g., the resulting datasets were often not interpretable without the provenance of the autogeneration procedure and autogeneration itself and often described the generation of derived data structures to ease follow-on computations. Describing computations as part of a format specification is problematic as it creates strong dependencies and often unnecessary restrictions for use and analysis of data stored in the format. Also, the reorganization of metadata has eliminated the need for autogen in many cases. A autogen features is arguably the role of a data API or intermediary derived-quantity API (or specification), rather than a format specification.
+* Enhanced specification of data types via ``dtype``:
+    * Enhanced the syntax for ``dtype`` to allow the specification of flat compound data types via lists of types
+    * Enhanced the syntac for ``dtype`` to allow the specification of i) object references and ii) region references
+    * Removed "!" syntax (e.g., "float32!") previously used to specify a minimum precision. All types are interpreted as minimum specs.
 * Others:
     * Removed key ```\_\_custom``` (without replacement). This feature was used only in one location to provide user hints where custom data could be placed, however, since the NWB specification approach explicitly allows users to add custom data in any location, this information was not binding.
 
