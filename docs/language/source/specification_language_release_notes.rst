@@ -58,6 +58,7 @@ Summary
     * Enhanced the syntax for ``dtype`` to allow the specification of flat compound data types via lists of types
     * Enhanced the syntac for ``dtype`` to allow the specification of i) object references and ii) region references
     * Removed "!" syntax (e.g., "float32!") previously used to specify a minimum precision. All types are interpreted as minimum specs.
+    * Specified list of available data types and their names
 * Others:
     * Removed key ```\_\_custom``` (without replacement). This feature was used only in one location to provide user hints where custom data could be placed, however, since the NWB specification approach explicitly allows users to add custom data in any location, this information was not binding.
 

@@ -56,6 +56,7 @@ allclean:
 	-rm $(RSTDIR)/_format_auto_docs/*.pdf
 	-rm $(RSTDIR)/_format_auto_docs/*.rst
 	-rm $(RSTDIR)/_format_auto_docs/*.inc
+	-rm $(RSTDIR)/_format_auto_docs/git_hash.txt
 
 clean:
 	-rm -rf $(BUILDDIR)/* $(RSTDIR)/$(PKGNAME)* $(RSTDIR)/modules.rst

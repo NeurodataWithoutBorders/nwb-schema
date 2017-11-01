@@ -147,13 +147,13 @@ List of the schema to be included in this namespace. The specification looks as 
 
 .. code-block:: python
 
-     - source: .base.yaml
+     - source: nwb.base.yaml
      - source: nwb.ephys.yaml
        neurodata_types: ElectricalSeries
      - namespace: core
        neurodata_types: Interface
 
-* ``source`` describes the relative path to the YAML (or JSON) files with the schema specifications
+* ``source`` describes the name of the YAML (or JSON) file with the schema specification. The schema files should be located in the same folder as the namespace file.
 * ``namespace`` describes a named reference to another namespace. In contrast to source, this is a reference by name to a known namespace (i.e., the namespace is resolved during the build and must point to an already existing namespace). This mechanism is used to allow, e.g., extension of a core namespace (here the NWB core namespace) without requiring hard paths to the files describing the core namespace.
 * ``neurodata_types`` then is an optional list of strings indicating which neurodata_types should be
   included from the given specification source or namespace. The default is ``neurodata_types: null`` indicating that all
