@@ -1,11 +1,11 @@
 """
 Module with classes for rendering specifications and object hierarchies
 """
-from form.spec.spec import AttributeSpec, LinkSpec
+from pynwb.form.spec.spec import AttributeSpec, LinkSpec
 from pynwb.spec import NWBGroupSpec as GroupSpec
 from pynwb.spec import NWBDatasetSpec as DatasetSpec
 from pynwb.spec import NWBNamespace as Namespace
-from form.spec.catalog import SpecCatalog
+from pynwb.form.spec.catalog import SpecCatalog
 from pynwb.core import docval, getargs
 import warnings
 

@@ -1,21 +1,8 @@
 Release Notes: NWB Format
 =========================
 
-Proposed Future Changes
------------------------
-Issue for proposed enhancements for NWB 2.x are managed in the GitHub project https://github.com/orgs/NeurodataWithoutBorders/projects/2 .
-
-Proposals for future enhancements are currently managed via issues on GitHub https://github.com/NeurodataWithoutBorders/nwb-schema/issues
-and should be assigned to the project ``NWB 2.x Proposed Enhancements``. Here a few format-specific enhancements that have been proposed:
-
-    - Create new module to store frequency decompositions: see https://github.com/NeurodataWithoutBorders/nwb-schema/issues/46
-    - Create new module to store matrix factorizations: see https://github.com/NeurodataWithoutBorders/nwb-schema/issues/47
-    - Change small metadata datasets to attributes where approbritate: see https://github.com/NeurodataWithoutBorders/nwb-schema/issues/48
-    - Addition of Interval series to SpikeWaveform and ElectrodeGroup objects: https://github.com/NeurodataWithoutBorders/nwb-schema/issues/2
-
-
-2.0.0 Alpha (August 2017)
--------------------------
+2.0.0 Beta (November 2017)
+--------------------------
 
 Improved organization of electrode metadata in ``/general/extracellular_ephys``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -37,14 +24,9 @@ The main ``/general/extracellular_ephys group`` then contained in addition the f
 
 **Reason:**
 
-    - This change  allows us to replace arrays with implicit links (define via integer indicies) in, e.g.,
-      ``<ElectricalSeries>`` and ``<FeatureExtraction>`` with a single explicit link to an ``<ElectrodeGroup>``
     - Avoid explosion of the number of groups and datasets. For example, in the case of an ECoG grid with 128 channels
       one had to create 128 groups and corresponding datasets to store the required metadata about the electrodes
       using the original layout.
-    - Avoid mixing of metadata from multiple devices (sessions etc.), e.g., the ``electrode_map`` would store
-      the physical location for all electrodes used in the file (indpendent of which device, subject, etc. the
-      electrodes are associated with).
     - Simplify access to related metadata. E.g., access to metadata from all electrodes of a single device requires
       resolution of a potentially large number of implicit links and access to a large number of groups (one per electrode)
       and datasets.
@@ -53,7 +35,7 @@ The main ``/general/extracellular_ephys group`` then contained in addition the f
       groups and datasets (one per electrode), hence, leading to a large number of small, independent read/write/seek operations,
       causing slow performance on common data accesses. Using the new layout, these kind of common data accesses can often be
       resolved via a single read/write
-    - Ease maintance, use, and development through consolidation of related metadata
+    - Ease maintenance, use, and development through consolidation of related metadata
 
 **Format Changes**
 
@@ -64,20 +46,26 @@ The main ``/general/extracellular_ephys group`` then contained in addition the f
         - ``description`` : text dataset (for the group)
         - ``device``: Soft link to the device in ``/general/devices/``
         - ``location``: Text description of the location of the device
-        - ``channel_description``: Array with text dataset description of each electrode
-        - ``channel_location``: Array with text description of the location of each channel
-        - ``channel_coordinates`` : Physical location of the electrodes [num_electrodes, x, y, z]
-        - ``channel_filtering`` : Dataset describing the filtering applied
-        - ``channel_impedance`` : Float array with the imedance values for the electrodes. This may be a 2D array
-          of ``[num_electrodes,2]`` in case impedance values are stored as ranges.
+
+    - Added table-like dataset ``electrodes`` that consolidates all electrode-specific metadata. This is a 1D data array
+      with a compound datatype, describing for each electrode:
+
+        - ``id`` : a user-specified unique identifier
+        - ``x``, ``y``, ``z`` : The floating point coordinate for the electrode
+        - ``imp`` : the impedance of the channel
+        - ``location`` : The location of channel within the subject e.g. brain region
+        - ``filtering`` : Description of hardware filtering
+        - ``description`` : Description of this electrode
+        - ``group`` : The name of the ``ElectrodeGroup``
+        - ``group_ref`` : Object reference to the ``ElectrodeGroup`` object
 
     - Updated ``/general/extracellular_ephys`` as follows:
 
         - Replaced ``/general/extracellular_ephys/<electrode_group_X>`` group (and all its contents) with the new ``<ElectrodeGroup>``
-        - Removed ``/general/extracellular_ephys/electrode_map`` dataset. This information is now stored in ``<ElectrodeGroup>/channel_coordinates``
+        - Removed ``/general/extracellular_ephys/electrode_map`` dataset. This information is now stored in the ``ElectrodeTable``.
         - Removed ``/general/extracellular_ephys/electrode_group`` dataset. This information is now stored in ``<ElectrodeGroup>/device``.
-        - Removed ``/general/extracellular_ephys/impedance`` dataset. This information is now stored in ``<ElectrodeGroup>/impedance``.
-        - Removed ``/general/extracellular_ephys/filtering`` dataset. This information is now stored in ``<ElectrodeGroup>/filtering``.
+        - Removed ``/general/extracellular_ephys/impedance`` This information is now stored in the ``ElectrodeTable``.
+        - Removed ``/general/extracellular_ephys/filtering`` This information is now stored in the ``ElectrodeTable``.
 
 Replaced Implicit Links/Data-Structures with Explicit Links
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -102,10 +90,10 @@ kind of links.
       (which is stored in ``/general/intracellular_ephys``). The dataset is also renamed to ``electrode`` for consistency.
     - Text dataset ``site`` in ``<OptogeneticSeries>`` is now a link to the corresponding ``<StimulusSite>``
       (which is stored in ``/general/optogenetics``).
-    - Integer dataset ``electrode_idx`` of ``FeatureExtraction`` is now a link to the corresponding ``<ElectrodeGroup>``
-      (which is stored in ``/general/extracellular_ephys``). Also, renamed the dataset to ``electrode_group`` for consistency.
-    - Integer array dataset ``electrode_idx`` of ``<ElectricalSeries>`` is now a link to the corresponding ``<ElectrodeGroup>``
-      (which is stored in ``/general/extracellular_ephys``). Also, renamed the dataset to ``electrode_group`` for consistency.
+    - Integer dataset ``electrode_idx`` of ``FeatureExtraction`` is now a dataset ``electrodes`` of type ``ElectrodeTableRegion``
+      which stores a region reference to the ``ElectrodeTable`` which is stored in ``/general/extracellular_ephys``.
+    - Integer array dataset ``electrode_idx`` of ``<ElectricalSeries>`` is now a dataset ``electrodes`` of type ``ElectrodeTableRegion``
+      which stores a region reference to the ``ElectrodeTable`` which is stored in ``/general/extracellular_ephys``.
     - Text dataset ``/general/extracellular_ephys/<electrode_group_X>/device`` is now a link ``<ElectrodeGroup>/device``
 
 Added missing metadata
@@ -138,6 +126,12 @@ Improved identifiably of objects
     - Group ``/general/intracellular_ephys/<electrode_X>`` now has the neurodata type ``IntracellularElectrode``
     - Group ``/general/optogenetics/<site_X>`` now has the neurodata type ``StimulusSite``
     - ...
+
+To enable identification of the type of objects, the ``neurodata_type`` is stored in HDF5 files as an
+attribute on the corresponding object (i.e., group or dataset). Also information about the ``namespace``
+(e.g., the name and version) are stored as attributed to allow unique identification of the specification
+for storage objects.
+
 
 Improved Consistency
 ^^^^^^^^^^^^^^^^^^^^
@@ -190,15 +184,21 @@ Improved organization of processed data
 
     * *Module* has been renamed to *ProcessingModule* to avoid possible confusion and to clarify its purpose
     * *Interface* has been renamed to *NWBContainer* to avoid confusion and ease intuition
-    * *NWBContainer* is now the base type of all main data storage types in the NWB format, including *TimeSeries.
-      This also means that all data storage types now inherit the required *help* and *source* attribute from
+    * *NWBContainer* is now the base type of all main data group types in the NWB format, including *TimeSeries*.
+      This also means that all group types now inherit the required *help* and *source* attribute from
       *NWBContainer*. Another implication of this change is that it is now possible to define data processing
       types that directly inherit from *TimeSeries*.
-    * All *Interface* types in the orignal format had fixed names. The fixed names have been replaced by
+    * All *Interface* types in the original format had fixed names. The fixed names have been replaced by
       specification of corresponding default names in the current format. This changes enables storage of
       multiple instances of the same analysis type in the same *ProcessingModule* by allowing users to
       customize the name of the data processing types, whereas in version 1.0.x only a single instance of
       each analysis could be stored in a *ProcessingModule* due to the requirement for fixed names.
+
+``NWBContainer`` and ``NWBData``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+As described above ``NWBContainer`` defines a common base type for all Groups with a ``neurodata_type`` in the
+format. Similarly, ``NWBData`` defines a common base type for all Datasets with a ``neurodata_type`` in the format.
 
 Ancestry
 ^^^^^^^^
@@ -302,6 +302,7 @@ Removed ``'neurodata\_type=Custom'``
 
 **Reason** All additions of data should be governed by extensions. Custom datasets can be identified based on
 the specification, i.e., any objects that are not part of the specification are custom.
+
 
 
 

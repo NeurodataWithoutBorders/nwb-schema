@@ -8,9 +8,9 @@ Generate figures and RST documents from the NWB YAML specification for the forma
 # Python 2/3 compatibility
 from __future__ import print_function
 
-from form.spec.spec import GroupSpec, DatasetSpec, LinkSpec, AttributeSpec
+from pynwb.form.spec.spec import GroupSpec, DatasetSpec, LinkSpec, AttributeSpec
 from pynwb.spec import NWBGroupSpec, NWBDatasetSpec, NWBNamespace
-from form.spec.namespace import NamespaceCatalog
+from pynwb.form.spec.namespace import NamespaceCatalog
 from collections import OrderedDict
 import warnings
 import os
@@ -18,11 +18,12 @@ import sys
 try:
     from utils.render import RSTDocument, RSTTable, SpecFormatter
 except ImportError:
-    from render import RSTDocument, RSTTable, SpecFormatter
-except ImportError:
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")))
-    from utils.render import RSTDocument, RSTTable, SpecFormatter
-    warnings.warn("The import path for utils/render may not be set properly")
+    try:
+        from render import RSTDocument, RSTTable, SpecFormatter
+    except ImportError:
+        sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")))
+        from utils.render import RSTDocument, RSTTable, SpecFormatter
+        warnings.warn("The import path for utils/render may not be set properly")
 
 # Import settings from the configuration file
 try:
@@ -336,7 +337,8 @@ def render_namespace(namespace_catalog,
     ns_desc_label = "nwb-type-namespace-doc"
     ns_src_label = "nwb-type-namespace-src"
     # Create the target doc
-    namespace_name = namespace_name if namespace_name is None else namespace_catalog.default_namespace
+    if namespace_name is None:
+        namespace_name = namespace_catalog.default_namespace
     curr_namespace = namespace_catalog.get_namespace(namespace_name)
     # Section heading
     sec_heading = "Namespace: %s" % curr_namespace['full_name'] if 'full_name' in curr_namespace else curr_namespace['name']
