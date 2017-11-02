@@ -8,7 +8,7 @@ Generate figures and RST documents from the NWB YAML specification for the forma
 # Python 2/3 compatibility
 from __future__ import print_function
 
-from pynwb.form.spec.spec import GroupSpec, DatasetSpec, LinkSpec, AttributeSpec
+from pynwb.form.spec.spec import GroupSpec, DatasetSpec, LinkSpec, AttributeSpec, RefSpec
 from pynwb.spec import NWBGroupSpec, NWBDatasetSpec, NWBNamespace
 from pynwb.form.spec.namespace import NamespaceCatalog
 from collections import OrderedDict
@@ -152,6 +152,28 @@ def clean_doc(doc_str, add_prefix=None, add_postifix=None, rst_format='**', remo
         temp_str += add_postifix
     return temp_str
 
+def render_data_type(dtype):
+    """
+    Create a text representation of the data type
+
+    :param dtype: data type object as returned by the spec. Which may be a list (in the case of compound types),
+           a dict in the case of reference types, or a string in the case of primitive types.
+    :return: RST string describing the data type.
+    """
+    if isinstance(dtype, list):
+        res = "Compound data type with the following elements: \n"
+        for item in dtype:
+            res += "    * **%s:** %s (*dtype=* %s ) \n" % (item['name'], item['doc'], render_data_type(item['dtype']))
+        res += "\n"
+        return res
+    elif isinstance(dtype, RefSpec):
+        res = "%s reference to %s" % (dtype['reftype'],
+                                      RSTDocument.get_reference(get_section_label(dtype['target_type']),
+                                                                dtype['target_type']))
+        return res
+    else:
+        return str(dtype)
+
 
 def spec_prop_doc(spec, newline='\n', ignore_props=None):
     """
@@ -172,7 +194,7 @@ def spec_prop_doc(spec, newline='\n', ignore_props=None):
         if spec.get('quantity', None) is not None and 'quantity' not in ignore_keys:
             spec_prop_list.append('**Quantity** %s' % quantity_to_string(spec['quantity']))
         if spec.get('dtype', None) is not None and 'dtype' not in ignore_keys:
-            spec_prop_list.append('**Data Type:** %s' % str(spec['dtype']))
+            spec_prop_list.append('**Data Type:** %s' % render_data_type(spec['dtype']))
         if spec.get('dims', None) is not None and 'dims' not in ignore_keys:
             spec_prop_list.append('**Dimensions:** %s' % str(spec['dims']))
         if spec.get('shape', None) is not None  and 'shape' not in ignore_keys:
@@ -199,7 +221,7 @@ def spec_prop_doc(spec, newline='\n', ignore_props=None):
     # Add attribute spec properites
     if isinstance(spec, AttributeSpec):
         if spec.get('dtype', None) is not None and 'dtype' not in ignore_keys:
-            spec_prop_list.append('**Data Type:** %s' % str(spec['dtype']))
+            spec_prop_list.append('**Data Type:** %s' % render_data_type(spec['dtype']))
         if spec.get('dims', None) is not None  and 'dims' not in ignore_keys:
             spec_prop_list.append('**Dimensions:** %s' % str(spec['dims']))
         if spec.get('shape', None) is not None  and 'shape' not in ignore_keys:
