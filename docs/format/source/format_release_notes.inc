@@ -111,7 +111,7 @@ Added missing metadata
       and improve human and programmatic data interpretation
     - Added ``filtering`` dataset to type ``<IntracellularElectrode>`` (i.e., ``/general/intracellular_ephys/<electrode_X>``)
       to enable specification of per-electrode filtering data
-
+    - Added default values for *<TimeSeries>/description" and *<TimeSeries>/comments"
 
 Improved identifiably of objects
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -186,7 +186,9 @@ Improved organization of processed data
     * *Interface* has been renamed to *NWBContainer* to avoid confusion and ease intuition
     * *NWBContainer* is now the base type of all main data group types in the NWB format, including *TimeSeries*.
       This also means that all group types now inherit the required *help* and *source* attribute from
-      *NWBContainer*. Another implication of this change is that it is now possible to define data processing
+      *NWBContainer*. A number of neurodata_types have been updated to add missing *help* (see
+      https://github.com/NeurodataWithoutBorders/nwb-schema/pull/37/files for details)
+    * With NWBContainer now being a general base class, this means is is now possible to define data processing
       types that directly inherit from *TimeSeries*.
     * All *Interface* types in the original format had fixed names. The fixed names have been replaced by
       specification of corresponding default names in the current format. This changes enables storage of
