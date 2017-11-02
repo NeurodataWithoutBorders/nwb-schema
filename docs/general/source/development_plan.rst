@@ -5,11 +5,7 @@ Development Plan
 
 .. todo::
 
-    This is a first draft. Check completeness and consistency of all items. Check and approbriateness of  timelines for the release.
-
-.. todo::
-
-    Check and complete list of contributors for the various items
+    This is a first draft. Check completeness and consistency of all items. Check and appropriateness of  timelines for the release. Check and complete list of contributors for the various items
 
 
 The following sections provide an overview of various development targets for NWB:N and what they entail.
@@ -19,7 +15,7 @@ The following sections provide an overview of various development targets for NW
 NWB:N 2.0 beta (11/10/2017)
 ---------------------------
 
-This is a first public beta release of the new version NWB:N. The stability of all modules can't be ensured. Backward compatibility cannot be promised at this point yet. Further changes to the APIs as well as the format are still planed between this beta and the first full release of NWB 2.0 (see Section :ref:`dev-nwb2` for details). The intent of this beta release is to enable early adopters to start exploring the new format and software.
+This is a first public beta release of the new version NWB:N. The intent of this beta release is to enable early adopters to start exploring the new format and software. As development is ongoing, there may still be bugs and further changes to the APIs as well as the format are still planed between this beta and the first full release of NWB 2.0 (see Section :ref:`dev-nwb2` for details). As such backward compatibility cannot be promised at this point yet.
 
 
 New features for this release:
@@ -47,7 +43,7 @@ New features for this release:
     * **Main contributors for this release** :
 
         * Andrew Tritt, Oliver Ruebel, David Camp, Kris Bouchard (LBNL) : Lead architects and development team
-        * Nicholas Chain (Allen Institute for Brain Science) and Andrew Tritt (LBNL) : Port to Python 2 and legacy read for Allen data
+        * Nicholas Cain (Allen Institute for Brain Science) and Andrew Tritt (LBNL) : Port to Python 2 and legacy read for Allen data
         * Bug fixes, feedback and suggestions have also been contributed by numerous users and developers from the NWB:N community
 
 * **PyNWB testing, continuous integration, deployment** We have developed an extensive set of unit tests for PyNWB. We have also created base infrastructure for integration tests to test end-to-end read/write of NWB:N files and data objects. While coverage of the tests is already quite good (>80%) coverage of the integration test suite is expected to be incomplete. We have also setup infrastructure for continuous integration to execute all tests on a broad range of platforms as well as defined software deployment paths (e.g., via PIP, CONDA)
@@ -68,7 +64,7 @@ New features for this release:
     * **Main contributors for this release**
 
         * Andrew Tritt (LBNL) : Lead for design and implementation of the Python test suites
-        * Jean-Christophe Fillion-Robin, Doruk Ozturk, Chris Kotfila Michael Grauer, Will Schroeder (Kitware) : Lead development team for creation of continuous integration, testing, and deployment mechanisms
+        * Jean-Christophe Fillion-Robin, Doruk Ozturk, Chris Kotfila, Michael Grauer, Will Schroeder (Kitware) : Lead development team for creation of continuous integration, testing, and deployment mechanisms
 
 
 * **Specification Language** We have simplified and extended the specification language used to describe the NWB:N format to ease readability, interpretability and expressiveness as well as added support for compound data types and references among others.
@@ -106,7 +102,7 @@ New features for this release:
         * Specification Language: http://schema-language.readthedocs.io
         * Data Storage: http://nwb-storage.readthedocs.io
 
-    * **Format Documentation Tools** To ensure consistency between the NWB:N format specification and documentation we have developed a set of tools generate Sphinx RST documents from the YAML specification sources. The tools are available in `docs/utils` as part of the nwb-schema repository for Python 2/3.
+    * **Format Documentation Tools** To ensure consistency between the NWB:N format specification and documentation we have developed a set of tools that generate Sphinx RST documents from the YAML specification sources. The tools are available in `docs/utils` as part of the nwb-schema repository for Python 2/3.
 
     * **Main contributors for this release** :
         * Oliver Ruebel and Andrew Tritt (LBNL) : Documentation leads
@@ -123,7 +119,7 @@ New features for this release:
 
     * **Main contributors for this release:**
         * Nathan Clack and Lawrence Niu (Vidriotech) : Software design and development lead
-        * Karel Svoboda : Project Lead
+        * Karel Svoboda  (Janelia Farms HHMI): Project Lead
         * Andrew Tritt and Oliver Ruebel : Review and discussion
 
 
@@ -139,15 +135,15 @@ Open GitHub Issues for this release
 NWB:N 2.0 (~June 2018)
 ----------------------
 
-The primary purpose of this targe release is to stabilize and complete development of NWB:N 2.0beta. This release will also include a number of changes to the format and APIs that have not made it into the beta release. Request for new features for this release has been frozen. Additional new features may be included in future NWB:N 2.x releases.
+The primary purpose of this target release is to stabilize and complete development of NWB:N 2.0beta. This release will also include a number of changes to the format and APIs that have not made it into the beta release. Requests for new features for this release has been frozen. Additional new features may be included in future NWB:N 2.x releases.
 
-Planed new features (beyond NWB:N 2.0 beta)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Planned new features (beyond NWB:N 2.0 beta)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * **NWB:N Format Specification (and PyNWB API)**
 
     * Support saving of NWB:N specifications in NWB:N HDF5 files as part of the ``/general/specifications``. Support use of these cached specification for data read.
-    * Reorganize ``/general`` to ease additiona and management of custom, lab-specific metadata via extensions
+    * Reorganize ``/general`` to ease adding and managing custom, lab-specific metadata via extensions
 
 * **NWB:N Specification Language (and PyNWB API)**
 
@@ -160,7 +156,7 @@ Planed new features (beyond NWB:N 2.0 beta)
 
 * **Testing, Continuous Integration, Deployment**
 
-    * Add integration test cases to ensure broad coverage of intergration tests
+    * Add integration test cases to ensure broad coverage of integration tests
     * Add further unit tests to ensure broad coverage
     * Define application test cases, i.e., sets of tests that implement select application test cases (e.g, convert of lab data to NWB:N).
 
@@ -169,6 +165,7 @@ Planed new features (beyond NWB:N 2.0 beta)
     * Complete release notes describing the changes to the format, specification language etc.
     * Add more tutorials and examples
     * Move documentation tools to make them easier to access and reuse
+    * Add tests for documentation tools
 
 * **Matlab API**
 
@@ -220,6 +217,6 @@ Open GitHub Issues for Future items
 Internal GitHub Project Board
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The following project board organizes issues related to NWB 2.x from the various repos: https://github.com/orgs/NeurodataWithoutBorders/projects/2  Note, as this is an organization-level project board, this is unfortunately only available to members of the NeurodataWithoutBorders GitHub organization. Note, until work begins on the NWB:N 2.x we may occasionally add nodes and tickets to this board to help with the planning and organization for NWB 2.x later on, however, this board is currently not activily maintained and may not reflect actual future plans for NWB 2.x.
+The following project board organizes issues related to NWB 2.x from the various repos: https://github.com/orgs/NeurodataWithoutBorders/projects/2  Note, as this is an organization-level project board, this is unfortunately only available to members of the NeurodataWithoutBorders GitHub organization. Note, until work begins on the NWB:N 2.x we may occasionally add notes and tickets to this board to help with the planning and organization for NWB 2.x later on, however, this board is currently not activily maintained and may not reflect actual future plans for NWB 2.x.
 
 
