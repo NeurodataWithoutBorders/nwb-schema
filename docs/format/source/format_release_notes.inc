@@ -113,7 +113,6 @@ Added missing metadata
       to enable specification of per-electrode filtering data
     - Added default values for *<TimeSeries>/description" and *<TimeSeries>/comments"
 
-
 Improved identifiably of objects
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
