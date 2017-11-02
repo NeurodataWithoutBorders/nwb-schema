@@ -152,7 +152,7 @@ Planned new features (beyond NWB:N 2.0 beta)
 * **PyNWB**
 
     * Expand legacy read support to more sets of Allen data
-    * Expand and refine existing features for read/write/specfication etc.
+    * Expand and refine existing features for read/write/specification etc.
 
 * **Testing, Continuous Integration, Deployment**
 
