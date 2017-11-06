@@ -67,8 +67,8 @@ the formal specification of data organizations.
 
 **Documentation:** http://schema-language.readthedocs.io
 
-Format Specification:
----------------------
+Format Specification
+--------------------
 **Problem:** How to organize complex collections of neuroscience data?
 
 **Approach:** Organize data hierarchically using easy-to-use primitives, e.g.,
