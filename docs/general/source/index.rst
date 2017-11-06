@@ -8,7 +8,6 @@ Welcome to NWB-N
     :caption: Table of Contents
 
     nwbintro
-    architecture
     general
     development_plan
     credits
