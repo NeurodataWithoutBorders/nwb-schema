@@ -4,8 +4,9 @@
 HDF5
 ====
 
-The NWB-N format currently uses the `Hierarchical Data Format (HDF5) <https://www.hdfgroup.org/HDF5/>`_
-as primary mechanism for data storage. HDF5 was selected for the NWB format because it met several of the project's
+The NWB:N format currently uses the `Hierarchical Data Format (HDF5) <https://www.hdfgroup.org/HDF5/>`_
+as primary mechanism for data storage. HDF5 was selected for the
+NWB format because it met several of the project's
 requirements. First, it is a mature data format standard with libraries
 available in multiple programming languages. Second, the format's
 hierarchical structure allows data to be grouped into logical
@@ -27,7 +28,7 @@ Format Mapping
 ==============
 
 Here we describe the mapping of NWB primitives (e.g,. Groups, Datasets, Attributes, Links etc.) used by
-the NWB format and specification to HDF5 storage primitives. As the NWB-N format was designed with HDF5
+the NWB format and specification to HDF5 storage primitives. As the NWB:N format was designed with HDF5
 in mind, the high-level mapping between the format specification and HDF5 is quite simple:
 
 .. tabularcolumns:: |p{4cm}|p{11cm}|
