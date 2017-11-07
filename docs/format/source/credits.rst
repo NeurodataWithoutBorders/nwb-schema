@@ -4,28 +4,28 @@ Credits
 
 .. contents::
 
-.. include:: ../../common/text/authors.inc
+Acknowledgments
+===============
 
-.. include:: ../../common/text/acknowledgement.inc
+For details on the partners, members, and supporters of NWB:N please the http://www.nwb.org/ project website.
+For specific contributions to the format specification and this document see the change logs of
+the Git repository at https://github.com/NeurodataWithoutBorders/nwb-schema .
 
 Authors
 =======
 
-NWB:N: Version 1.1.x and later
+NWB:N: Version 2.0.0 and later
 ------------------------------
 
-Version 1.1.x of the NWB:N format,  Version 1.2.x and later of the specification language, and
-Version 1.x and later of the NWB storage documents have been created by
-Oliver Ruebel and Andrew Tritt et al. in collaboration with original members of the NWB pilot project at the
-University of California in Berkeley and San Francisco and at the Allen Institute for Brain Science.
-
+Documentation for Version 2 of the NWB:N format and later have been created by
+Oliver Ruebel and Andrew Tritt et al. in collaboration with the NWB:N community.
 
 NWB:N: Version 1.0.x and earlier
 --------------------------------
 
-Version 1.0.5g (and earlier) of the NWB file format and Version 1.1c (and earlier) of the specification language
-were created by Jeff Teeters et al. as part of the first NWB pilot project. The documents governing the
-specification language and format have been adopted from the final versions released by the original NWB pilot project.
+Version 1.0.5g (and earlier) of the NWB file format were created by Jeff Teeters et al. as
+part of the first NWB pilot project. The documents for NWB:N 2 have been adopted from the
+final version of format docs released by the original NWB pilot project.
 
 
 *****
