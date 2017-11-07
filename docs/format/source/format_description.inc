@@ -2,7 +2,7 @@ Overview
 ========
 
 The NWB Format is a core component of the
-`Neurodata Without Borders: Neurophysiology (NWB-N) <http://nwb-overview.readthedocs.io/en/latest/nwbintro.html>`_  project.
+`Neurodata Without Borders: Neurophysiology (NWB:N) <http://nwb-overview.readthedocs.io/en/latest/nwbintro.html>`_  project.
 The NWB format is designed to store general optical and electrical physiology data in a way that
 is both understandable to humans as well as accessible to programmatic interpretation. The format is
 designed to be friendly to and usable by software tools and analysis
