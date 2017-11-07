@@ -61,12 +61,15 @@ inherits from *TimeSeries*.
 
 .. _sec_nwbcontainer_intro:
 
-NWBContainer
-------------
+NWBContainer and NWBData
+------------------------
 
 *NWBContainer* defines a generic container for storing collections of data. *NWBContainer* serves as the base type
 for all main data containers (including *TimeSeries*) of the core NWB data format and allows us to define and
 integrate new common functionality in a central place and via common mechanisms. See also :numref:`sec-NWBContainer`.
+
+*NWBData* then functions as a common base class for datasets with an assigned *neurodata_type*.
+See also :numref:`sec-NWBData`.
 
 .. note::
 
