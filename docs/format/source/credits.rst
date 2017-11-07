@@ -2,8 +2,6 @@
 Credits
 *******
 
-.. contents::
-
 Acknowledgments
 ===============
 
