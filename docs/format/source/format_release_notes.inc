@@ -111,7 +111,7 @@ Added missing metadata
       and improve human and programmatic data interpretation
     - Added ``filtering`` dataset to type ``<IntracellularElectrode>`` (i.e., ``/general/intracellular_ephys/<electrode_X>``)
       to enable specification of per-electrode filtering data
-    - Added default values for *<TimeSeries>/description" and *<TimeSeries>/comments"
+    - Added default values for ``<TimeSeries>/description`` and ``<TimeSeries>/comments``
 
 Improved identifiably of objects
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
