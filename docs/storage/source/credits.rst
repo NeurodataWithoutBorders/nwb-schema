@@ -1,11 +1,16 @@
-*******
-Credits
-*******
+*****
+Legal
+*****
 
 .. contents::
 
-.. include:: ../../common/text/authors.inc
+Copyright
+=========
 
-.. include:: ../../common/text/acknowledgement.inc
+.. include:: ../../../Legal.txt
 
-.. include:: ../../common/text/copyright.inc
+Licence
+=======
+
+.. include:: ../../../license.txt
+
