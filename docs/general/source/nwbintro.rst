@@ -1,11 +1,11 @@
 *************************************************
-Neurodata Without Borders: Neurophysiolgy (NWB-N)
+Neurodata Without Borders: Neurophysiolgy (NWB:N)
 *************************************************
 
 Mission
 =======
 
-Neurodata Without Borders: Neurophysiology (NWB-N) is a project to develop a
+Neurodata Without Borders: Neurophysiology (NWB:N) is a project to develop a
 unified data format for cellular-based neurophysiology data, focused on
 the dynamics of groups of neurons measured under a large range of
 experimental conditions. Participating labs provided use cases and
@@ -38,11 +38,11 @@ Project Components
    :scale: 65 %
    :alt: Components of NWB:Neurophysiology
 
-   Main components of NWB-N
+   Main components of NWB:N
 
 
 :numref:`fig-project-components` provides a high-level overview of the main
-components of NWB-N. The following subsection provide a high-level overview of the
+components of NWB:N. The following subsection provide a high-level overview of the
 problem, approach, description, and function of these components. Further details
 about the specific components are provided in the corresponding documentations.
 
@@ -52,7 +52,7 @@ Specification Language
 **Problem:** How to formally define neuroscience data standards?
 
 **Approach:** In order to support the formal and verifiable specification of neurodata
-file formats, NWB-N defines and uses the NWB specification
+file formats, NWB:N defines and uses the NWB specification
 language.
 
 **Description:** The specification language is
@@ -76,7 +76,7 @@ Groups (similar to Folders), Datasets (n-D Arrays), Attributes (Metadata objects
 and Links (links to Groups and Datasets).
 
 **Description:** The NWB format standard is governed by a formal format specification,
-the NWB-N schema that is formally specified using the NWB specification language.
+the NWB:N schema that is formally specified using the NWB specification language.
 A new schema file will be published for each revision of the NWB format
 standard. Developers can use the schema to validate NWB files or create
 advanced APIs for NWB data.
@@ -97,7 +97,7 @@ Data Storage
 
 **Problem:** How to store large collections of neuroscience data?
 
-**Approach:** NWB-N format currently uses the `Hierarchical Data Format (HDF5) <https://www.hdfgroup.org/HDF5/>`_
+**Approach:** NWB:N format currently uses the `Hierarchical Data Format (HDF5) <https://www.hdfgroup.org/HDF5/>`_
 as primary storage mechanism.
 
 **Description:** HDF5 was selected for the NWB format because it met several of the project's
@@ -119,7 +119,7 @@ mission of The HDF Group, the nonprofit that is the steward of the
 technology.
 
 **Function:** A primary function of the data storage is to map
-NWB-N primitives (Groups, Datasets, Attributes, Links etc.) to storage.
+NWB:N primitives (Groups, Datasets, Attributes, Links etc.) to storage.
 In the case of HDF5 this is currently a 1-to-1 mapping as the NWB
 primitives match HDF5 primitives.
 
@@ -131,29 +131,32 @@ Data API(s)
 
 **Problem:** How to efficiently interact with neuroscience data?
 
-**Approach:** The PyNWB API provides users easy-to-use representations of
-NWB-N types for programmatic use and enables the mapping of these representations
-to/from data storage based using the NWB-N format specification.
-
-**Description:** PyNWB provides critical functionality neede to read, write, use, and
-analyse data stored in NWB-N. PyNWB provides users an easy-to-use interface and abstractions
-for integrating NWB types with their codes while insulating them from implementation
-details with respect to specification language, format, and storage.
+**Approach:** Develop APIs that provides users easy-to-use representations of
+NWB:N neurodata types for programmatic use and enable the mapping of these representations
+to/from data storage based on the NWB:N format specification.
 
 **Function:** The role of data API(s) is to facilitate efficient interaction
-with neuroscience data stored in the NWB-N data format
+with neuroscience data stored in the NWB:N data format
 (e.g,. for reading, writing, querying, and analyzing neuroscience data).
-A main funcion of an API is provide users a stable and usable interface
+A main function of an API is provide users a stable and usable interface
 for programmatic use and development of new applications. As such, a
 central function of the API is also to insulate developers and users from
-implementation details regarding the specifciation language, format specification,
+implementation details regarding the specification language, format specification,
 and data storage.
 
-**Documentation:** http://pynwb.readthedocs.io
+**Description** NeurodataWithoutBorders currently provides the following APIs for NWB:N
 
-**Sources:** https://github.com/NeurodataWithoutBorders/pynwb
+* **PyNWB:** PyNWB provides critical functionality needed to read, write, use, and
+  analyse data stored in NWB:N. PyNWB provides users an easy-to-use interface and abstractions
+  for integrating NWB types with their codes while insulating them from implementation
+  details with respect to specification language, format, and storage.
 
+   * **Documentation:** http://pynwb.readthedocs.io
+   * **Sources:** https://github.com/NeurodataWithoutBorders/pynwb
 
+* **MatNWB:** MatNWB is a Matlab API for NWB:N. MatNWB generates Matlab classes for
+  representing NWB:N *neurodata_types* directly from the YAML specification.
 
+   * **Soures:** https://github.com/NeurodataWithoutBorders/matnwb
 
 

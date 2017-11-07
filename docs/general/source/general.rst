@@ -5,9 +5,10 @@ General
 Getting Help
 ------------
 
-Detailed documentation of the various aspects of the NWB-N project are available here:
+Detailed documentation of the various aspects of the NWB:N project are available here:
 
-* **General Overview** : http://nwb-overview.readthedocs.io
+* **Main Project Site** http://www.nwb.org/nwb-neurophysiology/
+* **General Overview (this documentation)** : http://nwb-overview.readthedocs.io
 * **Specification Language:** http://schema-language.readthedocs.io
 * **Format Specification:** http://nwb-schema.readthedocs.io
 * **Data Storage:** http://nwb-storage.readthedocs.io
@@ -46,6 +47,9 @@ The sources for the API, format specification, and all documents are available h
         * ``docs/storage`` : Sphinx sources for the data storage documention
         * ``docs/utils`` : Python utilities used for generation of the format documentation from the YAML specification.
           This includes convenient helper functions for rendering specification hierarchies and for generating RST docs.
+
+* **MatNWB** https://github.com/NeurodataWithoutBorders/matnwb
+    * This respository includes all sources of the MatNWB Matlab API.
 
 Code of Conduct
 ---------------
