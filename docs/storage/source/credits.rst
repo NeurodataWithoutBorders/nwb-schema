@@ -2,6 +2,9 @@
 Credits
 *******
 
+Authors
+=======
+
 NWB:N: Version 2.0.0 and later
 ------------------------------
 
