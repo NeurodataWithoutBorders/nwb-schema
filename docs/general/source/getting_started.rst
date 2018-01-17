@@ -1,3 +1,5 @@
+.. _sec_getting_started:
+
 ***************
 Getting Started
 ***************
@@ -20,7 +22,6 @@ I want to get an overview of all the aspects of NWB:N
 A general overview an pointers to all relevant documents are available as part of the
 `General Overview <http://nwb-overview.readthedocs.io>`_ docs. For a more broader overview
 of the NeurodataWithoutBorders project see also http://www.nwb.org .
-
 
 
 Getting Help

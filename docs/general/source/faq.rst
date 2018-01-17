@@ -5,6 +5,7 @@ Frequently Asked Questions
 I would like to use NWB:N. How do I get started?
 ------------------------------------------------
 
+See the :ref:`sec_getting_started` section for more information.
 
 What is the difference between pynwb, nwb-schema and api-python?
 ----------------------------------------------------------------
