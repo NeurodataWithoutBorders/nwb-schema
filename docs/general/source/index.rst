@@ -12,8 +12,9 @@ documents associated with NWB:N.
     :caption: Table of Contents
 
     nwbintro
+    getting_started
+    faq
     development_plan
-    resources
     publications
     credits
 
