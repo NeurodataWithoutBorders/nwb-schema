@@ -1,6 +1,27 @@
-*********
-Resources
-*********
+***************
+Getting Started
+***************
+
+How to get started
+------------------
+
+I am scientist/developer in a neuroscience lab and want to start using NWB:N
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For end-users, the main entry point into the world of NWB:N are usually the PyNWB Python API.
+For more details see here: `http://readthedocs.org/projects/pynwb/downloads/pdf/latest <http://readthedocs.org/projects/pynwb/downloads/pdf/latest/>`_
+
+For Matlab users, a MatNWB also provides a Matlab API for NWB:N 2.  For more details see here:
+`https://github.com/NeurodataWithoutBorders/matnwb <https://github.com/NeurodataWithoutBorders/matnwb>`_
+
+I want to get an overview of all the aspects of NWB:N
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A general overview an pointers to all relevant documents are available as part of the
+`General Overview <http://nwb-overview.readthedocs.io>`_ docs. For a more broader overview
+of the NeurodataWithoutBorders project see also http://www.nwb.org .
+
+
 
 Getting Help
 ------------
