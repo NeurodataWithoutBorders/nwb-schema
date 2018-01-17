@@ -10,10 +10,10 @@ How to get started
 I am scientist/developer in a neuroscience lab and want to start using NWB:N
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-For end-users, the main entry point into the world of NWB:N are usually the PyNWB Python API.
+For end-users, the main entry point into the world of NWB:N is usually the PyNWB Python API.
 For more details see here: `http://readthedocs.org/projects/pynwb/downloads/pdf/latest <http://readthedocs.org/projects/pynwb/downloads/pdf/latest/>`_
 
-For Matlab users, a MatNWB also provides a Matlab API for NWB:N 2.  For more details see here:
+For Matlab users, MatNWB also provides a Matlab API for NWB:N 2.  For more details see here:
 `https://github.com/NeurodataWithoutBorders/matnwb <https://github.com/NeurodataWithoutBorders/matnwb>`_
 
 I want to get an overview of all the aspects of NWB:N
