@@ -290,4 +290,4 @@ groups:
     quantity: +
   default_name: MotionCorrection
   neurodata_type_def: MotionCorrection
-  neurodata_type_inc: NWBContainer
+  neurodata_type_inc: NWBDataInterface
