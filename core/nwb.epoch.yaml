@@ -27,24 +27,3 @@ datasets:
   doc: 'One of possibly many different experimental epoch'
   neurodata_type_def: EpochTable
   neurodata_type_inc: NWBData
-- attributes:
-  - doc: Value is 'Data on how an epoch applies to a time series'
-    dtype: text
-    name: help
-    value: Data on how an epoch applies to a time series
-  doc: 'An index into a TimeSeries object'
-  dtype:
-  - doc: "Start index into the TimeSeries data[] field. COMMENT: This can be used\
-      \ to calculate location in TimeSeries timestamp[] field"
-    dtype: int32
-    name: idx_start
-  - doc: Number of data samples available in this time series, during this epoch.
-    dtype: int32
-    name: count
-  - doc: Stop time of epoch, in seconds
-    dtype:
-      target_type: TimeSeries
-      reftype: object
-    name: timeseries
-  neurodata_type_def: TimeSeriesIndex
-  neurodata_type_inc: NWBData
