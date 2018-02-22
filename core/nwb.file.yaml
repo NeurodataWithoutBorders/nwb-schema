@@ -81,7 +81,7 @@ groups:
         but must be unique within the experiment.'
       name: epochs
       neurodata_type_inc: EpochTable
-    - doc: 'Indexes into TimeSeries that epochs stored in the EpochTable "epochs" appy to'
+    - doc: 'Indexes into TimeSeries that epochs stored in the EpochTable "epochs" apply to'
       name: timeseries_index
       neurodata_type_inc: TimeSeriesIndex
     name: epochs
