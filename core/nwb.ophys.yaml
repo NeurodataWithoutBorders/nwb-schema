@@ -47,13 +47,11 @@ groups:
     shape:
     - null
     - null
-  - dims:
-    - num_ROIs
-    doc: List of ROIs represented, one name for each row of data[].
-    dtype: text
-    name: roi_names
-    shape:
-    - null
+  - doc: 'a dataset referencing into an ROITable containing information on the ROIs stored in this timeseries'
+    dtype:
+      target_type: ROITable
+      reftype: region
+    name: rois
   doc: ROI responses over an imaging plane. Each row in data[] should correspond to
     the signal from one ROI.
   links:
@@ -135,19 +133,6 @@ groups:
         doc: the weight of the pixel
       neurodata_type_inc: NWBData
       neurodata_type_def: PixelMaskTable
-    - doc: Pixel Mask Regions
-      dtype:
-      - name: id
-        dtype: int
-        doc: a user-specified unique identifier
-      - name: pix_mask
-        dtype: int
-            target_type: PixelMaskTable
-            reftype: region
-        doc: a region reference to the pixel mask table
-      name: roi_table
-      neurodata_type_inc: NWBData
-      neurodata_type_def: ROITable
     - doc: ROI mask, represented in 2D ([y][x]) intensity image
       dims:
       - num_roi
@@ -160,7 +145,25 @@ groups:
       - null
       - null
       neurodata_type_inc: NWBData
-      neurodata_type_def: ROIImageMask
+      neurodata_type_def: ROIImageMasks
+    - doc: Pixel Mask regions and Image Mask regions
+      dtype:
+      - name: id
+        dtype: int
+        doc: a user-specified unique identifier
+      - name: pix_mask
+        dtype:
+          target_type: PixelMaskTable
+          reftype: region
+        doc: a region reference to the pixel mask table
+      - name: img_mask
+        dtype:
+          target_type: ROIImageMasks
+          reftype: region
+        doc: a region reference to the pixel mask table
+      name: roi_table
+      neurodata_type_inc: NWBData
+      neurodata_type_def: ROITable
     doc: Group name is human-readable description of imaging plane
     groups:
     - doc: Stores image stacks segmentation mask apply to.
