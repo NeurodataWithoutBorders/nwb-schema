@@ -188,7 +188,7 @@ groups:
       name: help
       value: Values for each element in id
     doc: Data values indexed by pointer
-    dtype: float
+    dtype: any
     neurodata_type_def: VectorData
     neurodata_type_inc: NWBData
   - name: data_idx
