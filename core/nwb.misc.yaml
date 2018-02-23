@@ -126,27 +126,6 @@ groups:
     contains a group for each unit. The name of the group should match the value in
     the source module, if that is possible/relevant (e.g., name of ROIs from Segmentation
     module).
-  groups:
-  - attributes:
-    - doc: Store times for a particulare UnitTime
-      dtype: text
-      name: help
-      value: Times for a particular UnitTime object
-    - doc: Description of the unit (eg, cell type).
-      dtype: text
-      name: unit_description
-    datasets:
-    - dims:
-      - num_events
-      doc: Spike time for the units (exact or estimated)
-      dtype: float64
-      name: times
-      shape:
-      - null
-    doc: Group storing times for &lt;unit_N&gt;.
-    neurodata_type_def: SpikeUnit
-    neurodata_type_inc: NWBDataInterface
-    quantity: +
   default_name: UnitTimes
   neurodata_type_def: UnitTimes
-  neurodata_type_inc: NWBDataInterface
+  neurodata_type_inc: VectorDataInterface
