@@ -168,3 +168,26 @@ groups:
   doc: A NWBDataInterface for storing images that have some relationship
   neurodata_type_def: Images
   neurodata_type_inc: NWBDataInterface
+- datasets:
+  - doc: a unique identifier for each element
+    dtype: int
+    shape:
+    - null
+    neurodata_type_def: ElementIdentifiers
+    neurodata_type_inc: NWBData
+  - doc: Data values indexed by pointer
+    dtype: float
+    neurodata_type_def: VectorData
+    neurodata_type_inc: NWBData
+  - doc: Pointers that index data values
+    dtype:
+      target_type: VectorData
+      reftype: region
+    shape:
+    - null
+    neurodata_type_def: VectorIndex
+    neurodata_type_inc: NWBData
+  doc: "A generic data structure for efficiently storing vector data for a set of elements. \
+    \ For example, spike unit times or pixel masks"
+  neurodata_type_def: VectorDataInterface
+  neurodata_type_inc: NWBDataInterface
