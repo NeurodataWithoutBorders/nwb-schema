@@ -120,7 +120,7 @@ groups:
       name: description
       quantity: '?'
     - doc: a table for storing pixel masks
-      name: pixel_mask_weights
+      name: pixel_mask
       dtype:
       - name: x
         dtype: uint
@@ -131,39 +131,26 @@ groups:
       - name: weight
         dtype: float
         doc: the weight of the pixel
-      neurodata_type_inc: NWBData
-      neurodata_type_def: PixelMaskTable
-    - doc: ROI mask, represented in 2D ([y][x]) intensity image
+      neurodata_type_inc: VectorData
+    - name: img_mask
+      doc: ROI mask, represented in 2D ([y][x]) intensity image
       dims:
       - num_roi
       - num_x
       - num_y
       dtype: float
-      name: roi_img_mask
       shape:
       - null
       - null
       - null
       neurodata_type_inc: NWBData
       neurodata_type_def: ROIImageMasks
-    - doc: Pixel Mask regions and Image Mask regions
-      dtype:
-      - name: id
-        dtype: int
-        doc: a user-specified unique identifier
-      - name: pix_mask
-        dtype:
-          target_type: PixelMaskTable
-          reftype: region
-        doc: a region reference to the pixel mask table
-      - name: img_mask
-        dtype:
-          target_type: ROIImageMasks
-          reftype: region
-        doc: a region reference to the pixel mask table
-      name: roi_table
-      neurodata_type_inc: NWBData
-      neurodata_type_def: ROITable
+    - name: pixel_mask_index
+      doc: Pixel Mask regions
+      neurodata_type+inc: VectorIndex
+    - name: roi_ids
+      doc: Unique identifiers for each ROI
+      neurodata_type+inc: ElementIndentifiers
     doc: Group name is human-readable description of imaging plane
     groups:
     - doc: Stores image stacks segmentation mask apply to.
