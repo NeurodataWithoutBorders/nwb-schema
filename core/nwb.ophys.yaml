@@ -132,7 +132,7 @@ groups:
         dtype: float
         doc: the weight of the pixel
       neurodata_type_inc: VectorData
-    - name: img_mask
+    - name: image_mask
       doc: ROI mask, represented in 2D ([y][x]) intensity image
       dims:
       - num_roi
