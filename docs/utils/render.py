@@ -71,7 +71,7 @@ class SpecFormatter(object):
     @staticmethod
     def spec_from_file(filenames, group_spec_cls=None):
         """
-        Generate a SpecCatalog for the fiven list of spec files
+        Generate a SpecCatalog for the given list of spec files
 
         :param filenames: List of YAML/JSON specification files
         :type filenames: List of strings
@@ -104,7 +104,7 @@ class SpecFormatter(object):
 class HierarchyDescription(dict):
     """
     Dictionary data structure used to describe the contents of the specification or NWB file hierarchy.
-    This simple helper datas structure was designed to ease rendering of object hierarchies but may
+    This simple helper data structure was designed to ease rendering of object hierarchies but may
     be useful for other purposes as well.
 
     Ultimately, this is a flattened version of a spec or namespace where all datasets, groups, attributes,

@@ -1,5 +1,5 @@
-Release Notes: NWB Format
-=========================
+Release Notes
+=============
 
 2.0.0 Beta (November 2017)
 --------------------------

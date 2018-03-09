@@ -85,7 +85,46 @@ import os
 
 CUSTOM_LATEX_TABLE_COLUMNS = "|p{4cm}|p{1cm}|p{10cm}|"
 
-class PrintCol:
+
+########################################################
+#  Internal helper classes
+########################################################
+class GitHashHelper(object):
+    """
+    Helper class for retrieving and comparing git hashes for a repo.
+    """
+
+    @classmethod
+    def get_git_revision_hash(cls):
+        """
+        Helper function used to retrieve the git hash from the repo
+
+        :return: String with the git hash
+        """
+        import subprocess
+        return subprocess.check_output(['git', 'rev-parse', 'HEAD'])
+
+    @classmethod
+    def git_hash_match(cls, hashfilename):
+        """
+        Helper function used to check if the current git hash matches the version of the files
+
+        :return: True if match
+        """
+        if os.path.exists(hashfilename):
+            f = open(hashfilename, 'rb')
+            prev_hash = f.read()
+            f.close()
+            curr_hash = cls.get_git_revision_hash()
+            return curr_hash == prev_hash
+        else:
+            return False
+
+class PrintHelper:
+    """
+    Helper functions used for printing color-coded progress and status messages.
+    """
+
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKGREEN = '\033[32m'
@@ -105,13 +144,94 @@ class PrintCol:
         """
 
         :param text: The text to be printed
-        :param col: One of PrintCol.HEADER, OKBLUE etc.
+        :param col: One of PrintHelper.HEADER, OKBLUE etc.
         :return:
         """
         indent_str = indent_step * indent
         print(col + indent_str + text + cls.ENDC)
 
+    @classmethod
+    def print_type_hierarchy(cls, type_hierarchy, depth=0, show_ancestry=False):
+        """
+        Helper function used to print a hierarchy of neurodata_types
 
+        :param type_hierarchy: OrderedDict containtin for each type a dict with the 'spec' and OrderedDict of 'substype'
+        :param depth: Recursion depth of the print used to indent the hierarchy
+        """
+        for k, v in type_hierarchy.items():
+            msg = k
+            if show_ancestry and len(v['ancestry']) > 0:
+                msg += '      ancestry=' + str(v['ancestry'])
+            cls.print(msg, cls.OKBLUE+cls.BOLD if depth==0 else cls.OKBLUE, depth)
+            cls.print_type_hierarchy(v['subtypes'], depth=depth+1, show_ancestry=show_ancestry)
+
+    @classmethod
+    def print_sections(cls, type_sections):
+        """
+        Helper function to print sorting of neurodata_type to sections
+
+        :param type_sections: OrderedDict of sections created by the function sort_type_hierarchy_to_sections(...)
+        :return:
+        """
+        for sec in type_sections:
+            cls.print(sec['title'], cls.OKBLUE+cls.BOLD)
+            cls.print(str(list(sec['neurodata_types'].keys())), cls.OKBLUE)
+
+
+class LabelHelper(object):
+    """
+    Simple helper class used to generate section, table and other labels in the RST document
+    to support cross-referencing.
+    """
+    @staticmethod
+    def get_section_label(neurodata_type):
+        """
+        Get the label of the section with the documenation for the given neurodata_type
+
+        :param neurodata_type: String with the name of the neurodata_type
+        :return: String with the section label where the neurodatatype is described
+        """
+        return 'sec-' + neurodata_type
+
+    @staticmethod
+    def get_src_section_label(neurodata_type):
+        """
+        Get the label for the section with the source YAML/JSON of the given neurodata_type.
+
+        :param neurodata_type: String with the name of the neurodata_type
+        :return: String with the section lable or None in case no sources are included as part of the documentation
+        """
+        if spec_generate_src_file:
+            return 'sec-' + neurodata_type + "-src"
+        elif spec_show_json_src or spec_show_yaml_src:
+            return LabelHelper.get_section_label(neurodata_type)
+        else:
+            None
+
+    @staticmethod
+    def get_group_table_label(parent):
+        """
+        Get the name of the reference for the table listing all subgroups for the parent neurodata_type
+
+        :param parent: String with the name of the parent neurodata_type
+        :return: String with label of the table
+        """
+        return 'table-'+parent+'-groups'
+
+    @staticmethod
+    def get_data_table_label(parent):
+        """
+        Get the name of the reference for the table listing all data for the parent
+
+        :param parent: String with the name of the parent neurodata_type
+        :return: String with label of the table
+        """
+        return 'table-'+parent+'-data'
+
+
+########################################################
+#  Internal dictionary data structures
+########################################################
 class NeurodataTypeDict(dict):
     """Dict used to describe a neurodata type"""
     def __init__(self, neurodata_type, spec, ancestry, subtypes):
@@ -121,10 +241,28 @@ class NeurodataTypeDict(dict):
         self['subtypes'] = subtypes
 
 
-def clean_doc(doc_str, add_prefix=None, add_postifix=None, rst_format='**', remove_html_tags=True):
+class NeurodataTypeSection(dict):
+    """
+    Dict describing a set of neurodata_types that should be grouped in a section in the documentation
+    """
+    def __init__(self, title, neurodata_types=None, intro=None):
+        """
+
+        :param title: String with the title of the section
+        :param neurodata_types: None or OrderedDict where the keys are neurodata_types and the values
+                                are NeurodataTypeDict
+        :param intro: None or RSTDocument with introductory text for the section.
+        """
+        self['title'] = title
+        self['neurodata_types'] = OrderedDict() if neurodata_types is None else neurodata_types
+        self['intro'] = intro
+
+
+def clean_schema_doc_string(doc_str, add_prefix=None, add_postifix=None, rst_format='**', remove_html_tags=True):
     """
     Replace COMMENT, NOTE, MORE_INFO etc. qualifieres from the original spec
     with RST-style
+
     :param doc_str: The documentation string to be processed
     :param add_prefix: Prefix string to be added before Comment, Note, etc. substrings.
                     Useful, e.g., to add newlines before the different sections of the doc string.
@@ -168,22 +306,23 @@ def render_data_type(dtype):
         return res
     elif isinstance(dtype, RefSpec):
         res = "%s reference to %s" % (dtype['reftype'],
-                                      RSTDocument.get_reference(get_section_label(dtype['target_type']),
+                                      RSTDocument.get_reference(LabelHelper.get_section_label(dtype['target_type']),
                                                                 dtype['target_type']))
         return res
     else:
         return str(dtype)
 
 
-def spec_prop_doc(spec, newline='\n', ignore_props=None, prepend_items=None, append_items=None):
+def get_specification_properties_document(spec, newline='\n', ignore_props=None, prepend_items=None, append_items=None):
     """
     Create a list with the properties from the spec rendered as RST
+
     :param spec: The GroupSpec, DatasetSpec, AttributeSpec, or LinkSpec object
     :param newline: String to be used for newline
     :param ignore_props: List of strings of property keys we should ignore
     :param prepend_items: List of strings with additional items to be added to the beginning of the list of properties
     :param append_items: List of strings with additional items to be added to the end of the list of properties
-    :return:
+    :return: String with the rendered list of properties of the specification
     """
 
     spec_prop_list = []
@@ -192,14 +331,14 @@ def spec_prop_doc(spec, newline='\n', ignore_props=None, prepend_items=None, app
     ignore_keys = [] if ignore_props is None else ignore_props
     # Add link properties
     if isinstance(spec, LinkSpec):
-        spec_prop_list.append('**Target Type** %s' % RSTDocument.get_reference(get_section_label(spec['target_type']), spec['target_type']))
+        spec_prop_list.append('**Target Type** %s' % RSTDocument.get_reference(LabelHelper.get_section_label(spec['target_type']), spec['target_type']))
     # Add dataset properties
     if isinstance(spec, DatasetSpec):
         if spec.get('neurodata_type_def', None) is not None and 'neurodata_type_def' not in ignore_keys:
             spec_prop_list.append('**Neurodata Type:** %s' % str(spec['neurodata_type_def']))
         if spec.get('neurodata_type_inc', None) is not None and 'neurodata_type_inc' not in ignore_keys:
             extend_type = str(spec['neurodata_type_inc'])
-            spec_prop_list.append('**Extends:** %s' %  RSTDocument.get_reference(get_section_label(extend_type), extend_type))
+            spec_prop_list.append('**Extends:** %s' %  RSTDocument.get_reference(LabelHelper.get_section_label(extend_type), extend_type))
         if 'primitive_type' not in ignore_keys:
             spec_prop_list.append('**Primitive Type:** %s' %  get_primitive_type(spec))
         if spec.get('quantity', None) is not None and 'quantity' not in ignore_keys:
@@ -216,10 +355,10 @@ def spec_prop_doc(spec, newline='\n', ignore_props=None, prepend_items=None, app
     if isinstance(spec, GroupSpec):
         if spec.get('neurodata_type_def', None) is not None and 'neurodata_type_def' not in ignore_keys:
             ntype = str(spec['neurodata_type_def'])
-            spec_prop_list.append('**Neurodata Type:** %s' % RSTDocument.get_reference(get_section_label(ntype), ntype))
+            spec_prop_list.append('**Neurodata Type:** %s' % RSTDocument.get_reference(LabelHelper.get_section_label(ntype), ntype))
         if spec.get('neurodata_type_inc', None) is not None and 'neurodata_type_inc' not in ignore_keys:
             extend_type = str(spec['neurodata_type_inc'])
-            spec_prop_list.append('**Extends:** %s' %  RSTDocument.get_reference(get_section_label(extend_type), extend_type))
+            spec_prop_list.append('**Extends:** %s' %  RSTDocument.get_reference(LabelHelper.get_section_label(extend_type), extend_type))
         if 'primitive_type' not in ignore_keys:
             spec_prop_list.append('**Primitive Type:** %s' %  get_primitive_type(spec))
         if spec.get('quantity', None) is not None and 'quantity' not in ignore_keys:
@@ -266,7 +405,8 @@ def spec_prop_doc(spec, newline='\n', ignore_props=None, prepend_items=None, app
 
 def quantity_to_string(quantity):
     """
-    Helper function to convert a quantity identifier to a consisten string for the documentation
+    Helper function to convert a quantity identifier to a consistent string for the documentation
+
     :param quantity: Quantity used in the format specification
     :return: String describing the quantity
     """
@@ -283,53 +423,6 @@ def quantity_to_string(quantity):
     else:
         return qdict[quantity]
 
-
-
-class NeurodataTypeSection(dict):
-        """
-        Dict describing a set of neurodata_types that should be grouped in a section in the documentation
-        """
-        def __init__(self, title, neurodata_types=None, intro=None):
-            """
-
-            :param title: String with the title of the section
-            :param neurodata_types: None or OrderedDict where the keys are neurodata_types and the values
-                                    are NeurodataTypeDict
-            :param intro: None or RSTDocument with introductory text for the section.
-            """
-            self['title'] = title
-            self['neurodata_types'] = OrderedDict() if neurodata_types is None else neurodata_types
-            self['intro'] = intro
-
-
-def get_section_label(neurodata_type):
-    """Get the lable of the section with the documenation for the given neurodata_type"""
-    return 'sec-' + neurodata_type
-
-
-def get_src_section_label(neurodata_type):
-    """Get the label for the section with the source YAML/JSON of the given neurodata_type.
-
-    :return: String with the section lable or None in case no sources are included as part of the documentation
-    """
-    if spec_generate_src_file:
-        return 'sec-' + neurodata_type + "-src"
-    elif spec_show_json_src or spec_show_yaml_src:
-        return get_section_label(neurodata_type)
-    else:
-        None
-
-def get_group_table_label(parent):
-    """
-    Get the name of the reference for the table listing all subgroups for the parent
-    """
-    return 'table-'+parent+'-groups'
-
-def get_data_table_label(parent):
-    """
-    Get the name of the reference for the table listing all data for the parent
-    """
-    return 'table-'+parent+'-data'
 
 def render_namespace(namespace_catalog,
                      namespace_name=None,
@@ -377,12 +470,15 @@ def render_namespace(namespace_catalog,
         namespace_name = namespace_catalog.default_namespace
     curr_namespace = namespace_catalog.get_namespace(namespace_name)
     # Section heading
-    sec_heading = "Namespace: %s" % curr_namespace['full_name'] if 'full_name' in curr_namespace else curr_namespace['name']
+
+    subsec_heading = "Namespace -- %s" % curr_namespace['full_name'] if 'full_name' in curr_namespace else curr_namespace['name']
     # Render the description of the namespace
     if desc_doc:
+        # Add section heading
+        ns_desc_doc.add_section("Format Overview")
         # Add a subsection for the Namespace
         ns_desc_doc.add_label(ns_desc_label)
-        ns_desc_doc.add_section(sec_heading)
+        ns_desc_doc.add_subsection(subsec_heading)
         # Add a link to the source specification
         if seperate_src_file:
             ns_src_doc.add_text('**Source Specification:** see %s %s %s' % (ns_src_doc.get_numbered_reference(ns_src_label),
@@ -441,7 +537,7 @@ def render_namespace(namespace_catalog,
     if src_doc:
         if seperate_src_file:
             ns_src_doc.add_label(ns_src_label)
-            ns_src_doc.add_subsection(sec_heading)
+            ns_src_doc.add_subsection(subsec_heading)
             ns_src_doc.add_text('**Description:** see %s' % ns_src_doc.get_numbered_reference(ns_desc_label) + ns_src_doc.newline + ns_src_doc.newline)
 
         if show_json_src:
@@ -458,12 +554,12 @@ def render_namespace(namespace_catalog,
         ns_desc_filename = os.path.join(file_dir, '%s_namespace_description.inc' % namespace_name)
         if desc_doc:
             ns_desc_doc.write(ns_desc_filename, 'w')
-            PrintCol.print("    " + namespace_name + '-- WRITE NAMESPACE DESCRIPTION DOC OK.', PrintCol.OKGREEN)
+            PrintHelper.print("    " + namespace_name + '-- WRITE NAMESPACE DESCRIPTION DOC OK.', PrintHelper.OKGREEN)
             # Include the files in the main documents
             desc_doc.add_include(os.path.basename(file_dir) + "/" + os.path.basename(ns_desc_filename))
         if src_doc:
             ns_src_doc.write(ns_src_filename, 'w')
-            PrintCol.print("    " + namespace_name + '-- WRITE NAMESPACE SOURCE DOC OK.', PrintCol.OKGREEN)
+            PrintHelper.print("    " + namespace_name + '-- WRITE NAMESPACE SOURCE DOC OK.', PrintHelper.OKGREEN)
             # Include the files in the main documents
             src_doc.add_include(os.path.basename(file_dir) + "/" + os.path.basename(ns_src_filename))
 
@@ -498,7 +594,7 @@ def render_type_hierarchy(type_hierarchy,
         """
         for k, v in type_hierarchy.items():
             type_list_item = indent_step*depth + '* '
-            type_list_item += outdoc.get_reference(get_section_label(k), k)
+            type_list_item += outdoc.get_reference(LabelHelper.get_section_label(k), k)
             if show_ancestry:
                 type_list_item += '      ancestry=' + str(v['ancestry'])
             type_list_item += outdoc.newline
@@ -556,11 +652,11 @@ def create_spec_table(spec,
     elif spec.get('neurodata_type_def',None) is not None:
         spec_name = depth_str +  '<%s>' % spec.neurodata_type_def
     elif spec_type == 'link':
-        spec_name = depth_str +  '<%s>' % RSTDocument.get_reference(get_section_label(spec.data_type_inc), spec.data_type_inc)
+        spec_name = depth_str +  '<%s>' % RSTDocument.get_reference(LabelHelper.get_section_label(spec.data_type_inc), spec.data_type_inc)
     elif spec.get('neurodata_type_inc', None) is not None:
-        spec_name = depth_str +  '<%s>' % RSTDocument.get_reference(get_section_label(spec.neurodata_type_inc), spec.neurodata_type_inc)
+        spec_name = depth_str +  '<%s>' % RSTDocument.get_reference(LabelHelper.get_section_label(spec.neurodata_type_inc), spec.neurodata_type_inc)
     else:
-        spec_name = depth_str +  '<%s>' % RSTDocument.get_reference(get_section_label(spec.neurodata_type), spec.neurodata_type)
+        spec_name = depth_str +  '<%s>' % RSTDocument.get_reference(LabelHelper.get_section_label(spec.neurodata_type), spec.neurodata_type)
     spec_quantity = quantity_to_string(spec.quantity) \
                     if not (isinstance(spec, AttributeSpec) or isinstance(spec, LinkSpec)) \
                     else ""
@@ -569,12 +665,12 @@ def create_spec_table(spec,
     if appreviate_main_object_doc and depth==0:
         # Create the appreviated descripiton of the main object
         spec_doc = "Top level %s for %s" % (spec_type, spec_name.lstrip(depth_str))
-        spec_doc += spec_prop_doc(spec, rst_table.newline, ignore_props=['primitive_type'])
+        spec_doc += get_specification_properties_document(spec, rst_table.newline, ignore_props=['primitive_type'])
     else:
         # Create the description for the object
-        spec_doc = clean_doc(spec.doc, add_prefix=rst_table.newline+rst_table.newline)
+        spec_doc = clean_schema_doc_string(spec.doc, add_prefix=rst_table.newline + rst_table.newline)
         # Create the list of additonal object properties to be added as a list ot the doc
-        spec_doc += spec_prop_doc(spec, rst_table.newline, ignore_props=['primitive_type'])
+        spec_doc += get_specification_properties_document(spec, rst_table.newline, ignore_props=['primitive_type'])
 
     # Render the object to the table
     rst_table.add_row(row_values=[spec_name, spec_type, spec_doc], #, spec_quantity],
@@ -634,13 +730,13 @@ def render_group_specs(group_spec, rst_doc, parent=None):
         raise ValueError('Could not determine name of group')
     rst_doc.add_paragraph("Groups: %s%s" % (parent,group_name))
     # Compile the documentation for the group
-    gdoc = clean_doc(group_spec.doc,
-                     add_prefix=rst_doc.newline+rst_doc.newline, #+' ',
+    gdoc = clean_schema_doc_string(group_spec.doc,
+                                   add_prefix=rst_doc.newline+rst_doc.newline,  #+' ',
                      add_postifix=rst_doc.newline,
-                     rst_format='**')
+                                   rst_format='**')
 
     gdoc += rst_doc.newline
-    gdoc += spec_prop_doc(group_spec, rst_doc.newline, ignore_props=['primitive_type'])
+    gdoc += get_specification_properties_document(group_spec, rst_doc.newline, ignore_props=['primitive_type'])
     # Add the group documentation to the RST document
     rst_doc.add_text(gdoc)
     rst_doc.add_text(rst_doc.newline)
@@ -662,7 +758,7 @@ def render_group_specs(group_spec, rst_doc, parent=None):
         rst_doc.add_table(rst_table=group_spec_data_table,
                           title=group_spec_data_table_title,
                           latex_tablecolumns=CUSTOM_LATEX_TABLE_COLUMNS)
-                          # table_ref=get_data_table_label(group_name))
+                          # table_ref=LabelHelper.get_data_table_label(group_name))
 
     # Add a table with all the subgroups of this group
     if spec_show_subgroups_in_seperate_table:
@@ -680,7 +776,7 @@ def render_group_specs(group_spec, rst_doc, parent=None):
             rst_doc.add_table(group_spec_groups_table,
                               title=group_spec_groups_table_title,
                               latex_tablecolumns=CUSTOM_LATEX_TABLE_COLUMNS)
-                              # table_ref=get_group_table_label(group_name))
+                              # table_ref=LabelHelper.get_group_table_label(group_name))
 
 
     # Recursively render paragraphs for all the subgroups of this group
@@ -753,15 +849,15 @@ def render_specs(neurodata_types,
         #  Create the base documentation for the current type
         #######################################################
         # Create the section heading and label
-        type_desc_doc.add_label(get_section_label(rt))
-        section_heading = rt # if extend_type is None else "%s extends %s" % (rt, type_desc_doc.get_reference(get_section_label(extend_type), extend_type))
+        type_desc_doc.add_label(LabelHelper.get_section_label(rt))
+        section_heading = rt # if extend_type is None else "%s extends %s" % (rt, type_desc_doc.get_reference(LabelHelper.get_section_label(extend_type), extend_type))
         type_desc_doc.add_subsubsection(section_heading)
         type_desc_doc.add_text('**Overview:** ')# + type_desc_doc.newline + type_desc_doc.newline)
         # Add the document string for the neurodata_type to the document
-        rt_clean_doc = clean_doc(rt_spec['doc'],
-                                 add_prefix=type_desc_doc.newline+type_desc_doc.newline,
-                                 add_postifix=type_desc_doc.newline,
-                                 rst_format='**')
+        rt_clean_doc = clean_schema_doc_string(rt_spec['doc'],
+                                               add_prefix=type_desc_doc.newline+type_desc_doc.newline,
+                                               add_postifix=type_desc_doc.newline,
+                                               rst_format='**')
         type_desc_doc.add_text(rt_clean_doc)
         type_desc_doc.add_text(type_desc_doc.newline + type_desc_doc.newline)
         # Add note if necessary to indicate that the following documentation only shows changes to the parent class
@@ -773,8 +869,8 @@ def render_specs(neurodata_types,
             type_desc_doc.add_text("``%s`` extends ``%s`` (see %s) and includes all elements of %s%s" %
                          (rt,
                           extend_type,
-                          type_desc_doc.get_numbered_reference(get_section_label(extend_type)),
-                          type_desc_doc.get_reference(get_section_label(extend_type), extend_type),
+                          type_desc_doc.get_numbered_reference(LabelHelper.get_section_label(extend_type)),
+                          type_desc_doc.get_reference(LabelHelper.get_section_label(extend_type), extend_type),
                           sentence_end))
             type_desc_doc.add_text(type_desc_doc.newline + type_desc_doc.newline)
 
@@ -783,12 +879,12 @@ def render_specs(neurodata_types,
         if seperate_src_file:
             # Add a link to the source to the main documentQuant
             additional_props.append('**Source Specification:** see %s' %
-                                    type_desc_doc.get_numbered_reference(label=get_src_section_label(rt)))
+                                    type_desc_doc.get_numbered_reference(label=LabelHelper.get_src_section_label(rt)))
 
-        type_desc_doc.add_text(spec_prop_doc(rt_spec,
-                                             type_desc_doc.newline,
-                                             ignore_props=['neurodata_type_def', 'default_name', 'name'],
-                                             append_items=additional_props))
+        type_desc_doc.add_text(get_specification_properties_document(rt_spec,
+                                                                     type_desc_doc.newline,
+                                                                     ignore_props=['neurodata_type_def', 'default_name', 'name'],
+                                                                     append_items=additional_props))
         type_desc_doc.add_text(type_desc_doc.newline)
 
         ##################################################
@@ -818,18 +914,18 @@ def render_specs(neurodata_types,
                                     pad_inches = 0)
                         plt.close()
                         type_desc_doc.add_figure(img='./_format_auto_docs/'+rt+".*", alt=rt)
-                        PrintCol.print("    " + rt + '-- RENDER OK.', PrintCol.OKGREEN)
+                        PrintHelper.print("    " + rt + '-- RENDER OK.', PrintHelper.OKGREEN)
                     else:
-                       PrintCol.print("    " + rt + '-- SKIPPED RENDER HIERARCHY. TWO OR FEWER NODES.', PrintCol.OKBLUE)
+                       PrintHelper.print("    " + rt + '-- SKIPPED RENDER HIERARCHY. TWO OR FEWER NODES.', PrintHelper.OKBLUE)
                 else:
-                    PrintCol.print("    " + rt + '-- SKIPPED RENDER HIERARCHY. See conf.py', PrintCol.OKBLUE)
+                    PrintHelper.print("    " + rt + '-- SKIPPED RENDER HIERARCHY. See conf.py', PrintHelper.OKBLUE)
             except (KeyboardInterrupt, SystemExit):
                 raise
             except:
-                PrintCol.print(rt + '-- RENDER HIERARCHY FAILED', PrintCol.FAIL)
+                PrintHelper.print(rt + '-- RENDER HIERARCHY FAILED', PrintHelper.FAIL)
         else:
             if show_hierarchy_plots:
-                PrintCol.print(rt + '-- RENDER HIERARCHY FAILED DUE TO MISSING PACKAGES', PrintCol.FAIL)
+                PrintHelper.print(rt + '-- RENDER HIERARCHY FAILED DUE TO MISSING PACKAGES', PrintHelper.FAIL)
 
         ####################################################################
         #  Add the YAML and/or JSON sources to the document if requested
@@ -837,12 +933,12 @@ def render_specs(neurodata_types,
         # If the JSON/YAML are shown in a seperate chapter than add section headings
         if seperate_src_file:
             # Add a section to the file for the sources
-            src_sec_lable = get_src_section_label(rt)
+            src_sec_lable = LabelHelper.get_src_section_label(rt)
             type_src_doc.add_label(src_sec_lable)
             type_src_doc.add_subsubsection(section_heading)
             if extend_type is not None:
-                type_src_doc.add_text('**Extends:** %s' % type_src_doc.get_reference(get_section_label(extend_type), extend_type) + type_src_doc.newline + type_src_doc.newline)
-            type_src_doc.add_text('**Description:** see %s' % type_src_doc.get_numbered_reference(get_section_label(rt)) + type_src_doc.newline + type_src_doc.newline)
+                type_src_doc.add_text('**Extends:** %s' % type_src_doc.get_reference(LabelHelper.get_section_label(extend_type), extend_type) + type_src_doc.newline + type_src_doc.newline)
+            type_src_doc.add_text('**Description:** see %s' % type_src_doc.get_numbered_reference(LabelHelper.get_section_label(rt)) + type_src_doc.newline + type_src_doc.newline)
 
         # Add the YAML for the current spec
         if show_yaml_src:
@@ -870,7 +966,7 @@ def render_specs(neurodata_types,
                     rt_spec_data_table_title = "Datasets, Links, and Attributes contained in <%s>" % rt
             type_desc_doc.add_table(rt_spec_data_table,
                                     title=rt_spec_data_table_title,
-                                    table_ref=get_data_table_label(rt),
+                                    table_ref=LabelHelper.get_data_table_label(rt),
                                     latex_tablecolumns=CUSTOM_LATEX_TABLE_COLUMNS)
 
         #############################################################################
@@ -891,7 +987,7 @@ def render_specs(neurodata_types,
                     rt_spec_group_table_title = "Groups contained in <%s>" % rt
                 type_desc_doc.add_table(rt_spec_group_table,
                                         title=rt_spec_group_table_title,
-                                        table_ref=get_group_table_label(rt),
+                                        table_ref=LabelHelper.get_group_table_label(rt),
                                         latex_tablecolumns=CUSTOM_LATEX_TABLE_COLUMNS)
 
         ######################################################
@@ -910,9 +1006,9 @@ def render_specs(neurodata_types,
             type_src_filename = os.path.join(file_dir, '%s_source.inc' % rt)
             type_desc_filename = os.path.join(file_dir, '%s_description.inc' % rt)
             type_desc_doc.write(type_desc_filename, 'w')
-            PrintCol.print("    " + rt + '-- WRITE DESCRIPTION DOC OK.', PrintCol.OKGREEN)
+            PrintHelper.print("    " + rt + '-- WRITE DESCRIPTION DOC OK.', PrintHelper.OKGREEN)
             type_src_doc.write(type_src_filename, 'w')
-            PrintCol.print("    " + rt + '-- WRITE SOURCE DOC OK.', PrintCol.OKGREEN)
+            PrintHelper.print("    " + rt + '-- WRITE SOURCE DOC OK.', PrintHelper.OKGREEN)
             # Include the files in the main documents
             desc_doc.add_include(os.path.basename(file_dir) + "/" + os.path.basename(type_desc_filename))
             src_doc.add_include(os.path.basename(file_dir) + "/" + os.path.basename(type_src_filename))
@@ -1008,7 +1104,7 @@ def compute_neurodata_type_hierarchy(spec_catalog):
     # Check that we actually included all the types. If the above code is correct, we should have captured all types.
     for rt in registered_types:
         if rt not in flat_type_hierarchy:
-            PrintCol.print('ERROR -- Type missing in type hierarchy: %s' % rt , PrintCol.FAIL)
+            PrintHelper.print('ERROR -- Type missing in type hierarchy: %s' % rt, PrintHelper.FAIL)
             type_hierarchy[rt] = NeurodataTypeDict(neurodata_type=rt,
                                                    spec=spec_catalog.get_spec(rt),
                                                    ancestry=[],
@@ -1103,32 +1199,6 @@ def sort_type_hierarchy_to_sections(type_hierarchy, registered_types):
     return sections
 
 
-def print_type_hierarchy(type_hierarchy, depth=0, show_ancestry=False):
-    """
-    Helper function used to print a hierarchy of neurodata_types
-    :param type_hierarchy: OrderedDict containtin for each type a dict with the 'spec' and OrderedDict of 'substype'
-    :param depth: Recursion depth of the print used to indent the hierarchy
-    """
-    for k, v in type_hierarchy.items():
-        msg = k
-        if show_ancestry and len(v['ancestry']) > 0:
-            msg += '      ancestry=' + str(v['ancestry'])
-        PrintCol.print(msg, PrintCol.OKBLUE+PrintCol.BOLD if depth==0 else PrintCol.OKBLUE, depth)
-        print_type_hierarchy(v['subtypes'], depth=depth+1, show_ancestry=show_ancestry)
-
-
-def print_sections(type_sections):
-    """
-    Helper function to print sorting of neurodata_type to sections
-
-    :param type_sections: OrderedDict of sections created by the function sort_type_hierarchy_to_sections(...)
-    :return:
-    """
-    for sec in type_sections:
-        PrintCol.print(sec['title'], PrintCol.OKBLUE+PrintCol.BOLD)
-        PrintCol.print(str(list(sec['neurodata_types'].keys())), PrintCol.OKBLUE)
-
-
 def load_nwb_namespace(namespace_file, default_namespace='core', resolve=spec_resolve_type_inc):
     """
     Load an nwb namespace from file
@@ -1142,28 +1212,6 @@ def load_nwb_namespace(namespace_file, default_namespace='core', resolve=spec_re
     default_spec_catalog = namespace.get_namespace('core').catalog
     return namespace, default_spec_catalog
 
-
-def get_git_revision_hash():
-    """
-    Helper function used to retrieve the git hash from the repo
-    :return: String with the git hash
-    """
-    import subprocess
-    return subprocess.check_output(['git', 'rev-parse', 'HEAD'])
-
-def git_hash_match(hashfilename):
-    """
-    Helper function used to check if the current git hash matches the version of the files
-    :return: True if match
-    """
-    if os.path.exists(hashfilename):
-        f = open(hashfilename, 'rb')
-        prev_hash = f.read()
-        f.close()
-        curr_hash = get_git_revision_hash()
-        return curr_hash == prev_hash
-    else:
-        return False
 
 def main():
 
@@ -1182,24 +1230,24 @@ def main():
     # Clean up the output directory if necessary
     if spec_clean_output_dir_if_old_git_hash:
         if os.path.exists(file_dir):
-            if not git_hash_match(git_hash_filename):
+            if not GitHashHelper.git_hash_match(git_hash_filename):
                 import shutil
                 shutil.rmtree(file_dir)
-                PrintCol.print('Removed old sources at: %s' % file_dir, col=PrintCol.OKGREEN)
+                PrintHelper.print('Removed old sources at: %s' % file_dir, col=PrintHelper.OKGREEN)
 
     # Create the output directory if necessary
     if not os.path.exists(file_dir):
-        PrintCol.print('Generating output directory: %s' % file_dir, col=PrintCol.OKGREEN)
+        PrintHelper.print('Generating output directory: %s' % file_dir, col=PrintHelper.OKGREEN)
         os.mkdir(file_dir)
         git_hash_file = open(git_hash_filename, 'wb')
-        git_hash_file.write(get_git_revision_hash())
+        git_hash_file.write(GitHashHelper.get_git_revision_hash())
         git_hash_file.close()
     else:
-        PrintCol.print('Output directory already exists: %s' % file_dir, col=PrintCol.OKGREEN)
+        PrintHelper.print('Output directory already exists: %s' % file_dir, col=PrintHelper.OKGREEN)
         if spec_skip_doc_autogen_if_current_git_hash:
-            if git_hash_match(git_hash_filename):
-                PrintCol.print('Git hash of sources already up-to-date. Skip autogenerate of sources.',
-                               col=PrintCol.OKGREEN)
+            if GitHashHelper.git_hash_match(git_hash_filename):
+                PrintHelper.print('Git hash of sources already up-to-date. Skip autogenerate of sources.',
+                                  col=PrintHelper.OKGREEN)
                 return
 
     # Load the core namespace
@@ -1211,12 +1259,12 @@ def main():
     print("BUILDING TYPE HIERARCHY")
     registered_types = spec_catalog.get_registered_types()
     type_hierarchy, flat_type_hierarchy = compute_neurodata_type_hierarchy(spec_catalog)
-    print_type_hierarchy(type_hierarchy, show_ancestry=False)
+    PrintHelper.print_type_hierarchy(type_hierarchy, show_ancestry=False)
 
     # Sorting types into sections
     print("SORTING TYPES INTO SECTIONS")
     type_sections = sort_type_hierarchy_to_sections(type_hierarchy, registered_types)
-    print_sections(type_sections)
+    PrintHelper.print_sections(type_sections)
 
 
     # Create the documentation RST file
@@ -1226,7 +1274,7 @@ def main():
     if spec_generate_src_file:
         src_doc = RSTDocument()
         src_doc.add_label("nwb-type-specification-sources")
-        src_doc.add_section("Sources")
+        src_doc.add_section("Schema Sources")
     else:
         src_doc = None
 
@@ -1260,7 +1308,7 @@ def main():
     print("RENDERING TYPE SPECIFICATIONS")
     desc_doc.add_latex_clearpage() # Add a clearpage command for latex to avoid possible troubles with figure placement outside of the current section
     desc_doc.add_label("nwb-type-specifications")
-    desc_doc.add_section("Specifications")
+    desc_doc.add_section("Type Specifications")
 
     # Render all the sections with the different types
     sec_index = 0
@@ -1291,7 +1339,7 @@ def main():
     def write_rst_doc(document, filename, mode='w'):
         if document is not None and filename is not None:
             document.write(filename=filename, mode=mode)
-            PrintCol.print("Write %s" % filename, PrintCol.OKGREEN)
+            PrintHelper.print("Write %s" % filename, PrintHelper.OKGREEN)
     write_rst_doc(desc_doc, doc_filename)     # Write the descritpion RST document
     write_rst_doc(src_doc, srcdoc_filename)   # Write the source RST document
     write_rst_doc(masterdoc, master_filename) # Write the master RST document
