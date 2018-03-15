@@ -200,8 +200,7 @@ Comments and Definitions
 Notation
 --------
 
-The description of the format in :numref:`nwb-type-specifications` is
-divided into subsection based on *neurodata_type*. Each *neurodata_type* section includes:
+The description of the format is divided into subsection based on *neurodata_type*. Each *neurodata_type* section includes:
 
 * A basic description of the type
 * An optional figure describing the organization of data within the type
