@@ -104,7 +104,7 @@ class SchemaHelper(object):
                                      dataset_spec_cls=NWBDatasetSpec,
                                      spec_namespace_cls=NWBNamespace)
         namespace.load_namespaces(namespace_file, resolve=resolve)
-        default_spec_catalog = namespace.get_namespace('core').catalog   # TODO should 'core' be default_namespace?
+        default_spec_catalog = namespace.get_namespace(default_namespace).catalog   # TODO check if this should be 'core' or default_namespace?
         return namespace, default_spec_catalog
 
     @staticmethod
@@ -264,11 +264,12 @@ class SchemaHelper(object):
         # Check that we actually included all the types. If the above code is correct, we should have captured all types.
         for rt in registered_types:
             if rt not in flat_type_hierarchy:
-                PrintHelper.print('ERROR -- Type missing in type hierarchy: %s' % rt, PrintHelper.FAIL)
+                PrintHelper.print('ERROR -- Type missing in type hierarchy. Adding it as a basetype: %s' % rt, PrintHelper.FAIL)
                 type_hierarchy[rt] = NeurodataTypeDict(neurodata_type=rt,
                                                        spec=spec_catalog.get_spec(rt),
                                                        ancestry=[],
                                                        subtypes=OrderedDict())
+                flat_type_hierarchy[rt] = type_hierarchy[rt]
 
         return type_hierarchy, flat_type_hierarchy
 
