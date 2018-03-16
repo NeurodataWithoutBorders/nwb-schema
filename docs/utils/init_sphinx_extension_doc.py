@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# Python 2/3 compatibility
+from __future__ import print_function
 
 from subprocess import check_call, CalledProcessError
 import argparse
@@ -264,6 +266,8 @@ def get_custom_settings(utils_dir,
                         output_dec_master='format_spec_doc.inc',
                         output_src_master='format_spec_sources.inc',
                         output_hierarchy_master='format_spec_type_hierarchy.inc',
+                        output_clean_if_old_hash=True,
+                        output_skip_if_current_hash=False,
                         show_yaml_src=True,
                         show_json_src=False,
                         show_hierarchy_plots=True,
@@ -367,7 +371,7 @@ spec_input_namespace_filename = %s
 # Name of the default namespace in the file
 spec_input_default_namespace = %s
 
-""" % ("'%s'" % spec_dir,
+""" % ("'%s'" % os.path.relpath(os.path.abspath(spec_dir), os.path.abspath(output_master)),
        "'%s'" % namespace_filename,
        "'%s'" % default_namespace)
 
@@ -391,11 +395,19 @@ spec_output_src_filename  = %s
 # Name of the file containing the type hierarchy. (Included in spec_output_doc_filename)
 spec_output_doc_type_hierarchy_filename = %s
 
+# Clean up the output directory before we build if the git hash is out of date
+spec_clean_output_dir_if_old_git_hash = %s
+
+# Do not rebuild the format sources if we have previously build the sources and the git hash matches
+spec_skip_doc_autogen_if_current_git_hash = %s
+
 """ % ('os.path.join(os.path.dirname(os.path.abspath(__file__)), "%s")' % spec_output_dir,
        "'%s'" % output_master,
        "'%s'" % output_dec_master,
        "'%s'" % output_src_master,
-       "'%s'" % output_hierarchy_master)
+       "'%s'" % output_hierarchy_master,
+       "%s" % output_clean_if_old_hash,
+       "%s" % output_skip_if_current_hash)
 
     # Add custom generator options
     custom_autodoc_settings += \
@@ -934,7 +946,7 @@ def main():
                 sphinx_master=sphinx_master,
                 output=clargs['output'])
     write_theme_overwrites(output=clargs['output'])
-    write_custom_conf(output=clargs['output'])
+    write_custom_conf(**clargs)
     write_makefile(output=clargs['output'], utilsdir=clargs['utilsdir'].rstrip('/'))
     custom_description_file = write_custom_description(output=clargs['output'],
                                                        custom_description=clargs['custom_description'],
