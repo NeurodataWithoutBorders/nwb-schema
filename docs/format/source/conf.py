@@ -224,6 +224,7 @@ latex_elements = {
 \setcounter{secnumdepth}{6}
 \\usepackage{enumitem}
 \setlistdepth{100}
+\\addto\\captionsenglish{\\renewcommand{\\contentsname}{Table of contents}}
 """,
 }
 # \\renewlist{itemize}{itemize}{100}

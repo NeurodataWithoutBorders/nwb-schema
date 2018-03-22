@@ -1,20 +1,46 @@
 Welcome to the NWB Format Specification
 =======================================
 
+.. raw:: latex
+
+   \part{Introduction}
+
+.. toctree::
+   :numbered:
+   :maxdepth: 2
+   :caption: Introduction
+
+   format_description
+
+.. raw:: latex
+
+   \part{Format Specification}
 
 .. toctree::
     :numbered:
-    :maxdepth: 8
-    :caption: Table of Contents
+    :maxdepth: 3
+    :caption: Format Specification
 
     format
-    credits
 
-Indices and tables
-==================
+.. raw:: latex
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   \part{History and Legal}
+
+.. toctree::
+   :maxdepth: 2
+   :caption: History & Legal
+
+   format_release_notes
+   credits
+
+
+..
+    Indices and tables
+    ==================
+
+    * :ref:`genindex`
+    * :ref:`modindex`
+    * :ref:`search`
 
 

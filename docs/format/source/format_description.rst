@@ -49,8 +49,8 @@ the top-level organization of data into groups is described in :numref:`table-NW
 
 .. _sec_neurodata_type_intro:
 
-neurodata_type
---------------
+``neurodata_type`` : Assigning types to specifications
+------------------------------------------------------
 
 The concept of a *neurodata_type* is similar to the concept of a Class in object-oriented programming.
 In the NWB format, groups or datasets may be given a unique *neurodata_type*. The *neurodata_type*
@@ -61,15 +61,16 @@ inherits from *TimeSeries*.
 
 .. _sec_nwbcontainer_intro:
 
-NWBContainer and NWBData
-------------------------
+``NWBContainer``, ``NWBData``: Base neurodata_types for containers and datasets
+-------------------------------------------------------------------------------
 
-*NWBContainer* defines a generic container for storing collections of data. *NWBContainer* serves as the base type
-for all main data containers (including *TimeSeries*) of the core NWB data format and allows us to define and
-integrate new common functionality in a central place and via common mechanisms. See also :numref:`sec-NWBContainer`.
+*NWBContainer* is a specification of a group that defines a generic container for storing collections of data.
+*NWBContainer* serves as the base type for all main data containers (including *TimeSeries*) of the core NWB data
+format and allows us to define and integrate new common functionality in a central place and via common mechanisms.
+See also :numref:`sec-NWBContainer`.
 
-*NWBData* then functions as a common base class for datasets with an assigned *neurodata_type*.
-See also :numref:`sec-NWBData`.
+*NWBData* is a specification of a Dataset that functions as a common base neurodata_type for datasets with an
+assigned *neurodata_type*. See also :numref:`sec-NWBData`.
 
 .. note::
 
@@ -81,8 +82,8 @@ See also :numref:`sec-NWBData`.
 
 .. _sec_timeseries_intro:
 
-Time Series
------------
+``Time Series`` : A base neurodata_type for storing time series data
+--------------------------------------------------------------------
 
 The file format is designed around a data structure called a
 *TimeSeries* which stores time-varying data. A *TimeSeries* is a
@@ -125,8 +126,8 @@ existing outside the lab. Extensions are described in section (see :numref:`sec-
 
 .. _sec-data-processing-modules:
 
-Data Processing Modules
------------------------
+Data Processing Modules: Organizing processed data
+--------------------------------------------------
 
 NWB uses *ProcessingModule* to store data for—and represent the results of—common
 data processing steps, such as spike sorting and image segmentation,
@@ -199,8 +200,7 @@ Comments and Definitions
 Notation
 --------
 
-The description of the format in :numref:`nwb-type-specifications` is
-divided into subsection based on *neurodata_type*. Each *neurodata_type* section includes:
+The description of the format is divided into subsection based on *neurodata_type*. Each *neurodata_type* section includes:
 
 * A basic description of the type
 * An optional figure describing the organization of data within the type
@@ -251,10 +251,10 @@ signed and unsigned), so long as the selected size encompasses the full
 range of data, and for floats, without loss of significant precision.
 Fields that have a minimum size can use larger, but not smaller sizes.
 
-Link types
-----------
+Links and data references
+-------------------------
 
-In some instances, the specification refers to links. When links
+**Soft Links:** In some instances, the specification refers to links. When links
 are made within a file, NWB uses soft-links and not hard-links.
 This is because soft-links distinguish between the link and the
 target of the link, whereas hard-links cause multiple names (paths) to
@@ -264,6 +264,18 @@ link is removed (or moved to another location), then the soft link will "dangle,
 that is point to a target that no longer exists. For this reason, moving
 or removing targets of soft links should be avoided unless the links are
 updated to point to the new location.
+
+**Object References:** Object references are similar
+to SoftLinks but instead of being stored as elements in the data hierarchy
+(similar to a Group or Dataset) the object reference defines a data type
+on a Dataset, i.e., the object references are stored as elements in a
+Dataset.
+
+**Region References:** Region references are similar to object references
+but instead of pointing to another Group/Dataset as a whole a region reference
+defines an additional selection and as such describe a reference to a subset
+of a dataset.
+
 
 
 Design notes
