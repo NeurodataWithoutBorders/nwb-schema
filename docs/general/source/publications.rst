@@ -21,7 +21,6 @@ NWB:N Version 2
   (Poster) `(online abstract) <http://www.abstractsonline.com/pp8/#!/4376/presentation/22013>`_
   `(pdf) <https://github.com/NeurodataWithoutBorders/nwb-schema/raw/dev/docs/general/source/pubs/ruebel_sfn_2017.pdf>`_
 
-
 ===============
 NWB:N Version 1
 ===============
@@ -32,3 +31,14 @@ NWB:N Version 1
    Markus Meister, Karel Svoboda, Friedrich T. Sommer, "Neurodata Without Borders: Creating a Common Data
    Format for Neurophysiology," Neuron , Volume 88 , Issue 4 , 629 - 634, Nov., 2015
    `(online paper) <http://www.cell.com/neuron/fulltext/S0896-6273(15)00919-8>`_
+
+================
+Software Process
+================
+
+* Doruk Ozturk, Michael Grauer, Jean-Christophe Fillion-Robin, Will Schroeder and Sandy McKenzie
+
+  * "How to Improve Software Quality in Open Source Projects: Part I – Overview of Continuous Integration (CI) and Software Process in PyNWB"
+    `(blog post part 1) <https://blog.kitware.com/how-to-improve-software-quality-in-open-source-projects-part-i-overview-of-continuous-integration-ci-and-software-process-in-pynwb/>`_
+  * "How to Improve Software Quality in Open Source Projects: Part II – Packaging PyNWB for Multiple Operating Systems and Python Versions"
+    `(blog post part 2) <https://blog.kitware.com/improving-software-quality-in-open-source-projects-part-ii-packaging-pynwb-for-multiple-operating-systems-and-python-versions/>`_
