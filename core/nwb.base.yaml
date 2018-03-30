@@ -163,10 +163,10 @@ groups:
   groups:
   - doc: 'Lab specific time and sync information as provided directly from hardware
       devices and that is necessary for aligning all acquired time information to
-      a common timebase. The timestamp array stores time in the common timebase.
-      COMMENT: This group will usually only be populated in TimeSeries that are
-      stored external to the NWB file, in files storing raw data. Once timestamp
-      data is calculated, the contents of "sync" are mostly for archival purposes.'
+      a common timebase. The timestamp array stores time in the common timebase. COMMENT:
+      This group will usually only be populated in TimeSeries that are stored external
+      to the NWB file, in files storing raw data. Once timestamp data is calculated,
+      the contents of "sync" are mostly for archival purposes.'
     name: sync
     quantity: '?'
   neurodata_type_def: TimeSeries
@@ -197,9 +197,9 @@ groups:
     name: help
     value: A collection of images that have some meaningful relationship
   datasets:
-    - doc: Images stored in this NWBDataInterface
-      neurodata_type_inc: Image
-      quantity: '+'
+  - doc: Images stored in this NWBDataInterface
+    neurodata_type_inc: Image
+    quantity: '+'
   default_name: Images
   doc: A NWBDataInterface for storing images that have some relationship
   neurodata_type_def: Images
