@@ -183,7 +183,7 @@ groups:
     name: help
     value: Metadata about an imaging plane
   datasets:
-  - doc: Description of &lt;image_plane_X&gt;
+  - doc: 'Description of <image_plane_X>'
     dtype: text
     name: description
     quantity: '?'
