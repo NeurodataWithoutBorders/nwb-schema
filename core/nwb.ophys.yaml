@@ -238,7 +238,8 @@ groups:
     ImageSegmentation and DfOverF interfaces'
   groups:
   - attributes:
-    - doc: Value is 'Metadata about an optical channel used to record from an imaging plane'
+    - doc: Value is 'Metadata about an optical channel used to record from an imaging
+        plane'
       dtype: text
       name: help
       value: Metadata about an optical channel used to record from an imaging plane
