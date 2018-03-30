@@ -15,7 +15,7 @@ groups:
     dtype: text
     name: file_create_date
     shape:
-    - null
+    - 'null'
   - doc: 'A unique text identifier for the file. COMMENT: Eg, concatenated lab name,
       file creation date/time and experimentalist, or a hash of these and/or other
       values. The goal is that the string should be unique to all other files.'
@@ -243,7 +243,7 @@ groups:
           dtype: text
           name: namespaces
           shape:
-          - null
+          - 'null'
         doc: Dataset for storing contents of a specification file for either the core
           format or an extension.  Name should match name of file.`
         dtype: text

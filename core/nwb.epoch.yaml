@@ -24,7 +24,7 @@ groups:
     name: tags
     quantity: '?'
     shape:
-    - null
+    - 'null'
   doc: 'One of possibly many different experimental epochCOMMENT: Name is arbitrary
     but must be unique within the experiment.'
   groups:

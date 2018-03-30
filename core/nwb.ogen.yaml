@@ -20,7 +20,7 @@ groups:
     dtype: float32
     name: data
     shape:
-    - null
+    - 'null'
   doc: Optogenetic stimulus.  The data[] field is in unit of watts.
   links:
   - doc: link to OptogeneticStimulusSite group that describes the site to which this

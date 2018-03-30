@@ -14,14 +14,14 @@ groups:
       dtype: int32
       name: dimension
       shape:
-      - null
+      - 'null'
     - dims:
       - row|column
       doc: Size of viewing area, in meters
       dtype: float
       name: field_of_view
       shape:
-      - null
+      - 'null'
     - doc: Unit that axis data is stored in (e.g., degrees)
       dtype: text
       name: unit
@@ -32,8 +32,8 @@ groups:
     dtype: float32
     name: axis_1_phase_map
     shape:
-    - null
-    - null
+    - 'null'
+    - 'null'
   - attributes:
     - dims:
       - row_col
@@ -42,14 +42,14 @@ groups:
       dtype: int32
       name: dimension
       shape:
-      - null
+      - 'null'
     - dims:
       - row_col
       doc: Size of viewing area, in meters
       dtype: float
       name: field_of_view
       shape:
-      - null
+      - 'null'
     - doc: Unit that axis data is stored in (e.g., degrees)
       dtype: text
       name: unit
@@ -62,8 +62,8 @@ groups:
     name: axis_1_power_map
     quantity: '?'
     shape:
-    - null
-    - null
+    - 'null'
+    - 'null'
   - attributes:
     - dims:
       - row_col
@@ -72,14 +72,14 @@ groups:
       dtype: int32
       name: dimension
       shape:
-      - null
+      - 'null'
     - dims:
       - row_col
       doc: Size of viewing area, in meters
       dtype: float
       name: field_of_view
       shape:
-      - null
+      - 'null'
     - doc: Unit that axis data is stored in (e.g., degrees)
       dtype: text
       name: unit
@@ -90,8 +90,8 @@ groups:
     dtype: float32
     name: axis_2_phase_map
     shape:
-    - null
-    - null
+    - 'null'
+    - 'null'
   - attributes:
     - dims:
       - row_col
@@ -100,14 +100,14 @@ groups:
       dtype: int32
       name: dimension
       shape:
-      - null
+      - 'null'
     - dims:
       - row_col
       doc: Size of viewing area, in meters
       dtype: float
       name: field_of_view
       shape:
-      - null
+      - 'null'
     - doc: Unit that axis data is stored in (e.g., degrees)
       dtype: text
       name: unit
@@ -120,8 +120,8 @@ groups:
     name: axis_2_power_map
     quantity: '?'
     shape:
-    - null
-    - null
+    - 'null'
+    - 'null'
   - dims:
     - '2'
     doc: Two-element array describing the contents of the two response axis fields.
@@ -130,7 +130,7 @@ groups:
     dtype: text
     name: axis_descriptions
     shape:
-    - null
+    - 'null'
   - attributes:
     - doc: Number of bits used to represent each value. This is necessary to determine
         maximum (white) pixel value
@@ -143,14 +143,14 @@ groups:
       dtype: int32
       name: dimension
       shape:
-      - null
+      - 'null'
     - dims:
       - row_col
       doc: Size of viewing area, in meters
       dtype: float
       name: field_of_view
       shape:
-      - null
+      - 'null'
     - doc: Focal depth offset, in meters
       dtype: float
       name: focal_depth
@@ -165,8 +165,8 @@ groups:
     dtype: uint16
     name: focal_depth_image
     shape:
-    - null
-    - null
+    - 'null'
+    - 'null'
   - attributes:
     - dims:
       - row_col
@@ -175,14 +175,14 @@ groups:
       dtype: int32
       name: dimension
       shape:
-      - null
+      - 'null'
     - dims:
       - row_col
       doc: Size of viewing area, in meters.
       dtype: float
       name: field_of_view
       shape:
-      - null
+      - 'null'
     dims:
     - num_rows
     - num_cols
@@ -190,8 +190,8 @@ groups:
     dtype: float32
     name: sign_map
     shape:
-    - null
-    - null
+    - 'null'
+    - 'null'
   - attributes:
     - doc: Number of bits used to represent each value. This is necessary to determine
         maximum (white) pixel value
@@ -204,14 +204,14 @@ groups:
       dtype: int32
       name: dimension
       shape:
-      - null
+      - 'null'
     - dims:
       - row_col
       doc: Size of viewing area, in meters
       dtype: float
       name: field_of_view
       shape:
-      - null
+      - 'null'
     - doc: Format of image. Right now only 'raw' supported
       dtype: text
       name: format
@@ -222,8 +222,8 @@ groups:
     dtype: uint16
     name: vasculature_image
     shape:
-    - null
-    - null
+    - 'null'
+    - 'null'
   doc: 'Intrinsic signal optical imaging or widefield imaging for measuring retinotopy.
     Stores orthogonal maps (e.g., altitude/azimuth; radius/theta) of responses to
     specific stimuli and a combined polarity map from which to identify visual areas.<br

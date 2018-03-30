@@ -23,8 +23,8 @@ groups:
     dtype: number
     name: data
     shape:
-    - null
-    - null
+    - 'null'
+    - 'null'
   - doc: Description defining what exactly 'straight-ahead' means.
     dtype: text
     name: reference_frame

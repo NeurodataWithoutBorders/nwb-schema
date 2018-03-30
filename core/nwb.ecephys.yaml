@@ -22,9 +22,9 @@ groups:
     dtype: number
     name: data
     shape:
-    - - null
-    - - null
-      - null
+    - - 'null'
+    - - 'null'
+      - 'null'
   - name: electrodes
     doc: 'the electrodes that this series was generated from'
     neurodata_type_inc: ElectrodeTableRegion
@@ -59,11 +59,11 @@ groups:
     dtype: float32
     name: data
     shape:
-    - - null
-      - null
-    - - null
-      - null
-      - null
+    - - 'null'
+      - 'null'
+    - - 'null'
+      - 'null'
+      - 'null'
   doc: 'Stores "snapshots" of spike events (i.e., threshold crossings) in data. This
     may also be raw data, as reported by ephys hardware. If so, the TimeSeries::description
     field should describing how events were detected. All SpikeEventSeries should
@@ -94,8 +94,8 @@ groups:
     dtype: float32
     name: waveform_mean
     shape:
-    - null
-    - null
+    - 'null'
+    - 'null'
   - dims:
     - num_clusters
     - num_samples
@@ -103,8 +103,8 @@ groups:
     dtype: float32
     name: waveform_sd
     shape:
-    - null
-    - null
+    - 'null'
+    - 'null'
   doc: The mean waveform shape, including standard deviation, of the different clusters.
     Ideally, the waveform analysis should be performed on data that is only high-pass
     filtered. This is a separate module because it is expected to require updating.
@@ -135,7 +135,7 @@ groups:
     dtype: int32
     name: num
     shape:
-    - null
+    - 'null'
   - dims:
     - num_clusters
     doc: Maximum ratio of waveform peak to RMS on any channel in the cluster (provides
@@ -143,7 +143,7 @@ groups:
     dtype: float32
     name: peak_over_rms
     shape:
-    - null
+    - 'null'
   - dims:
     - num_events
     doc: Times of clustered events, in seconds. This may be a link to times field
@@ -151,7 +151,7 @@ groups:
     dtype: float64
     name: times
     shape:
-    - null
+    - 'null'
   doc: Clustered spike data, whether from automatic clustering tools (e.g., klustakwik)
     or as a result of manual sorting.
   default_name: Clustering
@@ -169,7 +169,7 @@ groups:
     dtype: text
     name: description
     shape:
-    - null
+    - 'null'
   - dims:
     - num_events
     - num_channels
@@ -178,16 +178,16 @@ groups:
     dtype: float32
     name: features
     shape:
-    - null
-    - null
-    - null
+    - 'null'
+    - 'null'
+    - 'null'
   - dims:
     - num_events
     doc: Times of events that features correspond to (can be a link).
     dtype: float64
     name: times
     shape:
-    - null
+    - 'null'
   - name: electrodes
     doc: 'the electrodes that this series was generated from'
     neurodata_type_inc: ElectrodeTableRegion
@@ -215,7 +215,7 @@ groups:
     dtype: int32
     name: source_idx
     shape:
-    - null
+    - 'null'
   - attributes:
     - default_value: Seconds
       doc: The string "Seconds"
@@ -228,7 +228,7 @@ groups:
     dtype: float64
     name: times
     shape:
-    - null
+    - 'null'
   doc: Detected spike events from voltage trace(s).
   links:
   - doc: HDF5 link to ElectricalSeries that this data was calculated from. Metadata

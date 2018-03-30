@@ -11,7 +11,7 @@ groups:
     dtype: number
     name: data
     shape:
-    - null
+    - 'null'
   - doc: 'Units: Volt/Amp (v-clamp) or Volt/Volt (c-clamp)'
     dtype: float
     name: gain

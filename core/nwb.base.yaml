@@ -26,7 +26,7 @@ datasets:
     target_type: VectorData
     reftype: region
   shape:
-  - null
+  - 'null'
   neurodata_type_def: VectorIndex
   neurodata_type_inc: NWBData
 - default_name: element_id
@@ -38,7 +38,7 @@ datasets:
   doc: a unique identifier for each element
   dtype: int
   shape:
-  - null
+  - 'null'
   neurodata_type_def: ElementIdentifiers
   neurodata_type_inc: NWBData
 groups:
@@ -85,7 +85,7 @@ groups:
     name: control
     quantity: '?'
     shape:
-    - null
+    - 'null'
   - dims:
     - num_control_values
     doc: 'Description of each control value. COMMENT: Array length should be as long
@@ -95,7 +95,7 @@ groups:
     name: control_description
     quantity: '?'
     shape:
-    - null
+    - 'null'
   - attributes:
     - default_value: 1.0
       doc: Scalar to multiply each element in data to convert it to the specified
@@ -125,7 +125,7 @@ groups:
     dtype: any
     name: data
     shape:
-    - null
+    - 'null'
   - attributes:
     - doc: 'Sampling rate, in Hz COMMENT: Rate information is stored in Hz'
       dtype: float32
@@ -158,7 +158,7 @@ groups:
     name: timestamps
     quantity: '?'
     shape:
-    - null
+    - 'null'
   doc: General purpose time series.
   groups:
   - doc: "Lab specific time and sync information as provided directly from hardware\

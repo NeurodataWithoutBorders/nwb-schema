@@ -45,15 +45,15 @@ groups:
     dtype: float32
     name: data
     shape:
-    - null
-    - null
+    - 'null'
+    - 'null'
   - dims:
     - num_ROIs
     doc: List of ROIs represented, one name for each row of data[].
     dtype: text
     name: roi_names
     shape:
-    - null
+    - 'null'
   doc: ROI responses over an imaging plane. Each row in data[] should correspond to
     the signal from one ROI.
   links:
@@ -136,8 +136,8 @@ groups:
         dtype: float32
         name: img_mask
         shape:
-        - null
-        - null
+        - 'null'
+        - 'null'
       - dims:
         - num_pixels
         - '2'
@@ -145,15 +145,15 @@ groups:
         dtype: uint16
         name: pix_mask
         shape:
-        - null
-        - null
+        - 'null'
+        - 'null'
       - dims:
         - num_pixels
         doc: Weight of each pixel listed in pix_mask
         dtype: float32
         name: pix_mask_weight
         shape:
-        - null
+        - 'null'
       - doc: Description of this ROI.
         dtype: text
         name: roi_description
@@ -223,8 +223,8 @@ groups:
     dtype: float32
     name: manifold
     shape:
-    - null
-    - null
+    - 'null'
+    - 'null'
     - 3
   - doc: 'Describes position and reference frame of manifold based on position of
       first element in manifold. For example, text description of anotomical location
