@@ -29,7 +29,6 @@ def run_doc_autogen(_):
    conf_file_dir = os.path.dirname(os.path.abspath(__file__))
    sys.path.append(conf_file_dir)  # Need so that generate format docs can find the conf_doc_autogen file
    from conf_doc_autogen import spec_output_dir
-   import conf_get_pynwb    # We don't have FORM and PyNWB on ReadTheDocs. This script downloads and install the packages locally if they cannot be imported by simply donwloading the zip of the repo, unpacking it and setting the system paths
 
    if spec_doc_rebuild_always or not os.path.exists(spec_output_dir):
       from nwb_docutils.generate_format_docs import main as generate_docs
