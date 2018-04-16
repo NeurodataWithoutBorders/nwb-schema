@@ -1,29 +1,13 @@
 Welcome to NWB: Neurophysiology (NWB:N)
 =======================================
 
-The goal of this document is to provide users an overview of the various
-aspects of NWB:N and provide pointers to find an navigate the various
-documents associated with NWB:N.
+.. note::
+
+    The NWB:N overview page has moved. Please visit our new overview page at: `https://neurodatawithoutborders.github.io/ <https://neurodatawithoutborders.github.io/>`__
 
 
-.. toctree::
-    :numbered:
-    :maxdepth: 6
-    :caption: Table of Contents
-
-    nwbintro
-    getting_started
-    faq
-    development_plan
-    publications
-    credits
 
 
-Indices and tables
-==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
 
