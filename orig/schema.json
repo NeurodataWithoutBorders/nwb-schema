@@ -1870,7 +1870,7 @@
                     }
                 },
                 "/general/optogenetics/?": {
-                    "description": "Metadata describing optogenetic stimuluation",
+                    "description": "Metadata describing optogenetic stimulation",
                     "<site_X>/*": {
                         "device": {
                             "references": "/general/devices/<device_X>/",
@@ -1889,7 +1889,7 @@
                             "description": "Description of site",
                             "data_type": "text"
                         },
-                        "_description": "One of possibly many groups describing an optogenetic stimuluation site. COMMENT: Name is arbitrary but should be meaningful. Name is referenced by OptogeneticSeries"
+                        "_description": "One of possibly many groups describing an optogenetic stimulation site. COMMENT: Name is arbitrary but should be meaningful. Name is referenced by OptogeneticSeries"
                     }
                 },
                 "FeatureExtraction/": {
