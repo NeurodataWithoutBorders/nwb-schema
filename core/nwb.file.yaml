@@ -271,7 +271,7 @@ groups:
         dtype: text
         name: genotype
         quantity: '?'
-      - doc: Gender of subject
+      - doc: Sex of subject
         dtype: text
         name: sex
         quantity: '?'
