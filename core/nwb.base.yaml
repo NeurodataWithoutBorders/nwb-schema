@@ -26,7 +26,7 @@ datasets:
     target_type: VectorData
     reftype: region
   shape:
-  - null
+  - 'null'
   neurodata_type_def: VectorIndex
   neurodata_type_inc: NWBData
 - default_name: element_id
@@ -38,7 +38,7 @@ datasets:
   doc: a unique identifier for each element
   dtype: int
   shape:
-  - null
+  - 'null'
   neurodata_type_def: ElementIdentifiers
   neurodata_type_inc: NWBData
 groups:
@@ -85,7 +85,7 @@ groups:
     name: control
     quantity: '?'
     shape:
-    - null
+    - 'null'
   - dims:
     - num_control_values
     doc: 'Description of each control value. COMMENT: Array length should be as long
@@ -95,7 +95,7 @@ groups:
     name: control_description
     quantity: '?'
     shape:
-    - null
+    - 'null'
   - attributes:
     - default_value: 1.0
       doc: Scalar to multiply each element in data to convert it to the specified
@@ -111,10 +111,10 @@ groups:
       dtype: float32
       name: resolution
       required: false
-    - doc: "The base unit of measure used to store data. This should be in the SI\
-        \ unit. COMMENT: This is the SI unit (when appropriate) of the stored data,\
-        \ such as Volts. If the actual data is stored in millivolts, the field 'conversion'\
-        \ below describes how to convert the data to the specified SI unit."
+    - doc: 'The base unit of measure used to store data. This should be in the SI
+        unit. COMMENT: This is the SI unit (when appropriate) of the stored data,
+        such as Volts. If the actual data is stored in millivolts, the field ''conversion''
+        below describes how to convert the data to the specified SI unit.'
       dtype: text
       name: unit
     dims:
@@ -125,7 +125,7 @@ groups:
     dtype: any
     name: data
     shape:
-    - null
+    - 'null'
   - attributes:
     - doc: 'Sampling rate, in Hz COMMENT: Rate information is stored in Hz'
       dtype: float32
@@ -158,15 +158,15 @@ groups:
     name: timestamps
     quantity: '?'
     shape:
-    - null
+    - 'null'
   doc: General purpose time series.
   groups:
-  - doc: "Lab specific time and sync information as provided directly from hardware\
-      \ devices and that is necessary for aligning all acquired time information to\
-      \ a common timebase. The timestamp array stores time in the common timebase.\
-      \ COMMENT: This group will usually only be populated in TimeSeries that are\
-      \ stored external to the NWB file, in files storing raw data. Once timestamp\
-      \ data is calculated, the contents of 'sync' are mostly for archival purposes."
+  - doc: 'Lab specific time and sync information as provided directly from hardware
+      devices and that is necessary for aligning all acquired time information to
+      a common timebase. The timestamp array stores time in the common timebase. COMMENT:
+      This group will usually only be populated in TimeSeries that are stored external
+      to the NWB file, in files storing raw data. Once timestamp data is calculated,
+      the contents of "sync" are mostly for archival purposes.'
     name: sync
     quantity: '?'
   neurodata_type_def: TimeSeries
@@ -197,9 +197,9 @@ groups:
     name: help
     value: A collection of images that have some meaningful relationship
   datasets:
-    - doc: Images stored in this NWBDataInterface
-      neurodata_type_inc: Image
-      quantity: '+'
+  - doc: Images stored in this NWBDataInterface
+    neurodata_type_inc: Image
+    quantity: '+'
   default_name: Images
   doc: A NWBDataInterface for storing images that have some relationship
   neurodata_type_def: Images

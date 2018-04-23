@@ -9,10 +9,10 @@ groups:
   datasets:
   - attributes:
     - default_value: meter
-      doc: "The base unit of measure used to store data. This should be in the SI\
-        \ unit. COMMENT: This is the SI unit (when appropriate) of the stored data,\
-        \ such as Volts. If the actual data is stored in millivolts, the field 'conversion'\
-        \ below describes how to convert the data to the specified SI unit."
+      doc: 'The base unit of measure used to store data. This should be in the SI
+        unit. COMMENT: This is the SI unit (when appropriate) of the stored data,
+        such as Volts. If the actual data is stored in millivolts, the field ''conversion''
+        below describes how to convert the data to the specified SI unit.'
       dtype: text
       name: unit
       required: false
@@ -23,8 +23,8 @@ groups:
     dtype: number
     name: data
     shape:
-    - null
-    - null
+    - 'null'
+    - 'null'
   - doc: Description defining what exactly 'straight-ahead' means.
     dtype: text
     name: reference_frame
@@ -101,7 +101,7 @@ groups:
   groups:
   - doc: TimeSeries object containing time series data on pupil size
     neurodata_type_inc: TimeSeries
-    quantity: +
+    quantity: '+'
   default_name: PupilTracking
   neurodata_type_def: PupilTracking
   neurodata_type_inc: NWBDataInterface
@@ -147,7 +147,7 @@ groups:
   groups:
   - doc: SpatialSeries object containing position data
     neurodata_type_inc: SpatialSeries
-    quantity: +
+    quantity: '+'
   default_name: Position
   neurodata_type_def: Position
   neurodata_type_inc: NWBDataInterface
