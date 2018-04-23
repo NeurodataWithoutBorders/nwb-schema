@@ -190,11 +190,11 @@ groups:
   - doc: Name of device in /general/devices
     dtype: text
     name: device
-  - doc: Excitation wavelength
-    dtype: text
+  - doc: Excitation wavelength in nm
+    dtype: float
     name: excitation_lambda
   - doc: Rate images are acquired, in Hz.
-    dtype: text
+    dtype: float
     name: imaging_rate
   - doc: Calcium indicator
     dtype: text
@@ -246,8 +246,8 @@ groups:
     - doc: Any notes or comments about the channel
       dtype: text
       name: description
-    - doc: Emission lambda for channel
-      dtype: text
+    - doc: Emission wavelength for channel in nm
+      dtype:  float
       name: emission_lambda
     doc: 'One of possibly many groups storing channel-specific data COMMENT: Name
       is arbitrary but should be meaningful'
