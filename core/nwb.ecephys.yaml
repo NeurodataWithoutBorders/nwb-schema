@@ -298,7 +298,7 @@ groups:
   neurodata_type_inc: NWBDataInterface
 - attributes:
   - doc: Value is 'Metadata about a physical grouping of channels'
-    dtype: str
+    dtype: text
     name: help
     value: A physical grouping of channels
   - doc: description of this electrode group
@@ -343,13 +343,13 @@ datasets:
     dtype: utf8
     doc: a brief description of what this electrode is
   - name: group
-    dtype: ascii
-    doc: the name of the ElectrodeGroup this electrode is a part of
-  - name: group_ref
     dtype:
         target_type: ElectrodeGroup
         reftype: object
     doc: a reference to the ElectrodeGroup this electrode is a part of
+  - name: group_name
+    dtype: ascii
+    doc: the name of the ElectrodeGroup this electrode is a part of
   attributes:
     - doc: Value is 'a table for storing data about extracellular electrodes'
       dtype: text
