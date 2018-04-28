@@ -226,7 +226,7 @@ groups:
   - doc: Name of device in /general/devices
     dtype: text
     name: device
-  - doc: Excitation wavelength
+  - doc: Excitation wavelength in nm
     dtype: float
     name: excitation_lambda
   - doc: Rate images are acquired, in Hz.
@@ -282,7 +282,7 @@ groups:
     - doc: Any notes or comments about the channel
       dtype: text
       name: description
-    - doc: Emission lambda for channel
+    - doc: Emission wavelength for channel in nm
       dtype: float
       name: emission_lambda
     doc: 'One of possibly many groups storing channel-specific data COMMENT: Name
