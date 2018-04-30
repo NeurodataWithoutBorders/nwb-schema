@@ -20,6 +20,16 @@ Data publishers can use the specification language to extend
 the format in order to store types of data not supported by the
 NWB core format (:numref:`sec-extensions`).
 
+.. seealso::
+
+    * The mapping of objects described in the specification language to HDF5 is
+      described in more detail in the NWB storage docs available here http://nwb-storage.readthedocs.io/en/latest/
+    * Data structures for interacting with the specification language documents
+      (e.g, namespace and specification YAML/JSON files) are available as part of
+      PyNWB. For further details see the PyNWB docs available here: http://pynwb.readthedocs.io/en/latest/index.html
+    * For a general overview of the NWB-N data format see here: http://nwb-overview.readthedocs.io/en/latest/
+    * For detailed descripiton of the actual NWB-N data format see here: http://nwb-schema.readthedocs.io/en/latest/index.html
+
 
 .. _sec-extensions:
 
@@ -61,7 +71,15 @@ and subsequent sections.
     Use ``nwb_init_sphinx_extension_doc --help`` to view the list
     of options for generating the docs. The package also includes the executable ``nwb_generate_format_docs``
     which is used for generating actual reStructuredText files and figures from YAML/JSON
-    specification sources.
+    specification sources. For an example see: http://pynwb.readthedocs.io/en/latest/example.html#documenting-extensions
+
+.. seealso::
+
+    For examples on how to create and use extensions in PyNWB see:
+
+    * http://pynwb.readthedocs.io/en/latest/example.html#extending-nwb : Examples showing how to extend NWB
+    * http://pynwb.readthedocs.io/en/latest/tutorials.html#extensions : Tutorial showing how to define and use extensions
+
 
 
 .. _sec-namespace-dec:
@@ -387,7 +405,7 @@ Boolean describing whether the this group can be linked.
 ``attributes``
 ^^^^^^^^^^^^^^
 
-List of attribute specifications describing the attributes of the group. See Section :ref:`attribute-spec` for details.
+List of attribute specifications describing the attributes of the group. See :numref:`sec-attributes-spec` for details.
 
 .. code-block:: yaml
 
@@ -398,6 +416,7 @@ List of attribute specifications describing the attributes of the group. See Sec
 ^^^^^^^^^
 
 List of link specifications describing all links to be stored as part of this group.
+See :numref:`sec-link-spec` for details.
 
 .. code-block:: yaml
 
@@ -407,10 +426,12 @@ List of link specifications describing all links to be stored as part of this gr
       target_type: type of target
     - ...
 
+
 ``datasets``
 ^^^^^^^^^^^^
 
 List of dataset specifications describing all datasets to be stored as part of this group.
+See :numref:`sec-dataset-spec` for details.
 
 .. code-block:: yaml
 
@@ -439,15 +460,13 @@ List of group specifications describing all groups to be stored as part of this 
     - ...
 
 
-.. _attribute-spec:
-
-
 ``\_required``
 ^^^^^^^^^^^^^^
 
 .. attention::
 
-   TODO: The ``\_required`` key has been removed in version 1.2.x and later. An improved version will be added again in later version of the specification language.
+   The ``\_required`` key has been removed in version 2.0. An improved version may
+   be added again in later version of the specification language.
 
 
 .. _sec-attributes-spec:
@@ -737,8 +756,7 @@ Links
 =====
 
 The link specification is used to specify links to other groups or datasets.
-In HDF5 it is recommended that links be stored a soft links. The link specification
-is a dictionary with the following form:
+The link specification is a dictionary with the following form:
 
 .. code-block:: yaml
 
@@ -746,6 +764,13 @@ is a dictionary with the following form:
     - doc: Link to target type
       name: link name
       target_type: type of target
+
+.. note::
+
+    When mapped to storage, links should always remain identifiable as such. For example,
+    in the context of HDF5, this means that soft links (or external links) should be
+    used instead of hard links.
+
 
 Link specification keys
 ------------------------
@@ -873,7 +898,7 @@ List describing the names of the dimensions of the dataset. Same as for attribut
 ``attributes``
 ^^^^^^^^^^^^^^
 
-List of attribute specifications describing the attributes of the group. See Section :ref:`attribute-spec` for details.
+List of attribute specifications describing the attributes of the group. See Section :ref:`sec-attributes-spec` for details.
 
 .. code-block:: yaml
 
