@@ -3,8 +3,8 @@ Release Notes
 =============
 
 
-Version 1.2a (April, 2017)
---------------------------
+Version 2.0.0alpha (August, 2017)
+----------------------------------
 
 Summary
 ^^^^^^^
@@ -54,6 +54,11 @@ Summary
     * Documentation for source codes and the specification are auto-generated from source to ensure consistency between sources and the documentation
 * Avoid mixing of format specification and computations:
     * Removed key ```autogen``` (without replacement). The autogen key was used to describe how to compute certain derived datasets from the file. This feature was problematic with respect to the guiding principles of NWB for a couple of reasons. E.g., the resulting datasets were often not interpretable without the provenance of the autogeneration procedure and autogeneration itself and often described the generation of derived data structures to ease follow-on computations. Describing computations as part of a format specification is problematic as it creates strong dependencies and often unnecessary restrictions for use and analysis of data stored in the format. Also, the reorganization of metadata has eliminated the need for autogen in many cases. A autogen features is arguably the role of a data API or intermediary derived-quantity API (or specification), rather than a format specification.
+* Enhanced specification of data types via ``dtype``:
+    * Enhanced the syntax for ``dtype`` to allow the specification of flat compound data types via lists of types
+    * Enhanced the syntac for ``dtype`` to allow the specification of i) object references and ii) region references
+    * Removed "!" syntax (e.g., "float32!") previously used to specify a minimum precision. All types are interpreted as minimum specs.
+    * Specified list of available data types and their names
 * Others:
     * Removed key ```\_\_custom``` (without replacement). This feature was used only in one location to provide user hints where custom data could be placed, however, since the NWB specification approach explicitly allows users to add custom data in any location, this information was not binding.
 
@@ -138,7 +143,7 @@ and format likely via support for modeling of relationships or support for table
 
 The ```autogen``` key has been removed without replacement.
 
-**Reason:** The autogen specification was orignially used to specify that the attribute or dataset contents (values)
+**Reason:** The autogen specification was originally used to specify that the attribute or dataset contents (values)
 can be derived from the contents of the HDF5 file and, hence, generated and validated automatically.
 As such, autogen crossed a broad range of different functionalities, including:
 
@@ -161,9 +166,6 @@ This mixing of functionality in turn led to several concerns:
 **Usage in NWB** autogen was used in NWB V.1.0.6 to generate 17 datasets/attributes primarily to:
 i) store the path of links in separate datasets/attributes or ii) generate lists of datasets/groups of a given type/property.
 The datasets were reviewed at a hackathon and determined to be non-essential and as such removed from the format as well.
-
-
-
 
 
 

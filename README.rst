@@ -1,11 +1,13 @@
-The PyNWB repository has moved to `Github <https://github.com/NeurodataWithoutBorders/nwb-schema>`_
-
 NWB Schema Format
 ========================
 
-A schema definition for storing neurodata in HDF5 format.
+A format specification schema for the NWB:N neuroscience data format. 
 
--`Learn more <http://www.nwb.org/>`_.
+- `Learn more about NWB <http://www.nwb.org/>`_.
+- `Learn more bout the NWB:N format schema <http://nwb-schema.readthedocs.io>`_
+- `Learn more about the different components of the NWB:N ecosystem <http://nwb-overview.readthedocs.io>`_
+- The PyNWB Python API for the NWB:N format is available on `Github <https://github.com/NeurodataWithoutBorders/pynwb>`_
+- The MatNWB Matlab API for the NWB:N format is available on `Github <https://github.com/NeurodataWithoutBorders/matnwb>`_
 
 
 License

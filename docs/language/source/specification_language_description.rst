@@ -64,11 +64,12 @@ and subsequent sections.
 
 .. tip::
 
-    The ``nwb-schema`` repo includes tools to generate Sphinx documentation from
-    format specifications. In particular the tool ``utils/init_sphinx_extension_doc.py``
+    The ``nwb-docutils`` package includes tools to generate Sphinx documentation from
+    format specifications. In particular the executable ``nwb_init_sphinx_extension_doc``
     provides functionality to setup documentation for a format or extension defined
     by a namespace (similar to the documentation for NWB core namespace at http://nwb-schema.readthedocs.io/en/latest/ ).
-    The repo also includes the tool ``utils/generate_format_docs.py``
+    Use ``nwb_init_sphinx_extension_doc --help`` to view the list
+    of options for generating the docs. The package also includes the executable ``nwb_generate_format_docs``
     which is used for generating actual reStructuredText files and figures from YAML/JSON
     specification sources. For an example see: http://pynwb.readthedocs.io/en/latest/example.html#documenting-extensions
 
@@ -164,13 +165,13 @@ List of the schema to be included in this namespace. The specification looks as 
 
 .. code-block:: python
 
-     - source: .base.yaml
+     - source: nwb.base.yaml
      - source: nwb.ephys.yaml
        neurodata_types: ElectricalSeries
      - namespace: core
        neurodata_types: Interface
 
-* ``source`` describes the relative path to the YAML (or JSON) files with the schema specifications
+* ``source`` describes the name of the YAML (or JSON) file with the schema specification. The schema files should be located in the same folder as the namespace file.
 * ``namespace`` describes a named reference to another namespace. In contrast to source, this is a reference by name to a known namespace (i.e., the namespace is resolved during the build and must point to an already existing namespace). This mechanism is used to allow, e.g., extension of a core namespace (here the NWB core namespace) without requiring hard paths to the files describing the core namespace.
 * ``neurodata_types`` then is an optional list of strings indicating which neurodata_types should be
   included from the given specification source or namespace. The default is ``neurodata_types: null`` indicating that all
@@ -518,21 +519,149 @@ purpose and use of the attribute data. The ``doc`` key is required.
 
 String specifying the data type of the attribute. Allowable values are:
 
-- ``float`` – indicates a floating point number
-- ``int`` – indicates an integer
-- ``uint`` – unsigned integer
-- ``number`` – indicates either a floating point or an integer
-- ``text`` – a text string
++--------------------------+----------------------------------+----------------+
+| ``dtype`` **spec value** | **storage type**                 | **size**       |
++--------------------------+----------------------------------+----------------+
+|  * "float"               | single precision floating point  |  32 bit        |
+|  * "float32"             |                                  |                |
++--------------------------+----------------------------------+----------------+
+|  * "double"              | double precision floating point  | 64 bit         |
+|  * "float64"             |                                  |                |
++--------------------------+----------------------------------+----------------+
+|  * "long"                | signed 64 bit integer            | 64 bit         |
+|  * "int64"               |                                  |                |
++--------------------------+----------------------------------+----------------+
+|  * "int"                 | signed 32 bit integer            | 32 bit         |
+|  * "int32"               |                                  |                |
++--------------------------+----------------------------------+----------------+
+|  * "int16"               | signed 16 bit integer            | 16 bit         |
++--------------------------+----------------------------------+----------------+
+|  * "int8"                | signed 8 bit integer             | 8 bit          |
++--------------------------+----------------------------------+----------------+
+| * "uint32"               | unsigned 32 bit integer          | 32 bit         |
++--------------------------+----------------------------------+----------------+
+| * "uint16"               | unsigned 16 bit integer          | 16 bit         |
++--------------------------+----------------------------------+----------------+
+| * "uint8"                | unsigned 8 bit integer           | 8 bit          |
++--------------------------+----------------------------------+----------------+
+|  * "text"                | unicode                          | variable       |
+|  * "utf"                 |                                  |                |
+|  * "utf8"                |                                  |                |
+|  * "utf-8"               |                                  |                |
++--------------------------+----------------------------------+----------------+
+|  * "ascii"               | ascii                            | variable       |
+|  * "str"                 |                                  |                |
++--------------------------+----------------------------------+----------------+
 
-For all of the above types (except number and text), a default size (in bits) can
-be specified by appending the size to the type, e.g., int32. If “!” is
-appended to the default size, e.g. “float64!”, then the default size is
-also the required minimum size.
+.. note::
 
-.. attention::
+    The precision indicated in the specification is generally interpreted as a minimum precision.
+    Higher precisions may be used if required by the particular data.
 
-    - **TODO** Check that the list of allowable dtypes is complete
-    - **TODO** Check that the behavior described for type bit lengths is current
+Reference ``dtype``
+"""""""""""""""""""
+
+In additon to the above basic data types, an attribute or dataset may also store references to other
+data objects. Reference ``dtypes`` are described via a dictionary. E.g.:
+
+.. code-block:: yaml
+
+  dtype:
+        target_type: ElectrodeGroup
+        reftype: object
+
+
+``target_type`` here describes the ``neurodata_type`` of the target that the reference points to and
+``reftype`` describes the kind of reference. Currently the specification language supports two main
+reference types.
+
+
++--------------------------+-------------------------------------+
+| ``reftype`` **value**    | **Reference type description**      |
++--------------------------+-------------------------------------+
+|  * "ref"                 | Reference to another group or       |
+|  * "reference"           | dataset of the given `              |
+|  * "object"              | ``target_type``                     |
++--------------------------+-------------------------------------+
+|  * region                | Reference to a region (i.e. subset) |
+|                          | of another dataset of the given     |
+|                          | ``target_type``                     |
++--------------------------+-------------------------------------+
+
+Compound ``dtype``
+""""""""""""""""""
+
+Compound data types are essentially a ``struct``, i.e., the data type is a composition of several primitive types.
+This is useful to specify complex types, e.g., for storage of complex numbers consisting of a real and imaginary components,
+vectors or tensors, as well to create table-like data structures. Compond data types are created by defining a list of
+the form:
+
+.. code-block:: yaml
+
+    dtype:
+    - name: <name of the data value>
+      dtype: <one of the above basic dtype stings or references>
+      doc: <description of the data>
+   - name: ....
+     .
+     .
+     .
+
+.. note::
+
+    Currently only "flat" compound types are allowed, i.e., a compound type may not contain other compound types
+    but may itself only consist of basic dtypes, e.g,. float, string, etc. or reference dtypes.
+
+
+Below and example form the NWB:N format specification showing the use of compound data types to create a table-like
+data structur for storing metadata about electrodes.
+
+
+.. code-block:: yaml
+
+    datasets:
+    - doc: 'a table for storing queryable information about electrodes in a single table'
+      dtype:
+      - name: id
+        dtype: int
+        doc: a user-specified unique identifier
+      - name: x
+        dtype: float
+        doc: the x coordinate of the channels location
+      - name: y
+        dtype: float
+        doc: the y coordinate of the channels location
+      - name: z
+        dtype: float
+        doc: the z coordinate of the channels location
+      - name: imp
+        dtype: float
+        doc: the impedance of the channel
+      - name: location
+        dtype: ascii
+        doc: the location of channel within the subject e.g. brain region
+      - name: filtering
+        dtype: ascii
+        doc: description of hardware filtering
+      - name: description
+        dtype: utf8
+        doc: a brief description of what this electrode is
+      - name: group
+        dtype: ascii
+        doc: the name of the ElectrodeGroup this electrode is a part of
+      - name: group_ref
+        dtype:
+            target_type: ElectrodeGroup
+            reftype: object
+        doc: a reference to the ElectrodeGroup this electrode is a part of
+      attributes:
+        - doc: Value is 'a table for storing data about extracellular electrodes'
+          dtype: text
+          name: help
+          value: a table for storing data about extracellular electrodes
+      neurodata_type_inc: NWBData
+    neurodata_type_def: ElectrodeTable
+
 
 .. _sec-dims:
 

@@ -4,8 +4,9 @@
 HDF5
 ====
 
-The NWB-N format currently uses the `Hierarchical Data Format (HDF5) <https://www.hdfgroup.org/HDF5/>`_
-as primary mechanism for data storage. HDF5 was selected for the NWB format because it met several of the project's
+The NWB:N format currently uses the `Hierarchical Data Format (HDF5) <https://www.hdfgroup.org/HDF5/>`_
+as primary mechanism for data storage. HDF5 was selected for the
+NWB format because it met several of the project's
 requirements. First, it is a mature data format standard with libraries
 available in multiple programming languages. Second, the format's
 hierarchical structure allows data to be grouped into logical
@@ -27,7 +28,7 @@ Format Mapping
 ==============
 
 Here we describe the mapping of NWB primitives (e.g,. Groups, Datasets, Attributes, Links etc.) used by
-the NWB format and specification to HDF5 storage primitives. As the NWB-N format was designed with HDF5
+the NWB format and specification to HDF5 storage primitives. As the NWB:N format was designed with HDF5
 in mind, the high-level mapping between the format specification and HDF5 is quite simple:
 
 .. tabularcolumns:: |p{4cm}|p{11cm}|
@@ -146,3 +147,52 @@ Links
     doc                           Not mapped; Stored in schema only
     target_type                   Not mapped. The target type is determined by the type of the target of the HDF5 link
     ============================  ======================================================================================
+
+
+dtype mappings
+--------------
+
+The mappings of data types is as follows
+
+    +--------------------------+----------------------------------+----------------+
+    | ``dtype`` **spec value** | **storage type**                 | **size**       |
+    +--------------------------+----------------------------------+----------------+
+    |  * "float"               | single precision floating point  |  32 bit        |
+    |  * "float32"             |                                  |                |
+    +--------------------------+----------------------------------+----------------+
+    |  * "double"              | double precision floating point  | 64 bit         |
+    |  * "float64"             |                                  |                |
+    +--------------------------+----------------------------------+----------------+
+    |  * "long"                | signed 64 bit integer            | 64 bit         |
+    |  * "int64"               |                                  |                |
+    +--------------------------+----------------------------------+----------------+
+    |  * "int"                 | signed 32 bit integer            | 32 bit         |
+    |  * "int32"               |                                  |                |
+    +--------------------------+----------------------------------+----------------+
+    |  * "int16"               | signed 16 bit integer            | 16 bit         |
+    +--------------------------+----------------------------------+----------------+
+    |  * "int8"                | signed 8 bit integer             | 8 bit          |
+    +--------------------------+----------------------------------+----------------+
+    | * "uint32"               | unsigned 32 bit integer          | 32 bit         |
+    +--------------------------+----------------------------------+----------------+
+    | * "uint16"               | unsigned 16 bit integer          | 16 bit         |
+    +--------------------------+----------------------------------+----------------+
+    | * "uint8"                | unsigned 8 bit integer           | 8 bit          |
+    +--------------------------+----------------------------------+----------------+
+    |  * "text"                | unicode                          | variable       |
+    |  * "utf"                 |                                  |                |
+    |  * "utf8"                |                                  |                |
+    |  * "utf-8"               |                                  |                |
+    +--------------------------+----------------------------------+----------------+
+    |  * "ascii"               | ascii                            | variable       |
+    |  * "str"                 |                                  |                |
+    +--------------------------+----------------------------------+----------------+
+    |  * "ref"                 | Reference to another group or    |                |
+    |  * "reference"           | dataset                          |                |
+    |  * "object"              |                                  |                |
+    +--------------------------+----------------------------------+----------------+
+    |  * region                | Reference to a region            |                |
+    |                          | of another dataset               |                |
+    +--------------------------+----------------------------------+----------------+
+    |  compound dtype          + HDF5 compound data type          |                |
+    +--------------------------+----------------------------------+----------------+

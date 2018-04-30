@@ -10,7 +10,6 @@ BUILDDIR       = _build
 SRCDIR         = ../src
 RSTDIR         = source
 PKGNAME        = pynwb
-UTILSDIR      = $(PWD)/../
 CONFDIR       = $(PWD)/source
 
 # Internal variables.
@@ -56,6 +55,7 @@ allclean:
 	-rm $(RSTDIR)/_format_auto_docs/*.pdf
 	-rm $(RSTDIR)/_format_auto_docs/*.rst
 	-rm $(RSTDIR)/_format_auto_docs/*.inc
+	-rm $(RSTDIR)/_format_auto_docs/git_hash.txt
 
 clean:
 	-rm -rf $(BUILDDIR)/* $(RSTDIR)/$(PKGNAME)* $(RSTDIR)/modules.rst
@@ -172,7 +172,7 @@ doctest:
 	      "results in $(BUILDDIR)/doctest/output.txt."
 
 apidoc:
-	PYTHONPATH=$(UTILSDIR):$(CONFDIR):$(PYTHONPATH) python ../utils/generate_format_docs.py
+	PYTHONPATH=$(CONFDIR):$(PYTHONPATH) nwb_generate_format_docs
 	@echo
 	@echo "Generate rst source files from NWB spec."
 

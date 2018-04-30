@@ -9,11 +9,6 @@ The documentation for NWB-N consists of a series of documents describing the var
 
 In addition to the above folders, ``/docs`` contains the following additional components:
 
-* ``docs/utils`` Python sources used for generating documentation
-    * ``docs/utils/generate_format_docs.py`` is used by ``docs/format`` to auto-generate documentation for
-      the NWB-N format from the YAML sources
-    * ``docs/utils/render.py`` is used to generate figures of the hierarchies of NWB-N files and
-      specifications as well as to help with the programmatic generation of reStructuredText (RST) documents
 * ``docs/common/text`` Documentation text sources that are used in multiple documents (e.g., the introduction to NWB-N)
 * ``docs/common/figures`` Figures that are being used in multiple documents (e.g., charts describing NWB-N)
 
