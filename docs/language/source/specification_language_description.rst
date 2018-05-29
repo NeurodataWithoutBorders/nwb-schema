@@ -438,7 +438,7 @@ See :numref:`sec-dataset-spec` for details.
     datasets:
     - name: data1
       doc: My data 1
-      type: number
+      type: int
       quantity: 'zero_or_one'
     - name: data2
       doc: My data 2
