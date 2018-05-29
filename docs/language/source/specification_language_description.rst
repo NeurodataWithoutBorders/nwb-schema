@@ -700,7 +700,7 @@ of the array data.
 ``shape``
 ^^^^^^^^^
 
-Optional key describing the shape of the array stored as the valye of the attribute.
+Optional key describing the shape of the array stored as the value of the attribute.
 The description of ``shape`` must match the description of dimensions in so far as
 if we name two dimensions in ``dims`` than we must also specify the ``shape`` for
 two dimensions. We may specify ``null`` in case that the length of a dimension is not
@@ -723,6 +723,16 @@ may have multiple valid shape options, e.g,:
     - - 5
     - - null
       - 5
+
+The default behavior for shape is:
+
+.. code-block:: yaml
+
+    ...
+    shape: null
+
+indicating that the attribute/dataset is a scalar.
+
 
 
 ``required``
