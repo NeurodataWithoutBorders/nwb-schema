@@ -438,7 +438,7 @@ See :numref:`sec-dataset-spec` for details.
     datasets:
     - name: data1
       doc: My data 1
-      type: number
+      type: int
       quantity: 'zero_or_one'
     - name: data2
       doc: My data 2
@@ -548,9 +548,6 @@ String specifying the data type of the attribute. Allowable values are:
 |  * "utf"                 |                                  |                |
 |  * "utf8"                |                                  |                |
 |  * "utf-8"               |                                  |                |
-+--------------------------+----------------------------------+----------------+
-|  * "ascii"               | ascii                            | variable       |
-|  * "str"                 |                                  |                |
 +--------------------------+----------------------------------+----------------+
 
 .. note::
