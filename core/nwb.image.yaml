@@ -112,7 +112,6 @@ groups:
     quantity: '?'
     shape:
     - 2
-    - 3
   - doc: Description of image relative to some reference frame (e.g., which way is
       up). Must also specify frame of reference.
     dtype: text
