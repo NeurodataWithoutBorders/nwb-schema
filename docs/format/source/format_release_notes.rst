@@ -224,7 +224,7 @@ Improved organization of processed data
 Simplified organization of acquistion data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Specific Chagnes:**
+**Specific Changes:**
 
     * ``/acquistion`` may now store any primary data defined via an :ref:`NWBDataInterface <sec-NWBDataInterface>` type
       (not just TimeSeries).
@@ -232,6 +232,13 @@ Simplified organization of acquistion data
     * Created a new neurodata_type :ref:`Images <sec-Images>` for storing a collection of images to replace
       ``acquisition/images`` and provide a more general container for use elsewhere in NWB:N (i.e., this is not
       meant to replace :ref:`ImageSeries <sec-ImageSeries>`)
+
+Simplified extension of subject metadata
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Specific Change:å** Assigned ``neurodata_type`` to ``/general/subject`` to enable extension of the subject container
+directly without having to extend ``NWBFile`` itself. (see https://github.com/NeurodataWithoutBorders/nwb-schema/issues/120
+and https://github.com/NeurodataWithoutBorders/nwb-schema/pull/121 for details)
 
 
 Ancestry
