@@ -31,8 +31,9 @@ generic container for storing colleciton of data and is used to define common fe
 across data containers (see :numref:`sec_nwbcontainer_intro`). *TimeSeries* is a central component in
 the NWB format for storing complex temporal series (see :numref:`sec_timeseries_intro`). In the format,
 these types are then extended to define more specialized types. To organize and define collections of processed data
-from common data processing steps, the NWB format then defines the concept of *ProcessingModule* where each processing
-step is represented by a corresponding *NWBContainer* (see :numref:`sec-data-processing-modules` for details).
+from common data processing steps, the NWB:N format then defines the concept of *ProcessingModule* where each processing
+step is represented by a corresponding *NWBDataInterface* (an extension of *NWBContainer*)
+(see :numref:`sec-data-processing-modules` for details).
 
 At a high level, data is organized into the following main groups:
 
@@ -61,24 +62,31 @@ inherits from *TimeSeries*.
 
 .. _sec_nwbcontainer_intro:
 
-``NWBContainer``, ``NWBData``: Base neurodata_types for containers and datasets
--------------------------------------------------------------------------------
+``NWBContainer``, ``NWBData``, ``NWBDataInterface``: Base neurodata_types for containers and datasets
+-----------------------------------------------------------------------------------------------------
 
-*NWBContainer* is a specification of a group that defines a generic container for storing collections of data.
-*NWBContainer* serves as the base type for all main data containers (including *TimeSeries*) of the core NWB data
-format and allows us to define and integrate new common functionality in a central place and via common mechanisms.
-See also :numref:`sec-NWBContainer`.
+:ref:`NWBContainer <sec-NWBContainer>` is a specification of a group that defines a generic container for
+storing collections of data. :ref:`NWBContainer <sec-NWBContainer>` serves as the base type for all main data containers
+(including :ref:`TimeSeries <sec-TimeSeries>`) of the core NWB:N data
+format and allows us to define and integrate new common functionality in a central place and via common mechanisms
+(see :numref:`sec-NWBContainer`)
 
-*NWBData* is a specification of a Dataset that functions as a common base neurodata_type for datasets with an
-assigned *neurodata_type*. See also :numref:`sec-NWBData`.
+:ref:`NWBDataInterface <sec-NWBDataInterface>` extends :ref:`NWBContainer <sec-NWBContainer>` and
+serves as base type for primary data (e.g., experimental or analysis data) and is used to
+distinguish in the schema between non-metadata data containers and metadata containers
+(see :numref:`sec-NWBDataInterface`)
+
+
+:ref:`NWBData <sec-NWBData>` is a specification of a Dataset that functions as a common base neurodata_type for
+datasets with an assigned *neurodata_type* (see :numref:`sec-NWBData`)
 
 .. note::
 
-    The concept of *NWBContainer* (see :numref:`sec-NWBContainer`) has been introduced in NWB 2 and
-    is a generalization of the concept of *Interface* from earlier version of NWB (i.e., 1.0.x and earlier).
-    In contrast to v1.0.x, *Interface* was renamed to *NWBContainer* to ease intuition and
-    the concept was generalized to provide a common base for data containers (rather than
-    being specific to *ProcessingModules*).
+    The concept of :ref:`NWBContainer <sec-NWBContainer>` and :ref:`NWBData <sec-NWBData>` have been introduced in
+    NWB:N 2. :ref:`NWBDataInterface <sec-NWBDataInterface>` (also introduced in NWB:N 2) replaces ``Interface``
+    from NWB:N 1.x. ``Interface``  *Interface* was renamed to *NWBDataInterface* to ease intuition and
+    the concept was generalized via :ref:`NWBContainer <sec-NWBContainer>` to provide a common base for
+    data containers (rather than being specific to *ProcessingModules* as in NWB:N 1.x).
 
 .. _sec_timeseries_intro:
 
@@ -129,21 +137,23 @@ existing outside the lab. Extensions are described in section (see :numref:`sec-
 Data Processing Modules: Organizing processed data
 --------------------------------------------------
 
-NWB uses *ProcessingModule* to store data for—and represent the results of—common
+NWB:N uses :ref:`ProcessingModule <sec-ProcessingModule>` to store
+data for—and represent the results of—common
 data processing steps, such as spike sorting and image segmentation,
 that occur before scientific analysis of the data. Processing modules store the
 data used by software tools to calculate these intermediate results.
 All processing modules are stored directly in the group
 `/processing <#groups-processing>`__. The name of each module is chosen by the
 data provider (i.e. processing modules have a "variable" name). The particular data
-within each processing module is specified by one or more *NWBContainers*, which are
-groups residing directly within processing module. Each NWBContainer has a unique
-neurodata_type (e.g., *ImageSegmentation*) that decribes and defines the data
-contained in the NWBContainer. For NWBContainers designed for use with
+within each processing module is specified by one or more
+:ref:`NWBDataInterface <sec-NWBDataInterface>`, which are
+groups residing directly within a processing module. Each NWBDataInterface has a unique
+neurodata_type (e.g., *ImageSegmentation*) that describes and defines the data
+contained in the NWBDataInterface. For NWBDataInterfaces designed for use with
 processing modules, a default name (usually the same as the neurodata_type) is
-commonly specified to further ease identification of the data in file. However, to
-support storage of multiple instances of the same subtype of NWBContainer in the
-same processing module, NWB allows users to optionally define custom names as well.
+commonly specified to further ease identification of the data in a file. However, to
+support storage of multiple instances of the same subtype in the
+same processing module, NWB:N allows users to optionally define custom names as well.
 A detailed overview of the main data processing containers is available in
 :numref:`Data_Processing`.
 
