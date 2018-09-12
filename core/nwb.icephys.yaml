@@ -116,7 +116,7 @@ groups:
     name: resistance_comp_bandwidth
     quantity: '?'
   - attributes:
-    - default_value: pecent
+    - default_value: percent
       doc: "The base unit of measure used to store data. This should be in the SI\
         \ unit. COMMENT: This is the SI unit (when appropriate) of the stored data,\
         \ such as Volts. If the actual data is stored in millivolts, the field 'conversion'\
@@ -129,7 +129,7 @@ groups:
     name: resistance_comp_correction
     quantity: '?'
   - attributes:
-    - default_value: pecent
+    - default_value: percent
       doc: "The base unit of measure used to store data. This should be in the SI\
         \ unit. COMMENT: This is the SI unit (when appropriate) of the stored data,\
         \ such as Volts. If the actual data is stored in millivolts, the field 'conversion'\
