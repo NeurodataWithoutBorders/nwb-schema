@@ -96,6 +96,38 @@ kind of links.
       which stores a region reference to the ``ElectrodeTable`` which is stored in ``/general/extracellular_ephys``.
     - Text dataset ``/general/extracellular_ephys/<electrode_group_X>/device`` is now a link ``<ElectrodeGroup>/device``
 
+Support row-based and column-based tables
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Change:** Add support for storing tabular data via row-based and column-based table structures
+
+**Reason:** Simplify storage of complex metadata. Simplify storage of dynamic and variable-length metadata.
+
+**Format Changes:**
+
+    * **Row-based tables:** are implemented via a change in the specification language through support for
+      compound data types The advantage of row-based tables is that they i) allow referencing of sets of
+      rows via region-references to a single dataset (e.g., a set of electrodes), ii)  make it
+      easy to add rows by appending to a single dataset, iii) make it easy to read individual rows
+      of a table (but require reading the full table to extract the data of a single column).
+       Row-based tables are used to simplify, e.g,.
+      the organization of electrode-metadata in NWB:N 2 (see above).
+      (See the `specification language release notes <http://schema-language.readthedocs.io/en/latest/specification_language_release_notes.html#release-notes>`_
+      for details about the addition of compound data types in the schema).
+    * **Column-based tables:** are implemented via the new neurodata_type :ref:`DynamicTable <sec-DynamicTable>`.
+      A DynamicTable is simplified-speaking just a collection of an arbitrary number of :ref:`TableColumn <sec-TableColumn>`
+      datasets (all with equal length) and a dataset storing row ids and a dataset storing column names. The
+      advantage of the column-based store is that it i) makes it easy to add new columns to the table without
+      the need for extensions and ii) the column-based storage makes it easy to read individual columns
+      efficiently (while reading full rows requires reading from multiple datasets). DynamicTable is used, e.g.,
+      to enhance storage of trial data.
+
+Improved storage of epoch data
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    * Added :ref:`DynamicTable <sec-DynamicTable>` for storing dynamic metadata about epochs to the
+      :ref:`Epochs <sec-Epochs>` neurodata_type
+
 Added missing metadata
 ^^^^^^^^^^^^^^^^^^^^^^
 
