@@ -1,8 +1,12 @@
 Release Notes
 =============
 
-2.0.0 Beta (November 2017)
---------------------------
+2.0.0 Beta (2017/18)
+--------------------
+
+**First release:** November 2017
+
+**Subsequent releases:** The schema was improved and updated throughout the beta phase with full release planed for fall 2018.
 
 Improved organization of electrode metadata in ``/general/extracellular_ephys``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -95,6 +99,55 @@ kind of links.
     - Integer array dataset ``electrode_idx`` of ``<ElectricalSeries>`` is now a dataset ``electrodes`` of type ``ElectrodeTableRegion``
       which stores a region reference to the ``ElectrodeTable`` which is stored in ``/general/extracellular_ephys``.
     - Text dataset ``/general/extracellular_ephys/<electrode_group_X>/device`` is now a link ``<ElectrodeGroup>/device``
+
+Support row-based and column-based tables
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Change:** Add support for storing tabular data via row-based and column-based table structures.
+
+**Reason:** Simplify storage of complex metadata. Simplify storage of dynamic and variable-length metadata.
+
+**Format Changes:**
+
+    * **Row-based tables:** are implemented via a change in the specification language through support for
+      compound data types The advantage of row-based tables is that they i) allow referencing of sets of
+      rows via region-references to a single dataset (e.g., a set of electrodes), ii)  make it
+      easy to add rows by appending to a single dataset, iii) make it easy to read individual rows
+      of a table (but require reading the full table to extract the data of a single column).
+      Row-based tables are used to simplify, e.g,. the organization of electrode-metadata in NWB:N 2 (see above).
+      (See the `specification language release notes <http://schema-language.readthedocs.io/en/latest/specification_language_release_notes.html#release-notes>`_
+      for details about the addition of compound data types in the schema).
+    * **Column-based tables:** are implemented via the new neurodata_type :ref:`DynamicTable <sec-DynamicTable>`.
+      A DynamicTable is simplified-speaking just a collection of an arbitrary number of :ref:`TableColumn <sec-TableColumn>`
+      datasets (all with equal length) and a dataset storing row ids and a dataset storing column names. The
+      advantage of the column-based store is that it i) makes it easy to add new columns to the table without
+      the need for extensions and ii) the column-based storage makes it easy to read individual columns
+      efficiently (while reading full rows requires reading from multiple datasets). DynamicTable is used, e.g.,
+      to enhance storage of trial data. (See https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files )
+
+Improved support for trial-based data
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Change:** Add dedicated concept for storing trial data.
+
+**Reason:** Users indicated that it was not easy to store trial data in NWB:N 1.x.
+
+**Format Changes:** Added top-level group ``trials/`` which is a :ref:`DynamicTable <sec-DynamicTable>`
+with ``start`` and ``end`` columns and optional additional user-defined table columns.
+See `PR536 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_ for detailed code changes. See
+the `PyNWB docs <https://pynwb.readthedocs.io/en/latest/tutorials/general/file.html?highlight=Trial#trials>`_ for a
+short tutorial on how to use trials. See :ref:`NWBFile <sec-NWBFile>` *Groups: /trials* for an overview of the trial
+schema.
+
+Improved storage of epoch data
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Change:** Add table to store metadata about epochs.
+
+**Reason:** Provide path to easily add metadata about epochs without requiring users to create custom extensions.
+
+**Format Changes:**  Added :ref:`DynamicTable <sec-DynamicTable>` for storing dynamic metadata about
+epochs to the :ref:`Epochs <sec-Epochs>` neurodata_type to support storage of dynamic metadata about epochs.
 
 Added missing metadata
 ^^^^^^^^^^^^^^^^^^^^^^
