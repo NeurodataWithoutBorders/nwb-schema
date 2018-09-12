@@ -132,7 +132,7 @@ Improved support for trial-based data
 
 **Reason:** Users indicated that it was not easy to store trial data in NWB:N 1.x.
 
-**Format Changes:** Added top-level group ``trials/`` which is a :ref:`DynamicTable <sec-DynamicTable>`
+**Format Changes:** Added optional top-level group ``trials/`` which is a :ref:`DynamicTable <sec-DynamicTable>`
 with ``start`` and ``end`` columns and optional additional user-defined table columns.
 See `PR536 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_ for detailed code changes. See
 the `PyNWB docs <https://pynwb.readthedocs.io/en/latest/tutorials/general/file.html?highlight=Trial#trials>`_ for a
@@ -146,8 +146,24 @@ Improved storage of epoch data
 
 **Reason:** Provide path to easily add metadata about epochs without requiring users to create custom extensions.
 
-**Format Changes:**  Added :ref:`DynamicTable <sec-DynamicTable>` for storing dynamic metadata about
+**Format Changes:** Added :ref:`DynamicTable <sec-DynamicTable>` for storing dynamic metadata about
 epochs to the :ref:`Epochs <sec-Epochs>` neurodata_type to support storage of dynamic metadata about epochs.
+
+
+Reduce requirement for potentially empty groups
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Change:** Make several previously required fields optional
+
+**Reason:** Reduce need for empty groups.
+
+**Format Changes:** The following groups/datasets have been made optional:
+
+    * ``/epochs`` : not all experiments may require epochs.
+    * ``/general/optogenetics`` : not all epeeriments may use optogenetic data
+    * ``device`` in :ref:`IntracellularElectrode <sec-IntracellularElectrode>`
+    *
+
 
 Added missing metadata
 ^^^^^^^^^^^^^^^^^^^^^^
