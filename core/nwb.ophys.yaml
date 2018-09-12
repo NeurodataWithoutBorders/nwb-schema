@@ -230,7 +230,7 @@ groups:
     dtype: float
     name: excitation_lambda
   - doc: Rate images are acquired, in Hz.
-    dtype: text
+    dtype: float
     name: imaging_rate
   - doc: Calcium indicator
     dtype: text
