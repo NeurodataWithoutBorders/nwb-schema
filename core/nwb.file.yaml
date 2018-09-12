@@ -12,11 +12,13 @@ groups:
   datasets:
   - dims:
     - '*unlimited*'
-    doc: 'Time file was created, UTC, and subsequent modifications to file. COMMENT:
-      Date + time, Use ISO format (eg, ISO 8601) or a format that is easy to read
-      and unambiguous. File can be created after the experiment was run, so this may
-      differ from experiment start time. Each modifictation to file adds new entry
-      to array. '
+    doc: 'The point in time the file was created and subsequent modifications to the file.
+    COMMENT: The date and time must be given in ISO 8601:2004(E) format.
+      File can be created after the experiment was run, so this may differ from
+      experiment start time. Each modification to the file adds a new entry to
+      the array.
+      Only the following types of representations are allowed:
+      \"2017-08-28T23:24:47+02:00\", \"2017-08-30T5:21:47Z\" or \"2017-08-30T05:21:47.45925Z\".'
     dtype: text
     name: file_create_date
     shape:
@@ -29,9 +31,11 @@ groups:
   - doc: One or two sentences describing the experiment and data in the file.
     dtype: text
     name: session_description
-  - doc: 'Time of experiment/session start, UTC.  COMMENT: Date + time, Use ISO format
-      (eg, ISO 8601) or an easy-to-read and unambiguous format. All times stored in
-      the file use this time as reference (ie, time zero)'
+  - doc: 'The point in time of the experiment/session start.
+      COMMENT: The date and time must be given in ISO 8601:2004(E) format.
+      All times stored in the file use this time as reference (ie, time zero).
+      Only the following types of representations are allowed:
+      \"2017-08-28T23:24:47+02:00\", \"2017-08-30T5:21:47Z\" or \"2017-08-30T05:21:47.45925Z\"'
     dtype: text
     name: session_start_time
   doc: Top level of NWB file.
