@@ -157,50 +157,82 @@ places and ensure that the same kind of information is available.
 Improved governance and accessibility
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Change:** Updated release and documentation mechanisms for the NWB format specification
+**Change:** Updated release and documentation mechanisms for the NWB:N format specification
 
-**Reason:** Improve governance, ease-of-use, extensibility, and accessibility of the NWB format specification
+**Reason:** Improve governance, ease-of-use, extensibility, and accessibility of the NWB:N format specification
 
 **Specific Changes**
 
-    - The NWB format specification is now released in seperate Git repository
+    - The NWB:N format specification is now released in seperate Git repository
     - Format specifications are released as YAML files (rather than via Python .py file included in the API)
     - Organized core types into a set of smaller YAML files to ease overview and maintenance
     - Converted all documentation documents to Sphinx reStructuredText to improve portability, maintainability,
       deployment, and public access
     - Sphinx documentation for the format are auto-generated from the YAML sources to ensure consistency between
       the specification and documentation
-    - The pyNWB API now provides dedicated data structured to interact with NWB specifications, enabling users
+    - The PyNWB API now provides dedicated data structured to interact with NWB:N specifications, enabling users
       programmatically access and generate format specifications
 
-Improved organization of processed data
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Change:** Relaxed requirements and renamed core types used for storage of processed data.
+Added new base data dypes: ``NWBContainer``, ``NWBData``, ``NWBDataInterface``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Change:** Added common base types for Groups, Datasets, and for Groups storing primary experiment data
+
+**Reason** Collect common functionality and ease future evolution of the standard
+
+**Specific Changes**
+
+    * :ref:`NWBContainer <sec-NWBContainer>` defines a common base type for all Groups with a ``neurodata_type`` and
+      is now the base type of all main data group types in the NWB:N format,
+      including :ref:`TimeSeries <sec-TimeSeries>`. This also means that all group types now inherit the required
+      ``help`` and ``source`` attribute from ``NWBContainer``. A number of neurodata_types have been updated
+      to add the missing ``help`` (see
+      https://github.com/NeurodataWithoutBorders/nwb-schema/pull/37/files for details)
+    * :ref:`NWBDataInterface <sec-NWBDataInterface>` extends :ref:`NWBContainer <sec-NWBContainer>` and replaces
+      ``Interface`` from NWB:N 1.x. It has been renamed to ease intuition. :ref:`NWBDataInterface <sec-NWBDataInterface>`
+      serves as base type for primary data (e.g., experimental or analysis data) and is used to
+      distinguish in the schema between non-metadata data containers and metadata containers.
+      (see https://github.com/NeurodataWithoutBorders/nwb-schema/pull/116/files for details)
+    * :ref:`NWBData <sec-NWBData>` defines a common base type for all Datasets with a ``neurodata_type``
+      and serves a similar function to :ref:`NWBContainer <sec-NWBContainer>` only for Datasets instead of Groups.
+
+
+Improved organization of processed data
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Change:** Relaxed requirements and renamed and refined core types used for storage of processed data.
 
 **Reason:** Ease user intuition and provide greater flexibility for users.
 
 **Specific Changes:** The following changes have been made to the organization of processed data:
 
-    * *Module* has been renamed to *ProcessingModule* to avoid possible confusion and to clarify its purpose
-    * *Interface* has been renamed to *NWBContainer* to avoid confusion and ease intuition
-    * *NWBContainer* is now the base type of all main data group types in the NWB format, including *TimeSeries*.
-      This also means that all group types now inherit the required *help* and *source* attribute from
-      *NWBContainer*. A number of neurodata_types have been updated to add missing *help* (see
-      https://github.com/NeurodataWithoutBorders/nwb-schema/pull/37/files for details)
-    * With NWBContainer now being a general base class, this means is is now possible to define data processing
-      types that directly inherit from *TimeSeries*.
+    * *Module* has been renamed to :ref:`ProcessingModule <sec-ProcessingModule>` to avoid possible confusion
+       and to clarify its purpose. Also :ref:`ProcessingModule <sec-ProcessingModule>` may now
+       contain any  :ref:`NWBDataInterface <sec-NWBDataInterface>`.
+    * With :ref:`NWBDataInterface <sec-NWBDataInterface>` now being a general base class of
+      :ref:`TimeSeries <sec-TimeSeries>`, this means that it is is now
+      possible to define data processing types that directly inherit from :ref:`TimeSeries <sec-TimeSeries>`,
+      which was not possible in NWB:N 1.x.
+    * *Interface* has been renamed to *NWBDataInterface* to avoid confusion and ease intuition (see above)
     * All *Interface* types in the original format had fixed names. The fixed names have been replaced by
-      specification of corresponding default names in the current format. This changes enables storage of
-      multiple instances of the same analysis type in the same *ProcessingModule* by allowing users to
+      specification of corresponding default names. This change enables storage of
+      multiple instances of the same analysis type in the same :ref:`ProcessingModule <sec-ProcessingModule>` by allowing users to
       customize the name of the data processing types, whereas in version 1.0.x only a single instance of
       each analysis could be stored in a *ProcessingModule* due to the requirement for fixed names.
 
-``NWBContainer`` and ``NWBData``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Simplified organization of acquistion data
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As described above ``NWBContainer`` defines a common base type for all Groups with a ``neurodata_type`` in the
-format. Similarly, ``NWBData`` defines a common base type for all Datasets with a ``neurodata_type`` in the format.
+**Specific Chagnes:**
+
+    * ``/acquistion`` may now store any primary data defined via an :ref:`NWBDataInterface <sec-NWBDataInterface>` type
+      (not just TimeSeries).
+    * ``/acquistion/timeseries`` and ``/acquistion/images`` have been removed
+    * Created a new neurodata_type :ref:`Images <sec-Images>` for storing a collection of images to replace
+      ``acquisition/images`` and provide a more general container for use elsewhere in NWB:N (i.e., this is not
+      meant to replace :ref:`ImageSeries <sec-ImageSeries>`)
+
 
 Ancestry
 ^^^^^^^^
@@ -219,7 +251,7 @@ but this could be easily added if needed.
 Specification language changes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Change:** Numerous changes have been made to the specification language itself in NWB 2.0. Most changes to
+**Change:** Numerous changes have been made to the specification language itself in NWB:N 2.0. Most changes to
 the specification language effect mainly how the format is specified, rather than the actual structure of the format.
 The changes that have implications on the format itself are described next. For an overview and discussion of the
 changes to the specification language see `specification language release notes <http://schema-language.readthedocs.io/en/latest/specification_language_release_notes.html#release-notes>`_.
@@ -261,7 +293,7 @@ Removed datasets defined via autogen
 of all datasets that were produced via autogen it was decided that all autogen datasets should be
 removed from the format.
 
-**Reason** The main reasons for removal of autogen dataset is to ease use and maintance of NWB files by
+**Reason** The main reasons for removal of autogen dataset is to ease use and maintance of NWB:N files by
 i) avoiding redundant storage of information (i.e., improve normalization of data) and ii) avoiding
 dependencies between data (i.e., datasets havging to be updated due to changes in other locations in a file).
 
