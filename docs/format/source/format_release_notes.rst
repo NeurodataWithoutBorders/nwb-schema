@@ -159,8 +159,37 @@ large numbers of Epochs.
 * In addition, a :ref:`DynamicTable <sec-DynamicTable>` for storing dynamic metadata about epochs has been added to
   the :ref:`Epochs <sec-Epochs>` neurodata_type to support storage of dynamic metadata about epochs without requiring
   users to create custom extensions
-  (see `PR536 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_).
+  (see `PR536 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_).
 
+Improved storage of ROIs
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Reason:**
+
+* **Improve efficiency:** Similar to epochs, in NWB 1.x ROIs were stored as a single group per ROI. This structure is
+  inefficient for storing large numbers of ROIs.
+* **Make links explicit:** The relationship of ``RoiResponseSeries`` to ``ROI`` objects was implicit (i.e. ROI was
+  specified by a string), so one had to know a priori which ``ImageSegmentation`` and ``ImagingPlane`` was used
+  to produce the ROIs.
+
+**Changes:** See also `PR391 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/391>`_ and
+`I118 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/118>`_ for details:
+
+1. Added neurodata_type :ref:`ImageMasks <sec-ImageMasks>` replacing ROI.img_mask (from NWB:N 1.x) with a 3D dataset with
+   shape [num_rois, num_x_pixels, num_y_pixels] (i.e. an array of image masks)
+2. Added neurodata_type :ref:`PixelMasks <sec-PixelMasks>` which replaces ROI.pix_mask/ROI.pix_mask_weight (from NWB:N 1.x)
+   with a table that has columns “x”, “y”, and “weight” (i.e. combining ROI.pix_mask and ROI.pix_mask_weight
+   into a single table)
+3. Added neurodata_type :ref:`ROITable <sec-ROITable>` which defines a table  for storing references to the image mask
+   and pixel mask for each ROI (see item 1,2)
+4. Added neurodata_type :ref:`ROITableRegion <sec-ROITableRegion>` for referencing a subset of elements in an ROITable
+5. Replaced ``RoiResponseSeries.roi_names`` with ``RoiResponseSeries.rois``, which is
+   an :ref:`ROITableRegion <sec-ROITableRegion>`  (see items 3,4)
+6. Removed ``RoiResponseSeries.segmentation_interface``. This information is available through
+   ``RoiResponseSeries.rois`` (described above in 5.)
+7. Assigned neurodata_type :ref:`PlaneSegmentation <sec-PlaneSegmentation>` to the image_plan group in
+   :ref:`ImageSegmentation <sec-ImageSegmentation>` and updated it to use the new :ref:`ROITable <sec-ROITable>`,
+   :ref:`ImageMasks <sec-ImageMasks>`, and :ref:`PixelMasks <sec-PixelMasks>` (see items 1-4 above).
 
 Reduce requirement for potentially empty groups
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -316,7 +345,7 @@ Simplified organization of acquistion data
 Simplified extension of subject metadata
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Specific Change:å** Assigned ``neurodata_type`` to ``/general/subject`` to enable extension of the subject container
+**Specific Change:** Assigned ``neurodata_type`` to ``/general/subject`` to enable extension of the subject container
 directly without having to extend ``NWBFile`` itself. (see https://github.com/NeurodataWithoutBorders/nwb-schema/issues/120
 and https://github.com/NeurodataWithoutBorders/nwb-schema/pull/121 for details)
 
