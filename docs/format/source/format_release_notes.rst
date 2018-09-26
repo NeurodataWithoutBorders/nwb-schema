@@ -176,7 +176,6 @@ Reduce requirement for potentially empty groups
     * ``device`` in :ref:`IntracellularElectrode <sec-IntracellularElectrode>`
     *
 
-
 Added missing metadata
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -321,6 +320,14 @@ Simplified extension of subject metadata
 directly without having to extend ``NWBFile`` itself. (see https://github.com/NeurodataWithoutBorders/nwb-schema/issues/120
 and https://github.com/NeurodataWithoutBorders/nwb-schema/pull/121 for details)
 
+
+Keywords
+^^^^^^^^
+
+**Change:** Added keywords fields to ``/general``
+
+**Reason:** Data archive and search tools often rely on user-defined keywords to facilitate discovery. This
+enables users to specify keywords for a file. (see `PR620 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/620>`_)
 
 Ancestry
 ^^^^^^^^
