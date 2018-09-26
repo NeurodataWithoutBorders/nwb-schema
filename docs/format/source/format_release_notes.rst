@@ -142,9 +142,9 @@ schema.
 Improved storage of epoch data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Change** Store epoch data as a series of tables to improve efficiency, usability and extensibility.
+**Change:** Store epoch data as a series of tables to improve efficiency, usability and extensibility.
 
-**Reason** In NWB 1.x Epochs are stored as a single group per Epoch. Within each Epoch, the index into each
+**Reason:** In NWB 1.x Epochs are stored as a single group per Epoch. Within each Epoch, the index into each
 TimeSeries that the Epoch applies to was stored as a single group. This structure is inefficient for storing
 large numbers of Epochs.
 
