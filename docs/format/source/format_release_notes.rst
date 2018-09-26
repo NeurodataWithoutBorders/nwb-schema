@@ -142,12 +142,24 @@ schema.
 Improved storage of epoch data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Change:** Add table to store metadata about epochs.
+**Change:** Store epoch data as a series of tables to improve efficiency, usability and extensibility.
 
-**Reason:** Provide path to easily add metadata about epochs without requiring users to create custom extensions.
+**Reason:** In NWB 1.x Epochs are stored as a single group per Epoch. Within each Epoch, the index into each
+TimeSeries that the Epoch applies to was stored as a single group. This structure is inefficient for storing
+large numbers of Epochs.
 
-**Format Changes:** Added :ref:`DynamicTable <sec-DynamicTable>` for storing dynamic metadata about
-epochs to the :ref:`Epochs <sec-Epochs>` neurodata_type to support storage of dynamic metadata about epochs.
+**Format Changes:**
+
+* Create new neurodata_type :ref:`Epochs <sec-Epochs>` which is included in :ref:`NWBFile <sec-NWBFile>` as the group
+  ``epochs``. This simplifies extension of the epochs structure. /epochs now contains an
+  :ref:`EpochTable <sec-EpochTable>` that describes that start/stop times, tags, and a region reference into the
+  :ref:`TimeSeriesIndex <sec-TimeSeriesIndex>` to identify the timeseries parts the epoch applys to.
+  (see `PR396 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/396>`_ and
+  `I119 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/119>`_ )
+* In addition, a :ref:`DynamicTable <sec-DynamicTable>` for storing dynamic metadata about epochs has been added to
+  the :ref:`Epochs <sec-Epochs>` neurodata_type to support storage of dynamic metadata about epochs without requiring
+  users to create custom extensions
+  (see `PR536 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_).
 
 
 Reduce requirement for potentially empty groups
