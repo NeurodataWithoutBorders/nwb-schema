@@ -237,6 +237,73 @@ Improved storage of ROIs
    :ref:`ImageSegmentation <sec-ImageSegmentation>` and updated it to use the new :ref:`ROITable <sec-ROITable>`,
    :ref:`ImageMasks <sec-ImageMasks>`, and :ref:`PixelMasks <sec-PixelMasks>` (see items 1-4 above).
 
+
+
+.. _sec-rn-vectordata-nwb2:
+
+Enable efficient storage of large numbers of vector data elements
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Change** Introduce neurodata_types :ref:`VectorData <sec-VectorData>` , :ref:`VectorIndex <sec-VectorIndex>`,
+:ref:`ElementIdentifiers <sec-ElementIdentifiers>`
+
+**Reason** To efficiently store spike data as part of UnitTimes a new, more efficient data structure was required.
+This builds the general, reusable types to define efficient data storage for large numbers of data vectors in
+efficient, consolidated arrays, which enable more efficient read, write, and search (see :ref:`sec-rn-unittimes-nwb2`).
+
+**Format Changes**
+
+* :ref:`VectorData <sec-VectorData>` : Data values from a series of data elements are concatinated into a single
+  array. This allows all elements to be stored efficiently in a single data array.
+* :ref:`VectorIndex <sec-VectorIndex>` : 1D dataset of region-references selecting subranges in
+  :ref:`VectorData <sec-VectorData>`. With this we can efficiently access single sub-vectors associated with single
+  elements from the :ref:`VectorData <sec-VectorData>` collection.
+* :ref:`ElementIdentifiers <sec-ElementIdentifiers>` : 1D array for stroing unique identifiers for the elements in
+  a VectorIndex.
+
+See :ref:`sec-rn-vectordata-nwb2` for am illustration and specific example use in practice.
+See also `I116 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/117>`__ and
+`PR382 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/382>`__ for further details.
+
+
+.. _sec-rn-unittimes-nwb2:
+
+Improve storage of spike data (i.e., UnitTimes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Change** Restructure :ref:`UnitTimes <sec-UnitTimes>` to use the new :ref:`VectorData <sec-VectorData>` ,
+:ref:`VectorIndex <sec-VectorIndex>`, :ref:`ElementIdentifiers <sec-ElementIdentifiers>` data structures
+(see :ref:`sec-rn-vectordata-nwb2`)
+
+**Reason:** In NWB:N 1.x each unit was stored as a separate group ``unit_n`` containing the ``times`` and
+``unit_description`` for unit with index ``n``. In cases where users have a very large number of units, this
+was problematic with regard to performance.
+
+**Format Changes:**
+
+
+* Replaced ``unit_n`` (from NWB:N 1.x, also referred to by neurodata_type ``SpikeUnit`` in NWB:N 2beta) groups in
+  :ref:`UnitTimes <sec-UnitTimes>` with the following datadates:
+
+    * ``unit_ids`` : :ref:`ElementIdentifiers <sec-ElementIdentifiers>` dataset for stroing unique ides for each element
+    * ``spike_times_index``: :ref:`VectorIndex <sec-VectorIndex>` dataset with region references into the spike times dataset
+    * ``spike_times``: :ref:`VectorData <sec-VectorData>` dataset storing the actual spike times data of all units in
+      a single data array (for efficiency).
+
+.. _fig-software-architecture:
+
+.. figure:: figures/unit_times_refactor_nwb2_release_notes.*
+   :width: 75%
+   :alt: UnitTimes data structure overview
+
+   Overview of the basic data structure for storing :ref:`UnitTimes <sec-UnitTimes>` using the
+   :ref:`VectorData <sec-VectorData>` (``spike_times``), :ref:`VectorIndex <sec-VectorIndex>` (``spike_times_index``),
+   and :ref:`ElementIdentifiers <sec-ElementIdentifiers>` (``unit_ids``) data structures.
+
+
+See also `I116 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/117>`__ and
+`PR382 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/382>`__ for further details.
+
 Reduce requirement for potentially empty groups
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
