@@ -108,10 +108,11 @@ kind of links.
     - Text dataset ``site`` in ``<OptogeneticSeries>`` is now a link to the corresponding ``<StimulusSite>``
       (which is stored in ``/general/optogenetics``).
     - Integer dataset ``electrode_idx`` of ``FeatureExtraction`` is now a dataset ``electrodes`` of type
-     :ref:`DynamicTableRegion <sec-DynamicTableRegion>` pointing to a region of the ``ElectrodeTable`` stored in ``/general/extracellular_ephys/electrodes``.
+      :ref:`DynamicTableRegion <sec-DynamicTableRegion>` pointing to a region of the ``ElectrodeTable`` stored in ``/general/extracellular_ephys/electrodes``.
     - Integer array dataset ``electrode_idx`` of ``<ElectricalSeries>`` is now a dataset ``electrodes`` of type
-     :ref:`DynamicTableRegion <sec-DynamicTableRegion>` pointing to a region of the ``ElectrodeTable`` stored in ``/general/extracellular_ephys/electrodes``.
+      :ref:`DynamicTableRegion <sec-DynamicTableRegion>` pointing to a region of the ``ElectrodeTable`` stored in ``/general/extracellular_ephys/electrodes``.
     - Text dataset ``/general/extracellular_ephys/<electrode_group_X>/device`` is now a link ``<ElectrodeGroup>/device``
+
 
 .. _sec-rn-tables:
 
@@ -164,11 +165,25 @@ Improved support for trial-based data
 **Reason:** Users indicated that it was not easy to store trial data in NWB:N 1.x.
 
 **Format Changes:** Added optional top-level group ``trials/`` which is a :ref:`DynamicTable <sec-DynamicTable>`
-with ``start`` and ``end`` columns and optional additional user-defined table columns.
+with ``id``,``start``, and ``end`` columns and optional additional user-defined table columns.
 See `PR536 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_ for detailed code changes. See
-the `PyNWB docs <https://pynwb.readthedocs.io/en/latest/tutorials/general/file.html?highlight=Trial#trials>`_ for a
+the `PyNWB docs <https://pynwb.readthedocs.io/en/latest/tutorials/general/file.html?highlight=Trial#trials>`__ for a
 short tutorial on how to use trials. See :ref:`NWBFile <sec-NWBFile>` *Groups: /trials* for an overview of the trial
 schema.
+
+Improved support for unit-based metadata
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Change:** Add dedicated concept for storing unit data.
+
+**Reason:** Users indicated that it was not easy to store user-defined  metadata about units.
+
+**Format Changes:** Added optional top-level group ``units/`` which is a :ref:`DynamicTable <sec-DynamicTable>`
+with a ``id`` and``description`` columns and optional additional user-defined table columns.
+See `PR597 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/597>`_ for detailed code changes. See
+the `PyNWB docs <https://pynwb.readthedocs.io/en/latest/tutorials/general/file.html#units>`__ for a
+short tutorial on how to use unit metadata. See :ref:`NWBFile <sec-NWBFile>` *Groups: /units* for an overview of the
+unit schema.
 
 Improved storage of epoch data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
