@@ -51,17 +51,16 @@ The main ``/general/extracellular_ephys group`` then contained in addition the f
         - ``device``: Soft link to the device in ``/general/devices/``
         - ``location``: Text description of the location of the device
 
-    - Added table-like dataset ``electrodes`` that consolidates all electrode-specific metadata. This is a 1D data array
-      with a compound datatype, describing for each electrode:
+    - Added table-like dataset ``electrodes`` that consolidates all electrode-specific metadata. This is a
+      :ref:`DynamicTable <sec-DynamicTable>` describing for each electrode:
 
         - ``id`` : a user-specified unique identifier
         - ``x``, ``y``, ``z`` : The floating point coordinate for the electrode
         - ``imp`` : the impedance of the channel
         - ``location`` : The location of channel within the subject e.g. brain region
         - ``filtering`` : Description of hardware filtering
-        - ``description`` : Description of this electrode
-        - ``group`` : The name of the ``ElectrodeGroup``
-        - ``group_ref`` : Object reference to the ``ElectrodeGroup`` object
+        - ``group`` : Object reference to the ``ElectrodeGroup`` object
+        - ``group_name`` : The name of the ``ElectrodeGroup``
 
     - Updated ``/general/extracellular_ephys`` as follows:
 
@@ -70,6 +69,20 @@ The main ``/general/extracellular_ephys group`` then contained in addition the f
         - Removed ``/general/extracellular_ephys/electrode_group`` dataset. This information is now stored in ``<ElectrodeGroup>/device``.
         - Removed ``/general/extracellular_ephys/impedance`` This information is now stored in the ``ElectrodeTable``.
         - Removed ``/general/extracellular_ephys/filtering`` This information is now stored in the ``ElectrodeTable``.
+
+
+.. note::
+
+    In NWB 2.0Beta the refactor originally used a row-based table for the ``ElectrodeTable`` based on a compound
+    data type as described in `#I6 (new-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/6>`_, i.e.,
+    ``electrodes`` was a 1D compound dataset. This was later changed to a column-based :ref:`DynamicTable <sec-DynamicTable>`
+    (see :ref:`sec-rn-tables`). The main reason for this later change was mainly to avoid the need
+    for large numbers of user-extensions to add electrode metadata
+    (see `#I623 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/623>`_ and
+    `PR634 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/634>`_ for details.) This change
+    also removed the optional ``description`` column as it can be added easily by the user to the
+    :ref:`DynamicTable <sec-DynamicTable>` if required.
+
 
 Replaced Implicit Links/Data-Structures with Explicit Links
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -94,11 +107,13 @@ kind of links.
       (which is stored in ``/general/intracellular_ephys``). The dataset is also renamed to ``electrode`` for consistency.
     - Text dataset ``site`` in ``<OptogeneticSeries>`` is now a link to the corresponding ``<StimulusSite>``
       (which is stored in ``/general/optogenetics``).
-    - Integer dataset ``electrode_idx`` of ``FeatureExtraction`` is now a dataset ``electrodes`` of type ``ElectrodeTableRegion``
-      which stores a region reference to the ``ElectrodeTable`` which is stored in ``/general/extracellular_ephys``.
-    - Integer array dataset ``electrode_idx`` of ``<ElectricalSeries>`` is now a dataset ``electrodes`` of type ``ElectrodeTableRegion``
-      which stores a region reference to the ``ElectrodeTable`` which is stored in ``/general/extracellular_ephys``.
+    - Integer dataset ``electrode_idx`` of ``FeatureExtraction`` is now a dataset ``electrodes`` of type
+     :ref:`DynamicTableRegion <sec-DynamicTableRegion>` pointing to a region of the ``ElectrodeTable`` stored in ``/general/extracellular_ephys/electrodes``.
+    - Integer array dataset ``electrode_idx`` of ``<ElectricalSeries>`` is now a dataset ``electrodes`` of type
+     :ref:`DynamicTableRegion <sec-DynamicTableRegion>` pointing to a region of the ``ElectrodeTable`` stored in ``/general/extracellular_ephys/electrodes``.
     - Text dataset ``/general/extracellular_ephys/<electrode_group_X>/device`` is now a link ``<ElectrodeGroup>/device``
+
+.. _sec-rn-tables:
 
 Support row-based and column-based tables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -117,6 +132,12 @@ Support row-based and column-based tables
       Row-based tables are used to simplify, e.g,. the organization of electrode-metadata in NWB:N 2 (see above).
       (See the `specification language release notes <http://schema-language.readthedocs.io/en/latest/specification_language_release_notes.html#release-notes>`_
       for details about the addition of compound data types in the schema).
+
+      * *Referencing rows in a row-based tables:* Subsets of rows can referenced directly via a region-reference to the
+        row-based table. Subsets
+      * *Referencing columns in a row-based table:* This is currently not directly supported, but could be implemented
+        via a combination of an object-reference to the table and a list of the lables of columns.
+
     * **Column-based tables:** are implemented via the new neurodata_type :ref:`DynamicTable <sec-DynamicTable>`.
       A DynamicTable is simplified-speaking just a collection of an arbitrary number of :ref:`TableColumn <sec-TableColumn>`
       datasets (all with equal length) and a dataset storing row ids and a dataset storing column names. The
@@ -124,6 +145,16 @@ Support row-based and column-based tables
       the need for extensions and ii) the column-based storage makes it easy to read individual columns
       efficiently (while reading full rows requires reading from multiple datasets). DynamicTable is used, e.g.,
       to enhance storage of trial data. (See https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files )
+
+      * *Referencing rows in column-based tables:*  As :ref:`DynamicTable <sec-DynamicTable>` consist of multiple
+        datasets (compared to row-based tables which consists of a single 1D dataset with a compound datatuype)
+        is not possible to reference a set of rows with a single region reference. To address this issue, NWB:N defines
+        :ref:`DynamicTableRegion <sec-DynamicTableRegion>` (added later in `PR634 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/634>`_)
+        dataset type, which stores a list of integer indices (row index) and also has an attribute ``table`` with
+        the object reference to the corresponding :ref:`DynamicTable <sec-DynamicTable>`.
+      * *Referencing columns in a columns-based table:* As each column is a seperate dataset, columns of a column-based
+        :ref:`DynamicTable <sec-DynamicTable>` can be directly references via links, object-references and
+        region-references.
 
 Improved support for trial-based data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
