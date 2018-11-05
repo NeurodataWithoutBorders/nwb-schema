@@ -171,20 +171,6 @@ the `PyNWB docs <https://pynwb.readthedocs.io/en/latest/tutorials/general/file.h
 short tutorial on how to use trials. See :ref:`NWBFile <sec-NWBFile>` *Groups: /trials* for an overview of the trial
 schema.
 
-Improved support for unit-based metadata
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-**Change:** Add dedicated concept for storing unit data.
-
-**Reason:** Users indicated that it was not easy to store user-defined  metadata about units.
-
-**Format Changes:** Added optional top-level group ``units/`` which is a :ref:`DynamicTable <sec-DynamicTable>`
-with a ``id`` and``description`` columns and optional additional user-defined table columns.
-See `PR597 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/597>`_ for detailed code changes. See
-the `PyNWB docs <https://pynwb.readthedocs.io/en/latest/tutorials/general/file.html#units>`__ for a
-short tutorial on how to use unit metadata. See :ref:`NWBFile <sec-NWBFile>` *Groups: /units* for an overview of the
-unit schema.
-
 Improved storage of epoch data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -261,48 +247,77 @@ efficient, consolidated arrays, which enable more efficient read, write, and sea
 * :ref:`ElementIdentifiers <sec-ElementIdentifiers>` : 1D array for stroing unique identifiers for the elements in
   a VectorIndex.
 
-See :ref:`sec-rn-vectordata-nwb2` for am illustration and specific example use in practice.
+See :ref:`sec-rn-unittimes-nwb2` for an illustration and specific example use in practice.
 See also `I116 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/117>`__ and
 `PR382 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/382>`__ for further details.
 
 
 .. _sec-rn-unittimes-nwb2:
 
-Improve storage of spike data (i.e., UnitTimes)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Improved storage of unit-based data
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Change** Restructure :ref:`UnitTimes <sec-UnitTimes>` to use the new :ref:`VectorData <sec-VectorData>` ,
+In NWB:N 1.0.x data about spike units was stored across a number of different neurodata_types, specifically
+``UnitTimes``, ``ClusterWaveforms``, and ``Clustering``. This structure had several critical shortcomings,
+which were addressed in three main phases during the development of NWB:N 2.
+
+**Problem 1: Efficiency:** In NWB:N 1.x each unit was stored as a separate group ``unit_n`` containing the ``times``
+and ``unit_description`` for unit with index ``n``. In cases where users have a very large number of units, this
+was problematic with regard to performance. To address this challenge ``UnitTimes`` has been
+restructured in NWB:N 2 to use the new :ref:`VectorData <sec-VectorData>` ,
 :ref:`VectorIndex <sec-VectorIndex>`, :ref:`ElementIdentifiers <sec-ElementIdentifiers>` data structures
-(see :ref:`sec-rn-vectordata-nwb2`)
+(see :ref:`sec-rn-vectordata-nwb2`).Specifically, NWB:N 2 replaced ``unit_n`` (from NWB:N 1.x, also referred to
+by neurodata_type ``SpikeUnit`` in NWB:N 2beta) groups in ``UnitTimes``  with the following datadates:
 
-**Reason:** In NWB:N 1.x each unit was stored as a separate group ``unit_n`` containing the ``times`` and
-``unit_description`` for unit with index ``n``. In cases where users have a very large number of units, this
-was problematic with regard to performance.
-
-**Format Changes:**
-
-
-* Replaced ``unit_n`` (from NWB:N 1.x, also referred to by neurodata_type ``SpikeUnit`` in NWB:N 2beta) groups in
-  :ref:`UnitTimes <sec-UnitTimes>` with the following datadates:
-
-    * ``unit_ids`` : :ref:`ElementIdentifiers <sec-ElementIdentifiers>` dataset for stroing unique ides for each element
+    * ``unit_ids`` : :ref:`ElementIdentifiers <sec-ElementIdentifiers>` dataset for storing unique ids for each element
     * ``spike_times_index``: :ref:`VectorIndex <sec-VectorIndex>` dataset with region references into the spike times dataset
     * ``spike_times``: :ref:`VectorData <sec-VectorData>` dataset storing the actual spike times data of all units in
       a single data array (for efficiency).
 
+See also `I116 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/117>`__ and
+`PR382 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/382>`__ for further details.
+
 .. _fig-software-architecture:
 
-.. figure:: figures/unit_times_refactor_nwb2_release_notes.*
-   :width: 75%
+.. figure:: figures/unit_times_refactor_nwb2_release_notesV2_Part1.*
+   :width: 100%
    :alt: UnitTimes data structure overview
 
-   Overview of the basic data structure for storing :ref:`UnitTimes <sec-UnitTimes>` using the
+   Overview of the basic data structure for storing ``UnitTimes`` using the
    :ref:`VectorData <sec-VectorData>` (``spike_times``), :ref:`VectorIndex <sec-VectorIndex>` (``spike_times_index``),
    and :ref:`ElementIdentifiers <sec-ElementIdentifiers>` (``unit_ids``) data structures.
 
+**Problem 2: Dynamic Metadata:** Users indicated that it was not easy to store user-defined  metadata about units.
+To address this challenge, NWB:N 2 added an optional top-level group ``units/`` (which was subsequently moved to
+``/intervals/units``)  which is a :ref:`DynamicTable <sec-DynamicTable>`
+with ``id`` and ``description`` columns and optional additional user-defined table columns.
+See `PR597 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/597>`_ for detailed code changes. See
+the `PyNWB docs <https://pynwb.readthedocs.io/en/latest/tutorials/general/file.html#units>`__ for a
+short tutorial on how to use unit metadata. See :ref:`NWBFile <sec-NWBFile>` *Groups: /units* for an overview of the
+unit schema.
 
-See also `I116 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/117>`__ and
-`PR382 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/382>`__ for further details.
+**Problem 3: Usability:** Finally, users found that storing unit data was
+challenging due to the fact that the information was distributed across a number of different
+types. To address this challenge, NWB:N 2.0 integrates ``UnitTimes``, ``ClusterWaveforms``, and ``Clustering`` (deprecated)
+into the new column-based table ``units/`` (i.e., ``intervals/units``) (which still uses the optimized vector data
+storage to efficiently store spike times). See for discussions and
+`I674 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/issues/674>`_
+(and related `I675 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/issues/675>`_) and the pull
+request `PR684 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/684>`_ for detailed changes.
+
+
+Together these changes have resulted in the following improved structure for storing unit data and metadata in
+NWB:N 2.0.
+
+.. figure:: figures/unit_times_refactor_nwb2_release_notesV2_Part2.*
+   :width: 100%
+   :alt: Spiking units data structure overview
+
+   Overview of the data structure for storing spiking unit data and metadata in NWB:N 2.0
+
+
+
+
 
 Reduce requirement for potentially empty groups
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
