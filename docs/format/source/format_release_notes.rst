@@ -471,6 +471,21 @@ Keywords
 **Reason:** Data archive and search tools often rely on user-defined keywords to facilitate discovery. This
 enables users to specify keywords for a file. (see `PR620 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/620>`_)
 
+Source
+^^^^^^
+
+**Change:** Remove required attribute ``source`` from all neurodata_types
+
+**Reason:** In NWB:N 1.0.x the attribute ``source`` was defined as a free text entry
+intended for storage of provenance information. In practice, however, this
+attribute was often either ignored, contained no useful information, and/or
+was misused to encode custom metadata (that should have been defined via extensions).
+
+**Specific Change:** Removed attribute ``source`` from the core base neurodata_types
+which effects a large number of the types throughout the NWB:N schema. For further
+details see `PR695 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/695>`_)
+
+
 Ancestry
 ^^^^^^^^
 
