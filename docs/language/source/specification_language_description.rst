@@ -549,7 +549,7 @@ String specifying the data type of the attribute. Allowable values are:
 |  * "utf8"                |                                  |                |
 |  * "utf-8"               |                                  |                |
 +--------------------------+----------------------------------+----------------+
-|  * bool                  | 8 bit integer with valid values  | 8bit           |
+|  * "bool"                | 8 bit integer with valid values  | 8bit           |
 |                          | 0 or 1                           |                |
 +--------------------------+----------------------------------+----------------+
 | * "isodatetime"          | ISO8061 datetime string, e.g.,   | variable       |
