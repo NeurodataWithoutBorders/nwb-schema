@@ -316,10 +316,6 @@ NWB:N 2.0.
    Overview of the data structure for storing spiking unit data and metadata in NWB:N 2.0
 
 
-
-
-
-
 Improve standardization of reference time specification using ISO8061
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -331,6 +327,25 @@ Improve standardization of reference time specification using ISO8061
 added as dedicated dtype to the specification language. For details see
 `PR641 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/641>`_ and
 `I50 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/50>`_.
+
+Improved specification of reference time
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Change:** Add field ``timestamps_reference_time``, allowing users to explicitly  specify a date and time
+corresponding to time zero for all timestamps in the nwb file.
+
+**Reason:** Previously ``session_start_time`` served both as the indicator for the start time
+of a session as well as the global reference time for a file. Decoupling the two makes the
+global reference time explicit and enables users to use times relative to the session start as well
+as other reference time frames, e.g., using POSIX time. This also makes the specification easier to
+develop against, since this will explicitly specify the offset to obtain relative timestamps, eliminating
+the need for APIs to guess based on range.
+
+**Format Changes:** Added top-level field ``timestamps_reference_time``.
+See `PR709 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/709>`_ and
+`I49 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/49>`_
+for further details.
+
 
 
 
