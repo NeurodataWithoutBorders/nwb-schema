@@ -59,6 +59,9 @@ Summary
     * Enhanced the syntax for ``dtype`` to allow the specification of i) object references and ii) region references
     * Removed "!" syntax (e.g., "float32!") previously used to specify a minimum precision. All types are interpreted as minimum specs.
     * Specified list of available data types and their names
+    * Added ``isodatetime`` dtype for specification of ISO8061 datetime string (e.g., ``2018-09-28T14:43:54.123+02:00``) as data type
+    * Added ``bool`` dtype for specification fo boolean type fields (see `PR691 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/691>`_
+      and `I658 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/658>`_.
 * Others:
     * Removed key ```\_\_custom``` (without replacement). This feature was used only in one location to provide user hints where custom data could be placed, however, since the NWB specification approach explicitly allows users to add custom data in any location, this information was not binding.
 

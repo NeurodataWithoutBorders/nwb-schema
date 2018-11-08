@@ -319,6 +319,21 @@ NWB:N 2.0.
 
 
 
+
+Improve standardization of reference time specification using ISO8061
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Changes:** Modify ``session_start_time`` an ``file_create_date`` to enforce use of ISO 8601 datetime strings
+
+**Reason:** Standardize the specficiation of timestamps to ensure consistent programmatic and human interpretation
+
+**Format Changes:** Updated ``session_start_time`` and ``file_create_date`` to use ``dtype: isodatetime`` that was
+added as dedicated dtype to the specification language. For details see
+`PR641 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/641>`_ and
+`I50 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/50>`_.
+
+
+
 Reduce requirement for potentially empty groups
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -512,7 +527,8 @@ as defined by the spec.
 
 **Note** The new specification API as part of PyNWB/FORM makes the ancestry still easily accessible to users. As
 the ancestry can be easily extracted from the spec, we currently do not write a separate ancestry attribute
-but this could be easily added if needed.
+but this could be easily added if needed. (see also `PR707 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/707>`_,
+`I24 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/24>`_)
 
 
 Specification language changes
