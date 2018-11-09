@@ -193,7 +193,9 @@ Improved storage of Images
 * **Improve consistency of schema:** Previously there was a reference to ``Image`` from ``ImageSeries``, however ``Image`` was not defined in the schema
 * **Support different static image types**
 
-**Changes:** `Image` was added as a base type, and subtypes were defined: `GrayscaleImage`, `RGBImage`, and `RGBAImage` (The "A" in "RGBA" is for transparency).
+**Changes:** :ref:`Image <sec-Image>`  was added as a base type, and subtypes were defined:
+:ref:`GrayscaleImage <sec-GrayscaleImage>`, :ref:`RGBImage <sec-RGBImage>`, and :ref:`RGBAImage <sec-RGBAImage>`
+(The "A" in "RGBA" is for alpha, i.e., opacity).
 
 
 Improved storage of ROIs
