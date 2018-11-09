@@ -297,6 +297,25 @@ NWB:N 2.0.
    Overview of the data structure for storing spiking unit data and metadata in NWB:N 2.0
 
 
+Improved support for sweep-based information
+""""""""""""""""""""""""""""""""""""""""""""
+
+**Changes** Added :ref:`SweepTable <sec-SweepTable>` type stored in ``/general/intracellular_ephys``
+
+**Reason:** In Icephys it is common to have sweeps (i.e., a group of PatchClampSeries belonging together, were up
+to two TimeSeries are from one electrode, including other TimeSeries not related to an electrode (aka TTL channels)).
+NWB:N 1.0.x did not support the concept of sweeps, so it was not possible to link different TimeSeries for sweeps.
+The goal of this change is to allow users to find the TimeSeries which are from one sweep without having to iterate
+over all present TimeSeries.
+
+**Format Changes** Added neurodata_type :ref:`SweepTable <sec-SweepTable>` to ``/general/intracellular_ephys``.
+SweepTable is a `DynamicTable <sec-DynamicTable>` storing for each sweep a the ``sweep_number`` and the
+``series_index``.  The later is a :ref:`VectorIndex <sec-VectorIndex>` pointing to a :ref:`VectorData <sec-VectorData>`
+dataset describing belonging :ref:`PatchClampSeries <sec-PatchClampSeries>`  to the sweeps.
+See `I499 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/499>`_ and
+`PR701 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/701>`_ for further details.
+
+
 Improved specification of reference time stamp(s)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -349,19 +368,19 @@ large numbers of Epochs.
 :ref:`DynamicTable <sec-DynamicTable>` for storing time intervals) that is stored in the group ``/intervals/epochs``.
 Over the course of the development of NWB:N 2 the epoch storage has been refined in several phases:
 
-   * Create new neurodata_type :ref:`Epochs <sec-Epochs>` which is included in :ref:`NWBFile <sec-NWBFile>` as the group
+   - Create new neurodata_type :ref:`Epochs <sec-Epochs>` which is included in :ref:`NWBFile <sec-NWBFile>` as the group
      ``epochs``. This simplifies extension of the epochs structure. /epochs now contains an
      :ref:`EpochTable <sec-EpochTable>` that describes the start/stop times, tags, and a region reference into the
      :ref:`TimeSeriesIndex <sec-TimeSeriesIndex>` to identify the timeseries parts the epoch applys to.
      (see `PR396 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/396>`_ and
      `I119 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/119>`_ )
-   * In addition, a :ref:`DynamicTable <sec-DynamicTable>` for storing dynamic metadata about epochs was then added later to
+   - In addition, a :ref:`DynamicTable <sec-DynamicTable>` for storing dynamic metadata about epochs was then added later to
      the :ref:`Epochs <sec-Epochs>` neurodata_type to support storage of dynamic metadata about epochs without requiring
      users to create custom extensions
      (see `PR536 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_).
-   * Subsequently in `PR682 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/682>`_ the epoch table was
+   - Subsequently in `PR682 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/682>`_ the epoch table was
      then fully converted to a dynamic table.
-   * Finally, in `PR690 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/690>`_ the EpochTable was then moved to
+   - Finally, in `PR690 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/690>`_ the EpochTable was then moved to
      ``/intervals/epochs`` and the EpochTable type was replaced by the more general type :ref:`TimeIntervals <sec-TimeIntervals>`.
      This also led to removal of the ``Epochs`` type.
 
@@ -503,7 +522,7 @@ places and ensure that the same kind of information is available.
       `PR697 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/697>`_ and
       `I136 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/136>`_ for details
 
-Added ``kKeywords`` field
+Added ``keywords`` field
 """""""""""""""""""""""""
 
 **Change:** Added keywords fields to ``/general``
