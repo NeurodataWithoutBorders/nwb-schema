@@ -206,23 +206,26 @@ Improved storage of ROIs
 * **Make links explicit:** The relationship of ``RoiResponseSeries`` to ``ROI`` objects was implicit (i.e. ROI was
   specified by a string), so one had to know a priori which ``ImageSegmentation`` and ``ImagingPlane`` was used
   to produce the ROIs.
+* **Support 3D ROIs:** Allow users to add 3D ROIs collected from a multi-plane image. `PR688 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/688>`_ and `I554 (nwb-schema) <https://github.com/NeurodataWithoutBorders/pynwb/issues/554>`_
 
 **Changes:** See also `PR391 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/391>`_ and
 `I118 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/118>`_ for details:
 
-1. Added neurodata_type :ref:`ImageMasks <sec-ImageMasks>` replacing ROI.img_mask (from NWB:N 1.x) with a 3D dataset with
-   shape [num_rois, num_x_pixels, num_y_pixels] (i.e. an array of image masks)
+1. Added neurodata_type :ref:`ImageMasks <sec-ImageMasks>` replacing ROI.img_mask (from NWB:N 1.x) with 
+     * A 3D dataset with shape [num_rois, num_x_pixels, num_y_pixels] (i.e. an array of planar image masks) or 
+     * A 4D dataset with shape [num_rois, num_x_pixels, num_y_pixels, num_z_pixels] (i.e. an array of volumetric image masks)
 2. Added neurodata_type :ref:`PixelMasks <sec-PixelMasks>` which replaces ROI.pix_mask/ROI.pix_mask_weight (from NWB:N 1.x)
    with a table that has columns “x”, “y”, and “weight” (i.e. combining ROI.pix_mask and ROI.pix_mask_weight
    into a single table)
-3. Added neurodata_type :ref:`ROITable <sec-ROITable>` which defines a table  for storing references to the image mask
+3. Added analogous neurodata_type :ref:`VoxelMasks <sec-VoxelMasks>` with a table that has columns "x", "y", "z", and "weight" for 3D ROIs.
+4. Added neurodata_type :ref:`ROITable <sec-ROITable>` which defines a table  for storing references to the image mask
    and pixel mask for each ROI (see item 1,2)
-4. Added neurodata_type :ref:`ROITableRegion <sec-ROITableRegion>` for referencing a subset of elements in an ROITable
-5. Replaced ``RoiResponseSeries.roi_names`` with ``RoiResponseSeries.rois``, which is
+5. Added neurodata_type :ref:`ROITableRegion <sec-ROITableRegion>` for referencing a subset of elements in an ROITable
+6. Replaced ``RoiResponseSeries.roi_names`` with ``RoiResponseSeries.rois``, which is
    an :ref:`ROITableRegion <sec-ROITableRegion>`  (see items 3,4)
-6. Removed ``RoiResponseSeries.segmentation_interface``. This information is available through
+7. Removed ``RoiResponseSeries.segmentation_interface``. This information is available through
    ``RoiResponseSeries.rois`` (described above in 5.)
-7. Assigned neurodata_type :ref:`PlaneSegmentation <sec-PlaneSegmentation>` to the image_plan group in
+8. Assigned neurodata_type :ref:`PlaneSegmentation <sec-PlaneSegmentation>` to the image_plan group in
    :ref:`ImageSegmentation <sec-ImageSegmentation>` and updated it to use the new :ref:`ROITable <sec-ROITable>`,
    :ref:`ImageMasks <sec-ImageMasks>`, and :ref:`PixelMasks <sec-PixelMasks>` (see items 1-4 above).
 
