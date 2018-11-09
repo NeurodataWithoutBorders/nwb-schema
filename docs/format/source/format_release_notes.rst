@@ -213,8 +213,8 @@ Improved storage of ROIs
 **Changes:** See also `PR391 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/391>`_ and
 `I118 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/118>`_ for details:
 
-1. Added neurodata_type :ref:`ImageMasks <sec-ImageMasks>` replacing ROI.img_mask (from NWB:N 1.x) with 
-     * A 3D dataset with shape [num_rois, num_x_pixels, num_y_pixels] (i.e. an array of planar image masks) or 
+1. Added neurodata_type :ref:`ImageMasks <sec-ImageMasks>` replacing ROI.img_mask (from NWB:N 1.x) with
+     * A 3D dataset with shape [num_rois, num_x_pixels, num_y_pixels] (i.e. an array of planar image masks) or
      * A 4D dataset with shape [num_rois, num_x_pixels, num_y_pixels, num_z_pixels] (i.e. an array of volumetric image masks)
 2. Added neurodata_type :ref:`PixelMasks <sec-PixelMasks>` which replaces ROI.pix_mask/ROI.pix_mask_weight (from NWB:N 1.x)
    with a table that has columns “x”, “y”, and “weight” (i.e. combining ROI.pix_mask and ROI.pix_mask_weight
@@ -380,7 +380,7 @@ Over the course of the development of NWB:N 2 the epoch storage has been refined
      (see `PR536 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_).
    - Subsequently in `PR682 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/682>`_ the epoch table was
      then fully converted to a dynamic table.
-   - Finally, in `PR690 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/690>`_ the EpochTable was then moved to
+   - Finally, in `PR690 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/690>`_ the EpochTable was then moved to
      ``/intervals/epochs`` and the EpochTable type was replaced by the more general type :ref:`TimeIntervals <sec-TimeIntervals>`.
      This also led to removal of the ``Epochs`` type.
 
@@ -399,7 +399,28 @@ the `PyNWB docs <https://pynwb.readthedocs.io/en/latest/tutorials/general/file.h
 short tutorial on how to use trials. See :ref:`NWBFile <sec-NWBFile>` *Groups: /trials* for an overview of the trial
 schema. **Note:** Originally trials was added a top-level group trials which was then later moved to ``/intervals/trials``
 as part of the generalization of time interval storage as part of
-`PR690 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/690>`_ .
+`PR690 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/690>`_ .
+
+Generalized storage of time interval
+""""""""""""""""""""""""""""""""""""
+
+**Change:** Create general type :ref:`TimeIntervals <sec-TimeIntervals >` (which is a generalization of the
+previous EpochTable type) and create top-level group ``/intervals`` for organizing time interval data.
+
+**Reason:** Previously all time interval data was stored in either ``epochs`` or ``trials``. To facilitate reuse
+and extensibility this has been generalized to enable users to create arbitrary types of intervals in
+addition to the predefined types, i.e., epochs or trials.
+
+**Format Changes:** See `PR690 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/690>`_ and
+`I683 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/683>`_ for details:
+
+   - Renamed ``EpochTable`` type to the more general type :ref:`TimeIntervals <sec-TimeIntervals >` to facilitate
+     reuse.
+   - Created top-level group ``/intervals`` for organizing time interval data.
+
+      - Moved ``/epochs`` to ``/intervals/epochs`` and reused the TimeIntervals type
+      - Moved ``/trials`` to ``/intervals/trials`` and reused the TimeIntervals type
+      - Allow users to add arbitary TimeIntervals tables to ``/intervals``
 
 
 Replaced Implicit Links/Data-Structures with Explicit Links
