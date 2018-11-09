@@ -208,10 +208,9 @@ Improved storage of ROIs
 * **Make links explicit:** The relationship of ``RoiResponseSeries`` to ``ROI`` objects was implicit (i.e. ROI was
   specified by a string), so one had to know a priori which ``ImageSegmentation`` and ``ImagingPlane`` was used
   to produce the ROIs.
-* **Support 3D ROIs:** Allow users to add 3D ROIs collected from a multi-plane image. `PR688 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/688>`_ and `I554 (nwb-schema) <https://github.com/NeurodataWithoutBorders/pynwb/issues/554>`_
+* **Support 3D ROIs:** Allow users to add 3D ROIs collected from a multi-plane image.
 
-**Changes:** See also `PR391 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/391>`_ and
-`I118 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/118>`_ for details:
+**Changes:**
 
 1. Added neurodata_type :ref:`ImageMasks <sec-ImageMasks>` replacing ROI.img_mask (from NWB:N 1.x) with
      * A 3D dataset with shape [num_rois, num_x_pixels, num_y_pixels] (i.e. an array of planar image masks) or
@@ -230,6 +229,18 @@ Improved storage of ROIs
 8. Assigned neurodata_type :ref:`PlaneSegmentation <sec-PlaneSegmentation>` to the image_plan group in
    :ref:`ImageSegmentation <sec-ImageSegmentation>` and updated it to use the new :ref:`ROITable <sec-ROITable>`,
    :ref:`ImageMasks <sec-ImageMasks>`, and :ref:`PixelMasks <sec-PixelMasks>` (see items 1-4 above).
+
+For additional details see also:
+
+* `PR391 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/391>`_ and
+  `I118 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/118>`_ for details on the main
+  refactoring of ROI storage,
+* `PR665 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/665>`_ and
+  `I663 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/663>`_ (and previous issue
+   `I643 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/643>`_) for details on the
+   subsequent refactor using :ref:`DynamicTable <sec-DynamicTable>`, and
+* `PR688 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/688>`_ and
+  `I554 (nwb-schema) <https://github.com/NeurodataWithoutBorders/pynwb/issues/554>`_ for details on 3D ROIs,
 
 
 
@@ -368,21 +379,22 @@ large numbers of Epochs.
 :ref:`DynamicTable <sec-DynamicTable>` for storing time intervals) that is stored in the group ``/intervals/epochs``.
 Over the course of the development of NWB:N 2 the epoch storage has been refined in several phases:
 
-   - Create new neurodata_type :ref:`Epochs <sec-Epochs>` which is included in :ref:`NWBFile <sec-NWBFile>` as the group
-     ``epochs``. This simplifies extension of the epochs structure. /epochs now contains an
-     :ref:`EpochTable <sec-EpochTable>` that describes the start/stop times, tags, and a region reference into the
-     :ref:`TimeSeriesIndex <sec-TimeSeriesIndex>` to identify the timeseries parts the epoch applys to.
-     (see `PR396 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/396>`_ and
-     `I119 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/119>`_ )
-   - In addition, a :ref:`DynamicTable <sec-DynamicTable>` for storing dynamic metadata about epochs was then added later to
-     the :ref:`Epochs <sec-Epochs>` neurodata_type to support storage of dynamic metadata about epochs without requiring
-     users to create custom extensions
-     (see `PR536 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_).
-   - Subsequently in `PR682 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/682>`_ the epoch table was
-     then fully converted to a dynamic table.
-   - Finally, in `PR690 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/690>`_ the EpochTable was then moved to
-     ``/intervals/epochs`` and the EpochTable type was replaced by the more general type :ref:`TimeIntervals <sec-TimeIntervals>`.
-     This also led to removal of the ``Epochs`` type.
+   - First, we create a new neurodata_type ``Epochs`` which was included in :ref:`NWBFile <sec-NWBFile>` as the group
+     ``epochs``. This simplified the extension of the epochs structure. ``/epochs`` at that point contained a
+     compound (row-based) table with neurodata_type ``EpochTable``  that described the start/stop times, tags,
+     and a region reference into the :ref:`TimeSeriesIndex <sec-TimeSeriesIndex>` to identify the timeseries
+     parts the epoch applys to (see `PR396 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/396>`_ and
+     `I119 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/119>`_ ).
+   - Later, an additional :ref:`DynamicTable <sec-DynamicTable>` for storing dynamic metadata about epochs was then
+     added to the ``Epochs`` neurodata_type to support storage of dynamic metadata about epochs without requiring
+     users to create custom extensions (see `PR536 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_).
+   - Subsequently the epoch table was then fully converted to a dynamic table (see
+     `PR682 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/682>`_ and
+     `I664 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/664>`_)
+   - Finally, the EpochTable was then moved to ``/intervals/epochs`` and the EpochTable type was replaced by the
+     more general type :ref:`TimeIntervals <sec-TimeIntervals>`. This also led to removal of the ``Epochs`` type
+     (see `PR690 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/690>`_ and
+     `I683 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/683>`_)
 
 
 Improved support for trial-based data
