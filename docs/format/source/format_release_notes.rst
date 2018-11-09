@@ -380,7 +380,7 @@ Over the course of the development of NWB:N 2 the epoch storage has been refined
      (see `PR536 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_).
    - Subsequently in `PR682 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/682>`_ the epoch table was
      then fully converted to a dynamic table.
-   - Finally, in `PR690 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/690>`_ the EpochTable was then moved to
+   - Finally, in `PR690 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/690>`_ the EpochTable was then moved to
      ``/intervals/epochs`` and the EpochTable type was replaced by the more general type :ref:`TimeIntervals <sec-TimeIntervals>`.
      This also led to removal of the ``Epochs`` type.
 
@@ -399,7 +399,7 @@ the `PyNWB docs <https://pynwb.readthedocs.io/en/latest/tutorials/general/file.h
 short tutorial on how to use trials. See :ref:`NWBFile <sec-NWBFile>` *Groups: /trials* for an overview of the trial
 schema. **Note:** Originally trials was added a top-level group trials which was then later moved to ``/intervals/trials``
 as part of the generalization of time interval storage as part of
-`PR690 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/690>`_ .
+`PR690 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/690>`_ .
 
 Generalized storage of time interval
 """"""""""""""""""""""""""""""""""""
@@ -417,6 +417,7 @@ addition to the predefined types, i.e., epochs or trials.
    - Renamed ``EpochTable`` type to the more general type :ref:`TimeIntervals <sec-TimeIntervals >` to facilitate
      reuse.
    - Created top-level group ``/intervals`` for organizing time interval data.
+
       - Moved ``/epochs`` to ``/intervals/epochs`` and reused the TimeIntervals type
       - Moved ``/trials`` to ``/intervals/trials`` and reused the TimeIntervals type
       - Allow users to add arbitary TimeIntervals tables to ``/intervals``
