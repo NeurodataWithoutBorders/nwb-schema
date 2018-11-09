@@ -196,7 +196,7 @@ Improved storage of ROIs
 * **Make links explicit:** The relationship of ``RoiResponseSeries`` to ``ROI`` objects was implicit (i.e. ROI was
   specified by a string), so one had to know a priori which ``ImageSegmentation`` and ``ImagingPlane`` was used
   to produce the ROIs.
-* **Support 3D ROIs:** Allow users to add 3D ROIs collected from a multi-plane image.
+* **Support 3D ROIs:** Allow users to add 3D ROIs collected from a multi-plane image. `PR688 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/688>`_ and `I554 (nwb-schema) <https://github.com/NeurodataWithoutBorders/pynwb/issues/554>`_
 
 **Changes:** See also `PR391 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/391>`_ and
 `I118 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/118>`_ for details:
@@ -207,7 +207,7 @@ Improved storage of ROIs
 2. Added neurodata_type :ref:`PixelMasks <sec-PixelMasks>` which replaces ROI.pix_mask/ROI.pix_mask_weight (from NWB:N 1.x)
    with a table that has columns “x”, “y”, and “weight” (i.e. combining ROI.pix_mask and ROI.pix_mask_weight
    into a single table)
-3. Added analogous neurodata_type :ref:`PixelMasks <sec-VoxelMasks>` with a table that has columns "x", "y", "z", and "weight" for 3D ROIs.
+3. Added analogous neurodata_type :ref:`VoxelMasks <sec-VoxelMasks>` with a table that has columns "x", "y", "z", and "weight" for 3D ROIs.
 4. Added neurodata_type :ref:`ROITable <sec-ROITable>` which defines a table  for storing references to the image mask
    and pixel mask for each ROI (see item 1,2)
 5. Added neurodata_type :ref:`ROITableRegion <sec-ROITableRegion>` for referencing a subset of elements in an ROITable
