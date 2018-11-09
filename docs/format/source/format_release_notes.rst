@@ -237,8 +237,8 @@ For additional details see also:
   refactoring of ROI storage,
 * `PR665 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/665>`_ and
   `I663 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/663>`_ (and previous issue
-   `I643 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/643>`_) for details on the
-   subsequent refactor using :ref:`DynamicTable <sec-DynamicTable>`, and
+  `I643 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/643>`_) for details on the
+  subsequent refactor using :ref:`DynamicTable <sec-DynamicTable>`, and
 * `PR688 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/688>`_ and
   `I554 (nwb-schema) <https://github.com/NeurodataWithoutBorders/pynwb/issues/554>`_ for details on 3D ROIs,
 
@@ -388,7 +388,7 @@ Over the course of the development of NWB:N 2 the epoch storage has been refined
    - Later, an additional :ref:`DynamicTable <sec-DynamicTable>` for storing dynamic metadata about epochs was then
      added to the ``Epochs`` neurodata_type to support storage of dynamic metadata about epochs without requiring
      users to create custom extensions (see `PR536 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_).
-   - Subsequently the epoch table was then fully converted to a dynamic table (see
+   - Subsequently the epoch table was then fully converted to a  :ref:`DynamicTable <sec-DynamicTable>` (see
      `PR682 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/682>`_ and
      `I664 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/664>`_)
    - Finally, the EpochTable was then moved to ``/intervals/epochs`` and the EpochTable type was replaced by the
