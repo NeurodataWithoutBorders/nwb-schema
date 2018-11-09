@@ -185,6 +185,16 @@ The main ``/general/extracellular_ephys group`` then contained in addition the f
     :ref:`DynamicTable <sec-DynamicTable>` if required.
 
 
+Improved storage of Images
+""""""""""""""""""""""""""
+
+**Reason:**
+
+* **Improve consistency of schema:** Previously there was a reference to ``Image`` from ``ImageSeries``, however ``Image`` was not defined in the schema
+* **Support different static image types**
+
+**Changes:** `Image` was added as a base type, and subtypes were defined: `GrayscaleImage`, `RGBImage`, and `RGBAImage` (The "A" in "RGBA" is for transparency).
+
 
 Improved storage of ROIs
 """"""""""""""""""""""""
