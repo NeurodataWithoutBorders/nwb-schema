@@ -8,8 +8,109 @@ Release Notes
 
 **Subsequent releases:** The schema was improved and updated throughout the beta phase with full release planed for fall 2018.
 
+Added new base data dypes: ``NWBContainer``, ``NWBData``, ``NWBDataInterface``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Change:** Added common base types for Groups, Datasets, and for Groups storing primary experiment data
+
+**Reason** Collect common functionality and ease future evolution of the standard
+
+**Specific Changes**
+
+    * :ref:`NWBContainer <sec-NWBContainer>` defines a common base type for all Groups with a ``neurodata_type`` and
+      is now the base type of all main data group types in the NWB:N format,
+      including :ref:`TimeSeries <sec-TimeSeries>`. This also means that all group types now inherit the required
+      ``help`` and ``source`` attribute from ``NWBContainer``. A number of neurodata_types have been updated
+      to add the missing ``help`` (see
+      https://github.com/NeurodataWithoutBorders/nwb-schema/pull/37/files for details)
+    * :ref:`NWBDataInterface <sec-NWBDataInterface>` extends :ref:`NWBContainer <sec-NWBContainer>` and replaces
+      ``Interface`` from NWB:N 1.x. It has been renamed to ease intuition. :ref:`NWBDataInterface <sec-NWBDataInterface>`
+      serves as base type for primary data (e.g., experimental or analysis data) and is used to
+      distinguish in the schema between non-metadata data containers and metadata containers.
+      (see https://github.com/NeurodataWithoutBorders/nwb-schema/pull/116/files for details)
+    * :ref:`NWBData <sec-NWBData>` defines a common base type for all Datasets with a ``neurodata_type``
+      and serves a similar function to :ref:`NWBContainer <sec-NWBContainer>` only for Datasets instead of Groups.
+
+
+Support general data structures for data tables and vector data
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _sec-rn-tables:
+
+Support row-based and column-based tables
+"""""""""""""""""""""""""""""""""""""""""
+
+**Change:** Add support for storing tabular data via row-based and column-based table structures.
+
+**Reason:** Simplify storage of complex metadata. Simplify storage of dynamic and variable-length metadata.
+
+**Format Changes:**
+
+    * **Row-based tables:** are implemented via a change in the specification language through support for
+      compound data types The advantage of row-based tables is that they i) allow referencing of sets of
+      rows via region-references to a single dataset (e.g., a set of electrodes), ii)  make it
+      easy to add rows by appending to a single dataset, iii) make it easy to read individual rows
+      of a table (but require reading the full table to extract the data of a single column).
+      Row-based tables are used to simplify, e.g,. the organization of electrode-metadata in NWB:N 2 (see above).
+      (See the `specification language release notes <http://schema-language.readthedocs.io/en/latest/specification_language_release_notes.html#release-notes>`_
+      for details about the addition of compound data types in the schema).
+
+      * *Referencing rows in a row-based tables:* Subsets of rows can referenced directly via a region-reference to the
+        row-based table. Subsets
+      * *Referencing columns in a row-based table:* This is currently not directly supported, but could be implemented
+        via a combination of an object-reference to the table and a list of the lables of columns.
+
+    * **Column-based tables:** are implemented via the new neurodata_type :ref:`DynamicTable <sec-DynamicTable>`.
+      A DynamicTable is simplified-speaking just a collection of an arbitrary number of :ref:`TableColumn <sec-TableColumn>`
+      datasets (all with equal length) and a dataset storing row ids and a dataset storing column names. The
+      advantage of the column-based store is that it i) makes it easy to add new columns to the table without
+      the need for extensions and ii) the column-based storage makes it easy to read individual columns
+      efficiently (while reading full rows requires reading from multiple datasets). DynamicTable is used, e.g.,
+      to enhance storage of trial data. (See https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files )
+
+      * *Referencing rows in column-based tables:*  As :ref:`DynamicTable <sec-DynamicTable>` consist of multiple
+        datasets (compared to row-based tables which consists of a single 1D dataset with a compound datatuype)
+        is not possible to reference a set of rows with a single region reference. To address this issue, NWB:N defines
+        :ref:`DynamicTableRegion <sec-DynamicTableRegion>` (added later in `PR634 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/634>`_)
+        dataset type, which stores a list of integer indices (row index) and also has an attribute ``table`` with
+        the object reference to the corresponding :ref:`DynamicTable <sec-DynamicTable>`.
+      * *Referencing columns in a columns-based table:* As each column is a seperate dataset, columns of a column-based
+        :ref:`DynamicTable <sec-DynamicTable>` can be directly references via links, object-references and
+        region-references.
+
+
+.. _sec-rn-vectordata-nwb2:
+
+Enable efficient storage of large numbers of vector data elements
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+**Change** Introduce neurodata_types :ref:`VectorData <sec-VectorData>` , :ref:`VectorIndex <sec-VectorIndex>`,
+:ref:`ElementIdentifiers <sec-ElementIdentifiers>`
+
+**Reason** To efficiently store spike data as part of UnitTimes a new, more efficient data structure was required.
+This builds the general, reusable types to define efficient data storage for large numbers of data vectors in
+efficient, consolidated arrays, which enable more efficient read, write, and search (see :ref:`sec-rn-unittimes-nwb2`).
+
+**Format Changes**
+
+* :ref:`VectorData <sec-VectorData>` : Data values from a series of data elements are concatinated into a single
+  array. This allows all elements to be stored efficiently in a single data array.
+* :ref:`VectorIndex <sec-VectorIndex>` : 1D dataset of region-references selecting subranges in
+  :ref:`VectorData <sec-VectorData>`. With this we can efficiently access single sub-vectors associated with single
+  elements from the :ref:`VectorData <sec-VectorData>` collection.
+* :ref:`ElementIdentifiers <sec-ElementIdentifiers>` : 1D array for stroing unique identifiers for the elements in
+  a VectorIndex.
+
+See :ref:`sec-rn-unittimes-nwb2` for an illustration and specific example use in practice.
+See also `I116 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/117>`__ and
+`PR382 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/382>`__ for further details.
+
+
+Use new table and vector data structures to improve data organization
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Improved organization of electrode metadata in ``/general/extracellular_ephys``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 **Change:** Consolidate metadata from related electrodes (e.g., from a single device) in a single location.
 
@@ -84,117 +185,9 @@ The main ``/general/extracellular_ephys group`` then contained in addition the f
     :ref:`DynamicTable <sec-DynamicTable>` if required.
 
 
-Replaced Implicit Links/Data-Structures with Explicit Links
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-**Change** Replace implicit links with explicit soft-links to the corresponding HDF5 objects where possible, i.e.,
-use explicit HDF5 mechanisms for expressing basic links between data rather than implicit ones that require
-users/developers to know how to use the specific data.
-
-**Reason:** In several places datasets containing arrays of either i) strings with object names, ii) strings with paths,
-or iii) integer indexes are used that implicitly point to other locations in the file. These forms of implicit
-links are not self-describing (e.g., the kind of linking, target location, implicit size and numbering assumptions
-are not easily identified). This hinders human interpretation of the data as well as programmatic resolution of these
-kind of links.
-
-**Format Changes:**
-
-    - Text dataset ``image_plane`` of ``<TwoPhotonSeries>`` is now a link to the corresponding ``<ImagingPlane>``
-      (which is stored in ``/general/optophysiology``)
-    - Text dataset ``image_plane_name`` of ``<ImageSegmentation>`` is now a link to the corresponding ``<ImagingPlane>``
-      (which is stored in ``/general/optophysiology``). The dataset is also renamed to ``image_plane`` for consistency with ``<TwoPhotonSeries>``
-    - Text dataset ``electrode_name`` of ``<PatchClampSeries>`` is now a link to the corresponding ``<IntracellularElectrode>``
-      (which is stored in ``/general/intracellular_ephys``). The dataset is also renamed to ``electrode`` for consistency.
-    - Text dataset ``site`` in ``<OptogeneticSeries>`` is now a link to the corresponding ``<StimulusSite>``
-      (which is stored in ``/general/optogenetics``).
-    - Integer dataset ``electrode_idx`` of ``FeatureExtraction`` is now a dataset ``electrodes`` of type
-      :ref:`DynamicTableRegion <sec-DynamicTableRegion>` pointing to a region of the ``ElectrodeTable`` stored in ``/general/extracellular_ephys/electrodes``.
-    - Integer array dataset ``electrode_idx`` of ``<ElectricalSeries>`` is now a dataset ``electrodes`` of type
-      :ref:`DynamicTableRegion <sec-DynamicTableRegion>` pointing to a region of the ``ElectrodeTable`` stored in ``/general/extracellular_ephys/electrodes``.
-    - Text dataset ``/general/extracellular_ephys/<electrode_group_X>/device`` is now a link ``<ElectrodeGroup>/device``
-
-
-.. _sec-rn-tables:
-
-Support row-based and column-based tables
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-**Change:** Add support for storing tabular data via row-based and column-based table structures.
-
-**Reason:** Simplify storage of complex metadata. Simplify storage of dynamic and variable-length metadata.
-
-**Format Changes:**
-
-    * **Row-based tables:** are implemented via a change in the specification language through support for
-      compound data types The advantage of row-based tables is that they i) allow referencing of sets of
-      rows via region-references to a single dataset (e.g., a set of electrodes), ii)  make it
-      easy to add rows by appending to a single dataset, iii) make it easy to read individual rows
-      of a table (but require reading the full table to extract the data of a single column).
-      Row-based tables are used to simplify, e.g,. the organization of electrode-metadata in NWB:N 2 (see above).
-      (See the `specification language release notes <http://schema-language.readthedocs.io/en/latest/specification_language_release_notes.html#release-notes>`_
-      for details about the addition of compound data types in the schema).
-
-      * *Referencing rows in a row-based tables:* Subsets of rows can referenced directly via a region-reference to the
-        row-based table. Subsets
-      * *Referencing columns in a row-based table:* This is currently not directly supported, but could be implemented
-        via a combination of an object-reference to the table and a list of the lables of columns.
-
-    * **Column-based tables:** are implemented via the new neurodata_type :ref:`DynamicTable <sec-DynamicTable>`.
-      A DynamicTable is simplified-speaking just a collection of an arbitrary number of :ref:`TableColumn <sec-TableColumn>`
-      datasets (all with equal length) and a dataset storing row ids and a dataset storing column names. The
-      advantage of the column-based store is that it i) makes it easy to add new columns to the table without
-      the need for extensions and ii) the column-based storage makes it easy to read individual columns
-      efficiently (while reading full rows requires reading from multiple datasets). DynamicTable is used, e.g.,
-      to enhance storage of trial data. (See https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files )
-
-      * *Referencing rows in column-based tables:*  As :ref:`DynamicTable <sec-DynamicTable>` consist of multiple
-        datasets (compared to row-based tables which consists of a single 1D dataset with a compound datatuype)
-        is not possible to reference a set of rows with a single region reference. To address this issue, NWB:N defines
-        :ref:`DynamicTableRegion <sec-DynamicTableRegion>` (added later in `PR634 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/634>`_)
-        dataset type, which stores a list of integer indices (row index) and also has an attribute ``table`` with
-        the object reference to the corresponding :ref:`DynamicTable <sec-DynamicTable>`.
-      * *Referencing columns in a columns-based table:* As each column is a seperate dataset, columns of a column-based
-        :ref:`DynamicTable <sec-DynamicTable>` can be directly references via links, object-references and
-        region-references.
-
-Improved support for trial-based data
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-**Change:** Add dedicated concept for storing trial data.
-
-**Reason:** Users indicated that it was not easy to store trial data in NWB:N 1.x.
-
-**Format Changes:** Added optional top-level group ``trials/`` which is a :ref:`DynamicTable <sec-DynamicTable>`
-with ``id``,``start``, and ``end`` columns and optional additional user-defined table columns.
-See `PR536 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_ for detailed code changes. See
-the `PyNWB docs <https://pynwb.readthedocs.io/en/latest/tutorials/general/file.html?highlight=Trial#trials>`__ for a
-short tutorial on how to use trials. See :ref:`NWBFile <sec-NWBFile>` *Groups: /trials* for an overview of the trial
-schema.
-
-Improved storage of epoch data
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-**Change:** Store epoch data as a series of tables to improve efficiency, usability and extensibility.
-
-**Reason:** In NWB 1.x Epochs are stored as a single group per Epoch. Within each Epoch, the index into each
-TimeSeries that the Epoch applies to was stored as a single group. This structure is inefficient for storing
-large numbers of Epochs.
-
-**Format Changes:**
-
-* Create new neurodata_type :ref:`Epochs <sec-Epochs>` which is included in :ref:`NWBFile <sec-NWBFile>` as the group
-  ``epochs``. This simplifies extension of the epochs structure. /epochs now contains an
-  :ref:`EpochTable <sec-EpochTable>` that describes that start/stop times, tags, and a region reference into the
-  :ref:`TimeSeriesIndex <sec-TimeSeriesIndex>` to identify the timeseries parts the epoch applys to.
-  (see `PR396 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/396>`_ and
-  `I119 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/119>`_ )
-* In addition, a :ref:`DynamicTable <sec-DynamicTable>` for storing dynamic metadata about epochs has been added to
-  the :ref:`Epochs <sec-Epochs>` neurodata_type to support storage of dynamic metadata about epochs without requiring
-  users to create custom extensions
-  (see `PR536 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_).
 
 Improved storage of ROIs
-^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""
 
 **Reason:**
 
@@ -225,37 +218,10 @@ Improved storage of ROIs
 
 
 
-.. _sec-rn-vectordata-nwb2:
-
-Enable efficient storage of large numbers of vector data elements
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-**Change** Introduce neurodata_types :ref:`VectorData <sec-VectorData>` , :ref:`VectorIndex <sec-VectorIndex>`,
-:ref:`ElementIdentifiers <sec-ElementIdentifiers>`
-
-**Reason** To efficiently store spike data as part of UnitTimes a new, more efficient data structure was required.
-This builds the general, reusable types to define efficient data storage for large numbers of data vectors in
-efficient, consolidated arrays, which enable more efficient read, write, and search (see :ref:`sec-rn-unittimes-nwb2`).
-
-**Format Changes**
-
-* :ref:`VectorData <sec-VectorData>` : Data values from a series of data elements are concatinated into a single
-  array. This allows all elements to be stored efficiently in a single data array.
-* :ref:`VectorIndex <sec-VectorIndex>` : 1D dataset of region-references selecting subranges in
-  :ref:`VectorData <sec-VectorData>`. With this we can efficiently access single sub-vectors associated with single
-  elements from the :ref:`VectorData <sec-VectorData>` collection.
-* :ref:`ElementIdentifiers <sec-ElementIdentifiers>` : 1D array for stroing unique identifiers for the elements in
-  a VectorIndex.
-
-See :ref:`sec-rn-unittimes-nwb2` for an illustration and specific example use in practice.
-See also `I116 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/117>`__ and
-`PR382 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/382>`__ for further details.
-
-
 .. _sec-rn-unittimes-nwb2:
 
 Improved storage of unit-based data
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""
 
 In NWB:N 1.0.x data about spike units was stored across a number of different neurodata_types, specifically
 ``UnitTimes``, ``ClusterWaveforms``, and ``Clustering``. This structure had several critical shortcomings,
@@ -316,8 +282,14 @@ NWB:N 2.0.
    Overview of the data structure for storing spiking unit data and metadata in NWB:N 2.0
 
 
+Improved specification of reference time stamp(s)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To improve the specification of refernce time, NWB:N adopts ISO8061 for storing datetimes and adds
+``timestamps_reference_time`` as explicit zero for all timestamps in addition to the ``session_start_time``.
+
 Improve standardization of reference time specification using ISO8061
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 **Changes:** Modify ``session_start_time`` an ``file_create_date`` to enforce use of ISO 8601 datetime strings
 
@@ -329,7 +301,7 @@ added as dedicated dtype to the specification language. For details see
 `I50 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/50>`_.
 
 Improved specification of reference time
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""
 
 **Change:** Add field ``timestamps_reference_time``, allowing users to explicitly  specify a date and time
 corresponding to time zero for all timestamps in the nwb file.
@@ -346,40 +318,95 @@ See `PR709 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/709>`_
 `I49 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/49>`_
 for further details.
 
+Improved storage of time intervals
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Reduce requirement for potentially empty groups
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Improved storage of epoch data
+""""""""""""""""""""""""""""""
 
-**Change:** Make several previously required fields optional
+**Change:** Store epoch data as a table to improve efficiency, usability and extensibility.
 
-**Reason:** Reduce need for empty groups.
+**Reason:** In NWB 1.x Epochs are stored as a single group per Epoch. Within each Epoch, the index into each
+TimeSeries that the Epoch applies to was stored as a single group. This structure is inefficient for storing
+large numbers of Epochs.
 
-**Format Changes:** The following groups/datasets have been made optional:
+**Format Changes:** In NWB:N 2 epochs are stored via a :ref:`TimeIntervals <sec-TimeIntervals>` table (i.e., a
+:ref:`DynamicTable <sec-DynamicTable>` for storing time intervals) that is stored in the group ``/intervals/epochs``.
+Over the course of the development of NWB:N 2 the epoch storage has been refined in several phases:
 
-    * ``/epochs`` : not all experiments may require epochs.
-    * ``/general/optogenetics`` : not all epeeriments may use optogenetic data
-    * ``device`` in :ref:`IntracellularElectrode <sec-IntracellularElectrode>`
-    *
+   * Create new neurodata_type :ref:`Epochs <sec-Epochs>` which is included in :ref:`NWBFile <sec-NWBFile>` as the group
+     ``epochs``. This simplifies extension of the epochs structure. /epochs now contains an
+     :ref:`EpochTable <sec-EpochTable>` that describes the start/stop times, tags, and a region reference into the
+     :ref:`TimeSeriesIndex <sec-TimeSeriesIndex>` to identify the timeseries parts the epoch applys to.
+     (see `PR396 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/396>`_ and
+     `I119 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/119>`_ )
+   * In addition, a :ref:`DynamicTable <sec-DynamicTable>` for storing dynamic metadata about epochs was then added later to
+     the :ref:`Epochs <sec-Epochs>` neurodata_type to support storage of dynamic metadata about epochs without requiring
+     users to create custom extensions
+     (see `PR536 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_).
+   * Subsequently in `PR682 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/682>`_ the epoch table was
+     then fully converted to a dynamic table.
+   * Finally, in `PR690 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/690>`_ the EpochTable was then moved to
+     ``/intervals/epochs`` and the EpochTable type was replaced by the more general type :ref:`TimeIntervals <sec-TimeIntervals>`.
+     This also led to removal of the ``Epochs`` type.
 
-Added missing metadata
-^^^^^^^^^^^^^^^^^^^^^^
 
-**Change:** Add a few missing metadata attributes/datasets.
+Improved support for trial-based data
+"""""""""""""""""""""""""""""""""""""
 
-**Reason:** Ease data interpretation, improve format consistency, and enable storage of additional metadata
+**Change:** Add dedicated concept for storing trial data.
+
+**Reason:** Users indicated that it was not easy to store trial data in NWB:N 1.x.
+
+**Format Changes:** Added optional group ``/intervals/trials/`` which is a :ref:`DynamicTable <sec-DynamicTable>`
+with ``id``,``start``, and ``end`` columns and optional additional user-defined table columns.
+See `PR536 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_ for detailed code changes. See
+the `PyNWB docs <https://pynwb.readthedocs.io/en/latest/tutorials/general/file.html?highlight=Trial#trials>`__ for a
+short tutorial on how to use trials. See :ref:`NWBFile <sec-NWBFile>` *Groups: /trials* for an overview of the trial
+schema. **Note:** Originally trials was added a top-level group trials which was then later moved to ``/intervals/trials``
+as part of the generalization of time interval storage as part of
+`PR690 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/690>`_ .
+
+
+Replaced Implicit Links/Data-Structures with Explicit Links
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Change** Replace implicit links with explicit soft-links to the corresponding HDF5 objects where possible, i.e.,
+use explicit HDF5 mechanisms for expressing basic links between data rather than implicit ones that require
+users/developers to know how to use the specific data. In addition to links, NWB:N 2 adds support for object-
+and region references, enabling the creation of datasets (i.e., arrays) that store links to other data objects
+(groups or datasets) or regions (i.e., subsets) of datasets.
+
+**Reason:** In several places datasets containing arrays of either i) strings with object names, ii) strings with paths,
+or iii) integer indexes are used that implicitly point to other locations in the file. These forms of implicit
+links are not self-describing (e.g., the kind of linking, target location, implicit size and numbering assumptions
+are not easily identified). This hinders human interpretation of the data as well as programmatic resolution of these
+kind of links.
 
 **Format Changes:**
 
-    - ``/general/devices`` text dataset becomes group with neurodata type ``Device`` to enable storage of more complex
-      and structured metadata about devices (rather than just a single string)
-    - Added attribute ``unit=Seconds`` to ``<EventDetection>/times`` dataset to explicitly describe time units
-      and improve human and programmatic data interpretation
-    - Added ``filtering`` dataset to type ``<IntracellularElectrode>`` (i.e., ``/general/intracellular_ephys/<electrode_X>``)
-      to enable specification of per-electrode filtering data
-    - Added default values for ``<TimeSeries>/description`` and ``<TimeSeries>/comments``
+    - Text dataset ``image_plane`` of ``<TwoPhotonSeries>`` is now a link to the corresponding ``<ImagingPlane>``
+      (which is stored in ``/general/optophysiology``)
+    - Text dataset ``image_plane_name`` of ``<ImageSegmentation>`` is now a link to the corresponding ``<ImagingPlane>``
+      (which is stored in ``/general/optophysiology``). The dataset is also renamed to ``image_plane`` for consistency with ``<TwoPhotonSeries>``
+    - Text dataset ``electrode_name`` of ``<PatchClampSeries>`` is now a link to the corresponding ``<IntracellularElectrode>``
+      (which is stored in ``/general/intracellular_ephys``). The dataset is also renamed to ``electrode`` for consistency.
+    - Text dataset ``site`` in ``<OptogeneticSeries>`` is now a link to the corresponding ``<StimulusSite>``
+      (which is stored in ``/general/optogenetics``).
+    - Integer dataset ``electrode_idx`` of ``FeatureExtraction`` is now a dataset ``electrodes`` of type
+      :ref:`DynamicTableRegion <sec-DynamicTableRegion>` pointing to a region of the ``ElectrodeTable`` stored in ``/general/extracellular_ephys/electrodes``.
+    - Integer array dataset ``electrode_idx`` of ``<ElectricalSeries>`` is now a dataset ``electrodes`` of type
+      :ref:`DynamicTableRegion <sec-DynamicTableRegion>` pointing to a region of the ``ElectrodeTable`` stored in ``/general/extracellular_ephys/electrodes``.
+    - Text dataset ``/general/extracellular_ephys/<electrode_group_X>/device`` is now a link ``<ElectrodeGroup>/device``
+    - The Epochs , Unit, Trial and other dynamic tables in NWB:N 2 also support (and use) region and object references
+      to explicitly reference other data (e.g., vector data as part of the unit tables).
+
+
+Improved consistency, identifiably, and readability
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Improved identifiably of objects
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""
 
 **Change:** All groups and datasets are now required to either have a unique ``name`` or a unique ``neurodata_type`` defined.
 
@@ -397,9 +424,48 @@ attribute on the corresponding object (i.e., group or dataset). Also information
 (e.g., the name and version) are stored as attributed to allow unique identification of the specification
 for storage objects.
 
+Simplified extension of subject metadata
+""""""""""""""""""""""""""""""""""""""""
+
+**Specific Change:** Assigned ``neurodata_type`` to ``/general/subject`` to enable extension of the subject container
+directly without having to extend ``NWBFile`` itself. (see https://github.com/NeurodataWithoutBorders/nwb-schema/issues/120
+and https://github.com/NeurodataWithoutBorders/nwb-schema/pull/121 for details)
+
+
+Reduce requirement for potentially empty groups
+"""""""""""""""""""""""""""""""""""""""""""""""
+
+**Change:** Make several previously required fields optional
+
+**Reason:** Reduce need for empty groups.
+
+**Format Changes:** The following groups/datasets have been made optional:
+
+    * ``/epochs`` : not all experiments may require epochs.
+    * ``/general/optogenetics`` : not all epeeriments may use optogenetic data
+    * ``device`` in :ref:`IntracellularElectrode <sec-IntracellularElectrode>`
+    *
+
+Added missing metadata
+""""""""""""""""""""""
+
+**Change:** Add a few missing metadata attributes/datasets.
+
+**Reason:** Ease data interpretation, improve format consistency, and enable storage of additional metadata
+
+**Format Changes:**
+
+    - ``/general/devices`` text dataset becomes group with neurodata type ``Device`` to enable storage of more complex
+      and structured metadata about devices (rather than just a single string)
+    - Added attribute ``unit=Seconds`` to ``<EventDetection>/times`` dataset to explicitly describe time units
+      and improve human and programmatic data interpretation
+    - Added ``filtering`` dataset to type ``<IntracellularElectrode>`` (i.e., ``/general/intracellular_ephys/<electrode_X>``)
+      to enable specification of per-electrode filtering data
+    - Added default values for ``<TimeSeries>/description`` and ``<TimeSeries>/comments``
+
 
 Improved Consistency
-^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""
 
 **Change:** Rename objects, add missing objects, and refine types
 
@@ -422,52 +488,50 @@ places and ensure that the same kind of information is available.
       `PR697 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/697>`_ and
       `I136 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/136>`_ for details
 
-Improved governance and accessibility
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Added ``kKeywords`` field
+"""""""""""""""""""""""""
 
-**Change:** Updated release and documentation mechanisms for the NWB:N format specification
+**Change:** Added keywords fields to ``/general``
 
-**Reason:** Improve governance, ease-of-use, extensibility, and accessibility of the NWB:N format specification
-
-**Specific Changes**
-
-    - The NWB:N format specification is now released in seperate Git repository
-    - Format specifications are released as YAML files (rather than via Python .py file included in the API)
-    - Organized core types into a set of smaller YAML files to ease overview and maintenance
-    - Converted all documentation documents to Sphinx reStructuredText to improve portability, maintainability,
-      deployment, and public access
-    - Sphinx documentation for the format are auto-generated from the YAML sources to ensure consistency between
-      the specification and documentation
-    - The PyNWB API now provides dedicated data structured to interact with NWB:N specifications, enabling users
-      programmatically access and generate format specifications
+**Reason:** Data archive and search tools often rely on user-defined keywords to facilitate discovery. This
+enables users to specify keywords for a file. (see `PR620 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/620>`_)
 
 
-Added new base data dypes: ``NWBContainer``, ``NWBData``, ``NWBDataInterface``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Removed ``source`` field
+""""""""""""""""""""""""
 
-**Change:** Added common base types for Groups, Datasets, and for Groups storing primary experiment data
+**Change:** Remove required attribute ``source`` from all neurodata_types
 
-**Reason** Collect common functionality and ease future evolution of the standard
+**Reason:** In NWB:N 1.0.x the attribute ``source`` was defined as a free text entry
+intended for storage of provenance information. In practice, however, this
+attribute was often either ignored, contained no useful information, and/or
+was misused to encode custom metadata (that should have been defined via extensions).
 
-**Specific Changes**
+**Specific Change:** Removed attribute ``source`` from the core base neurodata_types
+which effects a large number of the types throughout the NWB:N schema. For further
+details see `PR695 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/695>`_)
 
-    * :ref:`NWBContainer <sec-NWBContainer>` defines a common base type for all Groups with a ``neurodata_type`` and
-      is now the base type of all main data group types in the NWB:N format,
-      including :ref:`TimeSeries <sec-TimeSeries>`. This also means that all group types now inherit the required
-      ``help`` and ``source`` attribute from ``NWBContainer``. A number of neurodata_types have been updated
-      to add the missing ``help`` (see
-      https://github.com/NeurodataWithoutBorders/nwb-schema/pull/37/files for details)
-    * :ref:`NWBDataInterface <sec-NWBDataInterface>` extends :ref:`NWBContainer <sec-NWBContainer>` and replaces
-      ``Interface`` from NWB:N 1.x. It has been renamed to ease intuition. :ref:`NWBDataInterface <sec-NWBDataInterface>`
-      serves as base type for primary data (e.g., experimental or analysis data) and is used to
-      distinguish in the schema between non-metadata data containers and metadata containers.
-      (see https://github.com/NeurodataWithoutBorders/nwb-schema/pull/116/files for details)
-    * :ref:`NWBData <sec-NWBData>` defines a common base type for all Datasets with a ``neurodata_type``
-      and serves a similar function to :ref:`NWBContainer <sec-NWBContainer>` only for Datasets instead of Groups.
 
+Removed ``ancestry`` field
+""""""""""""""""""""""""""
+
+**Change:** Removed the explicit specification of ancestry as an attribute as part of the format specification
+
+**Reason:** 1) avoid redundant information as the ancestry is encoded in the inheritance of types, 2) ease maintenance,
+and 3) avoid possible inconsistencies between the ancestry attribute and the true ancestry (i.e., inheritance hierarchy)
+as defined by the spec.
+
+**Note** The new specification API as part of PyNWB/FORM makes the ancestry still easily accessible to users. As
+the ancestry can be easily extracted from the spec, we currently do not write a separate ancestry attribute
+but this could be easily added if needed. (see also `PR707 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/707>`_,
+`I24 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/24>`_)
+
+
+Improved organization of processed and acquisition data
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Improved organization of processed data
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""
 
 **Change:** Relaxed requirements and renamed and refined core types used for storage of processed data.
 
@@ -490,7 +554,7 @@ Improved organization of processed data
       each analysis could be stored in a *ProcessingModule* due to the requirement for fixed names.
 
 Simplified organization of acquistion data
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""
 
 **Specific Changes:**
 
@@ -501,50 +565,26 @@ Simplified organization of acquistion data
       ``acquisition/images`` and provide a more general container for use elsewhere in NWB:N (i.e., this is not
       meant to replace :ref:`ImageSeries <sec-ImageSeries>`)
 
-Simplified extension of subject metadata
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Specific Change:** Assigned ``neurodata_type`` to ``/general/subject`` to enable extension of the subject container
-directly without having to extend ``NWBFile`` itself. (see https://github.com/NeurodataWithoutBorders/nwb-schema/issues/120
-and https://github.com/NeurodataWithoutBorders/nwb-schema/pull/121 for details)
+Improved governance and accessibility
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+**Change:** Updated release and documentation mechanisms for the NWB:N format specification
 
-Keywords
-^^^^^^^^
+**Reason:** Improve governance, ease-of-use, extensibility, and accessibility of the NWB:N format specification
 
-**Change:** Added keywords fields to ``/general``
+**Specific Changes**
 
-**Reason:** Data archive and search tools often rely on user-defined keywords to facilitate discovery. This
-enables users to specify keywords for a file. (see `PR620 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/620>`_)
+    - The NWB:N format specification is now released in seperate Git repository
+    - Format specifications are released as YAML files (rather than via Python .py file included in the API)
+    - Organized core types into a set of smaller YAML files to ease overview and maintenance
+    - Converted all documentation documents to Sphinx reStructuredText to improve portability, maintainability,
+      deployment, and public access
+    - Sphinx documentation for the format are auto-generated from the YAML sources to ensure consistency between
+      the specification and documentation
+    - The PyNWB API now provides dedicated data structured to interact with NWB:N specifications, enabling users to
+      programmatically access and generate format specifications
 
-Source
-^^^^^^
-
-**Change:** Remove required attribute ``source`` from all neurodata_types
-
-**Reason:** In NWB:N 1.0.x the attribute ``source`` was defined as a free text entry
-intended for storage of provenance information. In practice, however, this
-attribute was often either ignored, contained no useful information, and/or
-was misused to encode custom metadata (that should have been defined via extensions).
-
-**Specific Change:** Removed attribute ``source`` from the core base neurodata_types
-which effects a large number of the types throughout the NWB:N schema. For further
-details see `PR695 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/695>`_)
-
-
-Ancestry
-^^^^^^^^
-
-**Change:** Removed the explicit specification of ancestry as an attribute as part of the format specification
-
-**Reason:** 1) avoid redundant information as the ancestry is encoded in the inheritance of types, 2) ease maintenance,
-and 3) avoid possible inconsistencies between the ancestry attribute and the true ancestry (i.e., inheritance hierarchy)
-as defined by the spec.
-
-**Note** The new specification API as part of PyNWB/FORM makes the ancestry still easily accessible to users. As
-the ancestry can be easily extracted from the spec, we currently do not write a separate ancestry attribute
-but this could be easily added if needed. (see also `PR707 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/707>`_,
-`I24 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/24>`_)
 
 
 Specification language changes
