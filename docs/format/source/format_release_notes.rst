@@ -347,8 +347,6 @@ See `PR709 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/709>`_
 for further details.
 
 
-
-
 Reduce requirement for potentially empty groups
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -403,7 +401,7 @@ for storage objects.
 Improved Consistency
 ^^^^^^^^^^^^^^^^^^^^
 
-**Change:** Rename objects (and add missing objects)
+**Change:** Rename objects, add missing objects, and refine types
 
 **Reason:** Improve consistency in the naming of data objects that store similar types of information in different
 places and ensure that the same kind of information is available.
@@ -420,6 +418,9 @@ places and ensure that the same kind of information is available.
       (and since the dataset is now a link to the ``<ElectrodeGroup>``)
     - Renamed dataset ``electrode_idx`` in ``<ElectricalSeries>`` to ``electrode_group`` for consistency
       (and since the dataset is now a link to the ``<ElectrodeGroup>``)
+    - Changed ``imaging_rate`` field in :ref:`ImagingPlane <sec-ImagingPlane>` from text to float. See
+      `PR697 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/697>`_ and
+      `I136 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/136>`_ for details
 
 Improved governance and accessibility
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
