@@ -416,7 +416,7 @@ as part of the generalization of time interval storage as part of
 Generalized storage of time interval
 """"""""""""""""""""""""""""""""""""
 
-**Change:** Create general type :ref:`TimeIntervals <sec-TimeIntervals >` (which is a generalization of the
+**Change:** Create general type :ref:`TimeIntervals <sec-TimeIntervals>` (which is a generalization of the
 previous EpochTable type) and create top-level group ``/intervals`` for organizing time interval data.
 
 **Reason:** Previously all time interval data was stored in either ``epochs`` or ``trials``. To facilitate reuse
@@ -426,7 +426,7 @@ addition to the predefined types, i.e., epochs or trials.
 **Format Changes:** See `PR690 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/690>`_ and
 `I683 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/683>`_ for details:
 
-   - Renamed ``EpochTable`` type to the more general type :ref:`TimeIntervals <sec-TimeIntervals >` to facilitate
+   - Renamed ``EpochTable`` type to the more general type :ref:`TimeIntervals <sec-TimeIntervals>` to facilitate
      reuse.
    - Created top-level group ``/intervals`` for organizing time interval data.
 
