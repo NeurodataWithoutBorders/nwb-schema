@@ -219,11 +219,16 @@ Improved storage of ROIs
    with a table that has columns “x”, “y”, and “weight” (i.e. combining ROI.pix_mask and ROI.pix_mask_weight
    into a single table)
 3. Added analogous neurodata_type :ref:`VoxelMasks <sec-VoxelMasks>` with a table that has columns "x", "y", "z", and "weight" for 3D ROIs.
-4. Added neurodata_type :ref:`ROITable <sec-ROITable>` which defines a table  for storing references to the image mask
-   and pixel mask for each ROI (see item 1,2)
+4. Added neurodata_type ``ROITable`` which defines a table  for storing references to the image mask
+   and pixel mask for each ROI (see item 1,2). The ``ROITable`` type was subsequently merged with the
+   :ref:`PlaneSegmentation <sec-PlaneSegmentation>`  type and as such does no longer appear as a seperate type in the
+   NWB:N 2 schema but :ref:`PlaneSegmentation <sec-PlaneSegmentation>` takes the function of ``ROITable``.
 5. Added neurodata_type :ref:`ROITableRegion <sec-ROITableRegion>` for referencing a subset of elements in an ROITable
 6. Replaced ``RoiResponseSeries.roi_names`` with ``RoiResponseSeries.rois``, which is
-   an :ref:`ROITableRegion <sec-ROITableRegion>`  (see items 3,4)
+   a :ref:`DynamicTableRegion <sec-DynamicTableRegion>` into the :ref:`PlaneSegmentation <sec-PlaneSegmentation>`
+   table of ROIs (see items 3,4). (Before ROITable was converted from a row-based to a column-based table,
+   `RoiResponseSeries.rois`` had been changes to a dedicated ``ROITableRegion`` which was then subsequently changed to
+   a correspondign :ref:`DynamicTableRegion <sec-DynamicTableRegion>`)
 7. Removed ``RoiResponseSeries.segmentation_interface``. This information is available through
    ``RoiResponseSeries.rois`` (described above in 5.)
 8. Assigned neurodata_type :ref:`PlaneSegmentation <sec-PlaneSegmentation>` to the image_plan group in
