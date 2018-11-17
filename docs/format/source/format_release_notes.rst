@@ -61,8 +61,8 @@ Support row-based and column-based tables
         via a combination of an object-reference to the table and a list of the lables of columns.
 
     * **Column-based tables:** are implemented via the new neurodata_type :ref:`DynamicTable <sec-DynamicTable>`.
-      A DynamicTable is simplified-speaking just a collection of an arbitrary number of :ref:`TableColumn <sec-TableColumn>`
-      datasets (all with equal length) and a dataset storing row ids and a dataset storing column names. The
+      A DynamicTable is simplified-speaking just a collection of an arbitrary number of :ref:`VectorData <sec-VectorData>`
+      table column datasets (all with equal length) and a dataset storing row ids and a dataset storing column names. The
       advantage of the column-based store is that it i) makes it easy to add new columns to the table without
       the need for extensions and ii) the column-based storage makes it easy to read individual columns
       efficiently (while reading full rows requires reading from multiple datasets). DynamicTable is used, e.g.,
@@ -223,7 +223,7 @@ outline the main changes (several of which were ultimately merged together in th
    **(a)** a 3D dataset with shape [num_rois, num_x_pixels, num_y_pixels] (i.e. an array of planar image masks) or
    **(b)** a 4D dataset with shape [num_rois, num_x_pixels, num_y_pixels, num_z_pixels] (i.e. an array of volumetric image masks)
    ``ImageMasks`` was subsequently merged with :ref:`PlaneSegmentation <sec-PlaneSegmentation>`
-   and is represented by the :ref:`TableColumn <sec-TableColumn>` ``image_mask`` in the table.
+   and is represented by the :ref:`VectorData <sec-VectorData>` table column ``image_mask`` in the table.
 2. Added neurodata_type ``PixelMasks`` which replaces ROI.pix_mask/ROI.pix_mask_weight (from NWB:N 1.x)
    with a table that has columns “x”, “y”, and “weight” (i.e. combining ROI.pix_mask and ROI.pix_mask_weight
    into a single table).  ``PixelMasks`` was subsequently merged with :ref:`PlaneSegmentation <sec-PlaneSegmentation>`
