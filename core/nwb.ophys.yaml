@@ -22,11 +22,13 @@ groups:
     dtype: float32
     doc: Width, height and depth of image, or imaged area (meters).
     dims:
+    - width|height
     - width|height|depth
     quantity: '?'
     required: false
     shape:
-    - 3
+    - - 2
+    - - 3
   links:
   - name: imaging_plane
     doc: link to ImagingPlane group from which this TimeSeries data was generated
@@ -116,7 +118,7 @@ groups:
       doc: Value is 'Results from segmentation of an imaging plane'
       value: Results from segmentation of an imaging plane
     datasets:
-    - neurodata_type_inc: TableColumn
+    - neurodata_type_inc: VectorData
       name: image_mask
       doc: ROI masks for each ROI. Each image mask is the size of the original imaging
         plane (or volume) and members of the ROI are finite non-zero
