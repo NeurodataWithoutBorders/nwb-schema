@@ -61,8 +61,8 @@ Support row-based and column-based tables
         via a combination of an object-reference to the table and a list of the lables of columns.
 
     * **Column-based tables:** are implemented via the new neurodata_type :ref:`DynamicTable <sec-DynamicTable>`.
-      A DynamicTable is simplified-speaking just a collection of an arbitrary number of :ref:`TableColumn <sec-TableColumn>`
-      datasets (all with equal length) and a dataset storing row ids and a dataset storing column names. The
+      A DynamicTable is simplified-speaking just a collection of an arbitrary number of :ref:`VectorData <sec-VectorData>`
+      table column datasets (all with equal length) and a dataset storing row ids and a dataset storing column names. The
       advantage of the column-based store is that it i) makes it easy to add new columns to the table without
       the need for extensions and ii) the column-based storage makes it easy to read individual columns
       efficiently (while reading full rows requires reading from multiple datasets). DynamicTable is used, e.g.,
@@ -210,25 +210,51 @@ Improved storage of ROIs
   to produce the ROIs.
 * **Support 3D ROIs:** Allow users to add 3D ROIs collected from a multi-plane image.
 
-**Changes:**
+**Changes:** The main types for storing ROIs in NWB:N 2 are  :ref:`ImageSegmentation <sec-ImageSegmentation>`
+which stores 0 or more  :ref:`PlaneSegmentation <sec-PlaneSegmentation>` which
+:ref:`DynamicTable <sec-DynamicTable>` for manages the results for image segmentation of a specific imaging plane.
+The ROIs are referenced by :ref:`RoiResponseSeries <sec-RoiResponseSeries>` which stores the ROI responses over an
+imaging plane. During the development of NWB:N 2 the management of ROIs has been improved several times. Here we
+outline the main changes (several of which were ultimately merged together in the
+:ref:`PlaneSegmentation <sec-PlaneSegmentation>` type).
 
-1. Added neurodata_type :ref:`ImageMasks <sec-ImageMasks>` replacing ROI.img_mask (from NWB:N 1.x) with
-     * A 3D dataset with shape [num_rois, num_x_pixels, num_y_pixels] (i.e. an array of planar image masks) or
-     * A 4D dataset with shape [num_rois, num_x_pixels, num_y_pixels, num_z_pixels] (i.e. an array of volumetric image masks)
-2. Added neurodata_type :ref:`PixelMasks <sec-PixelMasks>` which replaces ROI.pix_mask/ROI.pix_mask_weight (from NWB:N 1.x)
+
+1. Added neurodata_type  ``ImageMasks`` replacing ``ROI.img_mask`` (from NWB:N 1.x) with
+   **(a)** a 3D dataset with shape [num_rois, num_x_pixels, num_y_pixels] (i.e. an array of planar image masks) or
+   **(b)** a 4D dataset with shape [num_rois, num_x_pixels, num_y_pixels, num_z_pixels] (i.e. an array of volumetric image masks)
+   ``ImageMasks`` was subsequently merged with :ref:`PlaneSegmentation <sec-PlaneSegmentation>`
+   and is represented by the :ref:`VectorData <sec-VectorData>` table column ``image_mask`` in the table.
+2. Added neurodata_type ``PixelMasks`` which replaces ROI.pix_mask/ROI.pix_mask_weight (from NWB:N 1.x)
    with a table that has columns “x”, “y”, and “weight” (i.e. combining ROI.pix_mask and ROI.pix_mask_weight
-   into a single table)
-3. Added analogous neurodata_type :ref:`VoxelMasks <sec-VoxelMasks>` with a table that has columns "x", "y", "z", and "weight" for 3D ROIs.
-4. Added neurodata_type :ref:`ROITable <sec-ROITable>` which defines a table  for storing references to the image mask
-   and pixel mask for each ROI (see item 1,2)
-5. Added neurodata_type :ref:`ROITableRegion <sec-ROITableRegion>` for referencing a subset of elements in an ROITable
+   into a single table).  ``PixelMasks`` was subsequently merged with :ref:`PlaneSegmentation <sec-PlaneSegmentation>`
+   and is represented by the :ref:`VectorData <sec-VectorData>` dataset ``pixel__mask`` that is referenced from the table
+   via the :ref:`VectorIndex <sec-VectorIndex>` column ``pixel_mask_index``.
+3. Added analogous neurodata_type ``VoxelMasks`` with a table that has columns "x", "y", "z", and "weight" for 3D ROIs.
+   ``VoxelMasks`` was subsequently merged with :ref:`PlaneSegmentation <sec-PlaneSegmentation>` and is represented
+   by the :ref:`VectorData <sec-VectorData>` dataset ``voxel_mask`` that is referenced from the table via
+   the :ref:`VectorIndex <sec-VectorIndex>` column ``voxel_mask_index``.
+4. Added neurodata_type ``ROITable`` which defines a table  for storing references to the image mask
+   and pixel mask for each ROI (see item 1,2). The ``ROITable`` type was subsequently merged with the
+   :ref:`PlaneSegmentation <sec-PlaneSegmentation>`  type and as such does no longer appear as a seperate type in the
+   NWB:N 2 schema but :ref:`PlaneSegmentation <sec-PlaneSegmentation>` takes the function of ``ROITable``.
+5. Added neurodata_type ``ROITableRegion`` for referencing a subset of elements in an ROITable. Subsequently
+   ``ROITableRegion`` has been replaced by :ref:`DynamicTableRegion <sec-DynamicTableRegion>` as the ``ROITable``
+   changed to a :ref:`DynamicTable <sec-DynamicTable>` and was merged with
+   :ref:`PlaneSegmentation <sec-PlaneSegmentation>` (see 8.)
 6. Replaced ``RoiResponseSeries.roi_names`` with ``RoiResponseSeries.rois``, which is
-   an :ref:`ROITableRegion <sec-ROITableRegion>`  (see items 3,4)
+   a :ref:`DynamicTableRegion <sec-DynamicTableRegion>` into the :ref:`PlaneSegmentation <sec-PlaneSegmentation>`
+   table of ROIs (see items 3,4). (Before ROITable was converted from a row-based to a column-based table,
+   `RoiResponseSeries.rois`` had been changed to a ``ROITableRegion`` which was then subsequently changed to
+   a correspondign :ref:`DynamicTableRegion <sec-DynamicTableRegion>`)
 7. Removed ``RoiResponseSeries.segmentation_interface``. This information is available through
    ``RoiResponseSeries.rois`` (described above in 5.)
 8. Assigned neurodata_type :ref:`PlaneSegmentation <sec-PlaneSegmentation>` to the image_plan group in
-   :ref:`ImageSegmentation <sec-ImageSegmentation>` and updated it to use the new :ref:`ROITable <sec-ROITable>`,
-   :ref:`ImageMasks <sec-ImageMasks>`, and :ref:`PixelMasks <sec-PixelMasks>` (see items 1-4 above).
+   :ref:`ImageSegmentation <sec-ImageSegmentation>` and updated it to use the ``ROITable``,
+   ``ImageMasks``, ``PixelMasks``, and :``VoxelMasks``
+   (see items 1-4 above). Specifically, :ref:`PlaneSegmentation <sec-PlaneSegmentation>` has been changed to
+   be a :ref:`DynamicTable <sec-DynamicTable>` and ``ROITable``, ``ImageMasks``, ``PixelMasks``, and :``VoxelMasks`
+   have been merged into the :ref:`PlaneSegmentation <sec-PlaneSegmentation>` table, resulting in the removal of
+   the ``ROITable``, ``ROITableRegion``, ``ImageMasks``, ``PixelMasks``, and :``VoxelMasks`` types.
 
 For additional details see also:
 
@@ -382,8 +408,9 @@ Over the course of the development of NWB:N 2 the epoch storage has been refined
    - First, we create a new neurodata_type ``Epochs`` which was included in :ref:`NWBFile <sec-NWBFile>` as the group
      ``epochs``. This simplified the extension of the epochs structure. ``/epochs`` at that point contained a
      compound (row-based) table with neurodata_type ``EpochTable``  that described the start/stop times, tags,
-     and a region reference into the :ref:`TimeSeriesIndex <sec-TimeSeriesIndex>` to identify the timeseries
-     parts the epoch applys to (see `PR396 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/396>`_ and
+     and a region reference into the ``TimeSeriesIndex`` to identify the timeseries
+     parts the epoch applys to. Note, the types ``Epochs``, ``EpochTable`` and ``TimeSeriesIndex`` have been
+     removed/superseded in subsequent changes. (See `PR396 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/396>`_ and
      `I119 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/119>`_ ).
    - Later, an additional :ref:`DynamicTable <sec-DynamicTable>` for storing dynamic metadata about epochs was then
      added to the ``Epochs`` neurodata_type to support storage of dynamic metadata about epochs without requiring
@@ -416,7 +443,7 @@ as part of the generalization of time interval storage as part of
 Generalized storage of time interval
 """"""""""""""""""""""""""""""""""""
 
-**Change:** Create general type :ref:`TimeIntervals <sec-TimeIntervals >` (which is a generalization of the
+**Change:** Create general type :ref:`TimeIntervals <sec-TimeIntervals>` (which is a generalization of the
 previous EpochTable type) and create top-level group ``/intervals`` for organizing time interval data.
 
 **Reason:** Previously all time interval data was stored in either ``epochs`` or ``trials``. To facilitate reuse
@@ -426,7 +453,7 @@ addition to the predefined types, i.e., epochs or trials.
 **Format Changes:** See `PR690 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/690>`_ and
 `I683 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/683>`_ for details:
 
-   - Renamed ``EpochTable`` type to the more general type :ref:`TimeIntervals <sec-TimeIntervals >` to facilitate
+   - Renamed ``EpochTable`` type to the more general type :ref:`TimeIntervals <sec-TimeIntervals>` to facilitate
      reuse.
    - Created top-level group ``/intervals`` for organizing time interval data.
 
