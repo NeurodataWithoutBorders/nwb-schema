@@ -331,7 +331,14 @@ NWB:N 2.0.
    :width: 100%
    :alt: Spiking units data structure overview
 
-   Overview of the data structure for storing spiking unit data and metadata in NWB:N 2.0
+   Overview of the data structure for storing spiking unit data and metadata in NWB:N 2.0.
+
+In addition to ``spike_times``, the units table includes the following optional columns:
+   - ``obs_intervals``: intervals indicating the time intervals over which this unit was recorded.
+   - ``electrodes``: range references to the electrodes table indicating which electrodes from which this unit was recorded.
+   - ``electrode_group``: may be used instead of ``electrodes`` if mutually exclusive electrode groups are sufficient.
+   - ``waveform_mean``: mean waveform across all recorded spikes.
+   - ``waveform_sd``: standard deviation from the mean across all recorded spikes.
 
 
 Improved support for sweep-based information
