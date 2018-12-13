@@ -432,7 +432,7 @@ Improved support for trial-based data
 **Reason:** Users indicated that it was not easy to store trial data in NWB:N 1.x.
 
 **Format Changes:** Added optional group ``/intervals/trials/`` which is a :ref:`DynamicTable <sec-DynamicTable>`
-with ``id``,``start``, and ``end`` columns and optional additional user-defined table columns.
+with ``id``, ``start_time``, and ``stop_time`` columns and optional additional user-defined table columns.
 See `PR536 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_ for detailed code changes. See
 the `PyNWB docs <https://pynwb.readthedocs.io/en/latest/tutorials/general/file.html?highlight=Trial#trials>`__ for a
 short tutorial on how to use trials. See :ref:`NWBFile <sec-NWBFile>` *Groups: /trials* for an overview of the trial
