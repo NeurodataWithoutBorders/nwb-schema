@@ -191,6 +191,8 @@ Improved storage of Spectral Analyses
 
 **Changes:** A new datatype, `SpectralAnalysis`, has been introduced to offer a common interface for labs to exchange the result of time-frequency analysis. The new type offers a DynamicTable to flexibly add features of bands, and a place to directly link to the `TimeSeries` that was used.
 
+For further details see `#I46 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/46>`_ and `#PR764 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/764>`_ 
+
 Improved storage of Images
 """"""""""""""""""""""""""
 
