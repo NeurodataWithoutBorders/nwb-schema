@@ -8,7 +8,7 @@ Release Notes
 
 **Subsequent releases:** The schema was improved and updated throughout the beta phase with full release planed for fall 2018.
 
-Added new base data dypes: ``NWBContainer``, ``NWBData``, ``NWBDataInterface``
+Added new base data types: ``NWBContainer``, ``NWBData``, ``NWBDataInterface``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Change:** Added common base types for Groups, Datasets, and for Groups storing primary experiment data
@@ -58,7 +58,7 @@ Support row-based and column-based tables
       * *Referencing rows in a row-based tables:* Subsets of rows can referenced directly via a region-reference to the
         row-based table. Subsets
       * *Referencing columns in a row-based table:* This is currently not directly supported, but could be implemented
-        via a combination of an object-reference to the table and a list of the lables of columns.
+        via a combination of an object-reference to the table and a list of the labels of columns.
 
     * **Column-based tables:** are implemented via the new neurodata_type :ref:`DynamicTable <sec-DynamicTable>`.
       A DynamicTable is simplified-speaking just a collection of an arbitrary number of :ref:`VectorData <sec-VectorData>`
@@ -93,12 +93,12 @@ efficient, consolidated arrays, which enable more efficient read, write, and sea
 
 **Format Changes**
 
-* :ref:`VectorData <sec-VectorData>` : Data values from a series of data elements are concatinated into a single
+* :ref:`VectorData <sec-VectorData>` : Data values from a series of data elements are concatenated into a single
   array. This allows all elements to be stored efficiently in a single data array.
-* :ref:`VectorIndex <sec-VectorIndex>` : 1D dataset of region-references selecting subranges in
+* :ref:`VectorIndex <sec-VectorIndex>` : 1D dataset of region-references selecting sub-ranges in
   :ref:`VectorData <sec-VectorData>`. With this we can efficiently access single sub-vectors associated with single
   elements from the :ref:`VectorData <sec-VectorData>` collection.
-* :ref:`ElementIdentifiers <sec-ElementIdentifiers>` : 1D array for stroing unique identifiers for the elements in
+* :ref:`ElementIdentifiers <sec-ElementIdentifiers>` : 1D array for storing unique identifiers for the elements in
   a VectorIndex.
 
 See :ref:`sec-rn-unittimes-nwb2` for an illustration and specific example use in practice.
@@ -115,7 +115,7 @@ Improved organization of electrode metadata in ``/general/extracellular_ephys``
 **Change:** Consolidate metadata from related electrodes (e.g., from a single device) in a single location.
 
 **Example:** Previous versions of the format specified in ``/general/extracellular_ephys`` for each electrode a
-group ``<electrode_group_X>`` that stores 3 text datastes with a description, device name, and location, respectively.
+group ``<electrode_group_X>`` that stores 3 text datasets with a description, device name, and location, respectively.
 The main ``/general/extracellular_ephys group`` then contained in addition the following datasets:
 
     - ``electrode_group`` text array describing for each electrode_group (implicitly referenced by index)
@@ -182,16 +182,24 @@ The main ``/general/extracellular_ephys group`` then contained in addition the f
     (see `#I623 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/623>`_ and
     `PR634 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/634>`_ for details.) This change
     also removed the optional ``description`` column as it can be added easily by the user to the
-    :ref:`DynamicTable <sec-DynamicTable>` if required.    
+    :ref:`DynamicTable <sec-DynamicTable>` if required.
 
-Improved storage of Spectral Analyses
-"""""""""""""""""""""""""""""""""""""
+Improved storage of lab-specific meta-data
+""""""""""""""""""""""""""""""""""""""""""
+**Reason:** Labs commonly have specific meta-data associated with sessions, and we need a good way to organize this within NWB.
+
+**Changes:** The datatype ``LabMetaData`` has been added to the schema within /general so that an extension can be added to /general by inheriting from LabMetaData.
+
+For further details see `I19 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/19>`_ and `PR751 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/751>`_.
+
+Improved storage of Spectral Analyses (Signal Decomposition)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 **Reason:** Labs commonly use analyses that involve frequency decomposition or bandpass filtering of neural or behavioral data, and it is difficult to standardize this data and meta-data across labs.
 
-**Changes:** A new datatype, `SpectralAnalysis`, has been introduced to offer a common interface for labs to exchange the result of time-frequency analysis. The new type offers a DynamicTable to flexibly add features of bands, and a place to directly link to the `TimeSeries` that was used.
+**Changes:** A new datatype, ``SpectralAnalysis``, has been introduced to offer a common interface for labs to exchange the result of time-frequency analysis. The new type offers a DynamicTable to flexibly add features of bands, and a place to directly link to the ``TimeSeries`` that was used.
 
-For further details see `#I46 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/46>`_ and `#PR764 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/764>`_ 
+For further details see `#I46 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/46>`_ and `#PR764 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/764>`_
 
 Improved storage of Images
 """"""""""""""""""""""""""
@@ -371,7 +379,7 @@ See `I499 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/499>`
 Improved specification of reference time stamp(s)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To improve the specification of refernce time, NWB:N adopts ISO8061 for storing datetimes and adds
+To improve the specification of reference time, NWB:N adopts ISO8061 for storing datetimes and adds
 ``timestamps_reference_time`` as explicit zero for all timestamps in addition to the ``session_start_time``.
 
 Improve standardization of reference time specification using ISO8061
@@ -379,7 +387,7 @@ Improve standardization of reference time specification using ISO8061
 
 **Changes:** Modify ``session_start_time`` an ``file_create_date`` to enforce use of ISO 8601 datetime strings
 
-**Reason:** Standardize the specficiation of timestamps to ensure consistent programmatic and human interpretation
+**Reason:** Standardize the specification of timestamps to ensure consistent programmatic and human interpretation
 
 **Format Changes:** Updated ``session_start_time`` and ``file_create_date`` to use ``dtype: isodatetime`` that was
 added as dedicated dtype to the specification language. For details see
@@ -664,14 +672,14 @@ Improved organization of processed data
       customize the name of the data processing types, whereas in version 1.0.x only a single instance of
       each analysis could be stored in a *ProcessingModule* due to the requirement for fixed names.
 
-Simplified organization of acquistion data
+Simplified organization of acquisition data
 """"""""""""""""""""""""""""""""""""""""""
 
 **Specific Changes:**
 
-    * ``/acquistion`` may now store any primary data defined via an :ref:`NWBDataInterface <sec-NWBDataInterface>` type
+    * ``/acquisition`` may now store any primary data defined via an :ref:`NWBDataInterface <sec-NWBDataInterface>` type
       (not just TimeSeries).
-    * ``/acquistion/timeseries`` and ``/acquistion/images`` have been removed
+    * ``/acquisition/timeseries`` and ``/acquisition/images`` have been removed
     * Created a new neurodata_type :ref:`Images <sec-Images>` for storing a collection of images to replace
       ``acquisition/images`` and provide a more general container for use elsewhere in NWB:N (i.e., this is not
       meant to replace :ref:`ImageSeries <sec-ImageSeries>`)
@@ -686,7 +694,7 @@ Improved governance and accessibility
 
 **Specific Changes**
 
-    - The NWB:N format specification is now released in seperate Git repository
+    - The NWB:N format specification is now released in separate Git repository
     - Format specifications are released as YAML files (rather than via Python .py file included in the API)
     - Organized core types into a set of smaller YAML files to ease overview and maintenance
     - Converted all documentation documents to Sphinx reStructuredText to improve portability, maintainability,
@@ -743,9 +751,9 @@ Removed datasets defined via autogen
 of all datasets that were produced via autogen it was decided that all autogen datasets should be
 removed from the format.
 
-**Reason** The main reasons for removal of autogen dataset is to ease use and maintance of NWB:N files by
+**Reason** The main reasons for removal of autogen dataset is to ease use and maintenance of NWB:N files by
 i) avoiding redundant storage of information (i.e., improve normalization of data) and ii) avoiding
-dependencies between data (i.e., datasets havging to be updated due to changes in other locations in a file).
+dependencies between data (i.e., datasets having to be updated due to changes in other locations in a file).
 
 **Format Changes**
 
@@ -771,7 +779,7 @@ dependencies between data (i.e., datasets havging to be updated due to changes i
     * TimeSeries.missing_fields
 
 
-* Other datasets/attributes that have been removed to ease use and maintance because the data stored is redundant and can be
+* Other datasets/attributes that have been removed to ease use and maintenance because the data stored is redundant and can be
   easily extracted from the file:
 
     * NWBFile/epochs.tags
