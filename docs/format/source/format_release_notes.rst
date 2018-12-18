@@ -467,6 +467,8 @@ addition to the predefined types, i.e., epochs or trials.
       - Moved ``/epochs`` to ``/intervals/epochs`` and reused the TimeIntervals type
       - Moved ``/trials`` to ``/intervals/trials`` and reused the TimeIntervals type
       - Allow users to add arbitary TimeIntervals tables to ``/intervals``
+      - Add optional :ref:`TimeIntervals <sec-TimeIntervals>` object named ``invalid_times`` in ''/intervals``, which
+        specifies time intervals that contain artifacts. See `I224 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/224>`_ and `PR731 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/731>`_ for details.
 
 
 Replaced Implicit Links/Data-Structures with Explicit Links
