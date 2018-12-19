@@ -182,7 +182,7 @@ The main ``/general/extracellular_ephys group`` then contained in addition the f
     (see `#I623 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/623>`_ and
     `PR634 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/634>`_ for details.) This change
     also removed the optional ``description`` column as it can be added easily by the user to the
-    :ref:`DynamicTable <sec-DynamicTable>` if required.    
+    :ref:`DynamicTable <sec-DynamicTable>` if required.
 
 Improved storage of Spectral Analyses
 """""""""""""""""""""""""""""""""""""
@@ -191,7 +191,7 @@ Improved storage of Spectral Analyses
 
 **Changes:** A new datatype, `SpectralAnalysis`, has been introduced to offer a common interface for labs to exchange the result of time-frequency analysis. The new type offers a DynamicTable to flexibly add features of bands, and a place to directly link to the `TimeSeries` that was used.
 
-For further details see `#I46 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/46>`_ and `#PR764 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/764>`_ 
+For further details see `#I46 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/46>`_ and `#PR764 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/764>`_
 
 Improved storage of Images
 """"""""""""""""""""""""""
@@ -676,6 +676,11 @@ Simplified organization of acquistion data
       ``acquisition/images`` and provide a more general container for use elsewhere in NWB:N (i.e., this is not
       meant to replace :ref:`ImageSeries <sec-ImageSeries>`)
 
+Other changes:
+^^^^^^^^^^^^^^
+
+* `PR765 <https://github.com/NeurodataWithoutBorders/pynwb/pull/765>`_ made the timestamps in
+   :ref:`SpikeEventSeries <sec-SpikeEventSeries>` required
 
 Improved governance and accessibility
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
