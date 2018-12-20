@@ -260,9 +260,9 @@ outline the main changes (several of which were ultimately merged together in th
    :ref:`ImageSegmentation <sec-ImageSegmentation>` and updated it to use the ``ROITable``,
    ``ImageMasks``, ``PixelMasks``, and :``VoxelMasks``
    (see items 1-4 above). Specifically, :ref:`PlaneSegmentation <sec-PlaneSegmentation>` has been changed to
-   be a :ref:`DynamicTable <sec-DynamicTable>` and ``ROITable``, ``ImageMasks``, ``PixelMasks``, and :``VoxelMasks`
+   be a :ref:`DynamicTable <sec-DynamicTable>` and ``ROITable``, ``ImageMasks``, ``PixelMasks``, and ``VoxelMasks``
    have been merged into the :ref:`PlaneSegmentation <sec-PlaneSegmentation>` table, resulting in the removal of
-   the ``ROITable``, ``ROITableRegion``, ``ImageMasks``, ``PixelMasks``, and :``VoxelMasks`` types.
+   the ``ROITable``, ``ROITableRegion``, ``ImageMasks``, ``PixelMasks``, and ``VoxelMasks`` types.
 
 For additional details see also:
 
