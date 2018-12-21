@@ -219,8 +219,8 @@ Improved storage of ROIs
 * **Support 3D ROIs:** Allow users to add 3D ROIs collected from a multi-plane image.
 
 **Changes:** The main types for storing ROIs in NWB:N 2 are  :ref:`ImageSegmentation <sec-ImageSegmentation>`
-which stores 0 or more  :ref:`PlaneSegmentation <sec-PlaneSegmentation>` which
-:ref:`DynamicTable <sec-DynamicTable>` for manages the results for image segmentation of a specific imaging plane.
+which stores 0 or more  :ref:`PlaneSegmentation <sec-PlaneSegmentation>`. :ref:`PlaneSegmentation <sec-PlaneSegmentation>`
+is a :ref:`DynamicTable <sec-DynamicTable>` for managing image segmentation results of a specific imaging plane.
 The ROIs are referenced by :ref:`RoiResponseSeries <sec-RoiResponseSeries>` which stores the ROI responses over an
 imaging plane. During the development of NWB:N 2 the management of ROIs has been improved several times. Here we
 outline the main changes (several of which were ultimately merged together in the
