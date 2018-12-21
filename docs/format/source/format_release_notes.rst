@@ -187,11 +187,16 @@ The main ``/general/extracellular_ephys group`` then contained in addition the f
 Improved storage of Spectral Analyses
 """""""""""""""""""""""""""""""""""""
 
-**Reason:** Labs commonly use analyses that involve frequency decomposition or bandpass filtering of neural or behavioral data, and it is difficult to standardize this data and meta-data across labs.
+**Reason:** Labs commonly use analyses that involve frequency decomposition or bandpass filtering
+of neural or behavioral data, and it is difficult to standardize this data and meta-data across labs.
 
-**Changes:** A new datatype, `SpectralAnalysis`, has been introduced to offer a common interface for labs to exchange the result of time-frequency analysis. The new type offers a DynamicTable to flexibly add features of bands, and a place to directly link to the `TimeSeries` that was used.
+**Changes:** A new datatype, :ref:`DecompositionSeries <sec-DecompositionSeries>` has been introduced to offer
+a common interface for labs to exchange the result of time-frequency analysis. The new type offers a
+:ref:`DynamicTable <sec-DynamicTable>` to allow users to flexibly add features of bands, and a place
+to directly link to the `TimeSeries` that was used.
 
-For further details see `#I46 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/46>`_ and `#PR764 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/764>`_
+For further details see `#I46 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/46>`_
+and `#PR764 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/764>`_
 
 Improved storage of Images
 """"""""""""""""""""""""""
