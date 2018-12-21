@@ -95,10 +95,13 @@ efficient, consolidated arrays, which enable more efficient read, write, and sea
 
 * :ref:`VectorData <sec-VectorData>` : Data values from a series of data elements are concatinated into a single
   array. This allows all elements to be stored efficiently in a single data array.
-* :ref:`VectorIndex <sec-VectorIndex>` : 1D dataset of region-references selecting subranges in
-  :ref:`VectorData <sec-VectorData>`. With this we can efficiently access single sub-vectors associated with single
-  elements from the :ref:`VectorData <sec-VectorData>` collection.
-* :ref:`ElementIdentifiers <sec-ElementIdentifiers>` : 1D array for stroing unique identifiers for the elements in
+* :ref:`VectorIndex <sec-VectorIndex>` : 1D dataset of exclusive stop-indices selecting subranges in
+  :ref:`VectorData <sec-VectorData>`. In additon, the ``target`` attribute stores an object reference to the
+  corresponding VectorData dataset. With this we can efficiently access single sub-vectors associated with single
+  elements from the :ref:`VectorData <sec-VectorData>` collection. An alternative approch would be store
+  region-references as part of the VectorIndex. We opted for stop-indices mainly because they are more
+  space-efficient and are easier to use for introspection of index values than region references.
+* :ref:`ElementIdentifiers <sec-ElementIdentifiers>` : 1D array for storing  unique identifiers for the elements in
   a VectorIndex.
 
 See :ref:`sec-rn-unittimes-nwb2` for an illustration and specific example use in practice.
