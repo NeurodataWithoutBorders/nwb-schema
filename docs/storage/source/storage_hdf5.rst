@@ -110,7 +110,7 @@ Datasets
     * TODO Update mapping of namespace ID
     * TODO Update mapping of dims
 
-Attriutes
+Attributes
 ---------
 
 .. tabularcolumns:: |p{4cm}|p{11cm}|
