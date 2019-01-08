@@ -16,7 +16,7 @@ files. Groups and datasets can have attributes that provide additional
 details, such as authorities' identifiers. Third, its linking feature
 enables data stored in one location to be transparently accessed from
 multiple locations in the hierarchy. The linked data can be external to
-the file. Fourth, HDF5 is widley supported across programming languages
+the file. Fourth, HDF5 is widely supported across programming languages
 (e.g., C, C++, Python, MATLAB, R among others) and tools, such as,
 `HDFView <https://www.hdfgroup.org/products/java/hdfview/>`__, a free,
 cross-platform application, can be used to open a file and browse data.
