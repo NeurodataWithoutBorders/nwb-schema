@@ -124,7 +124,7 @@ Attributes
     name                          Name of the attribute in HDF5
     doc                           Not mapped; Stored in schema only
     dtype                         Data type of the HDF5 attribute
-    shape                         Shape of the HDF5 dataset if the shape is fixes, otherwise shape defines the maxshape
+    shape                         Shape of the HDF5 dataset if the shape is fixed, otherwise shape defines the maxshape
     dims                          Not mapped; Reflected by the shape of the attribute data
     required                      Not mapped; Stored in schema only
     parent                        Not mapped; In HDF5 all attributes are explicitly tied to the parent.
