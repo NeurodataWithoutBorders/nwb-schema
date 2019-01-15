@@ -95,10 +95,13 @@ efficient, consolidated arrays, which enable more efficient read, write, and sea
 
 * :ref:`VectorData <sec-VectorData>` : Data values from a series of data elements are concatenated into a single
   array. This allows all elements to be stored efficiently in a single data array.
-* :ref:`VectorIndex <sec-VectorIndex>` : 1D dataset of region-references selecting sub-ranges in
-  :ref:`VectorData <sec-VectorData>`. With this we can efficiently access single sub-vectors associated with single
-  elements from the :ref:`VectorData <sec-VectorData>` collection.
-* :ref:`ElementIdentifiers <sec-ElementIdentifiers>` : 1D array for storing unique identifiers for the elements in
+* :ref:`VectorIndex <sec-VectorIndex>` : 1D dataset of exclusive stop-indices selecting subranges in
+  :ref:`VectorData <sec-VectorData>`. In additon, the ``target`` attribute stores an object reference to the
+  corresponding VectorData dataset. With this we can efficiently access single sub-vectors associated with single
+  elements from the :ref:`VectorData <sec-VectorData>` collection. An alternative approch would be store
+  region-references as part of the VectorIndex. We opted for stop-indices mainly because they are more
+  space-efficient and are easier to use for introspection of index values than region references.
+* :ref:`ElementIdentifiers <sec-ElementIdentifiers>` : 1D array for storing  unique identifiers for the elements in
   a VectorIndex.
 
 See :ref:`sec-rn-unittimes-nwb2` for an illustration and specific example use in practice.
@@ -195,11 +198,17 @@ For further details see `I19 (nwb-schema) <https://github.com/NeurodataWithoutBo
 Improved storage of Spectral Analyses (Signal Decomposition)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-**Reason:** Labs commonly use analyses that involve frequency decomposition or bandpass filtering of neural or behavioral data, and it is difficult to standardize this data and meta-data across labs.
+**Reason:** Labs commonly use analyses that involve frequency decomposition or bandpass filtering
+of neural or behavioral data, and it is difficult to standardize this data and meta-data across labs.
 
-**Changes:** A new datatype, ``SpectralAnalysis``, has been introduced to offer a common interface for labs to exchange the result of time-frequency analysis. The new type offers a DynamicTable to flexibly add features of bands, and a place to directly link to the ``TimeSeries`` that was used.
+**Changes:** A new datatype, :ref:`DecompositionSeries <sec-DecompositionSeries>` has been introduced to offer
+a common interface for labs to exchange the result of time-frequency analysis. The new type offers a
+:ref:`DynamicTable <sec-DynamicTable>` to allow users to flexibly add features of bands, and a place
+to directly link to the `TimeSeries` that was used.
 
-For further details see `#I46 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/46>`_ and `#PR764 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/764>`_
+For further details see `#I46 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/46>`_
+and `#PR764 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/764>`_
+
 
 Improved storage of Images
 """"""""""""""""""""""""""
@@ -227,8 +236,8 @@ Improved storage of ROIs
 * **Support 3D ROIs:** Allow users to add 3D ROIs collected from a multi-plane image.
 
 **Changes:** The main types for storing ROIs in NWB:N 2 are  :ref:`ImageSegmentation <sec-ImageSegmentation>`
-which stores 0 or more  :ref:`PlaneSegmentation <sec-PlaneSegmentation>` which
-:ref:`DynamicTable <sec-DynamicTable>` for manages the results for image segmentation of a specific imaging plane.
+which stores 0 or more  :ref:`PlaneSegmentation <sec-PlaneSegmentation>`. :ref:`PlaneSegmentation <sec-PlaneSegmentation>`
+is a :ref:`DynamicTable <sec-DynamicTable>` for managing image segmentation results of a specific imaging plane.
 The ROIs are referenced by :ref:`RoiResponseSeries <sec-RoiResponseSeries>` which stores the ROI responses over an
 imaging plane. During the development of NWB:N 2 the management of ROIs has been improved several times. Here we
 outline the main changes (several of which were ultimately merged together in the
@@ -268,9 +277,9 @@ outline the main changes (several of which were ultimately merged together in th
    :ref:`ImageSegmentation <sec-ImageSegmentation>` and updated it to use the ``ROITable``,
    ``ImageMasks``, ``PixelMasks``, and :``VoxelMasks``
    (see items 1-4 above). Specifically, :ref:`PlaneSegmentation <sec-PlaneSegmentation>` has been changed to
-   be a :ref:`DynamicTable <sec-DynamicTable>` and ``ROITable``, ``ImageMasks``, ``PixelMasks``, and :``VoxelMasks`
+   be a :ref:`DynamicTable <sec-DynamicTable>` and ``ROITable``, ``ImageMasks``, ``PixelMasks``, and ``VoxelMasks``
    have been merged into the :ref:`PlaneSegmentation <sec-PlaneSegmentation>` table, resulting in the removal of
-   the ``ROITable``, ``ROITableRegion``, ``ImageMasks``, ``PixelMasks``, and :``VoxelMasks`` types.
+   the ``ROITable``, ``ROITableRegion``, ``ImageMasks``, ``PixelMasks``, and ``VoxelMasks`` types.
 
 For additional details see also:
 
@@ -684,6 +693,11 @@ Simplified organization of acquisition data
       ``acquisition/images`` and provide a more general container for use elsewhere in NWB:N (i.e., this is not
       meant to replace :ref:`ImageSeries <sec-ImageSeries>`)
 
+Other changes:
+^^^^^^^^^^^^^^
+
+* `PR765 <https://github.com/NeurodataWithoutBorders/pynwb/pull/765>`_ made the timestamps in
+   :ref:`SpikeEventSeries <sec-SpikeEventSeries>` required
 
 Improved governance and accessibility
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
