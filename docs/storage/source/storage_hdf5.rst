@@ -95,7 +95,7 @@ Datasets
     ============================  ======================================================================================
     name                          Name of the dataset in HDF5
     doc                           HDF5 attribute doc on the HDF5 dataset
-    dtype                         Data type of the HDF5 dataset
+    dtype                         Data type of the HDF5 dataset (see `dtype mappings`_ table)
     shape                         Shape of the HDF5 dataset if the shape is fixed, otherwise shape defines the maxshape
     dims                          Not mapped
     attributes                    HDF5 attributes on the HDF5 group
