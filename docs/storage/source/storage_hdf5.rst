@@ -16,7 +16,7 @@ files. Groups and datasets can have attributes that provide additional
 details, such as authorities' identifiers. Third, its linking feature
 enables data stored in one location to be transparently accessed from
 multiple locations in the hierarchy. The linked data can be external to
-the file. Fourth, HDF5 is widley supported across programming languages
+the file. Fourth, HDF5 is widely supported across programming languages
 (e.g., C, C++, Python, MATLAB, R among others) and tools, such as,
 `HDFView <https://www.hdfgroup.org/products/java/hdfview/>`__, a free,
 cross-platform application, can be used to open a file and browse data.
@@ -110,7 +110,7 @@ Datasets
     * TODO Update mapping of namespace ID
     * TODO Update mapping of dims
 
-Attriutes
+Attributes
 ---------
 
 .. tabularcolumns:: |p{4cm}|p{11cm}|
@@ -124,7 +124,7 @@ Attriutes
     name                          Name of the attribute in HDF5
     doc                           Not mapped; Stored in schema only
     dtype                         Data type of the HDF5 attribute
-    shape                         Shape of the HDF5 dataset if the shape is fixes, otherwise shape defines the maxshape
+    shape                         Shape of the HDF5 dataset if the shape is fixed, otherwise shape defines the maxshape
     dims                          Not mapped; Reflected by the shape of the attribute data
     required                      Not mapped; Stored in schema only
     parent                        Not mapped; In HDF5 all attributes are explicitly tied to the parent.

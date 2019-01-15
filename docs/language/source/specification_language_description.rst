@@ -520,7 +520,7 @@ purpose and use of the attribute data. The ``doc`` key is required.
 String specifying the data type of the attribute. Allowable values are:
 
 +--------------------------+----------------------------------+----------------+
-| ``dtype`` **spec value** | **storage type**                 | **size**       |
+| ``dtype`` **spec value** | **storage type**                 |   **size**     |
 +--------------------------+----------------------------------+----------------+
 |  * "float"               | single precision floating point  |  32 bit        |
 |  * "float32"             |                                  |                |
@@ -544,10 +544,15 @@ String specifying the data type of the attribute. Allowable values are:
 +--------------------------+----------------------------------+----------------+
 | * "uint8"                | unsigned 8 bit integer           | 8 bit          |
 +--------------------------+----------------------------------+----------------+
+| * "numeric"              | any numeric type (i.e., int,     | 8 to 64 bit    |
+|                          | uint, float etc.)                |                |
++--------------------------+----------------------------------+----------------+
 |  * "text"                | unicode                          | variable       |
 |  * "utf"                 |                                  |                |
 |  * "utf8"                |                                  |                |
 |  * "utf-8"               |                                  |                |
++--------------------------+----------------------------------+----------------+
+|  * "ascii"               | ascii text                       | variable       |
 +--------------------------+----------------------------------+----------------+
 |  * "bool"                | 8 bit integer with valid values  | 8bit           |
 |                          | 0 or 1                           |                |
