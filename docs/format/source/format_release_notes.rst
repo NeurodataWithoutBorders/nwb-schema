@@ -682,7 +682,7 @@ Improved organization of processed data
       each analysis could be stored in a *ProcessingModule* due to the requirement for fixed names.
 
 Simplified organization of acquisition data
-""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""
 
 **Specific Changes:**
 
