@@ -282,11 +282,11 @@ groups:
     - num_times
     shape:
     - null
+  links:
   - name: units
-    neurodata_type_inc: DynamicTableRegion
-    doc: a region of a Units table.
-    attributes:
-    - name: table:
-      dtype:
-        target_type: Units
-        reftype: object
+    doc: The units table that is being indexed
+    target_type: Units
+  - name: spike_event_series
+    doc: The SpikeEventSeries that holds the recorded spike snippets for each spike event
+    quantity: '?'
+    target_type: SpikeEventSeries
