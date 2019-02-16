@@ -33,7 +33,12 @@ groups:
       - null
   - neurodata_type_inc: DynamicTableRegion
     name: electrodes
+    quantity: '?'
     doc: the electrodes that this series was generated from
+  links:
+    - name: electrode_group
+      quantity: '?'
+      target_type: ElectrodeGroup
 - neurodata_type_def: SpikeEventSeries
   neurodata_type_inc: ElectricalSeries
   doc: 'Stores ''snapshots'' of spike events (i.e., threshold crossings) in data. This
