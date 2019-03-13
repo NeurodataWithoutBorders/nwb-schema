@@ -1,6 +1,18 @@
 Release Notes
 =============
 
+
+2.0.1 (3/12/10)
+--------------------
+**Change:** ``UnitSeries`` neurodata_type, which stores the assignment of electrophysiologically recorded waveforms to sorted groups that
+represent putatively different sources.
+
+**Reason:**  ``UnitSeries`` acts as a link between ``SpikeEventSeries`` and the ``Units`` table, allowing a user to
+find the recorded waveforms of specific sorted units.
+
+**Specific Changes:** ``UnitSeries`` was added to the ``misc`` module of the schema, and a ``UnitSeries`` class was
+added as a class to ``misc.py``.
+
 2.0.0 Beta (2017/18)
 --------------------
 
@@ -13,9 +25,9 @@ Added new base data types: ``NWBContainer``, ``NWBData``, ``NWBDataInterface``
 
 **Change:** Added common base types for Groups, Datasets, and for Groups storing primary experiment data
 
-**Reason** Collect common functionality and ease future evolution of the standard
+**Reason:** Collect common functionality and ease future evolution of the standard
 
-**Specific Changes**
+**Specific Changes:**
 
     * :ref:`NWBContainer <sec-NWBContainer>` defines a common base type for all Groups with a ``neurodata_type`` and
       is now the base type of all main data group types in the NWB:N format,
