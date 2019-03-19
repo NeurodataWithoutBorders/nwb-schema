@@ -47,13 +47,10 @@ spec_output_doc_type_hierarchy_filename = 'format_spec_type_hierarchy.inc'
 # Should the YAML sources be included for the different modules
 spec_show_yaml_src = True
 
-# Should the JSON sources be included for the different modules
-spec_show_json_src = False
-
 # Show figure of the hierarchy of objects defined by the spec
 spec_show_hierarchy_plots = True
 
-# Should the sources of the neurodata_types (JSON/YAML) be rendered in a separate section (True) or
+# Should the sources of the neurodata_types (YAML) be rendered in a separate section (True) or
 # in the same location as the base documentation
 spec_generate_src_file = True
 
