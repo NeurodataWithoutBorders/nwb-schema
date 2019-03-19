@@ -113,6 +113,8 @@ The specification of a namespace looks as follows:
       schema:
       - source: nwb.base.yaml
         neurodata_types: null
+        doc : Base nwb types
+        title : Base types
       - ...
 
 The top-level key must be ``namespaces``. The value of ``namespaces``
@@ -167,6 +169,8 @@ List of the schema to be included in this namespace. The specification looks as 
 
      - source: nwb.base.yaml
      - source: nwb.ephys.yaml
+       doc: Types related to EPhys
+       title: EPhys
        neurodata_types: ElectricalSeries
      - namespace: core
        neurodata_types: Interface
@@ -176,6 +180,9 @@ List of the schema to be included in this namespace. The specification looks as 
 * ``neurodata_types`` then is an optional list of strings indicating which neurodata_types should be
   included from the given specification source or namespace. The default is ``neurodata_types: null`` indicating that all
   neurordata_types should be included.
+* ``doc`` is an optional key for source files with a doc string to further document the content of the source file.
+* ``title`` is an option key for source files to provide a descriptive title for a file for documentation purposes.
+
 
 .. attention::
 

@@ -2,8 +2,12 @@
 Release Notes
 =============
 
+Version 2.0.1 (March, 2019)
+---------------------------------
+* Added support for specifying a ``title`` and ``doc`` for ``source`` files as part of the ``schema`` portion of a ``namespace`` specification
 
-Version 2.0.0alpha (August, 2017)
+
+Version 2.0.0 (January, 2019)
 ----------------------------------
 
 Summary
