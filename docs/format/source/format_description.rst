@@ -154,8 +154,6 @@ processing modules, a default name (usually the same as the neurodata_type) is
 commonly specified to further ease identification of the data in a file. However, to
 support storage of multiple instances of the same subtype in the
 same processing module, NWB:N allows users to optionally define custom names as well.
-A detailed overview of the main data processing containers is available in
-:numref:`Data_Processing`.
 
 
 .. _sec-extending-the-format:
@@ -197,8 +195,8 @@ electrical versus optical physiology) as well as new modalities (e.g.,
 video tracking of whisker positions). When a neurodata_type inherits from *TimeSeries*,
 new data objects (i.e., datasets, attributes, groups, and links)
 can be added while all objects of the parent *TimeSeries* type are
-inherited and, hence, part of the new neurodata_type. Section :numref:`TimeSeries_Types`
-provides detailed definitions for all core *TimeSeries* types.
+inherited and, hence, part of the new neurodata_type. Section :numref:`sec-TimeSeries`
+includes a list of all *TimeSeries* types.
 
 Extending *NWBContainer* works in the same way, e.g., to create more specific types for
 data processing.
