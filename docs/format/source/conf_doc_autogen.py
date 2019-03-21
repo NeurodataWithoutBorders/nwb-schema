@@ -47,13 +47,10 @@ spec_output_doc_type_hierarchy_filename = 'format_spec_type_hierarchy.inc'
 # Should the YAML sources be included for the different modules
 spec_show_yaml_src = True
 
-# Should the JSON sources be included for the different modules
-spec_show_json_src = False
-
 # Show figure of the hierarchy of objects defined by the spec
 spec_show_hierarchy_plots = True
 
-# Should the sources of the neurodata_types (JSON/YAML) be rendered in a separate section (True) or
+# Should the sources of the neurodata_types (YAML) be rendered in a separate section (True) or
 # in the same location as the base documentation
 spec_generate_src_file = True
 
@@ -82,3 +79,15 @@ spec_add_latex_clearpage_after_ndt_sections = True
 # Resolve includes to always show the full list of objects that are part of a type (True)
 # or to show only the parts that are actually new to a current type while only linking to base types
 spec_resolve_type_inc = False
+
+# Default type map to be used. This is the type map where dependent namespaces are stored. In the case of
+# NWB this is spec_default_type_map = pynwb.get_type_map()
+import pynwb
+spec_default_type_map = pynwb.get_type_map()
+
+# Default specification classes for groups datasets and namespaces. In the case of NWB these are the NWB-specfic
+# spec classes. In the general cases these are the spec classes from HDMF
+spec_group_spec_cls = pynwb.spec.NWBGroupSpec
+spec_dataset_spec_cls = pynwb.spec.NWBDatasetSpec
+spec_namespace_spec_cls = pynwb.spec.NWBNamespace
+
