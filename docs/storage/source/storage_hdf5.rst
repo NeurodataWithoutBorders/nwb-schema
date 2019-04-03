@@ -111,7 +111,7 @@ Datasets
     * TODO Update mapping of dims
 
 Attributes
----------
+----------
 
 .. tabularcolumns:: |p{4cm}|p{11cm}|
 
@@ -202,3 +202,24 @@ The mappings of data types is as follows
     |                          | For example                      |                |
     |                          | ``2018-09-28T14:43:54.123+02:00``|                |
     +--------------------------+----------------------------------+----------------+
+
+
+Caching format specifications
+=============================
+
+In practice it is useful to cache the specification a file was created with (including extensions)
+directly in the HDF5 file. Caching the specification in the file ensures that users can access
+the specification directly if necessary without requiring external resources. However, the mechanisms for
+caching format specifications is likely different for different storage backends and is not
+part of the NWB:N format specification itself. For the HDF5 backend, caching of the schema is implemented as follows.
+
+The HDF5 backend adds the reserved top-level group ``/specifications`` in which all format specifications (including
+extensions) are cached. The ``/specifications`` group contains for each specification namespace a subgroup
+``/specifications/<namespace-name>/<version>`` in which the specification for a particular version of a namespace
+are stored (e.g., ``/specifications/core/2.0.1`` in the case of the NWB:N core namespace at version 2.0.1).
+The actual specification data is then stored as a JSON string in scalar datasets with a binary, variable-length string
+data type (e.g., ``dtype=special_dtype(vlen=binary_type)`` in Python). The specification of the namespace is stored in
+``/specifications/<namespace-name>/<version>/namespace`` while additional source files are stored in
+``/specifications/<namespace-name>/<version>/<source-filename>``. Here ``<source-filename>`` refers to the main name
+of the source-file without file extension (e.g,. the core namespace defines ``nwb.ephys.yaml`` as source which would
+be stored in ``/specifications/core/2.0.1/nwb.ecephys``).
