@@ -822,6 +822,11 @@ purpose and use of the linked data. The ``doc`` key is required.
 
 Optional key specifying the ``name`` of the link.
 
+``quantity``
+^^^^^^^^^^^^
+
+Optional key specifying how many allowable instances for that link. Default is 1. If `name` is defined, quantity may not be >1. See :numref:`sec-quantity` for details.
+
 
 .. _sec-dataset-spec:
 
