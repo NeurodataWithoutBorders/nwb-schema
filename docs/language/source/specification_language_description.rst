@@ -383,7 +383,7 @@ The result of this is that ``MySeries`` now includes a group of type ``Series``,
 
 The ``quantity`` describes how often the corresponding group (or dataset) can appear. The ``quantity``
 indicates both minimum and maximum number of instances. Hence, if the minimum number of instances is ``0``
-then the group (or dataset) is optional and otherwise it is required.
+then the group (or dataset) is optional and otherwise it is required. The default value is ``quantity=1``.
 
 +---------------------------------+-------------------+------------------+--------------------------+
 | value                           |  minimum quantity | maximum quantity |  Comment                 |
