@@ -99,17 +99,21 @@ The specification of a namespace looks as follows:
       name: NWB
       full_name: NWB core
       version: 1.2.0
-      date: 2017-04-25 18:05:00
+      date: 2019-05-22
       author:
+      - Andrew Tritt
+      - Oliver Ruebel
+      - Ryan Ly
+      - Ben Dichter
       - Keith Godfrey
       - Jeff Teeters
-      - Oliver Ruebel
-      - Andrew Tritt
       contact:
+      - ajtritt@lbl.gov
+      - oruebel@lbl.gov
+      - rly@lbl.gov
+      - bdichter@lbl.gov
       - keithg@alleninstitute.org
       - jteeters@berkeley.edu
-      - oruebel@lbl.gov
-      - ajtritt@lbl.gov
       schema:
       - source: nwb.base.yaml
         neurodata_types: null
