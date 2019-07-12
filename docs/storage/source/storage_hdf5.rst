@@ -77,7 +77,8 @@ Groups
     linkable                      Not mapped; Stored in schema only
     quantity                      Not mapped; Number of appearances of the dataset.
     neurodata_type                Attribute ``neurodata_type``
-    namespace ID                  Attribute ``neurodata_namespace``
+    namespace ID                  Attribute ``namespace``
+    object ID                     Attribute ``object_id``
     ============================  ======================================================================================
 
 
@@ -102,12 +103,12 @@ Datasets
     linkable                      Not mapped; Stored in schema only
     quantity                      Not mapped; Number of appearances of the dataset.
     neurodata_type                Attribute ``neurodata_type``
-    namespace ID                  Attribute ``neurodata_namespace``
+    namespace ID                  Attribute ``namespace``
+    object ID                     Attribute ``object_id``
     ============================  ======================================================================================
 
 .. note::
 
-    * TODO Update mapping of namespace ID
     * TODO Update mapping of dims
 
 Attributes
