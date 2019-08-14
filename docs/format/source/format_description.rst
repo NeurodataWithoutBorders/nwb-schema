@@ -168,7 +168,8 @@ definitions for storing custom data. To avoid collisions between extensions,
 extensions are defined as part of custom namespaces (which typically import
 the core NWB namespace). Extensions to the format are written using the
 `Specification Language <http://schema-language.readthedocs.io/en/latest/>`_ .
-To ease development of extensions, the PyNWB_ (and FORM) API provides dedicated
+To ease development of extensions, the PyNWB_
+(and `HDMF <https://github.com/hdmf-dev/hdmf>`_ used by PyNWB) API provides dedicated
 data structures that support programmatic creation and use of extensions. An
 example for extending NWB using PyNWB_ is available at
 https://pynwb.readthedocs.io/en/stable/extensions.html and
