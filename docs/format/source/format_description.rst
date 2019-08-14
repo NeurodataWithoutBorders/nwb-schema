@@ -15,7 +15,7 @@ The NWB format uses the following main primitives to hierarchically organize neu
 * A *Dataset* describes an n-dimensional array and provides the primary means for storing data,
 * An *Attribute** is a small dataset that is attached to a specific group or dataset and is typically used to
   store metadata specific to the object they are associated with, and
-* A *Links* is references to another groups are datasets.
+* A *Link* is a reference to another group or dataset.
 
 The NWB format is formally described via formal specification documents using the `NWB specification language <http://schema-language.readthedocs.io/en/latest/>`_ .
 HDF5 currently serves as the main format for storing data in the NWB format (see http://nwb-storage.readthedocs.io/en/latest/ for details).
@@ -27,7 +27,7 @@ This allows for reuse and extension of types through inclusion and inheritance. 
 in the format can be uniquely identified by either their name and/or *neurodata_type*
 
 Two important base types in the NWB format are *NWBContainer* and *TimeSeries*. *NWBContainer* defines a
-generic container for storing colleciton of data and is used to define common features and functionality
+generic container for storing collection of data and is used to define common features and functionality
 across data containers (see :numref:`sec_nwbcontainer_intro`). *TimeSeries* is a central component in
 the NWB format for storing complex temporal series (see :numref:`sec_timeseries_intro`). In the format,
 these types are then extended to define more specialized types. To organize and define collections of processed data
@@ -37,7 +37,7 @@ step is represented by a corresponding *NWBDataInterface* (an extension of *NWBC
 
 At a high level, data is organized into the following main groups:
 
-* *acquistion/* : For storage of data streams recorded from the system, including ephys, ophys, tracking, etc.
+* *acquisition/* : For storage of data streams recorded from the system, including ephys, ophys, tracking, etc.
 * *epochs/* : For storage of experimental intervals,
 * *stimulus/* : For storage of stimulus data,
 * *general/* : For storage of experimental metadata, including protocol, notes and description of hardware device(s).
@@ -55,7 +55,7 @@ the top-level organization of data into groups is described in :numref:`table-NW
 
 The concept of a *neurodata_type* is similar to the concept of a Class in object-oriented programming.
 In the NWB format, groups or datasets may be given a unique *neurodata_type*. The *neurodata_type*
-allows the unique identification of the type of objects in the format and also endable the reuse of
+allows the unique identification of the type of objects in the format and also enable the reuse of
 types through the concept of inheritance. A group or dataset may, hence, define a new *neurodata_type*
 while extending an existing type. E.g., *AbstractFeatureSeries* defines a new type that
 inherits from *TimeSeries*.
@@ -170,9 +170,9 @@ the core NWB namespace). Extensions to the format are written using the
 `Specification Language <http://schema-language.readthedocs.io/en/latest/>`_ .
 To ease development of extensions, the PyNWB (and FORM) API provides dedicated
 data structures that support programmatic creation and use of extensions. An
-example for extensing NWB using PyNWB is available at
+example for extending NWB using PyNWB is available at
 http://pynwb.readthedocs.io/en/latest/example.html#extending-nwb and
-additional details are also available as part ot the PyNWB tutorials
+additional details are also available as part of the PyNWB tutorials
 at http://pynwb.readthedocs.io/en/latest/tutorials.html#tutorials .
 
 Creating extensions allows adding and documenting new data to NWB, interaction with
@@ -217,7 +217,7 @@ The description of the format is divided into subsection based on *neurodata_typ
 
 In the tables we use the following notation in the **Id** column to uniquely identify datasets, groups, attributes:
 
-* ```name``` desribes the unique name of an object
+* ```name``` describes the unique name of an object
 * ```<neurodata_type>``` describes the ```neurodata_type``` of the object in case that the object does not have a unique name
 * ```...``` prefixes are used to indicate the depth of the object in the hierarchy to allow identification of the parent of the object. E.g., an object with a ```..``` prefix will belong to the previous object with a `.` prefix.
 
