@@ -44,7 +44,7 @@ At a high level, data is organized into the following main groups:
 * *processing/* : standardized processing modules, often as part of intermediate analysis of data that is necessary to perform before scientific analysis,
 * *analysis/* : lab-specific and custom scientific analysis of data.
 
-The high-level data organization of NWB files is described in detail in :numref:`sec-NWBFile`.
+The high-level data organization within NWB files is described in detail in :numref:`sec-NWBFile`.
 The top-level datasets and attributes are described in :numref:`table-NWBFile-data` and
 the top-level organization of data into groups is described in :numref:`table-NWBFile-groups`.
 
