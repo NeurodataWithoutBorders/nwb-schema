@@ -37,12 +37,12 @@ step is represented by a corresponding *NWBDataInterface* (an extension of *NWBC
 
 At a high level, data is organized into the following main groups:
 
-* *acquisition/* : For storage of data streams recorded from the system, including ephys, ophys, tracking, etc.
-* *epochs/* : For storage of experimental intervals,
-* *stimulus/* : For storage of stimulus data,
-* *general/* : For storage of experimental metadata, including protocol, notes and description of hardware device(s).
-* *processing/* : For storage of standardized processing modules, often as part of intermediate analysis of data that is necessary to perform before scientific analysis,
-* *analysis/* : For storage of lab-specific and custom scientific analysis of data,
+* *acquisition/* : data streams recorded from the system, including ephys, ophys, tracking, etc.,
+* *epochs/* : experimental intervals,
+* *stimulus/* : stimulus data,
+* *general/* : experimental metadata, including protocol, notes and description of hardware device(s).
+* *processing/* : standardized processing modules, often as part of intermediate analysis of data that is necessary to perform before scientific analysis,
+* *analysis/* : lab-specific and custom scientific analysis of data.
 
 The high-level data organization of NWB files is described in detail in :numref:`sec-NWBFile`.
 The top-level datasets and attributes are described in :numref:`table-NWBFile-data` and
