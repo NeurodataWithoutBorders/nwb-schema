@@ -95,7 +95,7 @@ datasets with an assigned *neurodata_type* (see :numref:`sec-NWBData`).
 
 The file format is designed around a data structure called a
 *TimeSeries* which stores time-varying data. A *TimeSeries* is a
-superset of several INCF types, including signal events, image stacks
+superset of several neurodata_types, including signal events, image stacks
 and experimental events. To account for different storage requirements
 and different modalities, a *TimeSeries* is defined in a minimal form
 and it can be extended (i.e., subclassed) to account for different
