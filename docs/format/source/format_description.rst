@@ -19,12 +19,12 @@ The NWB format uses the following main primitives to hierarchically organize neu
 
 The NWB format is formally described via formal specification documents using the `NWB specification language <http://schema-language.readthedocs.io/en/latest/>`_ .
 HDF5 currently serves as the main format for storing data in the NWB format (see http://nwb-storage.readthedocs.io/en/latest/ for details).
-The `PyNWB <http://pynwb.readthedocs.io/en/latest/>` API is available to enable users to efficiently interact with NWB format files.
+The `PyNWB <http://pynwb.readthedocs.io/en/latest/>`_ API is available to enable users to efficiently interact with NWB format files.
 
 The NWB format uses a modular design in which all main semantic components of the format have
 a unique *neurodata_type* (similar to a Class in object-oriented design)(:numref:`sec_neurodata_type_intro`).
 This allows for reuse and extension of types through inclusion and inheritance. All datasets and groups
-in the format can be uniquely identified by either their name and/or *neurodata_type*
+in the format can be uniquely identified by either their name and/or *neurodata_type*.
 
 Two important base types in the NWB format are *NWBContainer* and *TimeSeries*. *NWBContainer* defines a
 generic container for storing collection of data and is used to define common features and functionality
