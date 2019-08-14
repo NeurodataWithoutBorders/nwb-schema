@@ -15,7 +15,7 @@ The NWB format uses the following main primitives to hierarchically organize neu
 * A *Dataset* describes an n-dimensional array and provides the primary means for storing data,
 * An *Attribute** is a small dataset that is attached to a specific group or dataset and is typically used to
   store metadata specific to the object they are associated with, and
-* A *Links* is references to another groups are datasets.
+* A *Link* is a reference to another group or dataset.
 
 The NWB format is formally described via formal specification documents using the `NWB specification language <http://schema-language.readthedocs.io/en/latest/>`_ .
 HDF5 currently serves as the main format for storing data in the NWB format (see http://nwb-storage.readthedocs.io/en/latest/ for details).
