@@ -69,22 +69,22 @@ inherits from *TimeSeries*.
 storing collections of data. :ref:`NWBContainer <sec-NWBContainer>` serves as the base type for all main data containers
 (including :ref:`TimeSeries <sec-TimeSeries>`) of the core NWB:N data
 format and allows us to define and integrate new common functionality in a central place and via common mechanisms
-(see :numref:`sec-NWBContainer`)
+(see :numref:`sec-NWBContainer`).
 
 :ref:`NWBDataInterface <sec-NWBDataInterface>` extends :ref:`NWBContainer <sec-NWBContainer>` and
 serves as base type for primary data (e.g., experimental or analysis data) and is used to
 distinguish in the schema between non-metadata data containers and metadata containers
-(see :numref:`sec-NWBDataInterface`)
+(see :numref:`sec-NWBDataInterface`).
 
 
 :ref:`NWBData <sec-NWBData>` is a specification of a Dataset that functions as a common base neurodata_type for
-datasets with an assigned *neurodata_type* (see :numref:`sec-NWBData`)
+datasets with an assigned *neurodata_type* (see :numref:`sec-NWBData`).
 
 .. note::
 
     The concept of :ref:`NWBContainer <sec-NWBContainer>` and :ref:`NWBData <sec-NWBData>` have been introduced in
     NWB:N 2. :ref:`NWBDataInterface <sec-NWBDataInterface>` (also introduced in NWB:N 2) replaces ``Interface``
-    from NWB:N 1.x. ``Interface``  *Interface* was renamed to *NWBDataInterface* to ease intuition and
+    from NWB:N 1.x. ``Interface``  was renamed to *NWBDataInterface* to ease intuition and
     the concept was generalized via :ref:`NWBContainer <sec-NWBContainer>` to provide a common base for
     data containers (rather than being specific to *ProcessingModules* as in NWB:N 1.x).
 
@@ -99,7 +99,7 @@ superset of several INCF types, including signal events, image stacks
 and experimental events. To account for different storage requirements
 and different modalities, a *TimeSeries* is defined in a minimal form
 and it can be extended (i.e., subclassed) to account for different
-modalities and data storage requirements (see :numref:`sec-extending-the-format`)
+modalities and data storage requirements (see :numref:`sec-extending-the-format`).
 
 Each *TimeSeries* has its own HDF5 group, and all datasets belonging to
 a *TimeSeries* are in that group. In particular, a *TimeSeries* defines
