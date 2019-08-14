@@ -19,12 +19,12 @@ The NWB format uses the following main primitives to hierarchically organize neu
 
 The NWB format is formally described via formal specification documents using the `NWB specification language <http://schema-language.readthedocs.io/en/latest/>`_ .
 HDF5 currently serves as the main format for storing data in the NWB format (see http://nwb-storage.readthedocs.io/en/latest/ for details).
-The `PyNWB <http://pynwb.readthedocs.io/en/latest/>` API is available to enable users to efficiently interact with NWB format files.
+The `PyNWB <http://pynwb.readthedocs.io/en/latest/>`_ API is available to enable users to efficiently interact with NWB format files.
 
 The NWB format uses a modular design in which all main semantic components of the format have
 a unique *neurodata_type* (similar to a Class in object-oriented design)(:numref:`sec_neurodata_type_intro`).
 This allows for reuse and extension of types through inclusion and inheritance. All datasets and groups
-in the format can be uniquely identified by either their name and/or *neurodata_type*
+in the format can be uniquely identified by either their name and/or *neurodata_type*.
 
 Two important base types in the NWB format are *NWBContainer* and *TimeSeries*. *NWBContainer* defines a
 generic container for storing collection of data and is used to define common features and functionality
@@ -37,14 +37,14 @@ step is represented by a corresponding *NWBDataInterface* (an extension of *NWBC
 
 At a high level, data is organized into the following main groups:
 
-* *acquisition/* : For storage of data streams recorded from the system, including ephys, ophys, tracking, etc.
-* *epochs/* : For storage of experimental intervals,
-* *stimulus/* : For storage of stimulus data,
-* *general/* : For storage of experimental metadata, including protocol, notes and description of hardware device(s).
-* *processing/* : For storage of standardized processing modules, often as part of intermediate analysis of data that is necessary to perform before scientific analysis,
-* *analysis/* : For storage of lab-specific and custom scientific analysis of data,
+* *acquisition/* : data streams recorded from the system, including ephys, ophys, tracking, etc.,
+* *epochs/* : experimental intervals,
+* *stimulus/* : stimulus data,
+* *general/* : experimental metadata, including protocol, notes and description of hardware device(s).
+* *processing/* : standardized processing modules, often as part of intermediate analysis of data that is necessary to perform before scientific analysis,
+* *analysis/* : lab-specific and custom scientific analysis of data.
 
-The high-level data organization of NWB files is described in detail in :numref:`sec-NWBFile`.
+The high-level data organization within NWB files is described in detail in :numref:`sec-NWBFile`.
 The top-level datasets and attributes are described in :numref:`table-NWBFile-data` and
 the top-level organization of data into groups is described in :numref:`table-NWBFile-groups`.
 
@@ -69,22 +69,22 @@ inherits from *TimeSeries*.
 storing collections of data. :ref:`NWBContainer <sec-NWBContainer>` serves as the base type for all main data containers
 (including :ref:`TimeSeries <sec-TimeSeries>`) of the core NWB:N data
 format and allows us to define and integrate new common functionality in a central place and via common mechanisms
-(see :numref:`sec-NWBContainer`)
+(see :numref:`sec-NWBContainer`).
 
 :ref:`NWBDataInterface <sec-NWBDataInterface>` extends :ref:`NWBContainer <sec-NWBContainer>` and
 serves as base type for primary data (e.g., experimental or analysis data) and is used to
 distinguish in the schema between non-metadata data containers and metadata containers
-(see :numref:`sec-NWBDataInterface`)
+(see :numref:`sec-NWBDataInterface`).
 
 
 :ref:`NWBData <sec-NWBData>` is a specification of a Dataset that functions as a common base neurodata_type for
-datasets with an assigned *neurodata_type* (see :numref:`sec-NWBData`)
+datasets with an assigned *neurodata_type* (see :numref:`sec-NWBData`).
 
 .. note::
 
     The concept of :ref:`NWBContainer <sec-NWBContainer>` and :ref:`NWBData <sec-NWBData>` have been introduced in
     NWB:N 2. :ref:`NWBDataInterface <sec-NWBDataInterface>` (also introduced in NWB:N 2) replaces ``Interface``
-    from NWB:N 1.x. ``Interface``  *Interface* was renamed to *NWBDataInterface* to ease intuition and
+    from NWB:N 1.x. ``Interface``  was renamed to *NWBDataInterface* to ease intuition and
     the concept was generalized via :ref:`NWBContainer <sec-NWBContainer>` to provide a common base for
     data containers (rather than being specific to *ProcessingModules* as in NWB:N 1.x).
 
@@ -95,11 +95,11 @@ datasets with an assigned *neurodata_type* (see :numref:`sec-NWBData`)
 
 The file format is designed around a data structure called a
 *TimeSeries* which stores time-varying data. A *TimeSeries* is a
-superset of several INCF types, including signal events, image stacks
+superset of several neurodata_types, including signal events, image stacks
 and experimental events. To account for different storage requirements
 and different modalities, a *TimeSeries* is defined in a minimal form
 and it can be extended (i.e., subclassed) to account for different
-modalities and data storage requirements (see :numref:`sec-extending-the-format`)
+modalities and data storage requirements (see :numref:`sec-extending-the-format`).
 
 Each *TimeSeries* has its own HDF5 group, and all datasets belonging to
 a *TimeSeries* are in that group. In particular, a *TimeSeries* defines
@@ -168,12 +168,13 @@ definitions for storing custom data. To avoid collisions between extensions,
 extensions are defined as part of custom namespaces (which typically import
 the core NWB namespace). Extensions to the format are written using the
 `Specification Language <http://schema-language.readthedocs.io/en/latest/>`_ .
-To ease development of extensions, the PyNWB (and FORM) API provides dedicated
+To ease development of extensions, the PyNWB_
+(and `HDMF <https://github.com/hdmf-dev/hdmf>`_ used by PyNWB) API provides dedicated
 data structures that support programmatic creation and use of extensions. An
-example for extending NWB using PyNWB is available at
-http://pynwb.readthedocs.io/en/latest/example.html#extending-nwb and
-additional details are also available as part of the PyNWB tutorials
-at http://pynwb.readthedocs.io/en/latest/tutorials.html#tutorials .
+example for extending NWB using PyNWB_ is available at
+https://pynwb.readthedocs.io/en/stable/extensions.html and
+additional details are also available as part of the PyNWB_ tutorials
+https://pynwb.readthedocs.io/en/stable/tutorials/index.html .
 
 Creating extensions allows adding and documenting new data to NWB, interaction with
 custom data via the API, validation of custom data contents, sharing and collaboration

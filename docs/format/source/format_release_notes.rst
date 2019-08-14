@@ -661,7 +661,7 @@ Removed ``ancestry`` field
 and 3) avoid possible inconsistencies between the ancestry attribute and the true ancestry (i.e., inheritance hierarchy)
 as defined by the spec.
 
-**Note** The new specification API as part of PyNWB/FORM makes the ancestry still easily accessible to users. As
+**Note** The new specification API as part of PyNWB/HDMF makes the ancestry still easily accessible to users. As
 the ancestry can be easily extracted from the spec, we currently do not write a separate ancestry attribute
 but this could be easily added if needed. (see also `PR707 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/707>`_,
 `I24 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/24>`_)
