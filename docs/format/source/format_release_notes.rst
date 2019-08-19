@@ -30,7 +30,7 @@ Release Notes
 
 - ElectrodeGroup link "device": optional -> required
 
-- This was previously required by PyNWB
+  - This was previously required by PyNWB
 
   - See https://github.com/NeurodataWithoutBorders/pynwb/issues/1025for details
 
