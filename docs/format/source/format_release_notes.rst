@@ -78,6 +78,10 @@ Release Notes
 
   - NWB is cumbersome as a format for day-to-day work. There is a lot of overheard to save one-off analysis results to an NWB file. To save new datasets, a user has write an extension. This is a lot of work for a result that may just be tossed out.
   - "scratch" is now an optional top-level group under NWBFile that can hold NWBContainer groups and ScratchData datasets
+  - The scratch space is explicitly for non-standardized data that is not intended for reuse
+    by others. Standard NWB:N types, and extensions if required, should always be used for any data that you
+    intend to share. As such, published data should not include scratch data and a user should be able
+    to ignore any data stored in scratch to use a file.
   - See https://github.com/NeurodataWithoutBorders/nwb-schema/issues/286 for details
 
 **Backwards compatibility:** The PyNWB and MatNWB APIs can read 2.0 files with the 2.1 schema. 
