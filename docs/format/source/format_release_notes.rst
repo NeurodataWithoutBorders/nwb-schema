@@ -31,7 +31,6 @@ Release Notes
 - ElectrodeGroup link "device": optional -> required
 
   - This was previously required by PyNWB
-
   - See https://github.com/NeurodataWithoutBorders/pynwb/issues/1025for details
 
 - Matched default and fixed values of datasets and attributes with the documentation and intended use
@@ -105,7 +104,7 @@ Release Notes
 making it easier to sort ``neurodata_types`` into meaningful categories (i.e., sections) with approbriate tiles and
 descriptions.
 
-**Backwards compatibility:** No changes to the actual specification fo the format are made. 2.0.1 is fully compatible
+**Backwards compatibility:** No changes to the actual specification of the format are made. 2.0.1 is fully compatible
 with 2.0.0.
 
 
