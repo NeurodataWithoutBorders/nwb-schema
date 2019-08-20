@@ -1,15 +1,11 @@
 groups:
 - neurodata_type_def: TwoPhotonSeries
   neurodata_type_inc: ImageSeries
-  doc: A special case of optical imaging.
+  doc: Image stack recorded over time from 2-photon microscope.
   attributes:
-  - name: help
-    dtype: text
-    doc: Value is 'Image stack recorded from 2-photon microscope'
-    value: Image stack recorded from 2-photon microscope
   - name: pmt_gain
     dtype: float32
-    doc: Photomultiplier gain
+    doc: Photomultiplier gain.
     required: false
   - name: scan_line_rate
     dtype: float32
@@ -20,34 +16,28 @@ groups:
   datasets:
   - name: field_of_view
     dtype: float32
-    doc: Width, height and depth of image, or imaged area (meters).
     dims:
     - width|height
     - width|height|depth
-    quantity: '?'
-    required: false
     shape:
     - - 2
     - - 3
+    doc: Width, height and depth of image, or imaged area, in meters.
+    required: false
+    quantity: '?'
   links:
   - name: imaging_plane
-    doc: link to ImagingPlane group from which this TimeSeries data was generated
     target_type: ImagingPlane
+    doc: Link to ImagingPlane object from which this TimeSeries data was generated.
+
 - neurodata_type_def: RoiResponseSeries
   neurodata_type_inc: TimeSeries
-  doc: ROI responses over an imaging plane. Each row in data[] should correspond to
-    the signal from one ROI.
-  attributes:
-  - name: help
-    dtype: text
-    doc: Value is 'ROI responses over an imaging plane. Each element on the second
-      dimension of data[] should correspond to the signal from one ROI'
-    value: ROI responses over an imaging plane. Each element on the second dimension
-      of data[] should correspond to the signal from one ROI
+  doc: ROI responses over an imaging plane. Each row in data should correspond to
+    the signal from one ROI. Each element on the second dimension of data should
+    correspond to the signal from one ROI.
   datasets:
   - name: data
     dtype: numeric
-    doc: Signals from ROIs
     dims:
     - - num_times
     - - num_times
@@ -56,46 +46,37 @@ groups:
     - - null
     - - null
       - null
-  - neurodata_type_inc: DynamicTableRegion
-    name: rois
-    doc: a dataset referencing into an ROITable containing information on the ROIs
-      stored in this timeseries
+    doc: Signals from ROIs.
+  - name: rois
+    neurodata_type_inc: DynamicTableRegion
+    doc: DynamicTableRegion referencing into an ROITable containing information on the ROIs
+      stored in this timeseries.
+
 - neurodata_type_def: DfOverF
   neurodata_type_inc: NWBDataInterface
+  default_name: DfOverF
   doc: dF/F information about a region of interest (ROI). Storage hierarchy of dF/F
-    should be the same as for segmentation (ie, same names for ROIs and for image
+    should be the same as for segmentation (i.e., same names for ROIs and for image
     planes).
-  attributes:
-  - name: help
-    dtype: text
-    doc: Value is 'Df/f over time of one or more ROIs. TimeSeries names should correspond
-      to imaging plane names'
-    value: Df/f over time of one or more ROIs. TimeSeries names should correspond
-      to imaging plane names
   groups:
   - neurodata_type_inc: RoiResponseSeries
-    doc: RoiResponseSeries object containing dF/F for a ROI
+    doc: RoiResponseSeries object(s) containing dF/F for a ROI.
     quantity: '+'
-  default_name: DfOverF
+
 - neurodata_type_def: Fluorescence
   neurodata_type_inc: NWBDataInterface
+  default_name: Fluorescence
   doc: Fluorescence information about a region of interest (ROI). Storage hierarchy
     of fluorescence should be the same as for segmentation (ie, same names for ROIs
     and for image planes).
-  attributes:
-  - name: help
-    dtype: text
-    doc: Value is 'Fluorescence over time of one or more ROIs. TimeSeries names should
-      correspond to imaging plane names'
-    value: Fluorescence over time of one or more ROIs. TimeSeries names should correspond
-      to imaging plane names
   groups:
   - neurodata_type_inc: RoiResponseSeries
-    doc: RoiResponseSeries object containing fluorescence data for a ROI
+    doc: RoiResponseSeries object(s) containing fluorescence data for a ROI.
     quantity: '+'
-  default_name: Fluorescence
+
 - neurodata_type_def: ImageSegmentation
   neurodata_type_inc: NWBDataInterface
+  default_name: ImageSegmentation
   doc: Stores pixels in an image that represent different regions of interest (ROIs)
     or masks. All segmentation for a given imaging plane is stored together, with
     storage for multiple imaging planes (masks) supported. Each ROI is stored in its
@@ -103,27 +84,14 @@ groups:
     that make up this mask. Segments can also be used for masking neuropil. If segmentation
     is allowed to change with time, a new imaging plane (or module) is required and
     ROI names should remain consistent between them.
-  attributes:
-  - name: help
-    dtype: text
-    doc: Value is 'Stores groups of pixels that define regions of interest from one
-      or more imaging planes'
-    value: Stores groups of pixels that define regions of interest from one or more
-      imaging planes
   groups:
   - neurodata_type_def: PlaneSegmentation
     neurodata_type_inc: DynamicTable
-    doc: results for image segmentation of a specific imaging plane
-    attributes:
-    - name: help
-      dtype: text
-      doc: Value is 'Results from segmentation of an imaging plane'
-      value: Results from segmentation of an imaging plane
+    doc: Results from image segmentation of a specific imaging plane.
+    quantity: '+'
     datasets:
-    - neurodata_type_inc: VectorData
-      name: image_mask
-      doc: ROI masks for each ROI. Each image mask is the size of the original imaging
-        plane (or volume) and members of the ROI are finite non-zero
+    - name: image_mask
+      neurodata_type_inc: VectorData
       dims:
       - - num_roi
         - num_x
@@ -140,187 +108,169 @@ groups:
         - null
         - null
         - null
+      doc: ROI masks for each ROI. Each image mask is the size of the original imaging
+        plane (or volume) and members of the ROI are finite non-zero.
       quantity: '?'
-    - neurodata_type_inc: VectorIndex
-      name: pixel_mask_index
-      doc: index into pixel_mask
+    - name: pixel_mask_index
+      neurodata_type_inc: VectorIndex
+      doc: Index into pixel_mask.
       quantity: '?'
-    - neurodata_type_inc: VectorData
-      name: pixel_mask
-      doc: 'Pixel masks for each ROI: a list of indices and weights for the ROI. Pixel
-        masks are concatenated and parsing of this dataset is maintained by the
-        PlaneSegmentation'
+    - name: pixel_mask
+      neurodata_type_inc: VectorData
       dtype:
       - name: x
         dtype: uint
-        doc: the pixel x-coordinate
+        doc: Pixel x-coordinate.
       - name: y
         dtype: uint
-        doc: the pixel y-coordinate
+        doc: Pixel y-coordinate.
       - name: weight
         dtype: float
-        doc: the weight of the pixel
+        doc: Weight of the pixel.
+      doc: 'Pixel masks for each ROI: a list of indices and weights for the ROI. Pixel
+        masks are concatenated and parsing of this dataset is maintained by the PlaneSegmentation'
       quantity: '?'
-    - neurodata_type_inc: VectorIndex
-      name: voxel_mask_index
-      doc: index into voxel_mask
+    - name: voxel_mask_index
+      neurodata_type_inc: VectorIndex
+      doc: Index into voxel_mask.
       quantity: '?'
-    - neurodata_type_inc: VectorData
-      name: voxel_mask
-      doc: 'Voxel masks for each ROI: a list of indices and weights for the ROI. Voxel
-        masks are concatenated and parsing of this dataset is maintained by the
-        PlaneSegmentation'
+    - name: voxel_mask
+      neurodata_type_inc: VectorData
       dtype:
       - name: x
         dtype: uint
-        doc: the voxel x-coordinate
+        doc: Voxel x-coordinate.
       - name: y
         dtype: uint
-        doc: the voxel y-coordinate
+        doc: Voxel y-coordinate.
       - name: z
         dtype: uint
-        doc: the voxel y-coordinate
+        doc: Voxel z-coordinate.
       - name: weight
         dtype: float
-        doc: the weight of the voxel
+        doc: Weight of the voxel.
+      doc: 'Voxel masks for each ROI: a list of indices and weights for the ROI. Voxel
+        masks are concatenated and parsing of this dataset is maintained by the PlaneSegmentation'
       quantity: '?'
     groups:
     - name: reference_images
-      doc: Stores image stacks segmentation mask apply to.
+      doc: Image stacks that the segmentation masks apply to.
       groups:
       - neurodata_type_inc: ImageSeries
         doc: One or more image stacks that the masks apply to (can be one-element
-          stack)
+          stack).
         quantity: '*'
     links:
     - name: imaging_plane
-      doc: link to ImagingPlane group from which this TimeSeries data was generated
       target_type: ImagingPlane
-    quantity: '+'
-  default_name: ImageSegmentation
+      doc: Link to ImagingPlane object from which this data was generated.
+
 - neurodata_type_def: ImagingPlane
   neurodata_type_inc: NWBContainer
-  doc: 'One of possibly many groups describing an imaging plane. COMMENT: Name is
-    arbitrary but should be meaningful. It is referenced by TwoPhotonSeries and also
-    ImageSegmentation and DfOverF interfaces'
-  attributes:
-  - name: help
-    dtype: text
-    doc: Value is 'Metadata about an imaging plane'
-    value: Metadata about an imaging plane
+  doc: An imaging plane and its metadata.
+  quantity: '*'
   datasets:
   - name: description
     dtype: text
-    doc: Description of image_plane_X
+    doc: Description of the imaging plane.
     quantity: '?'
   - name: excitation_lambda
     dtype: float
-    doc: Excitation wavelength in nm
+    doc: Excitation wavelength, in nm.
   - name: imaging_rate
     dtype: float
-    doc: Rate images are acquired, in Hz.
+    doc: Rate that images are acquired, in Hz.
   - name: indicator
     dtype: text
-    doc: Calcium indicator
+    doc: Calcium indicator.
   - name: location
     dtype: text
-    doc: Location of image plane
+    doc: Location of the imaging plane. Specify the area, layer, comments on estimation
+      of area/layer, stereotaxic coordinates if in vivo, etc. Use standard atlas
+      names for anatomical regions when possible.
   - name: manifold
     dtype: float32
-    doc: 'Physical position of each pixel. COMMENT: ''xyz'' represents the position
-      of the pixel relative to the defined coordinate space'
+    dims:
+    - - height
+      - width
+      - x|y|z
+    - - height
+      - width
+      - depth
+      - x|y|z
+    shape:
+    - - null
+      - null
+      - 3
+    - - null
+      - null
+      - null
+      - 3
+    doc: "Physical position of each pixel. 'xyz' represents the position\
+      \ of the pixel relative to the defined coordinate space."
+    quantity: '?'
     attributes:
     - name: conversion
       dtype: float
-      doc: Multiplier to get from stored values to specified unit (e.g., 1e-3 for
-        millimeters)
       default_value: 1.0
+      doc: Scalar to multiply each element in data to convert it to the specified 'unit'.
+        If the data are stored in acquisition system units or other units
+        that require a conversion to be interpretable, multiply the data by 'conversion'
+        to convert the data to the specified 'unit'. e.g. if the data acquisition system
+        stores values in this object as pixels from x = -500 to 499, y = -500 to 499
+        that correspond to a 2 m x 2 m range, then the 'conversion' multiplier to get
+        from raw data acquisition pixel units to meters is 2/1000.
       required: false
     - name: unit
       dtype: text
-      doc: Base unit that coordinates are stored in (e.g., Meters)
-      default_value: Meter
+      default_value: meters
+      doc: Base unit of measurement for working with the data. The default value
+        is 'meters'.
       required: false
-    dims:
-    -  - height
-       - width
-       - x|y|z
-    -  - height
-       - width
-       - depth
-       - x|y|z
-    shape:
-    -  - null
-       - null
-       - 3
-    -  - null
-       - null
-       - null
-       - 3
-    quantity: '?'
   - name: reference_frame
     dtype: text
-    doc: 'Describes position and reference frame of manifold based on position of
-      first element in manifold. For example, text description of anotomical location
-      or vectors needed to rotate to common anotomical axis (eg, AP/DV/ML). COMMENT:
-      This field is necessary to interpret manifold. If manifold is not present then
-      this field is not required'
+    doc: Describes position and reference frame of manifold based on position of
+      first element in manifold. For example, text description of anatomical location
+      or vectors needed to rotate to common anatomical axis (eg, AP/DV/ML). This
+      field is necessary to interpret manifold. If manifold is not present then
+      this field is not required.
     quantity: '?'
   groups:
   - neurodata_type_def: OpticalChannel
     neurodata_type_inc: NWBContainer
-    doc: 'One of possibly many groups storing channel-specific data COMMENT: Name
-      is arbitrary but should be meaningful'
-    attributes:
-    - name: help
-      dtype: text
-      doc: Value is 'Metadata about an optical channel used to record from an imaging
-        plane'
-      value: Metadata about an optical channel used to record from an imaging plane
+    doc: An optical channel used to record from an imaging plane.
     datasets:
     - name: description
       dtype: text
-      doc: Any notes or comments about the channel
+      doc: Description or other notes about the channel.
     - name: emission_lambda
       dtype: float
-      doc: Emission wavelength for channel in nm
+      doc: Emission wavelength for channel, in nm.
   links:
   - name: device
-    doc: the device that was used to record from this electrode
     target_type: Device
-  quantity: '*'
+    doc: Link to the Device object that was used to record from this electrode.
+
 - neurodata_type_def: MotionCorrection
   neurodata_type_inc: NWBDataInterface
+  default_name: MotionCorrection
   doc: 'An image stack where all frames are shifted (registered) to a common coordinate
     system, to account for movement and drift between frames. Note: each frame at
     each point in time is assumed to be 2-D (has only x & y dimensions).'
-  attributes:
-  - name: help
-    dtype: text
-    doc: Value is 'Image stacks whose frames have been shifted (registered) to account
-      for motion'
-    value: Image stacks whose frames have been shifted (registered) to account for
-      motion
   groups:
   - neurodata_type_def: CorrectedImageStack
-    neurodata_type_inc: NWBContainer
-    doc: One of possibly many.  Name should be informative.
-    attributes:
-    - name: help
-      dtype: text
-      doc: Value is 'Reuslts from motion correction of an image stack'
-      value: Reuslts from motion correction of an image stack
+    neurodata_type_inc: NWBDataInterface
+    doc: Reuslts from motion correction of an image stack.
+    quantity: '+'
     groups:
-    - neurodata_type_inc: ImageSeries
-      name: corrected
+    - name: corrected
+      neurodata_type_inc: ImageSeries
       doc: Image stack with frames shifted to the common coordinates.
-    - neurodata_type_inc: TimeSeries
-      name: xy_translation
+    - name: xy_translation
+      neurodata_type_inc: TimeSeries
       doc: Stores the x,y delta necessary to align each frame to the common coordinates,
         for example, to align each frame to a reference image.
     links:
     - name: original
-      doc: HDF5 Link to image series that is being registered.
       target_type: ImageSeries
-    quantity: '+'
-  default_name: MotionCorrection
+      doc: Link to ImageSeries object that is being registered.
