@@ -7,7 +7,7 @@ groups:
   attributes:
   - name: nwb_version
     dtype: text
-    value: 2.0.2
+    value: 2.1.0
     doc: File version string. Use semantic versioning, e.g. 1.2.1. This will be the
       name of the format with trailing major, minor and patch numbers.
   datasets:
@@ -199,8 +199,9 @@ groups:
       quantity: '?'
     - name: related_publications
       dtype: text
-      doc: Publication information. PMID, DOI, URL, etc. If multiple, concatenate
-        together and describe which is which.
+      doc: Publication information. PMID, DOI, URL, etc.
+      shape:
+      - null
       quantity: '?'
     - name: session_id
       dtype: text
