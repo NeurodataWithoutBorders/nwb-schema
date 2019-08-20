@@ -15,17 +15,17 @@ Release Notes
 
   - These were intended to be a "help" attribute, which has now been removed
   - For example, TimeIntervals dataset "start_time" attribute "description" had a fixed value that is now removed
-  
+
 - Reordered keys
 
   - This standardizes the order of keys across types and makes the schema more readable
   - See https://github.com/NeurodataWithoutBorders/nwb-schema/issues/274 for details
-  
+
 - Added "dims" attribute for datasets where "shape" was specified without "dims"
 
   - The "dims" attribute describes the data along each dimension of the dataset and is helpful to provide alongside "shape"
   - For example, NWBFile dataset "keywords" has attribute "shape" has one entry: "null". The attribute "dims" was added with one entry: "num_keywords"
-  
+
 - Removed redundant specifications that are inherited from a parent type
 
 - ElectrodeGroup link "device": optional -> required
@@ -44,10 +44,10 @@ Release Notes
   - VoltageClampStimulusSeries, CurrentClampSeries, IZeroClampSeries attribute "unit" has fixed value "volts"
   - CurrentClampStimulusSeries, VoltageClampSeries, attribute "unit" has fixed value "amperes"
 
-- NWBFile dataset "experimenter" changes from scalar to 1-D, unlimited array
+- NWBFile dataset "experimenter" and "related_publications" change from scalar to 1-D, unlimited arrays
 
-  - This allows the "experimenter" dataset to encode multiple experimenters
-  - See https://github.com/NeurodataWithoutBorders/pynwb/issues/985 for details
+  - This allows the "experimenter" and "related_publications" dataset to encode multiple values
+  - See https://github.com/NeurodataWithoutBorders/pynwb/issues/985 and https://github.com/NeurodataWithoutBorders/nwb-schema/issues/299 for details
 
 - Standardized units to be plural, lower-case, SI units
 
@@ -84,7 +84,7 @@ Release Notes
     to ignore any data stored in scratch to use a file.
   - See https://github.com/NeurodataWithoutBorders/nwb-schema/issues/286 for details
 
-**Backwards compatibility:** The PyNWB and MatNWB APIs can read 2.0 files with the 2.1 schema. 
+**Backwards compatibility:** The PyNWB and MatNWB APIs can read 2.0 files with the 2.1 schema.
 
 2.0.2 (June 2019)
 -----------------
@@ -1105,4 +1105,3 @@ without making all subfolders mandatory here.
 - Convert document to .html
 - ``TwoPhotonSeries::imaging\_plane`` was upgraded to mandatory to help
   enforce inclusion of important metadata in the file.
-
