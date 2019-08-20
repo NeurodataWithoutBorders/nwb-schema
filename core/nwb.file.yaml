@@ -166,6 +166,8 @@ groups:
       doc: Name of person(s) who performed the experiment. Can also specify roles
         of different people involved.
       quantity: '?'
+      dims:
+      - num_experimenters
       shape:
       - null
     - name: institution
@@ -200,6 +202,8 @@ groups:
     - name: related_publications
       dtype: text
       doc: Publication information. PMID, DOI, URL, etc.
+      dims:
+      - num_publications
       shape:
       - null
       quantity: '?'
