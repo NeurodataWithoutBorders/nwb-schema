@@ -1,0 +1,49 @@
+groups:
+- neurodata_type_def: Events
+  neurodata_type_inc: NWBDataInterface
+  doc: A list of timestamps, stored in seconds, of an event
+  attributes:
+  - name: description
+    dtype: text
+    doc: Description of the event.
+  datasets:
+  - name: timestamps
+    dtype: float64
+    dims:
+    - num_times
+    shape:
+    - null
+    doc: Event timestamps, in seconds, relative to the common experiment master-clock stored in 
+      NWBFile.timestamps_reference_time.
+    quantity: '?'
+    attributes:
+    - name: unit
+      dtype: text
+      value: seconds
+      doc: Unit of measurement for timestamps, which is fixed to 'seconds'.
+      
+- neurodata_type_def: LabeledEvents
+  neurodata_type_inc: Events
+  doc: A list of timestamps, stored in seconds, of an event that can have different labels. For example,
+    this type could represent the times that reward was given, as well as which of three different 
+    types of reward was given. In this case, the 'labels' dataset would contain values from {0, 1, 2},
+    and the 'label_map' would contain three text elements, where the first (index 0) specifies the
+    name of the reward associated with a label = 0, the second (index 1) specifies the name of the
+    reward associated with a label = 1, etc. 
+  datasets:
+  - name: labels
+    dtype: int
+    dims:
+    - num_times
+    shape:
+    - null
+    doc: Values from 0 to number of elements in 'label_map' - 1. See the 'label_map' dataset for what
+      each label means. Should have the same number of elements as the 'timestamps' dataset.
+  - name: label_map
+    dtype: text
+    dims:
+    - num_values
+    shape:
+    - null
+    doc: Mapping from an integer (the zero-based index) to a string, used to understand the integer
+      values in the 'labels' dataset
