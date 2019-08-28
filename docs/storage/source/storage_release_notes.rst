@@ -2,8 +2,12 @@
 Release Notes
 =============
 
-NWB:N - v2.0.0-beta
--------------------
+NWB:N - v2.0.1
+--------------
+Added missing documentation on how format specification are cached in HDF5.
+
+NWB:N - v2.0.0
+---------------
 
 Created seperate reStructuredText documentation (i.e., this document) discuss and govern
 storage-related concerns. In particular this documents describes how primitives and keys

@@ -98,6 +98,6 @@ In the regular Sphinx ```source/conf.py``` file we can then also set:
 
 ## Dependencies
 
-The generation of the format docs requires the PyNWB and FORM packages. Since these packages are not available via pip yet, the script ```conf_get_pynwb.py``` is used to install the packages via python on ReadTheDocs (RTD) to enable RTD to build the docs automatically.
+The generation of the format docs requires the PyNWB and HDMF packages. Since these packages are not available via pip yet, the script ```conf_get_pynwb.py``` is used to install the packages via python on ReadTheDocs (RTD) to enable RTD to build the docs automatically.
 
 

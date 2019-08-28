@@ -99,20 +99,26 @@ The specification of a namespace looks as follows:
       name: NWB
       full_name: NWB core
       version: 1.2.0
-      date: 2017-04-25 18:05:00
+      date: 2019-05-22
       author:
+      - Andrew Tritt
+      - Oliver Ruebel
+      - Ryan Ly
+      - Ben Dichter
       - Keith Godfrey
       - Jeff Teeters
-      - Oliver Ruebel
-      - Andrew Tritt
       contact:
+      - ajtritt@lbl.gov
+      - oruebel@lbl.gov
+      - rly@lbl.gov
+      - bdichter@lbl.gov
       - keithg@alleninstitute.org
       - jteeters@berkeley.edu
-      - oruebel@lbl.gov
-      - ajtritt@lbl.gov
       schema:
       - source: nwb.base.yaml
         neurodata_types: null
+        doc : Base nwb types
+        title : Base types
       - ...
 
 The top-level key must be ``namespaces``. The value of ``namespaces``
@@ -167,6 +173,8 @@ List of the schema to be included in this namespace. The specification looks as 
 
      - source: nwb.base.yaml
      - source: nwb.ephys.yaml
+       doc: Types related to EPhys
+       title: EPhys
        neurodata_types: ElectricalSeries
      - namespace: core
        neurodata_types: Interface
@@ -176,6 +184,9 @@ List of the schema to be included in this namespace. The specification looks as 
 * ``neurodata_types`` then is an optional list of strings indicating which neurodata_types should be
   included from the given specification source or namespace. The default is ``neurodata_types: null`` indicating that all
   neurordata_types should be included.
+* ``doc`` is an optional key for source files with a doc string to further document the content of the source file.
+* ``title`` is an option key for source files to provide a descriptive title for a file for documentation purposes.
+
 
 .. attention::
 
@@ -376,7 +387,7 @@ The result of this is that ``MySeries`` now includes a group of type ``Series``,
 
 The ``quantity`` describes how often the corresponding group (or dataset) can appear. The ``quantity``
 indicates both minimum and maximum number of instances. Hence, if the minimum number of instances is ``0``
-then the group (or dataset) is optional and otherwise it is required.
+then the group (or dataset) is optional and otherwise it is required. The default value is ``quantity=1``.
 
 +---------------------------------+-------------------+------------------+--------------------------+
 | value                           |  minimum quantity | maximum quantity |  Comment                 |
@@ -810,6 +821,11 @@ purpose and use of the linked data. The ``doc`` key is required.
 ^^^^^^^^
 
 Optional key specifying the ``name`` of the link.
+
+``quantity``
+^^^^^^^^^^^^
+
+Optional key specifying how many allowable instances for that link. Default is 1. If `name` is defined, quantity may not be >1. See :numref:`sec-quantity` for details.
 
 
 .. _sec-dataset-spec:
