@@ -249,3 +249,33 @@ groups:
       - null
     doc: Spike waveform standard deviation for each spike unit.
     quantity: '?'
+
+- neurodata_type_def: UnitSeries
+  neurodata_type_inc: TimeSeries
+  doc: Unit spike times - a stream of IDs of spiking units.
+  datasets:
+  - name: data
+    dtype: int
+    doc: The index of the spike unit in the DynamicTableRegion "units".
+    attributes:
+    - name: resolution
+      dtype: float
+      value: -1.0
+      doc: Value is -1.0. Indices do not have resolution.
+    - name: unit
+      dtype: text
+      value: index
+      doc: Value is 'index'
+    dims:
+    - num_times
+    shape:
+    - null
+  links:
+  - name: units
+    target_type: Units
+    doc: Link to the Units table that is being indexed.
+  - name: spike_event_series
+    target_type: SpikeEventSeries
+    doc: Link to the SpikeEventSeries that holds the recorded spike snippets for each spike event.
+    quantity: '?'
+

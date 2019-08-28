@@ -33,6 +33,10 @@ groups:
   - name: electrodes
     neurodata_type_inc: DynamicTableRegion
     doc: DynamicTableRegion pointer to the electrodes that this time series was generated from.
+  links:
+  - name: electrode_group
+    target_type: ElectrodeGroup
+    quantity: '?'
 
 - neurodata_type_def: SpikeEventSeries
   neurodata_type_inc: ElectricalSeries
@@ -83,6 +87,11 @@ groups:
       dtype: text
       value: seconds
       doc: Unit of measurement for timestamps, which is fixed to 'seconds'.
+  links:
+  - name: unit_series
+    target_type: UnitSeries
+    doc: Link to the UnitSeries that holds the unit ids for each waveform.
+    quantity: '?'
 
 - neurodata_type_def: FeatureExtraction
   neurodata_type_inc: NWBDataInterface
@@ -213,6 +222,10 @@ groups:
   - name: device
     target_type: Device
     doc: Link to the device that was used to record from this electrode group.
+  - name: spike_event_series
+    target_type: SpikeEventSeries
+    doc: Link to the SpikeEventSeries that holds the recorded spike snippets for this electrode group.
+    quantity: '?'
 
 # The types below have been deprecated
 - neurodata_type_def: ClusterWaveforms
