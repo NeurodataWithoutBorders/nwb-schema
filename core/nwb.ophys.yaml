@@ -234,7 +234,7 @@ groups:
     shape:
     - 2
     - 3
-    doc: Location of the origin in x, y or x, y, z, in meters
+    doc: Location of the origin in x, y or x, y, z, in the specified unit.
     required: false
     attributes:
     - name: unit
@@ -249,7 +249,8 @@ groups:
     shape:
     - 2
     - 3
-    doc: Space between pixels in x, y or x, y, z directions. Assumes imaging plane is a regular grid.
+    doc: Space between pixels in x, y or x, y, z directions, in the specified unit.
+      Assumes imaging plane is a regular grid.
     required: false
     attributes:
     - name: unit
