@@ -206,8 +206,8 @@ groups:
       - null
       - null
       - 3
-    doc: "Physical position of each pixel. 'xyz' represents the position\
-      \ of the pixel relative to the defined coordinate space."
+    doc: "DEPRECATED Physical position of each pixel. 'xyz' represents the position\
+      \ of the pixel relative to the defined coordinate space. Deprecated in favor of pixel_origin and pixel_deltas."
     quantity: '?'
     attributes:
     - name: conversion
@@ -224,9 +224,38 @@ groups:
     - name: unit
       dtype: text
       default_value: meters
-      doc: Base unit of measurement for working with the data. The default value
-        is 'meters'.
+      doc: Base unit of measurement for working with the data. The default value is 'meters'.
       required: false
+  - name: pixel_origin
+    dtype: float
+    dims:
+    - x, y
+    - x, y, z
+    shape:
+    - 2
+    - 3
+    doc: Location of the origin in x, y or x, y, z, in meters
+    required: false
+    attributes:
+    - name: unit
+      dtype: text
+      default_value: meters
+      doc: Measurement units for pixel_origin. The default value is 'meters'.
+  - name: pixel_deltas
+    dtype: float
+    dims:
+    - x, y
+    - x, y, z
+    shape:
+    - 2
+    - 3
+    doc: Space between pixels in x, y or x, y, z directions. Assumes imaging plane is a regular grid.
+    required: false
+    attributes:
+    - name: unit
+      dtype: text
+      default_value: meters
+      doc: Measurement units for pixel_deltas. The default value is 'meters'.
   - name: reference_frame
     dtype: text
     doc: Describes position and reference frame of manifold based on position of
