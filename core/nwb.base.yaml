@@ -1,62 +1,7 @@
 datasets:
 - neurodata_type_def: NWBData
+  neurodata_type_inc: Data
   doc: An abstract data type for a dataset.
-
-- neurodata_type_def: Index
-  neurodata_type_inc: NWBData
-  doc: Pointers that index data values.
-  attributes:
-  - name: target
-    dtype:
-      target_type: NWBData
-      reftype: object
-    doc: Target dataset that this index applies to.
-
-- neurodata_type_def: VectorData
-  neurodata_type_inc: NWBData
-  doc: A 1-dimensional dataset. This can be indexed using a VectorIndex to
-    encode a 2-dimensional ragged array in 1 dimension. The first vector
-    is at VectorData[0:VectorIndex(0)+1]. The second vector is at
-    VectorData[VectorIndex(0)+1:VectorIndex(1)+1]. And so on.
-  attributes:
-  - name: description
-    dtype: text
-    doc: Description of what these vectors represent.
-
-- neurodata_type_def: VectorIndex
-  neurodata_type_inc: Index
-  doc: An array of indices into the first dimension of the target VectorData.
-    Can be used with VectorData to encode a 2-dimensional ragged array in 1 dimension.
-  attributes:
-  - name: target
-    dtype:
-      target_type: VectorData
-      reftype: object
-    doc: Reference to the target dataset that this index applies to.
-
-- neurodata_type_def: ElementIdentifiers
-  neurodata_type_inc: NWBData
-  default_name: element_id
-  dtype: int
-  dims:
-  - num_elements
-  shape:
-  - null
-  doc: A list of unique identifiers for values within a dataset, e.g. rows of a DynamicTable.
-
-- neurodata_type_def: DynamicTableRegion
-  neurodata_type_inc: VectorData
-  dtype: int
-  doc: A region/index into a DynamicTable.
-  attributes:
-  - name: table
-    dtype:
-      target_type: DynamicTable
-      reftype: object
-    doc: Reference to the DynamicTable object that this region applies to.
-  - name: description
-    dtype: text
-    doc: Description of what this table region points to.
 
 - neurodata_type_def: Image
   neurodata_type_inc: NWBData
@@ -93,6 +38,7 @@ datasets:
 
 groups:
 - neurodata_type_def: NWBContainer
+  neurodata_type_inc: Container
   doc: An abstract data type for a generic container storing collections of data and
     metadata. Base type for all data and metadata containers.
 
@@ -241,6 +187,9 @@ groups:
   - neurodata_type_inc: NWBDataInterface
     doc: Data objects stored in this collection.
     quantity: '*'
+  - neurodata_type_inc: DynamicTable
+    doc: Tables stored in this collection.
+    quantity: '*'
 
 - neurodata_type_def: Images
   neurodata_type_inc: NWBDataInterface
@@ -254,53 +203,3 @@ groups:
   - neurodata_type_inc: Image
     doc: Images stored in this collection.
     quantity: '+'
-
-- neurodata_type_def: DynamicTable
-  neurodata_type_inc: NWBDataInterface
-  doc: A group containing multiple datasets that are aligned on the first dimension
-    (Currently, this requirement if left up to APIs to check and enforce). Apart from
-    a column that contains unique identifiers for each row there are no other required
-    datasets. Users are free to add any number of VectorData objects here. Table functionality
-    is already supported through compound types, which is analogous to storing an
-    array-of-structs. DynamicTable can be thought of as a struct-of-arrays. This provides
-    an alternative structure to choose from when optimizing storage for anticipated
-    access patterns. Additionally, this type provides a way of creating a table without
-    having to define a compound type up front. Although this convenience may be attractive,
-    users should think carefully about how data will be accessed. DynamicTable is
-    more appropriate for column-centric access, whereas a dataset with a compound
-    type would be more appropriate for row-centric access. Finally, data size should
-    also be taken into account. For small tables, performance loss may be an acceptable
-    trade-off for the flexibility of a DynamicTable. For example, DynamicTable was
-    originally developed for storing trial data and spike unit metadata. Both of these
-    use cases are expected to produce relatively small tables, so the spatial locality
-    of multiple datasets present in a DynamicTable is not expected to have a significant
-    performance impact. Additionally, requirements of trial and unit metadata tables
-    are sufficiently diverse that performance implications can be overlooked in favor
-    of usability.
-  attributes:
-  - name: colnames
-    dtype: ascii
-    dims:
-    - num_columns
-    shape:
-    - null
-    doc: The names of the columns in this table. This should be used to specify
-      an order to the columns.
-  - name: description
-    dtype: text
-    doc: Description of what is in this dynamic table.
-  datasets:
-  - name: id
-    neurodata_type_inc: ElementIdentifiers
-    dtype: int
-    dims:
-    - num_rows
-    shape:
-    - null
-    doc: Array of unique identifiers for the rows of this dynamic table.
-  - neurodata_type_inc: VectorData
-    doc: Vector columns of this dynamic table.
-    quantity: '*'
-  - neurodata_type_inc: VectorIndex
-    doc: Indices for the vector columns of this dynamic table.
-    quantity: '*'
