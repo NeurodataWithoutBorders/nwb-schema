@@ -25,10 +25,13 @@ groups:
   neurodata_type_inc: Events
   doc: A list of timestamps, stored in seconds, of an event that can have different labels. For example,
     this type could represent the times that reward was given, as well as which of three different 
-    types of reward was given. In this case, the 'labels' dataset would contain values from {0, 1, 2},
+    types of reward was given. In this case, the 'labels' dataset would contain values {0, 1, 2},
     and the 'label_map' would contain three text elements, where the first (index 0) specifies the
     name of the reward associated with a label = 0, the second (index 1) specifies the name of the
-    reward associated with a label = 1, etc. 
+    reward associated with a label = 1, etc. The labels do not have to start at 0 and do not need to be
+    sequential, e.g. the 'labels' dataset could contain values {0, 10, 100}, and the 'label_map' dataset
+    could contain 101 values, where label_map[0] is 'No reward', label_map[10] is '10% reward', 
+    label_map[100] is 'Full reward', and all other entries in 'label_map' are the empty string.
   datasets:
   - name: labels
     dtype: int
@@ -36,8 +39,9 @@ groups:
     - num_times
     shape:
     - null
-    doc: Values from 0 to number of elements in 'label_map' - 1. See the 'label_map' dataset for what
-      each label means. Should have the same number of elements as the 'timestamps' dataset.
+    doc: Integer labels that map onto strings using the mapping in the 'label_map' dataset. Values must
+      be 0 or greater and need not be sequential. This dataset should have the same number of elements 
+      as the 'timestamps' dataset.
   - name: label_map
     dtype: text
     dims:
@@ -45,4 +49,5 @@ groups:
     shape:
     - null
     doc: Mapping from an integer (the zero-based index) to a string, used to understand the integer
-      values in the 'labels' dataset
+      values in the 'labels' dataset. Use an empty string to represent a label value that is not
+      mapped to any text.
