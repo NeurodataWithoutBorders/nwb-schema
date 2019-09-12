@@ -15,7 +15,6 @@ groups:
     - null
     doc: Event timestamps, in seconds, relative to the common experiment master-clock stored in 
       NWBFile.timestamps_reference_time.
-    quantity: '?'
     attributes:
     - name: unit
       dtype: text
