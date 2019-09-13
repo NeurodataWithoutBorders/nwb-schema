@@ -42,7 +42,7 @@ groups:
     doc: Integer labels that map onto strings using the mapping in the 'label_map' dataset. Values must
       be 0 or greater and need not be sequential. This dataset should have the same number of elements 
       as the 'timestamps' dataset.
-  - name: label_map
+  - name: labels
     dtype: text
     dims:
     - num_values
