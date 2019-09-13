@@ -25,7 +25,7 @@ groups:
   neurodata_type_inc: Events
   doc: A list of timestamps, stored in seconds, of an event that can have different labels. For example,
     this type could represent the times that reward was given, as well as which of three different 
-    types of reward was given. In this case, the 'labels' dataset would contain values {0, 1, 2},
+    types of reward was given. In this case, the 'label_keys' dataset would contain values {0, 1, 2},
     and the 'label_map' would contain three text elements, where the first (index 0) specifies the
     name of the reward associated with a label = 0, the second (index 1) specifies the name of the
     reward associated with a label = 1, etc. The labels do not have to start at 0 and do not need to be
