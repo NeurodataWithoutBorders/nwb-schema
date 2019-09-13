@@ -10,7 +10,7 @@ groups:
   - name: timestamps
     dtype: float64
     dims:
-    - num_times
+    - num_events
     shape:
     - null
     doc: Event timestamps, in seconds, relative to the common experiment master-clock stored in 
