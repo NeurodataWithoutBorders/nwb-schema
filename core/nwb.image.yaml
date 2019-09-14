@@ -89,18 +89,21 @@ groups:
       shape:
       - null
       doc: Each external image may contain one or more consecutive frames of the full
-        ImageSeries. This field serves as an index to indicate what frames each file
-        contains, to faciliate random access. starting_frame, hence, contains for
-        each image in external_file field, the number of the first frame within the
-        full ImageSeries that is stored in the corresponding external image file.
-        Zero-based indexing is used (hence, the first element will always be zero).
+        ImageSeries. This attribute serves as an index to indicate which frames each file
+        contains, to faciliate random access. The 'starting_frame' attribute, hence,
+        contains a list of frame numbers within the full ImageSeries of the first frame
+        of each file listed in the parent 'external_file' dataset. Zero-based indexing is
+        used (hence, the first element will always be zero). For example, if the
+        'external_file' dataset has three paths to files and the first file has 5 frames,
+        the second file has 10 frames, and the third file has 20 frames, then this
+        attribute will have values [0, 5, 15].
   - name: format
     dtype: text
-    doc: Format of image. If this is 'external' then the field external_file contains
-      the path information to the image files. If this is 'raw', then the raw 
-      (single-channel) binary data is stored in the data field. If format is not
-      present then then the default format='raw' case is assumed.
-    quantity: '?'
+    doc: Format of image. If this is 'external', then the attribute 'external_file'
+      contains the path information to the image files. If this is 'raw', then the raw
+      (single-channel) binary data is stored in the 'data' dataset. If this attribute
+      is not present, then then the default format='raw' case is assumed.
+    quantity: '?''
 
 - neurodata_type_def: ImageMaskSeries
   neurodata_type_inc: ImageSeries
