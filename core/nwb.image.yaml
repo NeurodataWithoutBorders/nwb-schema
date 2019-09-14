@@ -102,7 +102,7 @@ groups:
     doc: Format of image. If this is 'external', then the attribute 'external_file'
       contains the path information to the image files. If this is 'raw', then the raw
       (single-channel) binary data is stored in the 'data' dataset. If this attribute
-      is not present, then then the default format='raw' case is assumed.
+      is not present, then the default format='raw' case is assumed.
     quantity: '?''
 
 - neurodata_type_def: ImageMaskSeries
