@@ -29,12 +29,3 @@ Are backends other than HDF5 supported?
 NWB:N currently only officially supports HDF5 as main storage backend. However, the PyNWB API has been
 designed to enable the design of custom read/write backends for the API, enabling other storage backends
 to be mapped to NWB:N.
-
-Common attributes
-=================
-
-All NWB:N Groups and Datasets have three required attributes: `neurodata_type`, `namespace`, and `object_id`.
-
-- ``neurodata_type`` (variable-length string) is the name of the NWB:N primitive that this group or dataset maps onto
-- ``namespace`` (variable-length string) is the namespace where ``neurodata_type`` is defined, e.g. "core" or the namespace of an extension
-- ``object_id`` (variable-length string) is a universally unique identifier for this object within its hierarchy. It should be set to the string representation of a random UUID version 4 value (see `RFC 4122 <https://tools.ietf.org/html/rfc4122>`_) upon first creation. Currently, modification of an object does not require its ``object_id`` to be changed.
