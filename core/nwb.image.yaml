@@ -99,11 +99,12 @@ groups:
         attribute will have values [0, 5, 15].
   - name: format
     dtype: text
+    default_value: raw
     doc: Format of image. If this is 'external', then the attribute 'external_file'
       contains the path information to the image files. If this is 'raw', then the raw
       (single-channel) binary data is stored in the 'data' dataset. If this attribute
       is not present, then the default format='raw' case is assumed.
-    quantity: '?''
+    quantity: '?'
 
 - neurodata_type_def: ImageMaskSeries
   neurodata_type_inc: ImageSeries
