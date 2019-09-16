@@ -307,19 +307,19 @@ groups:
         datasets:
         - name: x
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: x coordinate of the channel location.
         - name: y
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: y coordinate of the channel location.
         - name: z
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: z coordinate of the channel location.
         - name: imp
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: Impedance of the channel.
         - name: location
           neurodata_type_inc: VectorData
@@ -329,7 +329,7 @@ groups:
             standard atlas names for anatomical regions when possible.
         - name: filtering
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: Description of hardware filtering.
         - name: group
           neurodata_type_inc: VectorData

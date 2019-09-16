@@ -10,7 +10,7 @@ groups:
     appear backward (i.e., y before x).'
   datasets:
   - name: axis_1_phase_map
-    dtype: float
+    dtype: float32
     dims:
     - num_rows
     - num_cols
@@ -20,7 +20,7 @@ groups:
     doc: Phase response to stimulus on the first measured axis.
     attributes:
     - name: dimension
-      dtype: int
+      dtype: int32
       dims:
       - row_col
       shape:
@@ -28,7 +28,7 @@ groups:
       doc: 'Number of rows and columns in the image. NOTE: row, column representation
         is equivalent to height,width.'
     - name: field_of_view
-      dtype: float
+      dtype: float32
       dims:
       - row|column
       shape:
@@ -38,7 +38,7 @@ groups:
       dtype: text
       doc: Unit that axis data is stored in (e.g., degrees).
   - name: axis_1_power_map
-    dtype: float
+    dtype: float32
     dims:
     - num_rows
     - num_cols
@@ -50,7 +50,7 @@ groups:
     quantity: '?'
     attributes:
     - name: dimension
-      dtype: int
+      dtype: int32
       dims:
       - row_col
       shape:
@@ -58,7 +58,7 @@ groups:
       doc: 'Number of rows and columns in the image. NOTE: row, column representation
         is equivalent to height,width.'
     - name: field_of_view
-      dtype: float
+      dtype: float32
       dims:
       - row_col
       shape:
@@ -68,7 +68,7 @@ groups:
       dtype: text
       doc: Unit that axis data is stored in (e.g., degrees).
   - name: axis_2_phase_map
-    dtype: float
+    dtype: float32
     dims:
     - num_rows
     - num_cols
@@ -78,7 +78,7 @@ groups:
     doc: Phase response to stimulus on the second measured axis.
     attributes:
     - name: dimension
-      dtype: int
+      dtype: int32
       dims:
       - row_col
       shape:
@@ -86,7 +86,7 @@ groups:
       doc: 'Number of rows and columns in the image. NOTE: row, column representation
         is equivalent to height,width.'
     - name: field_of_view
-      dtype: float
+      dtype: float32
       dims:
       - row_col
       shape:
@@ -96,7 +96,7 @@ groups:
       dtype: text
       doc: Unit that axis data is stored in (e.g., degrees).
   - name: axis_2_power_map
-    dtype: float
+    dtype: float32
     dims:
     - num_rows
     - num_cols
@@ -108,7 +108,7 @@ groups:
     quantity: '?'
     attributes:
     - name: dimension
-      dtype: int
+      dtype: int32
       dims:
       - row_col
       shape:
@@ -116,7 +116,7 @@ groups:
       doc: 'Number of rows and columns in the image. NOTE: row, column representation
         is equivalent to height,width.'
     - name: field_of_view
-      dtype: float
+      dtype: float32
       dims:
       - row_col
       shape:
@@ -146,11 +146,11 @@ groups:
       wavelength) as data collection. Array format: [rows][columns].'
     attributes:
     - name: bits_per_pixel
-      dtype: int
+      dtype: int32
       doc: Number of bits used to represent each value. This is necessary to determine
         maximum (white) pixel value.
     - name: dimension
-      dtype: int
+      dtype: int32
       dims:
       - row_col
       shape:
@@ -158,20 +158,20 @@ groups:
       doc: 'Number of rows and columns in the image. NOTE: row, column representation
         is equivalent to height,width.'
     - name: field_of_view
-      dtype: float
+      dtype: float32
       dims:
       - row_col
       shape:
       - null
       doc: Size of viewing area, in meters.
     - name: focal_depth
-      dtype: float
+      dtype: float32
       doc: Focal depth offset, in meters.
     - name: format
       dtype: text
       doc: Format of image. Right now only 'raw' is supported.
   - name: sign_map
-    dtype: float
+    dtype: float32
     dims:
     - num_rows
     - num_cols
@@ -181,7 +181,7 @@ groups:
     doc: Sine of the angle between the direction of the gradient in axis_1 and axis_2.
     attributes:
     - name: dimension
-      dtype: int
+      dtype: int32
       dims:
       - row_col
       shape:
@@ -189,7 +189,7 @@ groups:
       doc: 'Number of rows and columns in the image. NOTE: row, column representation
         is equivalent to height,width.'
     - name: field_of_view
-      dtype: float
+      dtype: float32
       dims:
       - row_col
       shape:
@@ -206,11 +206,11 @@ groups:
     doc: 'Gray-scale anatomical image of cortical surface. Array structure: [rows][columns]'
     attributes:
     - name: bits_per_pixel
-      dtype: int
+      dtype: int32
       doc: Number of bits used to represent each value. This is necessary to determine
         maximum (white) pixel value
     - name: dimension
-      dtype: int
+      dtype: int32
       dims:
       - row_col
       shape:
@@ -218,7 +218,7 @@ groups:
       doc: 'Number of rows and columns in the image. NOTE: row, column representation
         is equivalent to height,width.'
     - name: field_of_view
-      dtype: float
+      dtype: float32
       dims:
       - row_col
       shape:

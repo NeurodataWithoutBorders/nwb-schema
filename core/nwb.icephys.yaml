@@ -26,7 +26,7 @@ groups:
         not necessarily stored in these units. To access the data in these units,
         multiply 'data' by 'conversion'.
   - name: gain
-    dtype: float
+    dtype: float32
     doc: Gain of the recording, in units Volt/Amp (v-clamp) or Volt/Volt (c-clamp).
     quantity: '?'
   links:
@@ -51,15 +51,15 @@ groups:
         Actual stored values are not necessarily stored in these units. To access the data in these units,
         multiply 'data' by 'conversion'.
   - name: bias_current
-    dtype: float
+    dtype: float32
     doc: Bias current, in amps.
     quantity: '?'
   - name: bridge_balance
-    dtype: float
+    dtype: float32
     doc: Bridge balance, in ohms.
     quantity: '?'
   - name: capacitance_compensation
-    dtype: float
+    dtype: float32
     doc: Capacitance compensation, in farads.
     quantity: '?'
 
@@ -71,15 +71,15 @@ groups:
     the amplifier is disconnected and no stimulus can reach the cell.
   datasets:
   - name: bias_current
-    dtype: float
+    dtype: float32
     value: 0.0
     doc: Bias current, in amps, fixed to 0.0.
   - name: bridge_balance
-    dtype: float
+    dtype: float32
     value: 0.0
     doc: Bridge balance, in ohms, fixed to 0.0.
   - name: capacitance_compensation
-    dtype: float
+    dtype: float32
     value: 0.0
     doc: Capacitance compensation, in farads, fixed to 0.0.
 
@@ -113,7 +113,7 @@ groups:
         Actual stored values are not necessarily stored in these units. To access the data in these units,
         multiply 'data' by 'conversion'.
   - name: capacitance_fast
-    dtype: float
+    dtype: float32
     doc: Fast capacitance, in farads.
     quantity: '?'
     attributes:
@@ -122,7 +122,7 @@ groups:
       value: farads
       doc: Unit of measurement for capacitance_fast, which is fixed to 'farads'.
   - name: capacitance_slow
-    dtype: float
+    dtype: float32
     doc: Slow capacitance, in farads.
     quantity: '?'
     attributes:
@@ -131,7 +131,7 @@ groups:
       value: farads
       doc: Unit of measurement for capacitance_fast, which is fixed to 'farads'.
   - name: resistance_comp_bandwidth
-    dtype: float
+    dtype: float32
     doc: Resistance compensation bandwidth, in hertz.
     quantity: '?'
     attributes:
@@ -140,7 +140,7 @@ groups:
       value: hertz
       doc: Unit of measurement for resistance_comp_bandwidth, which is fixed to 'hertz'.
   - name: resistance_comp_correction
-    dtype: float
+    dtype: float32
     doc: Resistance compensation correction, in percent.
     quantity: '?'
     attributes:
@@ -149,7 +149,7 @@ groups:
       value: percent
       doc: Unit of measurement for resistance_comp_correction, which is fixed to 'percent'.
   - name: resistance_comp_prediction
-    dtype: float
+    dtype: float32
     doc: Resistance compensation prediction, in percent.
     quantity: '?'
     attributes:
@@ -158,7 +158,7 @@ groups:
       value: percent
       doc: Unit of measurement for resistance_comp_prediction, which is fixed to 'percent'.
   - name: whole_cell_capacitance_comp
-    dtype: float
+    dtype: float32
     doc: Whole cell capacitance compensation, in farads.
     quantity: '?'
     attributes:
@@ -167,7 +167,7 @@ groups:
       value: farads
       doc: Unit of measurement for whole_cell_capacitance_comp, which is fixed to 'farads'.
   - name: whole_cell_series_resistance_comp
-    dtype: float
+    dtype: float32
     doc: Whole cell series resistance compensation, in ohms.
     quantity: '?'
     attributes:

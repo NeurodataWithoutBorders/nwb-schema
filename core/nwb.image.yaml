@@ -63,7 +63,7 @@ groups:
     doc: Binary data representing images across frames.
     quantity: '?'
   - name: dimension
-    dtype: int
+    dtype: int32
     dims:
     - rank
     shape:
@@ -83,7 +83,7 @@ groups:
     quantity: '?'
     attributes:
     - name: starting_frame
-      dtype: int
+      dtype: int32
       dims:
       - num_files
       shape:
@@ -129,11 +129,11 @@ groups:
     represents acquired imaging data, orientation is also important.
   datasets:
   - name: distance
-    dtype: float
+    dtype: float32
     doc: Distance from camera/monitor to target/eye.
     quantity: '?'
   - name: field_of_view
-    dtype: float
+    dtype: float32
     dims:
     - - width, height
     - - width, height, depth
@@ -158,7 +158,7 @@ groups:
     the timestamps array indicates when that image was displayed.
   datasets:
   - name: data
-    dtype: int
+    dtype: int32
     dims:
     - num_times
     shape:

@@ -37,7 +37,7 @@ datasets:
 - neurodata_type_def: ElementIdentifiers
   neurodata_type_inc: NWBData
   default_name: element_id
-  dtype: int
+  dtype: int32
   dims:
   - num_elements
   shape:
@@ -46,7 +46,7 @@ datasets:
 
 - neurodata_type_def: DynamicTableRegion
   neurodata_type_inc: VectorData
-  dtype: int
+  dtype: int32
   doc: A region/index into a DynamicTable.
   attributes:
   - name: table
@@ -83,7 +83,7 @@ datasets:
     (x, y, (r, g, b, a)).
   attributes:
   - name: resolution
-    dtype: float
+    dtype: float32
     doc: Pixel resolution of the image, in pixels per centimeter.
     required: false
   - name: description
@@ -146,7 +146,7 @@ groups:
       (e.g., image frames). This can also be a link to data stored in an external file.
     attributes:
     - name: conversion
-      dtype: float
+      dtype: float32
       default_value: 1.0
       doc: Scalar to multiply each element in data to convert it to the specified 'unit'.
         If the data are stored in acquisition system units or other units
@@ -158,7 +158,7 @@ groups:
         raw data acquisition values to recorded volts is 2.5/32768/8000 = 9.5367e-9.
       required: false
     - name: resolution
-      dtype: float
+      dtype: float32
       default_value: -1.0
       doc: Smallest meaningful difference between values in data, stored in the specified
         by unit, e.g., the change in value of the least significant bit, or a larger
@@ -170,21 +170,21 @@ groups:
         not necessarily stored in these units. To access the data in these units,
         multiply 'data' by 'conversion'.
   - name: starting_time
-    dtype: float
+    dtype: float32
     doc: Timestamp of the first sample in seconds. When timestamps are uniformly
       spaced, the timestamp of the first sample can be specified and all subsequent
       ones calculated from the sampling rate attribute.
     quantity: '?'
     attributes:
     - name: rate
-      dtype: float
+      dtype: float32
       doc: Sampling rate, in Hz.
     - name: unit
       dtype: text
       value: seconds
       doc: Unit of measurement for time, which is fixed to 'seconds'.
   - name: timestamps
-    dtype: float
+    dtype: float32
     dims:
     - num_times
     shape:
@@ -194,7 +194,7 @@ groups:
     quantity: '?'
     attributes:
     - name: interval
-      dtype: int
+      dtype: int32
       value: 1
       doc: Value is '1'
     - name: unit
@@ -292,7 +292,7 @@ groups:
   datasets:
   - name: id
     neurodata_type_inc: ElementIdentifiers
-    dtype: int
+    dtype: int32
     dims:
     - num_rows
     shape:
