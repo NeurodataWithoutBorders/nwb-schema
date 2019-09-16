@@ -1,7 +1,7 @@
 Release Notes
 =============
 
-2.1.0 (August 2019)
+2.1.0 (September 2019)
 -------------------
 
 - Improved documentation in "doc" attribute of many types
@@ -31,7 +31,7 @@ Release Notes
 - ElectrodeGroup link "device": optional -> required
 
   - This was previously required by PyNWB
-  - See https://github.com/NeurodataWithoutBorders/pynwb/issues/1025for details
+  - See https://github.com/NeurodataWithoutBorders/pynwb/issues/1025 for details
 
 - Matched default and fixed values of datasets and attributes with the documentation and intended use
 
@@ -83,6 +83,10 @@ Release Notes
     intend to share. As such, published data should not include scratch data and a user should be able
     to ignore any data stored in scratch to use a file.
   - See https://github.com/NeurodataWithoutBorders/nwb-schema/issues/286 for details
+
+- Set the default value for the dataset "format" to "raw" and clarified the documentation for ImageSeries
+
+  - See https://github.com/NeurodataWithoutBorders/nwb-schema/pull/308/files for details
 
 **Backwards compatibility:** The PyNWB and MatNWB APIs can read 2.0 files with the 2.1 schema.
 
