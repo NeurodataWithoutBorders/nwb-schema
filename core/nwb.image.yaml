@@ -76,7 +76,7 @@ groups:
     - num_files
     shape:
     - null
-    doc: Paths to one or more external file(s). The field is only present if format=external.
+    doc: Paths to one or more external file(s). The field is only present if format='external'.
       This is only relevant if the image series is stored in the file system as one
       or more image file(s). This field should NOT be used if the image is stored
       in another NWB file and that file is linked to this file.
@@ -96,7 +96,9 @@ groups:
         used (hence, the first element will always be zero). For example, if the
         'external_file' dataset has three paths to files and the first file has 5 frames,
         the second file has 10 frames, and the third file has 20 frames, then this
-        attribute will have values [0, 5, 15].
+        attribute will have values [0, 5, 15]. If there is a single external file that
+        holds all of the frames of the ImageSeries (and so there is a single element in
+        the 'external_file' dataset), then this attribute should have value [0]. 
   - name: format
     dtype: text
     default_value: raw
