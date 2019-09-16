@@ -1,6 +1,108 @@
 Release Notes
 =============
 
+2.1.0 (September 2019)
+-------------------
+
+- Improved documentation in "doc" attribute of many types
+
+- Removed "help" attribute
+
+  - Now that the schema is cached in an NWB file by default, this attribute is redundant, confusing, used inconsistently, clutters the file and documentation, and adds substantial boilerplate to writing extensions
+  - See https://github.com/NeurodataWithoutBorders/nwb-schema/issues/270 for details
+
+- Removed static "description" attribute from some types
+
+  - These were intended to be a "help" attribute, which has now been removed
+  - For example, TimeIntervals dataset "start_time" attribute "description" had a fixed value that is now removed
+
+- Reordered keys
+
+  - This standardizes the order of keys across types and makes the schema more readable
+  - See https://github.com/NeurodataWithoutBorders/nwb-schema/issues/274 for details
+
+- Added "dims" attribute for datasets where "shape" was specified without "dims"
+
+  - The "dims" attribute describes the data along each dimension of the dataset and is helpful to provide alongside "shape"
+  - For example, NWBFile dataset "keywords" has attribute "shape" has one entry: "null". The attribute "dims" was added with one entry: "num_keywords"
+
+- Removed redundant specifications that are inherited from a parent type
+
+- ElectrodeGroup link "device": optional -> required
+
+  - This was previously required by PyNWB
+  - See https://github.com/NeurodataWithoutBorders/pynwb/issues/1025 for details
+
+- Matched default and fixed values of datasets and attributes with the documentation and intended use
+
+  - IZeroClampSeries dataset "bias_current" unspecified value -> fixed value 0.0
+  - IZeroClampSeries dataset "bridge_balance" unspecified value -> fixed value 0.0
+  - IZeroClampSeries dataset "capacitance_compensation" unspecified value -> fixed value 0.0
+  - TimeSeries dataset "resolution" default value: 0.0 -> -1.0
+  - ImagingRetinotopy dataset "axis_descriptions" attribute "shape": null -> 2
+  - DecompositionSeries dataset "data" attribute "unit" default value unspecified -> default value "no unit"
+  - VoltageClampStimulusSeries, CurrentClampSeries, IZeroClampSeries attribute "unit" has fixed value "volts"
+  - CurrentClampStimulusSeries, VoltageClampSeries, attribute "unit" has fixed value "amperes"
+
+- NWBFile dataset "experimenter" and "related_publications" change from scalar to 1-D, unlimited arrays
+
+  - This allows the "experimenter" and "related_publications" dataset to encode multiple values
+  - See https://github.com/NeurodataWithoutBorders/pynwb/issues/985 and https://github.com/NeurodataWithoutBorders/nwb-schema/issues/299 for details
+
+- Standardized units to be plural, lower-case, SI units
+
+  - TimeSeries dataset "starting_time" attribute "unit" fixed value: "Seconds" -> "seconds"
+  - TimeSeries dataset "timestamps" attribute "unit" fixed value: "Seconds" -> "seconds"
+  - ElectricalSeries dataset "data" attribute "unit" default value (previously optional): "volt" -> fixed value "volts"
+  - SpikeEventSeries dataset "data" attribute "unit" default value (previously optional): "volt" -> fixed value "volts"
+  - SpikeEventSeries dataset "timestamps" attribute "unit" fixed value (previously optional): "Seconds" -> fixed value "seconds"
+  - EventDetection dataset "times" attribute "unit" default value: "Seconds" -> "seconds"
+  - VoltageClampSeries dataset "capacitance_fast" attribute "unit" default value "Farad" -> fixed value "farads"
+  - VoltageClampSeries dataset "capacitance_slow" attribute "unit" default value "Farad" -> fixed value "farads"
+  - VoltageClampSeries dataset "resistance_comp_bandwidth" attribute "unit" default value "Hz" -> fixed value "hertz"
+  - VoltageClampSeries dataset "resistance_comp_correction" attribute "unit" default value "percent" -> fixed value "percent"
+  - VoltageClampSeries dataset "resistance_comp_prediction" attribute "unit" default value "percent" -> fixed value "percent"
+  - VoltageClampSeries dataset "whole_cell_capacitance_comp" attribute "unit" default value "Farad" -> fixed value "farads"
+  - VoltageClampSeries dataset "whole_cell_series_resistance_comp" attribute "unit" default value "Ohm" -> fixed value "ohms"
+  - OptogeneticSeries dataset "data" attribute "unit" default value "watt" -> fixed value "watts"
+  - ImagingPlane dataset "manifold" attribute "unit" default value "Meter" -> default value "meters"
+  - see https://github.com/NeurodataWithoutBorders/nwb-schema/issues/277 for details
+
+- Made Units table column "waveform_mean" and "waveform_sd" have shape num_units x num_samples x num_electrodes
+
+  - See https://github.com/NeurodataWithoutBorders/pynwb/pull/1008 for details
+
+- Made CorrectedImageStack and ImagingRetinotopy inherit from the more specific NWBDataInterface instead of NWBContainer
+
+- Added a scratch space for saving arbitrary datasets to an NWBFile
+
+  - NWB is cumbersome as a format for day-to-day work. There is a lot of overheard to save one-off analysis results to an NWB file. To save new datasets, a user has write an extension. This is a lot of work for a result that may just be tossed out.
+  - "scratch" is now an optional top-level group under NWBFile that can hold NWBContainer groups and ScratchData datasets
+  - The scratch space is explicitly for non-standardized data that is not intended for reuse
+    by others. Standard NWB:N types, and extensions if required, should always be used for any data that you
+    intend to share. As such, published data should not include scratch data and a user should be able
+    to ignore any data stored in scratch to use a file.
+  - See https://github.com/NeurodataWithoutBorders/nwb-schema/issues/286 for details
+
+- Set the default value for the dataset "format" to "raw" and clarified the documentation for ImageSeries
+
+  - See https://github.com/NeurodataWithoutBorders/nwb-schema/pull/308/files for details
+
+**Backwards compatibility:** The PyNWB and MatNWB APIs can read 2.0 files with the 2.1 schema.
+
+2.0.2 (June 2019)
+-----------------
+
+- Updated authors
+
+- Removed NWBFile subgroup "specifications" because schema is now cached
+
+  - See https://github.com/NeurodataWithoutBorders/pynwb/pull/953 for details
+
+- Made DecompositionSeries link "source_timeseries" optional
+
+  - See https://github.com/NeurodataWithoutBorders/pynwb/pull/955 for details
+
 2.0.1 (March 2019)
 ------------------
 
@@ -10,7 +112,7 @@ Release Notes
 making it easier to sort ``neurodata_types`` into meaningful categories (i.e., sections) with approbriate tiles and
 descriptions.
 
-**Backwards compatibility:** No changes to the actual specification fo the format are made. 2.0.1 is fully compatible
+**Backwards compatibility:** No changes to the actual specification of the format are made. 2.0.1 is fully compatible
 with 2.0.0.
 
 
@@ -661,7 +763,7 @@ Removed ``ancestry`` field
 and 3) avoid possible inconsistencies between the ancestry attribute and the true ancestry (i.e., inheritance hierarchy)
 as defined by the spec.
 
-**Note** The new specification API as part of PyNWB/FORM makes the ancestry still easily accessible to users. As
+**Note** The new specification API as part of PyNWB/HDMF makes the ancestry still easily accessible to users. As
 the ancestry can be easily extracted from the spec, we currently do not write a separate ancestry attribute
 but this could be easily added if needed. (see also `PR707 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/707>`_,
 `I24 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/24>`_)
@@ -1007,4 +1109,3 @@ without making all subfolders mandatory here.
 - Convert document to .html
 - ``TwoPhotonSeries::imaging\_plane`` was upgraded to mandatory to help
   enforce inclusion of important metadata in the file.
-
