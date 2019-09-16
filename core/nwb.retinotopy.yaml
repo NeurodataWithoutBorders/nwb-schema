@@ -10,7 +10,7 @@ groups:
     appear backward (i.e., y before x).'
   datasets:
   - name: axis_1_phase_map
-    dtype: float32
+    dtype: float
     dims:
     - num_rows
     - num_cols
@@ -20,7 +20,7 @@ groups:
     doc: Phase response to stimulus on the first measured axis.
     attributes:
     - name: dimension
-      dtype: int32
+      dtype: int
       dims:
       - row_col
       shape:
@@ -38,7 +38,7 @@ groups:
       dtype: text
       doc: Unit that axis data is stored in (e.g., degrees).
   - name: axis_1_power_map
-    dtype: float32
+    dtype: float
     dims:
     - num_rows
     - num_cols
@@ -50,7 +50,7 @@ groups:
     quantity: '?'
     attributes:
     - name: dimension
-      dtype: int32
+      dtype: int
       dims:
       - row_col
       shape:
@@ -68,7 +68,7 @@ groups:
       dtype: text
       doc: Unit that axis data is stored in (e.g., degrees).
   - name: axis_2_phase_map
-    dtype: float32
+    dtype: float
     dims:
     - num_rows
     - num_cols
@@ -78,7 +78,7 @@ groups:
     doc: Phase response to stimulus on the second measured axis.
     attributes:
     - name: dimension
-      dtype: int32
+      dtype: int
       dims:
       - row_col
       shape:
@@ -96,7 +96,7 @@ groups:
       dtype: text
       doc: Unit that axis data is stored in (e.g., degrees).
   - name: axis_2_power_map
-    dtype: float32
+    dtype: float
     dims:
     - num_rows
     - num_cols
@@ -108,7 +108,7 @@ groups:
     quantity: '?'
     attributes:
     - name: dimension
-      dtype: int32
+      dtype: int
       dims:
       - row_col
       shape:
@@ -146,11 +146,11 @@ groups:
       wavelength) as data collection. Array format: [rows][columns].'
     attributes:
     - name: bits_per_pixel
-      dtype: int32
+      dtype: int
       doc: Number of bits used to represent each value. This is necessary to determine
         maximum (white) pixel value.
     - name: dimension
-      dtype: int32
+      dtype: int
       dims:
       - row_col
       shape:
@@ -171,7 +171,7 @@ groups:
       dtype: text
       doc: Format of image. Right now only 'raw' is supported.
   - name: sign_map
-    dtype: float32
+    dtype: float
     dims:
     - num_rows
     - num_cols
@@ -181,7 +181,7 @@ groups:
     doc: Sine of the angle between the direction of the gradient in axis_1 and axis_2.
     attributes:
     - name: dimension
-      dtype: int32
+      dtype: int
       dims:
       - row_col
       shape:
@@ -206,11 +206,11 @@ groups:
     doc: 'Gray-scale anatomical image of cortical surface. Array structure: [rows][columns]'
     attributes:
     - name: bits_per_pixel
-      dtype: int32
+      dtype: int
       doc: Number of bits used to represent each value. This is necessary to determine
         maximum (white) pixel value
     - name: dimension
-      dtype: int32
+      dtype: int
       dims:
       - row_col
       shape:

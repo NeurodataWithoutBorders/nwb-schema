@@ -25,11 +25,11 @@ groups:
     neurodata_type_inc: VectorData
     dtype:
     - name: idx_start
-      dtype: int32
+      dtype: int
       doc: Start index into the TimeSeries 'data' and 'timestamp' datasets of the
         referenced TimeSeries. The first dimension of those arrays is always time.
     - name: count
-      dtype: int32
+      dtype: int
       doc: Number of data samples available in this time series, during this epoch.
     - name: timeseries
       dtype:

@@ -146,7 +146,7 @@ groups:
       (e.g., image frames). This can also be a link to data stored in an external file.
     attributes:
     - name: conversion
-      dtype: float32
+      dtype: float
       default_value: 1.0
       doc: Scalar to multiply each element in data to convert it to the specified 'unit'.
         If the data are stored in acquisition system units or other units
@@ -158,7 +158,7 @@ groups:
         raw data acquisition values to recorded volts is 2.5/32768/8000 = 9.5367e-9.
       required: false
     - name: resolution
-      dtype: float32
+      dtype: float
       default_value: -1.0
       doc: Smallest meaningful difference between values in data, stored in the specified
         by unit, e.g., the change in value of the least significant bit, or a larger
@@ -170,21 +170,21 @@ groups:
         not necessarily stored in these units. To access the data in these units,
         multiply 'data' by 'conversion'.
   - name: starting_time
-    dtype: float64
+    dtype: float
     doc: Timestamp of the first sample in seconds. When timestamps are uniformly
       spaced, the timestamp of the first sample can be specified and all subsequent
       ones calculated from the sampling rate attribute.
     quantity: '?'
     attributes:
     - name: rate
-      dtype: float32
+      dtype: float
       doc: Sampling rate, in Hz.
     - name: unit
       dtype: text
       value: seconds
       doc: Unit of measurement for time, which is fixed to 'seconds'.
   - name: timestamps
-    dtype: float64
+    dtype: float
     dims:
     - num_times
     shape:
@@ -194,7 +194,7 @@ groups:
     quantity: '?'
     attributes:
     - name: interval
-      dtype: int32
+      dtype: int
       value: 1
       doc: Value is '1'
     - name: unit

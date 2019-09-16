@@ -65,7 +65,7 @@ groups:
       value: volts
       doc: Unit of measurement for waveforms, which is fixed to 'volts'.
   - name: timestamps
-    dtype: float64
+    dtype: float
     dims:
     - num_times
     shape:
@@ -76,7 +76,7 @@ groups:
       required for SpikeEventSeries and are thus re-specified here.
     attributes:
     - name: interval
-      dtype: int32
+      dtype: int
       value: 1
       doc: Value is '1'
     - name: unit
@@ -98,7 +98,7 @@ groups:
     - null
     doc: Description of features (eg, ''PC1'') for each of the extracted features.
   - name: features
-    dtype: float32
+    dtype: float
     dims:
     - num_events
     - num_channels
@@ -109,7 +109,7 @@ groups:
     - null
     doc: Multi-dimensional array of features extracted from each event.
   - name: times
-    dtype: float64
+    dtype: float
     dims:
     - num_events
     shape:
@@ -129,7 +129,7 @@ groups:
     doc: Description of how events were detected, such as voltage threshold, or dV/dT
       threshold, as well as relevant values.
   - name: source_idx
-    dtype: int32
+    dtype: int
     dims:
     - num_events
     shape:
@@ -139,7 +139,7 @@ groups:
       event (e.g., .25 ms before action potential peak, zero-crossing time, etc).
       The index points to each event from the raw data.
   - name: times
-    dtype: float64
+    dtype: float
     dims:
     - num_events
     shape:
@@ -229,7 +229,7 @@ groups:
     dtype: text
     doc: Filtering applied to data before generating mean/sd
   - name: waveform_mean
-    dtype: float32
+    dtype: float
     dims:
     - num_clusters
     - num_samples
@@ -241,7 +241,7 @@ groups:
       array slot [3]). Waveforms corresponding to gaps in cluster sequence should
       be empty (e.g., zero- filled)
   - name: waveform_sd
-    dtype: float32
+    dtype: float
     dims:
     - num_clusters
     - num_samples
@@ -265,14 +265,14 @@ groups:
     doc: Description of clusters or clustering, (e.g. cluster 0 is noise, clusters
       curated using Klusters, etc)
   - name: num
-    dtype: int32
+    dtype: int
     dims:
     - num_events
     shape:
     - null
     doc: Cluster number of each event
   - name: peak_over_rms
-    dtype: float32
+    dtype: float
     dims:
     - num_clusters
     shape:
@@ -280,7 +280,7 @@ groups:
     doc: Maximum ratio of waveform peak to RMS on any channel in the cluster (provides
       a basic clustering metric).
   - name: times
-    dtype: float64
+    dtype: float
     dims:
     - num_events
     shape:

@@ -4,18 +4,18 @@ groups:
   doc: Image stack recorded over time from 2-photon microscope.
   attributes:
   - name: pmt_gain
-    dtype: float32
+    dtype: float
     doc: Photomultiplier gain.
     required: false
   - name: scan_line_rate
-    dtype: float32
+    dtype: float
     doc: Lines imaged per second. This is also stored in /general/optophysiology but
       is kept here as it is useful information for analysis, and so good to be stored
       w/ the actual data.
     required: false
   datasets:
   - name: field_of_view
-    dtype: float32
+    dtype: float
     dims:
     - width|height
     - width|height|depth
@@ -189,7 +189,7 @@ groups:
       of area/layer, stereotaxic coordinates if in vivo, etc. Use standard atlas
       names for anatomical regions when possible.
   - name: manifold
-    dtype: float32
+    dtype: float
     dims:
     - - height
       - width

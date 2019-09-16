@@ -63,7 +63,7 @@ groups:
     doc: Binary data representing images across frames.
     quantity: '?'
   - name: dimension
-    dtype: int32
+    dtype: int
     dims:
     - rank
     shape:
@@ -129,11 +129,11 @@ groups:
     represents acquired imaging data, orientation is also important.
   datasets:
   - name: distance
-    dtype: float32
+    dtype: float
     doc: Distance from camera/monitor to target/eye.
     quantity: '?'
   - name: field_of_view
-    dtype: float32
+    dtype: float
     dims:
     - - width, height
     - - width, height, depth
