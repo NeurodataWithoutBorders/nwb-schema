@@ -206,7 +206,8 @@ data processing.
 Common attributes
 -----------------
 
-All NWB:N Groups and Datasets have three required attributes: `neurodata_type`, `namespace`, and `object_id`.
+All NWB:N Groups and Datasets with an assigned neurodata_type have three required attributes: `neurodata_type`,
+`namespace`, and `object_id`.
 
 - ``neurodata_type`` (variable-length string) is the name of the NWB:N primitive that this group or dataset maps onto
 - ``namespace`` (variable-length string) is the namespace where ``neurodata_type`` is defined, e.g. "core" or the
