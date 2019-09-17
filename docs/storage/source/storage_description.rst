@@ -15,7 +15,7 @@ basic primitives, e.g., Files, Groups, Datasets, Attributes, and Links to descri
 The role of the data storage then is to store large collections of neuroscience data. In other words,
 the role of the storage is to map NWB:N primitives (and types, i.e., neurodata_types) to persistent storage.
 For an overview of the various components of the NWB:N project
-see `here <http://nwb-overview.readthedocs.io/en/latest/nwbintro.html>`_ .
+see `here <https://neurodatawithoutborders.github.io/overview>`_ .
 
 How are NWB:N files stored?
 ===========================
