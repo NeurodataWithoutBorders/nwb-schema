@@ -29,10 +29,27 @@ groups:
       value: volts
       doc: Base unit of measurement for working with the data. This value is fixed to
         'volts'. Actual stored values are not necessarily stored in these units. To
-        access the data in these units, multiply 'data' by 'conversion'.
+        access the data in these units, multiply 'data' by 'conversion' and
+        'channel_conversion' (if present).
   - name: electrodes
     neurodata_type_inc: DynamicTableRegion
     doc: DynamicTableRegion pointer to the electrodes that this time series was generated from.
+  - name: channel_conversion
+    dtype: float
+    dims:
+    - num_channels
+    shape:
+    - null
+    doc: Channel-specific conversion factor. Multiply the data in the 'data' dataset by these
+      values on a per-channel basis AND by the global conversion factor in the 'conversion'
+      attribute of 'data' to get the data values in Volts.
+    quantity: '?'
+    attributes:
+    - name: axis
+      dtype: int
+      value: 1
+      doc: The zero-indexed axis of the 'data' dataset that the channel-specific conversion
+        factor corresponds to. This value is fixed to 1.
 
 - neurodata_type_def: SpikeEventSeries
   neurodata_type_inc: ElectricalSeries
