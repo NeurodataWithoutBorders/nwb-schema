@@ -38,8 +38,9 @@ groups:
   neurodata_type_inc: TimeSeries
   doc: General image data that is common between acquisition and stimulus time series.
     Sometimes the image data is stored in the file in a raw format while other
-    times it will be stored as an external image file in the host file system. The
-    data field will either be binary data or empty. [frame][y][x] or [frame][z][y][x].
+    times it will be stored as a series of external image files in the host file system.
+    The data field will either be binary data, if the data is stored in the NWB file, or
+    empty, if the data is stored in an external image stack. [frame][y][x] or [frame][z][y][x].
   datasets:
   - name: data
     dtype: numeric
@@ -75,8 +76,8 @@ groups:
     - num_files
     shape:
     - null
-    doc: Paths or URLs to one or more external file(s). Field only present if format=external.
-      This is only relevant if the image is stored in the file system as one
+    doc: Paths to one or more external file(s). The field is only present if format='external'.
+      This is only relevant if the image series is stored in the file system as one
       or more image file(s). This field should NOT be used if the image is stored
       in another NWB file and that file is linked to this file.
     quantity: '?'
@@ -87,17 +88,24 @@ groups:
       - num_files
       shape:
       - null
-      doc: Each entry is the frame number (within the full ImageSeries) of the first
-        frame in the corresponding external_file entry. This serves as an index to
-        what frames each file contains, allowing random access.Zero-based indexing
-        is used. (The first element will always be zero).
+      doc: Each external image may contain one or more consecutive frames of the full
+        ImageSeries. This attribute serves as an index to indicate which frames each file
+        contains, to faciliate random access. The 'starting_frame' attribute, hence,
+        contains a list of frame numbers within the full ImageSeries of the first frame
+        of each file listed in the parent 'external_file' dataset. Zero-based indexing is
+        used (hence, the first element will always be zero). For example, if the
+        'external_file' dataset has three paths to files and the first file has 5 frames,
+        the second file has 10 frames, and the third file has 20 frames, then this
+        attribute will have values [0, 5, 15]. If there is a single external file that
+        holds all of the frames of the ImageSeries (and so there is a single element in
+        the 'external_file' dataset), then this attribute should have value [0]. 
   - name: format
     dtype: text
-    doc: Format of image. If this is 'external' then the field external_file contains
-      the path or URL information to that file. For tiff, png, jpg, etc, the binary
-      representation of the image is stored in data. If the format is raw then the
-      fields bit_per_pixel and dimension are used. For raw images, only a single channel
-      is stored (e.g., red).
+    default_value: raw
+    doc: Format of image. If this is 'external', then the attribute 'external_file'
+      contains the path information to the image files. If this is 'raw', then the raw
+      (single-channel) binary data is stored in the 'data' dataset. If this attribute
+      is not present, then the default format='raw' case is assumed.
     quantity: '?'
 
 - neurodata_type_def: ImageMaskSeries

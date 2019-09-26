@@ -203,6 +203,23 @@ Extending *NWBContainer* works in the same way, e.g., to create more specific ty
 data processing.
 
 
+Common attributes
+-----------------
+
+All NWB:N Groups and Datasets with an assigned neurodata_type have three required attributes: `neurodata_type`,
+`namespace`, and `object_id`.
+
+- ``neurodata_type`` (variable-length string) is the name of the NWB:N primitive that this group or dataset maps onto
+- ``namespace`` (variable-length string) is the namespace where ``neurodata_type`` is defined, e.g. "core" or the
+namespace of an extension
+- ``object_id`` (variable-length string) is a universally unique identifier for this object within its hierarchy.
+It should be set to the string representation of a random UUID version 4 value
+(see `RFC 4122 <https://tools.ietf.org/html/rfc4122>`_) upon first creation. It is **not** a hash of the data. Files
+that contain the exact same data but were generated in different instances will have different ``object_id`` values.
+Currently, modification of an object does not require its ``object_id`` to be changed.
+
+
+
 Comments and Definitions
 ========================
 
@@ -313,4 +330,3 @@ The timestamps\_link and data\_link fields refer to links made between
 time series, such as if timeseries A and timeseries B, each having
 different data (or time) share time (or data). This is much more
 important information as it shows structural associations in the data.
-
