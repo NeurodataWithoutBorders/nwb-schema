@@ -78,7 +78,7 @@ groups:
       doc: Custom analysis results.
       quantity: '*'
     - neurodata_type_inc: DynamicTable
-      doc: Tabular data that is relevent to acquisition
+      doc: Tabular data that is relevent to data stored in analysis
       quantity: '*'
   - name: scratch
     doc: 'A place to store one-off analysis results. Data placed here is not intended for
