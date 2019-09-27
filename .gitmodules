@@ -1,0 +1,3 @@
+[submodule "hdmf-common-schema"]
+	path = hdmf-common-schema
+	url = https://github.com/hdmf-dev/hdmf-common-schema.git
