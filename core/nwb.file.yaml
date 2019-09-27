@@ -89,6 +89,9 @@ groups:
     - neurodata_type_inc: NWBContainer
       doc: Any one-off containers
       quantity: '*'
+    - neurodata_type_inc: DynamicTable
+      doc: Any one-off tables
+      quantity: '*'
     datasets:
     - neurodata_type_def: ScratchData
       neurodata_type_inc: NWBData
