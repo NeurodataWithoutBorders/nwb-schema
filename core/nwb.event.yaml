@@ -8,7 +8,7 @@ groups:
     doc: Description of the event.
   datasets:
   - name: timestamps
-    dtype: float64
+    dtype: float
     dims:
     - num_events
     shape:
