@@ -226,7 +226,7 @@ groups:
       default_value: meters
       doc: Base unit of measurement for working with the data. The default value is 'meters'.
       required: false
-  - name: pixel_origin
+  - name: origin_coords
     dtype: float
     dims:
     - x, y
@@ -234,14 +234,14 @@ groups:
     shape:
     - 2
     - 3
-    doc: Location of the origin in x, y or x, y, z, in the specified unit.
+    doc: Location of the origin in (x, y) or (x, y, z), in the specified unit.
     required: false
     attributes:
     - name: unit
       dtype: text
       default_value: meters
-      doc: Measurement units for pixel_origin. The default value is 'meters'.
-  - name: pixel_deltas
+      doc: Measurement units for origin_coords. The default value is 'meters'.
+  - name: grid_spacing
     dtype: float
     dims:
     - x, y
@@ -249,14 +249,14 @@ groups:
     shape:
     - 2
     - 3
-    doc: Space between pixels in x, y or x, y, z directions, in the specified unit.
+    doc: Space between pixels in (x, y) or voxels in (x, y, z) directions, in the specified unit.
       Assumes imaging plane is a regular grid.
     required: false
     attributes:
     - name: unit
       dtype: text
       default_value: meters
-      doc: Measurement units for pixel_deltas. The default value is 'meters'.
+      doc: Measurement units for grid_spacing. The default value is 'meters'.
   - name: reference_frame
     dtype: text
     doc: Describes position and reference frame of manifold based on position of
