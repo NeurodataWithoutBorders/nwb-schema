@@ -1958,7 +1958,7 @@
                         "data_type": "text"
                     },
                     "nwb_version": {
-                        "description": "File version string. COMMENT: Eg, NWB-1.0.0. This will be the name of the format with trailing major, minor and patch numbers.",
+                        "description": "File version string. COMMENT: Eg, 2.1.0. This will be the name of the format with trailing major, minor and patch numbers.",
                         "data_type": "text"
                     }
                 },
