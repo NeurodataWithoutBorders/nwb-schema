@@ -234,13 +234,9 @@ groups:
     shape:
     - 2
     - 3
-    doc: Location of the origin in (x, y) or (x, y, z), in the specified unit.
+    doc: Pixel location of the origin in (x, y) or (x, y, z), zero-indexed. See also reference_frame to interpret the
+      origin.
     required: false
-    attributes:
-    - name: unit
-      dtype: text
-      default_value: meters
-      doc: Measurement units for origin_coords. The default value is 'meters'.
   - name: grid_spacing
     dtype: float
     dims:
