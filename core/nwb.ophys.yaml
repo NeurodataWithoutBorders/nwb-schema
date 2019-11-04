@@ -246,7 +246,7 @@ groups:
     - 2
     - 3
     doc: Space between pixels in (x, y) or voxels in (x, y, z) directions, in the specified unit.
-      Assumes imaging plane is a regular grid.
+      Assumes imaging plane is a regular grid. See also reference_frame to interpret the grid.
     required: false
     attributes:
     - name: unit
@@ -260,6 +260,13 @@ groups:
       defined by origin_coords and grid_spacing or the vectors needed to transform or rotate the grid to
       a common anatomical axis (e.g., AP/DV/ML). This field is necessary to interpret origin_coords and grid_spacing.
       If origin_coords and grid_spacing are not present, then this field is not required.
+      For example, if the microscope takes 10 x 10 x 2 images, where the origin, here defined as bregma, is at pixel
+      (x=6, y=8, z=0) zero-indexed, the spacing between pixels is 0.2 mm in x and 0.2 mm in y and 0.5 mm in z, and
+      larger numbers in x means more anterior, larger numbers in y means more rightward, and larger numbers in z means
+      more ventral, then enter the following -- origin_coords = (6, 8, 0), grid_spacing = (0.2, 0.2, 0.5), and
+      reference_frame = "First dimension corresponds to anterior-posterior axis (larger index = more anterior). Second
+      dimension corresponds to medial-lateral axis (larger index = more rightward). Third dimension corresponds to
+      dorsal-ventral axis (larger index = more ventral). The origin is at bregma."
     quantity: '?'
   groups:
   - neurodata_type_def: OpticalChannel
