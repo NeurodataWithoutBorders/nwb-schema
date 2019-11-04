@@ -259,11 +259,11 @@ groups:
       doc: Measurement units for grid_spacing. The default value is 'meters'.
   - name: reference_frame
     dtype: text
-    doc: Describes position and reference frame of manifold based on position of
-      first element in manifold. For example, text description of anatomical location
-      or vectors needed to rotate to common anatomical axis (eg, AP/DV/ML). This
-      field is necessary to interpret manifold. If manifold is not present then
-      this field is not required.
+    doc: Describes reference frame of origin_coords and grid_spacing.
+      For example, this can be a text description of the anatomical location and orientation of the grid
+      defined by origin_coords and grid_spacing or the vectors needed to rotate to common anatomical axis
+      (e.g., AP/DV/ML). This field is necessary to interpret origin_coords and grid_spacing.
+      If origin_coords and grid_spacing are not present, then this field is not required.
     quantity: '?'
   groups:
   - neurodata_type_def: OpticalChannel
