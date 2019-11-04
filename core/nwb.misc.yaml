@@ -175,6 +175,16 @@ groups:
   default_name: Units
   doc: Data about spiking units. Event times of observed units (e.g. cell, synapse,
     etc.) should be concatenated and stored in spike_times.
+  attributes:
+  - name: waveform_sampling_rate
+    dtype: float
+    doc: Sampling rate of waveforms stored in waveform_mean and waveform_sd, in hertz.
+    required: false
+  - name: waveform_unit
+    dtype: text
+    value: volts
+    doc: Unit of measurement for waveforms stored in waveform_mean and waveform_sd. This value is fixed to 'volts'.
+    required: false
   datasets:
   - name: spike_times_index
     neurodata_type_inc: VectorIndex
