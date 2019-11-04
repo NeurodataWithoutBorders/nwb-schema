@@ -261,8 +261,8 @@ groups:
     dtype: text
     doc: Describes reference frame of origin_coords and grid_spacing.
       For example, this can be a text description of the anatomical location and orientation of the grid
-      defined by origin_coords and grid_spacing or the vectors needed to rotate to common anatomical axis
-      (e.g., AP/DV/ML). This field is necessary to interpret origin_coords and grid_spacing.
+      defined by origin_coords and grid_spacing or the vectors needed to transform or rotate the grid to
+      a common anatomical axis (e.g., AP/DV/ML). This field is necessary to interpret origin_coords and grid_spacing.
       If origin_coords and grid_spacing are not present, then this field is not required.
     quantity: '?'
   groups:
