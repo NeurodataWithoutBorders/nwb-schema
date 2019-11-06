@@ -146,8 +146,8 @@ groups:
     attributes:
     - name: unit
       dtype: text
-      value: percent
-      doc: Unit of measurement for resistance_comp_correction, which is fixed to 'percent'.
+      value: percents
+      doc: Unit of measurement for resistance_comp_correction, which is fixed to 'percents'.
   - name: resistance_comp_prediction
     dtype: float32
     doc: Resistance compensation prediction, in percent.
@@ -155,8 +155,8 @@ groups:
     attributes:
     - name: unit
       dtype: text
-      value: percent
-      doc: Unit of measurement for resistance_comp_prediction, which is fixed to 'percent'.
+      value: percents
+      doc: Unit of measurement for resistance_comp_prediction, which is fixed to 'percents'.
   - name: whole_cell_capacitance_comp
     dtype: float32
     doc: Whole cell capacitance compensation, in farads.
