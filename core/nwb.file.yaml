@@ -258,10 +258,9 @@ groups:
         ADC boards, microscopes, etc.
       quantity: '?'
       groups:
-      - neurodata_type_def: Device
-        neurodata_type_inc: NWBContainer
-        doc: A data acquisition device, e.g. recording system.
-        quantity: '+'
+      - neurodata_type_inc: Device
+        doc: Data acquisition devices.
+        quantity: '*'
     - neurodata_type_def: Subject
       neurodata_type_inc: NWBContainer
       name: subject
