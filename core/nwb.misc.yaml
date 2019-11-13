@@ -232,6 +232,16 @@ groups:
       - null
     doc: Spike waveform mean for each spike unit.
     quantity: '?'
+    attributes:
+    - name: sampling_rate
+      dtype: float
+      doc: Sampling rate, in hertz.
+      required: false
+    - name: unit
+      dtype: text
+      value: volts
+      doc: Unit of measurement. This value is fixed to 'volts'.
+      required: false
   - name: waveform_sd
     neurodata_type_inc: VectorData
     dtype: float
@@ -249,3 +259,13 @@ groups:
       - null
     doc: Spike waveform standard deviation for each spike unit.
     quantity: '?'
+    attributes:
+    - name: sampling_rate
+      dtype: float
+      doc: Sampling rate, in hertz.
+      required: false
+    - name: unit
+      dtype: text
+      value: volts
+      doc: Unit of measurement. This value is fixed to 'volts'.
+      required: false

@@ -1,8 +1,22 @@
 Release Notes
 =============
 
+2.2.0 (Upcoming)
+----------------
+
+- Moved common data structures such as Container and DynamicTable to hdmf.common.
+
+  - The hdmf-common-schema repo is now included as a submodule
+  - See https://github.com/NeurodataWithoutBorders/nwb-schema/pull/307 for details
+
+- Added "channel_conversion" dataset to ElectricalSeries to represent per-channel conversion factors
+
+- Added "sampling_rate" and "unit" attributes to "waveform_mean" and "waveform_sd" datasets/columns in Units table
+
+- Deprecated ImagingPlane "manifold" in favor of "origin_coords" and "grid_spacing"
+
 2.1.0 (September 2019)
--------------------
+----------------------
 
 - Improved documentation in "doc" attribute of many types
 
