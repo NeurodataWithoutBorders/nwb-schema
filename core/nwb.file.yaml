@@ -362,7 +362,7 @@ groups:
         - name: rel_z
           neurodata_type_inc: VectorData
           dtype: float
-          doc: z coordinate in channel group
+          doc: z coordinate in electrode group
           quantity: '?'
     - name: intracellular_ephys
       doc: Metadata related to intracellular electrophysiology.
