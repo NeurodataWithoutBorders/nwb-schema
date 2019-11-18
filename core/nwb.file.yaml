@@ -357,7 +357,7 @@ groups:
         - name: rel_y
           neurodata_type_inc: VectorData
           dtype: float
-          doc: y coordinate in channel group
+          doc: y coordinate in electrode group
           quantity: '?'
         - name: rel_z
           neurodata_type_inc: VectorData
