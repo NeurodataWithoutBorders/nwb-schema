@@ -316,15 +316,15 @@ groups:
         - name: x
           neurodata_type_inc: VectorData
           dtype: float
-          doc: x coordinate of the channel location.
+          doc: x coordinate of the channel location in the brain.
         - name: y
           neurodata_type_inc: VectorData
           dtype: float
-          doc: y coordinate of the channel location.
+          doc: y coordinate of the channel location in the brain.
         - name: z
           neurodata_type_inc: VectorData
           dtype: float
-          doc: z coordinate of the channel location.
+          doc: z coordinate of the channel location in the brain.
         - name: imp
           neurodata_type_inc: VectorData
           dtype: float
@@ -349,6 +349,21 @@ groups:
           neurodata_type_inc: VectorData
           dtype: ascii
           doc: Name of the ElectrodeGroup this electrode is a part of.
+        - name: rel_x
+          neurodata_type_inc: VectorData
+          dtype: float
+          doc: x coordinate in channel group
+          quantity: '?'
+        - name: rel_y
+          neurodata_type_inc: VectorData
+          dtype: float
+          doc: y coordinate in channel group
+          quantity: '?'
+        - name: rel_z
+          neurodata_type_inc: VectorData
+          dtype: float
+          doc: z coordinate in channel group
+          quantity: '?'
     - name: intracellular_ephys
       doc: Metadata related to intracellular electrophysiology.
       quantity: '?'
