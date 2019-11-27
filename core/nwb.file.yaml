@@ -309,6 +309,7 @@ groups:
         doc: Physical group of electrodes.
         quantity: '*'
       - name: electrodes
+        neurodata_type_def: Electrodes
         neurodata_type_inc: DynamicTable
         doc: A table of all electrodes (i.e. channels) used for recording.
         quantity: '?'

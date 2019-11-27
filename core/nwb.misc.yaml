@@ -127,6 +127,7 @@ groups:
     doc: The metric used, e.g. phase, amplitude, power.
   groups:
   - name: bands
+    neurodata_type_def: FrequencyBands
     neurodata_type_inc: DynamicTable
     doc: Table for describing the bands that this series was generated from. There
       should be one row in this table for each band.
