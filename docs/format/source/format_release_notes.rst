@@ -15,6 +15,9 @@ Release Notes
 
 - Deprecated ImagingPlane "manifold" in favor of "origin_coords" and "grid_spacing"
 
+- Use "text" data type for DynamicTable column names and for electrode table columns "location" and "group_name". Previously, only ASCII was allowed.
+
+
 2.1.0 (September 2019)
 ----------------------
 
