@@ -8,7 +8,7 @@ groups:
     dtype: text
     doc: Protocol/stimulus name for this patch-clamp dataset.
   - name: sweep_number
-    dtype: uint64
+    dtype: uint
     doc: Sweep number, allows to group different PatchClampSeries together.
     required: false
   datasets:
@@ -234,7 +234,7 @@ groups:
   datasets:
   - name: sweep_number
     neurodata_type_inc: VectorData
-    dtype: uint64
+    dtype: uint
     doc: Sweep number of the PatchClampSeries in that row.
   - name: series
     neurodata_type_inc: VectorData

@@ -19,6 +19,7 @@ Release Notes
 
 - Use "text" data type for electrode table columns "location" and "group_name". Previously, only ASCII was allowed.
 
+- Avoid enforcing "uint64" for sweep numbers for better compatiblity. Use uint instead which is 32bit.
 
 2.1.0 (September 2019)
 ----------------------
