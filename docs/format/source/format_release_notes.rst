@@ -19,6 +19,8 @@ Release Notes
 
 - Use "text" data type for electrode table columns "location" and "group_name". Previously, only ASCII was allowed.
 
+- Add to description to make electrode x,y,z consistent with CCF reference http://help.brain-map.org/display/mousebrain/API#API-DownloadAtlas3-DReferenceModels
+
 
 2.1.0 (September 2019)
 ----------------------
