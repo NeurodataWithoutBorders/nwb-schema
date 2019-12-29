@@ -116,30 +116,6 @@
         }
       }
     },
-    "object": {
-      "required": ["doc"],
-      "properties": {
-        "name": {"type": "string"},
-        "doc": {"type": "string"}
-      }
-    },
-    "data": {
-      "properties": {
-        "dtype": {"$ref": "#/definitions/dtype"},
-        "dims": {"$ref": "#/definitions/dims"},
-        "shape": {"$ref": "#/definitions/shape"}
-      }
-    },
-    "inheritable": {
-      "properties": {
-        "neurodata_type_def": {"type": "string"},
-        "neurodata_type_inc": {"type": "string"},
-        "default_name": {"type": "string"},
-        "quantity": {"$ref":  "#/definitions/quantity"},
-        "linkable": {"type": "boolean"},
-        "attributes": {"$ref": "#/definitions/attributes"}
-      }
-    },
     "groups": {
       "description": "list of groups",
       "type": "array",
