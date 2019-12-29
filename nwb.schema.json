@@ -1,0 +1,219 @@
+{
+  "$schema": "http://json-schema.org/draft-00/schema#/definitions/",
+  "$id": "NWB.schema.json",
+  "title": "NWB schema",
+  "description": "A schema for validating NWB YAML files",
+  "type": "object",
+  "properties": {
+    "groups": {"$ref": "#/definitions/groups"},
+    "attributes": {"$ref": "#/definitions/attributes"},
+    "datasets": {"$ref": "#/definitions/datasets"},
+    "links": {"$ref": "#/definitions/links"}
+  },
+  "definitions": {
+    "quantity": {
+      "description": "Quantity marker",
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 1
+        },
+        {
+          "type": "string",
+          "enum": [
+            "*",
+            "?",
+            "+",
+            "zero_or_many",
+            "one_or_many",
+            "zero_or_one"
+          ]
+        }
+      ]
+    },
+    "dtype": {
+      "description": "Required string describing the data type of the attribute",
+      "anyOf": [
+        {
+          "type": "string",
+          "enum": [
+            "float",
+            "float32",
+            "double",
+            "float64",
+            "long",
+            "int64",
+            "int",
+            "int32",
+            "int16",
+            "int8",
+            "uint32",
+            "uint16",
+            "uint8",
+            "numeric",
+            "text",
+            "utf",
+            "utf8",
+            "unt-8",
+            "ascii",
+            "bool",
+            "isodatetime"
+          ]
+        },
+        {
+          "$ref": "#/definitions/ref_dtype"
+        }
+      ]
+    },
+    "dims": {
+      "description": "Optional list describing the names of the dimensions of the data array stored by the attribute (default=None)",
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {"type": "string"},
+          {
+            "type":  "array",
+            "items": {"type":  "string"}
+          }
+        ]
+      }
+    },
+    "shape": {
+      "description": "Optional list describing the allowed shape(s) of the data array stored by the attribute (default=None)",
+      "anyOf": [
+        {"$ref": "#/definitions/shape_spec"},
+        {
+          "type": "array",
+          "items": {"$ref": "#/definitions/shape_spec"}
+        }
+      ]
+    },
+    "shape_spec": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "value": null
+          }
+        ]
+      }
+    },
+    "ref_dtype": {
+      "required": ["target_type", "reftype"],
+      "properties": {
+        "target_type": {
+          "description": "Describes the neurodata_type of the target that the reference points to",
+          "type": "string"
+        },
+        "reftype": {
+          "description": "describes the kind of reference",
+          "type": "string",
+          "enum": ["ref", "reference", "object", "region"]
+        }
+      }
+    },
+    "object": {
+      "required": ["doc"],
+      "properties": {
+        "name": {"type": "string"},
+        "doc": {"type": "string"}
+      }
+    },
+    "data": {
+      "properties": {
+        "dtype": {"$ref": "#/definitions/dtype"},
+        "dims": {"$ref": "#/definitions/dims"},
+        "shape": {"$ref": "#/definitions/shape"}
+      }
+    },
+    "inheritable": {
+      "properties": {
+        "neurodata_type_def": {"type": "string"},
+        "neurodata_type_inc": {"type": "string"},
+        "default_name": {"type": "string"},
+        "quantity": {"$ref":  "#/definitions/quantity"},
+        "linkable": {"type": "boolean"},
+        "attributes": {"$ref": "#/definitions/attributes"}
+      }
+    },
+    "groups": {
+      "description": "list of groups",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["doc"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {"type": "string"},
+          "default_name": {"type": "string"},
+          "doc": {"type": "string"},
+          "neurodata_type_def": {"type": "string"},
+          "neurodata_type_inc": {"type": "string"},
+          "quantity": {"$ref":  "#/definitions/quantity"},
+          "linkable": {"type": "boolean"},
+          "datasets": {"$ref": "#/definitions/datasets"},
+          "links": {"$ref": "#/definitions/links"},
+          "groups": {"$ref": "#/definitions/groups"},
+          "attributes": {"$ref": "#/definitions/attributes"}
+        }
+      }
+    },
+    "attributes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["doc"],
+        "additionalProperties": false,
+        "properties": {
+          "dtype": {"$ref": "#/definitions/dtype"},
+          "dims": {"$ref": "#/definitions/dims"},
+          "shape": {"$ref": "#/definitions/shape"},
+          "name": {"type": "string"},
+          "doc": {"type": "string"},
+          "required": {"type": "boolean"},
+          "value": {"description": "Optional constant, fixed value for the attribute."},
+          "default_value": {"description": "Optional default value for variable-valued attributes."}
+        }
+      }
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["target_type", "doc"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {"type": "string"},
+          "doc": {"type": "string"},
+          "target_type": {"type": "string"}
+        }
+      }
+    },
+    "datasets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["doc"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {"type": "string"},
+          "default_name": {"type": "string"},
+          "doc": {"type": "string"},
+          "dtype": {"$ref": "#/definitions/dtype"},
+          "dims": {"$ref": "#/definitions/dims"},
+          "shape": {"$ref": "#/definitions/shape"},
+          "neurodata_type_def": {"type": "string"},
+          "neurodata_type_inc": {"type": "string"},
+          "quantity": {"$ref":  "#/definitions/quantity"},
+          "linkable": {"type": "boolean"},
+          "attributes": {"$ref": "#/definitions/attributes"},
+          "default_value": {"type": "string"}
+        }
+      }
+    }
+  }
+}
