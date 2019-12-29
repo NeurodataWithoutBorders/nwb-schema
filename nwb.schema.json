@@ -147,6 +147,11 @@
         "type": "object",
         "required": ["doc"],
         "additionalProperties": false,
+        "anyOf":[
+          {"required": ["neurodata_type_def"]},
+          {"required": ["neurodata_type_inc"]},
+          {"required": ["name"]}
+        ],
         "properties": {
           "name": {"type": "string"},
           "default_name": {"type": "string"},
@@ -200,6 +205,11 @@
         "type": "object",
         "required": ["doc"],
         "additionalProperties": false,
+        "anyOf":[
+          {"required": ["neurodata_type_def"]},
+          {"required": ["neurodata_type_inc"]},
+          {"required": ["name"]}
+        ],
         "properties": {
           "name": {"type": "string"},
           "default_name": {"type": "string"},
@@ -212,7 +222,8 @@
           "quantity": {"$ref":  "#/definitions/quantity"},
           "linkable": {"type": "boolean"},
           "attributes": {"$ref": "#/definitions/attributes"},
-          "default_value": {"type": "string"}
+          "value": {"description": "Optional constant, fixed value for the attribute."},
+          "default_value": {"description": "Optional default value for variable-valued attributes."}
         }
       }
     }
