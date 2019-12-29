@@ -504,7 +504,7 @@ The specification of an attributes is described in YAML as follows:
       shape: Optional list describing the allowed shape(s) of the data array stored by the attribute (default=None)
       required: Optional boolean indicating whether the attribute is required (default=True)
       value: Optional constant, fixed value for the attribute.
-      defautl_value: Optional default value for variable-valued attributes. Only one of value or default_value should be set.
+      default_value: Optional default value for variable-valued attributes. Only one of value or default_value should be set.
     -
 
 Attribute specification keys
