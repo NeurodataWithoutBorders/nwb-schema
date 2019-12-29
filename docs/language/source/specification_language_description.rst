@@ -435,6 +435,7 @@ See :numref:`sec-link-spec` for details.
     - doc: Link to target type
       name: link name
       target_type: type of target
+      quantity: optional number of links allowed
     - ...
 
 
