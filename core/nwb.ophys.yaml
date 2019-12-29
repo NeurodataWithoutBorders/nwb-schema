@@ -252,7 +252,7 @@ groups:
     - 3
     doc: Space between pixels in (x, y) or voxels in (x, y, z) directions, in the specified unit.
       Assumes imaging plane is a regular grid. See also reference_frame to interpret the grid.
-    required: false
+    quantity: '?'
     attributes:
     - name: unit
       dtype: text
