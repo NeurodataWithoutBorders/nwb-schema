@@ -7,8 +7,8 @@ groups:
     dtype: text
     doc: Description of the device (e.g., model, firmware version, processing software version, etc.)
       as free-form text.
-    quantity: '?'
+    required: false
   - name: manufacturer
     dtype: text
     doc: The name of the manufacturer of the device.
-    quantity: '?'
+    required: false
