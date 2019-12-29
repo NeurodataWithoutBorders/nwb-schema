@@ -189,7 +189,8 @@
         "properties": {
           "name": {"type": "string"},
           "doc": {"type": "string"},
-          "target_type": {"type": "string"}
+          "target_type": {"type": "string"},
+          "quantity": {"$ref": "#/definitions/quantity"}
         }
       }
     },
