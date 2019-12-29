@@ -19,6 +19,8 @@ Release Notes
 
 - Use "text" data type for electrode table columns "location" and "group_name". Previously, only ASCII was allowed.
 
+- Change the "quantity" key of attribute Units.resolution to "required" for schema language compliance.
+
 
 2.1.0 (September 2019)
 ----------------------
