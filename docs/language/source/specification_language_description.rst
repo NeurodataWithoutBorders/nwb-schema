@@ -759,6 +759,7 @@ indicating that the attribute/dataset is a scalar.
 
 Optional boolean key describing whether the attribute is required. Default value is True.
 
+.. _sec-value:
 
 ``value``
 ^^^^^^^^^
@@ -767,6 +768,7 @@ Optional key specifying a fixed, constant value for the attribute. Default value
 the attribute has a variable value to be determined by the user (or API) in accordance with
 the current data.
 
+.. _sec-default_value:
 
 ``default_value``
 ^^^^^^^^^^^^^^^^^
@@ -927,6 +929,11 @@ List describing the shape of the dataset. Same as for attributes. See :numref:`s
 ^^^^^^^^
 
 List describing the names of the dimensions of the dataset. Same as for attributes. See :numref:`sec-dims` for details.
+
+
+``value`` and ``default_value``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Same as for attributes. See :numref:`sec-value` and :numref:`sec-default_value` for details.
 
 
 ``attributes``
