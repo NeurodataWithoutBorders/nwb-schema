@@ -236,7 +236,7 @@ groups:
     - 3
     doc: Physical location of the first element of the imaging plane (0, 0) for 2-D data or (0, 0, 0) for 3-D data.
       See also reference_frame for what the physical location is relative to (e.g., bregma).
-    required: false
+    quantity: '?'
     attributes:
     - name: unit
       dtype: text
