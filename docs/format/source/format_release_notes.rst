@@ -19,6 +19,8 @@ Release Notes
 
 - Use "text" data type for electrode table columns "location" and "group_name". Previously, only ASCII was allowed.
 
+- Remove "required" key from dataset ImageSeries.field_of_view for schema language compliance
+
 
 2.1.0 (September 2019)
 ----------------------
