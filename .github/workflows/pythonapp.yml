@@ -23,6 +23,8 @@ jobs:
         cd hdmf-common-schema/
         git checkout -b 5b4c997d4b8dbf04a7237b46823e426efb165f74
         cd ..
+        ls
+        ls hdmf-common-schema
         python -m pynwb.testing.validate_spec core/nwb.namespace.yaml -m hdmf-common-schema/hdmf-language.namespace.schema.json
     - name: Validate schema specification
       run: |
