@@ -15,7 +15,7 @@ jobs:
         python-version: 3.7
     - name: Install pynwb
       run: |
-        pip install git+https://github.com/NeurodataWithoutBorders/pynwb.git@7a9acb76268841c867c3d9e4705086305571dda7
+        pip install git+https://github.com/NeurodataWithoutBorders/pynwb.git@b5d35cfc713b434e358b3c9f6520fc3f94f71c6f
     - name: Run test
       run: |
          python -m pynwb.testing.validate_spec core -m nwb.schema.json
