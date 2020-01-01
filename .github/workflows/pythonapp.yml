@@ -15,7 +15,7 @@ jobs:
         python-version: 3.7
     - name: Install pynwb
       run: |
-        pip install git+https://github.com/NeurodataWithoutBorders/pynwb.git@b5d35cfc713b434e358b3c9f6520fc3f94f71c6f
+        pip install git+https://github.com/NeurodataWithoutBorders/pynwb.git@cd3c352087a159dfab635c0cde4239fbede0973a
         pip install jsonschema
     - name: Run test
       run: |
