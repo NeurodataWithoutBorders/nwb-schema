@@ -1,0 +1,21 @@
+name: Python application
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install pynwb
+      run: |
+        pip install git+https://github.com/NeurodataWithoutBorders/pynwb.git@7a9acb76268841c867c3d9e4705086305571dda7
+    - name: Run test
+      run: |
+         python -m pynwb.testing.validate_spec core -m nwb.schema.json
