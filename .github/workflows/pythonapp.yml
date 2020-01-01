@@ -16,6 +16,7 @@ jobs:
     - name: Install pynwb
       run: |
         pip install git+https://github.com/NeurodataWithoutBorders/pynwb.git@b5d35cfc713b434e358b3c9f6520fc3f94f71c6f
+        pip install -r jsonschema
     - name: Run test
       run: |
          python -m pynwb.testing.validate_spec core -m nwb.schema.json
