@@ -19,6 +19,8 @@ Release Notes
 
 - Use "text" data type for electrode table columns "location" and "group_name". Previously, only ASCII was allowed.
 
+- Replace "required" keys with "quantity" keys for ImagingPlane.origin_coords and ImagingPlane.grid_spacing for schema language compliance
+
 - Add "doc" key to ImagingRetinotopy.axis_2_power_map for schema language compliance
 
 
