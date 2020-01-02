@@ -19,7 +19,9 @@ Release Notes
 
 - Use "text" data type for electrode table columns "location" and "group_name". Previously, only ASCII was allowed.
 
-- Add "doc" key to ImagingRetinotopy.axis_2_power_map for schema language compliance
+- Add "doc" key to `ImagingRetinotopy.axis_2_power_map` for schema language compliance
+
+- Set `dtype` for `Image` and its subtypes to `numeric`. (note: technically this breaks backwards compatibility, in the schema, but the `pynwb` API has always enforced that Images have a numeric type, and realistically we do not think users are storing strings in an `Image` dataset.)
 
 
 2.1.0 (September 2019)
