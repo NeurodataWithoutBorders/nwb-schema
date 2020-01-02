@@ -1,8 +1,9 @@
 {
-  "$schema": "http://json-schema.org/draft-00/schema#/definitions/",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "NWB.schema.json",
-  "title": "NWB schema",
+  "title": "Schema for the NWB language specification",
   "description": "A schema for validating NWB YAML files",
+  "version": "2.0.2",
   "type": "object",
   "properties": {
     "groups": {"$ref": "#/definitions/groups"},
@@ -11,6 +12,9 @@
     "links": {"$ref": "#/definitions/links"}
   },
   "definitions": {
+    "protectedString": {
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+    },
     "quantity": {
       "description": "Quantity marker",
       "anyOf": [
@@ -116,30 +120,6 @@
         }
       }
     },
-    "object": {
-      "required": ["doc"],
-      "properties": {
-        "name": {"type": "string"},
-        "doc": {"type": "string"}
-      }
-    },
-    "data": {
-      "properties": {
-        "dtype": {"$ref": "#/definitions/dtype"},
-        "dims": {"$ref": "#/definitions/dims"},
-        "shape": {"$ref": "#/definitions/shape"}
-      }
-    },
-    "inheritable": {
-      "properties": {
-        "neurodata_type_def": {"type": "string"},
-        "neurodata_type_inc": {"type": "string"},
-        "default_name": {"type": "string"},
-        "quantity": {"$ref":  "#/definitions/quantity"},
-        "linkable": {"type": "boolean"},
-        "attributes": {"$ref": "#/definitions/attributes"}
-      }
-    },
     "groups": {
       "description": "list of groups",
       "type": "array",
@@ -147,12 +127,17 @@
         "type": "object",
         "required": ["doc"],
         "additionalProperties": false,
+        "anyOf":[
+          {"required": ["neurodata_type_def"]},
+          {"required": ["neurodata_type_inc"]},
+          {"required": ["name"]}
+        ],
         "properties": {
-          "name": {"type": "string"},
-          "default_name": {"type": "string"},
+          "name": {"$ref":  "#/definitions/protectedString"},
+          "default_name": {"$ref":  "#/definitions/protectedString"},
           "doc": {"type": "string"},
-          "neurodata_type_def": {"type": "string"},
-          "neurodata_type_inc": {"type": "string"},
+          "neurodata_type_def": {"$ref":  "#/definitions/protectedString"},
+          "neurodata_type_inc": {"$ref":  "#/definitions/protectedString"},
           "quantity": {"$ref":  "#/definitions/quantity"},
           "linkable": {"type": "boolean"},
           "datasets": {"$ref": "#/definitions/datasets"},
@@ -189,7 +174,8 @@
         "properties": {
           "name": {"type": "string"},
           "doc": {"type": "string"},
-          "target_type": {"type": "string"}
+          "target_type": {"type": "string"},
+          "quantity": {"$ref": "#/definitions/quantity"}
         }
       }
     },
@@ -199,19 +185,25 @@
         "type": "object",
         "required": ["doc"],
         "additionalProperties": false,
+        "anyOf":[
+          {"required": ["neurodata_type_def"]},
+          {"required": ["neurodata_type_inc"]},
+          {"required": ["name"]}
+        ],
         "properties": {
-          "name": {"type": "string"},
-          "default_name": {"type": "string"},
+          "name": {"$ref":  "#/definitions/protectedString"},
+          "default_name": {"$ref":  "#/definitions/protectedString"},
           "doc": {"type": "string"},
           "dtype": {"$ref": "#/definitions/dtype"},
           "dims": {"$ref": "#/definitions/dims"},
           "shape": {"$ref": "#/definitions/shape"},
-          "neurodata_type_def": {"type": "string"},
-          "neurodata_type_inc": {"type": "string"},
+          "neurodata_type_def": {"$ref":  "#/definitions/protectedString"},
+          "neurodata_type_inc": {"$ref":  "#/definitions/protectedString"},
           "quantity": {"$ref":  "#/definitions/quantity"},
           "linkable": {"type": "boolean"},
           "attributes": {"$ref": "#/definitions/attributes"},
-          "default_value": {"type": "string"}
+          "value": {"description": "Optional constant, fixed value for the attribute."},
+          "default_value": {"description": "Optional default value for variable-valued attributes."}
         }
       }
     }
