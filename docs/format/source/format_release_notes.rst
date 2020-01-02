@@ -19,6 +19,8 @@ Release Notes
 
 - Use "text" data type for electrode table columns "location" and "group_name". Previously, only ASCII was allowed.
 
+- Change the "quantity" key of attribute Units.resolution to "required" for schema language compliance.
+
 - Remove "required" key from dataset ImageSeries.field_of_view for schema language compliance
 
 - Replace "required" keys with "quantity" keys for ImagingPlane.origin_coords and ImagingPlane.grid_spacing for schema language compliance
