@@ -17,15 +17,6 @@ jobs:
       run: |
         pip install git+https://github.com/NeurodataWithoutBorders/pynwb.git@cd3c352087a159dfab635c0cde4239fbede0973a
         pip install jsonschema
-    - name: get namespace schema and validate
-      run: |
-        git clone https://github.com/ben-dichter-consulting/hdmf-common-schema.git
-        cd hdmf-common-schema/
-        git checkout -b 5b4c997d4b8dbf04a7237b46823e426efb165f74
-        cd ..
-        ls
-        ls hdmf-common-schema
-        python -m pynwb.testing.validate_spec core/nwb.namespace.yaml -m hdmf-common-schema/hdmf-language.namespace.schema.json
     - name: Validate schema specification
       run: |
         python -m pynwb.testing.validate_spec core -m nwb.schema.json
