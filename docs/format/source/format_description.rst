@@ -38,7 +38,7 @@ step is represented by a corresponding *NWBDataInterface* (an extension of *NWBC
 At a high level, data is organized into the following main groups:
 
 * *acquisition/* : data streams recorded from the system, including ephys, ophys, tracking, etc.,
-* *epochs/* : experimental intervals,
+* *intervals/* : experimental intervals,
 * *stimulus/* : stimulus data,
 * *general/* : experimental metadata, including protocol, notes and description of hardware device(s).
 * *processing/* : standardized processing modules, often as part of intermediate analysis of data that is necessary to perform before scientific analysis,
@@ -186,7 +186,7 @@ at https://github.com/NeurodataWithoutBorders/nwb-schema/issues .
 
 .. _sec-extending-the-ts-and-nc:
 
-Extending Time Series and NWBContainer
+Extending TimeSeries and NWBContainer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Like any other neurodata_type, *TimeSeries* can be extended via extensions
