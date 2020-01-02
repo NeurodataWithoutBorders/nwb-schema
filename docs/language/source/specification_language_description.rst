@@ -175,9 +175,11 @@ List of the schema to be included in this namespace. The specification looks as 
      - source: nwb.ephys.yaml
        doc: Types related to EPhys
        title: EPhys
-       neurodata_types: ElectricalSeries
+       neurodata_types: 
+       - ElectricalSeries
      - namespace: core
-       neurodata_types: Interface
+       neurodata_types:
+       - Interface
 
 * ``source`` describes the name of the YAML (or JSON) file with the schema specification. The schema files should be located in the same folder as the namespace file.
 * ``namespace`` describes a named reference to another namespace. In contrast to source, this is a reference by name to a known namespace (i.e., the namespace is resolved during the build and must point to an already existing namespace). This mechanism is used to allow, e.g., extension of a core namespace (here the NWB core namespace) without requiring hard paths to the files describing the core namespace.
