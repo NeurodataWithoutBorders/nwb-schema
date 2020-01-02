@@ -19,6 +19,8 @@ Release Notes
 
 - Use "text" data type for electrode table columns "location" and "group_name". Previously, only ASCII was allowed.
 
+- Avoid enforcing "uint64" for sweep numbers for better compatiblity. Use uint instead which is 32bit.
+
 - Change the "quantity" key of attribute Units.resolution to "required" for schema language compliance.
 
 - Remove "required" key from dataset ImageSeries.field_of_view for schema language compliance
