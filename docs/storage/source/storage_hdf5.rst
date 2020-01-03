@@ -5,7 +5,7 @@ HDF5
 ====
 
 The NWB:N format currently uses the `Hierarchical Data Format (HDF5) <https://www.hdfgroup.org/HDF5/>`_
-as primary mechanism for data storage. HDF5 was selected for the
+as the primary mechanism for data storage. HDF5 was selected for the
 NWB format because it met several of the project's
 requirements. First, it is a mature data format standard with libraries
 available in multiple programming languages. Second, the format's
@@ -27,7 +27,7 @@ technology.
 Format Mapping
 ==============
 
-Here we describe the mapping of NWB primitives (e.g,. Groups, Datasets, Attributes, Links etc.) used by
+Here we describe the mapping of NWB primitives (e.g,. Groups, Datasets, Attributes, Links, etc.) used by
 the NWB format and specification to HDF5 storage primitives. As the NWB:N format was designed with HDF5
 in mind, the high-level mapping between the format specification and HDF5 is quite simple:
 
@@ -42,20 +42,21 @@ in mind, the high-level mapping between the format specification and HDF5 is qui
     Group          Group
     Dataset        Dataset
     Attribute      Attribute
-    Link           Soft Link (or External Link)
+    Link           Soft Link or External Link
     =============  ===============================================
 
 
 .. note::
 
-    In HDF5 Links are stored as HDF5 Soft Links (or External Links). Hard Links are not used in NWB as the primary location
-    and, hence, primary ownership and link path for secondary locations,  cannot be determined for Hard Links.
+    Using HDF5, NWB links are stored as HDF5 Soft Links or External Links. Hard Links are not used in NWB because
+    the primary location and, hence, primary ownership and link path for secondary locations, cannot be determined
+    for Hard Links.
 
 
 Key Mapping
 ===========
 
-Here we describe the mapping of keys from the specifcation language to HDF5 storage objects:
+Here we describe the mapping of keys from the specification language to HDF5 storage objects:
 
 Groups
 ------
@@ -77,7 +78,8 @@ Groups
     linkable                      Not mapped; Stored in schema only
     quantity                      Not mapped; Number of appearances of the dataset.
     neurodata_type                Attribute ``neurodata_type``
-    namespace ID                  Attribute ``neurodata_namespace``
+    namespace ID                  Attribute ``namespace``
+    object ID                     Attribute ``object_id``
     ============================  ======================================================================================
 
 
@@ -88,7 +90,6 @@ Datasets
 
 .. table:: Mapping of datasets
     :class: longtable
-
 
     ============================  ======================================================================================
     NWB Key                       HDF5
@@ -102,13 +103,14 @@ Datasets
     linkable                      Not mapped; Stored in schema only
     quantity                      Not mapped; Number of appearances of the dataset.
     neurodata_type                Attribute ``neurodata_type``
-    namespace ID                  Attribute ``neurodata_namespace``
+    namespace ID                  Attribute ``namespace``
+    object ID                     Attribute ``object_id``
     ============================  ======================================================================================
 
 .. note::
 
-    * TODO Update mapping of namespace ID
     * TODO Update mapping of dims
+
 
 Attributes
 ----------
@@ -127,7 +129,6 @@ Attributes
     shape                         Shape of the HDF5 dataset if the shape is fixed, otherwise shape defines the maxshape
     dims                          Not mapped; Reflected by the shape of the attribute data
     required                      Not mapped; Stored in schema only
-    parent                        Not mapped; In HDF5 all attributes are explicitly tied to the parent.
     value                         Data value of the attribute
     ============================  ======================================================================================
 
@@ -157,7 +158,7 @@ The mappings of data types is as follows
     +--------------------------+----------------------------------+----------------+
     | ``dtype`` **spec value** | **storage type**                 | **size**       |
     +--------------------------+----------------------------------+----------------+
-    |  * "float"               | single precision floating point  |  32 bit        |
+    |  * "float"               | single precision floating point  | 32 bit         |
     |  * "float32"             |                                  |                |
     +--------------------------+----------------------------------+----------------+
     |  * "double"              | double precision floating point  | 64 bit         |
@@ -173,13 +174,13 @@ The mappings of data types is as follows
     +--------------------------+----------------------------------+----------------+
     |  * "int8"                | signed 8 bit integer             | 8 bit          |
     +--------------------------+----------------------------------+----------------+
-    | * "uint32"               | unsigned 32 bit integer          | 32 bit         |
+    |  * "uint32"              | unsigned 32 bit integer          | 32 bit         |
     +--------------------------+----------------------------------+----------------+
-    | * "uint16"               | unsigned 16 bit integer          | 16 bit         |
+    |  * "uint16"              | unsigned 16 bit integer          | 16 bit         |
     +--------------------------+----------------------------------+----------------+
-    | * "uint8"                | unsigned 8 bit integer           | 8 bit          |
+    |  * "uint8"               | unsigned 8 bit integer           | 8 bit          |
     +--------------------------+----------------------------------+----------------+
-    | * "bool"                 | boolean                          | 8 bit          |
+    |  * "bool"                | boolean                          | 8 bit          |
     +--------------------------+----------------------------------+----------------+
     |  * "text"                | unicode                          | variable       |
     |  * "utf"                 |                                  |                |
@@ -196,9 +197,9 @@ The mappings of data types is as follows
     |  * region                | Reference to a region            |                |
     |                          | of another dataset               |                |
     +--------------------------+----------------------------------+----------------+
-    |  compound dtype          + HDF5 compound data type          |                |
+    |  * compound dtype        | HDF5 compound data type          |                |
     +--------------------------+----------------------------------+----------------+
-    | * "isodatetime"          | ASCII ISO8061 datetime string.   | variable       |
+    |  * "isodatetime"         | ASCII ISO8061 datetime string.   | variable       |
     |                          | For example                      |                |
     |                          | ``2018-09-28T14:43:54.123+02:00``|                |
     +--------------------------+----------------------------------+----------------+

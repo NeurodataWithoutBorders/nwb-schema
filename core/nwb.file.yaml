@@ -61,6 +61,9 @@ groups:
     - neurodata_type_inc: NWBDataInterface
       doc: Acquired, raw data.
       quantity: '*'
+    - neurodata_type_inc: DynamicTable
+      doc: Tabular data that is relevent to acquisition
+      quantity: '*'
   - name: analysis
     doc: Lab-specific and custom scientific analysis of data. There is no defined
       format for the content of this group - the format is up to the individual user/lab.
@@ -74,6 +77,9 @@ groups:
     - neurodata_type_inc: NWBContainer
       doc: Custom analysis results.
       quantity: '*'
+    - neurodata_type_inc: DynamicTable
+      doc: Tabular data that is relevent to data stored in analysis
+      quantity: '*'
   - name: scratch
     doc: 'A place to store one-off analysis results. Data placed here is not intended for
       sharing. By placing data here, users acknowledge that there is no guarantee that
@@ -82,6 +88,9 @@ groups:
     groups:
     - neurodata_type_inc: NWBContainer
       doc: Any one-off containers
+      quantity: '*'
+    - neurodata_type_inc: DynamicTable
+      doc: Any one-off tables
       quantity: '*'
     datasets:
     - neurodata_type_def: ScratchData
@@ -249,10 +258,9 @@ groups:
         ADC boards, microscopes, etc.
       quantity: '?'
       groups:
-      - neurodata_type_def: Device
-        neurodata_type_inc: NWBContainer
-        doc: A data acquisition device, e.g. recording system.
-        quantity: '+'
+      - neurodata_type_inc: Device
+        doc: Data acquisition devices.
+        quantity: '*'
     - neurodata_type_def: Subject
       neurodata_type_inc: NWBContainer
       name: subject
@@ -308,22 +316,22 @@ groups:
         - name: x
           neurodata_type_inc: VectorData
           dtype: float
-          doc: x coordinate of the channel location.
+          doc: x coordinate of the channel location in the brain.
         - name: y
           neurodata_type_inc: VectorData
           dtype: float
-          doc: y coordinate of the channel location.
+          doc: y coordinate of the channel location in the brain.
         - name: z
           neurodata_type_inc: VectorData
           dtype: float
-          doc: z coordinate of the channel location.
+          doc: z coordinate of the channel location in the brain.
         - name: imp
           neurodata_type_inc: VectorData
           dtype: float
           doc: Impedance of the channel.
         - name: location
           neurodata_type_inc: VectorData
-          dtype: ascii
+          dtype: text
           doc: Location of the electrode (channel). Specify the area, layer, comments
             on estimation of area/layer, stereotaxic coordinates if in vivo, etc. Use
             standard atlas names for anatomical regions when possible.
@@ -339,8 +347,23 @@ groups:
           doc: Reference to the ElectrodeGroup this electrode is a part of.
         - name: group_name
           neurodata_type_inc: VectorData
-          dtype: ascii
+          dtype: text
           doc: Name of the ElectrodeGroup this electrode is a part of.
+        - name: rel_x
+          neurodata_type_inc: VectorData
+          dtype: float
+          doc: x coordinate in electrode group
+          quantity: '?'
+        - name: rel_y
+          neurodata_type_inc: VectorData
+          dtype: float
+          doc: y coordinate in electrode group
+          quantity: '?'
+        - name: rel_z
+          neurodata_type_inc: VectorData
+          dtype: float
+          doc: z coordinate in electrode group
+          quantity: '?'
     - name: intracellular_ephys
       doc: Metadata related to intracellular electrophysiology.
       quantity: '?'
