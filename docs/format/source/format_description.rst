@@ -267,15 +267,12 @@ Storing Time Values
 
 All times are stored in seconds using double precision (64 bit) floating
 point values. A smaller floating point value, e.g. 32 bit, is **not**
-permitted for storing times. This is because significant errors for time
+recommended for storing times. This is because significant errors for time
 can result from using smaller data sizes. Throughout this document,
-sizes (number of bits) are provided for many datatypes (e.g. float32).
-If the size is followed by "!" then the size is the minimum size,
-otherwise it is the recommended size. For fields with a recommended
-size, larger or smaller sizes can be used (and for integer types both
-signed and unsigned), so long as the selected size encompasses the full
-range of data, and for floats, without loss of significant precision.
-Fields that have a minimum size can use larger, but not smaller sizes.
+sizes (number of bits) are specified for many datatypes (e.g., float32).
+For fields with a specified size, larger sizes can be used, so long as
+the selected size encompasses the full range of data, and for floats,
+without loss of significant precision.
 
 Links and data references
 -------------------------
