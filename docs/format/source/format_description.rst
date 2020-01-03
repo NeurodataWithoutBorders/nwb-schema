@@ -265,8 +265,8 @@ Here a quick example:
 Storing Time Values
 -------------------
 
-All times are stored in seconds using double precision (64 bit) floating
-point values. A smaller floating point value, e.g. 32 bit, is **not**
+All times are stored in seconds using double precision (64-bit) floating
+point values. A smaller floating point value, e.g., 32-bit, is **not**
 recommended for storing times. This is because significant errors for time
 can result from using smaller data sizes. Throughout this document,
 sizes (number of bits) are specified for many datatypes (e.g., float32).
@@ -304,13 +304,13 @@ of a dataset.
 Design notes
 ------------
 
-The listed size of integers is the suggested size. What's important for
-integers is simply that the integer is large enough to store the
-required data, and preferably not larger. For floating point, double is
-required for timestamps, while floating point is largely sufficient for
-other uses. This is why doubles (float64) are stated in some places.
-Because floating point sizes are provided, integer sizes are provided as
-well.
+**Data type sizes**
+
+The listed size of integers and floating point values is the minimum size.
+The size of the data type should be large enough to store the
+required data, and preferably not larger. For floating point, double
+(64-bit float) is highly recommended for timestamps, while 32-bit floating
+point is largely sufficient for other uses.
 
 **Why do timestamps\_link and data\_link record linking between
 datasets, but links between epochs and timeseries are not recorded?**
