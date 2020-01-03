@@ -117,7 +117,7 @@ groups:
         not necessarily stored in these units. To access the data in these units,
         multiply 'data' by 'conversion'.
   - name: starting_time
-    dtype: float32
+    dtype: float64
     doc: Timestamp of the first sample in seconds. When timestamps are uniformly
       spaced, the timestamp of the first sample can be specified and all subsequent
       ones calculated from the sampling rate attribute.
@@ -131,7 +131,7 @@ groups:
       value: seconds
       doc: Unit of measurement for time, which is fixed to 'seconds'.
   - name: timestamps
-    dtype: float32
+    dtype: float64
     dims:
     - num_times
     shape:

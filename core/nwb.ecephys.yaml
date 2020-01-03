@@ -87,7 +87,7 @@ groups:
       value: volts
       doc: Unit of measurement for waveforms, which is fixed to 'volts'.
   - name: timestamps
-    dtype: float32
+    dtype: float64
     dims:
     - num_times
     shape:

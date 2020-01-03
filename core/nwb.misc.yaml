@@ -182,7 +182,7 @@ groups:
     quantity: '?'
   - name: spike_times
     neurodata_type_inc: VectorData
-    dtype: float32
+    dtype: float64
     doc: Spike times for each unit.
     quantity: '?'
     attributes:
@@ -199,7 +199,7 @@ groups:
     quantity: '?'
   - name: obs_intervals
     neurodata_type_inc: VectorData
-    dtype: float32
+    dtype: float64
     dims:
     - num_intervals
     - start|end
