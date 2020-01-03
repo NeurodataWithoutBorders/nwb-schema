@@ -31,7 +31,7 @@ groups:
 
 - neurodata_type_def: RoiResponseSeries
   neurodata_type_inc: TimeSeries
-  doc: ROI responses over an imaging plane. The first dimension represents time. 
+  doc: ROI responses over an imaging plane. The first dimension represents time.
     The second dimension, if present, represents ROIs.
   datasets:
   - name: data
@@ -117,10 +117,10 @@ groups:
       neurodata_type_inc: VectorData
       dtype:
       - name: x
-        dtype: uint
+        dtype: uint32
         doc: Pixel x-coordinate.
       - name: y
-        dtype: uint
+        dtype: uint32
         doc: Pixel y-coordinate.
       - name: weight
         dtype: float32
@@ -136,13 +136,13 @@ groups:
       neurodata_type_inc: VectorData
       dtype:
       - name: x
-        dtype: uint
+        dtype: uint32
         doc: Voxel x-coordinate.
       - name: y
-        dtype: uint
+        dtype: uint32
         doc: Voxel y-coordinate.
       - name: z
-        dtype: uint
+        dtype: uint32
         doc: Voxel z-coordinate.
       - name: weight
         dtype: float32
@@ -225,7 +225,7 @@ groups:
       doc: Base unit of measurement for working with the data. The default value is 'meters'.
       required: false
   - name: origin_coords
-    dtype: float
+    dtype: float32
     dims:
     - x, y
     - x, y, z
@@ -241,7 +241,7 @@ groups:
       default_value: meters
       doc: Measurement units for origin_coords. The default value is 'meters'.
   - name: grid_spacing
-    dtype: float
+    dtype: float32
     dims:
     - x, y
     - x, y, z

@@ -351,17 +351,17 @@ groups:
           doc: Name of the ElectrodeGroup this electrode is a part of.
         - name: rel_x
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: x coordinate in electrode group
           quantity: '?'
         - name: rel_y
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: y coordinate in electrode group
           quantity: '?'
         - name: rel_z
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: z coordinate in electrode group
           quantity: '?'
     - name: intracellular_ephys

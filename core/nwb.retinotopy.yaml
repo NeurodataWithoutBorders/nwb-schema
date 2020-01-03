@@ -68,7 +68,7 @@ datasets:
     doc: 'Number of rows and columns in the image. NOTE: row, column representation
       is equivalent to height, width.'
   - name: field_of_view
-    dtype: float
+    dtype: float32
     dims:
     - row_col
     shape:

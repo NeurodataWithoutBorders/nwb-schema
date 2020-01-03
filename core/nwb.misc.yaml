@@ -187,7 +187,7 @@ groups:
     quantity: '?'
     attributes:
     - name: resolution
-      dtype: double
+      dtype: float64
       doc: The smallest possible difference between two spike times. Usually 1 divided by the acquisition sampling rate
         from which spike times were extracted, but could be larger if the acquisition time series was downsampled or
         smaller if the acquisition time series was smoothed/interpolated and it is possible for the spike time to be
@@ -242,7 +242,7 @@ groups:
     quantity: '?'
     attributes:
     - name: sampling_rate
-      dtype: float
+      dtype: float32
       doc: Sampling rate, in hertz.
       required: false
     - name: unit
@@ -269,7 +269,7 @@ groups:
     quantity: '?'
     attributes:
     - name: sampling_rate
-      dtype: float
+      dtype: float32
       doc: Sampling rate, in hertz.
       required: false
     - name: unit
