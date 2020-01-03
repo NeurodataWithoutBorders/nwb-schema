@@ -6,6 +6,7 @@ Version 2.0.2 (Upcoming)
 -------------------------
 * add ``value`` and ``default_value`` as optional keys of a dataset.
 * ``dtype`` changed from required to optional for datasets.
+* add dtypes that are already supported in `hdmf.spec`: short (int16), uint64, bytes (ascii), and datetime (isodatetime)
 
 Version 2.0.1 (March, 2019)
 ---------------------------------
