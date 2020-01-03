@@ -23,7 +23,6 @@ groups:
     - - 2
     - - 3
     doc: Width, height and depth of image, or imaged area, in meters.
-    required: false
     quantity: '?'
   links:
   - name: imaging_plane
@@ -32,9 +31,8 @@ groups:
 
 - neurodata_type_def: RoiResponseSeries
   neurodata_type_inc: TimeSeries
-  doc: ROI responses over an imaging plane. Each row in data should correspond to
-    the signal from one ROI. Each element on the second dimension of data should
-    correspond to the signal from one ROI.
+  doc: ROI responses over an imaging plane. The first dimension represents time. 
+    The second dimension, if present, represents ROIs.
   datasets:
   - name: data
     dtype: numeric
@@ -236,7 +234,7 @@ groups:
     - 3
     doc: Physical location of the first element of the imaging plane (0, 0) for 2-D data or (0, 0, 0) for 3-D data.
       See also reference_frame for what the physical location is relative to (e.g., bregma).
-    required: false
+    quantity: '?'
     attributes:
     - name: unit
       dtype: text
@@ -252,7 +250,7 @@ groups:
     - 3
     doc: Space between pixels in (x, y) or voxels in (x, y, z) directions, in the specified unit.
       Assumes imaging plane is a regular grid. See also reference_frame to interpret the grid.
-    required: false
+    quantity: '?'
     attributes:
     - name: unit
       dtype: text

@@ -175,9 +175,11 @@ List of the schema to be included in this namespace. The specification looks as 
      - source: nwb.ephys.yaml
        doc: Types related to EPhys
        title: EPhys
-       neurodata_types: ElectricalSeries
+       neurodata_types: 
+       - ElectricalSeries
      - namespace: core
-       neurodata_types: Interface
+       neurodata_types:
+       - Interface
 
 * ``source`` describes the name of the YAML (or JSON) file with the schema specification. The schema files should be located in the same folder as the namespace file.
 * ``namespace`` describes a named reference to another namespace. In contrast to source, this is a reference by name to a known namespace (i.e., the namespace is resolved during the build and must point to an already existing namespace). This mechanism is used to allow, e.g., extension of a core namespace (here the NWB core namespace) without requiring hard paths to the files describing the core namespace.
@@ -760,6 +762,7 @@ indicating that the attribute/dataset is a scalar.
 
 Optional boolean key describing whether the attribute is required. Default value is True.
 
+.. _sec-value:
 
 ``value``
 ^^^^^^^^^
@@ -768,6 +771,7 @@ Optional key specifying a fixed, constant value for the attribute. Default value
 the attribute has a variable value to be determined by the user (or API) in accordance with
 the current data.
 
+.. _sec-default_value:
 
 ``default_value``
 ^^^^^^^^^^^^^^^^^
@@ -848,9 +852,11 @@ The specification of a datasets is described in YAML as follows:
         neurodata_type_inc: Optional neurodata_type the group should inherit from
         quantity: Optional quantity identifier for the group (default=1).
         linkable: Boolean indicating whether the group is linkable (default=True)
-        dtype: Required string describing the data type of the dataset
+        dtype: Optional string describing the data type of the dataset
         dims: Optional list describing the names of the dimensions of the dataset
-        shape: Optional list describing the shape (or possibel shapes) of the dataset
+        shape: Optional list describing the shape (or possible shapes) of the dataset
+        value: Optional to fix value of dataset
+        default_value: Optional to set a default value for the dataset
         attributes: Optional list of attribute specifications describing the attributes of the group
 
 The specification of datasets looks quite similar to attributes and groups. Similar to
@@ -917,7 +923,7 @@ Boolean describing whether the this group can be linked.
 ``dtype``
 ^^^^^^^^^
 
-String describing the data type of the dataset. Same as for attributes. See :numref:`sec-dtype` for details.
+String describing the data type of the dataset. Same as for attributes. See :numref:`sec-dtype` for details. ``dtype`` may be omitted for abstract classes. Best practice is to define ``dtype`` for most concrete classes.
 
 ``shape``
 ^^^^^^^^^
@@ -928,6 +934,11 @@ List describing the shape of the dataset. Same as for attributes. See :numref:`s
 ^^^^^^^^
 
 List describing the names of the dimensions of the dataset. Same as for attributes. See :numref:`sec-dims` for details.
+
+
+``value`` and ``default_value``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Same as for attributes. See :numref:`sec-value` and :numref:`sec-default_value` for details.
 
 
 ``attributes``
