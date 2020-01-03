@@ -21,6 +21,8 @@ Release Notes
 
 - Add to description to make electrode x,y,z consistent with CCF reference http://help.brain-map.org/display/mousebrain/API#API-DownloadAtlas3-DReferenceModels
 
+- Set `dtype` for `Image` and its subtypes to `numeric`. (note: technically this breaks backwards compatibility, in the schema, but the `pynwb` API has always enforced that Images have a numeric type, and realistically we do not think users are storing strings in an `Image` dataset.)
+
 - Avoid enforcing "uint64" for sweep numbers for better compatiblity. Use uint instead which is 32bit.
 
 - Change the "quantity" key of attribute Units.resolution to "required" for schema language compliance.

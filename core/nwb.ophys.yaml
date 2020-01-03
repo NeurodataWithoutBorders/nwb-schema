@@ -31,9 +31,8 @@ groups:
 
 - neurodata_type_def: RoiResponseSeries
   neurodata_type_inc: TimeSeries
-  doc: ROI responses over an imaging plane. Each row in data should correspond to
-    the signal from one ROI. Each element on the second dimension of data should
-    correspond to the signal from one ROI.
+  doc: ROI responses over an imaging plane. The first dimension represents time. 
+    The second dimension, if present, represents ROIs.
   datasets:
   - name: data
     dtype: numeric
