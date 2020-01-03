@@ -21,6 +21,8 @@ Release Notes
 
 - Avoid enforcing "uint64" for sweep numbers for better compatibility. Use uint instead which is 32bit.
 
+- Set `dtype` for `Image` and its subtypes to `numeric`. (note: technically this breaks backwards compatibility, in the schema, but the `pynwb` API has always enforced that Images have a numeric type, and realistically we do not think users are storing strings in an `Image` dataset.)
+
 - Change the "quantity" key of attribute Units.resolution to "required" for schema language compliance.
 
 - Remove "required" key from dataset ImageSeries.field_of_view for schema language compliance

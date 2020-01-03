@@ -852,7 +852,7 @@ The specification of a datasets is described in YAML as follows:
         neurodata_type_inc: Optional neurodata_type the group should inherit from
         quantity: Optional quantity identifier for the group (default=1).
         linkable: Boolean indicating whether the group is linkable (default=True)
-        dtype: Required string describing the data type of the dataset
+        dtype: Optional string describing the data type of the dataset
         dims: Optional list describing the names of the dimensions of the dataset
         shape: Optional list describing the shape (or possible shapes) of the dataset
         value: Optional to fix value of dataset
@@ -923,7 +923,7 @@ Boolean describing whether the this group can be linked.
 ``dtype``
 ^^^^^^^^^
 
-String describing the data type of the dataset. Same as for attributes. See :numref:`sec-dtype` for details.
+String describing the data type of the dataset. Same as for attributes. See :numref:`sec-dtype` for details. ``dtype`` may be omitted for abstract classes. Best practice is to define ``dtype`` for most concrete classes.
 
 ``shape``
 ^^^^^^^^^

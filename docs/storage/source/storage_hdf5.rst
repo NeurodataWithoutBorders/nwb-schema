@@ -158,7 +158,7 @@ The mappings of data types is as follows
     +--------------------------+----------------------------------+----------------+
     | ``dtype`` **spec value** | **storage type**                 | **size**       |
     +--------------------------+----------------------------------+----------------+
-    |  * "float"               | single precision floating point  | 32 bit        |
+    |  * "float"               | single precision floating point  | 32 bit         |
     |  * "float32"             |                                  |                |
     +--------------------------+----------------------------------+----------------+
     |  * "double"              | double precision floating point  | 64 bit         |
