@@ -131,7 +131,7 @@ groups:
     - null
     doc: Multi-dimensional array of features extracted from each event.
   - name: times
-    dtype: float32
+    dtype: float64
     dims:
     - num_events
     shape:
@@ -161,7 +161,7 @@ groups:
       event (e.g., .25 ms before action potential peak, zero-crossing time, etc).
       The index points to each event from the raw data.
   - name: times
-    dtype: float32
+    dtype: float64
     dims:
     - num_events
     shape:
@@ -315,7 +315,7 @@ groups:
     doc: Maximum ratio of waveform peak to RMS on any channel in the cluster (provides
       a basic clustering metric).
   - name: times
-    dtype: float32
+    dtype: float64
     dims:
     - num_events
     shape:
