@@ -1,8 +1,41 @@
 Release Notes
 =============
 
-2.1.0 (August 2019)
--------------------
+2.2.0 (Upcoming)
+----------------
+
+- Moved common data structures such as Container and DynamicTable to hdmf.common.
+
+  - The hdmf-common-schema repo is now included as a submodule
+  - See https://github.com/NeurodataWithoutBorders/nwb-schema/pull/307 for details
+
+- Added "channel_conversion" dataset to ElectricalSeries to represent per-channel conversion factors
+
+- Added "sampling_rate" and "unit" attributes to "waveform_mean" and "waveform_sd" datasets/columns in Units table
+
+- Deprecated ImagingPlane "manifold" in favor of "origin_coords" and "grid_spacing"
+
+- Use "text" data type for all DynamicTable "colnames". Previously, only ASCII was allowed.
+
+- Use "text" data type for electrode table columns "location" and "group_name". Previously, only ASCII was allowed.
+
+- Add "doc" key to `ImagingRetinotopy.axis_2_power_map` for schema language compliance
+
+- Set `dtype` for `Image` and its subtypes to `numeric`. (note: technically this breaks backwards compatibility, in the schema, but the `pynwb` API has always enforced that Images have a numeric type, and realistically we do not think users are storing strings in an `Image` dataset.)
+
+- Avoid enforcing "uint64" for sweep numbers for better compatiblity. Use uint instead which is 32bit.
+
+- Change the "quantity" key of attribute Units.resolution to "required" for schema language compliance.
+
+- Remove "required" key from dataset ImageSeries.field_of_view for schema language compliance
+
+- Replace "required" keys with "quantity" keys for ImagingPlane.origin_coords and ImagingPlane.grid_spacing for schema language compliance
+
+- Add "doc" key to ImagingRetinotopy.axis_2_power_map for schema language compliance
+
+
+2.1.0 (September 2019)
+----------------------
 
 - Improved documentation in "doc" attribute of many types
 
@@ -31,7 +64,7 @@ Release Notes
 - ElectrodeGroup link "device": optional -> required
 
   - This was previously required by PyNWB
-  - See https://github.com/NeurodataWithoutBorders/pynwb/issues/1025for details
+  - See https://github.com/NeurodataWithoutBorders/pynwb/issues/1025 for details
 
 - Matched default and fixed values of datasets and attributes with the documentation and intended use
 
@@ -83,6 +116,10 @@ Release Notes
     intend to share. As such, published data should not include scratch data and a user should be able
     to ignore any data stored in scratch to use a file.
   - See https://github.com/NeurodataWithoutBorders/nwb-schema/issues/286 for details
+
+- Set the default value for the dataset "format" to "raw" and clarified the documentation for ImageSeries
+
+  - See https://github.com/NeurodataWithoutBorders/nwb-schema/pull/308/files for details
 
 **Backwards compatibility:** The PyNWB and MatNWB APIs can read 2.0 files with the 2.1 schema.
 

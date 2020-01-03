@@ -17,10 +17,14 @@ namespaces:
   - jteeters@berkeley.edu
   full_name: NWB core
   schema:
+  - namespace: hdmf-common
   - doc: This source module contains base data types used throughout the NWB:N data
       format.
     source: nwb.base.yaml
     title: Base data types
+  - doc: This source module contains neurodata_types for device data.
+    source: nwb.device.yaml
+    title: Devices
   - doc: This source module contains neurodata_types for epoch data.
     source: nwb.epoch.yaml
     title: Epochs

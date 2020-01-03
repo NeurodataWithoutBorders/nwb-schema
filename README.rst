@@ -1,11 +1,18 @@
 NWB Schema Format
 ========================
 
-A format specification schema for the Neurodata Without Borders: Neurophysiology (NWB:N) data format. 
+A format specification schema for the Neurodata Without Borders: Neurophysiology (NWB:N) data format.
 
-- `Learn more about NWB <http://www.nwb.org/>`_.
-- `Learn more about the NWB:N format schema <http://nwb-schema.readthedocs.io>`_
-- `Learn more about the different components of the NWB:N ecosystem <http://neurodatawithoutborders.github.io/>`_
+This repo contains:
+
+* The core NWB schema
+* The `Documentation for the NWB schema <http://nwb-schema.readthedocs.io>`_ (editable `here <https://github.com/NeurodataWithoutBorders/nwb-schema/tree/dev/docs/format/source>`_) 
+* The `NWB specification language <https://schema-language.readthedocs.io/en/latest/index.html>`_ (editable `here <https://github.com/NeurodataWithoutBorders/nwb-schema/blob/dev/docs/language/source/specification_language_description.rst>`_)
+* The `HDF5 storage specification <https://nwb-storage.readthedocs.io/en/latest/storage_hdf5.html>`_ (editable `here <https://github.com/NeurodataWithoutBorders/nwb-schema/blob/dev/docs/storage/source/storage_hdf5.rst>`_)
+
+For more information:
+
+- Learn more about NWB and `nwb.org <http://www.nwb.org/>`_.
 - The PyNWB Python API for the NWB:N format is available on `Github <https://github.com/NeurodataWithoutBorders/pynwb>`_
 - The MatNWB Matlab API for the NWB:N format is available on `Github <https://github.com/NeurodataWithoutBorders/matnwb>`_
 

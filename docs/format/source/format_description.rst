@@ -1,8 +1,8 @@
 Overview
 ========
 
-The NWB Format is a core component of the
-`Neurodata Without Borders: Neurophysiology (NWB:N) <http://nwb-overview.readthedocs.io/en/latest/nwbintro.html>`_  project.
+The `NWB Format <https://www.nwb.org/nwb-neurophysiology/>`_ is a core component of the
+`Neurodata Without Borders: Neurophysiology (NWB:N) <https://www.nwb.org/nwb-software/>`_  project.
 The NWB format is designed to store general optical and electrical physiology data in a way that
 is both understandable to humans as well as accessible to programmatic interpretation. The format is
 designed to be friendly to and usable by software tools and analysis
@@ -38,7 +38,7 @@ step is represented by a corresponding *NWBDataInterface* (an extension of *NWBC
 At a high level, data is organized into the following main groups:
 
 * *acquisition/* : data streams recorded from the system, including ephys, ophys, tracking, etc.,
-* *epochs/* : experimental intervals,
+* *intervals/* : experimental intervals,
 * *stimulus/* : stimulus data,
 * *general/* : experimental metadata, including protocol, notes and description of hardware device(s).
 * *processing/* : standardized processing modules, often as part of intermediate analysis of data that is necessary to perform before scientific analysis,
@@ -186,7 +186,7 @@ at https://github.com/NeurodataWithoutBorders/nwb-schema/issues .
 
 .. _sec-extending-the-ts-and-nc:
 
-Extending Time Series and NWBContainer
+Extending TimeSeries and NWBContainer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Like any other neurodata_type, *TimeSeries* can be extended via extensions
@@ -201,6 +201,23 @@ includes a list of all *TimeSeries* types.
 
 Extending *NWBContainer* works in the same way, e.g., to create more specific types for
 data processing.
+
+
+Common attributes
+-----------------
+
+All NWB:N Groups and Datasets with an assigned neurodata_type have three required attributes: `neurodata_type`,
+`namespace`, and `object_id`.
+
+- ``neurodata_type`` (variable-length string) is the name of the NWB:N primitive that this group or dataset maps onto
+- ``namespace`` (variable-length string) is the namespace where ``neurodata_type`` is defined, e.g. "core" or the
+namespace of an extension
+- ``object_id`` (variable-length string) is a universally unique identifier for this object within its hierarchy.
+It should be set to the string representation of a random UUID version 4 value
+(see `RFC 4122 <https://tools.ietf.org/html/rfc4122>`_) upon first creation. It is **not** a hash of the data. Files
+that contain the exact same data but were generated in different instances will have different ``object_id`` values.
+Currently, modification of an object does not require its ``object_id`` to be changed.
+
 
 
 Comments and Definitions
@@ -313,4 +330,3 @@ The timestamps\_link and data\_link fields refer to links made between
 time series, such as if timeseries A and timeseries B, each having
 different data (or time) share time (or data). This is much more
 important information as it shows structural associations in the data.
-
