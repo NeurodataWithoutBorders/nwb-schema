@@ -5,6 +5,7 @@
   "description": "A schema for validating NWB YAML files and NWB extensions",
   "version": "2.0.2",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
     "groups": {"$ref": "#/definitions/groups"},
     "attributes": {"$ref": "#/definitions/attributes"},
