@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "NWB.schema.json",
   "title": "Schema for the NWB language specification",
-  "description": "A schema for validating NWB YAML files",
+  "description": "A schema for validating NWB YAML files and NWB extensions",
   "version": "2.0.2",
   "type": "object",
   "properties": {
@@ -13,6 +13,7 @@
   },
   "definitions": {
     "protectedString": {
+      "type": "string",
       "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
     },
     "quantity": {
@@ -35,7 +36,7 @@
         }
       ]
     },
-    "dtype": {
+    "flat_dtype": {
       "description": "Required string describing the data type of the attribute",
       "anyOf": [
         {
@@ -51,6 +52,7 @@
             "int32",
             "int16",
             "int8",
+            "uint",
             "uint32",
             "uint16",
             "uint8",
@@ -64,9 +66,13 @@
             "isodatetime"
           ]
         },
-        {
-          "$ref": "#/definitions/ref_dtype"
-        }
+        {"$ref": "#/definitions/ref_dtype"}
+      ]
+    },
+    "dtype": {
+      "anyOf": [
+        {"$ref": "#/definitions/flat_dtype"},
+        {"$ref": "#/definitions/compound_dtype"}
       ]
     },
     "dims": {
@@ -107,6 +113,7 @@
       }
     },
     "ref_dtype": {
+      "type": "object",
       "required": ["target_type", "reftype"],
       "properties": {
         "target_type": {
@@ -120,10 +127,23 @@
         }
       }
     },
+    "compound_dtype": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "doc", "dtype"],
+        "properties": {
+          "name": {"$ref": "#/definitions/protectedString"},
+          "doc": {"type": "string"},
+          "dtype": {"$ref": "#/definitions/flat_dtype"}
+        }
+      }
+    },
     "groups": {
       "description": "list of groups",
       "type": "array",
       "items": {
+        "title": "group",
         "type": "object",
         "required": ["doc"],
         "additionalProperties": false,
@@ -150,6 +170,7 @@
     "attributes": {
       "type": "array",
       "items": {
+        "title": "attribute",
         "type": "object",
         "required": ["doc"],
         "additionalProperties": false,
@@ -168,6 +189,7 @@
     "links": {
       "type": "array",
       "items": {
+        "title": "link",
         "type": "object",
         "required": ["target_type", "doc"],
         "additionalProperties": false,
@@ -182,6 +204,7 @@
     "datasets": {
       "type": "array",
       "items": {
+        "title": "dataset",
         "type": "object",
         "required": ["doc"],
         "additionalProperties": false,
