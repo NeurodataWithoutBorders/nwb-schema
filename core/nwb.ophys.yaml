@@ -31,7 +31,7 @@ groups:
 
 - neurodata_type_def: RoiResponseSeries
   neurodata_type_inc: TimeSeries
-  doc: ROI responses over an imaging plane. The first dimension represents time. 
+  doc: ROI responses over an imaging plane. The first dimension represents time.
     The second dimension, if present, represents ROIs.
   datasets:
   - name: data
@@ -117,13 +117,13 @@ groups:
       neurodata_type_inc: VectorData
       dtype:
       - name: x
-        dtype: uint
+        dtype: uint32
         doc: Pixel x-coordinate.
       - name: y
-        dtype: uint
+        dtype: uint32
         doc: Pixel y-coordinate.
       - name: weight
-        dtype: float
+        dtype: float32
         doc: Weight of the pixel.
       doc: 'Pixel masks for each ROI: a list of indices and weights for the ROI. Pixel
         masks are concatenated and parsing of this dataset is maintained by the PlaneSegmentation'
@@ -136,16 +136,16 @@ groups:
       neurodata_type_inc: VectorData
       dtype:
       - name: x
-        dtype: uint
+        dtype: uint32
         doc: Voxel x-coordinate.
       - name: y
-        dtype: uint
+        dtype: uint32
         doc: Voxel y-coordinate.
       - name: z
-        dtype: uint
+        dtype: uint32
         doc: Voxel z-coordinate.
       - name: weight
-        dtype: float
+        dtype: float32
         doc: Weight of the voxel.
       doc: 'Voxel masks for each ROI: a list of indices and weights for the ROI. Voxel
         masks are concatenated and parsing of this dataset is maintained by the PlaneSegmentation'
@@ -173,10 +173,10 @@ groups:
     doc: Description of the imaging plane.
     quantity: '?'
   - name: excitation_lambda
-    dtype: float
+    dtype: float32
     doc: Excitation wavelength, in nm.
   - name: imaging_rate
-    dtype: float
+    dtype: float32
     doc: Rate that images are acquired, in Hz.
   - name: indicator
     dtype: text
@@ -209,7 +209,7 @@ groups:
     quantity: '?'
     attributes:
     - name: conversion
-      dtype: float
+      dtype: float32
       default_value: 1.0
       doc: Scalar to multiply each element in data to convert it to the specified 'unit'.
         If the data are stored in acquisition system units or other units
@@ -225,7 +225,7 @@ groups:
       doc: Base unit of measurement for working with the data. The default value is 'meters'.
       required: false
   - name: origin_coords
-    dtype: float
+    dtype: float32
     dims:
     - x, y
     - x, y, z
@@ -241,7 +241,7 @@ groups:
       default_value: meters
       doc: Measurement units for origin_coords. The default value is 'meters'.
   - name: grid_spacing
-    dtype: float
+    dtype: float32
     dims:
     - x, y
     - x, y, z
@@ -282,7 +282,7 @@ groups:
       dtype: text
       doc: Description or other notes about the channel.
     - name: emission_lambda
-      dtype: float
+      dtype: float32
       doc: Emission wavelength for channel, in nm.
   links:
   - name: device

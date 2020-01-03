@@ -30,7 +30,7 @@ groups:
     dtype: text
     doc: Description of stimulation site.
   - name: excitation_lambda
-    dtype: float
+    dtype: float32
     doc: Excitation wavelength, in nm.
   - name: location
     dtype: text

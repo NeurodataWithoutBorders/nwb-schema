@@ -265,17 +265,14 @@ Here a quick example:
 Storing Time Values
 -------------------
 
-All times are stored in seconds using double precision (64 bit) floating
-point values. A smaller floating point value, e.g. 32 bit, is **not**
+All times are stored in seconds using double precision (64-bit) floating
+point values. A smaller floating point value, e.g., 32-bit, is **not**
 permitted for storing times. This is because significant errors for time
 can result from using smaller data sizes. Throughout this document,
-sizes (number of bits) are provided for many datatypes (e.g. float32).
-If the size is followed by "!" then the size is the minimum size,
-otherwise it is the recommended size. For fields with a recommended
-size, larger or smaller sizes can be used (and for integer types both
-signed and unsigned), so long as the selected size encompasses the full
-range of data, and for floats, without loss of significant precision.
-Fields that have a minimum size can use larger, but not smaller sizes.
+sizes (number of bits) are specified for many datatypes (e.g., float32).
+For fields with a specified size, larger sizes can be used, so long as
+the selected size encompasses the full range of data, and for floats,
+without loss of significant precision.
 
 Links and data references
 -------------------------
@@ -307,13 +304,13 @@ of a dataset.
 Design notes
 ------------
 
-The listed size of integers is the suggested size. What's important for
-integers is simply that the integer is large enough to store the
-required data, and preferably not larger. For floating point, double is
-required for timestamps, while floating point is largely sufficient for
-other uses. This is why doubles (float64) are stated in some places.
-Because floating point sizes are provided, integer sizes are provided as
-well.
+**Data type sizes**
+
+The listed size of integers and floating point values is the minimum size.
+The size of the data type should be large enough to store the
+required data, and preferably not larger. 64-bit floating point (double)
+is required for timestamps, while 32-bit floating point is largely
+sufficient for other uses.
 
 **Why do timestamps\_link and data\_link record linking between
 datasets, but links between epochs and timeseries are not recorded?**

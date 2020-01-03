@@ -29,7 +29,7 @@ datasets:
     (x, y, (r, g, b, a)).
   attributes:
   - name: resolution
-    dtype: float
+    dtype: float32
     doc: Pixel resolution of the image, in pixels per centimeter.
     required: false
   - name: description
