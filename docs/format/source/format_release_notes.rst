@@ -33,6 +33,10 @@ Release Notes
 
 - Add "doc" key to ImagingRetinotopy.axis_2_power_map for schema language compliance
 
+- Change dims of ImageSeries from (frame, y, x) to (frame, x, y) and (frame, z, y, x) to (frame, x, y, z) to be consistent with the dimension ordering in PlaneSegmentation.
+
+- Change dims of Image from (y, x) to (x, y). (note: as far as we know, users of NWB 2.0 that use the Image type encode their data as (x, y)) to be consistent with the dimension ordering in ImageSeries.
+
 
 2.1.0 (September 2019)
 ----------------------
