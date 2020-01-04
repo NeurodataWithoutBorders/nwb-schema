@@ -192,7 +192,7 @@ groups:
         from which spike times were extracted, but could be larger if the acquisition time series was downsampled or
         smaller if the acquisition time series was smoothed/interpolated and it is possible for the spike time to be
         between samples.
-      quantity: '?'
+      required: false
   - name: obs_intervals_index
     neurodata_type_inc: VectorIndex
     doc: Index into the obs_intervals dataset.

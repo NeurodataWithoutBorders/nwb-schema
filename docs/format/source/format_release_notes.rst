@@ -15,6 +15,25 @@ Release Notes
 
 - Deprecated ImagingPlane "manifold" in favor of "origin_coords" and "grid_spacing"
 
+- Use "text" data type for all DynamicTable "colnames". Previously, only ASCII was allowed.
+
+- Use "text" data type for electrode table columns "location" and "group_name". Previously, only ASCII was allowed.
+
+- Add "doc" key to `ImagingRetinotopy.axis_2_power_map` for schema language compliance
+
+- Set `dtype` for `Image` and its subtypes to `numeric`. (note: technically this breaks backwards compatibility, in the schema, but the `pynwb` API has always enforced that Images have a numeric type, and realistically we do not think users are storing strings in an `Image` dataset.)
+
+- Avoid enforcing "uint64" for sweep numbers for better compatiblity. Use uint instead which is 32bit.
+
+- Change the "quantity" key of attribute Units.resolution to "required" for schema language compliance.
+
+- Remove "required" key from dataset ImageSeries.field_of_view for schema language compliance
+
+- Replace "required" keys with "quantity" keys for ImagingPlane.origin_coords and ImagingPlane.grid_spacing for schema language compliance
+
+- Add "doc" key to ImagingRetinotopy.axis_2_power_map for schema language compliance
+
+
 2.1.0 (September 2019)
 ----------------------
 

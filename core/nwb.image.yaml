@@ -8,6 +8,7 @@ datasets:
   - null
   - null
   doc: A grayscale image.
+  dtype: numeric
 
 - neurodata_type_def: RGBImage
   neurodata_type_inc: Image
@@ -20,6 +21,7 @@ datasets:
   - null
   - 3
   doc: A color image.
+  dtype: numeric
 
 - neurodata_type_def: RGBAImage
   neurodata_type_inc: Image
@@ -32,6 +34,7 @@ datasets:
   - null
   - 4
   doc: A color image with transparency.
+  dtype: numeric
 
 groups:
 - neurodata_type_def: ImageSeries
