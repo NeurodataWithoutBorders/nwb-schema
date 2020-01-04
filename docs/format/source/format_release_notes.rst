@@ -19,11 +19,9 @@ Release Notes
 
 - Use "text" data type for electrode table columns "location" and "group_name". Previously, only ASCII was allowed.
 
-- Add "doc" key to `ImagingRetinotopy.axis_2_power_map` for schema language compliance
+- Avoid enforcing "uint64" for sweep numbers for better compatibility. Use uint instead which is 32bit.
 
 - Set `dtype` for `Image` and its subtypes to `numeric`. (note: technically this breaks backwards compatibility, in the schema, but the `pynwb` API has always enforced that Images have a numeric type, and realistically we do not think users are storing strings in an `Image` dataset.)
-
-- Avoid enforcing "uint64" for sweep numbers for better compatiblity. Use uint instead which is 32bit.
 
 - Change the "quantity" key of attribute Units.resolution to "required" for schema language compliance.
 
@@ -198,11 +196,11 @@ Support row-based and column-based tables
 **Format Changes:**
 
     * **Row-based tables:** are implemented via a change in the specification language through support for
-      compound data types The advantage of row-based tables is that they i) allow referencing of sets of
-      rows via region-references to a single dataset (e.g., a set of electrodes), ii)  make it
-      easy to add rows by appending to a single dataset, iii) make it easy to read individual rows
+      compound data types The advantage of row-based tables is that they 1) allow referencing of sets of
+      rows via region-references to a single dataset (e.g., a set of electrodes), 2) make it
+      easy to add rows by appending to a single dataset, 3) make it easy to read individual rows
       of a table (but require reading the full table to extract the data of a single column).
-      Row-based tables are used to simplify, e.g,. the organization of electrode-metadata in NWB:N 2 (see above).
+      Row-based tables are used to simplify, e.g., the organization of electrode-metadata in NWB:N 2 (see above).
       (See the `specification language release notes <http://schema-language.readthedocs.io/en/latest/specification_language_release_notes.html#release-notes>`_
       for details about the addition of compound data types in the schema).
 
@@ -214,18 +212,18 @@ Support row-based and column-based tables
     * **Column-based tables:** are implemented via the new neurodata_type :ref:`DynamicTable <sec-DynamicTable>`.
       A DynamicTable is simplified-speaking just a collection of an arbitrary number of :ref:`VectorData <sec-VectorData>`
       table column datasets (all with equal length) and a dataset storing row ids and a dataset storing column names. The
-      advantage of the column-based store is that it i) makes it easy to add new columns to the table without
-      the need for extensions and ii) the column-based storage makes it easy to read individual columns
+      advantage of the column-based store is that it 1) makes it easy to add new columns to the table without
+      the need for extensions and 2) the column-based storage makes it easy to read individual columns
       efficiently (while reading full rows requires reading from multiple datasets). DynamicTable is used, e.g.,
       to enhance storage of trial data. (See https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files )
 
       * *Referencing rows in column-based tables:*  As :ref:`DynamicTable <sec-DynamicTable>` consist of multiple
-        datasets (compared to row-based tables which consists of a single 1D dataset with a compound datatuype)
+        datasets (compared to row-based tables which consists of a single 1D dataset with a compound datatype)
         is not possible to reference a set of rows with a single region reference. To address this issue, NWB:N defines
         :ref:`DynamicTableRegion <sec-DynamicTableRegion>` (added later in `PR634 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/634>`_)
         dataset type, which stores a list of integer indices (row index) and also has an attribute ``table`` with
         the object reference to the corresponding :ref:`DynamicTable <sec-DynamicTable>`.
-      * *Referencing columns in a columns-based table:* As each column is a seperate dataset, columns of a column-based
+      * *Referencing columns in a columns-based table:* As each column is a separate dataset, columns of a column-based
         :ref:`DynamicTable <sec-DynamicTable>` can be directly references via links, object-references and
         region-references.
 
@@ -247,9 +245,9 @@ efficient, consolidated arrays, which enable more efficient read, write, and sea
 * :ref:`VectorData <sec-VectorData>` : Data values from a series of data elements are concatenated into a single
   array. This allows all elements to be stored efficiently in a single data array.
 * :ref:`VectorIndex <sec-VectorIndex>` : 1D dataset of exclusive stop-indices selecting subranges in
-  :ref:`VectorData <sec-VectorData>`. In additon, the ``target`` attribute stores an object reference to the
+  :ref:`VectorData <sec-VectorData>`. In addition, the ``target`` attribute stores an object reference to the
   corresponding VectorData dataset. With this we can efficiently access single sub-vectors associated with single
-  elements from the :ref:`VectorData <sec-VectorData>` collection. An alternative approch would be store
+  elements from the :ref:`VectorData <sec-VectorData>` collection. An alternative approach would be store
   region-references as part of the VectorIndex. We opted for stop-indices mainly because they are more
   space-efficient and are easier to use for introspection of index values than region references.
 * :ref:`ElementIdentifiers <sec-ElementIdentifiers>` : 1D array for storing  unique identifiers for the elements in
@@ -277,8 +275,8 @@ The main ``/general/extracellular_ephys group`` then contained in addition the f
     - ``electrode_map`` array with the x,y,z locations of each electrode
     - ``filtering``, i.e., a single string describing the filtering for all electrodes (even though each
       electrode might be from different devices), and iv),
-    - ``impedance``, i.e, a single text array for impedance (i.e., the user has to know which format the
-      string has, e.g, a float or a tuple of floats for impedance ranges).
+    - ``impedance``, i.e., a single text array for impedance (i.e., the user has to know which format the
+      string has, e.g., a float or a tuple of floats for impedance ranges).
 
 
 **Reason:**
@@ -300,7 +298,7 @@ The main ``/general/extracellular_ephys group`` then contained in addition the f
 
     - Added specification of a new neurodata type ``<ElectrodeGroup>`` group.
       Each ``<ElectrodeGroup>`` contains the following datasets to describe the metadata of a set of related
-      electrodes (e.g,. all electrodes from a single device):
+      electrodes (e.g., all electrodes from a single device):
 
         - ``description`` : text dataset (for the group)
         - ``device``: Soft link to the device in ``/general/devices/``
@@ -411,7 +409,7 @@ outline the main changes (several of which were ultimately merged together in th
    the :ref:`VectorIndex <sec-VectorIndex>` column ``voxel_mask_index``.
 4. Added neurodata_type ``ROITable`` which defines a table  for storing references to the image mask
    and pixel mask for each ROI (see item 1,2). The ``ROITable`` type was subsequently merged with the
-   :ref:`PlaneSegmentation <sec-PlaneSegmentation>`  type and as such does no longer appear as a seperate type in the
+   :ref:`PlaneSegmentation <sec-PlaneSegmentation>`  type and as such does no longer appear as a separate type in the
    NWB:N 2 schema but :ref:`PlaneSegmentation <sec-PlaneSegmentation>` takes the function of ``ROITable``.
 5. Added neurodata_type ``ROITableRegion`` for referencing a subset of elements in an ROITable. Subsequently
    ``ROITableRegion`` has been replaced by :ref:`DynamicTableRegion <sec-DynamicTableRegion>` as the ``ROITable``
@@ -421,7 +419,7 @@ outline the main changes (several of which were ultimately merged together in th
    a :ref:`DynamicTableRegion <sec-DynamicTableRegion>` into the :ref:`PlaneSegmentation <sec-PlaneSegmentation>`
    table of ROIs (see items 3,4). (Before ROITable was converted from a row-based to a column-based table,
    `RoiResponseSeries.rois`` had been changed to a ``ROITableRegion`` which was then subsequently changed to
-   a correspondign :ref:`DynamicTableRegion <sec-DynamicTableRegion>`)
+   a corresponding :ref:`DynamicTableRegion <sec-DynamicTableRegion>`)
 7. Removed ``RoiResponseSeries.segmentation_interface``. This information is available through
    ``RoiResponseSeries.rois`` (described above in 5.)
 8. Assigned neurodata_type :ref:`PlaneSegmentation <sec-PlaneSegmentation>` to the image_plan group in
@@ -461,7 +459,7 @@ was problematic with regard to performance. To address this challenge ``UnitTime
 restructured in NWB:N 2 to use the new :ref:`VectorData <sec-VectorData>` ,
 :ref:`VectorIndex <sec-VectorIndex>`, :ref:`ElementIdentifiers <sec-ElementIdentifiers>` data structures
 (see :ref:`sec-rn-vectordata-nwb2`).Specifically, NWB:N 2 replaced ``unit_n`` (from NWB:N 1.x, also referred to
-by neurodata_type ``SpikeUnit`` in NWB:N 2beta) groups in ``UnitTimes``  with the following datadates:
+by neurodata_type ``SpikeUnit`` in NWB:N 2beta) groups in ``UnitTimes``  with the following data:
 
     * ``unit_ids`` : :ref:`ElementIdentifiers <sec-ElementIdentifiers>` dataset for storing unique ids for each element
     * ``spike_times_index``: :ref:`VectorIndex <sec-VectorIndex>` dataset with region references into the spike times dataset
@@ -642,7 +640,7 @@ addition to the predefined types, i.e., epochs or trials.
 
       - Moved ``/epochs`` to ``/intervals/epochs`` and reused the TimeIntervals type
       - Moved ``/trials`` to ``/intervals/trials`` and reused the TimeIntervals type
-      - Allow users to add arbitary TimeIntervals tables to ``/intervals``
+      - Allow users to add arbitrary TimeIntervals tables to ``/intervals``
       - Add optional :ref:`TimeIntervals <sec-TimeIntervals>` object named ``invalid_times`` in ''/intervals``, which
         specifies time intervals that contain artifacts. See `I224 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/224>`_ and `PR731 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/731>`_ for details.
 
@@ -656,8 +654,8 @@ users/developers to know how to use the specific data. In addition to links, NWB
 and region references, enabling the creation of datasets (i.e., arrays) that store links to other data objects
 (groups or datasets) or regions (i.e., subsets) of datasets.
 
-**Reason:** In several places datasets containing arrays of either i) strings with object names, ii) strings with paths,
-or iii) integer indexes are used that implicitly point to other locations in the file. These forms of implicit
+**Reason:** In several places datasets containing arrays of either 1) strings with object names, 2) strings with paths,
+or 3) integer indexes are used that implicitly point to other locations in the file. These forms of implicit
 links are not self-describing (e.g., the kind of linking, target location, implicit size and numbering assumptions
 are not easily identified). This hinders human interpretation of the data as well as programmatic resolution of these
 kind of links.
@@ -721,7 +719,7 @@ Reduce requirement for potentially empty groups
 **Format Changes:** The following groups/datasets have been made optional:
 
     * ``/epochs`` : not all experiments may require epochs.
-    * ``/general/optogenetics`` : not all epeeriments may use optogenetic data
+    * ``/general/optogenetics`` : not all experiments may use optogenetic data
     * ``device`` in :ref:`IntracellularElectrode <sec-IntracellularElectrode>`
     *
 
@@ -755,7 +753,7 @@ places and ensure that the same kind of information is available.
 
     - Added missing ``help`` attribute for ``<BehavioralTimeSeries>`` to improve consistency with other types
       as well as human data interpretation
-    - Renamed dataset ``image_plan_name`` in ``<ImageSegmentation>`` to ``image_plane``to ensure consistency
+    - Renamed dataset ``image_plan_name`` in ``<ImageSegmentation>`` to ``image_plane`` to ensure consistency
       in naming with ``<TwoPhotonSeries>``
     - Renamed dataset ``electrode_name`` in ``<PatchClampSeries>`` to ``electrode`` for consistency (and
       since the dataset is now a link, rather than a text name).
@@ -822,7 +820,7 @@ Improved organization of processed data
        and to clarify its purpose. Also :ref:`ProcessingModule <sec-ProcessingModule>` may now
        contain any  :ref:`NWBDataInterface <sec-NWBDataInterface>`.
     * With :ref:`NWBDataInterface <sec-NWBDataInterface>` now being a general base class of
-      :ref:`TimeSeries <sec-TimeSeries>`, this means that it is is now
+      :ref:`TimeSeries <sec-TimeSeries>`, this means that it is now
       possible to define data processing types that directly inherit from :ref:`TimeSeries <sec-TimeSeries>`,
       which was not possible in NWB:N 1.x.
     * *Interface* has been renamed to *NWBDataInterface* to avoid confusion and ease intuition (see above)
@@ -892,7 +890,7 @@ Specification of dataset dimensions
     * The ``unit`` for values in a dataset are specified via an attribute on the dataset itself rather than via
       ``unit`` definitions in structs that are available only in the specification itself but not the format.
     * In some cases the length of a dimension was implicitly described by the length of structs describing the
-      components of a dimension. This information is now explitily described in the ``shape`` of a dataset.
+      components of a dimension. This information is now explicitly described in the ``shape`` of a dataset.
 
 Added ``Link`` type
 """""""""""""""""""
@@ -917,7 +915,7 @@ of all datasets that were produced via autogen it was decided that all autogen d
 removed from the format.
 
 **Reason** The main reasons for removal of autogen dataset is to ease use and maintenance of NWB:N files by
-i) avoiding redundant storage of information (i.e., improve normalization of data) and ii) avoiding
+1) avoiding redundant storage of information (i.e., improve normalization of data) and 2) avoiding
 dependencies between data (i.e., datasets having to be updated due to changes in other locations in a file).
 
 **Format Changes**
