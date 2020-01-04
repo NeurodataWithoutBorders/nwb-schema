@@ -27,7 +27,7 @@ technology.
 Format Mapping
 ==============
 
-Here we describe the mapping of NWB primitives (e.g,. Groups, Datasets, Attributes, Links, etc.) used by
+Here we describe the mapping of NWB primitives (e.g., Groups, Datasets, Attributes, Links, etc.) used by
 the NWB format and specification to HDF5 storage primitives. As the NWB:N format was designed with HDF5
 in mind, the high-level mapping between the format specification and HDF5 is quite simple:
 
@@ -222,5 +222,5 @@ The actual specification data is then stored as a JSON string in scalar datasets
 data type (e.g., ``dtype=special_dtype(vlen=binary_type)`` in Python). The specification of the namespace is stored in
 ``/specifications/<namespace-name>/<version>/namespace`` while additional source files are stored in
 ``/specifications/<namespace-name>/<version>/<source-filename>``. Here ``<source-filename>`` refers to the main name
-of the source-file without file extension (e.g,. the core namespace defines ``nwb.ephys.yaml`` as source which would
+of the source-file without file extension (e.g., the core namespace defines ``nwb.ephys.yaml`` as source which would
 be stored in ``/specifications/core/2.0.1/nwb.ecephys``).

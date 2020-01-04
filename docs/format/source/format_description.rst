@@ -114,13 +114,13 @@ convert stored values to the specified SI unit.
 
 *TimeSeries* support provides two time objects representations.
 The first, *timestamps*, stores time information that is corrected
-to the experiment's time base (i.e.,aligned to a master clock,
+to the experiment's time base (i.e., aligned to a master clock,
 with time-zero aligned to the starting time of the experiment).
 This field is used for data processing and
 subsequent scientific analysis. The second, *sync*, is an optional group
 that can be used to store the sample times as reported by the
 acquisition/stimulus hardware, before samples are converted to a common
-timebase and corrected relative to the master clock. This approach
+time-base and corrected relative to the master clock. This approach
 allows the NWB format to support streaming of data directly from
 hardware sources.
 

@@ -10,7 +10,7 @@ Introduction
 ============
 
 In order to support the formal and verifiable specification of neurodata
-file formats, NWB-N defines and uses the NWB specification language.
+file formats, NWB:N defines and uses the NWB specification language.
 The specification language is defined in YAML (or optionally JSON) and defines formal
 structures for describing the organization of complex data using basic
 concepts, e.g., Groups, Datasets, Attributes, and Links.
@@ -27,8 +27,8 @@ NWB core format (:numref:`sec-extensions`).
     * Data structures for interacting with the specification language documents
       (e.g, namespace and specification YAML/JSON files) are available as part of
       PyNWB. For further details see the PyNWB docs available here: http://pynwb.readthedocs.io/en/latest/index.html
-    * For a general overview of the NWB-N data format see here: http://nwb-overview.readthedocs.io/en/latest/
-    * For detailed descripiton of the actual NWB-N data format see here: http://nwb-schema.readthedocs.io/en/latest/index.html
+    * For a general overview of the NWB:N data format see here: http://nwb-overview.readthedocs.io/en/latest/
+    * For detailed description of the actual NWB:N data format see here: http://nwb-schema.readthedocs.io/en/latest/index.html
 
 
 .. _sec-extensions:
@@ -39,7 +39,7 @@ Extensions
 As mentioned, extensions to the core format are specified via custom
 user namespaces. Each namespace must have a unique name (i.e, must be
 different from NWB). The schema of new neurodata_types (groups, datasets etc.)
-are then specified in seperate schema specification files.
+are then specified in separate schema specification files.
 While it is possible to define multiple namespaces in the same file, most commonly,
 each new namespace will be defined in a separate file with corresponding
 schema specifications being stored in one ore more additional YAML (or JSON) files.
@@ -89,7 +89,7 @@ Namespaces
 
 Namespaces are used to define a collections of specifications, to enable
 users to develop extensions in their own namespace and, hence, to avoid
-name/type collisions. Namespaces are defined in seperate YAML files.
+name/type collisions. Namespaces are defined in separate YAML files.
 The specification of a namespace looks as follows:
 
 .. code-block:: python
@@ -136,7 +136,7 @@ Text description of the namespace.
 ``name``
 ^^^^^^^^
 
-Unique name used to refer to the namespace
+Unique name used to refer to the namespace.
 
 ``full_name``
 ^^^^^^^^^^^^^
@@ -146,12 +146,12 @@ Optional string with extended full name for the namespace.
 ``version``
 ^^^^^^^^^^^
 
-Version string for the namespace
+Version string for the namespace.
 
 ``date``
 ^^^^^^^^
 
-Date the namespace has been last modified or released. Formatting is ``%Y-%m-%d %H:%M:%S``, e.g, ``2017-04-25 17:14:13``
+Date the namespace has been last modified or released. Formatting is ``%Y-%m-%d %H:%M:%S``, e.g., ``2017-04-25 17:14:13``.
 
 ``author``
 ^^^^^^^^^^
@@ -175,7 +175,7 @@ List of the schema to be included in this namespace. The specification looks as 
      - source: nwb.ephys.yaml
        doc: Types related to EPhys
        title: EPhys
-       neurodata_types: 
+       neurodata_types:
        - ElectricalSeries
      - namespace: core
        neurodata_types:
@@ -185,7 +185,7 @@ List of the schema to be included in this namespace. The specification looks as 
 * ``namespace`` describes a named reference to another namespace. In contrast to source, this is a reference by name to a known namespace (i.e., the namespace is resolved during the build and must point to an already existing namespace). This mechanism is used to allow, e.g., extension of a core namespace (here the NWB core namespace) without requiring hard paths to the files describing the core namespace.
 * ``neurodata_types`` then is an optional list of strings indicating which neurodata_types should be
   included from the given specification source or namespace. The default is ``neurodata_types: null`` indicating that all
-  neurordata_types should be included.
+  neurodata_types should be included.
 * ``doc`` is an optional key for source files with a doc string to further document the content of the source file.
 * ``title`` is an option key for source files to provide a descriptive title for a file for documentation purposes.
 
@@ -239,9 +239,9 @@ Groups are specified as part of the top-level list or via lists stored in the ke
         quantity: Optional quantity identifier for the group (default=1).
         linkable: Boolean indicating whether the group is linkable (default=True)
         attributes: Optional list of attribute specifications describing the attributes of the group
-        datasets: Optional list of dataset specifications desribing the datasets contained in the group
+        datasets: Optional list of dataset specifications describing the datasets contained in the group
         links: Optional list of link specification describing the links contained in the group
-        groups: Optional list of group specifciations describing the sub-groups contained in the group
+        groups: Optional list of group specifications describing the sub-groups contained in the group
 
 The key/value pairs that make up a group specification are described in more detail next in Section :numref:`sec-group-spec-keys`.
 
@@ -287,11 +287,11 @@ describing the group. The ``doc`` key is required.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The concept of a neurodata_type is similar to the concept of Class in object-oriented programming.
-A neurodata_type is a unique identifier for a specific type of group (or dataset) in a specfication.
+A neurodata_type is a unique identifier for a specific type of group (or dataset) in a specification.
 By assigning a neurodata_type to a group (or dataset) enables others to reuse that type by inclusion or
 inheritance (*Note:* only groups (or datasets) with a specified type can be reused).
 
-- ```neurodata_type_def```: This key is used to define (i.e, create) a new neurodata_type and to assign that type to
+- ```neurodata_type_def```: This key is used to define (i.e., create) a new neurodata_type and to assign that type to
   the current group (or dataset).
 
 - ```neurodata_type_inc```: The value of the ``neurodata_type_inc`` key describes the base type
@@ -303,13 +303,13 @@ unique neurodata_type. This means, any group (or dataset) with a variable name m
 
 The neurodata_type is determined by the value of the ``neurodata_type_def`` key or if no new
 type is defined then the value of ``neurodata_type_inc`` is used to determine type. Or in other
-words, the neurodata_type is determined by the last type in the ancestry (i.e, inheritance hierarchy) of an object.
+words, the neurodata_type is determined by the last type in the ancestry (i.e., inheritance hierarchy) of an object.
 
 
 **Reusing existing neurodata_types**
 
 The combination of ```neurodata_type_inc``` and ```neurodata_type_def``` provides an easy-to-use mechanism for
-reuse of type specifications via inheritance (i.e., merge and extension of specifications) and inclusion (i.e,
+reuse of type specifications via inheritance (i.e., merge and extension of specifications) and inclusion (i.e.,
 embedding of an existing type as a component, such as a subgroup, of a new specification). Here an overview
 of all relevant cases:
 
@@ -620,7 +620,7 @@ Compound ``dtype``
 
 Compound data types are essentially a ``struct``, i.e., the data type is a composition of several primitive types.
 This is useful to specify complex types, e.g., for storage of complex numbers consisting of a real and imaginary components,
-vectors or tensors, as well to create table-like data structures. Compond data types are created by defining a list of
+vectors or tensors, as well to create table-like data structures. Compound data types are created by defining a list of
 the form:
 
 .. code-block:: yaml
@@ -641,7 +641,7 @@ the form:
 
 
 Below and example form the NWB:N format specification showing the use of compound data types to create a table-like
-data structur for storing metadata about electrodes.
+data structure for storing metadata about electrodes.
 
 
 .. code-block:: yaml
@@ -731,7 +731,7 @@ Optional key describing the shape of the array stored as the value of the attrib
 The description of ``shape`` must match the description of dimensions in so far as
 if we name two dimensions in ``dims`` than we must also specify the ``shape`` for
 two dimensions. We may specify ``null`` in case that the length of a dimension is not
-restricted. E.g.:
+restricted, e.g.:
 
 .. code-block:: yaml
 
@@ -866,7 +866,7 @@ The specification of a datasets is described in YAML as follows:
 
 The specification of datasets looks quite similar to attributes and groups. Similar to
 attributes, datasets describe the storage of arbitrary n-dimensional array data.
-However, in conrast to attributes, datasets are not associated with a specific parent
+However, in contrast to attributes, datasets are not associated with a specific parent
 group or dataset object but are (similar to groups) primary data objects (and as such
 typically manage larger data than attributes).
 The key/value pairs that make up a dataset specification are described in more detail next in Section
@@ -972,4 +972,3 @@ Relationships
    is independent of the version number for the NWB format. The date
    after the version number is the last modification date of this
    document.
-
