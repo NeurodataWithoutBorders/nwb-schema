@@ -33,6 +33,8 @@ Release Notes
 
 - Add "doc" key to ImagingRetinotopy.axis_2_power_map for schema language compliance
 
+- Add optional "reference" dataset in ElectrodeGroup
+
 
 2.1.0 (September 2019)
 ----------------------
