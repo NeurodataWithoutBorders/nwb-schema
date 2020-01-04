@@ -191,11 +191,11 @@ groups:
     dims:
     - - height
       - width
-      - x|y|z
+      - x, y, z
     - - height
       - width
       - depth
-      - x|y|z
+      - x, y, z
     shape:
     - - null
       - null
