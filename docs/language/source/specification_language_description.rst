@@ -548,9 +548,12 @@ String specifying the data type of the attribute. Allowable values are:
 |  * "int"                 | signed 32 bit integer            | 32 bit         |
 |  * "int32"               |                                  |                |
 +--------------------------+----------------------------------+----------------+
-|  * "int16"               | signed 16 bit integer            | 16 bit         |
+|  * "short"               | signed 16 bit integer            | 16 bit         |
+|  * "int16"               |                                  |                |
 +--------------------------+----------------------------------+----------------+
 |  * "int8"                | signed 8 bit integer             | 8 bit          |
++--------------------------+----------------------------------+----------------+
+| * "uint64"               | unsigned 64 bit integer          | 64 bit         |
 +--------------------------+----------------------------------+----------------+
 | * "uint32"               | unsigned 32 bit integer          | 32 bit         |
 +--------------------------+----------------------------------+----------------+
@@ -567,12 +570,14 @@ String specifying the data type of the attribute. Allowable values are:
 |  * "utf-8"               |                                  |                |
 +--------------------------+----------------------------------+----------------+
 |  * "ascii"               | ascii text                       | variable       |
+|  * "bytes"               |                                  |                |
 +--------------------------+----------------------------------+----------------+
-|  * "bool"                | 8 bit integer with valid values  | 8bit           |
+|  * "bool"                | 8 bit integer with valid values  | 8 bit          |
 |                          | 0 or 1                           |                |
 +--------------------------+----------------------------------+----------------+
 | * "isodatetime"          | ISO8061 datetime string, e.g.,   | variable       |
 |                          | 2018-09-28T14:43:54.123+02:00    |                |
+| * "datetime"             |                                  |                |
 +--------------------------+----------------------------------+----------------+
 
 .. note::
@@ -852,7 +857,7 @@ The specification of a datasets is described in YAML as follows:
         neurodata_type_inc: Optional neurodata_type the group should inherit from
         quantity: Optional quantity identifier for the group (default=1).
         linkable: Boolean indicating whether the group is linkable (default=True)
-        dtype: Required string describing the data type of the dataset
+        dtype: Optional string describing the data type of the dataset
         dims: Optional list describing the names of the dimensions of the dataset
         shape: Optional list describing the shape (or possible shapes) of the dataset
         value: Optional to fix value of dataset
@@ -923,7 +928,7 @@ Boolean describing whether the this group can be linked.
 ``dtype``
 ^^^^^^^^^
 
-String describing the data type of the dataset. Same as for attributes. See :numref:`sec-dtype` for details.
+String describing the data type of the dataset. Same as for attributes. See :numref:`sec-dtype` for details. ``dtype`` may be omitted for abstract classes. Best practice is to define ``dtype`` for most concrete classes.
 
 ``shape``
 ^^^^^^^^^
