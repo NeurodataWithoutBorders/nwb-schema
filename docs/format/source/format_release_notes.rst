@@ -29,6 +29,8 @@ Release Notes
 
 - Add "doc" key to ImagingRetinotopy.axis_2_power_map for schema language compliance
 
+- Fix makefiles for generating documentation on Windows.
+
 
 2.1.0 (September 2019)
 ----------------------
