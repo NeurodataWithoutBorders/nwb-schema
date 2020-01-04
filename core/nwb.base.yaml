@@ -5,6 +5,7 @@ datasets:
 
 - neurodata_type_def: Image
   neurodata_type_inc: NWBData
+  dtype: numeric
   dims:
   - - num_x
     - num_y
