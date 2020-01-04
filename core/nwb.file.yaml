@@ -315,19 +315,19 @@ groups:
         datasets:
         - name: x
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: x coordinate of the channel location in the brain.
         - name: y
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: y coordinate of the channel location in the brain.
         - name: z
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: z coordinate of the channel location in the brain.
         - name: imp
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: Impedance of the channel.
         - name: location
           neurodata_type_inc: VectorData
@@ -337,7 +337,7 @@ groups:
             standard atlas names for anatomical regions when possible.
         - name: filtering
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: Description of hardware filtering.
         - name: group
           neurodata_type_inc: VectorData
@@ -351,17 +351,17 @@ groups:
           doc: Name of the ElectrodeGroup this electrode is a part of.
         - name: rel_x
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: x coordinate in electrode group
           quantity: '?'
         - name: rel_y
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: y coordinate in electrode group
           quantity: '?'
         - name: rel_z
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: z coordinate in electrode group
           quantity: '?'
     - name: intracellular_ephys

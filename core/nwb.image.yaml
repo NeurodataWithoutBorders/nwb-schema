@@ -2,36 +2,39 @@ datasets:
 - neurodata_type_def: GrayscaleImage
   neurodata_type_inc: Image
   dims:
-  - y
   - x
+  - y
   shape:
   - null
   - null
   doc: A grayscale image.
+  dtype: numeric
 
 - neurodata_type_def: RGBImage
   neurodata_type_inc: Image
   dims:
-  - y
   - x
-  - R, G, B
+  - y
+  - r, g, b
   shape:
   - null
   - null
   - 3
   doc: A color image.
+  dtype: numeric
 
 - neurodata_type_def: RGBAImage
   neurodata_type_inc: Image
   dims:
-  - y
   - x
-  - R, G, B, A
+  - y
+  - r, g, b, a
   shape:
   - null
   - null
   - 4
   doc: A color image with transparency.
+  dtype: numeric
 
 groups:
 - neurodata_type_def: ImageSeries
@@ -40,18 +43,18 @@ groups:
     Sometimes the image data is stored in the file in a raw format while other
     times it will be stored as a series of external image files in the host file system.
     The data field will either be binary data, if the data is stored in the NWB file, or
-    empty, if the data is stored in an external image stack. [frame][y][x] or [frame][z][y][x].
+    empty, if the data is stored in an external image stack. [frame][x][y] or [frame][x][y][z].
   datasets:
   - name: data
     dtype: numeric
     dims:
     - - frame
-      - y
       - x
+      - y
     - - frame
-      - z
-      - y
       - x
+      - y
+      - z
     shape:
     - - null
       - null
@@ -83,7 +86,7 @@ groups:
     quantity: '?'
     attributes:
     - name: starting_frame
-      dtype: int
+      dtype: int32
       dims:
       - num_files
       shape:
@@ -98,7 +101,7 @@ groups:
         the second file has 10 frames, and the third file has 20 frames, then this
         attribute will have values [0, 5, 15]. If there is a single external file that
         holds all of the frames of the ImageSeries (and so there is a single element in
-        the 'external_file' dataset), then this attribute should have value [0]. 
+        the 'external_file' dataset), then this attribute should have value [0].
   - name: format
     dtype: text
     default_value: raw
@@ -158,7 +161,7 @@ groups:
     the timestamps array indicates when that image was displayed.
   datasets:
   - name: data
-    dtype: int
+    dtype: int32
     dims:
     - num_times
     shape:
