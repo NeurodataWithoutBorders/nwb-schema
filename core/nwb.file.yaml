@@ -316,15 +316,15 @@ groups:
         - name: x
           neurodata_type_inc: VectorData
           dtype: float32
-          doc: x coordinate of the channel location in the brain.
+          doc: x coordinate of the channel location in the brain (+x is posterior).
         - name: y
           neurodata_type_inc: VectorData
           dtype: float32
-          doc: y coordinate of the channel location in the brain.
+          doc: y coordinate of the channel location in the brain (+y is inferior).
         - name: z
           neurodata_type_inc: VectorData
           dtype: float32
-          doc: z coordinate of the channel location in the brain.
+          doc: z coordinate of the channel location in the brain (+z is right).
         - name: imp
           neurodata_type_inc: VectorData
           dtype: float32

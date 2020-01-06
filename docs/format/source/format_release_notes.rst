@@ -19,6 +19,8 @@ Release Notes
 
 - Use "text" data type for electrode table columns "location" and "group_name". Previously, only ASCII was allowed.
 
+- Add to description to make electrode x,y,z consistent with CCF reference http://help.brain-map.org/display/mousebrain/API#API-DownloadAtlas3-DReferenceModels
+
 - Avoid enforcing "uint64" for sweep numbers for better compatibility. Use uint instead which is 32bit.
 
 - Set `dtype` for `Image` and its subtypes to `numeric`. (note: technically this breaks backwards compatibility, in the schema, but the `pynwb` API has always enforced that Images have a numeric type, and realistically we do not think users are storing strings in an `Image` dataset.)
