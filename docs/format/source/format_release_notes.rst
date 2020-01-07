@@ -31,7 +31,7 @@ Release Notes
 
 - Add "doc" key to ImagingRetinotopy.axis_2_power_map for schema language compliance
 
-- Add optional "reference" dataset in ElectrodeGroup
+- Add optional "reference" column in "electrodes" table
 
 - Change dims of ImageSeries from (frame, y, x) to (frame, x, y) and (frame, z, y, x) to (frame, x, y, z) to be consistent with the dimension ordering in PlaneSegmentation.
 
