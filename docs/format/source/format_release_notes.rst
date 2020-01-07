@@ -41,6 +41,9 @@ Release Notes
 
 - Change dims of Image from (y, x) to (x, y). (note: as far as we know, users of NWB 2.0 that use the Image type encode their data as (x, y)) to be consistent with the dimension ordering in ImageSeries.
 
+- Update hdmf-common-schema to version 1.1.0 which includes:
+  - The 'colnames' attribute of ``DynamicTable`` changed from data type 'ascii' to 'text'.
+  - Improved documentation and type docstrings.
 
 2.1.0 (September 2019)
 ----------------------
