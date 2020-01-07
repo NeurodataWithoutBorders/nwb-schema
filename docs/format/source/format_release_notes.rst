@@ -4,14 +4,16 @@ Release Notes
 2.2.0 (Upcoming)
 ----------------
 
-- Moved common data structures such as Container and DynamicTable to hdmf.common.
+- Moved common data structures such as Container and DynamicTable to hdmf-common-schema.
 
   - The hdmf-common-schema repo is now included as a submodule
   - See https://github.com/NeurodataWithoutBorders/nwb-schema/pull/307 for details
 
-- Added "channel_conversion" dataset to ElectricalSeries to represent per-channel conversion factors
+- Added "channel_conversion" dataset to ElectricalSeries to represent per-channel conversion factors.
 
-- Added "sampling_rate" and "unit" attributes to "waveform_mean" and "waveform_sd" datasets/columns in Units table
+- Added "sampling_rate" and "unit" attributes to "waveform_mean" and "waveform_sd" datasets/columns in Units table.
+
+- Added "description" and "manufacturer" attributes to Device.
 
 - Deprecated ImagingPlane "manifold" in favor of "origin_coords" and "grid_spacing"
 
@@ -19,29 +21,36 @@ Release Notes
 
 - Use "text" data type for electrode table columns "location" and "group_name". Previously, only ASCII was allowed.
 
-- Add to description to make electrode x,y,z consistent with CCF reference http://help.brain-map.org/display/mousebrain/API#API-DownloadAtlas3-DReferenceModels
+- Added to description to make electrode x,y,z consistent with CCF reference. http://help.brain-map.org/display/mousebrain/API#API-DownloadAtlas3-DReferenceModels
+
+- Added "position" dataset with compound data type x,y,z in ElectrodeGroup.
 
 - Avoid enforcing "uint64" for sweep numbers for better compatibility. Use uint instead which is 32bit.
 
 - Set `dtype` for `Image` and its subtypes to `numeric`. (note: technically this breaks backwards compatibility, in the schema, but the `pynwb` API has always enforced that Images have a numeric type, and realistically we do not think users are storing strings in an `Image` dataset.)
 
-- Change the "quantity" key of attribute Units.resolution to "required" for schema language compliance.
+- Added "resolution" attribute to "spike_times" column of Units.
 
-- Remove "required" key from dataset ImageSeries.field_of_view for schema language compliance
+- Changed the "quantity" key of attribute Units.resolution to "required" for schema language compliance.
 
-- Replace "required" keys with "quantity" keys for ImagingPlane.origin_coords and ImagingPlane.grid_spacing for schema language compliance
+- Removed "required" key from dataset ImageSeries.field_of_view for schema language compliance.
 
-- Add "doc" key to ImagingRetinotopy.axis_2_power_map for schema language compliance
+- Replaced "required" keys with "quantity" keys for ImagingPlane.origin_coords and ImagingPlane.grid_spacing for schema language compliance.
 
-- Fix makefiles for generating documentation on Windows.
+- Refactored ImagingRetinotopy type to reduce redundancy.
 
-- Add optional "reference" column in "electrodes" table
+- Added "doc" key to ImagingRetinotopy.axis_2_power_map for schema language compliance.
 
-- Change dims of ImageSeries from (frame, y, x) to (frame, x, y) and (frame, z, y, x) to (frame, x, y, z) to be consistent with the dimension ordering in PlaneSegmentation.
+- Fixed makefiles for generating documentation on Windows.
 
-- Change dims of Image from (y, x) to (x, y). (note: as far as we know, users of NWB 2.0 that use the Image type encode their data as (x, y)) to be consistent with the dimension ordering in ImageSeries.
+- Added optional "reference" column in "electrodes" table.
 
-- Update hdmf-common-schema to version 1.1.0 which includes:
+- Changed dims of ImageSeries from (frame, y, x) to (frame, x, y) and (frame, z, y, x) to (frame, x, y, z) to be consistent with the dimension ordering in PlaneSegmentation.
+
+- Changed dims of Image from (y, x) to (x, y). (note: as far as we know, users of NWB 2.0 that use the Image type encode their data as (x, y)) to be consistent with the dimension ordering in ImageSeries.
+
+- Updated hdmf-common-schema to version 1.1.0 which includes:
+
   - The 'colnames' attribute of ``DynamicTable`` changed from data type 'ascii' to 'text'.
   - Improved documentation and type docstrings.
 
