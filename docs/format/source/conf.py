@@ -31,7 +31,7 @@ def run_doc_autogen(_):
    from conf_doc_autogen import spec_output_dir
 
    if spec_doc_rebuild_always or not os.path.exists(spec_output_dir):
-      from nwb_docutils.generate_format_docs import main as generate_docs
+      from hdmf_docutils.generate_format_docs import main as generate_docs
       generate_docs()
 
 def setup(app):
@@ -59,7 +59,7 @@ numfig = True
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc']
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -120,6 +120,10 @@ pygments_style = 'sphinx'
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
+
+intersphinx_mapping = {
+    'hdmf-common-schema': ('https://hdmf-common-schema.readthedocs.io/en/latest/', None),
+}
 
 
 # -- Options for HTML output ---------------------------------------------------

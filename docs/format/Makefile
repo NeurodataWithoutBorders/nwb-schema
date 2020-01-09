@@ -170,7 +170,7 @@ doctest:
 	      "results in $(BUILDDIR)/doctest/output.txt."
 
 apidoc:
-	PYTHONPATH=$(CONFDIR):$(PYTHONPATH) nwb_generate_format_docs
+	PYTHONPATH=$(CONFDIR):$(PYTHONPATH) hdmf_generate_format_docs
 	@echo
 	@echo "Generate rst source files from NWB spec."
 
