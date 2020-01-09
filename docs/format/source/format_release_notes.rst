@@ -2,7 +2,7 @@ Release Notes
 =============
 
 2.2.0 (January 6, 2020)
-----------------
+-----------------------
 
 - Moved common data structures such as Container and DynamicTable to hdmf-common-schema.
 
