@@ -122,7 +122,7 @@ pygments_style = 'sphinx'
 #modindex_common_prefix = []
 
 intersphinx_mapping = {
-    'hdmf-common-schema': ('https://hdmf-common-schema.readthedocs.io/en/latest/', None),
+    'hdmf-common-schema': ('https://hdmf-common-schema.readthedocs.io/en/stable/', None),
 }
 
 
