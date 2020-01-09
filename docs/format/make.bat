@@ -204,7 +204,7 @@ results in %BUILDDIR%/doctest/output.txt.
 
 if "%1" == "apidoc" (
   set PYTHONPATH=%cd%/source;%PYTHONPATH%
-	nwb_generate_format_docs
+	hdmf_generate_format_docs
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Generate rst source files from NWB spec.

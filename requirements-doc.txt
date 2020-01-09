@@ -1,1 +1,2 @@
-nwb-docutils
+hdmf-docutils
+pynwb

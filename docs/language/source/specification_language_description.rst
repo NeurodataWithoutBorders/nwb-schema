@@ -64,12 +64,12 @@ and subsequent sections.
 
 .. tip::
 
-    The ``nwb-docutils`` package includes tools to generate Sphinx documentation from
-    format specifications. In particular the executable ``nwb_init_sphinx_extension_doc``
+    The ``hdmf-docutils`` package includes tools to generate Sphinx documentation from
+    format specifications. In particular the executable ``hdmf_init_sphinx_extension_doc``
     provides functionality to setup documentation for a format or extension defined
     by a namespace (similar to the documentation for NWB core namespace at http://nwb-schema.readthedocs.io/en/latest/ ).
-    Use ``nwb_init_sphinx_extension_doc --help`` to view the list
-    of options for generating the docs. The package also includes the executable ``nwb_generate_format_docs``
+    Use ``hdmf_init_sphinx_extension_doc --help`` to view the list
+    of options for generating the docs. The package also includes the executable ``hdmf_generate_format_docs``
     which is used for generating actual reStructuredText files and figures from YAML/JSON
     specification sources. For an example see: http://pynwb.readthedocs.io/en/latest/example.html#documenting-extensions
 
