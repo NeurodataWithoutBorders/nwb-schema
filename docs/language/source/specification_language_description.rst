@@ -231,59 +231,29 @@ Groups are specified as part of the top-level list or via lists stored in the ke
 
 
     # Group specification
-    -   name: Optional fixed name for the group. A group must either have a unique neurodata_type or a unique, fixed name.
+    -   neurodata_type_def: Optional new neurodata_type for the group
+        neurodata_type_inc: Optional neurodata_type the group should inherit from
+        name: Optional fixed name for the group. A group must either have a unique neurodata_type or a unique, fixed name.
         default_name: Default name for the group
         doc: Required description of the group
-        neurodata_type_def: Optional new neurodata_type for the group
-        neurodata_type_inc: Optional neurodata_type the group should inherit from
         quantity: Optional quantity identifier for the group (default=1).
         linkable: Boolean indicating whether the group is linkable (default=True)
         attributes: Optional list of attribute specifications describing the attributes of the group
         datasets: Optional list of dataset specifications describing the datasets contained in the group
-        links: Optional list of link specification describing the links contained in the group
         groups: Optional list of group specifications describing the sub-groups contained in the group
+        links: Optional list of link specification describing the links contained in the group
 
 The key/value pairs that make up a group specification are described in more detail next in Section :numref:`sec-group-spec-keys`.
+The keys should be ordered as specified above for readability and consistency with the rest of the schema.
 
 .. _sec-group-spec-keys:
 
 Group specification keys
 ------------------------
 
-``name``
-^^^^^^^^
-
-String with the optional fixed name for the group.
-
-.. note::
-
-    Every group must have either a unique fixed ``name`` or a unique ``neurodata_type`` determined by
-    (``neurodata_type_def`` and ``neurodata_type_inc``) to enable the unique
-    identification of groups when stored on disk.
-
-``default_name``
-^^^^^^^^^^^^^^^^
-
-Default name of the group.
-
-.. note::
-
-    Only one of either ``name`` or ``default_name`` (or neither) should be specified as the fixed
-    name given by ``name`` would always overwrite the behavior of ``default_name``.
-
-``doc``
-^^^^^^^
-
-The value of the group specification ``doc`` key is a string
-describing the group. The ``doc`` key is required.
-
-.. note::
-
-    In earlier versions (before version 1.2a) this key was called ``description``
-
 .. _sec-neurodata-type:
 
-``neurodata_type_inc`` and ``neurodata_type_def``
+``neurodata_type_def`` and ``neurodata_type_inc``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The concept of a neurodata_type is similar to the concept of Class in object-oriented programming.
@@ -352,7 +322,6 @@ if we resolve the inheritance, then the above is equivalent to:
 
 **Example: Reuse by inclusion**
 
-
 .. code-block:: yaml
 
     # Abbreviated YAML specification
@@ -363,7 +332,6 @@ if we resolve the inheritance, then the above is equivalent to:
     -   neurodata_type_def: MySeries
         groups:
         - neurodata_type_inc: Series
-
 
 The result of this is that ``MySeries`` now includes a group of type ``Series``, i.e., the above is equivalent to:
 
@@ -381,6 +349,36 @@ The result of this is that ``MySeries`` now includes a group of type ``Series``,
     simplify the concepts of  inclusion and merging of specifications and replaced the
     keys ```include``` and ```merge```(and ```merge+```).
 
+``name``
+^^^^^^^^
+
+String with the optional fixed name for the group.
+
+.. note::
+
+    Every group must have either a unique fixed ``name`` or a unique ``neurodata_type`` determined by
+    (``neurodata_type_def`` and ``neurodata_type_inc``) to enable the unique
+    identification of groups when stored on disk.
+
+``default_name``
+^^^^^^^^^^^^^^^^
+
+Default name of the group.
+
+.. note::
+
+    Only one of either ``name`` or ``default_name`` (or neither) should be specified as the fixed
+    name given by ``name`` would always overwrite the behavior of ``default_name``.
+
+``doc``
+^^^^^^^
+
+The value of the group specification ``doc`` key is a string
+describing the group. The ``doc`` key is required.
+
+.. note::
+
+    In earlier versions (before version 1.2a) this key was called ``description``
 
 .. _sec-quantity:
 
@@ -414,7 +412,6 @@ then the group (or dataset) is optional and otherwise it is required. The defaul
 
 Boolean describing whether the this group can be linked.
 
-
 ``attributes``
 ^^^^^^^^^^^^^^
 
@@ -424,22 +421,6 @@ List of attribute specifications describing the attributes of the group. See :nu
 
     attributes:
     - ...
-
-``links``
-^^^^^^^^^
-
-List of link specifications describing all links to be stored as part of this group.
-See :numref:`sec-link-spec` for details.
-
-.. code-block:: yaml
-
-    links:
-    - doc: Link to target type
-      name: link name
-      target_type: type of target
-      quantity: optional number of links allowed
-    - ...
-
 
 ``datasets``
 ^^^^^^^^^^^^
@@ -473,6 +454,20 @@ List of group specifications describing all groups to be stored as part of this 
       quantity: 'zero_or_one'
     - ...
 
+``links``
+^^^^^^^^^
+
+List of link specifications describing all links to be stored as part of this group.
+See :numref:`sec-link-spec` for details.
+
+.. code-block:: yaml
+
+    links:
+    - doc: Link to target type
+      name: link name
+      target_type: type of target
+      quantity: optional number of links allowed
+    - ...
 
 ``\_required``
 ^^^^^^^^^^^^^^
@@ -495,20 +490,21 @@ the  group, dataset, or link they are associated with. Similar to datasets, attr
 can define arbitrary n-dimensional arrays, but are typically used to store smaller data.
 The specification of an attributes is described in YAML as follows:
 
-
 .. code-block:: yaml
 
     ...
     attributes:
     - name: Required string describing the name of the attribute
-      doc: Required string with the description of the attribute
       dtype: Required string describing the data type of the attribute
       dims: Optional list describing the names of the dimensions of the data array stored by the attribute (default=None)
       shape: Optional list describing the allowed shape(s) of the data array stored by the attribute (default=None)
-      required: Optional boolean indicating whether the attribute is required (default=True)
       value: Optional constant, fixed value for the attribute.
       default_value: Optional default value for variable-valued attributes. Only one of value or default_value should be set.
-    -
+      doc: Required string with the description of the attribute
+      required: Optional boolean indicating whether the attribute is required (default=True)
+
+The keys should be ordered as specified above for readability and consistency with the rest of the schema.
+
 
 Attribute specification keys
 ----------------------------
@@ -518,13 +514,6 @@ Attribute specification keys
 
 String with the name for the attribute. The ``name`` key is required and must
 specify a unique attribute on the current parent object (e.g., group or dataset)
-
-
-``doc``
-^^^^^^^
-
-``doc`` specifies the documentation string for the attribute  and should describe the
-purpose and use of the attribute data. The ``doc`` key is required.
 
 .. _sec-dtype:
 
@@ -588,7 +577,7 @@ String specifying the data type of the attribute. Allowable values are:
 Reference ``dtype``
 """""""""""""""""""
 
-In additon to the above basic data types, an attribute or dataset may also store references to other
+In addition to the above basic data types, an attribute or dataset may also store references to other
 data objects. Reference ``dtypes`` are described via a dictionary. E.g.:
 
 .. code-block:: yaml
@@ -642,7 +631,6 @@ the form:
 
 Below and example form the NWB:N format specification showing the use of compound data types to create a table-like
 data structure for storing metadata about electrodes.
-
 
 .. code-block:: yaml
 
@@ -760,15 +748,6 @@ The default behavior for shape is:
 
 indicating that the attribute/dataset is a scalar.
 
-
-
-``required``
-^^^^^^^^^^^^
-
-Optional boolean key describing whether the attribute is required. Default value is True.
-
-.. _sec-value:
-
 ``value``
 ^^^^^^^^^
 
@@ -788,6 +767,19 @@ default value is used in case that the user does not specify a specific value fo
     Only one of either ``value`` or ``default_value`` should be specified (or neither) but never
     both at the same time, as ``value`` would always overwrite the ``default_value``.
 
+``doc``
+^^^^^^^
+
+``doc`` specifies the documentation string for the attribute  and should describe the
+purpose and use of the attribute data. The ``doc`` key is required.
+
+``required``
+^^^^^^^^^^^^
+
+Optional boolean key describing whether the attribute is required. Default value is True.
+
+.. _sec-value:
+
 
 .. _sec-link-spec:
 
@@ -800,9 +792,9 @@ The link specification is a dictionary with the following form:
 .. code-block:: yaml
 
     links:
-    - doc: Link to target type
-      name: link name
+    - name: link name
       target_type: type of target
+      doc: Link to target type
 
 .. note::
 
@@ -810,9 +802,15 @@ The link specification is a dictionary with the following form:
     in the context of HDF5, this means that soft links (or external links) should be
     used instead of hard links.
 
+The keys should be ordered as specified above for readability and consistency with the rest of the schema.
 
 Link specification keys
 ------------------------
+
+``name``
+^^^^^^^^
+
+Optional key specifying the ``name`` of the link.
 
 ``target_type``
 ^^^^^^^^^^^^^^^
@@ -827,15 +825,11 @@ instance of that structure.
 ``doc`` specifies the documentation string for the link and  should describe the
 purpose and use of the linked data. The ``doc`` key is required.
 
-``name``
-^^^^^^^^
-
-Optional key specifying the ``name`` of the link.
-
 ``quantity``
 ^^^^^^^^^^^^
 
-Optional key specifying how many allowable instances for that link. Default is 1. If `name` is defined, quantity may not be >1. See :numref:`sec-quantity` for details.
+Optional key specifying how many allowable instances for that link. Default is 1. If `name` is defined, quantity may
+not be >1. See :numref:`sec-quantity` for details.
 
 
 .. _sec-dataset-spec:
@@ -843,25 +837,24 @@ Optional key specifying how many allowable instances for that link. Default is 1
 Datasets
 ========
 
-
 Datasets are specified as part of lists stored in the key ``datasets`` as part of group specifications.
 The specification of a datasets is described in YAML as follows:
 
 .. code-block:: yaml
 
     - datasets:
-      - name: fixed name of the dataset
-        default_name: default name of the dataset
-        doc: Required description of the dataset
-        neurodata_type_def: Optional new neurodata_type for the group
+      - neurodata_type_def: Optional new neurodata_type for the group
         neurodata_type_inc: Optional neurodata_type the group should inherit from
-        quantity: Optional quantity identifier for the group (default=1).
-        linkable: Boolean indicating whether the group is linkable (default=True)
+        name: fixed name of the dataset
+        default_name: default name of the dataset
         dtype: Optional string describing the data type of the dataset
         dims: Optional list describing the names of the dimensions of the dataset
         shape: Optional list describing the shape (or possible shapes) of the dataset
         value: Optional to fix value of dataset
         default_value: Optional to set a default value for the dataset
+        doc: Required description of the dataset
+        quantity: Optional quantity identifier for the group (default=1).
+        linkable: Boolean indicating whether the group is linkable (default=True)
         attributes: Optional list of attribute specifications describing the attributes of the group
 
 The specification of datasets looks quite similar to attributes and groups. Similar to
@@ -870,14 +863,18 @@ However, in contrast to attributes, datasets are not associated with a specific 
 group or dataset object but are (similar to groups) primary data objects (and as such
 typically manage larger data than attributes).
 The key/value pairs that make up a dataset specification are described in more detail next in Section
-:numref:`sec-dataset-spec-keys`.
-
+:numref:`sec-dataset-spec-keys`. The keys should be ordered as specified above for readability and consistency with the
+rest of the schema.
 
 .. _sec-dataset-spec-keys:
 
 Dataset specification keys
 --------------------------
 
+``neurodata_type_inc`` and ``neurodata_type_def``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Same as for groups. See :numref:`sec-neurodata-type` for details.
 
 ``name``
 ^^^^^^^^
@@ -899,6 +896,25 @@ Default name of the group.
     Only one of either ``name`` or ``default_name`` (or neither) should be specified as the fixed
     name given by ``name`` would always overwrite the behavior of ``default_name``.
 
+``dtype``
+^^^^^^^^^
+
+String describing the data type of the dataset. Same as for attributes. See :numref:`sec-dtype` for details. ``dtype`` may be omitted for abstract classes. Best practice is to define ``dtype`` for most concrete classes.
+
+``dims``
+^^^^^^^^
+
+List describing the names of the dimensions of the dataset. Same as for attributes. See :numref:`sec-dims` for details.
+
+``shape``
+^^^^^^^^^
+
+List describing the shape of the dataset. Same as for attributes. See :numref:`sec-shape` for details.
+
+``value`` and ``default_value``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Same as for attributes. See :numref:`sec-value` and :numref:`sec-default_value` for details.
+
 ``doc``
 ^^^^^^^
 
@@ -909,12 +925,6 @@ describing the dataset. The ``doc`` key is required.
 
     In earlier versions (before version 1.2a) this key was called ``description``
 
-``neurodata_type_inc`` and ``neurodata_type_def``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Same as for groups. See :numref:`sec-neurodata-type` for details.
-
-
 ``quantity``
 ^^^^^^^^^^^^
 
@@ -924,27 +934,6 @@ Same as for groups. See :numref:`sec-quantity` for details.
 ^^^^^^^^^^^^
 
 Boolean describing whether the this group can be linked.
-
-``dtype``
-^^^^^^^^^
-
-String describing the data type of the dataset. Same as for attributes. See :numref:`sec-dtype` for details. ``dtype`` may be omitted for abstract classes. Best practice is to define ``dtype`` for most concrete classes.
-
-``shape``
-^^^^^^^^^
-
-List describing the shape of the dataset. Same as for attributes. See :numref:`sec-shape` for details.
-
-``dims``
-^^^^^^^^
-
-List describing the names of the dimensions of the dataset. Same as for attributes. See :numref:`sec-dims` for details.
-
-
-``value`` and ``default_value``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Same as for attributes. See :numref:`sec-value` and :numref:`sec-default_value` for details.
-
 
 ``attributes``
 ^^^^^^^^^^^^^^
