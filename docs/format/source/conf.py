@@ -75,7 +75,7 @@ master_doc = 'source/index'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Neurodata Without Borders'
+project = u'NWB Format Specification'
 copyright = u'2017-2020, Neurodata Without Borders'
 
 # The version info for the project you're documenting, acts as replacement for
