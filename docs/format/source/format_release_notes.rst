@@ -4,7 +4,7 @@ Release Notes
 2.2.1 (January 14, 2020)
 ------------------------
 
-- Fixed incorrect version number in nwb.file.yaml.
+- Fixed incorrect version numbers in nwb.file.yaml and hdmf-common namespace.yaml.
 
 2.2.0 (January 6, 2020)
 -----------------------
