@@ -1,8 +1,12 @@
 Release Notes
 =============
 
-2.2.0 (Upcoming)
+2.3.0 (Upcoming)
 ----------------
+- Allow more than one OpticalChannel object in ImagingPlane
+
+2.2.0
+------
 
 - Moved common data structures such as Container and DynamicTable to hdmf.common.
 
