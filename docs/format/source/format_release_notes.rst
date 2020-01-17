@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+2.3.0 (Upcoming)
+----------------
+- Fix shape and dims of OpticalSeries.data for color images
+
 2.2.1 (January 14, 2020)
 ------------------------
 
