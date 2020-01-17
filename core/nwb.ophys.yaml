@@ -23,7 +23,6 @@ groups:
     - - 2
     - - 3
     doc: Width, height and depth of image, or imaged area, in meters.
-    required: false
     quantity: '?'
   links:
   - name: imaging_plane
@@ -32,9 +31,8 @@ groups:
 
 - neurodata_type_def: RoiResponseSeries
   neurodata_type_inc: TimeSeries
-  doc: ROI responses over an imaging plane. Each row in data should correspond to
-    the signal from one ROI. Each element on the second dimension of data should
-    correspond to the signal from one ROI.
+  doc: ROI responses over an imaging plane. The first dimension represents time.
+    The second dimension, if present, represents ROIs.
   datasets:
   - name: data
     dtype: numeric
@@ -119,13 +117,13 @@ groups:
       neurodata_type_inc: VectorData
       dtype:
       - name: x
-        dtype: uint
+        dtype: uint32
         doc: Pixel x-coordinate.
       - name: y
-        dtype: uint
+        dtype: uint32
         doc: Pixel y-coordinate.
       - name: weight
-        dtype: float
+        dtype: float32
         doc: Weight of the pixel.
       doc: 'Pixel masks for each ROI: a list of indices and weights for the ROI. Pixel
         masks are concatenated and parsing of this dataset is maintained by the PlaneSegmentation'
@@ -138,16 +136,16 @@ groups:
       neurodata_type_inc: VectorData
       dtype:
       - name: x
-        dtype: uint
+        dtype: uint32
         doc: Voxel x-coordinate.
       - name: y
-        dtype: uint
+        dtype: uint32
         doc: Voxel y-coordinate.
       - name: z
-        dtype: uint
+        dtype: uint32
         doc: Voxel z-coordinate.
       - name: weight
-        dtype: float
+        dtype: float32
         doc: Weight of the voxel.
       doc: 'Voxel masks for each ROI: a list of indices and weights for the ROI. Voxel
         masks are concatenated and parsing of this dataset is maintained by the PlaneSegmentation'
@@ -175,10 +173,10 @@ groups:
     doc: Description of the imaging plane.
     quantity: '?'
   - name: excitation_lambda
-    dtype: float
+    dtype: float32
     doc: Excitation wavelength, in nm.
   - name: imaging_rate
-    dtype: float
+    dtype: float32
     doc: Rate that images are acquired, in Hz.
   - name: indicator
     dtype: text
@@ -193,11 +191,11 @@ groups:
     dims:
     - - height
       - width
-      - x|y|z
+      - x, y, z
     - - height
       - width
       - depth
-      - x|y|z
+      - x, y, z
     shape:
     - - null
       - null
@@ -211,7 +209,7 @@ groups:
     quantity: '?'
     attributes:
     - name: conversion
-      dtype: float
+      dtype: float32
       default_value: 1.0
       doc: Scalar to multiply each element in data to convert it to the specified 'unit'.
         If the data are stored in acquisition system units or other units
@@ -227,7 +225,7 @@ groups:
       doc: Base unit of measurement for working with the data. The default value is 'meters'.
       required: false
   - name: origin_coords
-    dtype: float
+    dtype: float32
     dims:
     - x, y
     - x, y, z
@@ -236,14 +234,14 @@ groups:
     - 3
     doc: Physical location of the first element of the imaging plane (0, 0) for 2-D data or (0, 0, 0) for 3-D data.
       See also reference_frame for what the physical location is relative to (e.g., bregma).
-    required: false
+    quantity: '?'
     attributes:
     - name: unit
       dtype: text
       default_value: meters
       doc: Measurement units for origin_coords. The default value is 'meters'.
   - name: grid_spacing
-    dtype: float
+    dtype: float32
     dims:
     - x, y
     - x, y, z
@@ -252,7 +250,7 @@ groups:
     - 3
     doc: Space between pixels in (x, y) or voxels in (x, y, z) directions, in the specified unit.
       Assumes imaging plane is a regular grid. See also reference_frame to interpret the grid.
-    required: false
+    quantity: '?'
     attributes:
     - name: unit
       dtype: text
@@ -285,7 +283,7 @@ groups:
       dtype: text
       doc: Description or other notes about the channel.
     - name: emission_lambda
-      dtype: float
+      dtype: float32
       doc: Emission wavelength for channel, in nm.
   links:
   - name: device

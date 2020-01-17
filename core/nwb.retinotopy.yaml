@@ -23,6 +23,7 @@ groups:
   - name: axis_2_power_map
     neurodata_type_inc: AxisMap
     quantity: '?'
+    doc: Power response to stimulus on the second measured axis.
   - name: sign_map
     neurodata_type_inc: RetinotopyMap
     doc: Sine of the angle between the direction of the gradient in axis_1 and axis_2.
@@ -40,7 +41,7 @@ groups:
       wavelength) as data collection. Array format: [rows][columns].'
     attributes:
     - name: focal_depth
-      dtype: float
+      dtype: float32
       doc: Focal depth offset, in meters.
   - name: vasculature_image
     neurodata_type_inc: RetinotopyImage
@@ -67,12 +68,13 @@ datasets:
     doc: 'Number of rows and columns in the image. NOTE: row, column representation
       is equivalent to height, width.'
   - name: field_of_view
-    dtype: float
+    dtype: float32
     dims:
     - row_col
     shape:
     - 2
     doc: Size of viewing area, in meters.
+
 - neurodata_type_def: AxisMap
   neurodata_type_inc: RetinotopyMap
   dtype: float32
@@ -105,7 +107,7 @@ datasets:
     doc: 'Number of rows and columns in the image. NOTE: row, column representation
       is equivalent to height, width.'
   - name: field_of_view
-    dtype: float
+    dtype: float32
     dims:
     - row_col
     shape:

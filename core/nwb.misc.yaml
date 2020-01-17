@@ -61,7 +61,7 @@ groups:
     doc: Annotations made during an experiment.
     attributes:
     - name: resolution
-      dtype: float
+      dtype: float32
       value: -1.0
       doc: Smallest meaningful difference between values in data. Annotations have
         no units, so the value is fixed to -1.0.
@@ -90,7 +90,7 @@ groups:
     doc: Use values >0 if interval started, <0 if interval ended.
     attributes:
     - name: resolution
-      dtype: float
+      dtype: float32
       value: -1.0
       doc: Smallest meaningful difference between values in data. Annotations have
         no units, so the value is fixed to -1.0.
@@ -137,7 +137,7 @@ groups:
       doc: Name of the band, e.g. theta.
     - name: band_limits
       neurodata_type_inc: VectorData
-      dtype: float
+      dtype: float32
       dims:
       - num_bands
       - low, high
@@ -148,7 +148,7 @@ groups:
         2 SD on either side of the center.
     - name: band_mean
       neurodata_type_inc: VectorData
-      dtype: float
+      dtype: float32
       dims:
       - num_bands
       shape:
@@ -156,7 +156,7 @@ groups:
       doc: The mean Gaussian filters, in Hz.
     - name: band_stdev
       neurodata_type_inc: VectorData
-      dtype: float
+      dtype: float32
       dims:
       - num_bands
       shape:
@@ -182,24 +182,24 @@ groups:
     quantity: '?'
   - name: spike_times
     neurodata_type_inc: VectorData
-    dtype: double
+    dtype: float64
     doc: Spike times for each unit.
     quantity: '?'
     attributes:
     - name: resolution
-      dtype: double
+      dtype: float64
       doc: The smallest possible difference between two spike times. Usually 1 divided by the acquisition sampling rate
         from which spike times were extracted, but could be larger if the acquisition time series was downsampled or
         smaller if the acquisition time series was smoothed/interpolated and it is possible for the spike time to be
         between samples.
-      quantity: '?'
+      required: false
   - name: obs_intervals_index
     neurodata_type_inc: VectorIndex
     doc: Index into the obs_intervals dataset.
     quantity: '?'
   - name: obs_intervals
     neurodata_type_inc: VectorData
-    dtype: double
+    dtype: float64
     dims:
     - num_intervals
     - start|end
@@ -225,7 +225,7 @@ groups:
     quantity: '?'
   - name: waveform_mean
     neurodata_type_inc: VectorData
-    dtype: float
+    dtype: float32
     dims:
     - - num_units
       - num_samples
@@ -242,7 +242,7 @@ groups:
     quantity: '?'
     attributes:
     - name: sampling_rate
-      dtype: float
+      dtype: float32
       doc: Sampling rate, in hertz.
       required: false
     - name: unit
@@ -252,7 +252,7 @@ groups:
       required: false
   - name: waveform_sd
     neurodata_type_inc: VectorData
-    dtype: float
+    dtype: float32
     dims:
     - - num_units
       - num_samples
@@ -269,7 +269,7 @@ groups:
     quantity: '?'
     attributes:
     - name: sampling_rate
-      dtype: float
+      dtype: float32
       doc: Sampling rate, in hertz.
       required: false
     - name: unit

@@ -7,7 +7,7 @@ groups:
   attributes:
   - name: nwb_version
     dtype: text
-    value: 2.1.0
+    value: 2.2.1
     doc: File version string. Use semantic versioning, e.g. 1.2.1. This will be the
       name of the format with trailing major, minor and patch numbers.
   datasets:
@@ -315,19 +315,19 @@ groups:
         datasets:
         - name: x
           neurodata_type_inc: VectorData
-          dtype: float
-          doc: x coordinate of the channel location in the brain.
+          dtype: float32
+          doc: x coordinate of the channel location in the brain (+x is posterior).
         - name: y
           neurodata_type_inc: VectorData
-          dtype: float
-          doc: y coordinate of the channel location in the brain.
+          dtype: float32
+          doc: y coordinate of the channel location in the brain (+y is inferior).
         - name: z
           neurodata_type_inc: VectorData
-          dtype: float
-          doc: z coordinate of the channel location in the brain.
+          dtype: float32
+          doc: z coordinate of the channel location in the brain (+z is right).
         - name: imp
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: Impedance of the channel.
         - name: location
           neurodata_type_inc: VectorData
@@ -337,7 +337,7 @@ groups:
             standard atlas names for anatomical regions when possible.
         - name: filtering
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: Description of hardware filtering.
         - name: group
           neurodata_type_inc: VectorData
@@ -351,18 +351,23 @@ groups:
           doc: Name of the ElectrodeGroup this electrode is a part of.
         - name: rel_x
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: x coordinate in electrode group
           quantity: '?'
         - name: rel_y
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: y coordinate in electrode group
           quantity: '?'
         - name: rel_z
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: z coordinate in electrode group
+          quantity: '?'
+        - name: reference
+          neurodata_type_inc: VectorData
+          dtype: text
+          doc: Description of the reference used for this electrode.
           quantity: '?'
     - name: intracellular_ephys
       doc: Metadata related to intracellular electrophysiology.
