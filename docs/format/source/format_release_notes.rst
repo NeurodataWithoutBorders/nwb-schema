@@ -36,8 +36,6 @@ Release Notes
 
 - Added "resolution" attribute to "spike_times" column of Units.
 
-- Changed the "quantity" key of attribute Units.resolution to "required" for schema language compliance.
-
 - Removed "required" key from dataset ImageSeries.field_of_view for schema language compliance.
 
 - Replaced "required" keys with "quantity" keys for ImagingPlane.origin_coords and ImagingPlane.grid_spacing for schema language compliance.
