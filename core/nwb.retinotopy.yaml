@@ -41,6 +41,7 @@ groups:
     neurodata_type_inc: FocalDepthImage
     doc: 'Grayscale image taken with same settings/parameters (e.g., focal depth,
       wavelength) as data collection. Array format: [rows][columns].'
+    quantity: '?'
   - name: vasculature_image
     neurodata_type_inc: RetinotopyImage
     doc: 'Grayscale anatomical image of cortical surface. Array structure: [rows][columns]'
