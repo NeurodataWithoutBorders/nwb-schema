@@ -1,7 +1,7 @@
 Release Notes
 =============
 
-2.3.0 (Upcoming)
+2.2.2 (Upcoming)
 ----------------
 - Fix shape and dims of OpticalSeries.data for color images
 
