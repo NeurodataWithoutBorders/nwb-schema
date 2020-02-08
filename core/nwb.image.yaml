@@ -146,6 +146,7 @@ groups:
     doc: Width, height and depth of image, or imaged area, in meters.
     quantity: '?'
   - name: data
+      doc: Images presented to subject, either grayscale or RGB
       dtype: numeric
       dims:
         - - frame
