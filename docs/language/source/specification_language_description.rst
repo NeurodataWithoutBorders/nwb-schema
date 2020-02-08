@@ -553,12 +553,12 @@ String specifying the data type of the attribute. Allowable values are:
 | * "numeric"              | any numeric type (i.e., int,     | 8 to 64 bit    |
 |                          | uint, float etc.)                |                |
 +--------------------------+----------------------------------+----------------+
-|  * "text"                | unicode                          | variable       |
+|  * "text"                | 8-bit Unicode                    | variable       |
 |  * "utf"                 |                                  |                |
 |  * "utf8"                |                                  |                |
 |  * "utf-8"               |                                  |                |
 +--------------------------+----------------------------------+----------------+
-|  * "ascii"               | ascii text                       | variable       |
+|  * "ascii"               | ASCII text                       | variable       |
 |  * "bytes"               |                                  |                |
 +--------------------------+----------------------------------+----------------+
 |  * "bool"                | 8 bit integer with valid values  | 8 bit          |
@@ -573,6 +573,9 @@ String specifying the data type of the attribute. Allowable values are:
 
     The precision indicated in the specification is generally interpreted as a minimum precision.
     Higher precisions may be used if required by the particular data.
+    In addition, since valid ASCII text is valid UTF-8-encoded Unicode, ASCII text may be used
+    where 8-bit Unicode is required. 8-bit Unicode cannot be used where ASCII is required.
+
 
 Reference ``dtype``
 """""""""""""""""""
