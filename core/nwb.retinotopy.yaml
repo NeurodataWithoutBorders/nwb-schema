@@ -5,6 +5,9 @@ groups:
   doc: 'Intrinsic signal optical imaging or widefield imaging for measuring retinotopy.
     Stores orthogonal maps (e.g., altitude/azimuth; radius/theta) of responses to
     specific stimuli and a combined polarity map from which to identify visual areas.
+    This group does not store the raw responses imaged during retinotopic mapping or the
+    stimuli presented, but rather the resulting phase and power maps after applying a Fourier
+    transform on the averaged responses.
     Note: for data consistency, all images and arrays are stored in the format [row][column]
     and [row, col], which equates to [y][x]. Field of view and dimension arrays may
     appear backward (i.e., y before x).'
@@ -22,17 +25,17 @@ groups:
     - name: dimension
       dtype: int32
       dims:
-      - row_col
+      - num_rows, num_cols
       shape:
-      - null
+      - 2
       doc: 'Number of rows and columns in the image. NOTE: row, column representation
-        is equivalent to height,width.'
+        is equivalent to height, width.'
     - name: field_of_view
-      dtype: float
+      dtype: float32
       dims:
-      - row|column
+      - height, width
       shape:
-      - null
+      - 2
       doc: Size of viewing area, in meters.
     - name: unit
       dtype: text
@@ -52,17 +55,17 @@ groups:
     - name: dimension
       dtype: int32
       dims:
-      - row_col
+      - num_rows, num_cols
       shape:
-      - null
+      - 2
       doc: 'Number of rows and columns in the image. NOTE: row, column representation
-        is equivalent to height,width.'
+        is equivalent to height, width.'
     - name: field_of_view
-      dtype: float
+      dtype: float32
       dims:
-      - row_col
+      - height, width
       shape:
-      - null
+      - 2
       doc: Size of viewing area, in meters.
     - name: unit
       dtype: text
@@ -80,17 +83,17 @@ groups:
     - name: dimension
       dtype: int32
       dims:
-      - row_col
+      - num_rows, num_cols
       shape:
-      - null
+      - 2
       doc: 'Number of rows and columns in the image. NOTE: row, column representation
-        is equivalent to height,width.'
+        is equivalent to height, width.'
     - name: field_of_view
-      dtype: float
+      dtype: float32
       dims:
-      - row_col
+      - height, width
       shape:
-      - null
+      - 2
       doc: Size of viewing area, in meters.
     - name: unit
       dtype: text
@@ -110,17 +113,17 @@ groups:
     - name: dimension
       dtype: int32
       dims:
-      - row_col
+      - num_rows, num_cols
       shape:
-      - null
+      - 2
       doc: 'Number of rows and columns in the image. NOTE: row, column representation
-        is equivalent to height,width.'
+        is equivalent to height, width.'
     - name: field_of_view
-      dtype: float
+      dtype: float32
       dims:
-      - row_col
+      - height, width
       shape:
-      - null
+      - 2
       doc: Size of viewing area, in meters.
     - name: unit
       dtype: text
@@ -128,7 +131,7 @@ groups:
   - name: axis_descriptions
     dtype: text
     dims:
-    - names
+    - axis_1, axis_2
     shape:
     - 2
     doc: Two-element array describing the contents of the two response axis fields.
@@ -152,20 +155,20 @@ groups:
     - name: dimension
       dtype: int32
       dims:
-      - row_col
+      - num_rows, num_cols
       shape:
-      - null
+      - 2
       doc: 'Number of rows and columns in the image. NOTE: row, column representation
-        is equivalent to height,width.'
+        is equivalent to height, width.'
     - name: field_of_view
-      dtype: float
+      dtype: float32
       dims:
-      - row_col
+      - height, width
       shape:
-      - null
+      - 2
       doc: Size of viewing area, in meters.
     - name: focal_depth
-      dtype: float
+      dtype: float32
       doc: Focal depth offset, in meters.
     - name: format
       dtype: text
@@ -183,17 +186,17 @@ groups:
     - name: dimension
       dtype: int32
       dims:
-      - row_col
+      - num_rows, num_cols
       shape:
-      - null
+      - 2
       doc: 'Number of rows and columns in the image. NOTE: row, column representation
-        is equivalent to height,width.'
+        is equivalent to height, width.'
     - name: field_of_view
-      dtype: float
+      dtype: float32
       dims:
-      - row_col
+      - height, width
       shape:
-      - null
+      - 2
       doc: Size of viewing area, in meters.
   - name: vasculature_image
     dtype: uint16
@@ -212,17 +215,17 @@ groups:
     - name: dimension
       dtype: int32
       dims:
-      - row_col
+      - num_rows, num_cols
       shape:
-      - null
+      - 2
       doc: 'Number of rows and columns in the image. NOTE: row, column representation
-        is equivalent to height,width.'
+        is equivalent to height, width.'
     - name: field_of_view
-      dtype: float
+      dtype: float32
       dims:
-      - row_col
+      - height, width
       shape:
-      - null
+      - 2
       doc: Size of viewing area, in meters.
     - name: format
       dtype: text
