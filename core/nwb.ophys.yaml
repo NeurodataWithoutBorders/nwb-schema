@@ -277,6 +277,7 @@ groups:
   - neurodata_type_def: OpticalChannel
     neurodata_type_inc: NWBContainer
     doc: An optical channel used to record from an imaging plane.
+    quantity: '+'
     datasets:
     - name: description
       dtype: text

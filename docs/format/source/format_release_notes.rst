@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+2.3.0 (Upcoming)
+----------------
+- Allow more than one OpticalChannel object in ImagingPlane
+
 2.2.1 (January 14, 2020)
 ------------------------
 
