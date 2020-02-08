@@ -147,6 +147,7 @@ groups:
     - null
     doc: 'Gray-scale image taken with same settings/parameters (e.g., focal depth,
       wavelength) as data collection. Array format: [rows][columns].'
+    quantity: '?'
     attributes:
     - name: bits_per_pixel
       dtype: int32
@@ -182,6 +183,7 @@ groups:
     - null
     - null
     doc: Sine of the angle between the direction of the gradient in axis_1 and axis_2.
+    quantity: '?'
     attributes:
     - name: dimension
       dtype: int32
