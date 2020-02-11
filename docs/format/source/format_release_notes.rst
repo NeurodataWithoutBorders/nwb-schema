@@ -1,9 +1,12 @@
 Release Notes
 =============
 
-2.3.0 (Upcoming)
+2.2.2 (Upcoming)
 ----------------
-- Allow more than one OpticalChannel object in ImagingPlane
+
+- Fix shape and dims of `OpticalSeries.data` for color images
+
+- Allow more than one `OpticalChannel` object in `ImagingPlane`
 
 2.2.1 (January 14, 2020)
 ------------------------
