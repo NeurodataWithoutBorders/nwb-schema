@@ -5,8 +5,8 @@ Release Notes
 ----------------
 
 - Fix shape and dims of `OpticalSeries.data` for color images
-
 - Allow more than one `OpticalChannel` object in `ImagingPlane`
+- Update hdmf-common-schema to 1.1.3. This fixes missing 'shape' and 'dims' key for types `VectorData`, `VectorIndex`, and `DynamicTableRegion`.
 
 2.2.1 (January 14, 2020)
 ------------------------
