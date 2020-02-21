@@ -152,6 +152,10 @@ Release Notes
 - Set the default value for the dataset "format" to "raw" and clarified the documentation for ImageSeries
 
   - See https://github.com/NeurodataWithoutBorders/nwb-schema/pull/308/files for details
+  
+- Add required attribute ``object_id`` to all NWB Groups and Datasets with an assigned neurodata_type
+
+  - See https://nwb-schema.readthedocs.io/en/latest/format_description.html#common-attributes for details
 
 **Backwards compatibility:** The PyNWB and MatNWB APIs can read 2.0 files with the 2.1 schema.
 
