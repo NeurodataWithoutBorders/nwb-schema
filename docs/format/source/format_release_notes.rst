@@ -2,12 +2,12 @@ Release Notes
 =============
 
 2.2.2 (March 2, 2020)
-----------------
+---------------------
 
 - Fix shape and dims of `OpticalSeries.data` for color images
 - Allow more than one `OpticalChannel` object in `ImagingPlane`
 - Update hdmf-common-schema to 1.1.3. This fixes missing 'shape' and 'dims' key for types `VectorData`, `VectorIndex`, and `DynamicTableRegion`.
-- Revert changes to retinotopy.yaml in 2.1.0 which break backward compatibility and were not supported by the APIs in any case. Changes will be revisited in a future version. 
+- Revert changes to retinotopy.yaml in 2.1.0 which break backward compatibility and were not supported by the APIs in any case. Changes will be revisited in a future version.
 
 2.2.1 (January 14, 2020)
 ------------------------
@@ -153,7 +153,7 @@ Release Notes
 - Set the default value for the dataset "format" to "raw" and clarified the documentation for ImageSeries
 
   - See https://github.com/NeurodataWithoutBorders/nwb-schema/pull/308/files for details
-  
+
 - Add required attribute ``object_id`` to all NWB Groups and Datasets with an assigned neurodata_type
 
   - See https://nwb-schema.readthedocs.io/en/latest/format_description.html#common-attributes for details
