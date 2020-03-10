@@ -8,7 +8,7 @@ groups:
     doc: Description of the event.
   datasets:
   - name: timestamps
-    dtype: float
+    dtype: float32
     dims:
     - num_events
     shape:
@@ -34,7 +34,7 @@ groups:
     labels[100] is 'Full reward', and all other entries in 'labels' are the empty string.
   datasets:
   - name: label_keys
-    dtype: uint
+    dtype: uint8
     dims:
     - num_events
     shape:
