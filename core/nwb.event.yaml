@@ -34,7 +34,7 @@ groups:
     labels[100] is 'Full reward', and all other entries in 'labels' are the empty string.
   datasets:
   - name: label_keys
-    dtype: int
+    dtype: uint
     dims:
     - num_events
     shape:
