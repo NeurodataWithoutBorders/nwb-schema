@@ -349,6 +349,11 @@ The result of this is that ``MySeries`` now includes a group of type ``Series``,
     simplify the concepts of  inclusion and merging of specifications and replaced the
     keys ```include``` and ```merge```(and ```merge+```).
 
+.. note::
+
+    All groups and datasets with a ```neurodata_type_def``` must be declared at the root of the YAML file under
+    ```groups:``` or ```datasets:``` as of version 2.3. I.e., nested type definitions are not allowed.
+
 ``name``
 ^^^^^^^^
 
