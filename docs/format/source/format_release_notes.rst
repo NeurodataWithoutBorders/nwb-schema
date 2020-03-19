@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+2.2.3 (Upcoming)
+----------------
+
+- Move nested type definitions to root of YAML files. This does not functionally change the schema.
+
 2.2.2 (March 2, 2020)
 ---------------------
 
