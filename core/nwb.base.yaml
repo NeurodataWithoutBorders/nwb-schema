@@ -116,6 +116,17 @@ groups:
       doc: Base unit of measurement for working with the data. Actual stored values are
         not necessarily stored in these units. To access the data in these units,
         multiply 'data' by 'conversion'.
+    - name: process
+      dtype: text
+      doc: Optionally describe the process of the data. Can be "discrete", "continuous", or
+        "step-forward". For example: A lick times would be a "discrete" process, because the data
+        represents distict moments in time. A voltage trace would be a "continuous" process,
+        because samples are recorded from a continuous process. Times of image presentations is
+        "step-forward" because the picture remains the same until the next timepoint. This field
+        is optional, but be useful in providing information about the underlying data. It may
+        inform the way this data is interpretted, the way it is visualized, and what analysis
+        methods are applicable.
+      required: false
   - name: starting_time
     dtype: float64
     doc: Timestamp of the first sample in seconds. When timestamps are uniformly
