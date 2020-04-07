@@ -31,6 +31,7 @@ Welcome to the NWB Format Specification
    :maxdepth: 2
    :caption: History & Legal
 
+   software_process
    format_release_notes
    credits
 
@@ -42,5 +43,3 @@ Welcome to the NWB Format Specification
     * :ref:`genindex`
     * :ref:`modindex`
     * :ref:`search`
-
-
