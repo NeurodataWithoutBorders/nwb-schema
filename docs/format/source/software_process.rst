@@ -24,10 +24,15 @@ Immediately prior to a new public release, the version of the format should be u
 suffixes, e.g., "a", "b", and "rc", and the documentation and release notes should be checked and updated (see release
 process documents).
 
-It is important that all releases of nwb-schema contain a publicly released version of hdmf-common-schema. If a release
-contains an internally released version of hdmf-common-schema, e.g., from an untagged commit on the "dev" branch, then
-tracking the identity of the included hdmf-common-schema becomes difficult and the same version string could point to
-two different versions of the schema.
+It is important that all public releases of nwb-schema contain a publicly released version of hdmf-common-schema. If a
+public release contains an internally released version of hdmf-common-schema, e.g., from an untagged commit on the "dev"
+branch, then tracking the identity of the included hdmf-common-schema becomes difficult and the same version string
+could point to two different versions of the schema.
+
+For the same reason, it is important that all public releases of the APIs, PyNWB and MatNWB, contain a publicly
+released version of nwb-schema. Starting with nwb-schema version 2.2.0, the dev branch and all public releases of PyNWB
+and MatNWB include only publicly released versions of nwb-schema. For more details, see the
+[PyNWB software process documentation](https://pynwb.readthedocs.io/en/latest/software_process.html).
 
 The [NWB Extensions Versioning Guidelines](https://nwb-extensions.github.io/versioning_guidelines) are used to guide
 versioning of the NWB core schema, as well as extensions to NWB.
