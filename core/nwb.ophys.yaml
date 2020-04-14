@@ -181,7 +181,7 @@ groups:
   - name: imaging_rate
     dtype: float32
     doc: Rate that images are acquired, in Hz. If the corresponding TimeSeries is present, the rate should be stored
-    there instead.
+      there instead.
     quantity: '?'
   - name: indicator
     dtype: text
