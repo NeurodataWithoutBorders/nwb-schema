@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+2.2.4 (April 14, 2020)
+----------------------
+
+- Fix typo in nwb.ophys.yaml that prevents proper parsing of the schema.
+
 2.2.3 (April 13, 2020)
 ----------------------
 
