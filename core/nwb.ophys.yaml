@@ -31,7 +31,7 @@ groups:
 
 - neurodata_type_def: RoiResponseSeries
   neurodata_type_inc: TimeSeries
-  doc: ROI responses over an imaging plane. The first dimension represents time. 
+  doc: ROI responses over an imaging plane. The first dimension represents time.
     The second dimension, if present, represents ROIs.
   datasets:
   - name: data
@@ -83,85 +83,88 @@ groups:
     is allowed to change with time, a new imaging plane (or module) is required and
     ROI names should remain consistent between them.
   groups:
-  - neurodata_type_def: PlaneSegmentation
-    neurodata_type_inc: DynamicTable
+  - neurodata_type_inc: PlaneSegmentation
     doc: Results from image segmentation of a specific imaging plane.
     quantity: '+'
-    datasets:
-    - name: image_mask
-      neurodata_type_inc: VectorData
-      dims:
-      - - num_roi
-        - num_x
-        - num_y
-      - - num_roi
-        - num_x
-        - num_y
-        - num_z
-      shape:
-      - - null
-        - null
-        - null
-      - - null
-        - null
-        - null
-        - null
-      doc: ROI masks for each ROI. Each image mask is the size of the original imaging
-        plane (or volume) and members of the ROI are finite non-zero.
-      quantity: '?'
-    - name: pixel_mask_index
-      neurodata_type_inc: VectorIndex
-      doc: Index into pixel_mask.
-      quantity: '?'
-    - name: pixel_mask
-      neurodata_type_inc: VectorData
-      dtype:
-      - name: x
-        dtype: uint
-        doc: Pixel x-coordinate.
-      - name: y
-        dtype: uint
-        doc: Pixel y-coordinate.
-      - name: weight
-        dtype: float
-        doc: Weight of the pixel.
-      doc: 'Pixel masks for each ROI: a list of indices and weights for the ROI. Pixel
-        masks are concatenated and parsing of this dataset is maintained by the PlaneSegmentation'
-      quantity: '?'
-    - name: voxel_mask_index
-      neurodata_type_inc: VectorIndex
-      doc: Index into voxel_mask.
-      quantity: '?'
-    - name: voxel_mask
-      neurodata_type_inc: VectorData
-      dtype:
-      - name: x
-        dtype: uint
-        doc: Voxel x-coordinate.
-      - name: y
-        dtype: uint
-        doc: Voxel y-coordinate.
-      - name: z
-        dtype: uint
-        doc: Voxel z-coordinate.
-      - name: weight
-        dtype: float
-        doc: Weight of the voxel.
-      doc: 'Voxel masks for each ROI: a list of indices and weights for the ROI. Voxel
-        masks are concatenated and parsing of this dataset is maintained by the PlaneSegmentation'
-      quantity: '?'
+
+- neurodata_type_def: PlaneSegmentation
+  neurodata_type_inc: DynamicTable
+  doc: Results from image segmentation of a specific imaging plane.
+  datasets:
+  - name: image_mask
+    neurodata_type_inc: VectorData
+    dims:
+    - - num_roi
+      - num_x
+      - num_y
+    - - num_roi
+      - num_x
+      - num_y
+      - num_z
+    shape:
+    - - null
+      - null
+      - null
+    - - null
+      - null
+      - null
+      - null
+    doc: ROI masks for each ROI. Each image mask is the size of the original imaging
+      plane (or volume) and members of the ROI are finite non-zero.
+    quantity: '?'
+  - name: pixel_mask_index
+    neurodata_type_inc: VectorIndex
+    doc: Index into pixel_mask.
+    quantity: '?'
+  - name: pixel_mask
+    neurodata_type_inc: VectorData
+    dtype:
+    - name: x
+      dtype: uint32
+      doc: Pixel x-coordinate.
+    - name: y
+      dtype: uint32
+      doc: Pixel y-coordinate.
+    - name: weight
+      dtype: float32
+      doc: Weight of the pixel.
+    doc: 'Pixel masks for each ROI: a list of indices and weights for the ROI. Pixel
+      masks are concatenated and parsing of this dataset is maintained by the PlaneSegmentation'
+    quantity: '?'
+  - name: voxel_mask_index
+    neurodata_type_inc: VectorIndex
+    doc: Index into voxel_mask.
+    quantity: '?'
+  - name: voxel_mask
+    neurodata_type_inc: VectorData
+    dtype:
+    - name: x
+      dtype: uint32
+      doc: Voxel x-coordinate.
+    - name: y
+      dtype: uint32
+      doc: Voxel y-coordinate.
+    - name: z
+      dtype: uint32
+      doc: Voxel z-coordinate.
+    - name: weight
+      dtype: float32
+      doc: Weight of the voxel.
+    doc: 'Voxel masks for each ROI: a list of indices and weights for the ROI. Voxel
+      masks are concatenated and parsing of this dataset is maintained by the PlaneSegmentation'
+    quantity: '?'
+  groups:
+  - name: reference_images
+    doc: Image stacks that the segmentation masks apply to.
     groups:
-    - name: reference_images
-      doc: Image stacks that the segmentation masks apply to.
-      groups:
-      - neurodata_type_inc: ImageSeries
-        doc: One or more image stacks that the masks apply to (can be one-element
-          stack).
-        quantity: '*'
-    links:
-    - name: imaging_plane
-      target_type: ImagingPlane
-      doc: Link to ImagingPlane object from which this data was generated.
+    - neurodata_type_inc: ImageSeries
+      doc: One or more image stacks that the masks apply to (can be one-element
+        stack).
+      quantity: '*'
+  links:
+  - name: imaging_plane
+    target_type: ImagingPlane
+    doc: Link to ImagingPlane object from which this data was generated.
 
 - neurodata_type_def: ImagingPlane
   neurodata_type_inc: NWBContainer
@@ -173,10 +176,10 @@ groups:
     doc: Description of the imaging plane.
     quantity: '?'
   - name: excitation_lambda
-    dtype: float
+    dtype: float32
     doc: Excitation wavelength, in nm.
   - name: imaging_rate
-    dtype: float
+    dtype: float32
     doc: Rate that images are acquired, in Hz.
   - name: indicator
     dtype: text
@@ -191,11 +194,11 @@ groups:
     dims:
     - - height
       - width
-      - x|y|z
+      - x, y, z
     - - height
       - width
       - depth
-      - x|y|z
+      - x, y, z
     shape:
     - - null
       - null
@@ -209,7 +212,7 @@ groups:
     quantity: '?'
     attributes:
     - name: conversion
-      dtype: float
+      dtype: float32
       default_value: 1.0
       doc: Scalar to multiply each element in data to convert it to the specified 'unit'.
         If the data are stored in acquisition system units or other units
@@ -225,7 +228,7 @@ groups:
       doc: Base unit of measurement for working with the data. The default value is 'meters'.
       required: false
   - name: origin_coords
-    dtype: float
+    dtype: float32
     dims:
     - x, y
     - x, y, z
@@ -241,7 +244,7 @@ groups:
       default_value: meters
       doc: Measurement units for origin_coords. The default value is 'meters'.
   - name: grid_spacing
-    dtype: float
+    dtype: float32
     dims:
     - x, y
     - x, y, z
@@ -274,20 +277,24 @@ groups:
       rightward). Third dimension corresponds to dorsal-ventral axis (larger index = more ventral)."
     quantity: '?'
   groups:
-  - neurodata_type_def: OpticalChannel
-    neurodata_type_inc: NWBContainer
+  - neurodata_type_inc: OpticalChannel
     doc: An optical channel used to record from an imaging plane.
-    datasets:
-    - name: description
-      dtype: text
-      doc: Description or other notes about the channel.
-    - name: emission_lambda
-      dtype: float
-      doc: Emission wavelength for channel, in nm.
+    quantity: '+'
   links:
   - name: device
     target_type: Device
     doc: Link to the Device object that was used to record from this electrode.
+
+- neurodata_type_def: OpticalChannel
+  neurodata_type_inc: NWBContainer
+  doc: An optical channel used to record from an imaging plane.
+  datasets:
+  - name: description
+    dtype: text
+    doc: Description or other notes about the channel.
+  - name: emission_lambda
+    dtype: float32
+    doc: Emission wavelength for channel, in nm.
 
 - neurodata_type_def: MotionCorrection
   neurodata_type_inc: NWBDataInterface
@@ -296,19 +303,22 @@ groups:
     system, to account for movement and drift between frames. Note: each frame at
     each point in time is assumed to be 2-D (has only x & y dimensions).'
   groups:
-  - neurodata_type_def: CorrectedImageStack
-    neurodata_type_inc: NWBDataInterface
+  - neurodata_type_inc: CorrectedImageStack
     doc: Reuslts from motion correction of an image stack.
     quantity: '+'
-    groups:
-    - name: corrected
-      neurodata_type_inc: ImageSeries
-      doc: Image stack with frames shifted to the common coordinates.
-    - name: xy_translation
-      neurodata_type_inc: TimeSeries
-      doc: Stores the x,y delta necessary to align each frame to the common coordinates,
-        for example, to align each frame to a reference image.
-    links:
-    - name: original
-      target_type: ImageSeries
-      doc: Link to ImageSeries object that is being registered.
+
+- neurodata_type_def: CorrectedImageStack
+  neurodata_type_inc: NWBDataInterface
+  doc: Reuslts from motion correction of an image stack.
+  groups:
+  - name: corrected
+    neurodata_type_inc: ImageSeries
+    doc: Image stack with frames shifted to the common coordinates.
+  - name: xy_translation
+    neurodata_type_inc: TimeSeries
+    doc: Stores the x,y delta necessary to align each frame to the common coordinates,
+      for example, to align each frame to a reference image.
+  links:
+  - name: original
+    target_type: ImageSeries
+    doc: Link to ImageSeries object that is being registered.

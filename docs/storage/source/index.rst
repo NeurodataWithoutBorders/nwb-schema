@@ -1,4 +1,4 @@
-Welcome to NWB-N Storage
+Welcome to NWB Storage
 ========================
 
 
@@ -18,5 +18,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-
