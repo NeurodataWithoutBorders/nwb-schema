@@ -10,7 +10,51 @@
     "groups": {"$ref": "#/definitions/groups"},
     "attributes": {"$ref": "#/definitions/attributes"},
     "datasets": {"$ref": "#/definitions/datasets"},
-    "links": {"$ref": "#/definitions/links"}
+    "links": {"$ref": "#/definitions/links"},
+    "namespaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "version",
+          "author",
+          "contact"
+        ],
+        "properties": {
+          "name": {"type": "string"},
+          "version": {"type": "string", "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"},
+          "doc": {"type": "string"},
+          "author": {"type": "array", "items": {"type": "string"}},
+          "contact": {"type": "array", "items": {"type": "string", "format": "email"}},
+          "full_name": {"type":  "string"},
+          "date": {"type": "string", "format": "date"},
+          "schema": {
+            "type": "array",
+            "items":  {
+              "type": "object",
+              "oneOf": [
+                {"required": ["namespace"]},
+                {"required": ["source"]}
+              ],
+              "properties": {
+                "namespace": {"type":  "string"},
+                "doc": {"type": "string"},
+                "source": {"type": "string"},
+                "title": {"type": "string"},
+                "neurodata_types": {
+                  "type": "array",
+                  "items":  {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   },
   "definitions": {
     "protectedString": {
