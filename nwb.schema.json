@@ -57,11 +57,12 @@
             "uint32",
             "uint16",
             "uint8",
+            "uint64",
             "numeric",
             "text",
             "utf",
             "utf8",
-            "unt-8",
+            "utf-8",
             "ascii",
             "bool",
             "isodatetime"
