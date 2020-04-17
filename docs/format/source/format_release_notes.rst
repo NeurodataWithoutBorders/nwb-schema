@@ -1,6 +1,18 @@
 Release Notes
 =============
 
+2.2.4 (April 14, 2020)
+----------------------
+
+- Fix typo in nwb.ophys.yaml that prevents proper parsing of the schema.
+
+2.2.3 (April 13, 2020)
+----------------------
+
+- Move nested type definitions to root of YAML files. This does not functionally change the schema but simplifies parsing of the schema and extensions by APIs.
+- Make `ImagingPlane.imaging_rate` optional to handle cases where an imaging plane is associated with multiple time series with different rates.
+- Add release process documentation.
+
 2.2.2 (March 2, 2020)
 ---------------------
 

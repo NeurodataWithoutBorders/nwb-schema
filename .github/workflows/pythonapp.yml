@@ -1,0 +1,21 @@
+name: Python application
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install hdmf
+      run: |
+        pip install git+https://github.com/hdmf-dev/hdmf.git
+    - name: Validate schema specification
+      run: |
+        validate_hdmf_spec core -m nwb.schema.json
