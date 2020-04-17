@@ -16,7 +16,6 @@ jobs:
     - name: Install pynwb
       run: |
         pip install git+https://github.com/hdmf-dev/hdmf.git
-        pip install jsonschema
     - name: Validate schema specification
       run: |
         validate_hdmf_spec core -m nwb.schema.json
