@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+2.2.5 (Upcoming)
+----------------
+
+- Add optional "continuity" field to `TimeSeries`.
+
 2.2.4 (April 14, 2020)
 ----------------------
 
