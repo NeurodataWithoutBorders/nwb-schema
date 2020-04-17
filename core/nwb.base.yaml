@@ -119,7 +119,7 @@ groups:
     - name: continuity
       dtype: text
       doc: Optionally describe the continuity of the data. Can be "continuous", "instantaneous", or
-        "step". For example: A voltage trace would be "continuous", because samples 
+        "step". For example, a voltage trace would be "continuous", because samples 
         are recorded from a continuous process. An array of lick times would be "instantaneous", 
         because the data represents distinct moments in time. Times of image presentations would be  
         "step" because the picture remains the same until the next timepoint. This field is optional, 
