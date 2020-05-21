@@ -76,7 +76,7 @@ Groups
     attributes                    HDF5 attributes on the HDF5 group
     links                         HDF5 SoftLinks within the HDF5 group
     linkable                      Not mapped; Stored in schema only
-    quantity                      Not mapped; Number of appearances of the dataset.
+    quantity                      Not mapped; Number of appearances of the group
     neurodata_type                Attribute ``neurodata_type``
     namespace ID                  Attribute ``namespace``
     object ID                     Attribute ``object_id``
