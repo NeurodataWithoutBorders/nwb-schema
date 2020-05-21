@@ -99,7 +99,7 @@ Datasets
     dtype                         Data type of the HDF5 dataset (see `dtype mappings`_ table)
     shape                         Shape of the HDF5 dataset if the shape is fixed, otherwise shape defines the maxshape
     dims                          Not mapped
-    attributes                    HDF5 attributes on the HDF5 group
+    attributes                    HDF5 attributes on the HDF5 dataset
     linkable                      Not mapped; Stored in schema only
     quantity                      Not mapped; Number of appearances of the dataset.
     neurodata_type                Attribute ``neurodata_type``
