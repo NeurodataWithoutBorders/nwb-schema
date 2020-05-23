@@ -419,6 +419,10 @@ groups:
     dtype: text
     doc: Species of subject.
     quantity: '?'
+  - name: strain
+    dtype: text
+    doc: Strain of subject.
+    quantity: '?'
   - name: subject_id
     dtype: text
     doc: ID of animal/person used/participating in experiment (lab convention).
