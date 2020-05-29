@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+2.2.5 (May 29, 2020)
+----------------------
+
+- Fix incorrect dims and shape for ``ImagingPlane.origin_coords`` and ``ImagingPlane.grid_spacing``, and fix incorrect dims for ``TwoPhotonSeries.field_of_view``.
+
 2.2.4 (April 14, 2020)
 ----------------------
 
