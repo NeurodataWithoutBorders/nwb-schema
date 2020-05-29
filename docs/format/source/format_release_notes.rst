@@ -4,32 +4,33 @@ Release Notes
 2.2.5 (May 29, 2020)
 ----------------------
 
+- Add schema validation CI.
 - Fix incorrect dims and shape for ``ImagingPlane.origin_coords`` and ``ImagingPlane.grid_spacing``, and fix incorrect dims for ``TwoPhotonSeries.field_of_view``.
 
 2.2.4 (April 14, 2020)
 ----------------------
 
-- Fix typo in nwb.ophys.yaml that prevents proper parsing of the schema.
+- Fix typo in ``nwb.ophys.yaml`` that prevents proper parsing of the schema.
 
 2.2.3 (April 13, 2020)
 ----------------------
 
 - Move nested type definitions to root of YAML files. This does not functionally change the schema but simplifies parsing of the schema and extensions by APIs.
-- Make `ImagingPlane.imaging_rate` optional to handle cases where an imaging plane is associated with multiple time series with different rates.
+- Make ``ImagingPlane.imaging_rate`` optional to handle cases where an imaging plane is associated with multiple time series with different rates.
 - Add release process documentation.
 
 2.2.2 (March 2, 2020)
 ---------------------
 
-- Fix shape and dims of `OpticalSeries.data` for color images
-- Allow more than one `OpticalChannel` object in `ImagingPlane`
-- Update hdmf-common-schema to 1.1.3. This fixes missing 'shape' and 'dims' key for types `VectorData`, `VectorIndex`, and `DynamicTableRegion`.
-- Revert changes to retinotopy.yaml in 2.1.0 which break backward compatibility and were not supported by the APIs in any case. Changes will be revisited in a future version.
+- Fix shape and dims of ``OpticalSeries.data`` for color images
+- Allow more than one ``OpticalChannel`` object in ``ImagingPlane``
+- Update hdmf-common-schema to 1.1.3. This fixes missing 'shape' and 'dims' key for types ``VectorData``, ``VectorIndex``, and ``DynamicTableRegion``.
+- Revert changes to ``nwb.retinotopy.yaml`` in 2.1.0 which break backward compatibility and were not supported by the APIs in any case. Changes will be revisited in a future version.
 
 2.2.1 (January 14, 2020)
 ------------------------
 
-- Fixed incorrect version numbers in nwb.file.yaml and hdmf-common namespace.yaml.
+- Fixed incorrect version numbers in ``nwb.file.yaml`` and ``hdmf-common-schema/common/namespace.yaml``.
 
 2.2.0 (January 6, 2020)
 -----------------------
