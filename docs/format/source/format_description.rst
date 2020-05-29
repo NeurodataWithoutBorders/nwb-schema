@@ -274,6 +274,108 @@ For fields with a specified size, larger sizes can be used, so long as
 the selected size encompasses the full range of data, and for floats,
 without loss of significant precision.
 
+Units of Measurement
+--------------------
+
+As of NWB 2.3.0, the specification of units of measurement SHOULD follow the
+`International System of Units (SI)`_ and SHOULD be formatted using
+the `CMIXF-12 format`_. CMIXF provides a consistent system for all units and
+prefix symbols with only basic characters, avoiding symbols that can cause
+text encoding problems; for example, the CMIXF formatting for "microvolts"
+is "uV", "degrees Celsius" is "oC", and "Ohm" is "Ohm".
+
+Units MUST consist of the unit **symbol** with an optionally accompanying
+prefix symbol. Appropriate upper- or lower-casing MUST be applied as declared
+by CMIXF-12.
+
+Common units in neurophysiology and their symbols:
++-------------------+-------------+----------------------------------+
+| Unit name         | Unit symbol | Quantity name                    |
++===================+=============+==================================+
+| second            | s           | time                             |
++-------------------+-------------+----------------------------------+
+| volt              | V           | voltage                          |
++-------------------+-------------+----------------------------------+
+| meter (metre)     | m           | length                           |
++-------------------+-------------+----------------------------------+
+| hertz             | Hz          | frequency                        |
++-------------------+-------------+----------------------------------+
+| ampere            | A           | electric current                 |
++-------------------+-------------+----------------------------------+
+| ohm               | Ohm         | electric resistance, impedance   |
++-------------------+-------------+----------------------------------+
+| farad             | F           | capcaitance                      |
++-------------------+-------------+----------------------------------+
+| watt              | W           | power                            |
++-------------------+-------------+----------------------------------+
+| joule             | J           | energy, heat                     |
++-------------------+-------------+----------------------------------+
+| percent           | %           | part of 100                      |
++-------------------+-------------+----------------------------------+
+| degree            | o           | plane angle                      |
++-------------------+-------------+----------------------------------+
+| radian            | r           | plane angle                      |
++-------------------+-------------+----------------------------------+
+| decibel           | dB          | logarithm of power ratio         |
++-------------------+-------------+----------------------------------+
+| gram              | g           | mass                             |
++-------------------+-------------+----------------------------------+
+| liter (litre)     | L           | volume                           |
++-------------------+-------------+----------------------------------+
+| mole              | mol         | amount of substance              |
++-------------------+-------------+----------------------------------+
+| degree Celsius    | oC          | temperature relative to 273.15 K |
++-------------------+-------------+----------------------------------+
+
+Common prefixes:
++-------------+---------------+--------+
+| Prefix name | Prefix symbol | Factor |
++=============+===============+========+
+| giga        | G             | 10^9   |
++-------------+---------------+--------+
+| mega        | M             | 10^6   |
++-------------+---------------+--------+
+| kilo        | k             | 10^3   |
++-------------+---------------+--------+
+| centi       | c             | 10^-2  |
++-------------+---------------+--------+
+| milli       | m             | 10^-3  |
++-------------+---------------+--------+
+| micro       | u             | 10^-6  |
++-------------+---------------+--------+
+| nano        | n             | 10^-9  |
++-------------+---------------+--------+
+| pico        | p             | 10^-12 |
++-------------+---------------+--------+
+
+Arbitrary units should be represented as "a.u.". Unit-less measures should
+be represented as "n/a".
+
+"pixel" and "voxel" may be used as the unit for image and volume data.
+
+The unit of measurement for a value is most commonly stored in the "unit"
+attribute to a dataset, e.g., ``TimeSeries.data..unit``. If the value
+has no "unit" attribute, consult the docstring for the value field, which
+may specify a unit. Note that attributes cannot have nested attributes,
+so all attributes must specify their unit in the docstring. For this
+reason, it is recommended that all data and metadata with units be stored
+as datasets rather than attributes. NWB extensions should also use the
+format and guidance specified in this section.
+
+This specification follows the adoption of CMIXF-12_ by BIDS (TODO include
+link).
+
+Age values of subjects SHOULD be given in `ISO8601 duration format`_ and
+it is RECOMMENDED that the age is provided at the highest resolution
+available, except when a high resolution should be avoided due to privacy
+protection, e.g., of human subjects. For example, the age of a mouse that
+is 50 days old should be represented as "P50D". For different types of age
+(e.g., days post-fertilization), use the "age_reference" attribute.
+
+.. International System of Units (SI): https://en.wikipedia.org/wiki/International_System_of_Units
+.. _CMIXF-12 format: http://people.csail.mit.edu/jaffer/MIXF/CMIXF-12
+.. ISO8601 duration format: https://en.wikipedia.org/wiki/ISO_8601#Durations
+
 Links and data references
 -------------------------
 
