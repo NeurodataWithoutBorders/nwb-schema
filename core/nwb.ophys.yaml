@@ -226,8 +226,8 @@ groups:
       required: false
     - name: unit
       dtype: text
-      default_value: meters
-      doc: Base unit of measurement for working with the data. The default value is 'meters'.
+      default_value: m
+      doc: Base unit of measurement for working with the data. The default value is 'm'.
       required: false
   - name: origin_coords
     dtype: float32
@@ -243,8 +243,8 @@ groups:
     attributes:
     - name: unit
       dtype: text
-      default_value: meters
-      doc: Measurement units for origin_coords. The default value is 'meters'.
+      default_value: m
+      doc: Measurement units for origin_coords. The default value is 'm'.
   - name: grid_spacing
     dtype: float32
     dims:
@@ -259,8 +259,8 @@ groups:
     attributes:
     - name: unit
       dtype: text
-      default_value: meters
-      doc: Measurement units for grid_spacing. The default value is 'meters'.
+      default_value: m
+      doc: Measurement units for grid_spacing. The default value is 'm'.
   - name: reference_frame
     dtype: text
     doc: Describes reference frame of origin_coords and grid_spacing.

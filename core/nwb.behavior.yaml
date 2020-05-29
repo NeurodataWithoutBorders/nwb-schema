@@ -25,9 +25,9 @@ groups:
     attributes:
     - name: unit
       dtype: text
-      default_value: meters
+      default_value: m
       doc: Base unit of measurement for working with the data. The default value
-        is 'meters'. Actual stored values are not necessarily stored in these units.
+        is 'm'. Actual stored values are not necessarily stored in these units.
         To access the data in these units, multiply 'data' by 'conversion'.
       required: false
   - name: reference_frame

@@ -25,9 +25,9 @@ groups:
     attributes:
     - name: unit
       dtype: text
-      default_value: see 'feature_units'
+      default_value: n/a
       doc: Since there can be different units for different features, store the units
-        in 'feature_units'. The default value for this attribute is "see 'feature_units'".
+        in 'feature_units'. The default value for this attribute is "n/a".
       required: false
   - name: feature_units
     dtype: text
@@ -35,7 +35,7 @@ groups:
     - num_features
     shape:
     - null
-    doc: Units of each feature.
+    doc: Units of measurement of each feature.
     quantity: '?'
   - name: features
     dtype: text
@@ -115,13 +115,6 @@ groups:
     - null
     - null
     doc: Data decomposed into frequency bands.
-    attributes:
-    - name: unit
-      dtype: text
-      default_value: no unit
-      doc: Base unit of measurement for working with the data. Actual stored values are
-        not necessarily stored in these units. To access the data in these units,
-        multiply 'data' by 'conversion'.
   - name: metric
     dtype: text
     doc: The metric used, e.g. phase, amplitude, power.
@@ -247,8 +240,8 @@ groups:
       required: false
     - name: unit
       dtype: text
-      value: volts
-      doc: Unit of measurement. This value is fixed to 'volts'.
+      value: V
+      doc: Unit of measurement. This value is fixed to 'V'.
       required: false
   - name: waveform_sd
     neurodata_type_inc: VectorData
@@ -274,6 +267,6 @@ groups:
       required: false
     - name: unit
       dtype: text
-      value: volts
-      doc: Unit of measurement. This value is fixed to 'volts'.
+      value: V
+      doc: Unit of measurement. This value is fixed to 'V'.
       required: false

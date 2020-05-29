@@ -26,9 +26,9 @@ groups:
     attributes:
     - name: unit
       dtype: text
-      value: volts
+      value: V
       doc: Base unit of measurement for working with the data. This value is fixed to
-        'volts'. Actual stored values are not necessarily stored in these units. To
+        'V'. Actual stored values are not necessarily stored in these units. To
         access the data in these units, multiply 'data' by 'conversion' and
         'channel_conversion' (if present).
   - name: electrodes
@@ -84,8 +84,8 @@ groups:
     attributes:
     - name: unit
       dtype: text
-      value: volts
-      doc: Unit of measurement for waveforms, which is fixed to 'volts'.
+      value: V
+      doc: Unit of measurement for waveforms, which is fixed to 'V'.
   - name: timestamps
     dtype: float64
     dims:
@@ -103,8 +103,8 @@ groups:
       doc: Value is '1'
     - name: unit
       dtype: text
-      value: seconds
-      doc: Unit of measurement for timestamps, which is fixed to 'seconds'.
+      value: s
+      doc: Unit of measurement for timestamps, which is fixed to 's'.
 
 - neurodata_type_def: FeatureExtraction
   neurodata_type_inc: NWBDataInterface
@@ -170,8 +170,8 @@ groups:
     attributes:
     - name: unit
       dtype: text
-      value: seconds
-      doc: Unit of measurement for event times, which is fixed to 'seconds'.
+      value: s
+      doc: Unit of measurement for event times, which is fixed to 's'.
   links:
   - name: source_electricalseries
     target_type: ElectricalSeries
