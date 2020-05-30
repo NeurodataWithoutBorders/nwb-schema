@@ -83,7 +83,7 @@ copyright = u'2017-2020, Neurodata Without Borders'
 # built documents.
 #
 # The short X.Y version.
-version = 'v2.2.5'
+version = 'v2.3.0-alpha'
 # The full version, including alpha/beta/rc tags.
 release = version
 
