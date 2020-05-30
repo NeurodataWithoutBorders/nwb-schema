@@ -350,10 +350,12 @@ Common prefixes:
 | pico        | p             | 10^-12 |
 +-------------+---------------+--------+
 
-Arbitrary units should be represented as "a.u.". Unit-less measures should
-be represented as "n/a".
+Exceptions to the above formatting:
 
-"pixel" and "voxel" may be used as the unit for image and volume data.
+- Arbitrary units should be represented as "a.u.".
+- Unit-less data should be represented as "n/a".
+- "pixel" may be used for measurements of image data.
+- "voxel" may be used for measurements of volume data.
 
 The unit of measurement for a value is most commonly stored in the "unit"
 attribute to a dataset, e.g., ``TimeSeries.data..unit``. If the dataset
