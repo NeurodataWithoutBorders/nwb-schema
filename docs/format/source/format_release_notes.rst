@@ -1,6 +1,12 @@
 Release Notes
 =============
 
+2.3.0 (Upcoming)
+----------------------
+
+- All "unit" fields representing units of measurement now follow the CMIXF-12 format as described in:
+  https://nwb-schema.readthedocs.io/en/latest/format_description.html#units-of-measurement
+
 2.2.5 (May 29, 2020)
 ----------------------
 

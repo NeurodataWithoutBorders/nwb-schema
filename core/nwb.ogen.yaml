@@ -13,8 +13,8 @@ groups:
     attributes:
     - name: unit
       dtype: text
-      value: watts
-      doc: Unit of measurement for data, which is fixed to 'watts'.
+      value: W
+      doc: Unit of measurement for data, which is fixed to 'W'.
   links:
   - name: site
     target_type: OptogeneticStimulusSite
