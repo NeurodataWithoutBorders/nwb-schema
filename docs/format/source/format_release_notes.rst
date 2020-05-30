@@ -5,7 +5,7 @@ Release Notes
 ----------------------
 
 - All "unit" fields representing units of measurement now follow the CMIXF-12 format as described in:
-https://nwb-schema.readthedocs.io/en/latest/format_description.html#units-of-measurement
+  https://nwb-schema.readthedocs.io/en/latest/format_description.html#units-of-measurement
 
 2.2.4 (April 14, 2020)
 ----------------------
