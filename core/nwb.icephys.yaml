@@ -161,7 +161,7 @@ groups:
     attributes:
     - name: unit
       dtype: text
-      value: %
+      value: '%'
       doc: Unit of measurement for resistance_comp_correction, which is fixed to '%'.
   - name: resistance_comp_prediction
     dtype: float32
@@ -170,7 +170,7 @@ groups:
     attributes:
     - name: unit
       dtype: text
-      value: %
+      value: '%'
       doc: Unit of measurement for resistance_comp_prediction, which is fixed to '%'.
   - name: whole_cell_capacitance_comp
     dtype: float32
