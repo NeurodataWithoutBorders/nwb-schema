@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+2.3.0 (Upcoming)
+----------------
+
+- Add optional `strain` field to `Subject`.
+
 2.2.5 (May 29, 2020)
 ----------------------
 
