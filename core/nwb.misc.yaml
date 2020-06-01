@@ -277,3 +277,33 @@ groups:
       value: volts
       doc: Unit of measurement. This value is fixed to 'volts'.
       required: false
+  - name: waveforms
+    neurodata_type_inc: VectorData
+    dtype: float
+    dims:
+      - - num_spikes
+        - num_samples
+      - - num_spikes
+        - num_samples
+        - num_electrodes
+    shape:
+      - - null
+        - null
+      - - null
+        - null
+        - null
+    doc: 'Individual waveforms for each spike. If the dataset is three-dimensional, the third dimension shows the
+    response from different electrodes that all observe this unit simultaneously. In this case, the `electrodes` column
+    of this Units table should be used to indicate which electrodes are associated with this unit, and the electrodes
+    dimension here should be in the same order as the electrodes referenced in the `electrodes` column of this table.'
+    quantity: '?'
+    attributes:
+      - name: sampling_rate
+        dtype: float32
+        doc: Sampling rate, in hertz.
+        required: false
+      - name: unit
+        dtype: text
+        value: volts
+        doc: Unit of measurement. This value is fixed to 'volts'.
+        required: false
