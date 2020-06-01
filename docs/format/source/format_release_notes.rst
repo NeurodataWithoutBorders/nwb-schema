@@ -5,6 +5,7 @@ Release Notes
 ----------------
 
 - Add optional `strain` field to `Subject`.
+- Add optional `waveforms` column to the `Units` table.
 
 2.2.5 (May 29, 2020)
 ----------------------
