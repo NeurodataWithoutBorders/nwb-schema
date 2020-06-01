@@ -17,8 +17,8 @@ groups:
   - name: field_of_view
     dtype: float32
     dims:
-    - width|height
-    - width|height|depth
+    - - width|height
+    - - width|height|depth
     shape:
     - - 2
     - - 3
@@ -232,11 +232,11 @@ groups:
   - name: origin_coords
     dtype: float32
     dims:
-    - x, y
-    - x, y, z
+    - - x, y
+    - - x, y, z
     shape:
-    - 2
-    - 3
+    - - 2
+    - - 3
     doc: Physical location of the first element of the imaging plane (0, 0) for 2-D data or (0, 0, 0) for 3-D data.
       See also reference_frame for what the physical location is relative to (e.g., bregma).
     quantity: '?'
@@ -248,11 +248,11 @@ groups:
   - name: grid_spacing
     dtype: float32
     dims:
-    - x, y
-    - x, y, z
+    - - x, y
+    - - x, y, z
     shape:
-    - 2
-    - 3
+    - - 2
+    - - 3
     doc: Space between pixels in (x, y) or voxels in (x, y, z) directions, in the specified unit.
       Assumes imaging plane is a regular grid. See also reference_frame to interpret the grid.
     quantity: '?'
