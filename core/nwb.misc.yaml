@@ -307,3 +307,7 @@ groups:
         value: volts
         doc: Unit of measurement. This value is fixed to 'volts'.
         required: false
+  - name: waveforms_index
+    neurodata_type_inc: VectorIndex
+    doc: Index into the waveforms dataset.
+    quantity: '?'
