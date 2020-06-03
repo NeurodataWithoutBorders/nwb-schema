@@ -18,7 +18,7 @@ APIs can read and validate any NWB file compliant with NWB schema 2.0 and later.
   will still be compliant with the older, cached version. Updating the file to a newer version of the schema is
   not yet supported in MatNWB.
 
-Most NWB users are concerns about backward compatibility in the APIs. A file written now with NWB schema 2.x
+Most NWB users are concerned about backward compatibility in the APIs. A file written now with NWB schema 2.x
 will be readable by all future versions of PyNWB and MatNWB.
 
 Schema compatibility
