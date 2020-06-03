@@ -33,6 +33,7 @@ Welcome to the NWB Format Specification
 
    software_process
    format_release_notes
+   compatibility
    credits
 
 
