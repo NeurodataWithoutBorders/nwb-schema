@@ -279,7 +279,7 @@ groups:
       required: false
   - name: waveforms
     neurodata_type_inc: VectorData
-    dtype: float
+    dtype: float32
     dims:
       - - num_spikes
         - num_samples
