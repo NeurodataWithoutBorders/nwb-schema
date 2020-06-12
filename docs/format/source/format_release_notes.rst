@@ -5,6 +5,7 @@ Release Notes
 ----------------
 
 - Add optional `strain` field to `Subject`.
+- Add to `DecompositionSeries` an optional `DynamicTableRegion` called `source_channels`.
 
 2.2.5 (May 29, 2020)
 ----------------------
