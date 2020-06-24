@@ -7,7 +7,7 @@ groups:
   attributes:
   - name: nwb_version
     dtype: text
-    value: 2.2.4
+    value: "2.3.0-alpha"
     doc: File version string. Use semantic versioning, e.g. 1.2.1. This will be the
       name of the format with trailing major, minor and patch numbers.
   datasets:
@@ -418,6 +418,10 @@ groups:
   - name: species
     dtype: text
     doc: Species of subject.
+    quantity: '?'
+  - name: strain
+    dtype: text
+    doc: Strain of subject.
     quantity: '?'
   - name: subject_id
     dtype: text
