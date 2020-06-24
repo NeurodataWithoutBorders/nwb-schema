@@ -27,7 +27,7 @@ technology.
 Format Mapping
 ==============
 
-Here we describe the mapping of NWB primitives (e.g,. Groups, Datasets, Attributes, Links, etc.) used by
+Here we describe the mapping of NWB primitives (e.g., Groups, Datasets, Attributes, Links, etc.) used by
 the NWB format and specification to HDF5 storage primitives. As the NWB:N format was designed with HDF5
 in mind, the high-level mapping between the format specification and HDF5 is quite simple:
 
@@ -76,7 +76,7 @@ Groups
     attributes                    HDF5 attributes on the HDF5 group
     links                         HDF5 SoftLinks within the HDF5 group
     linkable                      Not mapped; Stored in schema only
-    quantity                      Not mapped; Number of appearances of the dataset.
+    quantity                      Not mapped; Number of appearances of the group
     neurodata_type                Attribute ``neurodata_type``
     namespace ID                  Attribute ``namespace``
     object ID                     Attribute ``object_id``
@@ -99,7 +99,7 @@ Datasets
     dtype                         Data type of the HDF5 dataset (see `dtype mappings`_ table)
     shape                         Shape of the HDF5 dataset if the shape is fixed, otherwise shape defines the maxshape
     dims                          Not mapped
-    attributes                    HDF5 attributes on the HDF5 group
+    attributes                    HDF5 attributes on the HDF5 dataset
     linkable                      Not mapped; Stored in schema only
     quantity                      Not mapped; Number of appearances of the dataset.
     neurodata_type                Attribute ``neurodata_type``
@@ -158,7 +158,7 @@ The mappings of data types is as follows
     +--------------------------+----------------------------------+----------------+
     | ``dtype`` **spec value** | **storage type**                 | **size**       |
     +--------------------------+----------------------------------+----------------+
-    |  * "float"               | single precision floating point  | 32 bit        |
+    |  * "float"               | single precision floating point  | 32 bit         |
     |  * "float32"             |                                  |                |
     +--------------------------+----------------------------------+----------------+
     |  * "double"              | double precision floating point  | 64 bit         |
@@ -222,5 +222,5 @@ The actual specification data is then stored as a JSON string in scalar datasets
 data type (e.g., ``dtype=special_dtype(vlen=binary_type)`` in Python). The specification of the namespace is stored in
 ``/specifications/<namespace-name>/<version>/namespace`` while additional source files are stored in
 ``/specifications/<namespace-name>/<version>/<source-filename>``. Here ``<source-filename>`` refers to the main name
-of the source-file without file extension (e.g,. the core namespace defines ``nwb.ephys.yaml`` as source which would
+of the source-file without file extension (e.g., the core namespace defines ``nwb.ephys.yaml`` as source which would
 be stored in ``/specifications/core/2.0.1/nwb.ecephys``).

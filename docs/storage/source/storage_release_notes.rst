@@ -2,6 +2,10 @@
 Release Notes
 =============
 
+NWB Storage v2.1.1
+------------------
+Fix wording in documentation of key mapping tables for group and dataset.
+
 NWB:N - v2.1.0
 --------------
 Added documentation for new NWB key 'object_id' (see also format release notes for NWB 2.1.0: https://nwb-schema.readthedocs.io/en/latest/format_release_notes.html#september-2019).

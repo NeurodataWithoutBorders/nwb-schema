@@ -5,15 +5,16 @@ datasets:
 
 - neurodata_type_def: Image
   neurodata_type_inc: NWBData
+  dtype: numeric
   dims:
-  - - num_x
-    - num_y
-  - - num_x
-    - num_y
-    - (r, g, b)
-  - - num_x
-    - num_y
-    - (r, g, b, a)
+  - - x
+    - y
+  - - x
+    - y
+    - r, g, b
+  - - x
+    - y
+    - r, g, b, a
   shape:
   - - null
     - null
@@ -28,7 +29,7 @@ datasets:
     (x, y, (r, g, b, a)).
   attributes:
   - name: resolution
-    dtype: float
+    dtype: float32
     doc: Pixel resolution of the image, in pixels per centimeter.
     required: false
   - name: description

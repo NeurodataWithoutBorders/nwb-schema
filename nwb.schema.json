@@ -1,18 +1,64 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "NWB.schema.json",
+  "$id": "nwb.schema.json",
   "title": "Schema for the NWB language specification",
-  "description": "A schema for validating NWB YAML files",
+  "description": "A schema for validating NWB YAML files and NWB extensions",
   "version": "2.0.2",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
     "groups": {"$ref": "#/definitions/groups"},
     "attributes": {"$ref": "#/definitions/attributes"},
     "datasets": {"$ref": "#/definitions/datasets"},
-    "links": {"$ref": "#/definitions/links"}
+    "links": {"$ref": "#/definitions/links"},
+    "namespaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "version",
+          "author",
+          "contact"
+        ],
+        "properties": {
+          "name": {"type": "string"},
+          "version": {"type": "string", "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"},
+          "doc": {"type": "string"},
+          "author": {"type": "array", "items": {"type": "string"}},
+          "contact": {"type": "array", "items": {"type": "string", "format": "email"}},
+          "full_name": {"type":  "string"},
+          "date": {"type": "string", "format": "date"},
+          "schema": {
+            "type": "array",
+            "items":  {
+              "type": "object",
+              "oneOf": [
+                {"required": ["namespace"]},
+                {"required": ["source"]}
+              ],
+              "properties": {
+                "namespace": {"type":  "string"},
+                "doc": {"type": "string"},
+                "source": {"type": "string"},
+                "title": {"type": "string"},
+                "neurodata_types": {
+                  "type": "array",
+                  "items":  {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   },
   "definitions": {
     "protectedString": {
+      "type": "string",
       "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
     },
     "quantity": {
@@ -35,7 +81,7 @@
         }
       ]
     },
-    "dtype": {
+    "flat_dtype": {
       "description": "Required string describing the data type of the attribute",
       "anyOf": [
         {
@@ -51,22 +97,28 @@
             "int32",
             "int16",
             "int8",
+            "uint",
             "uint32",
             "uint16",
             "uint8",
+            "uint64",
             "numeric",
             "text",
             "utf",
             "utf8",
-            "unt-8",
+            "utf-8",
             "ascii",
             "bool",
             "isodatetime"
           ]
         },
-        {
-          "$ref": "#/definitions/ref_dtype"
-        }
+        {"$ref": "#/definitions/ref_dtype"}
+      ]
+    },
+    "dtype": {
+      "anyOf": [
+        {"$ref": "#/definitions/flat_dtype"},
+        {"$ref": "#/definitions/compound_dtype"}
       ]
     },
     "dims": {
@@ -107,6 +159,7 @@
       }
     },
     "ref_dtype": {
+      "type": "object",
       "required": ["target_type", "reftype"],
       "properties": {
         "target_type": {
@@ -120,10 +173,23 @@
         }
       }
     },
+    "compound_dtype": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "doc", "dtype"],
+        "properties": {
+          "name": {"$ref": "#/definitions/protectedString"},
+          "doc": {"type": "string"},
+          "dtype": {"$ref": "#/definitions/flat_dtype"}
+        }
+      }
+    },
     "groups": {
       "description": "list of groups",
       "type": "array",
       "items": {
+        "title": "group",
         "type": "object",
         "required": ["doc"],
         "additionalProperties": false,
@@ -150,6 +216,7 @@
     "attributes": {
       "type": "array",
       "items": {
+        "title": "attribute",
         "type": "object",
         "required": ["doc"],
         "additionalProperties": false,
@@ -168,6 +235,7 @@
     "links": {
       "type": "array",
       "items": {
+        "title": "link",
         "type": "object",
         "required": ["target_type", "doc"],
         "additionalProperties": false,
@@ -182,6 +250,7 @@
     "datasets": {
       "type": "array",
       "items": {
+        "title": "dataset",
         "type": "object",
         "required": ["doc"],
         "additionalProperties": false,

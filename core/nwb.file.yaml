@@ -7,7 +7,7 @@ groups:
   attributes:
   - name: nwb_version
     dtype: text
-    value: 2.1.0
+    value: "2.3.0-alpha"
     doc: File version string. Use semantic versioning, e.g. 1.2.1. This will be the
       name of the format with trailing major, minor and patch numbers.
   datasets:
@@ -93,14 +93,9 @@ groups:
       doc: Any one-off tables
       quantity: '*'
     datasets:
-    - neurodata_type_def: ScratchData
-      neurodata_type_inc: NWBData
+    - neurodata_type_inc: ScratchData
       doc: Any one-off datasets
       quantity: '*'
-      attributes:
-      - name: notes
-        doc: 'Any notes the user has about the dataset being stored'
-        dtype: text
   - name: processing
     doc: "The home for ProcessingModules. These modules perform intermediate analysis\
       \ of data that is necessary to perform before scientific analysis. Examples\
@@ -248,8 +243,7 @@ groups:
         date made, injection location, volume, etc.
       quantity: '?'
     groups:
-    - neurodata_type_def: LabMetaData
-      neurodata_type_inc: NWBContainer
+    - neurodata_type_inc: LabMetaData
       doc: Place-holder than can be extended so that lab-specific meta-data can be
         placed in /general.
       quantity: '*'
@@ -261,46 +255,10 @@ groups:
       - neurodata_type_inc: Device
         doc: Data acquisition devices.
         quantity: '*'
-    - neurodata_type_def: Subject
-      neurodata_type_inc: NWBContainer
-      name: subject
+    - name: subject
+      neurodata_type_inc: Subject
       doc: Information about the animal or person from which the data was measured.
       quantity: '?'
-      datasets:
-      - name: age
-        dtype: text
-        doc: Age of subject. Can be supplied instead of 'date_of_birth'.
-        quantity: '?'
-      - name: date_of_birth
-        dtype: isodatetime
-        doc: Date of birth of subject. Can be supplied instead of 'age'.
-        quantity: '?'
-      - name: description
-        dtype: text
-        doc: Description of subject and where subject came from (e.g., breeder, if
-          animal).
-        quantity: '?'
-      - name: genotype
-        dtype: text
-        doc: Genetic strain. If absent, assume Wild Type (WT).
-        quantity: '?'
-      - name: sex
-        dtype: text
-        doc: Gender of subject.
-        quantity: '?'
-      - name: species
-        dtype: text
-        doc: Species of subject.
-        quantity: '?'
-      - name: subject_id
-        dtype: text
-        doc: ID of animal/person used/participating in experiment (lab convention).
-        quantity: '?'
-      - name: weight
-        dtype: text
-        doc: Weight at time of experiment, at time of surgery and at other important
-          times.
-        quantity: '?'
     - name: extracellular_ephys
       doc: Metadata related to extracellular electrophysiology.
       quantity: '?'
@@ -315,19 +273,19 @@ groups:
         datasets:
         - name: x
           neurodata_type_inc: VectorData
-          dtype: float
-          doc: x coordinate of the channel location in the brain.
+          dtype: float32
+          doc: x coordinate of the channel location in the brain (+x is posterior).
         - name: y
           neurodata_type_inc: VectorData
-          dtype: float
-          doc: y coordinate of the channel location in the brain.
+          dtype: float32
+          doc: y coordinate of the channel location in the brain (+y is inferior).
         - name: z
           neurodata_type_inc: VectorData
-          dtype: float
-          doc: z coordinate of the channel location in the brain.
+          dtype: float32
+          doc: z coordinate of the channel location in the brain (+z is right).
         - name: imp
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: Impedance of the channel.
         - name: location
           neurodata_type_inc: VectorData
@@ -337,7 +295,7 @@ groups:
             standard atlas names for anatomical regions when possible.
         - name: filtering
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: Description of hardware filtering.
         - name: group
           neurodata_type_inc: VectorData
@@ -351,18 +309,23 @@ groups:
           doc: Name of the ElectrodeGroup this electrode is a part of.
         - name: rel_x
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: x coordinate in electrode group
           quantity: '?'
         - name: rel_y
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: y coordinate in electrode group
           quantity: '?'
         - name: rel_z
           neurodata_type_inc: VectorData
-          dtype: float
+          dtype: float32
           doc: z coordinate in electrode group
+          quantity: '?'
+        - name: reference
+          neurodata_type_inc: VectorData
+          dtype: text
+          doc: Description of the reference used for this electrode.
           quantity: '?'
     - name: intracellular_ephys
       doc: Metadata related to intracellular electrophysiology.
@@ -422,3 +385,59 @@ groups:
     neurodata_type_inc: Units
     doc: Data about sorted spike units.
     quantity: '?'
+
+- neurodata_type_def: LabMetaData
+  neurodata_type_inc: NWBContainer
+  doc: Lab-specific meta-data.
+
+- neurodata_type_def: Subject
+  neurodata_type_inc: NWBContainer
+  doc: Information about the animal or person from which the data was measured.
+  datasets:
+  - name: age
+    dtype: text
+    doc: Age of subject. Can be supplied instead of 'date_of_birth'.
+    quantity: '?'
+  - name: date_of_birth
+    dtype: isodatetime
+    doc: Date of birth of subject. Can be supplied instead of 'age'.
+    quantity: '?'
+  - name: description
+    dtype: text
+    doc: Description of subject and where subject came from (e.g., breeder, if
+      animal).
+    quantity: '?'
+  - name: genotype
+    dtype: text
+    doc: Genetic strain. If absent, assume Wild Type (WT).
+    quantity: '?'
+  - name: sex
+    dtype: text
+    doc: Gender of subject.
+    quantity: '?'
+  - name: species
+    dtype: text
+    doc: Species of subject.
+    quantity: '?'
+  - name: strain
+    dtype: text
+    doc: Strain of subject.
+    quantity: '?'
+  - name: subject_id
+    dtype: text
+    doc: ID of animal/person used/participating in experiment (lab convention).
+    quantity: '?'
+  - name: weight
+    dtype: text
+    doc: Weight at time of experiment, at time of surgery and at other important
+      times.
+    quantity: '?'
+
+datasets:
+- neurodata_type_def: ScratchData
+  neurodata_type_inc: NWBData
+  doc: Any one-off datasets
+  attributes:
+  - name: notes
+    doc: 'Any notes the user has about the dataset being stored'
+    dtype: text
