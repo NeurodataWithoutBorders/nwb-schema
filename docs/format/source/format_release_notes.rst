@@ -6,6 +6,15 @@ Release Notes
 
 - Add optional ``strain`` field to ``Subject``.
 - Add to ``DecompositionSeries`` an optional ``DynamicTableRegion`` called ``source_channels``.
+- Update hdmf-common-schema to version 1.2.0. Release notes:
+  - Add software process documentation.
+  - Fix missing dtype for ``VectorIndex``.
+  - Add new ``VocabData`` data type.
+  - Move ``Data``, ``Index``, and ``Container`` to base.yaml. This change does not functionally change the schema.
+  - ``VectorIndex`` now extends ``VectorData`` instead of ``Index``. This change allows ``VectorIndex`` to index other
+    ``VectorIndex`` types.
+  - The ``Index`` data type is now unused and has been removed.
+  - Fix documentation for ragged arrays.
 
 2.2.5 (May 29, 2020)
 ----------------------
