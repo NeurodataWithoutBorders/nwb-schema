@@ -110,11 +110,11 @@ groups:
       (single-channel) binary data is stored in the 'data' dataset. If this attribute
       is not present, then the default format='raw' case is assumed.
     quantity: '?'
-    links:
-    - name: device
-      target_type: Device
-      doc: Link to the Device object that was used to capture these images.
-      quantity: '?'
+  links:
+  - name: device
+    target_type: Device
+    doc: Link to the Device object that was used to capture these images.
+    quantity: '?'
 
 - neurodata_type_def: ImageMaskSeries
   neurodata_type_inc: ImageSeries
