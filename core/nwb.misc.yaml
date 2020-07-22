@@ -125,6 +125,10 @@ groups:
   - name: metric
     dtype: text
     doc: The metric used, e.g. phase, amplitude, power.
+  - name: source_channels
+    neurodata_type_inc: DynamicTableRegion
+    doc: DynamicTableRegion pointer to the channels that this decomposition series was generated from.
+    quantity: '?'
   groups:
   - name: bands
     neurodata_type_inc: DynamicTable
