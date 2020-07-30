@@ -7,6 +7,7 @@ Release Notes
 - Add optional ``strain`` field to ``Subject``.
 - Add to ``DecompositionSeries`` an optional ``DynamicTableRegion`` called ``source_channels``.
 - Add to ``ImageSeries`` an optional link to ``Device``.
+- Clarify that the units for electrode impedance are 'Ohms'.
 
 2.2.5 (May 29, 2020)
 ----------------------
