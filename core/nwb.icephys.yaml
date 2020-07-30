@@ -72,8 +72,8 @@ groups:
   attributes:
   - name: stimulus_description
     dtype: text
-    doc: An IZeroClampSeries has no stimulus, so this attribute is automatically set to "NA"
-    value: NA
+    doc: An IZeroClampSeries has no stimulus, so this attribute is automatically set to "N/A"
+    value: N/A
   datasets:
   - name: bias_current
     dtype: float32
