@@ -8,6 +8,10 @@ Release Notes
 - Add to ``DecompositionSeries`` an optional ``DynamicTableRegion`` called ``source_channels``.
 - Add to ``ImageSeries`` an optional link to ``Device``.
 - Add optional "continuity" field to `TimeSeries`.
+- Fix dtype of ``data`` dataset of ``IndexSeries``, update ``unit`` attribute of ``data`` to have fixed value "N/A",
+  and update docstrings ``conversion`` and ``resolution`` attributes of ``data` to indicate that these fields are not
+  used.
+
 - Update hdmf-common-schema to version 1.2.0. Release notes:
   - Add software process documentation.
   - Fix missing dtype for ``VectorIndex``.
