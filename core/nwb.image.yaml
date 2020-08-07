@@ -39,11 +39,8 @@ datasets:
 groups:
 - neurodata_type_def: ImageSeries
   neurodata_type_inc: TimeSeries
-  doc: General image data that is common between acquisition and stimulus time series.
-    Sometimes the image data is stored in the file in a raw format while other
-    times it will be stored as a series of external image files in the host file system.
-    The data field will either be binary data, if the data is stored in the NWB file, or
-    empty, if the data is stored in an external image stack. [frame][x][y] or [frame][x][y][z].
+  doc: General image data. The image data may be stored in the file in a raw format or in a single external image file
+    or series of external image files in the host filesystem.
   datasets:
   - name: data
     dtype: numeric
@@ -63,8 +60,8 @@ groups:
       - null
       - null
       - null
-    doc: Binary data representing images across frames.
-    quantity: '?'
+    doc: Data representing images across frames. The dimensions are [frame][x][y] or [frame][x][y][z]. If data is
+      stored in an external_file, set this dataset to an empty 3-dimensional array.
   - name: dimension
     dtype: int32
     dims:
