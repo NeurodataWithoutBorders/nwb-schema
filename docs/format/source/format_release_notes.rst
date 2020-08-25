@@ -7,6 +7,7 @@ Release Notes
 - Add optional ``strain`` field to ``Subject``.
 - Add to ``DecompositionSeries`` an optional ``DynamicTableRegion`` called ``source_channels``.
 - Add to ``ImageSeries`` an optional link to ``Device``.
+- Clarify documentation for electrode impedance and filtering.
 - Add optional "continuity" field to `TimeSeries`.
 - Update hdmf-common-schema to version 1.2.0. Release notes:
   - Add software process documentation.
