@@ -37,6 +37,21 @@ datasets:
     doc: Description of the image.
     required: false
 
+- neurodata_type_def: ImageStack
+  neurodata_type_inc: VectorData
+  doc: A 1-dimensional ordered collection of images (by reference). The images should be stored in an Images type.
+  dims:
+  - num_images
+  shape:
+  - null
+  dtype:
+    target_type: Image
+    reftype: object
+  attributes:
+  - name: description
+    dtype: text
+    doc: Description of the image stack.
+
 groups:
 - neurodata_type_def: NWBContainer
   neurodata_type_inc: Container
@@ -119,11 +134,11 @@ groups:
     - name: continuity
       dtype: text
       doc: Optionally describe the continuity of the data. Can be "continuous", "instantaneous", or
-        "step". For example, a voltage trace would be "continuous", because samples 
-        are recorded from a continuous process. An array of lick times would be "instantaneous", 
-        because the data represents distinct moments in time. Times of image presentations would be  
-        "step" because the picture remains the same until the next timepoint. This field is optional, 
-        but is useful in providing information about the underlying data. It may inform the way this 
+        "step". For example, a voltage trace would be "continuous", because samples
+        are recorded from a continuous process. An array of lick times would be "instantaneous",
+        because the data represents distinct moments in time. Times of image presentations would be
+        "step" because the picture remains the same until the next timepoint. This field is optional,
+        but is useful in providing information about the underlying data. It may inform the way this
         data is interpreted, the way it is visualized, and what analysis methods are applicable.
       required: false
   - name: starting_time
@@ -205,7 +220,7 @@ groups:
 - neurodata_type_def: Images
   neurodata_type_inc: NWBDataInterface
   default_name: Images
-  doc: A collection of images.
+  doc: An unordered collection of images.
   attributes:
   - name: description
     dtype: text
