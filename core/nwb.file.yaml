@@ -286,7 +286,7 @@ groups:
         - name: imp
           neurodata_type_inc: VectorData
           dtype: float32
-          doc: Impedance of the channel.
+          doc: Impedance of the channel, in ohms.
         - name: location
           neurodata_type_inc: VectorData
           dtype: text
@@ -296,7 +296,7 @@ groups:
         - name: filtering
           neurodata_type_inc: VectorData
           dtype: float32
-          doc: Description of hardware filtering.
+          doc: Description of hardware filtering, including the filter name and frequency cutoffs.
         - name: group
           neurodata_type_inc: VectorData
           dtype:
