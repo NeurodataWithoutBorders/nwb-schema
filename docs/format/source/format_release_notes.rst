@@ -9,8 +9,9 @@ Release Notes
 - Add to ``ImageSeries`` an optional link to ``Device``.
 - Add optional "continuity" field to `TimeSeries`.
 - Fix dtype of ``data`` dataset of ``IndexSeries``, update ``unit`` attribute of ``data`` to have fixed value "N/A",
-  and update docstrings ``conversion`` and ``resolution`` attributes of ``data` to indicate that these fields are not
-  used.
+  update docstrings ``conversion`` and ``resolution`` attributes of ``data` to indicate that these fields are not
+  used, and add link to ``ImageStack``.
+- Add new neurodata_type ``ImageStack`` to represent an ordered collection of images.
 
 - Update hdmf-common-schema to version 1.2.0. Release notes:
   - Add software process documentation.
