@@ -7,6 +7,7 @@ Release Notes
 - Add optional ``strain`` field to ``Subject``.
 - Add to ``DecompositionSeries`` an optional ``DynamicTableRegion`` called ``source_channels``.
 - Add to ``ImageSeries`` an optional link to ``Device``.
+- Clarify documentation for electrode impedance and filtering.
 - Add optional "continuity" field to `TimeSeries`.
 - Fix dtype of ``data`` dataset of ``IndexSeries``, update ``unit`` attribute of ``data`` to have fixed value "N/A",
   and update docstrings ``conversion`` and ``resolution`` attributes of ``data` to indicate that these fields are not
