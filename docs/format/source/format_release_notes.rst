@@ -9,6 +9,7 @@ Release Notes
 - Add to ``DecompositionSeries`` an optional ``DynamicTableRegion`` called ``source_channels``.
 - Add to ``ImageSeries`` an optional link to ``Device``.
 - Add optional ``continuity`` field to ``TimeSeries``.
+- Clarify documentation for electrode impedance and filtering.
 - Update hdmf-common-schema to version 1.2.0. Release notes:
   - Add software process documentation.
   - Fix missing dtype for ``VectorIndex``.
