@@ -9,8 +9,7 @@ Release Notes
 - Add to ``ImageSeries`` an optional link to ``Device``.
 - Clarify documentation for electrode impedance and filtering.
 - Add optional "continuity" field to `TimeSeries`.
-- Update hdmf-common-schema to version 1.2.0. Release notes:
-  - Add software process documentation.
+- Update hdmf-common-schema to version 1.3.0. Release notes:
   - Fix missing dtype for ``VectorIndex``.
   - Add new ``VocabData`` data type.
   - Move ``Data``, ``Index``, and ``Container`` to base.yaml. This change does not functionally change the schema.
@@ -18,6 +17,11 @@ Release Notes
     ``VectorIndex`` types.
   - The ``Index`` data type is now unused and has been removed.
   - Fix documentation for ragged arrays.
+  - Add data type ExternalResources for storing ontology information / external resource references. NOTE:
+    this data type is in beta testing and is subject to change in a later version.
+  - Fix missing data_type_inc and use dtype uint for CSRMatrix. It now has data_type_inc: Container.
+  - Add hdmf-schema-language comment at the top of each yaml file.
+  - Add SimpleMultiContainer, a Container for storing other Container and Data objects together.
 
 2.2.5 (May 29, 2020)
 ----------------------
