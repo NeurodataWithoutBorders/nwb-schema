@@ -326,7 +326,7 @@ extra fields. For API's this specifically means:
 * an API is permitted to ignore extra fields on read,
 * an API is permitted to ignore (including remove) extra fields on write.
 
-In practice, the use of extra fields is highly discuraged and instead neurodata 
+In practice, the use of extra fields is highly discouraged and instead neurodata 
 extensions (NDX) should be used to extend NWB to include additional fields 
 if necessary. 
 
