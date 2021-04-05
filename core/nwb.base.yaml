@@ -3,6 +3,25 @@ datasets:
   neurodata_type_inc: Data
   doc: An abstract data type for a dataset.
 
+- neurodata_type_def: TimeSeriesReferenceVectorData
+  neurodata_type_inc: VectorData
+  dtype:
+  - name: idx_start
+    dtype: int32
+    doc: Start index into the TimeSeries 'data' and 'timestamp' datasets of the referenced
+      TimeSeries. The first dimension of those arrays is always time.
+  - name: count
+    dtype: int32
+    doc: Number of data samples available in this time series, during this epoch
+  - name: timeseries
+    dtype:
+      target_type: TimeSeries
+      reftype: object
+    doc: The TimeSeries that this index applies to
+  doc: Column storing references to a TimeSeries (rows). For each TimeSeries this
+    VectorData column stores the start_index and count to indicate the range in time
+    to be selected as well as an object reference to the TimeSeries.
+
 - neurodata_type_def: Image
   neurodata_type_inc: NWBData
   dtype: numeric
@@ -204,3 +223,4 @@ groups:
   - neurodata_type_inc: Image
     doc: Images stored in this collection.
     quantity: '+'
+
