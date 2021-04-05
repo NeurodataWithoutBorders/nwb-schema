@@ -230,7 +230,10 @@ groups:
 
 - neurodata_type_def: SweepTable
   neurodata_type_inc: DynamicTable
-  doc: The table which groups different PatchClampSeries together.
+  doc: '[DEPRACATED] Table used to group different PatchClampSeries.SweepTable
+        is being replaced by IntracellularRecordingsTable and SimultaneousRecordingsTable
+        tabels. Additional SequentialRecordingsTable, RepetitionsTable and
+        ExperimentalConditions tables provide enhanced support for experiment metadata.'
   datasets:
   - name: sweep_number
     neurodata_type_inc: VectorData
