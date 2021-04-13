@@ -312,6 +312,24 @@ required data, and preferably not larger. 64-bit floating point (double)
 is required for timestamps, while 32-bit floating point is largely
 sufficient for other uses.
 
+**Extra fields**
+
+All parts of an NWB file should be governed by either the core schema or 
+defined in a neurodata extension (NDX). *Extra fields* are any datasets, 
+attributes, groups, links etc. that are included in a file but which are 
+not described by the NWB schema or a neurodata extension (NDX). Extra fields 
+are not considered  part of the NWB file and as such, any NWB API may ignore
+extra fields. For API's this specifically means: 
+
+* an NWB file that includes extra fields should be readable by the API
+  as long as the file is otherwise valid,
+* an API is permitted to ignore extra fields on read,
+* an API is permitted to ignore (including remove) extra fields on write.
+
+In practice, the use of extra fields is highly discouraged and instead neurodata 
+extensions (NDX) should be used to extend NWB to include additional fields 
+if necessary. 
+
 **Why do timestamps\_link and data\_link record linking between
 datasets, but links between epochs and timeseries are not recorded?**
 

@@ -69,6 +69,11 @@ groups:
     and amplifier settings are off (i.e., CurrentClampSeries fields will be zero).
     There is no CurrentClampStimulusSeries associated with an IZero series because
     the amplifier is disconnected and no stimulus can reach the cell.
+  attributes:
+  - name: stimulus_description
+    dtype: text
+    doc: An IZeroClampSeries has no stimulus, so this attribute is automatically set to "N/A"
+    value: N/A
   datasets:
   - name: bias_current
     dtype: float32
