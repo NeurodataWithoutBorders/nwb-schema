@@ -16,7 +16,7 @@ Release Notes
   - Added experimental data type ``EnumData`` to store data from a set of fixed values.
   - Changed dtype for datasets within ``CSRMatrix`` from 'int' to 'uint' and added missing `data_type_inc: Container`
     to the ``CSRMatrix`` type.
-    Added data type ``SimpleMultiContainer``, a Container for storing other Container and Data objects together.
+    - Added data type ``SimpleMultiContainer``, a Container for storing other Container and Data objects together.
   - Fixed missing dtype for ``VectorIndex``.
   - ``VectorIndex`` now extends ``VectorData`` instead of ``Index``.
   - Removed unused and non-functional ``Index`` data type.
