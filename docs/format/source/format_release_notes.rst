@@ -17,6 +17,7 @@ Release Notes
   - Changed dtype for datasets within ``CSRMatrix`` from 'int' to 'uint' and added missing `data_type_inc: Container`
     to the ``CSRMatrix`` type.
     - Added data type ``SimpleMultiContainer``, a Container for storing other Container and Data objects together.
+  - Added data type ``AlignedDynamicTable``, a DynamicTable type with support for categories (or sub-headings) each described by a separate DynamicTable.
   - Fixed missing dtype for ``VectorIndex``.
   - ``VectorIndex`` now extends ``VectorData`` instead of ``Index``.
   - Removed unused and non-functional ``Index`` data type.
