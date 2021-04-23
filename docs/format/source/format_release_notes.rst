@@ -4,11 +4,12 @@ Release Notes
 2.3.0 (April 23, 2021)
 ----------------
 
+- Add optional ``waveforms`` column to the ``Units`` table.
 - Add optional ``strain`` field to ``Subject``.
 - Add to ``DecompositionSeries`` an optional ``DynamicTableRegion`` called ``source_channels``.
 - Add to ``ImageSeries`` an optional link to ``Device``.
+- Add optional ``continuity`` field to ``TimeSeries``.
 - Clarify documentation for electrode impedance and filtering.
-- Add optional "continuity" field to ``TimeSeries``.
 - Update hdmf-common-schema from 1.1.3 to version 1.5.0.
   - The HDMF-experimental namespace was added, which includes the ``ExternalResources`` and ``EnumData``
     data types. Schema in the HDMF-experimental namespace are experimental and subject to breaking changes at any time.
