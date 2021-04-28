@@ -404,7 +404,7 @@ groups:
   neurodata_type_inc: DynamicTable
   name: experimental_conditions
   doc: A table for grouping different intracellular recording repetitions together
-    that belong to the same experimental experimental_conditions.
+    that belong to the same experimental condition.
   datasets:
   - name: repetitions
     neurodata_type_inc: DynamicTableRegion
