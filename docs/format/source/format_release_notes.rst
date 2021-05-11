@@ -9,6 +9,7 @@ Release Notes
 - Add to ``DecompositionSeries`` an optional ``DynamicTableRegion`` called ``source_channels``.
 - Add to ``ImageSeries`` an optional link to ``Device``.
 - Add optional ``continuity`` field to ``TimeSeries``.
+- Add optional ``filtering`` attribute to ``ElectricalSeries``.
 - Clarify documentation for electrode impedance and filtering.
 - Update hdmf-common-schema from 1.1.3 to version 1.5.0.
   - The HDMF-experimental namespace was added, which includes the ``ExternalResources`` and ``EnumData``
