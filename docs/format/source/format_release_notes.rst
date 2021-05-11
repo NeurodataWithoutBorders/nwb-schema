@@ -1,7 +1,7 @@
 Release Notes
 =============
 
-2.3.0 (April 23, 2021)
+2.3.0 (May 11, 2021)
 ----------------
 
 - Add optional ``waveforms`` column to the ``Units`` table.
