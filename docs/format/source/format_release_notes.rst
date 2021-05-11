@@ -11,6 +11,8 @@ Release Notes
 - Add optional ``continuity`` field to ``TimeSeries``.
 - Add optional ``filtering`` attribute to ``ElectricalSeries``.
 - Clarify documentation for electrode impedance and filtering.
+- Add description of extra fields.
+- Set the ``stimulus_description`` for ``IZeroCurrentClamp`` to have the fixed value ``N/A``.
 - Update hdmf-common-schema from 1.1.3 to version 1.5.0.
   - The HDMF-experimental namespace was added, which includes the ``ExternalResources`` and ``EnumData``
     data types. Schema in the HDMF-experimental namespace are experimental and subject to breaking changes at any time.
