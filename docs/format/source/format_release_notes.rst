@@ -1,8 +1,8 @@
 Release Notes
 =============
 
-2.3.0 (May 11, 2021)
-----------------
+2.3.0 (May 12, 2021)
+---------------------
 
 - Add optional ``waveforms`` column to the ``Units`` table.
 - Add optional ``strain`` field to ``Subject``.
@@ -15,11 +15,11 @@ Release Notes
 - Set the ``stimulus_description`` for ``IZeroCurrentClamp`` to have the fixed value ``N/A``.
 - Update hdmf-common-schema from 1.1.3 to version 1.5.0.
   - The HDMF-experimental namespace was added, which includes the ``ExternalResources`` and ``EnumData``
-    data types. Schema in the HDMF-experimental namespace are experimental and subject to breaking changes at any time.
+  data types. Schema in the HDMF-experimental namespace are experimental and subject to breaking changes at any time.
   - Added experimental data type ``ExternalResources`` for storing ontology information / external resource references.
   - Added experimental data type ``EnumData`` to store data from a set of fixed values.
-  - Changed dtype for datasets within ``CSRMatrix`` from 'int' to 'uint' and added missing `data_type_inc: Container`
-    to the ``CSRMatrix`` type.
+  - Changed dtype for datasets within ``CSRMatrix`` from 'int' to 'uint' and added missing ``data_type_inc: Container``
+  to the ``CSRMatrix`` type.
   - Added data type ``SimpleMultiContainer``, a Container for storing other Container and Data objects together.
   - Added data type ``AlignedDynamicTable``, a DynamicTable type with support for categories (or sub-headings) each described by a separate DynamicTable.
   - Fixed missing dtype for ``VectorIndex``.
