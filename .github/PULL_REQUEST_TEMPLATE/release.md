@@ -11,7 +11,7 @@ Prepare for release of nwb-schema [version]
 - [ ] Update release notes (set release date) in `docs/format/source/format_release_notes.rst` and any other docs as
   needed
 - [ ] Test docs locally (`cd docs/format; make fulldoc`) where the nwb-schema submodule in the local version of PyNWB
-  is fully up-to-date with the head of the main branch.
+  is fully up-to-date with the head of the dev branch.
 - [ ] Push changes to this PR and make sure all PRs to be included in this release have been merged
 - [ ] Check that the readthedocs build for this PR succeeds (build latest to pull the new branch, then activate and
   build docs for new branch): https://readthedocs.org/projects/nwb-schema/builds/
