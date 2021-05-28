@@ -345,3 +345,56 @@ The timestamps\_link and data\_link fields refer to links made between
 time series, such as if timeseries A and timeseries B, each having
 different data (or time) share time (or data). This is much more
 important information as it shows structural associations in the data.
+
+
+Tables and ragged arrays
+------------------------
+
+The NWB schema includes several tables, such as for storing data/metadata
+about trials, epochs, single units and multi-units, electrodes, and ROIs.
+All of the tables in NWB derive from the base data type, DynamicTable.
+DynamicTable is a column-based representation of a table that allows
+users to add custom columns (of type VectorData) that are not
+pre-defined in the specification. This is useful for handling types of
+data where every experiment or lab may want to store information
+unique to that experiment or lab, e.g., metadata
+related to the trials in a session or spike sorting metrics.
+
+DynamicTable objects typically contain columns that are of equal length,
+where the i-th element of a column corresponds to the i-th element of
+all of the other columns. In other words, each row has a single item
+in each column. However, in some situations, users may wish to store and
+associate multiple items in a single column for each row. For example,
+in the Units table, each row represents a single sorted unit and each
+unit has multiple spike times associated with it, where the number of
+spike times differs between units (rows). This is sometimes called a
+ragged array or jagged array.
+
+Ragged array columns can be created by creating a primary VectorData
+column that contains all of the data values (e.g., spike times) and
+creating a secondary VectorIndex column that contains a mapping from rows
+to elements of its target VectorData column. The VectorIndex column has the same
+number of elements (rows) as the rest of the table.
+
+The values of the VectorIndex column follow the mapping such that the data
+associated with the first row is at VectorData[0:VectorIndex[0]], and the data
+associated with the second row is at VectorData[VectorIndex[0]:VectorIndex[1]],
+and so on.
+
+.. image:: figures/units_spike_times.png
+  :width: 800
+  :alt: Demonstration of how spike times are stored in a ragged array column in the Units table.
+
+Doubly ragged arrays
+---------------------
+
+.. image:: figures/units_waveforms.png
+  :width: 800
+  :alt: Demonstration of how waveforms are stored in a double ragged array column in the Units table.
+
+References to rows of a table
+------------------------------
+
+.. image:: figures/units_electrodes.png
+  :width: 800
+  :alt: Demonstration of how references to rows of the electrodes table are stored in the electrodes column of the Units table.
