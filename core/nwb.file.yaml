@@ -344,7 +344,7 @@ groups:
         quantity: '*'
       - name: sweep_table
         neurodata_type_inc: SweepTable
-        doc: '[DEPRACATED] Table used to group different PatchClampSeries.SweepTable
+        doc: '[DEPRECATED] Table used to group different PatchClampSeries. SweepTable
               is being replaced by IntracellularRecordingsTable and SimultaneousRecordingsTable
               tabels. Additional SequentialRecordingsTable, RepetitionsTable and
               ExperimentalConditions tables provide enhanced support for experiment metadata.'
