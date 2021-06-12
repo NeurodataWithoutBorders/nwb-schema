@@ -5,6 +5,7 @@ datasets:
 
 - neurodata_type_def: TimeSeriesReferenceVectorData
   neurodata_type_inc: VectorData
+  default_name: timeseries
   dtype:
   - name: idx_start
     dtype: int32
@@ -233,4 +234,3 @@ groups:
   - neurodata_type_inc: Image
     doc: Images stored in this collection.
     quantity: '+'
-
