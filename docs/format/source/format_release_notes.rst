@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+2.4.0 (Upcoming)
+----------------
+
+- Fix incorrect dtype for electrodes table column "filtering" (float -> text)
+
 2.3.0 (May 12, 2021)
 ---------------------
 
