@@ -7,7 +7,7 @@ groups:
   attributes:
   - name: nwb_version
     dtype: text
-    value: "2.3.0-alpha"
+    value: "2.4.0-alpha"
     doc: File version string. Use semantic versioning, e.g. 1.2.1. This will be the
       name of the format with trailing major, minor and patch numbers.
   datasets:
@@ -295,7 +295,7 @@ groups:
             standard atlas names for anatomical regions when possible.
         - name: filtering
           neurodata_type_inc: VectorData
-          dtype: float32
+          dtype: text
           doc: Description of hardware filtering, including the filter name and frequency cutoffs.
         - name: group
           neurodata_type_inc: VectorData

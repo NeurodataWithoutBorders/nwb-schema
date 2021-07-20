@@ -7,8 +7,11 @@ This repo contains:
 
 * The core NWB schema
 * The `Documentation for the NWB schema <http://nwb-schema.readthedocs.io>`_ (editable `here <https://github.com/NeurodataWithoutBorders/nwb-schema/tree/dev/docs/format/source>`_)
-* The `NWB specification language <https://schema-language.readthedocs.io/en/latest/index.html>`_ (editable `here <https://github.com/NeurodataWithoutBorders/nwb-schema/blob/dev/docs/language/source/specification_language_description.rst>`_)
 * The `HDF5 storage specification <https://nwb-storage.readthedocs.io/en/latest/storage_hdf5.html>`_ (editable `here <https://github.com/NeurodataWithoutBorders/nwb-schema/blob/dev/docs/storage/source/storage_hdf5.rst>`_)
+
+The NWB schema uses the [NWB specification language](http://schema-language.readthedocs.io/),
+which defines formal structures for describing the organization of
+complex data using basic concepts, e.g., Groups, Datasets, Attributes, and Links.
 
 For more information:
 
@@ -20,7 +23,7 @@ For more information:
 License
 ========================
 
-“nwb-schema” Copyright (c) 2017-2020, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy).  All rights reserved.
+“nwb-schema” Copyright (c) 2017-2021, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy).  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
@@ -38,7 +41,7 @@ You are under no obligation whatsoever to provide any bug fixes, patches, or upg
 Copyright
 ========================
 
-“nwb-schema” Copyright (c) 2017-2020, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy).  All rights reserved.
+“nwb-schema” Copyright (c) 2017-2021, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy).  All rights reserved.
 
 If you have questions about your rights to use or distribute this software, please contact Berkeley Lab's Innovation & Partnerships Office at IPO@lbl.gov.
 
