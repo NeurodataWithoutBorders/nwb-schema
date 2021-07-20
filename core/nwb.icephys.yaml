@@ -302,7 +302,7 @@ groups:
   doc: A table to group together a stimulus and response from a single electrode and
     a single simultaneous recording. Each row in the table represents a single recording
     consisting typically of a stimulus and a corresponding response. In some cases,
-    however, only a stimulus or a response are recorded as as part of an experiment.
+    however, only a stimulus or a response is recorded as part of an experiment.
     In this case both, the stimulus and response will point to the same TimeSeries
     while the idx_start and count of the invalid column will be set to -1, thus, indicating
     that no values have been recorded for the stimulus or response, respectively.
