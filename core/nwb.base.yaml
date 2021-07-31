@@ -36,21 +36,41 @@ datasets:
     dtype: text
     doc: Description of the image.
     required: false
-
+    
 - neurodata_type_def: ImageStack
   neurodata_type_inc: VectorData
-  doc: A 1-dimensional ordered collection of images (by reference). The images should be stored in an Images type.
+  dtype: numeric
   dims:
-  - num_images
+  - - num_images
+    - x
+    - y
+  - - num_images
+    - x
+    - y
+    - r, g, b
+  - - num_images
+    - x
+    - y
+    - r, g, b, a
   shape:
-  - null
-  dtype:
-    target_type: Image
-    reftype: object
+  - - null
+    - null
+  - - null
+    - null
+    - 3
+  - - null
+    - null
+    - 4
+  doc: An ordered collection of images with the same size.
   attributes:
+  - name: resolution
+    dtype: float32
+    doc: Pixel resolution of the images in the stack, in pixels per centimeter.
+    required: false
   - name: description
     dtype: text
     doc: Description of the image stack.
+    required: false
 
 groups:
 - neurodata_type_def: NWBContainer
