@@ -12,7 +12,7 @@ Release Notes
 - Fix dtype of ``data`` dataset of ``IndexSeries``, update ``unit`` attribute of ``data`` to have fixed value "N/A",
   update docstrings ``conversion`` and ``resolution`` attributes of ``data`` to indicate that these fields are not
   used, and add link to ``ImageStack``.
-- Add new neurodata_type ``ImageStack`` to represent an ordered collection of images.
+- Add new neurodata_type ``ImageStack`` to represent an ordered collection of images of the same size.
 
 - Update hdmf-common-schema to version 1.2.0. Release notes:
   - Add software process documentation.
