@@ -134,6 +134,9 @@ groups:
       - neurodata_type_inc: Images
         doc: Images objects containing images of presented stimuli.
         quantity: '*'
+      - neurodata_type_inc: ImageStacks
+        doc: ImageStacks objects containing image stacks of presented stimuli.
+        quantity: '*'
     - name: templates
       doc: 'Template stimuli. Timestamps in templates are based on stimulus
         design and are relative to the beginning of the stimulus. When templates are
