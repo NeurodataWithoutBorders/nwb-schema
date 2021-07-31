@@ -4,13 +4,13 @@ Release Notes
 2.4.0 (Upcoming)
 ----------------
 
-- Fixed incorrect dtype for electrodes table column "filtering" (float -> text)
+- Fixed incorrect dtype for electrodes table column "filtering" (float -> text).
 - Added new neurodata_types:
   - ``ImageStack`` to represent an ordered collection of images of the same size.
   - ``ImageStacks`` to represent an unordered collection of image stacks, analogous to the ``Images`` type.
 - Allowed ``NWBFile/stimulus/presentation`` to contain ``Images`` and ``ImageStacks`` objects.
 - Overhauled ``IndexSeries`` type:
-  - Fixed dtype of ``data`` dataset of ``IndexSeries`` to be uint32 instead of int32.
+  - Fixed dtype of ``data`` dataset of ``IndexSeries`` (uint32 -> int32).
   - Updated ``unit`` attribute of ``data`` to have fixed value "N/A".
   - Updated docstrings for the ``conversion`` and ``resolution`` attributes of ``data`` to indicate that 
     these fields are not used.
