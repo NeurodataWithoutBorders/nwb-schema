@@ -18,10 +18,13 @@ datasets:
   shape:
   - - null
     - null
+    - null
   - - null
+    - null
     - null
     - 3
   - - null
+    - null
     - null
     - 4
   doc: An abstract data type for an image. Shape can be 2-D (x, y), or 3-D where the
