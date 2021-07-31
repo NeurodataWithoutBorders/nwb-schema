@@ -1,12 +1,30 @@
 Release Notes
 =============
 
-2.3.0 (Upcoming)
+2.4.0 (Upcoming)
 ----------------
 
+- Fixed incorrect dtype for electrodes table column "filtering" (float -> text)
+- Added new neurodata_types:
+  - ``ImageStack`` to represent an ordered collection of images of the same size.
+  - ``ImageStacks`` to represent an unordered collection of image stacks, analogous to the ``Images`` type.
+- Allowed ``NWBFile/stimulus/presentation`` to contain ``Images`` and ``ImageStacks`` objects.
+- Overhauled ``IndexSeries`` type:
+  - Fixed dtype of ``data`` dataset of ``IndexSeries`` to be uint32 instead of int32.
+  - Updated ``unit`` attribute of ``data`` to have fixed value "N/A".
+  - Updated docstrings for the ``conversion`` and ``resolution`` attributes of ``data`` to indicate that 
+    these fields are not used.
+  - Added link to ``ImageStack`` which contains an ordered collection of images.
+
+2.3.0 (May 12, 2021)
+---------------------
+
+- Add optional ``waveforms`` column to the ``Units`` table.
 - Add optional ``strain`` field to ``Subject``.
 - Add to ``DecompositionSeries`` an optional ``DynamicTableRegion`` called ``source_channels``.
 - Add to ``ImageSeries`` an optional link to ``Device``.
+- Add optional ``continuity`` field to ``TimeSeries``.
+- Add optional ``filtering`` attribute to ``ElectricalSeries``.
 - Clarify documentation for electrode impedance and filtering.
 - Add optional "continuity" field to `TimeSeries`.
 - Fix dtype of ``data`` dataset of ``IndexSeries``, update ``unit`` attribute of ``data`` to have fixed value "N/A",
