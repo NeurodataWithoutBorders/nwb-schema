@@ -10,7 +10,7 @@ Release Notes
   - ``ImageStacks`` to represent an unordered collection of image stacks, analogous to the ``Images`` type.
 - Allowed ``NWBFile/stimulus/presentation`` to contain ``Images`` and ``ImageStacks`` objects.
 - Overhauled ``IndexSeries`` type:
-  - Fixed dtype of ``data`` dataset of ``IndexSeries`` (uint32 -> int32).
+  - Fixed dtype of ``data`` dataset of ``IndexSeries`` (int32 -> uint32).
   - Updated ``unit`` attribute of ``data`` to have fixed value "N/A".
   - Updated docstrings for the ``conversion`` and ``resolution`` attributes of ``data`` to indicate that 
     these fields are not used.
