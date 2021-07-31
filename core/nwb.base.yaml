@@ -252,3 +252,16 @@ groups:
   - neurodata_type_inc: Image
     doc: Images stored in this collection.
     quantity: '+'
+
+- neurodata_type_def: ImageStacks
+  neurodata_type_inc: NWBDataInterface
+  default_name: ImageStacks
+  doc: An unordered collection of image stacks.
+  attributes:
+  - name: description
+    dtype: text
+    doc: Description of this collection of image stacks.
+  datasets:
+  - neurodata_type_inc: ImageStack
+    doc: Image stacks stored in this collection.
+    quantity: '+'
