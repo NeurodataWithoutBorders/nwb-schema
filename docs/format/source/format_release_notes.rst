@@ -18,7 +18,6 @@ Release Notes
 
 2.3.0 (May 12, 2021)
 ---------------------
-
 - Add optional ``waveforms`` column to the ``Units`` table.
 - Add optional ``strain`` field to ``Subject``.
 - Add to ``DecompositionSeries`` an optional ``DynamicTableRegion`` called ``source_channels``.
@@ -26,21 +25,21 @@ Release Notes
 - Add optional ``continuity`` field to ``TimeSeries``.
 - Add optional ``filtering`` attribute to ``ElectricalSeries``.
 - Clarify documentation for electrode impedance and filtering.
-- Add optional "continuity" field to `TimeSeries`.
-- Fix dtype of ``data`` dataset of ``IndexSeries``, update ``unit`` attribute of ``data`` to have fixed value "N/A",
-  update docstrings ``conversion`` and ``resolution`` attributes of ``data`` to indicate that these fields are not
-  used, and add link to ``ImageStack``.
-- Add new neurodata_type ``ImageStack`` to represent an ordered collection of images of the same size.
-
-- Update hdmf-common-schema to version 1.2.0. Release notes:
-  - Add software process documentation.
-  - Fix missing dtype for ``VectorIndex``.
-  - Add new ``VocabData`` data type.
-  - Move ``Data``, ``Index``, and ``Container`` to base.yaml. This change does not functionally change the schema.
-  - ``VectorIndex`` now extends ``VectorData`` instead of ``Index``. This change allows ``VectorIndex`` to index other
-    ``VectorIndex`` types.
-  - The ``Index`` data type is now unused and has been removed.
-  - Fix documentation for ragged arrays.
+- Add description of extra fields.
+- Set the ``stimulus_description`` for ``IZeroCurrentClamp`` to have the fixed value ``N/A``.
+- Update hdmf-common-schema from 1.1.3 to version 1.5.0.
+  - The HDMF-experimental namespace was added, which includes the ``ExternalResources`` and ``EnumData``
+  data types. Schema in the HDMF-experimental namespace are experimental and subject to breaking changes at any time.
+  - Added experimental data type ``ExternalResources`` for storing ontology information / external resource references.
+  - Added experimental data type ``EnumData`` to store data from a set of fixed values.
+  - Changed dtype for datasets within ``CSRMatrix`` from 'int' to 'uint' and added missing ``data_type_inc: Container``
+  to the ``CSRMatrix`` type.
+  - Added data type ``SimpleMultiContainer``, a Container for storing other Container and Data objects together.
+  - Added data type ``AlignedDynamicTable``, a DynamicTable type with support for categories (or sub-headings) each described by a separate DynamicTable.
+  - Fixed missing dtype for ``VectorIndex``.
+  - ``VectorIndex`` now extends ``VectorData`` instead of ``Index``.
+  - Removed unused and non-functional ``Index`` data type.
+  - See https://hdmf-common-schema.readthedocs.io/en/latest/format_release_notes.html for full release notes.
 
 2.2.5 (May 29, 2020)
 ----------------------
