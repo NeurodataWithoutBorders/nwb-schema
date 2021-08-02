@@ -263,7 +263,10 @@ groups:
 - neurodata_type_def: Images
   neurodata_type_inc: NWBDataInterface
   default_name: Images
-  doc: An unordered collection of images.
+  doc: An collection of images with an optional way to specify the order of the images. 
+    For ordered image collections, if the images have different dimensions
+    and number of channels, use this type. If the images have the same dimensions and
+    number of channels, use the ImageStack type.
   attributes:
   - name: description
     dtype: text
@@ -272,6 +275,16 @@ groups:
   - neurodata_type_inc: Image
     doc: Images stored in this collection.
     quantity: '+'
+  - neurodata_type_inc: VectorData
+    dims:
+    - num_images
+    shape:
+    - null
+    dtype:
+      target_type: Image
+      reftype: object
+    doc: Ordered dataset of references to Image objects stored in the parent group.
+    quantity: '?'
 
 - neurodata_type_def: ImageStacks
   neurodata_type_inc: NWBDataInterface
