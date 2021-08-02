@@ -39,8 +39,7 @@ datasets:
 groups:
 - neurodata_type_def: ImageSeries
   neurodata_type_inc: TimeSeries
-  doc: General image data. The image data may be stored in the file in a raw format or in a single external image file
-    or series of external image files in the host filesystem.
+  doc: Image data stored in a raw format.
   datasets:
   - name: data
     dtype: numeric
@@ -60,8 +59,7 @@ groups:
       - null
       - null
       - null
-    doc: Data representing images across frames. The dimensions are [frame][x][y] or [frame][x][y][z]. If data is
-      stored in an external_file, set this dataset to an empty 3-dimensional array.
+    doc: Data representing images across frames. The dimensions are [frame][x][y] or [frame][x][y][z].
   - name: dimension
     dtype: int32
     dims:
@@ -76,10 +74,12 @@ groups:
     - num_files
     shape:
     - null
-    doc: Paths to one or more external file(s). The field is only present if format='external'.
+    doc: Use of this dataset is discouraged and will be deprecated. Please use 
+      ExternalImageSeries instead. Paths to one or more external file(s). 
+      The field is only present if format='external'.
       This is only relevant if the image series is stored in the file system as one
       or more image file(s). This field should NOT be used if the image is stored
-      in another NWB file and that file is linked to this file.
+      in another NWB file and that file is linked to this file. 
     quantity: '?'
     attributes:
     - name: starting_frame
@@ -102,11 +102,96 @@ groups:
   - name: format
     dtype: text
     default_value: raw
-    doc: Format of image. If this is 'external', then the attribute 'external_file'
-      contains the path information to the image files. If this is 'raw', then the raw
-      (single-channel) binary data is stored in the 'data' dataset. If this attribute
+    doc: Format of image. If this is 'raw', then the raw (single-channel) binary data is 
+      stored in the 'data' dataset. If this is 'external', then the attribute 'external_file'
+      contains the path information to the image files. Use of external files is discouraged
+      and will be deprecated. Please use ExternalImageSeries instead. If this attribute
       is not present, then the default format='raw' case is assumed.
     quantity: '?'
+  links:
+  - name: device
+    target_type: Device
+    doc: Link to the Device object that was used to capture these images.
+    quantity: '?'
+    
+- neurodata_type_def: ExternalImageSeries
+  neurodata_type_inc: NWBDataInterface
+  doc: General image data stored in external files on the filesystem. Note that this type
+    does not extend TimeSeries because there is no 'data' dataset. However, there is still
+    a time dimension which can be stored as timestamps or a starting time and sampling rate. 
+  datasets:
+  - name: dimension
+    dtype: int32
+    dims:
+    - rank
+    shape:
+    - null
+    doc: Number of pixels on x, y, (and z) axes.
+    quantity: '?'
+  - name: external_file
+    dtype: text
+    dims:
+    - num_files
+    shape:
+    - null
+    doc: Paths to one or more external image file(s).
+    quantity: '?'
+    attributes:
+    - name: starting_frame
+      dtype: int32
+      dims:
+      - num_files
+      shape:
+      - null
+      doc: "Each external image may contain one or more consecutive frames of the full
+        ExternalImageSeries (e.g., if an external image is a tiff stack). This attribute 
+        serves as an index to indicate which frames each file
+        contains, to faciliate random access. The 'starting_frame' attribute, hence,
+        contains a list of numbers corresponding to the index of the image series at which
+        each external file begins. Zero-based indexing is used; hence, the first element will 
+        always be zero. For example, if the 'external_file' dataset has three paths to files 
+        and the first file has 5 frames, the second file has 10 frames, and the third file has 
+        20 frames, then this attribute will have values [0, 5, 15]. In other words, 
+        starting_frame[0] = 0; 
+        for i in range(1, length(external_file)), 
+          starting_frame[i] = starting_frame[i-1] + num_frames(external_file[i])
+        If there is a single external file that holds all of the frames of the 
+        ExternalImageSeries (and so there is a single element in the 'external_file' 
+        dataset), then this attribute should have value [0]. If there are N
+        external files with a single frame each, then this attribute should have values
+        [0, 1, ..., N-1]."
+  - name: starting_time
+    dtype: float64
+    doc: Timestamp of the first sample in seconds. When timestamps are uniformly
+      spaced, the timestamp of the first sample can be specified and all subsequent
+      ones calculated from the sampling rate attribute.
+    quantity: '?'
+    attributes:
+    - name: rate
+      dtype: float32
+      doc: Sampling rate, in Hz.
+    - name: unit
+      dtype: text
+      value: seconds
+      doc: Unit of measurement for time, which is fixed to 'seconds'.
+  - name: timestamps
+    dtype: float64
+    dims:
+    - num_times
+    shape:
+    - null
+    doc: Timestamps for samples stored in data, in seconds, relative to the
+      common experiment master-clock stored in NWBFile.timestamps_reference_time.
+    quantity: '?'
+    attributes:
+    - name: interval
+      dtype: int32
+      value: 1
+      doc: Value is '1'
+    - name: unit
+      dtype: text
+      value: seconds
+      doc: Unit of measurement for timestamps, which is fixed to 'seconds'.
   links:
   - name: device
     target_type: Device
