@@ -275,7 +275,8 @@ groups:
   - neurodata_type_inc: Image
     doc: Images stored in this collection.
     quantity: '+'
-  - neurodata_type_inc: VectorData
+  - name: order
+    neurodata_type_inc: VectorData
     dims:
     - num_images
     shape:
