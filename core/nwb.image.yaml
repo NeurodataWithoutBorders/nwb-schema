@@ -208,8 +208,8 @@ groups:
   links:
   - name: indexed_timeseries
     target_type: ImageSeries
-    doc: Link to ImageSeries object containing images that are indexed. Use of the ImageSeries link 
-      is discouraged. Use a link to the Images or ImageStack type instead.
+    doc: Link to ImageSeries object containing images that are indexed. Use of this link 
+      is discouraged and will be deprecated. Link to an Images or ImageStack type instead.
     quantity: '?'
   - name: indexed_images
     target_type: Images
