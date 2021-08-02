@@ -1,7 +1,7 @@
 Release Notes
 =============
 
-2.4.0 (Upcoming)
+2.4.0 (August 4, 2021)
 ----------------
 
 - Fixed incorrect dtype for electrodes table column "filtering" (float -> text).
@@ -9,14 +9,15 @@ Release Notes
   - ``ImageStack`` to represent an ordered collection of images of the same size.
   - ``ImageStacks`` to represent an unordered collection of image stacks, analogous to the ``Images`` type.
 - Allowed ``NWBFile/stimulus/templates`` to contain ``Images`` and ``ImageStacks`` objects.
-- Added new optional ``VectorData`` dataset to ``Images`` that contains an ordered list of references to
+- Added new optional "order" dataset to ``Images`` that contains an ordered list of references to
   ``Image`` objects stored in the ``Images`` object.
 - Overhauled ``IndexSeries`` type:
   - Fixed dtype of ``data`` dataset of ``IndexSeries`` (int32 -> uint32).
   - Updated ``unit`` attribute of ``data`` to have fixed value "N/A".
   - Updated docstrings for the ``conversion`` and ``resolution`` attributes of ``data`` to indicate that 
     these fields are not used.
-  - Added link to ``ImageStack`` or ``Images`` which contain an ordered collection of images.
+  - Added link to either an ``ImageStack`` or ``Images``, both of which contain an ordered collection of images. 
+    Discouraged use of the link to an ``ImageSeries``.
 
 2.3.0 (May 12, 2021)
 ---------------------
