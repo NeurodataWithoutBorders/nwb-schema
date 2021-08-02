@@ -207,10 +207,16 @@ groups:
   links:
   - name: indexed_timeseries
     target_type: ImageSeries
-    doc: Link to ImageSeries object containing images that are indexed. Use of the ImageSeries link is discouraged.
-      Use a link to the ImageStack type instead.
+    doc: Link to ImageSeries object containing images that are indexed. Use of the ImageSeries link 
+      is discouraged. Use a link to the Images or ImageStack type instead.
+    quantity: '?'
+  - name: indexed_images
+    target_type: Images
+    doc: Link to Images object containing an ordered set of images that are indexed. The Images object
+      must contain a 'order' dataset specifying the order of the images in the Images type. 
     quantity: '?'
   - name: indexed_imagestack
     target_type: ImageStack
-    doc: Link to ImageStack object containing images that are indexed.
+    doc: Link to ImageStack object containing images that are indexed. Either the indexed_images link 
+      or the indexed_imagestack link should be used, but not both.
     quantity: '?'
