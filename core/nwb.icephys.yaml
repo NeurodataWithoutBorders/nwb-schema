@@ -235,7 +235,10 @@ groups:
 
 - neurodata_type_def: SweepTable
   neurodata_type_inc: DynamicTable
-  doc: The table which groups different PatchClampSeries together.
+  doc: '[DEPRECATED] Table used to group different PatchClampSeries. SweepTable
+        is being replaced by IntracellularRecordingsTable and SimultaneousRecordingsTable
+        tables. Additional SequentialRecordingsTable, RepetitionsTable, and
+        ExperimentalConditions tables provide enhanced support for experiment metadata.'
   datasets:
   - name: sweep_number
     neurodata_type_inc: VectorData
@@ -250,3 +253,170 @@ groups:
   - name: series_index
     neurodata_type_inc: VectorIndex
     doc: Index for series.
+
+- neurodata_type_def: IntracellularElectrodesTable
+  neurodata_type_inc: DynamicTable
+  doc: Table for storing intracellular electrode related metadata.
+  attributes:
+  - name: description
+    dtype: text
+    value: Table for storing intracellular electrode related metadata.
+    doc: Description of what is in this dynamic table.
+  datasets:
+  - name: electrode
+    neurodata_type_inc: VectorData
+    dtype:
+      target_type: IntracellularElectrode
+      reftype: object
+    doc: Column for storing the reference to the intracellular electrode.
+
+- neurodata_type_def: IntracellularStimuliTable
+  neurodata_type_inc: DynamicTable
+  doc: Table for storing intracellular stimulus related metadata.
+  attributes:
+  - name: description
+    dtype: text
+    value: Table for storing intracellular stimulus related metadata.
+    doc: Description of what is in this dynamic table.
+  datasets:
+  - name: stimulus
+    neurodata_type_inc: TimeSeriesReferenceVectorData
+    doc: Column storing the reference to the recorded stimulus for the recording (rows).
+
+- neurodata_type_def: IntracellularResponsesTable
+  neurodata_type_inc: DynamicTable
+  doc: Table for storing intracellular response related metadata.
+  attributes:
+  - name: description
+    dtype: text
+    value: Table for storing intracellular response related metadata.
+    doc: Description of what is in this dynamic table.
+  datasets:
+  - name: response
+    neurodata_type_inc: TimeSeriesReferenceVectorData
+    doc: Column storing the reference to the recorded response for the recording (rows)
+
+- neurodata_type_def: IntracellularRecordingsTable
+  neurodata_type_inc: AlignedDynamicTable
+  name: intracellular_recordings
+  doc: A table to group together a stimulus and response from a single electrode and
+    a single simultaneous recording. Each row in the table represents a single recording
+    consisting typically of a stimulus and a corresponding response. In some cases,
+    however, only a stimulus or a response is recorded as part of an experiment.
+    In this case, both the stimulus and response will point to the same TimeSeries
+    while the idx_start and count of the invalid column will be set to -1, thus, indicating
+    that no values have been recorded for the stimulus or response, respectively.
+    Note, a recording MUST contain at least a stimulus or a response. Typically the
+    stimulus and response are PatchClampSeries. However, the use of AD/DA channels
+    that are not associated to an electrode is also common in intracellular electrophysiology,
+    in which case other TimeSeries may be used.
+  attributes:
+  - name: description
+    dtype: text
+    value: A table to group together a stimulus and response from a single electrode
+      and a single simultaneous recording and for storing metadata about the intracellular
+      recording.
+    doc: Description of the contents of this table. Inherited from AlignedDynamicTable
+      and overwritten here to fix the value of the attribute.
+  groups:
+  - name: electrodes
+    neurodata_type_inc: IntracellularElectrodesTable
+    doc: Table for storing intracellular electrode related metadata.
+  - name: stimuli
+    neurodata_type_inc: IntracellularStimuliTable
+    doc: Table for storing intracellular stimulus related metadata.
+  - name: responses
+    neurodata_type_inc: IntracellularResponsesTable
+    doc: Table for storing intracellular response related metadata.
+
+- neurodata_type_def: SimultaneousRecordingsTable
+  neurodata_type_inc: DynamicTable
+  name: simultaneous_recordings
+  doc: A table for grouping different intracellular recordings from the IntracellularRecordingsTable
+    table together that were recorded simultaneously from different electrodes.
+  datasets:
+  - name: recordings
+    neurodata_type_inc: DynamicTableRegion
+    doc: A reference to one or more rows in the IntracellularRecordingsTable table.
+    attributes:
+    - name: table
+      dtype:
+        target_type: IntracellularRecordingsTable
+        reftype: object
+      doc: Reference to the IntracellularRecordingsTable table that this table region
+        applies to. This specializes the attribute inherited from DynamicTableRegion
+        to fix the type of table that can be referenced here.
+  - name: recordings_index
+    neurodata_type_inc: VectorIndex
+    doc: Index dataset for the recordings column.
+
+- neurodata_type_def: SequentialRecordingsTable
+  neurodata_type_inc: DynamicTable
+  name: sequential_recordings
+  doc: A table for grouping different sequential recordings from the SimultaneousRecordingsTable
+    table together. This is typically used to group together sequential recordings
+    where a sequence of stimuli of the same type with varying parameters have
+    been presented in a sequence.
+  datasets:
+  - name: simultaneous_recordings
+    neurodata_type_inc: DynamicTableRegion
+    doc: A reference to one or more rows in the SimultaneousRecordingsTable table.
+    attributes:
+    - name: table
+      dtype:
+        target_type: SimultaneousRecordingsTable
+        reftype: object
+      doc: Reference to the SimultaneousRecordingsTable table that this table region
+        applies to. This specializes the attribute inherited from DynamicTableRegion
+        to fix the type of table that can be referenced here.
+  - name: simultaneous_recordings_index
+    neurodata_type_inc: VectorIndex
+    doc: Index dataset for the simultaneous_recordings column.
+  - name: stimulus_type
+    neurodata_type_inc: VectorData
+    dtype: text
+    doc: The type of stimulus used for the sequential recording.
+
+- neurodata_type_def: RepetitionsTable
+  neurodata_type_inc: DynamicTable
+  name: repetitions
+  doc: A table for grouping different sequential intracellular recordings together.
+    With each SequentialRecording typically representing a particular type of stimulus,
+    the RepetitionsTable table is typically used to group sets of stimuli applied
+    in sequence.
+  datasets:
+  - name: sequential_recordings
+    neurodata_type_inc: DynamicTableRegion
+    doc: A reference to one or more rows in the SequentialRecordingsTable table.
+    attributes:
+    - name: table
+      dtype:
+        target_type: SequentialRecordingsTable
+        reftype: object
+      doc: Reference to the SequentialRecordingsTable table that this table region
+        applies to. This specializes the attribute inherited from DynamicTableRegion
+        to fix the type of table that can be referenced here.
+  - name: sequential_recordings_index
+    neurodata_type_inc: VectorIndex
+    doc: Index dataset for the sequential_recordings column.
+
+- neurodata_type_def: ExperimentalConditionsTable
+  neurodata_type_inc: DynamicTable
+  name: experimental_conditions
+  doc: A table for grouping different intracellular recording repetitions together
+    that belong to the same experimental condition.
+  datasets:
+  - name: repetitions
+    neurodata_type_inc: DynamicTableRegion
+    doc: A reference to one or more rows in the RepetitionsTable table.
+    attributes:
+    - name: table
+      dtype:
+        target_type: RepetitionsTable
+        reftype: object
+      doc: Reference to the RepetitionsTable table that this table region applies
+        to. This specializes the attribute inherited from DynamicTableRegion to fix
+        the type of table that can be referenced here.
+  - name: repetitions_index
+    neurodata_type_inc: VectorIndex
+    doc: Index dataset for the repetitions column.
