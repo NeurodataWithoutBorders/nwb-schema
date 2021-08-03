@@ -58,8 +58,10 @@ groups:
     - - null
       - null
       - null
-      - 3
-    doc: Data representing images across frames. The dimensions are [frame][x][y] or [frame][x][y][rgb].
+      - null
+    doc: 'Data representing images across frames. The dimensions are [frame][x][y] or [frame][x][y][rgb].
+      Use of ImageSeries to store volumetric data (shape: (frame, x, y, z)) is discouraged and will be 
+      deprecated in a future major release. Please use VolumeSeries instead.'
   - name: dimension
     dtype: int32
     dims:
