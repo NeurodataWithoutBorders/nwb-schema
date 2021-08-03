@@ -50,7 +50,7 @@ groups:
     - - frame
       - x
       - y
-      - z
+      - r, g, b
     shape:
     - - null
       - null
@@ -58,15 +58,15 @@ groups:
     - - null
       - null
       - null
-      - null
-    doc: Data representing images across frames. The dimensions are [frame][x][y] or [frame][x][y][z].
+      - 3
+    doc: Data representing images across frames. The dimensions are [frame][x][y] or [frame][x][y][rgb].
   - name: dimension
     dtype: int32
     dims:
-    - rank
+    - x, y
     shape:
-    - null
-    doc: Number of pixels on x, y, (and z) axes.
+    - 2
+    doc: Number of pixels on x and y axes.
     quantity: '?'
   - name: external_file
     dtype: text
@@ -230,27 +230,8 @@ groups:
     shape:
     - - 2
     - - 3
-    doc: Width, height and depth of image, or imaged area, in meters.
+    doc: Width, height, and depth of image, or imaged area, in meters.
     quantity: '?'
-  - name: data
-    dtype: numeric
-    dims:
-    - - frame
-      - x
-      - y
-    - - frame
-      - x
-      - y
-      - r, g, b
-    shape:
-    - - null
-      - null
-      - null
-    - - null
-      - null
-      - null
-      - 3
-    doc: Images presented to subject, either grayscale or RGB
   - name: orientation
     dtype: text
     doc: Description of image relative to some reference frame (e.g., which way is
