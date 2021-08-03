@@ -114,6 +114,47 @@ groups:
     doc: Link to the Device object that was used to capture these images.
     quantity: '?'
     
+- neurodata_type_def: VolumeSeries
+  neurodata_type_inc: TimeSeries
+  doc: Volume data stored in a raw format.
+  datasets:
+  - name: data
+    dtype: numeric
+    dims:
+    - - frame
+      - x
+      - y
+      - z
+    - - frame
+      - x
+      - y
+      - z
+      - r, g, b
+    shape:
+    - - null
+      - null
+      - null
+      - null
+    - - null
+      - null
+      - null
+      - null
+      - 3
+    doc: Data representing images across frames. The dimensions are [frame][x][y][z] or [frame][x][y][z][rgb].
+  - name: dimension
+    dtype: int32
+    dims:
+    - x, y, z
+    shape:
+    - 3
+    doc: Number of pixels on x, y, and z axes.
+    quantity: '?'
+  links:
+  - name: device
+    target_type: Device
+    doc: Link to the Device object that was used to capture these images.
+    quantity: '?'
+    
 - neurodata_type_def: ExternalImageSeries
   neurodata_type_inc: NWBDataInterface
   doc: General image data stored in external files on the filesystem. Note that this type
