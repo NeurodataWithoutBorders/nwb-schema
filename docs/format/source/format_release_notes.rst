@@ -47,10 +47,10 @@ Deprecations
 
 Bug Fixes
 ^^^^^^^^^
-- Fix incorrect dtype for electrodes table column "filtering" (float -> text) (#478)
-- Remove ``quantity: *`` from the type definitions of ``OptogeneticStimulusSite`` and ``ImagingPlane``.
+- Fixed incorrect dtype for electrodes table column "filtering" (float -> text) (#478)
+- Removed ``quantity: *`` from the type definitions of ``OptogeneticStimulusSite`` and ``ImagingPlane``.
   This change improves clarity of the schema to follow best practices. It has no functional effect on the schema. (#472)
-- Require the ``data`` dataset in ``ImageSeries``. Since ``ImageSeries`` is a ``TimeSeries`` and ``TimeSeries.data``
+- Updated ``ImageSeries`` to have its ``data`` dataset be required. Since ``ImageSeries`` is a ``TimeSeries`` and ``TimeSeries.data``
   is required, ``ImageSeries.data`` should also be a required dataset. Otherwise this creates problems for
   inheritance and validation. If ``ImageSeries`` data are stored in an external file, then ``ImageSeries.data`` should
   be set to an empty 3D array. (#481)
