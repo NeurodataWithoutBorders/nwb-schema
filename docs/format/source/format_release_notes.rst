@@ -1,10 +1,12 @@
 Release Notes
 =============
 
-2.4.0 (Upcoming)
+2.4.0 (Aug. 7, 2021)
 ----------------
 
 - Fix incorrect dtype for electrodes table column "filtering" (float -> text)
+- Remove "quantity: *" from the type definitions of ``OptogeneticStimulusSite`` and ``ImagingPlane``.
+  This change improves clarity of the schema to follow best practices. It has no functional effect on the schema.
 
 2.3.0 (May 12, 2021)
 ---------------------

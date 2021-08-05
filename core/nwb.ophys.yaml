@@ -169,7 +169,6 @@ groups:
 - neurodata_type_def: ImagingPlane
   neurodata_type_inc: NWBContainer
   doc: An imaging plane and its metadata.
-  quantity: '*'
   datasets:
   - name: description
     dtype: text
