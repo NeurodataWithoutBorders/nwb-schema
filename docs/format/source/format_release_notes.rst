@@ -7,6 +7,10 @@ Release Notes
 - Fix incorrect dtype for electrodes table column "filtering" (float -> text)
 - Remove "quantity: *" from the type definitions of ``OptogeneticStimulusSite`` and ``ImagingPlane``.
   This change improves clarity of the schema to follow best practices. It has no functional effect on the schema.
+- Require the "data" dataset in ``ImageSeries``. Since ``ImageSeries`` is a ``TimeSeries`` and ``TimeSeries`` requires
+  the "data" dataset, ``ImageSeries`` should also require the "data" dataset. Otherwise this creates problems for
+  inheritance and validation. If ``ImageSeries`` data are stored in an external file, then "data" should be set to
+  an empty 3D array.
 
 2.3.0 (May 12, 2021)
 ---------------------
