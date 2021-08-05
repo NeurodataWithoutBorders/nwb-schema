@@ -7,7 +7,7 @@ groups:
   attributes:
   - name: nwb_version
     dtype: text
-    value: "2.3.0-alpha"
+    value: "2.4.0-alpha"
     doc: File version string. Use semantic versioning, e.g. 1.2.1. This will be the
       name of the format with trailing major, minor and patch numbers.
   datasets:
@@ -295,7 +295,7 @@ groups:
             standard atlas names for anatomical regions when possible.
         - name: filtering
           neurodata_type_inc: VectorData
-          dtype: float32
+          dtype: text
           doc: Description of hardware filtering, including the filter name and frequency cutoffs.
         - name: group
           neurodata_type_inc: VectorData
@@ -333,9 +333,10 @@ groups:
       datasets:
       - name: filtering
         dtype: text
-        doc: Description of filtering used. Includes filtering type and
-          parameters, frequency fall-off, etc. If this changes between TimeSeries,
-          filter description should be stored as a text attribute for each TimeSeries.
+        doc: '[DEPRECATED] Use IntracellularElectrode.filtering instead. Description
+          of filtering used. Includes filtering type and parameters, frequency fall-off,
+          etc. If this changes between TimeSeries, filter description should be stored
+          as a text attribute for each TimeSeries.'
         quantity: '?'
       groups:
       - neurodata_type_inc: IntracellularElectrode
@@ -343,7 +344,49 @@ groups:
         quantity: '*'
       - name: sweep_table
         neurodata_type_inc: SweepTable
-        doc: The table which groups different PatchClampSeries together.
+        doc: '[DEPRECATED] Table used to group different PatchClampSeries. SweepTable
+              is being replaced by IntracellularRecordingsTable and SimultaneousRecordingsTable
+              tabels. Additional SequentialRecordingsTable, RepetitionsTable and
+              ExperimentalConditions tables provide enhanced support for experiment metadata.'
+        quantity: '?'
+      - name: intracellular_recordings
+        neurodata_type_inc: IntracellularRecordingsTable
+        doc: A table to group together a stimulus and response from a single electrode
+          and a single simultaneous recording. Each row in the table represents a
+          single recording consisting typically of a stimulus and a corresponding
+          response. In some cases, however, only a stimulus or a response are recorded
+          as as part of an experiment. In this case both, the stimulus and response
+          will point to the same TimeSeries while the idx_start and count of the invalid
+          column will be set to -1, thus, indicating that no values have been recorded
+          for the stimulus or response, respectively. Note, a recording MUST contain
+          at least a stimulus or a response. Typically the stimulus and response are
+          PatchClampSeries. However, the use of AD/DA channels that are not associated
+          to an electrode is also common in intracellular electrophysiology, in which
+          case other TimeSeries may be used.
+        quantity: '?'
+      - name: simultaneous_recordings
+        neurodata_type_inc: SimultaneousRecordingsTable
+        doc: A table for grouping different intracellular recordings from the IntracellularRecordingsTable
+          table together that were recorded simultaneously from different electrodes
+        quantity: '?'
+      - name: sequential_recordings
+        neurodata_type_inc: SequentialRecordingsTable
+        doc: A table for grouping different sequential recordings from the SimultaneousRecordingsTable
+          table together. This is typically used to group together sequential recordings
+          where the a sequence of stimuli of the same type with varying parameters
+          have been presented in a sequence.
+        quantity: '?'
+      - name: repetitions
+        neurodata_type_inc: RepetitionsTable
+        doc: A table for grouping different sequential intracellular recordings together.
+          With each SequentialRecording typically representing a particular type of
+          stimulus, the RepetitionsTable table is typically used to group sets of
+          stimuli applied in sequence.
+        quantity: '?'
+      - name: experimental_conditions
+        neurodata_type_inc: ExperimentalConditionsTable
+        doc: A table for grouping different intracellular recording repetitions together
+          that belong to the same experimental experimental_conditions.
         quantity: '?'
     - name: optogenetics
       doc: Metadata describing optogenetic stimuluation.
