@@ -97,6 +97,11 @@ groups:
       - num_DIM2
       - num_DIM3
       - num_DIM4
+    - - num_times
+      - num_DIM2
+      - num_DIM3
+      - num_DIM4
+      - num_DIM5
     shape:
     - - null
     - - null
@@ -108,7 +113,12 @@ groups:
       - null
       - null
       - null
-    doc: Data values. Data can be in 1-D, 2-D, 3-D, or 4-D. The first dimension
+    - - null
+      - null
+      - null
+      - null
+      - null
+    doc: Data values. Data can be in 1-D, 2-D, 3-D, 4-D, or 5-D. The first dimension
       should always represent time. This can also be used to store binary data
       (e.g., image frames). This can also be a link to data stored in an external file.
     attributes:
