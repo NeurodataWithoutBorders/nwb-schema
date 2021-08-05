@@ -43,7 +43,7 @@ Deprecations
 ^^^^^^^^^^^^
 - ``SweepTable`` has been deprecated in favor of the new intracellular electrophysiology  metadata tables. Use of ``SweepTable``
   is still possible but no longer recommended. (#470)
-- ``/general/intracellular_ephys/filtering`` has been deprated in favor of ``IntracellularElectrode.filtering`` (#470)
+- ``/general/intracellular_ephys/filtering`` has been deprecated in favor of ``IntracellularElectrode.filtering`` (#470)
 
 Bug Fixes
 ^^^^^^^^^
