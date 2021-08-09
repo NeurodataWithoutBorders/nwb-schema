@@ -1,19 +1,12 @@
 Release Notes
 =============
 
-2.4.0 (Aug. 7, 2021)
+2.4.0 (Aug. 11, 2021)
 --------------------
-
 
 Major changes
 ^^^^^^^^^^^^^
 - Added new ``TimeSeriesReferenceVectorData`` type for referencing ranges of ``TimeSeries`` from a ``VectorData`` column (#470)
-- Updated ``TimeIntervals`` to use the new  ``TimeSeriesReferenceVectorData`` type. This does not alter the overall structure
-  of ``TimeIntervals`` in a major way aside from changing the value of the ``neurodata_type`` attribute in the file
-  from ``VectorData`` to ```TimeSeriesReferenceVectorData``. This change replaces the existing ``TimeIntervals.timeseries``
-  column with a ``TimeSeriesReferenceVectorData`` type column of the same name and overall schema. This change facilitate creating
-  common functionality around ``TimeSeriesReferenceVectorData``. This change affects all existing ``TimeIntervals`` tables
-  as part of the ``intervals/`` group, i.e., ``intervals/epochs``, ``intervals/trials``, and ``intervals/invalid_times`` (#482)
 - Integrated the intracellular electrophysiology experiment metadata table structure developed as part of the
   `ndx-icephys-meta <https://github.com/oruebel/ndx-icephys-meta>`_ extension project with NWB (#470). This includes the
   following new types:
