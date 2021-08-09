@@ -5,7 +5,7 @@ Prepare for release of nwb-schema [version]
 - [ ] Update legal file dates and information in `Legal.txt`, `license.txt`, `README.md`, `docs/format/source/conf.py`,
   and any other locations as needed
 - [ ] Update `README.rst` as needed
-- [ ] Update the version string in `docs/format/source/conf.py`, `common/namespace.yaml`, and `/core/nwb.file.yaml`
+- [ ] Update the version string in `docs/format/source/conf.py`, `core/nwb.namespace.yaml`, and `core/nwb.file.yaml`
   (remove "-alpha" suffix)
 - [ ] Update `docs/format/source/conf.py` as needed
 - [ ] Update release notes (set release date) in `docs/format/source/format_release_notes.rst` and any other docs as
