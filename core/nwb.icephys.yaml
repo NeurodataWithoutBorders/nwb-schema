@@ -100,7 +100,7 @@ groups:
       value: amperes
       doc: Base unit of measurement for working with the data. which is fixed to 'amperes'.
         Actual stored values are not necessarily stored in these units. To access the data in these units,
-        multiply 'data' by 'conversion' and add 'offset'..
+        multiply 'data' by 'conversion' and add 'offset'.
 
 - neurodata_type_def: VoltageClampSeries
   neurodata_type_inc: PatchClampSeries
