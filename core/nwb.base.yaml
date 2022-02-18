@@ -144,7 +144,7 @@ groups:
       dtype: text
       doc: Base unit of measurement for working with the data. Actual stored values are
         not necessarily stored in these units. To access the data in these units,
-        multiply 'data' by 'conversion'.
+        multiply 'data' by 'conversion' and add `offset`.
     - name: continuity
       dtype: text
       doc: Optionally describe the continuity of the data. Can be "continuous", "instantaneous", or
