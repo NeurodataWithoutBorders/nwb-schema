@@ -38,8 +38,8 @@ groups:
       value: volts
       doc: Base unit of measurement for working with the data. This value is fixed to
         'volts'. Actual stored values are not necessarily stored in these units. To
-        access the data in these units, multiply 'data' by 'conversion' and
-        'channel_conversion' (if present).
+        access the data in these units, multiply 'data' by 'conversion', followed by
+        'channel_conversion' (if present), and then add 'offset'.
   - name: electrodes
     neurodata_type_inc: DynamicTableRegion
     doc: DynamicTableRegion pointer to the electrodes that this time series was generated from.
