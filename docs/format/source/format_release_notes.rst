@@ -1,6 +1,14 @@
 Release Notes
 =============
 
+2.5.0 (Upcoming)
+---------------------
+
+Minor changes
+^^^^^^^^^^^^^
+- Added an ``offset`` attribute to all ``TimeSeries`` objects to allow enhanced translation to scientific units.
+
+
 2.4.0 (Aug. 11, 2021)
 ---------------------
 
