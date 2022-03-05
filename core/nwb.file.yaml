@@ -325,7 +325,7 @@ groups:
         - name: reference
           neurodata_type_inc: VectorData
           dtype: text
-          doc: Description of the reference and/or reference scheme used for this electrode, e.g.,
+          doc: Description of the reference electrode and/or reference scheme used for this electrode, e.g.,
             "stainless steel skull screw" or "online common average referencing".
           quantity: '?'
     - name: intracellular_ephys
