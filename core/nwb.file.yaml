@@ -310,22 +310,23 @@ groups:
         - name: rel_x
           neurodata_type_inc: VectorData
           dtype: float32
-          doc: x coordinate in electrode group
+          doc: x coordinate relative to the x coordinate of the electrode group (+x is posterior).
           quantity: '?'
         - name: rel_y
           neurodata_type_inc: VectorData
           dtype: float32
-          doc: y coordinate in electrode group
+          doc: y coordinate relative to the y coordinate of the electrode group (+y is inferior).
           quantity: '?'
         - name: rel_z
           neurodata_type_inc: VectorData
           dtype: float32
-          doc: z coordinate in electrode group
+          doc: z coordinate relative to the z coordinate of the electrode group (+z is right).
           quantity: '?'
         - name: reference
           neurodata_type_inc: VectorData
           dtype: text
-          doc: Description of the reference used for this electrode.
+          doc: Description of the reference and/or reference scheme used for this electrode, e.g.,
+            "stainless steel skull screw" or "online common average referencing".
           quantity: '?'
     - name: intracellular_ephys
       doc: Metadata related to intracellular electrophysiology.
