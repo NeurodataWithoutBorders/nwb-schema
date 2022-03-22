@@ -8,7 +8,7 @@ Release Notes
 
 Minor changes
 ^^^^^^^^^^^^^
-- The elements `x`, `y`, `z`, `imp` and `filtering` are no longer required. 
+- The elements `x`, `y`, `z`, `imp` and `filtering` are now optional instead of required.
 - Added an ``offset`` attribute to all ``TimeSeries`` objects to allow enhanced translation to scientific units.
 
 
