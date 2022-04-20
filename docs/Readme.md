@@ -1,11 +1,15 @@
 **Overview**
 
-The documentation for NWB:N consists of a series of documents describing the various components of NWB:N:
+The documentation for NWB consists of a series of documents describing the various components of NWB:
 
 * ``docs/language`` with the documentation for the NWB:N specification language
 * ``docs/format`` with the documentation of the NWB:N data format
 * ``docs/storage`` with the documentation of the NWB:N storage component
 * The documentation of the PyNWB API is managed in the PyNWB git repo
+
+See also:
+* [Documentation](https://github.com/NeurodataWithoutBorders/nwb-schema-language) for the
+  [NWB Schema Language](https://schema-language.readthedocs.io/en/latest/)
 
 **Building Documentation**
 

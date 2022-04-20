@@ -1,3 +1,5 @@
+.. _nwb-schema-release-notes:
+
 Release Notes
 =============
 
