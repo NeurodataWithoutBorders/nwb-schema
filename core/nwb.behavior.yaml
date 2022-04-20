@@ -28,7 +28,7 @@ groups:
       default_value: meters
       doc: Base unit of measurement for working with the data. The default value
         is 'meters'. Actual stored values are not necessarily stored in these units.
-        To access the data in these units, multiply 'data' by 'conversion'.
+        To access the data in these units, multiply 'data' by 'conversion' and add 'offset'.
       required: false
   - name: reference_frame
     dtype: text

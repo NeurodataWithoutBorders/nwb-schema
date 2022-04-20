@@ -1,14 +1,21 @@
+.. _nwb-schema-release-notes:
+
 Release Notes
 =============
 
-2.5.0 (???)
------------
-- Updated ``TimeIntervals`` to use the new  ``TimeSeriesReferenceVectorData`` type. This does not alter the overall structure
+2.5.0 (Upcoming)
+---------------------
+
+Minor changes
+^^^^^^^^^^^^^
+- Added an ``offset`` attribute to all ``TimeSeries`` objects to allow enhanced translation to scientific units.
+- Updated ``TimeIntervals`` to use the new ``TimeSeriesReferenceVectorData`` type. This does not alter the overall structure
   of ``TimeIntervals`` in a major way aside from changing the value of the ``neurodata_type`` attribute in the file
   from ``VectorData`` to ```TimeSeriesReferenceVectorData``. This change replaces the existing ``TimeIntervals.timeseries``
   column with a ``TimeSeriesReferenceVectorData`` type column of the same name and overall schema. This change facilitates creating
   common functionality around ``TimeSeriesReferenceVectorData``. This change affects all existing ``TimeIntervals`` tables
   as part of the ``intervals/`` group, i.e., ``intervals/epochs``, ``intervals/trials``, and ``intervals/invalid_times`` (#486)
+
 
 2.4.0 (Aug. 11, 2021)
 ---------------------

@@ -1,3 +1,5 @@
+.. _nwb-schema:
+
 Welcome to the NWB Format Specification
 =======================================
 
