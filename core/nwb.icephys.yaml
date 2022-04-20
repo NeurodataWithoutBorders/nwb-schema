@@ -199,6 +199,10 @@ groups:
   neurodata_type_inc: NWBContainer
   doc: An intracellular electrode and its metadata.
   datasets:
+  - name: cell_id
+    dtype: text
+    doc: unique ID of cell
+    quantity: '?'
   - name: description
     dtype: text
     doc: Description of electrode (e.g.,  whole-cell, sharp, etc.).
