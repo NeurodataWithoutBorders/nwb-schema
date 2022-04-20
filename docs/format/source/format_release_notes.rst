@@ -3,7 +3,7 @@
 Release Notes
 =============
 
-2.5.0 (Upcoming)
+2.5.0 (April 20, 2022)
 ---------------------
 
 Minor changes
