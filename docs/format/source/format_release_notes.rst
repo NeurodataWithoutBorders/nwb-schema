@@ -9,6 +9,7 @@ Release Notes
 Minor changes
 ^^^^^^^^^^^^^
 - Added an ``offset`` attribute to all ``TimeSeries`` objects to allow enhanced translation to scientific units.
+- Added ``cell_id`` field to ``IntracellularElectrode``. (#512)
 
 Major changes
 ^^^^^^^^^^^^^
