@@ -201,7 +201,7 @@ groups:
   datasets:
   - name: cell_id
     dtype: text
-    doc: unique ID of cell
+    doc: unique ID of the cell
     quantity: '?'
   - name: description
     dtype: text
