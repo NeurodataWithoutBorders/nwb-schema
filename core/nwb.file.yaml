@@ -310,17 +310,17 @@ groups:
         - name: rel_x
           neurodata_type_inc: VectorData
           dtype: float32
-          doc: x coordinate relative to the x coordinate of the electrode group (+x is posterior).
+          doc: x coordinate in electrode group
           quantity: '?'
         - name: rel_y
           neurodata_type_inc: VectorData
           dtype: float32
-          doc: y coordinate relative to the y coordinate of the electrode group (+y is inferior).
+          doc: y coordinate in electrode group
           quantity: '?'
         - name: rel_z
           neurodata_type_inc: VectorData
           dtype: float32
-          doc: z coordinate relative to the z coordinate of the electrode group (+z is right).
+          doc: z coordinate in electrode group
           quantity: '?'
         - name: reference
           neurodata_type_inc: VectorData
