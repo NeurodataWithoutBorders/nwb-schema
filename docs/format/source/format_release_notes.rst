@@ -13,7 +13,7 @@ Minor changes
 
 Major changes
 ^^^^^^^^^^^^^
-- Shape of SpatialSeries.data is more restrictive to prevent > 3 columns.
+- Shape of SpatialSeries.data is more restrictive to prevent > 3 columns. (#510)
 
 
 2.4.0 (Aug. 11, 2021)
