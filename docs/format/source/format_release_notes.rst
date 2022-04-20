@@ -9,7 +9,7 @@ Release Notes
 Minor changes
 ^^^^^^^^^^^^^
 - Added an ``offset`` attribute to all ``TimeSeries`` objects to allow enhanced translation to scientific units.
-- Clarified the doc string for the `rel_x`, `rel_y`, `rel_z`, and `reference` columns of the electrodes table.
+- Clarified the doc string for the `reference` column of the electrodes table.
 
 
 2.4.0 (Aug. 11, 2021)
