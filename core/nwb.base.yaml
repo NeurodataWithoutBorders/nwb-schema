@@ -3,6 +3,26 @@ datasets:
   neurodata_type_inc: Data
   doc: An abstract data type for a dataset.
 
+- neurodata_type_def: TimeSeriesReferenceVectorData
+  neurodata_type_inc: VectorData
+  default_name: timeseries
+  dtype:
+  - name: idx_start
+    dtype: int32
+    doc: Start index into the TimeSeries 'data' and 'timestamp' datasets of the referenced
+      TimeSeries. The first dimension of those arrays is always time.
+  - name: count
+    dtype: int32
+    doc: Number of data samples available in this time series, during this epoch
+  - name: timeseries
+    dtype:
+      target_type: TimeSeries
+      reftype: object
+    doc: The TimeSeries that this index applies to
+  doc: Column storing references to a TimeSeries (rows). For each TimeSeries this
+    VectorData column stores the start_index and count to indicate the range in time
+    to be selected as well as an object reference to the TimeSeries.
+
 - neurodata_type_def: Image
   neurodata_type_inc: NWBData
   dtype: numeric
@@ -104,6 +124,15 @@ groups:
         acquisition system gain is 8000X, then the 'conversion' multiplier to get from
         raw data acquisition values to recorded volts is 2.5/32768/8000 = 9.5367e-9.
       required: false
+    - name: offset
+      dtype: float32
+      default_value: 0.0
+      doc: Scalar to add to the data after scaling by 'conversion' to finalize its coercion
+        to the specified 'unit'. Two common examples of this include (a) data stored in an
+        unsigned type that requires a shift after scaling to re-center the data,
+        and (b) specialized recording devices that naturally cause a scalar offset with
+        respect to the true units.
+      required: false
     - name: resolution
       dtype: float32
       default_value: -1.0
@@ -115,7 +144,17 @@ groups:
       dtype: text
       doc: Base unit of measurement for working with the data. Actual stored values are
         not necessarily stored in these units. To access the data in these units,
-        multiply 'data' by 'conversion'.
+        multiply 'data' by 'conversion' and add 'offset'.
+    - name: continuity
+      dtype: text
+      doc: Optionally describe the continuity of the data. Can be "continuous", "instantaneous", or
+        "step". For example, a voltage trace would be "continuous", because samples 
+        are recorded from a continuous process. An array of lick times would be "instantaneous", 
+        because the data represents distinct moments in time. Times of image presentations would be  
+        "step" because the picture remains the same until the next timepoint. This field is optional, 
+        but is useful in providing information about the underlying data. It may inform the way this 
+        data is interpreted, the way it is visualized, and what analysis methods are applicable.
+      required: false
   - name: starting_time
     dtype: float64
     doc: Timestamp of the first sample in seconds. When timestamps are uniformly

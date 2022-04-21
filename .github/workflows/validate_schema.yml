@@ -1,0 +1,21 @@
+name: Validate schema
+
+on: [push, pull_request]
+
+jobs:
+  validate:
+    # run pipeline on either a push event or a PR event on a fork
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.9"
+    - name: Install hdmf
+      run: |
+        pip install git+https://github.com/hdmf-dev/hdmf.git
+    - name: Validate schema specification
+      run: |
+        validate_hdmf_spec core -m nwb.schema.json

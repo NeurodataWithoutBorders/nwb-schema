@@ -125,6 +125,10 @@ groups:
   - name: metric
     dtype: text
     doc: The metric used, e.g. phase, amplitude, power.
+  - name: source_channels
+    neurodata_type_inc: DynamicTableRegion
+    doc: DynamicTableRegion pointer to the channels that this decomposition series was generated from.
+    quantity: '?'
   groups:
   - name: bands
     neurodata_type_inc: DynamicTable
@@ -277,3 +281,49 @@ groups:
       value: volts
       doc: Unit of measurement. This value is fixed to 'volts'.
       required: false
+  - name: waveforms
+    neurodata_type_inc: VectorData
+    dtype: numeric
+    dims:
+      - num_waveforms
+      - num_samples
+    shape:
+      - null
+      - null
+    doc: "Individual waveforms for each spike on each electrode. This is a doubly indexed column. The 'waveforms_index'
+      column indexes which waveforms in this column belong to the same spike event for a given unit, where each waveform
+      was recorded from a different electrode. The 'waveforms_index_index' column indexes the 'waveforms_index' column
+      to indicate which spike events belong to a given unit. For example, if the
+      'waveforms_index_index' column has values [2, 5, 6], then the first 2 elements of the 'waveforms_index' column
+      correspond to the 2 spike events of the first unit, the next 3 elements of the 'waveforms_index' column correspond
+      to the 3 spike events of the second unit, and the next 1 element of the 'waveforms_index' column corresponds to
+      the 1 spike event of the third unit. If the 'waveforms_index' column has values [3, 6, 8, 10, 12, 13], then
+      the first 3 elements of the 'waveforms' column contain the 3 spike waveforms that were recorded from 3 different
+      electrodes for the first spike time of the first unit. See
+      https://nwb-schema.readthedocs.io/en/stable/format_description.html#doubly-ragged-arrays for a graphical
+      representation of this example. When there is only one electrode for each unit (i.e., each spike time is
+      associated with a single waveform), then the 'waveforms_index' column will have values 1, 2, ..., N, where N is
+      the number of spike events. The number of electrodes for each spike event should be the same within a given unit.
+      The 'electrodes' column should be used to indicate which electrodes are associated with each unit, and the order
+      of the waveforms within a given unit x spike event should be in the same order as the electrodes referenced in
+      the 'electrodes' column of this table. The number of samples for each waveform must be the same."
+    quantity: '?'
+    attributes:
+      - name: sampling_rate
+        dtype: float32
+        doc: Sampling rate, in hertz.
+        required: false
+      - name: unit
+        dtype: text
+        value: volts
+        doc: Unit of measurement. This value is fixed to 'volts'.
+        required: false
+  - name: waveforms_index
+    neurodata_type_inc: VectorIndex
+    doc: Index into the waveforms dataset. One value for every spike event. See 'waveforms' for more detail.
+    quantity: '?'
+  - name: waveforms_index_index
+    neurodata_type_inc: VectorIndex
+    doc: Index into the waveforms_index dataset. One value for every unit (row in the table). See 'waveforms' for more
+      detail.
+    quantity: '?'

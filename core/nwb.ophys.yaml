@@ -169,7 +169,6 @@ groups:
 - neurodata_type_def: ImagingPlane
   neurodata_type_inc: NWBContainer
   doc: An imaging plane and its metadata.
-  quantity: '*'
   datasets:
   - name: description
     dtype: text
@@ -218,7 +217,7 @@ groups:
       default_value: 1.0
       doc: Scalar to multiply each element in data to convert it to the specified 'unit'.
         If the data are stored in acquisition system units or other units
-        that require a conversion to be interpretable, multiply the data by 'conversion'
+        that require a conversion to be interpretable, multiply the data by 'conversion' and add 'offset'
         to convert the data to the specified 'unit'. e.g. if the data acquisition system
         stores values in this object as pixels from x = -500 to 499, y = -500 to 499
         that correspond to a 2 m x 2 m range, then the 'conversion' multiplier to get

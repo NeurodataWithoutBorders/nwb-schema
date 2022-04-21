@@ -2,7 +2,7 @@ Overview
 ========
 
 The `NWB Format <https://www.nwb.org/nwb-neurophysiology/>`_ is a core component of the
-`Neurodata Without Borders: Neurophysiology (NWB:N) <https://www.nwb.org/nwb-software/>`_  project.
+`Neurodata Without Borders (NWB) <https://www.nwb.org/nwb-software/>`_  project.
 The NWB format is designed to store general optical and electrical physiology data in a way that
 is both understandable to humans as well as accessible to programmatic interpretation. The format is
 designed to be friendly to and usable by software tools and analysis
@@ -31,7 +31,7 @@ generic container for storing collection of data and is used to define common fe
 across data containers (see :numref:`sec_nwbcontainer_intro`). *TimeSeries* is a central component in
 the NWB format for storing complex temporal series (see :numref:`sec_timeseries_intro`). In the format,
 these types are then extended to define more specialized types. To organize and define collections of processed data
-from common data processing steps, the NWB:N format then defines the concept of *ProcessingModule* where each processing
+from common data processing steps, the NWB format then defines the concept of *ProcessingModule* where each processing
 step is represented by a corresponding *NWBDataInterface* (an extension of *NWBContainer*)
 (see :numref:`sec-data-processing-modules` for details).
 
@@ -67,7 +67,7 @@ inherits from *TimeSeries*.
 
 :ref:`NWBContainer <sec-NWBContainer>` is a specification of a group that defines a generic container for
 storing collections of data. :ref:`NWBContainer <sec-NWBContainer>` serves as the base type for all main data containers
-(including :ref:`TimeSeries <sec-TimeSeries>`) of the core NWB:N data
+(including :ref:`TimeSeries <sec-TimeSeries>`) of the core NWB data
 format and allows us to define and integrate new common functionality in a central place and via common mechanisms
 (see :numref:`sec-NWBContainer`).
 
@@ -83,10 +83,10 @@ datasets with an assigned *neurodata_type* (see :numref:`sec-NWBData`).
 .. note::
 
     The concept of :ref:`NWBContainer <sec-NWBContainer>` and :ref:`NWBData <sec-NWBData>` have been introduced in
-    NWB:N 2. :ref:`NWBDataInterface <sec-NWBDataInterface>` (also introduced in NWB:N 2) replaces ``Interface``
-    from NWB:N 1.x. ``Interface``  was renamed to *NWBDataInterface* to ease intuition and
+    NWB 2. :ref:`NWBDataInterface <sec-NWBDataInterface>` (also introduced in NWB 2) replaces ``Interface``
+    from NWB 1.x. ``Interface``  was renamed to *NWBDataInterface* to ease intuition and
     the concept was generalized via :ref:`NWBContainer <sec-NWBContainer>` to provide a common base for
-    data containers (rather than being specific to *ProcessingModules* as in NWB:N 1.x).
+    data containers (rather than being specific to *ProcessingModules* as in NWB 1.x).
 
 .. _sec_timeseries_intro:
 
@@ -137,7 +137,7 @@ existing outside the lab. Extensions are described in section (see :numref:`sec-
 Data Processing Modules: Organizing processed data
 --------------------------------------------------
 
-NWB:N uses :ref:`ProcessingModule <sec-ProcessingModule>` to store
+NWB uses :ref:`ProcessingModule <sec-ProcessingModule>` to store
 data for—and represent the results of—common
 data processing steps, such as spike sorting and image segmentation,
 that occur before scientific analysis of the data. Processing modules store the
@@ -153,7 +153,7 @@ contained in the NWBDataInterface. For NWBDataInterfaces designed for use with
 processing modules, a default name (usually the same as the neurodata_type) is
 commonly specified to further ease identification of the data in a file. However, to
 support storage of multiple instances of the same subtype in the
-same processing module, NWB:N allows users to optionally define custom names as well.
+same processing module, NWB allows users to optionally define custom names as well.
 
 
 .. _sec-extending-the-format:
@@ -206,10 +206,10 @@ data processing.
 Common attributes
 -----------------
 
-All NWB:N Groups and Datasets with an assigned neurodata_type have three required attributes: `neurodata_type`,
+All NWB Groups and Datasets with an assigned neurodata_type have three required attributes: `neurodata_type`,
 `namespace`, and `object_id`.
 
-- ``neurodata_type`` (variable-length string) is the name of the NWB:N primitive that this group or dataset maps onto
+- ``neurodata_type`` (variable-length string) is the name of the NWB primitive that this group or dataset maps onto
 - ``namespace`` (variable-length string) is the namespace where ``neurodata_type`` is defined, e.g. "core" or the
   namespace of an extension
 - ``object_id`` (variable-length string) is a universally unique identifier for this object within its hierarchy.
@@ -312,6 +312,24 @@ required data, and preferably not larger. 64-bit floating point (double)
 is required for timestamps, while 32-bit floating point is largely
 sufficient for other uses.
 
+**Extra fields**
+
+All parts of an NWB file should be governed by either the core schema or 
+defined in a neurodata extension (NDX). *Extra fields* are any datasets, 
+attributes, groups, links etc. that are included in a file but which are 
+not described by the NWB schema or a neurodata extension (NDX). Extra fields 
+are not considered  part of the NWB file and as such, any NWB API may ignore
+extra fields. For API's this specifically means: 
+
+* an NWB file that includes extra fields should be readable by the API
+  as long as the file is otherwise valid,
+* an API is permitted to ignore extra fields on read,
+* an API is permitted to ignore (including remove) extra fields on write.
+
+In practice, the use of extra fields is highly discouraged and instead neurodata 
+extensions (NDX) should be used to extend NWB to include additional fields 
+if necessary. 
+
 **Why do timestamps\_link and data\_link record linking between
 datasets, but links between epochs and timeseries are not recorded?**
 
@@ -327,3 +345,56 @@ The timestamps\_link and data\_link fields refer to links made between
 time series, such as if timeseries A and timeseries B, each having
 different data (or time) share time (or data). This is much more
 important information as it shows structural associations in the data.
+
+
+Tables and ragged arrays
+------------------------
+
+The NWB schema includes several tables, such as for storing data/metadata
+about trials, epochs, single units and multi-units, electrodes, and ROIs.
+All of the tables in NWB derive from the base data type, DynamicTable.
+DynamicTable is a column-based representation of a table that allows
+users to add custom columns (of type VectorData) that are not
+pre-defined in the specification. This is useful for handling types of
+data where every experiment or lab may want to store information
+unique to that experiment or lab, e.g., metadata
+related to the trials in a session or spike sorting metrics.
+
+DynamicTable objects typically contain columns that are of equal length,
+where the i-th element of a column corresponds to the i-th element of
+all of the other columns. In other words, each row has a single item
+in each column. However, in some situations, users may wish to store and
+associate multiple items in a single column for each row. For example,
+in the Units table, each row represents a single sorted unit and each
+unit has multiple spike times associated with it, where the number of
+spike times differs between units (rows). This is sometimes called a
+ragged array or jagged array.
+
+Ragged array columns can be created by creating a primary VectorData
+column that contains all of the data values (e.g., spike times) and
+creating a secondary VectorIndex column that contains a mapping from rows
+to elements of its target VectorData column. The VectorIndex column has the same
+number of elements (rows) as the rest of the table.
+
+The values of the VectorIndex column follow the mapping such that the data
+associated with the first row is at VectorData[0:VectorIndex[0]], and the data
+associated with the second row is at VectorData[VectorIndex[0]:VectorIndex[1]],
+and so on.
+
+.. image:: figures/units_spike_times.png
+  :width: 800
+  :alt: Demonstration of how spike times are stored in a ragged array column in the Units table.
+
+Doubly ragged arrays
+---------------------
+
+.. image:: figures/units_waveforms.png
+  :width: 800
+  :alt: Demonstration of how waveforms are stored in a double ragged array column in the Units table.
+
+References to rows of a table
+------------------------------
+
+.. image:: figures/units_electrodes.png
+  :width: 800
+  :alt: Demonstration of how references to rows of the electrodes table are stored in the electrodes column of the Units table.

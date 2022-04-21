@@ -5,6 +5,15 @@ groups:
     The data field is an int or float array storing data in volts. The first
     dimension should always represent time. The second dimension, if present,
     should represent channels.
+  attributes:
+  - name: filtering
+    dtype: text
+    doc: Filtering applied to all channels of the data. For example, if this ElectricalSeries represents
+      high-pass-filtered data (also known as AP Band), then this value could be "High-pass 4-pole Bessel filter
+      at 500 Hz". If this ElectricalSeries represents low-pass-filtered LFP data and the type of filter is unknown,
+      then this value could be "Low-pass filter at 300 Hz". If a non-standard filter type is used, provide as much
+      detail about the filter properties as possible.
+    required: false
   datasets:
   - name: data
     dtype: numeric
@@ -29,8 +38,8 @@ groups:
       value: volts
       doc: Base unit of measurement for working with the data. This value is fixed to
         'volts'. Actual stored values are not necessarily stored in these units. To
-        access the data in these units, multiply 'data' by 'conversion' and
-        'channel_conversion' (if present).
+        access the data in these units, multiply 'data' by 'conversion', followed by
+        'channel_conversion' (if present), and then add 'offset'.
   - name: electrodes
     neurodata_type_inc: DynamicTableRegion
     doc: DynamicTableRegion pointer to the electrodes that this time series was generated from.
@@ -202,7 +211,7 @@ groups:
     field. There is no assumed 1::1 correspondence between filtered ephys signals
     and electrodes, as a single signal can apply to many nearby electrodes, and one
     electrode may have different filtered (e.g., theta and/or gamma) signals represented.
-    Filter properties should be noted in the ElectricalSeries.
+    Filter properties should be noted in the ElectricalSeries 'filtering' attribute.
   groups:
   - neurodata_type_inc: ElectricalSeries
     doc: ElectricalSeries object(s) containing filtered electrophysiology data.
@@ -213,7 +222,7 @@ groups:
   default_name: LFP
   doc: LFP data from one or more channels. The electrode map in each published ElectricalSeries
     will identify which channels are providing LFP data. Filter properties should
-    be noted in the ElectricalSeries description or comments field.
+    be noted in the ElectricalSeries 'filtering' attribute.
   groups:
   - neurodata_type_inc: ElectricalSeries
     doc: ElectricalSeries object(s) containing LFP data for one or more channels.

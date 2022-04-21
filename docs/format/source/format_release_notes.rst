@@ -1,5 +1,92 @@
+.. _nwb-schema-release-notes:
+
 Release Notes
 =============
+
+2.5.0 (Upcoming)
+---------------------
+
+Minor changes
+^^^^^^^^^^^^^
+- Added an ``offset`` attribute to all ``TimeSeries`` objects to allow enhanced translation to scientific units.
+
+Major changes
+^^^^^^^^^^^^^
+- Shape of SpatialSeries.data is more restrictive to prevent > 3 columns.
+
+
+2.4.0 (Aug. 11, 2021)
+---------------------
+
+Major changes
+^^^^^^^^^^^^^
+- Added new ``TimeSeriesReferenceVectorData`` type for referencing ranges of ``TimeSeries`` from a ``VectorData`` column (#470)
+- Integrated the intracellular electrophysiology experiment metadata table structure developed as part of the
+  `ndx-icephys-meta <https://github.com/oruebel/ndx-icephys-meta>`_ extension project with NWB (#470). This includes the
+  following new types:
+
+   - ``IntracellularRecordingsTable`` is an ``AlignedDynamicTable`` for managing individual intracellular recordings and
+     to group together a stimulus and response from a single electrode recording. The table contains the following category tables:
+
+      - ``IntracellularElectrodesTable``; a ``DynamicTable`` for storing metadata about the ``IntracellularElectrode`` used
+      - ``IntracellularStimuliTable``; a ``DynamicTable`` for storing metadata about the recorded stimulus ``TimeSeries``
+        using the new ``TimeSeriesReferenceVectorData`` type to reference ``TimeSeries``
+      - ``IntracellularResponsesTable``; a ``DynamicTable`` for storing metadata about the recorded response ``TimeSeries``
+        using the new ``TimeSeriesReferenceVectorData`` type to reference ``TimeSeries``
+
+   - ``SimultaneousRecordingsTable`` is a ``DynamicTable`` for grouping different intracellular recordings from the
+     ``IntracellularRecordingsTable`` together that were recorded simultaneously from different electrodes and for
+     storing metdata about simultaneous recordings
+   - ``SequentialRecordingsTable`` is a ``DynamicTable`` for grouping different sequential recordings from the
+     ``SimultaneousRecordingsTable``  together and storing metadata about sequential recordings
+   - ``RepetitionsTable`` a ``DynamicTable`` for grouping different sequential intracellular recordings from the
+     ``SequentialRecordingsTable`` together and storing metadata about repetitions
+   - ``ExperimentalConditionsTable`` is a ``DynamicTable`` for grouping different intracellular recording repetitions
+     from the ``RepetitionsTable`` together and storing metadata about experimental conditions
+
+- Added the new intracellular electrophysiology metadata tables to ``/general/intracellular_ephys`` as part of ``NWBFile`` (#470)
+
+Deprecations
+^^^^^^^^^^^^
+- ``SweepTable`` has been deprecated in favor of the new intracellular electrophysiology  metadata tables. Use of ``SweepTable``
+  is still possible but no longer recommended. (#470)
+- ``/general/intracellular_ephys/filtering`` has been deprecated in favor of ``IntracellularElectrode.filtering`` (#470)
+
+Bug Fixes
+^^^^^^^^^
+- Fixed incorrect dtype for electrodes table column "filtering" (float -> text) (#478)
+- Removed ``quantity: *`` from the type definitions of ``OptogeneticStimulusSite`` and ``ImagingPlane``.
+  This change improves clarity of the schema to follow best practices. It has no functional effect on the schema. (#472)
+- Updated ``ImageSeries`` to have its ``data`` dataset be required. Since ``ImageSeries`` is a ``TimeSeries`` and ``TimeSeries.data``
+  is required, ``ImageSeries.data`` should also be a required dataset. Otherwise this creates problems for
+  inheritance and validation. If ``ImageSeries`` data are stored in an external file, then ``ImageSeries.data`` should
+  be set to an empty 3D array. (#481)
+
+2.3.0 (May 12, 2021)
+---------------------
+
+- Add optional ``waveforms`` column to the ``Units`` table.
+- Add optional ``strain`` field to ``Subject``.
+- Add to ``DecompositionSeries`` an optional ``DynamicTableRegion`` called ``source_channels``.
+- Add to ``ImageSeries`` an optional link to ``Device``.
+- Add optional ``continuity`` field to ``TimeSeries``.
+- Add optional ``filtering`` attribute to ``ElectricalSeries``.
+- Clarify documentation for electrode impedance and filtering.
+- Add description of extra fields.
+- Set the ``stimulus_description`` for ``IZeroCurrentClamp`` to have the fixed value ``N/A``.
+- Update hdmf-common-schema from 1.1.3 to version 1.5.0.
+  - The HDMF-experimental namespace was added, which includes the ``ExternalResources`` and ``EnumData``
+  data types. Schema in the HDMF-experimental namespace are experimental and subject to breaking changes at any time.
+  - Added experimental data type ``ExternalResources`` for storing ontology information / external resource references.
+  - Added experimental data type ``EnumData`` to store data from a set of fixed values.
+  - Changed dtype for datasets within ``CSRMatrix`` from 'int' to 'uint' and added missing ``data_type_inc: Container``
+  to the ``CSRMatrix`` type.
+  - Added data type ``SimpleMultiContainer``, a Container for storing other Container and Data objects together.
+  - Added data type ``AlignedDynamicTable``, a DynamicTable type with support for categories (or sub-headings) each described by a separate DynamicTable.
+  - Fixed missing dtype for ``VectorIndex``.
+  - ``VectorIndex`` now extends ``VectorData`` instead of ``Index``.
+  - Removed unused and non-functional ``Index`` data type.
+  - See https://hdmf-common-schema.readthedocs.io/en/latest/format_release_notes.html for full release notes.
 
 2.2.5 (May 29, 2020)
 ----------------------

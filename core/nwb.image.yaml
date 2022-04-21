@@ -63,8 +63,8 @@ groups:
       - null
       - null
       - null
-    doc: Binary data representing images across frames.
-    quantity: '?'
+    doc: Binary data representing images across frames. If data are stored in an external
+      file, this should be an empty 3D array.
   - name: dimension
     dtype: int32
     dims:
@@ -109,6 +109,11 @@ groups:
       contains the path information to the image files. If this is 'raw', then the raw
       (single-channel) binary data is stored in the 'data' dataset. If this attribute
       is not present, then the default format='raw' case is assumed.
+    quantity: '?'
+  links:
+  - name: device
+    target_type: Device
+    doc: Link to the Device object that was used to capture these images.
     quantity: '?'
 
 - neurodata_type_def: ImageMaskSeries
