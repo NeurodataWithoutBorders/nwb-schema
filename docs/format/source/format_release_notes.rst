@@ -9,11 +9,12 @@ Release Notes
 Minor changes
 ^^^^^^^^^^^^^
 - Added an ``offset`` attribute to all ``TimeSeries`` objects to allow enhanced translation to scientific units.
-- Clarified the doc string for the `reference` column of the electrodes table.
+- Clarified the doc string for the ``reference`` column of the electrodes table. (#498)
+- Added ``cell_id`` field to ``IntracellularElectrode``. (#512)
 
 Major changes
 ^^^^^^^^^^^^^
-- Shape of SpatialSeries.data is more restrictive to prevent > 3 columns.
+- Shape of SpatialSeries.data is more restrictive to prevent > 3 columns. (#510)
 
 
 2.4.0 (Aug. 11, 2021)
