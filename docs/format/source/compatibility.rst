@@ -35,7 +35,7 @@ optional fields, and make required fields optional.
 Later minor ``x.(y+1)`` and bugfix ``x.y.(z+1)`` versions of the NWB schema will avoid adding new required
 fields. Changes that break this rule will generally not be implemented until the next major ``(x+1).0``
 version of NWB. Rare exceptions to this rule are noted in the NWB schema version release notes
-and the NWB reference APIs will implement appropriate measures to ensure that ``x.y`` files are still
+and the official NWB APIs will implement appropriate measures to ensure that ``x.y`` files are still
 compatible with the APIs.
 
 - For example, the shape of a dataset changed from a scalar in NWB 2.0 to a 1-D array in NWB 2.1. Thus the NWB
