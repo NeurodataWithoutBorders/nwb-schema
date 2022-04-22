@@ -11,9 +11,10 @@ APIs can read and validate any NWB file compliant with NWB schema 2.0 and later.
 
 - Note: MatNWB reads NWB files based on the cached schema within the file. If an older schema was used to
   create the file and the schema was not cached, then additional steps [#f1]_ need to be taken to read the file.
-- If PyNWB reads an NWB file with an older, cached version of the NWB schema and then modifies the file, the file
-  will be written with the newer version of the schema. As a precaution, after writing the file, the file should
-  be validated against the newer version of the schema to ensure compliance.
+- If PyNWB reads an NWB file with an older, cached version of the NWB schema and then modifies the file,
+  changes to the file will be written with the newer version of the schema. As a precaution, when writing to
+  a file with different version, the file should be validated against the newer version of the schema to ensure 
+  compliance. As a best practice, it is recommended to avoid using different versions to write to the same file.
 - If MatNWB reads an NWB file with an older, cached version of the NWB schema and then modifies the file, the file
   will still be compliant with the older, cached version. Updating the file to a newer version of the schema is
   not yet supported in MatNWB.
