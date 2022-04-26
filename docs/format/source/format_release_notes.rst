@@ -13,8 +13,6 @@ Major changes
 Minor changes
 ^^^^^^^^^^^^^
 - Added an ``offset`` attribute to all ``TimeSeries`` objects to allow enhanced translation to scientific units.
-- Clarified the doc string for the ``reference`` column of the electrodes table. (#498)
-- Added ``cell_id`` field to ``IntracellularElectrode``. (#512)
 - Allowed ``NWBFile/stimulus/templates`` to contain ``Images`` objects. (#459)
 - Added new optional "ordered_images" dataset to ``Images`` that contains an ordered list of object references to
   ``Image`` objects stored in the same ``Images`` object. (#459)
@@ -106,7 +104,6 @@ Bug Fixes
   - ``VectorIndex`` now extends ``VectorData`` instead of ``Index``.
   - Removed unused and non-functional ``Index`` data type.
   - See https://hdmf-common-schema.readthedocs.io/en/latest/format_release_notes.html for full release notes.
-
 
 2.2.5 (May 29, 2020)
 ----------------------
