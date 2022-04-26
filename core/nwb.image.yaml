@@ -63,8 +63,8 @@ groups:
       - null
       - null
       - null
-    doc: Binary data representing images across frames.
-    quantity: '?'
+    doc: Binary data representing images across frames. If data are stored in an external
+      file, this should be an empty 3D array.
   - name: dimension
     dtype: int32
     dims:

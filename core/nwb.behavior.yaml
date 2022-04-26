@@ -16,11 +16,19 @@ groups:
     dims:
     - - num_times
     - - num_times
-      - num_features
+      - x
+    - - num_times
+      - x,y
+    - - num_times
+      - x,y,z
     shape:
     - - null
     - - null
-      - null
+      - 1
+    - - null
+      - 2
+    - - null
+      - 3
     doc: 1-D or 2-D array storing position or direction relative to some reference frame.
     attributes:
     - name: unit
@@ -28,7 +36,7 @@ groups:
       default_value: meters
       doc: Base unit of measurement for working with the data. The default value
         is 'meters'. Actual stored values are not necessarily stored in these units.
-        To access the data in these units, multiply 'data' by 'conversion'.
+        To access the data in these units, multiply 'data' by 'conversion' and add 'offset'.
       required: false
   - name: reference_frame
     dtype: text

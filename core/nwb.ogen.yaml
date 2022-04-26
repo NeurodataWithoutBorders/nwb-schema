@@ -24,7 +24,6 @@ groups:
 - neurodata_type_def: OptogeneticStimulusSite
   neurodata_type_inc: NWBContainer
   doc: A site of optogenetic stimulation.
-  quantity: '*'
   datasets:
   - name: description
     dtype: text

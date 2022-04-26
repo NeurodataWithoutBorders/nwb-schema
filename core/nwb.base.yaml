@@ -124,6 +124,15 @@ groups:
         acquisition system gain is 8000X, then the 'conversion' multiplier to get from
         raw data acquisition values to recorded volts is 2.5/32768/8000 = 9.5367e-9.
       required: false
+    - name: offset
+      dtype: float32
+      default_value: 0.0
+      doc: Scalar to add to the data after scaling by 'conversion' to finalize its coercion
+        to the specified 'unit'. Two common examples of this include (a) data stored in an
+        unsigned type that requires a shift after scaling to re-center the data,
+        and (b) specialized recording devices that naturally cause a scalar offset with
+        respect to the true units.
+      required: false
     - name: resolution
       dtype: float32
       default_value: -1.0
@@ -135,7 +144,7 @@ groups:
       dtype: text
       doc: Base unit of measurement for working with the data. Actual stored values are
         not necessarily stored in these units. To access the data in these units,
-        multiply 'data' by 'conversion'.
+        multiply 'data' by 'conversion' and add 'offset'.
     - name: continuity
       dtype: text
       doc: Optionally describe the continuity of the data. Can be "continuous", "instantaneous", or
