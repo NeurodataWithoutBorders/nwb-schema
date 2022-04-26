@@ -214,5 +214,5 @@ groups:
   - name: indexed_images
     target_type: Images
     doc: Link to Images object containing an ordered set of images that are indexed. The Images object
-      must contain a 'order' dataset specifying the order of the images in the Images type.
+      must contain a 'ordered_images' dataset specifying the order of the images in the Images type.
     quantity: '?'

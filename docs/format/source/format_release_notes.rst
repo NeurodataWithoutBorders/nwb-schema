@@ -16,15 +16,15 @@ Minor changes
 - Clarified the doc string for the ``reference`` column of the electrodes table. (#498)
 - Added ``cell_id`` field to ``IntracellularElectrode``. (#512)
 - Allowed ``NWBFile/stimulus/templates`` to contain ``Images`` objects. (#459)
-- Added new optional "order" dataset to ``Images`` that contains an ordered list of object references to
-  ``Image`` objects stored in the ``Images`` object. (#459)
+- Added new optional "ordered_images" dataset to ``Images`` that contains an ordered list of object references to
+  ``Image`` objects stored in the same ``Images`` object. (#459)
 - Overhauled ``IndexSeries`` type (#459):
   - Fixed dtype of ``data`` dataset of ``IndexSeries`` (int32 -> uint32).
   - Updated ``unit`` attribute of ``data`` to have fixed value "N/A".
   - Updated docstrings for the ``conversion`` and ``resolution`` attributes of ``data`` to indicate that
     these fields are not used.
   - Added link to an ``Images`` object, which contains an ordered collection of images.
-    Discouraged use of the link to an ``ImageSeries``.
+    Discouraged use of the ``indexed_timeseries`` link to an ``ImageSeries``.
 - Updated ``TimeIntervals`` to use the new ``TimeSeriesReferenceVectorData`` type. This does not alter the overall structure
   of ``TimeIntervals`` in a major way aside from changing the value of the ``neurodata_type`` attribute in the file
   from ``VectorData`` to ```TimeSeriesReferenceVectorData``. This change replaces the existing ``TimeIntervals.timeseries``
