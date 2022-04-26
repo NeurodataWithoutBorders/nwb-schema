@@ -178,11 +178,11 @@ groups:
 - neurodata_type_def: IndexSeries
   neurodata_type_inc: TimeSeries
   doc: Stores indices to image frames stored in an ImageSeries. The purpose of the
-    IndexSeries is to allow a static image stack to be stored in an Images or ImageStack
-    object, and the images in the stack to be referenced out-of-order. This can be for 
-    the display of individual images, or of movie segments (as a movie is simply a 
+    IndexSeries is to allow a static image stack to be stored in an Images
+    object, and the images in the stack to be referenced out-of-order. This can be for
+    the display of individual images, or of movie segments (as a movie is simply a
     series of images). The data field stores the index of the frame in the referenced
-    Images or ImageStack object, and the timestamps array indicates when that image 
+    Images object, and the timestamps array indicates when that image
     was displayed.
   datasets:
   - name: data
@@ -191,7 +191,7 @@ groups:
     - num_times
     shape:
     - null
-    doc: Index of the frame (using zero-indexing) in the referenced ImageStack.
+    doc: Index of the image (using zero-indexing) in the linked Images object.
     attributes:
     - name: conversion
       dtype: float32
@@ -208,16 +208,11 @@ groups:
   links:
   - name: indexed_timeseries
     target_type: ImageSeries
-    doc: Link to ImageSeries object containing images that are indexed. Use of this link 
-      is discouraged and will be deprecated. Link to an Images or ImageStack type instead.
+    doc: Link to ImageSeries object containing images that are indexed. Use of this link
+      is discouraged and will be deprecated. Link to an Images type instead.
     quantity: '?'
   - name: indexed_images
     target_type: Images
     doc: Link to Images object containing an ordered set of images that are indexed. The Images object
-      must contain a 'order' dataset specifying the order of the images in the Images type. 
-    quantity: '?'
-  - name: indexed_imagestack
-    target_type: ImageStack
-    doc: Link to ImageStack object containing images that are indexed. Either the indexed_images link 
-      or the indexed_imagestack link should be used, but not both.
+      must contain a 'order' dataset specifying the order of the images in the Images type.
     quantity: '?'

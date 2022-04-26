@@ -143,9 +143,6 @@ groups:
       - neurodata_type_inc: Images
         doc: Images objects containing images of presented stimuli.
         quantity: '*'
-      - neurodata_type_inc: ImageStacks
-        doc: ImageStacks objects containing image stacks of presented stimuli.
-        quantity: '*'
   - name: general
     doc: "Experimental metadata, including protocol, notes and description of hardware\
       \ device(s).  The metadata stored in this section should be used to\
