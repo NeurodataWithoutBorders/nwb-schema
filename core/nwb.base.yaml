@@ -235,7 +235,7 @@ groups:
   neurodata_type_inc: NWBDataInterface
   default_name: Images
   doc: An collection of images with an optional way to specify the order of the images
-    using the ordered_images dataset. An order should be specified if the images are
+    using the "order_of_images" dataset. An order must be specified if the images are
     referenced by index, e.g., from an IndexSeries.
   attributes:
   - name: description
@@ -245,7 +245,7 @@ groups:
   - neurodata_type_inc: Image
     doc: Images stored in this collection.
     quantity: '+'
-  - name: ordered_images
+  - name: order_of_images
     neurodata_type_inc: VectorData
     dims:
     - num_images
