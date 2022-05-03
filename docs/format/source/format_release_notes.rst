@@ -6,11 +6,33 @@ Release Notes
 2.5.0 (Upcoming)
 ---------------------
 
+Major changes
+^^^^^^^^^^^^^
+- Shape of SpatialSeries.data is more restrictive to prevent > 3 columns. (#510)
+
 Minor changes
 ^^^^^^^^^^^^^
 - The elements `x`, `y`, `z`, `imp` and `filtering` are now optional instead of required.
 - Added an ``offset`` attribute to all ``TimeSeries`` objects to allow enhanced translation to scientific units.
-
+- Allowed ``NWBFile/stimulus/templates`` to contain ``Images`` objects. (#459)
+- Added new optional "order_of_images" dataset to ``Images`` that contains an ordered list of object references to
+  ``Image`` objects stored in the same ``Images`` object. This dataset must be used if the images are referred to
+  by index, e.g., from an ``IndexSeries`` object. (#459)
+- Overhauled ``IndexSeries`` type (#459):
+  - Fixed dtype of ``data`` dataset of ``IndexSeries`` (int32 -> uint32).
+  - Updated ``unit`` attribute of ``data`` to have fixed value "N/A".
+  - Updated docstrings for the ``conversion`` and ``resolution`` attributes of ``data`` to indicate that
+    these fields are not used.
+  - Added link to an ``Images`` object, which contains an ordered collection of images.
+    Discouraged use of the ``indexed_timeseries`` link to an ``ImageSeries``.
+- Updated ``TimeIntervals`` to use the new ``TimeSeriesReferenceVectorData`` type. This does not alter the overall structure
+  of ``TimeIntervals`` in a major way aside from changing the value of the ``neurodata_type`` attribute in the file
+  from ``VectorData`` to ```TimeSeriesReferenceVectorData``. This change replaces the existing ``TimeIntervals.timeseries``
+  column with a ``TimeSeriesReferenceVectorData`` type column of the same name and overall schema. This change facilitates creating
+  common functionality around ``TimeSeriesReferenceVectorData``. This change affects all existing ``TimeIntervals`` tables
+  as part of the ``intervals/`` group, i.e., ``intervals/epochs``, ``intervals/trials``, and ``intervals/invalid_times``. (#486)
+- Clarified the doc string for the ``reference`` column of the electrodes table. (#498)
+- Added ``cell_id`` field to ``IntracellularElectrode``. (#512)
 
 2.4.0 (Aug. 11, 2021)
 ---------------------

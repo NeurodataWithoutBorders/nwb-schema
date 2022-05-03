@@ -178,20 +178,41 @@ groups:
 - neurodata_type_def: IndexSeries
   neurodata_type_inc: TimeSeries
   doc: Stores indices to image frames stored in an ImageSeries. The purpose of the
-    ImageIndexSeries is to allow a static image stack to be stored somewhere, and
-    the images in the stack to be referenced out-of-order. This can be for the display
-    of individual images, or of movie segments (as a movie is simply a series of images).
-    The data field stores the index of the frame in the referenced ImageSeries, and
-    the timestamps array indicates when that image was displayed.
+    IndexSeries is to allow a static image stack to be stored in an Images
+    object, and the images in the stack to be referenced out-of-order. This can be for
+    the display of individual images, or of movie segments (as a movie is simply a
+    series of images). The data field stores the index of the frame in the referenced
+    Images object, and the timestamps array indicates when that image
+    was displayed.
   datasets:
   - name: data
-    dtype: int32
+    dtype: uint32
     dims:
     - num_times
     shape:
     - null
-    doc: Index of the frame in the referenced ImageSeries.
+    doc: Index of the image (using zero-indexing) in the linked Images object.
+    attributes:
+    - name: conversion
+      dtype: float32
+      doc: This field is unused by IndexSeries.
+      required: false
+    - name: resolution
+      dtype: float32
+      doc: This field is unused by IndexSeries.
+      required: false
+    - name: unit
+      dtype: text
+      value: N/A
+      doc: This field is unused by IndexSeries and has the value N/A.
   links:
   - name: indexed_timeseries
     target_type: ImageSeries
-    doc: Link to ImageSeries object containing images that are indexed.
+    doc: Link to ImageSeries object containing images that are indexed. Use of this link
+      is discouraged and will be deprecated. Link to an Images type instead.
+    quantity: '?'
+  - name: indexed_images
+    target_type: Images
+    doc: Link to Images object containing an ordered set of images that are indexed. The Images object
+      must contain a 'ordered_images' dataset specifying the order of the images in the Images type.
+    quantity: '?'
