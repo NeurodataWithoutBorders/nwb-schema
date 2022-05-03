@@ -3,7 +3,7 @@
 Release Notes
 =============
 
-2.5.0 (April 20, 2022)
+2.5.0 (May 4, 2022)
 ---------------------
 
 Major changes
@@ -12,7 +12,7 @@ Major changes
 
 Minor changes
 ^^^^^^^^^^^^^
-- Added an ``offset`` attribute to all ``TimeSeries`` objects to allow enhanced translation to scientific units.
+- Added an ``offset`` attribute to all ``TimeSeries`` objects to allow enhanced translation to scientific units. (#494)
 - Allowed ``NWBFile/stimulus/templates`` to contain ``Images`` objects. (#459)
 - Added new optional "order_of_images" dataset to ``Images`` that contains an ordered list of object references to
   ``Image`` objects stored in the same ``Images`` object. This dataset must be used if the images are referred to
