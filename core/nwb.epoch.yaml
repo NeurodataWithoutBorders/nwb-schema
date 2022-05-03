@@ -22,20 +22,7 @@ groups:
     doc: Index for tags.
     quantity: '?'
   - name: timeseries
-    neurodata_type_inc: VectorData
-    dtype:
-    - name: idx_start
-      dtype: int32
-      doc: Start index into the TimeSeries 'data' and 'timestamp' datasets of the
-        referenced TimeSeries. The first dimension of those arrays is always time.
-    - name: count
-      dtype: int32
-      doc: Number of data samples available in this time series, during this epoch.
-    - name: timeseries
-      dtype:
-        target_type: TimeSeries
-        reftype: object
-      doc: the TimeSeries that this index applies to.
+    neurodata_type_inc: TimeSeriesReferenceVectorData
     doc: An index into a TimeSeries object.
     quantity: '?'
   - name: timeseries_index
