@@ -238,18 +238,18 @@ In the tables we use the following notation in the **Id** column to uniquely ide
 * ```name``` describes the unique name of an object
 * ```<neurodata_type>``` describes the ```neurodata_type``` of the object in case that the object does not have a unique name
 * ```—``` prefixes are used to indicate the depth of the object in the hierarchy to allow identification of the parent
-  of the object. E.g., an object with a ```——``` prefix will belong to the previous object with a `—` prefix.
+  of the object. E.g., an object with a ```——``` prefix will belong to the previous object with a ```—``` prefix.
 
 Here a quick example:
 
-.. tabularcolumns:: |p{4cm}|p{1cm}|p{10cm}|
+.. tabularcolumns:: |p{5cm}|p{1cm}|p{9cm}|
 .. table:: Example illustrating the description of the contents of ```neurodata_types```.
     :class: longtable
 
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
     | Id                        | Type        | Description                                                                                             |
     +===========================+=============+=========================================================================================================+
-    | <MyTimeSeries>            | group       | Top level group for the neurodata_type. The group the neurodata_type *MyTimeSerie*  but no fixed name   |
+    | <MyTimeSeries>            | group       | Top level group for the neurodata_type. The group the neurodata_type *MyTimeSeries* but no fixed name   |
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
     | —myattr                   | attribute   | Attribute with the fixed name myattr defined on <MyTimeSeries>                                          |
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
@@ -259,7 +259,7 @@ Here a quick example:
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
     | —myotherdata              | dataset     | Optional dataset with a unique name contained in <MyTimeSeries>                                         |
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
-    | —<ElectrialSeries>        | group       | Optional set of groups with the neurodata_type ElectricalSeries that are contained in <MyTimeSeries>    |
+    | —<ElectricalSeries>       | group       | Optional set of groups with the neurodata_type ElectricalSeries that are contained in <MyTimeSeries>    |
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
 
 
