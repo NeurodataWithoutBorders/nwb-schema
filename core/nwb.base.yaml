@@ -254,4 +254,6 @@ groups:
       target_type: Image
       reftype: object
     doc: Ordered dataset of references to Image objects stored in the parent group.
+      Each Image object in the Images group should be stored once and only once, so
+      the dataset should have the same length as the number of images.
     quantity: '?'
