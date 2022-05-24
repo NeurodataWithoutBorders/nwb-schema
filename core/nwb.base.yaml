@@ -57,6 +57,17 @@ datasets:
     doc: Description of the image.
     required: false
 
+- neurodata_type_def: ImageReferences
+  neurodata_type_inc: NWBData
+  dtype:
+    target_type: Image
+    reftype: object
+  dims:
+  - num_images
+  shape:
+  - null
+  doc: Ordered dataset of references to Image objects.
+
 groups:
 - neurodata_type_def: NWBContainer
   neurodata_type_inc: Container
@@ -246,13 +257,7 @@ groups:
     doc: Images stored in this collection.
     quantity: '+'
   - name: order_of_images
-    dims:
-    - num_images
-    shape:
-    - null
-    dtype:
-      target_type: Image
-      reftype: object
+    neurodata_type_inc: ImageReferences
     doc: Ordered dataset of references to Image objects stored in the parent group.
       Each Image object in the Images group should be stored once and only once, so
       the dataset should have the same length as the number of images.

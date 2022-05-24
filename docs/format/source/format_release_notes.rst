@@ -16,7 +16,8 @@ Minor changes
 - Allowed ``NWBFile/stimulus/templates`` to contain ``Images`` objects. (#459)
 - Added new optional "order_of_images" dataset to ``Images`` that contains an ordered list of object references to
   ``Image`` objects stored in the same ``Images`` object. This dataset must be used if the images are referred to
-  by index, e.g., from an ``IndexSeries`` object. (#459, #518, #519)
+  by index, e.g., from an ``IndexSeries`` object. Created new neurodata type ImageReferences which should be used
+  for this dataset. (#459, #518, #519, #520)
 - Overhauled ``IndexSeries`` type (#459):
   - Fixed dtype of ``data`` dataset of ``IndexSeries`` (int32 -> uint32).
   - Updated ``unit`` attribute of ``data`` to have fixed value "N/A".
