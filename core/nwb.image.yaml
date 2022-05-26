@@ -201,6 +201,10 @@ groups:
       dtype: float32
       doc: This field is unused by IndexSeries.
       required: false
+    - name: offset
+      dtype: float32
+      doc: This field is unused by IndexSeries.
+      required: false
     - name: unit
       dtype: text
       value: N/A

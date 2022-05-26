@@ -57,6 +57,17 @@ datasets:
     doc: Description of the image.
     required: false
 
+- neurodata_type_def: ImageReferences
+  neurodata_type_inc: NWBData
+  dtype:
+    target_type: Image
+    reftype: object
+  dims:
+  - num_images
+  shape:
+  - null
+  doc: Ordered dataset of references to Image objects.
+
 groups:
 - neurodata_type_def: NWBContainer
   neurodata_type_inc: Container
@@ -234,7 +245,7 @@ groups:
 - neurodata_type_def: Images
   neurodata_type_inc: NWBDataInterface
   default_name: Images
-  doc: An collection of images with an optional way to specify the order of the images
+  doc: A collection of images with an optional way to specify the order of the images
     using the "order_of_images" dataset. An order must be specified if the images are
     referenced by index, e.g., from an IndexSeries.
   attributes:
@@ -246,13 +257,8 @@ groups:
     doc: Images stored in this collection.
     quantity: '+'
   - name: order_of_images
-    neurodata_type_inc: VectorData
-    dims:
-    - num_images
-    shape:
-    - null
-    dtype:
-      target_type: Image
-      reftype: object
+    neurodata_type_inc: ImageReferences
     doc: Ordered dataset of references to Image objects stored in the parent group.
+      Each Image object in the Images group should be stored once and only once, so
+      the dataset should have the same length as the number of images.
     quantity: '?'

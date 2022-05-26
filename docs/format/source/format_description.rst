@@ -237,28 +237,29 @@ In the tables we use the following notation in the **Id** column to uniquely ide
 
 * ```name``` describes the unique name of an object
 * ```<neurodata_type>``` describes the ```neurodata_type``` of the object in case that the object does not have a unique name
-* ```...``` prefixes are used to indicate the depth of the object in the hierarchy to allow identification of the parent of the object. E.g., an object with a ```..``` prefix will belong to the previous object with a `.` prefix.
+* ```—``` prefixes are used to indicate the depth of the object in the hierarchy to allow identification of the parent
+  of the object. E.g., an object with a ```——``` prefix will belong to the previous object with a ```—``` prefix.
 
 Here a quick example:
 
-.. tabularcolumns:: |p{4cm}|p{1cm}|p{10cm}|
+.. tabularcolumns:: |p{5cm}|p{1cm}|p{9cm}|
 .. table:: Example illustrating the description of the contents of ```neurodata_types```.
     :class: longtable
 
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
     | Id                        | Type        | Description                                                                                             |
     +===========================+=============+=========================================================================================================+
-    | <MyTimeSeries>            | group       | Top level group for the neurodata_type. The group the neurodata_type *MyTimeSerie*  but no fixed name   |
+    | <MyTimeSeries>            | group       | Top level group for the neurodata_type. The group the neurodata_type *MyTimeSeries* but no fixed name   |
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
-    | .myattr                   | attribute   | Attribute with the fixed name myattr defined on <MyTimeSeries>                                          |
+    | —myattr                   | attribute   | Attribute with the fixed name myattr defined on <MyTimeSeries>                                          |
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
-    | .mydata                   | dataset     | Required dataset with a unique name contained in <MyTimeSeries>                                         |
+    | —mydata                   | dataset     | Required dataset with a unique name contained in <MyTimeSeries>                                         |
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
-    | ..unit                    | attribute   | Attribute unit defined on the dataset .mydata                                                           |
+    | ——unit                    | attribute   | Attribute unit defined on the dataset .mydata                                                           |
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
-    | .myotherdata              | dataset     | Optional dataset with a unique name contained in <MyTimeSeries>                                         |
+    | —myotherdata              | dataset     | Optional dataset with a unique name contained in <MyTimeSeries>                                         |
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
-    | .<ElectrialSeries>        | group       | Optional set of groups with the neurodata_type ElectricalSeries that are contained in <MyTimeSeries>    |
+    | —<ElectricalSeries>       | group       | Optional set of groups with the neurodata_type ElectricalSeries that are contained in <MyTimeSeries>    |
     +---------------------------+-------------+---------------------------------------------------------------------------------------------------------+
 
 
@@ -314,21 +315,21 @@ sufficient for other uses.
 
 **Extra fields**
 
-All parts of an NWB file should be governed by either the core schema or 
-defined in a neurodata extension (NDX). *Extra fields* are any datasets, 
-attributes, groups, links etc. that are included in a file but which are 
-not described by the NWB schema or a neurodata extension (NDX). Extra fields 
+All parts of an NWB file should be governed by either the core schema or
+defined in a neurodata extension (NDX). *Extra fields* are any datasets,
+attributes, groups, links etc. that are included in a file but which are
+not described by the NWB schema or a neurodata extension (NDX). Extra fields
 are not considered  part of the NWB file and as such, any NWB API may ignore
-extra fields. For API's this specifically means: 
+extra fields. For API's this specifically means:
 
 * an NWB file that includes extra fields should be readable by the API
   as long as the file is otherwise valid,
 * an API is permitted to ignore extra fields on read,
 * an API is permitted to ignore (including remove) extra fields on write.
 
-In practice, the use of extra fields is highly discouraged and instead neurodata 
-extensions (NDX) should be used to extend NWB to include additional fields 
-if necessary. 
+In practice, the use of extra fields is highly discouraged and instead neurodata
+extensions (NDX) should be used to extend NWB to include additional fields
+if necessary.
 
 **Why do timestamps\_link and data\_link record linking between
 datasets, but links between epochs and timeseries are not recorded?**
