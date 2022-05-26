@@ -12,6 +12,7 @@ Major changes
 
 Minor changes
 ^^^^^^^^^^^^^
+- The elements `x`, `y`, `z`, `imp` and `filtering` are now optional instead of required.
 - Added an ``offset`` attribute to all ``TimeSeries`` objects to allow enhanced translation to scientific units.
 - Allowed ``NWBFile/stimulus/templates`` to contain ``Images`` objects. (#459)
 - Added new optional "order_of_images" dataset to ``Images`` that contains an ordered list of object references to
