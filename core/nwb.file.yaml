@@ -278,18 +278,22 @@ groups:
           neurodata_type_inc: VectorData
           dtype: float32
           doc: x coordinate of the channel location in the brain (+x is posterior).
+          quantity: '?'
         - name: y
           neurodata_type_inc: VectorData
           dtype: float32
           doc: y coordinate of the channel location in the brain (+y is inferior).
+          quantity: '?'
         - name: z
           neurodata_type_inc: VectorData
           dtype: float32
           doc: z coordinate of the channel location in the brain (+z is right).
+          quantity: '?'
         - name: imp
           neurodata_type_inc: VectorData
           dtype: float32
           doc: Impedance of the channel, in ohms.
+          quantity: '?'
         - name: location
           neurodata_type_inc: VectorData
           dtype: text
@@ -300,6 +304,7 @@ groups:
           neurodata_type_inc: VectorData
           dtype: text
           doc: Description of hardware filtering, including the filter name and frequency cutoffs.
+          quantity: '?'
         - name: group
           neurodata_type_inc: VectorData
           dtype:
