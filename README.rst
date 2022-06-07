@@ -16,8 +16,8 @@ complex data using basic concepts, e.g., Groups, Datasets, Attributes, and Links
 For more information:
 
 - Learn more about NWB and `nwb.org <http://www.nwb.org/>`_.
-- The PyNWB Python API for the NWB:N format is available on `Github <https://github.com/NeurodataWithoutBorders/pynwb>`_
-- The MatNWB Matlab API for the NWB:N format is available on `Github <https://github.com/NeurodataWithoutBorders/matnwb>`_
+- The PyNWB Python API for the NWB format is available on `Github <https://github.com/NeurodataWithoutBorders/pynwb>`_
+- The MatNWB Matlab API for the NWB format is available on `Github <https://github.com/NeurodataWithoutBorders/matnwb>`_
 
 
 License
