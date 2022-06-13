@@ -1,4 +1,97 @@
 groups:
+- neurodata_type_def: ObjectiveLens
+  neurodata_type_inc: Device
+  doc: Metadata about an objective lens data acquisition device for one-photon optical imaging.
+  attributes:
+  - name: magnification
+    dtype: float32
+    doc: TODO
+    required: true
+  - name: numerical_aperture
+    dtype: float32
+    doc: TODO
+    required: true
+  - name: description
+    dtype: text
+    doc: Description of the device (e.g., model, firmware version, processing software version, etc.)
+      as free-form text.
+    required: false
+  - name: manufacturer
+    dtype: text
+    doc: The name of the manufacturer of the device.
+    required: false
+
+- neurodata_type_def: OnePhotonCamera
+  neurodata_type_inc: Device
+  doc: Metadata about the camera used as the data acquisition device for one-photon optical imaging.
+  attributes:
+  - name: quantum_efficiency
+    dtype: float32
+    doc: TODO
+    required: false
+  - name: read_noise
+    dtype: float32
+    doc: Number of electrons. TODO
+    required: false
+  - name: description
+    dtype: text
+    doc: Description of the device (e.g., model, firmware version, processing software version, etc.)
+      as free-form text.
+    required: false
+  - name: manufacturer
+    dtype: text
+    doc: The name of the manufacturer of the device.
+    required: false
+
+- neurodata_type_def: OnePhotonSeries
+  neurodata_type_inc: ImageSeries
+  doc: Image stack recorded over time from 1-photon microscope.
+  attributes:
+  - name: pmt_gain
+    dtype: float32
+    doc: Photomultiplier gain.
+    required: false
+  - name: scan_line_rate
+    dtype: float32
+    doc: Lines imaged per second. This is also stored in /general/optophysiology but
+      is kept here as it is useful information for analysis, and so good to be stored
+      w/ the actual data.
+    required: false
+  - name: exposure_time
+    dtype: float32
+    doc: TODO
+    required: false
+  - name: binning
+    dtype: float32
+    doc: TODO
+    required: false
+  - name: power
+    dtype: float32
+    doc: TODO
+    required: false
+  - name: intensity
+    dtype: float32
+    doc: TODO
+    required: false
+  datasets:
+  - name: field_of_view
+    dtype: float32
+    dims:
+    - - width|height
+    - - width|height|depth
+    shape:
+    - - 2
+    - - 3
+    doc: Width, height and depth of image, or imaged area, in meters.
+    quantity: '?'
+  links:
+  - name: objective_lens
+    target_type: ObjectiveLens
+    doc: Link to camera device object from which this TimeSeries data was generated.
+  - name: camera
+    target_type: OnePhotonCamera
+    doc: Link to camera device object from which this TimeSeries data was generated.
+
 - neurodata_type_def: TwoPhotonSeries
   neurodata_type_inc: ImageSeries
   doc: Image stack recorded over time from 2-photon microscope.
