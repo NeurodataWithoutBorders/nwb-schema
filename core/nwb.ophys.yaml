@@ -11,15 +11,6 @@ groups:
     dtype: float32
     doc: TODO
     required: true
-  - name: description
-    dtype: text
-    doc: Description of the device (e.g., model, firmware version, processing software version, etc.)
-      as free-form text.
-    required: false
-  - name: manufacturer
-    dtype: text
-    doc: The name of the manufacturer of the device.
-    required: false
 
 - neurodata_type_def: OnePhotonCamera
   neurodata_type_inc: Device
@@ -32,15 +23,6 @@ groups:
   - name: read_noise
     dtype: float32
     doc: Number of electrons. TODO
-    required: false
-  - name: description
-    dtype: text
-    doc: Description of the device (e.g., model, firmware version, processing software version, etc.)
-      as free-form text.
-    required: false
-  - name: manufacturer
-    dtype: text
-    doc: The name of the manufacturer of the device.
     required: false
 
 - neurodata_type_def: OnePhotonSeries
