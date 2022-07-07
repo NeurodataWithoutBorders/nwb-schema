@@ -1,30 +1,4 @@
 groups:
-- neurodata_type_def: ObjectiveLens
-  neurodata_type_inc: Device
-  doc: Metadata about an objective lens data acquisition device for one-photon optical imaging.
-  attributes:
-  - name: magnification
-    dtype: float32
-    doc: TODO
-    required: true
-  - name: numerical_aperture
-    dtype: float32
-    doc: TODO
-    required: true
-
-- neurodata_type_def: OnePhotonCamera
-  neurodata_type_inc: Device
-  doc: Metadata about the camera used as the data acquisition device for one-photon optical imaging.
-  attributes:
-  - name: quantum_efficiency
-    dtype: float32
-    doc: TODO
-    required: false
-  - name: read_noise
-    dtype: float32
-    doc: Number of electrons. TODO
-    required: false
-
 - neurodata_type_def: OnePhotonSeries
   neurodata_type_inc: ImageSeries
   doc: Image stack recorded over time from 1-photon microscope.
@@ -41,19 +15,19 @@ groups:
     required: false
   - name: exposure_time
     dtype: float32
-    doc: TODO
+    doc: Exposure time of the sample; often the inverse of the frequency.
     required: false
   - name: binning
-    dtype: float32
-    doc: TODO
+    dtype: uint8
+    doc: Amount of pixels combined into 'bins'; could be 1, 2, 4, 8, etc.
     required: false
   - name: power
     dtype: float32
-    doc: TODO
+    doc: Power of the excitation in mW, if known.
     required: false
   - name: intensity
     dtype: float32
-    doc: TODO
+    doc: Intensity of the excitation in mW/mm^2, if known.
     required: false
   datasets:
   - name: field_of_view
@@ -67,12 +41,9 @@ groups:
     doc: Width, height and depth of image, or imaged area, in meters.
     quantity: '?'
   links:
-  - name: objective_lens
-    target_type: ObjectiveLens
-    doc: Link to camera device object from which this TimeSeries data was generated.
-  - name: camera
-    target_type: OnePhotonCamera
-    doc: Link to camera device object from which this TimeSeries data was generated.
+  - name: imaging_plane
+    target_type: ImagingPlane
+    doc: Link to ImagingPlane object from which this TimeSeries data was generated.
 
 - neurodata_type_def: TwoPhotonSeries
   neurodata_type_inc: ImageSeries
