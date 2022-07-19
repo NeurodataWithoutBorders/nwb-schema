@@ -3,6 +3,15 @@
 Release Notes
 =============
 
+
+2.6.0-alpha (Upcoming)
+----------------------
+
+Major changes
+^^^^^^^^^^^^^
+- Added OnePhotonSeries. (#523)
+
+
 2.5.0 (June 14, 2022)
 ---------------------
 
