@@ -38,8 +38,13 @@ groups:
     shape:
     - - 2
     - - 3
-    doc: Width, height and depth of image, or imaged area, in meters.
+    doc: Width, height and depth of image or imaged area, in meters.
     quantity: '?'
+    attributes:
+    - name: unit
+      dtype: text
+      value: meters
+      doc: Unit of measurement for the width, height, and depth of the image or imaged area.
   links:
   - name: imaging_plane
     target_type: ImagingPlane
