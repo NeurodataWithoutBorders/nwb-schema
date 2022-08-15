@@ -456,7 +456,7 @@ groups:
           'gestational'. If reference is omitted, 'birth' is implied."
         dtype: text
         required: false
-        default: birth
+        default_value: birth
   - name: date_of_birth
     dtype: isodatetime
     doc: Date of birth of subject. Can be supplied instead of 'age'.
