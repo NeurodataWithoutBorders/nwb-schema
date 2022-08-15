@@ -7,7 +7,7 @@ groups:
   attributes:
   - name: nwb_version
     dtype: text
-    value: "2.5.0-alpha"
+    value: "2.5.0"
     doc: File version string. Use semantic versioning, e.g. 1.2.1. This will be the
       name of the format with trailing major, minor and patch numbers.
   datasets:
@@ -139,6 +139,9 @@ groups:
       groups:
       - neurodata_type_inc: TimeSeries
         doc: TimeSeries objects containing template data of presented stimuli.
+        quantity: '*'
+      - neurodata_type_inc: Images
+        doc: Images objects containing images of presented stimuli.
         quantity: '*'
   - name: general
     doc: "Experimental metadata, including protocol, notes and description of hardware\
@@ -275,18 +278,22 @@ groups:
           neurodata_type_inc: VectorData
           dtype: float32
           doc: x coordinate of the channel location in the brain (+x is posterior).
+          quantity: '?'
         - name: y
           neurodata_type_inc: VectorData
           dtype: float32
           doc: y coordinate of the channel location in the brain (+y is inferior).
+          quantity: '?'
         - name: z
           neurodata_type_inc: VectorData
           dtype: float32
           doc: z coordinate of the channel location in the brain (+z is right).
+          quantity: '?'
         - name: imp
           neurodata_type_inc: VectorData
           dtype: float32
           doc: Impedance of the channel, in ohms.
+          quantity: '?'
         - name: location
           neurodata_type_inc: VectorData
           dtype: text
@@ -297,6 +304,7 @@ groups:
           neurodata_type_inc: VectorData
           dtype: text
           doc: Description of hardware filtering, including the filter name and frequency cutoffs.
+          quantity: '?'
         - name: group
           neurodata_type_inc: VectorData
           dtype:
@@ -325,7 +333,8 @@ groups:
         - name: reference
           neurodata_type_inc: VectorData
           dtype: text
-          doc: Description of the reference used for this electrode.
+          doc: Description of the reference electrode and/or reference scheme used for this electrode, e.g.,
+            "stainless steel skull screw" or "online common average referencing".
           quantity: '?'
     - name: intracellular_ephys
       doc: Metadata related to intracellular electrophysiology.

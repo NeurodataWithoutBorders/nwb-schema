@@ -57,6 +57,17 @@ datasets:
     doc: Description of the image.
     required: false
 
+- neurodata_type_def: ImageReferences
+  neurodata_type_inc: NWBData
+  dtype:
+    target_type: Image
+    reftype: object
+  dims:
+  - num_images
+  shape:
+  - null
+  doc: Ordered dataset of references to Image objects.
+
 groups:
 - neurodata_type_def: NWBContainer
   neurodata_type_inc: Container
@@ -148,11 +159,11 @@ groups:
     - name: continuity
       dtype: text
       doc: Optionally describe the continuity of the data. Can be "continuous", "instantaneous", or
-        "step". For example, a voltage trace would be "continuous", because samples 
-        are recorded from a continuous process. An array of lick times would be "instantaneous", 
-        because the data represents distinct moments in time. Times of image presentations would be  
-        "step" because the picture remains the same until the next timepoint. This field is optional, 
-        but is useful in providing information about the underlying data. It may inform the way this 
+        "step". For example, a voltage trace would be "continuous", because samples
+        are recorded from a continuous process. An array of lick times would be "instantaneous",
+        because the data represents distinct moments in time. Times of image presentations would be
+        "step" because the picture remains the same until the next timepoint. This field is optional,
+        but is useful in providing information about the underlying data. It may inform the way this
         data is interpreted, the way it is visualized, and what analysis methods are applicable.
       required: false
   - name: starting_time
@@ -234,7 +245,9 @@ groups:
 - neurodata_type_def: Images
   neurodata_type_inc: NWBDataInterface
   default_name: Images
-  doc: A collection of images.
+  doc: A collection of images with an optional way to specify the order of the images
+    using the "order_of_images" dataset. An order must be specified if the images are
+    referenced by index, e.g., from an IndexSeries.
   attributes:
   - name: description
     dtype: text
@@ -243,3 +256,9 @@ groups:
   - neurodata_type_inc: Image
     doc: Images stored in this collection.
     quantity: '+'
+  - name: order_of_images
+    neurodata_type_inc: ImageReferences
+    doc: Ordered dataset of references to Image objects stored in the parent group.
+      Each Image object in the Images group should be stored once and only once, so
+      the dataset should have the same length as the number of images.
+    quantity: '?'

@@ -16,11 +16,19 @@ groups:
     dims:
     - - num_times
     - - num_times
-      - num_features
+      - x
+    - - num_times
+      - x,y
+    - - num_times
+      - x,y,z
     shape:
     - - null
     - - null
-      - null
+      - 1
+    - - null
+      - 2
+    - - null
+      - 3
     doc: 1-D or 2-D array storing position or direction relative to some reference frame.
     attributes:
     - name: unit
