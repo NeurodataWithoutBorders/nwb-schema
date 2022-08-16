@@ -450,6 +450,13 @@ groups:
     dtype: text
     doc: Age of subject. Can be supplied instead of 'date_of_birth'.
     quantity: '?'
+    attributes:
+      - name: reference
+        doc: "Age is with reference to this event. Can be 'birth' or 
+          'gestational'. If reference is omitted, 'birth' is implied."
+        dtype: text
+        required: false
+        default_value: birth
   - name: date_of_birth
     dtype: isodatetime
     doc: Date of birth of subject. Can be supplied instead of 'age'.
