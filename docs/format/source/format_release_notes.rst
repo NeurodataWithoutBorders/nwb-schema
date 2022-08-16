@@ -3,7 +3,7 @@
 Release Notes
 =============
 
-2.5.1 (Upcoming)
+2.6.0 (Upcoming)
 ----------------
 - ``Subject.age`` has a new optional attribute, ``reference``, which can take a value of "birth" (default) or "gestational". (#525)
 
