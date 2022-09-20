@@ -29,22 +29,6 @@ groups:
     dtype: float32
     doc: Intensity of the excitation in mW/mm^2, if known.
     required: false
-  datasets:
-  - name: field_of_view
-    dtype: float32
-    dims:
-    - - width|height
-    - - width|height|depth
-    shape:
-    - - 2
-    - - 3
-    doc: Width, height and depth of image or imaged area, in meters.
-    quantity: '?'
-    attributes:
-    - name: unit
-      dtype: text
-      value: meters
-      doc: Unit of measurement for the width, height, and depth of the image or imaged area.
   links:
   - name: imaging_plane
     target_type: ImagingPlane
