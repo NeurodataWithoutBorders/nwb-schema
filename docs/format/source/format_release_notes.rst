@@ -7,7 +7,7 @@ Release Notes
 2.6.0-alpha (Upcoming)
 ----------------------
 
-Major changes
+Minor changes
 ^^^^^^^^^^^^^
 - Added OnePhotonSeries. (#523)
 - ``Subject.age`` has a new optional attribute, ``reference``, which can take a value of "birth" (default) or "gestational". (#525)
