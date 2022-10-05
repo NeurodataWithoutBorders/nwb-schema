@@ -187,7 +187,7 @@ groups:
   - name: spike_times
     neurodata_type_inc: VectorData
     dtype: float64
-    doc: Spike times for each unit.
+    doc: Spike times for each unit in seconds.
     quantity: '?'
     attributes:
     - name: resolution
