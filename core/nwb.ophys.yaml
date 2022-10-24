@@ -1,4 +1,39 @@
 groups:
+- neurodata_type_def: OnePhotonSeries
+  neurodata_type_inc: ImageSeries
+  doc: Image stack recorded over time from 1-photon microscope.
+  attributes:
+  - name: pmt_gain
+    dtype: float32
+    doc: Photomultiplier gain.
+    required: false
+  - name: scan_line_rate
+    dtype: float32
+    doc: Lines imaged per second. This is also stored in /general/optophysiology but
+      is kept here as it is useful information for analysis, and so good to be stored
+      w/ the actual data.
+    required: false
+  - name: exposure_time
+    dtype: float32
+    doc: Exposure time of the sample; often the inverse of the frequency.
+    required: false
+  - name: binning
+    dtype: uint8
+    doc: Amount of pixels combined into 'bins'; could be 1, 2, 4, 8, etc.
+    required: false
+  - name: power
+    dtype: float32
+    doc: Power of the excitation in mW, if known.
+    required: false
+  - name: intensity
+    dtype: float32
+    doc: Intensity of the excitation in mW/mm^2, if known.
+    required: false
+  links:
+  - name: imaging_plane
+    target_type: ImagingPlane
+    doc: Link to ImagingPlane object from which this TimeSeries data was generated.
+
 - neurodata_type_def: TwoPhotonSeries
   neurodata_type_inc: ImageSeries
   doc: Image stack recorded over time from 2-photon microscope.
