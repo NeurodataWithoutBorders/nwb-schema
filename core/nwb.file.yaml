@@ -2,12 +2,12 @@ groups:
 - neurodata_type_def: NWBFile
   neurodata_type_inc: NWBContainer
   name: root
-  doc: An NWB:N file storing cellular-based neurophysiology data from a single
+  doc: An NWB file storing cellular-based neurophysiology data from a single
     experimental session.
   attributes:
   - name: nwb_version
     dtype: text
-    value: "2.6.0-alpha"
+    value: "2.6.0"
     doc: File version string. Use semantic versioning, e.g. 1.2.1. This will be the
       name of the format with trailing major, minor and patch numbers.
   datasets:
@@ -452,7 +452,7 @@ groups:
     quantity: '?'
     attributes:
       - name: reference
-        doc: "Age is with reference to this event. Can be 'birth' or 
+        doc: "Age is with reference to this event. Can be 'birth' or
           'gestational'. If reference is omitted, 'birth' is implied."
         dtype: text
         required: false

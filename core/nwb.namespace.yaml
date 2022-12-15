@@ -18,7 +18,7 @@ namespaces:
   full_name: NWB core
   schema:
   - namespace: hdmf-common
-  - doc: This source module contains base data types used throughout the NWB:N data
+  - doc: This source module contains base data types used throughout the NWB data
       format.
     source: nwb.base.yaml
     title: Base data types
@@ -31,9 +31,9 @@ namespaces:
   - doc: This source module contains neurodata_types for image data.
     source: nwb.image.yaml
     title: Image data
-  - doc: Main NWB:N file specification.
+  - doc: Main NWB file specification.
     source: nwb.file.yaml
-    title: NWB:N file
+    title: NWB file
   - doc: Miscellaneous types.
     source: nwb.misc.yaml
     title: Miscellaneous neurodata_types.
