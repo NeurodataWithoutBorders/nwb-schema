@@ -2,9 +2,9 @@
 
 The documentation for NWB consists of a series of documents describing the various components of NWB:
 
-* ``docs/language`` with the documentation for the NWB:N specification language
-* ``docs/format`` with the documentation of the NWB:N data format
-* ``docs/storage`` with the documentation of the NWB:N storage component
+* ``docs/language`` with the documentation for the NWB specification language
+* ``docs/format`` with the documentation of the NWB data format
+* ``docs/storage`` with the documentation of the NWB storage component
 * The documentation of the PyNWB API is managed in the PyNWB git repo
 
 See also:
