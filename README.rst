@@ -3,6 +3,8 @@ NWB Schema Format
 
 A format specification schema for the Neurodata Without Borders (NWB) data format.
 
+To get started using NWB, please go to the [NWB overview website](https://nwb-overview.readthedocs.io/en/latest/).
+
 This repo contains:
 
 * The core NWB schema
