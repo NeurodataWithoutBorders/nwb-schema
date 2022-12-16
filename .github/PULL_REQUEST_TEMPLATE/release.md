@@ -14,8 +14,8 @@ Target release date: [date]
 - [ ] Test docs locally (`cd docs/format; make fulldoc`) where the nwb-schema submodule in the local version of PyNWB
   is fully up-to-date with the head of the dev branch.
 - [ ] Push changes to this PR and make sure all PRs to be included in this release have been merged
-- [ ] Check that the readthedocs build for this PR succeeds (build latest to pull the new branch, then activate and
-  build docs for new branch): https://readthedocs.org/projects/nwb-schema/builds/
+- [ ] Check that the readthedocs build for this PR succeeds (see auto-triggered PR build):
+  https://readthedocs.org/projects/nwb-schema/builds/
 
 ### After merging:
 1. Create a new git tag. Pull the latest master branch locally, run `git tag [version] --sign`, copy and paste the
