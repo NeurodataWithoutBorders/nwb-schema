@@ -1,4 +1,5 @@
 Prepare for release of nwb-schema [version]
+Target release date: [date]
 
 ### Before merging:
 - [ ] Update requirements versions as needed
