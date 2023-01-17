@@ -1,7 +1,9 @@
 NWB Schema Format
 ========================
 
-A format specification schema for the Neurodata Without Borders: Neurophysiology (NWB:N) data format.
+A format specification schema for the Neurodata Without Borders (NWB) data format.
+
+To get started using NWB, please go to the [NWB overview website](https://nwb-overview.readthedocs.io/en/latest/).
 
 This repo contains:
 
@@ -19,11 +21,13 @@ For more information:
 - The PyNWB Python API for the NWB format is available on `Github <https://github.com/NeurodataWithoutBorders/pynwb>`_
 - The MatNWB Matlab API for the NWB format is available on `Github <https://github.com/NeurodataWithoutBorders/matnwb>`_
 
+The NWB 1.0 format and API are archived in the [NeurodataWithoutBorders/api-python](https://github.com/NeurodataWithoutBorders/api-python) repository. https://github.com/NeurodataWithoutBorders/api-python/blob/master/nwb/nwb_core.py contains the reference schema for the NWB 1 format. 
+
 
 License
 ========================
 
-“nwb-schema” Copyright (c) 2017-2021, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy).  All rights reserved.
+“nwb-schema” Copyright (c) 2017-2023, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy).  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
@@ -41,7 +45,7 @@ You are under no obligation whatsoever to provide any bug fixes, patches, or upg
 Copyright
 ========================
 
-“nwb-schema” Copyright (c) 2017-2021, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy).  All rights reserved.
+“nwb-schema” Copyright (c) 2017-2023, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy).  All rights reserved.
 
 If you have questions about your rights to use or distribute this software, please contact Berkeley Lab's Innovation & Partnerships Office at IPO@lbl.gov.
 
