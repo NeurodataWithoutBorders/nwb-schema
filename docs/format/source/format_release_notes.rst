@@ -4,7 +4,7 @@ Release Notes
 =============
 
 
-2.6.0 (January 5, 2023)
+2.6.0 (January 17, 2023)
 -----------------------
 
 Minor changes
