@@ -93,7 +93,7 @@ groups:
       - null
       doc: Each external image may contain one or more consecutive frames of the full
         ImageSeries. This attribute serves as an index to indicate which frames each file
-        contains, to faciliate random access. The 'starting_frame' attribute, hence,
+        contains, to facilitate random access. The 'starting_frame' attribute, hence,
         contains a list of frame numbers within the full ImageSeries of the first frame
         of each file listed in the parent 'external_file' dataset. Zero-based indexing is
         used (hence, the first element will always be zero). For example, if the

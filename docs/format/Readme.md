@@ -57,14 +57,14 @@ In addition to standard Sphinx options, there are a number of additional options
 
 * ```spec_show_yaml_src``` Boolean indicating whether the YAML sources should be included for the different neurodata types
 * ```spec_show_json_src``` Boolean indicating whether the JSON sources should be included for the different neurodata types
-* ```spec_generate_src_file``` Boolen indicating whether the YAML/JSON sources of the neurodata_types should be rendered in a separate section (True) or in the same location as the main documentation
-* ```spec_show_hierarchy_plots ``` Boolean indicating whether we should generate and show figures of the hierachy defined by the specifications as part of the documentation
+* ```spec_generate_src_file``` Boolean indicating whether the YAML/JSON sources of the neurodata_types should be rendered in a separate section (True) or in the same location as the main documentation
+* ```spec_show_hierarchy_plots ``` Boolean indicating whether we should generate and show figures of the hierarchy defined by the specifications as part of the documentation
 * ```spec_file_per_type``` Boolean indicating whether we should generate separate .inc reStructuredText for each neurodata_type (True)
 or should all text be added to the main file (False)
-* ```spec_show_subgroups_in_tables``` Should subgroups of the main groups be renderd in the table as well. Usually this is disabled since groups are rendered as separte sections in the tex
+* ```spec_show_subgroups_in_tables``` Should subgroups of the main groups be rendered in the table as well. Usually this is disabled since groups are rendered as separate sections in the tex
 * ```spec_appreviate_main_object_doc_in_tables``` Appreviate the documentation of the main object for which a table is rendered in the table. This is commonly set to True as doc of the main object is alrready rendered as the main intro for the section describing the object
 * ```spec_show_title_for_tables``` Add a title for the table showing the specifications.
-* ```spec_show_subgroups_in_seperate_table``` Should top-level subgroups be listed in a seperate table or as part of the main dataset and attributes table
+* ```spec_show_subgroups_in_seperate_table``` Should top-level subgroups be listed in a separate table or as part of the main dataset and attributes table
 * ```spec_table_depth_char``` Char to be used as prefix to indicate the depth of an object in the specification hierarchy. NOTE: The char used should be supported by LaTeX.
 * ```spec_add_latex_clearpage_after_ndt_sections``` Add a LaTeX clearpage after each main section describing a neurodata_type. This helps in LaTeX to keep the ordering of figures, tables, and code blocks consistent in particular when the hierarchy_plots are included.
 * ```spec_resolve_type_inc``` Resolve includes to always show the full list of objects that are part of a type (True) or to show only the parts that are actually new to a current type while only linking to base types (False)

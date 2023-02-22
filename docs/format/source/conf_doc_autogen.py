@@ -58,7 +58,7 @@ spec_generate_src_file = True
 # or should all text be added to the main file
 spec_file_per_type = True
 
-# Should top-level subgroups be listed in a seperate table or as part of the main dataset and attributes table
+# Should top-level subgroups be listed in a separate table or as part of the main dataset and attributes table
 spec_show_subgroups_in_seperate_table = True
 
 # Appreviate the documentation of the main object for which a table is rendered in the table.

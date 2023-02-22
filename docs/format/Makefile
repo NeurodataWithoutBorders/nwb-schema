@@ -22,7 +22,7 @@ I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 help:
 	@echo "To update documentation sources from the format specification please use \`make apidoc'"
 	@echo ""
-	@echo "To build the documenation please use \`make <target>' where <target> is one of"
+	@echo "To build the documentation please use \`make <target>' where <target> is one of"
 	@echo "  fulldoc    to rebuild the apidoc, html, and latexpdf documents all at once"
 	@echo "  html       to make standalone HTML files"
 	@echo "  dirhtml    to make HTML files named index.html in directories"

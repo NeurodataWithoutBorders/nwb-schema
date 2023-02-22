@@ -67,7 +67,7 @@ Major changes
 
    - ``SimultaneousRecordingsTable`` is a ``DynamicTable`` for grouping different intracellular recordings from the
      ``IntracellularRecordingsTable`` together that were recorded simultaneously from different electrodes and for
-     storing metdata about simultaneous recordings
+     storing metadata about simultaneous recordings
    - ``SequentialRecordingsTable`` is a ``DynamicTable`` for grouping different sequential recordings from the
      ``SimultaneousRecordingsTable``  together and storing metadata about sequential recordings
    - ``RepetitionsTable`` a ``DynamicTable`` for grouping different sequential intracellular recordings from the
@@ -761,7 +761,7 @@ Over the course of the development of NWB:N 2 the epoch storage has been refined
      ``epochs``. This simplified the extension of the epochs structure. ``/epochs`` at that point contained a
      compound (row-based) table with neurodata_type ``EpochTable``  that described the start/stop times, tags,
      and a region reference into the ``TimeSeriesIndex`` to identify the timeseries
-     parts the epoch applys to. Note, the types ``Epochs``, ``EpochTable`` and ``TimeSeriesIndex`` have been
+     parts the epoch applies to. Note, the types ``Epochs``, ``EpochTable`` and ``TimeSeriesIndex`` have been
      removed/superseded in subsequent changes. (See `PR396 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/396>`_ and
      `I119 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/119>`_ ).
    - Later, an additional :ref:`DynamicTable <sec-DynamicTable>` for storing dynamic metadata about epochs was then
