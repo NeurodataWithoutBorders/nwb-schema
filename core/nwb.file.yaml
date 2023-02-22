@@ -62,7 +62,7 @@ groups:
       doc: Acquired, raw data.
       quantity: '*'
     - neurodata_type_inc: DynamicTable
-      doc: Tabular data that is relevent to acquisition
+      doc: Tabular data that is relevant to acquisition
       quantity: '*'
   - name: analysis
     doc: Lab-specific and custom scientific analysis of data. There is no defined
@@ -78,7 +78,7 @@ groups:
       doc: Custom analysis results.
       quantity: '*'
     - neurodata_type_inc: DynamicTable
-      doc: Tabular data that is relevent to data stored in analysis
+      doc: Tabular data that is relevant to data stored in analysis
       quantity: '*'
   - name: scratch
     doc: 'A place to store one-off analysis results. Data placed here is not intended for
@@ -355,7 +355,7 @@ groups:
         neurodata_type_inc: SweepTable
         doc: '[DEPRECATED] Table used to group different PatchClampSeries. SweepTable
               is being replaced by IntracellularRecordingsTable and SimultaneousRecordingsTable
-              tabels. Additional SequentialRecordingsTable, RepetitionsTable and
+              tables. Additional SequentialRecordingsTable, RepetitionsTable and
               ExperimentalConditions tables provide enhanced support for experiment metadata.'
         quantity: '?'
       - name: intracellular_recordings

@@ -12,7 +12,7 @@
 # serve to show the default.
 
 import sys
-sys.setrecursionlimit(1500)  # Attempt to fix probelm with pickle on ReadTheDocs
+sys.setrecursionlimit(1500)  # Attempt to fix problem with pickle on ReadTheDocs
 
 import sphinx_rtd_theme
 
