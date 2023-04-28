@@ -61,7 +61,7 @@ groups:
     doc: Annotations made during an experiment.
     attributes:
     - name: resolution
-      dtype: float
+      dtype: float32
       value: -1.0
       doc: Smallest meaningful difference between values in data. Annotations have
         no units, so the value is fixed to -1.0.
@@ -90,7 +90,7 @@ groups:
     doc: Use values >0 if interval started, <0 if interval ended.
     attributes:
     - name: resolution
-      dtype: float
+      dtype: float32
       value: -1.0
       doc: Smallest meaningful difference between values in data. Annotations have
         no units, so the value is fixed to -1.0.
@@ -125,6 +125,10 @@ groups:
   - name: metric
     dtype: text
     doc: The metric used, e.g. phase, amplitude, power.
+  - name: source_channels
+    neurodata_type_inc: DynamicTableRegion
+    doc: DynamicTableRegion pointer to the channels that this decomposition series was generated from.
+    quantity: '?'
   groups:
   - name: bands
     neurodata_type_def: FrequencyBandsTable
@@ -138,7 +142,7 @@ groups:
       doc: Name of the band, e.g. theta.
     - name: band_limits
       neurodata_type_inc: VectorData
-      dtype: float
+      dtype: float32
       dims:
       - num_bands
       - low, high
@@ -149,7 +153,7 @@ groups:
         2 SD on either side of the center.
     - name: band_mean
       neurodata_type_inc: VectorData
-      dtype: float
+      dtype: float32
       dims:
       - num_bands
       shape:
@@ -157,7 +161,7 @@ groups:
       doc: The mean Gaussian filters, in Hz.
     - name: band_stdev
       neurodata_type_inc: VectorData
-      dtype: float
+      dtype: float32
       dims:
       - num_bands
       shape:
@@ -183,24 +187,24 @@ groups:
     quantity: '?'
   - name: spike_times
     neurodata_type_inc: VectorData
-    dtype: double
-    doc: Spike times for each unit.
+    dtype: float64
+    doc: Spike times for each unit in seconds.
     quantity: '?'
     attributes:
     - name: resolution
-      dtype: double
+      dtype: float64
       doc: The smallest possible difference between two spike times. Usually 1 divided by the acquisition sampling rate
         from which spike times were extracted, but could be larger if the acquisition time series was downsampled or
         smaller if the acquisition time series was smoothed/interpolated and it is possible for the spike time to be
         between samples.
-      quantity: '?'
+      required: false
   - name: obs_intervals_index
     neurodata_type_inc: VectorIndex
     doc: Index into the obs_intervals dataset.
     quantity: '?'
   - name: obs_intervals
     neurodata_type_inc: VectorData
-    dtype: double
+    dtype: float64
     dims:
     - num_intervals
     - start|end
@@ -226,7 +230,7 @@ groups:
     quantity: '?'
   - name: waveform_mean
     neurodata_type_inc: VectorData
-    dtype: float
+    dtype: float32
     dims:
     - - num_units
       - num_samples
@@ -243,7 +247,7 @@ groups:
     quantity: '?'
     attributes:
     - name: sampling_rate
-      dtype: float
+      dtype: float32
       doc: Sampling rate, in hertz.
       required: false
     - name: unit
@@ -253,7 +257,7 @@ groups:
       required: false
   - name: waveform_sd
     neurodata_type_inc: VectorData
-    dtype: float
+    dtype: float32
     dims:
     - - num_units
       - num_samples
@@ -270,7 +274,7 @@ groups:
     quantity: '?'
     attributes:
     - name: sampling_rate
-      dtype: float
+      dtype: float32
       doc: Sampling rate, in hertz.
       required: false
     - name: unit
@@ -278,3 +282,49 @@ groups:
       value: volts
       doc: Unit of measurement. This value is fixed to 'volts'.
       required: false
+  - name: waveforms
+    neurodata_type_inc: VectorData
+    dtype: numeric
+    dims:
+      - num_waveforms
+      - num_samples
+    shape:
+      - null
+      - null
+    doc: "Individual waveforms for each spike on each electrode. This is a doubly indexed column. The 'waveforms_index'
+      column indexes which waveforms in this column belong to the same spike event for a given unit, where each waveform
+      was recorded from a different electrode. The 'waveforms_index_index' column indexes the 'waveforms_index' column
+      to indicate which spike events belong to a given unit. For example, if the
+      'waveforms_index_index' column has values [2, 5, 6], then the first 2 elements of the 'waveforms_index' column
+      correspond to the 2 spike events of the first unit, the next 3 elements of the 'waveforms_index' column correspond
+      to the 3 spike events of the second unit, and the next 1 element of the 'waveforms_index' column corresponds to
+      the 1 spike event of the third unit. If the 'waveforms_index' column has values [3, 6, 8, 10, 12, 13], then
+      the first 3 elements of the 'waveforms' column contain the 3 spike waveforms that were recorded from 3 different
+      electrodes for the first spike time of the first unit. See
+      https://nwb-schema.readthedocs.io/en/stable/format_description.html#doubly-ragged-arrays for a graphical
+      representation of this example. When there is only one electrode for each unit (i.e., each spike time is
+      associated with a single waveform), then the 'waveforms_index' column will have values 1, 2, ..., N, where N is
+      the number of spike events. The number of electrodes for each spike event should be the same within a given unit.
+      The 'electrodes' column should be used to indicate which electrodes are associated with each unit, and the order
+      of the waveforms within a given unit x spike event should be in the same order as the electrodes referenced in
+      the 'electrodes' column of this table. The number of samples for each waveform must be the same."
+    quantity: '?'
+    attributes:
+      - name: sampling_rate
+        dtype: float32
+        doc: Sampling rate, in hertz.
+        required: false
+      - name: unit
+        dtype: text
+        value: volts
+        doc: Unit of measurement. This value is fixed to 'volts'.
+        required: false
+  - name: waveforms_index
+    neurodata_type_inc: VectorIndex
+    doc: Index into the waveforms dataset. One value for every spike event. See 'waveforms' for more detail.
+    quantity: '?'
+  - name: waveforms_index_index
+    neurodata_type_inc: VectorIndex
+    doc: Index into the waveforms_index dataset. One value for every unit (row in the table). See 'waveforms' for more
+      detail.
+    quantity: '?'

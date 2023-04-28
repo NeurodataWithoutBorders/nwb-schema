@@ -7,14 +7,12 @@ SPHINXBUILD    = sphinx-build
 SPHINXAPIDOC   = sphinx-apidoc
 PAPER          =
 BUILDDIR       = _build
-SRCDIR         = ../src
 RSTDIR         = source
-PKGNAME        = nwbstorage
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
-ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) source
+ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) $(RSTDIR)
 # the i18n builder cannot share the environment and doctrees with the others
 I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 
@@ -23,7 +21,7 @@ I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 help:
 	@echo "To update documentation sources from the format specification please use \`make apidoc'"
 	@echo ""
-	@echo "To build the documenation please use \`make <target>' where <target> is one of"
+	@echo "To build the documentation please use \`make <target>' where <target> is one of"
 	@echo "  fulldoc    to rebuild the html and latexpdf documents all at once"
 	@echo "  html       to make standalone HTML files"
 	@echo "  dirhtml    to make HTML files named index.html in directories"
@@ -44,6 +42,7 @@ help:
 	@echo "  changes    to make an overview of all changed/added/deprecated items"
 	@echo "  linkcheck  to check all external links for integrity"
 	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
+	@echo "  clean      to clean all documents built by Sphinx in _build"
 
 clean:
 	-rm -rf $(BUILDDIR)/*

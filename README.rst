@@ -1,19 +1,33 @@
 NWB Schema Format
 ========================
 
-A format specification schema for the Neurodata Without Borders: Neurophysiology (NWB:N) data format. 
+A format specification schema for the Neurodata Without Borders (NWB) data format.
 
-- `Learn more about NWB <http://www.nwb.org/>`_.
-- `Learn more about the NWB:N format schema <http://nwb-schema.readthedocs.io>`_
-- `Learn more about the different components of the NWB:N ecosystem <http://neurodatawithoutborders.github.io/>`_
-- The PyNWB Python API for the NWB:N format is available on `Github <https://github.com/NeurodataWithoutBorders/pynwb>`_
-- The MatNWB Matlab API for the NWB:N format is available on `Github <https://github.com/NeurodataWithoutBorders/matnwb>`_
+To get started using NWB, please go to the [NWB overview website](https://nwb-overview.readthedocs.io/en/latest/).
+
+This repo contains:
+
+* The core NWB schema
+* The `Documentation for the NWB schema <http://nwb-schema.readthedocs.io>`_ (editable `here <https://github.com/NeurodataWithoutBorders/nwb-schema/tree/dev/docs/format/source>`_)
+* The `HDF5 storage specification <https://nwb-storage.readthedocs.io/en/latest/storage_hdf5.html>`_ (editable `here <https://github.com/NeurodataWithoutBorders/nwb-schema/blob/dev/docs/storage/source/storage_hdf5.rst>`_)
+
+The NWB schema uses the [NWB specification language](http://schema-language.readthedocs.io/),
+which defines formal structures for describing the organization of
+complex data using basic concepts, e.g., Groups, Datasets, Attributes, and Links.
+
+For more information:
+
+- Learn more about NWB and `nwb.org <http://www.nwb.org/>`_.
+- The PyNWB Python API for the NWB format is available on `Github <https://github.com/NeurodataWithoutBorders/pynwb>`_
+- The MatNWB Matlab API for the NWB format is available on `Github <https://github.com/NeurodataWithoutBorders/matnwb>`_
+
+The NWB 1.0 format and API are archived in the [NeurodataWithoutBorders/api-python](https://github.com/NeurodataWithoutBorders/api-python) repository. https://github.com/NeurodataWithoutBorders/api-python/blob/master/nwb/nwb_core.py contains the reference schema for the NWB 1 format. 
 
 
 License
 ========================
 
-“nwb-schema” Copyright (c) 2017-2019, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy).  All rights reserved.
+“nwb-schema” Copyright (c) 2017-2023, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy).  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
@@ -31,7 +45,7 @@ You are under no obligation whatsoever to provide any bug fixes, patches, or upg
 Copyright
 ========================
 
-“nwb-schema” Copyright (c) 2017-2019, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy).  All rights reserved.
+“nwb-schema” Copyright (c) 2017-2023, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy).  All rights reserved.
 
 If you have questions about your rights to use or distribute this software, please contact Berkeley Lab's Innovation & Partnerships Office at IPO@lbl.gov.
 

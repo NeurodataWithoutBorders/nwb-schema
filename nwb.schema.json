@@ -1,0 +1,280 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "nwb.schema.json",
+  "title": "Schema for the NWB language specification",
+  "description": "A schema for validating NWB YAML files and NWB extensions",
+  "version": "2.0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "groups": {"$ref": "#/definitions/groups"},
+    "attributes": {"$ref": "#/definitions/attributes"},
+    "datasets": {"$ref": "#/definitions/datasets"},
+    "links": {"$ref": "#/definitions/links"},
+    "namespaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "version",
+          "author",
+          "contact"
+        ],
+        "properties": {
+          "name": {"type": "string"},
+          "version": {"type": "string", "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"},
+          "doc": {"type": "string"},
+          "author": {"type": "array", "items": {"type": "string"}},
+          "contact": {"type": "array", "items": {"type": "string", "format": "email"}},
+          "full_name": {"type":  "string"},
+          "date": {"type": "string", "format": "date"},
+          "schema": {
+            "type": "array",
+            "items":  {
+              "type": "object",
+              "oneOf": [
+                {"required": ["namespace"]},
+                {"required": ["source"]}
+              ],
+              "properties": {
+                "namespace": {"type":  "string"},
+                "doc": {"type": "string"},
+                "source": {"type": "string"},
+                "title": {"type": "string"},
+                "neurodata_types": {
+                  "type": "array",
+                  "items":  {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "protectedString": {
+      "type": "string",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+    },
+    "quantity": {
+      "description": "Quantity marker",
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 1
+        },
+        {
+          "type": "string",
+          "enum": [
+            "*",
+            "?",
+            "+",
+            "zero_or_many",
+            "one_or_many",
+            "zero_or_one"
+          ]
+        }
+      ]
+    },
+    "flat_dtype": {
+      "description": "Required string describing the data type of the attribute",
+      "anyOf": [
+        {
+          "type": "string",
+          "enum": [
+            "float",
+            "float32",
+            "double",
+            "float64",
+            "long",
+            "int64",
+            "int",
+            "int32",
+            "int16",
+            "int8",
+            "uint",
+            "uint32",
+            "uint16",
+            "uint8",
+            "uint64",
+            "numeric",
+            "text",
+            "utf",
+            "utf8",
+            "utf-8",
+            "ascii",
+            "bool",
+            "isodatetime"
+          ]
+        },
+        {"$ref": "#/definitions/ref_dtype"}
+      ]
+    },
+    "dtype": {
+      "anyOf": [
+        {"$ref": "#/definitions/flat_dtype"},
+        {"$ref": "#/definitions/compound_dtype"}
+      ]
+    },
+    "dims": {
+      "description": "Optional list describing the names of the dimensions of the data array stored by the attribute (default=None)",
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {"type": "string"},
+          {
+            "type":  "array",
+            "items": {"type":  "string"}
+          }
+        ]
+      }
+    },
+    "shape": {
+      "description": "Optional list describing the allowed shape(s) of the data array stored by the attribute (default=None)",
+      "anyOf": [
+        {"$ref": "#/definitions/shape_spec"},
+        {
+          "type": "array",
+          "items": {"$ref": "#/definitions/shape_spec"}
+        }
+      ]
+    },
+    "shape_spec": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "value": null
+          }
+        ]
+      }
+    },
+    "ref_dtype": {
+      "type": "object",
+      "required": ["target_type", "reftype"],
+      "properties": {
+        "target_type": {
+          "description": "Describes the neurodata_type of the target that the reference points to",
+          "type": "string"
+        },
+        "reftype": {
+          "description": "describes the kind of reference",
+          "type": "string",
+          "enum": ["ref", "reference", "object", "region"]
+        }
+      }
+    },
+    "compound_dtype": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "doc", "dtype"],
+        "properties": {
+          "name": {"$ref": "#/definitions/protectedString"},
+          "doc": {"type": "string"},
+          "dtype": {"$ref": "#/definitions/flat_dtype"}
+        }
+      }
+    },
+    "groups": {
+      "description": "list of groups",
+      "type": "array",
+      "items": {
+        "title": "group",
+        "type": "object",
+        "required": ["doc"],
+        "additionalProperties": false,
+        "anyOf":[
+          {"required": ["neurodata_type_def"]},
+          {"required": ["neurodata_type_inc"]},
+          {"required": ["name"]}
+        ],
+        "properties": {
+          "name": {"$ref":  "#/definitions/protectedString"},
+          "default_name": {"$ref":  "#/definitions/protectedString"},
+          "doc": {"type": "string"},
+          "neurodata_type_def": {"$ref":  "#/definitions/protectedString"},
+          "neurodata_type_inc": {"$ref":  "#/definitions/protectedString"},
+          "quantity": {"$ref":  "#/definitions/quantity"},
+          "linkable": {"type": "boolean"},
+          "datasets": {"$ref": "#/definitions/datasets"},
+          "links": {"$ref": "#/definitions/links"},
+          "groups": {"$ref": "#/definitions/groups"},
+          "attributes": {"$ref": "#/definitions/attributes"}
+        }
+      }
+    },
+    "attributes": {
+      "type": "array",
+      "items": {
+        "title": "attribute",
+        "type": "object",
+        "required": ["doc"],
+        "additionalProperties": false,
+        "properties": {
+          "dtype": {"$ref": "#/definitions/dtype"},
+          "dims": {"$ref": "#/definitions/dims"},
+          "shape": {"$ref": "#/definitions/shape"},
+          "name": {"type": "string"},
+          "doc": {"type": "string"},
+          "required": {"type": "boolean"},
+          "value": {"description": "Optional constant, fixed value for the attribute."},
+          "default_value": {"description": "Optional default value for variable-valued attributes."}
+        }
+      }
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "title": "link",
+        "type": "object",
+        "required": ["target_type", "doc"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {"type": "string"},
+          "doc": {"type": "string"},
+          "target_type": {"type": "string"},
+          "quantity": {"$ref": "#/definitions/quantity"}
+        }
+      }
+    },
+    "datasets": {
+      "type": "array",
+      "items": {
+        "title": "dataset",
+        "type": "object",
+        "required": ["doc"],
+        "additionalProperties": false,
+        "anyOf":[
+          {"required": ["neurodata_type_def"]},
+          {"required": ["neurodata_type_inc"]},
+          {"required": ["name"]}
+        ],
+        "properties": {
+          "name": {"$ref":  "#/definitions/protectedString"},
+          "default_name": {"$ref":  "#/definitions/protectedString"},
+          "doc": {"type": "string"},
+          "dtype": {"$ref": "#/definitions/dtype"},
+          "dims": {"$ref": "#/definitions/dims"},
+          "shape": {"$ref": "#/definitions/shape"},
+          "neurodata_type_def": {"$ref":  "#/definitions/protectedString"},
+          "neurodata_type_inc": {"$ref":  "#/definitions/protectedString"},
+          "quantity": {"$ref":  "#/definitions/quantity"},
+          "linkable": {"type": "boolean"},
+          "attributes": {"$ref": "#/definitions/attributes"},
+          "value": {"description": "Optional constant, fixed value for the attribute."},
+          "default_value": {"description": "Optional default value for variable-valued attributes."}
+        }
+      }
+    }
+  }
+}

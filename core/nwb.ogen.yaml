@@ -24,13 +24,12 @@ groups:
 - neurodata_type_def: OptogeneticStimulusSite
   neurodata_type_inc: NWBContainer
   doc: A site of optogenetic stimulation.
-  quantity: '*'
   datasets:
   - name: description
     dtype: text
     doc: Description of stimulation site.
   - name: excitation_lambda
-    dtype: float
+    dtype: float32
     doc: Excitation wavelength, in nm.
   - name: location
     dtype: text

@@ -2,36 +2,39 @@ datasets:
 - neurodata_type_def: GrayscaleImage
   neurodata_type_inc: Image
   dims:
-  - y
   - x
+  - y
   shape:
   - null
   - null
   doc: A grayscale image.
+  dtype: numeric
 
 - neurodata_type_def: RGBImage
   neurodata_type_inc: Image
   dims:
-  - y
   - x
-  - R, G, B
+  - y
+  - r, g, b
   shape:
   - null
   - null
   - 3
   doc: A color image.
+  dtype: numeric
 
 - neurodata_type_def: RGBAImage
   neurodata_type_inc: Image
   dims:
-  - y
   - x
-  - R, G, B, A
+  - y
+  - r, g, b, a
   shape:
   - null
   - null
   - 4
   doc: A color image with transparency.
+  dtype: numeric
 
 groups:
 - neurodata_type_def: ImageSeries
@@ -40,18 +43,18 @@ groups:
     Sometimes the image data is stored in the file in a raw format while other
     times it will be stored as a series of external image files in the host file system.
     The data field will either be binary data, if the data is stored in the NWB file, or
-    empty, if the data is stored in an external image stack. [frame][y][x] or [frame][z][y][x].
+    empty, if the data is stored in an external image stack. [frame][x][y] or [frame][x][y][z].
   datasets:
   - name: data
     dtype: numeric
     dims:
     - - frame
-      - y
       - x
+      - y
     - - frame
-      - z
-      - y
       - x
+      - y
+      - z
     shape:
     - - null
       - null
@@ -60,8 +63,8 @@ groups:
       - null
       - null
       - null
-    doc: Binary data representing images across frames.
-    quantity: '?'
+    doc: Binary data representing images across frames. If data are stored in an external
+      file, this should be an empty 3D array.
   - name: dimension
     dtype: int32
     dims:
@@ -83,14 +86,14 @@ groups:
     quantity: '?'
     attributes:
     - name: starting_frame
-      dtype: int
+      dtype: int32
       dims:
       - num_files
       shape:
       - null
       doc: Each external image may contain one or more consecutive frames of the full
         ImageSeries. This attribute serves as an index to indicate which frames each file
-        contains, to faciliate random access. The 'starting_frame' attribute, hence,
+        contains, to facilitate random access. The 'starting_frame' attribute, hence,
         contains a list of frame numbers within the full ImageSeries of the first frame
         of each file listed in the parent 'external_file' dataset. Zero-based indexing is
         used (hence, the first element will always be zero). For example, if the
@@ -98,7 +101,7 @@ groups:
         the second file has 10 frames, and the third file has 20 frames, then this
         attribute will have values [0, 5, 15]. If there is a single external file that
         holds all of the frames of the ImageSeries (and so there is a single element in
-        the 'external_file' dataset), then this attribute should have value [0]. 
+        the 'external_file' dataset), then this attribute should have value [0].
   - name: format
     dtype: text
     default_value: raw
@@ -106,6 +109,11 @@ groups:
       contains the path information to the image files. If this is 'raw', then the raw
       (single-channel) binary data is stored in the 'data' dataset. If this attribute
       is not present, then the default format='raw' case is assumed.
+    quantity: '?'
+  links:
+  - name: device
+    target_type: Device
+    doc: Link to the Device object that was used to capture these images.
     quantity: '?'
 
 - neurodata_type_def: ImageMaskSeries
@@ -142,6 +150,25 @@ groups:
     - - 3
     doc: Width, height and depth of image, or imaged area, in meters.
     quantity: '?'
+  - name: data
+    dtype: numeric
+    dims:
+    - - frame
+      - x
+      - y
+    - - frame
+      - x
+      - y
+      - r, g, b
+    shape:
+    - - null
+      - null
+      - null
+    - - null
+      - null
+      - null
+      - 3
+    doc: Images presented to subject, either grayscale or RGB
   - name: orientation
     dtype: text
     doc: Description of image relative to some reference frame (e.g., which way is
@@ -151,20 +178,45 @@ groups:
 - neurodata_type_def: IndexSeries
   neurodata_type_inc: TimeSeries
   doc: Stores indices to image frames stored in an ImageSeries. The purpose of the
-    ImageIndexSeries is to allow a static image stack to be stored somewhere, and
-    the images in the stack to be referenced out-of-order. This can be for the display
-    of individual images, or of movie segments (as a movie is simply a series of images).
-    The data field stores the index of the frame in the referenced ImageSeries, and
-    the timestamps array indicates when that image was displayed.
+    IndexSeries is to allow a static image stack to be stored in an Images
+    object, and the images in the stack to be referenced out-of-order. This can be for
+    the display of individual images, or of movie segments (as a movie is simply a
+    series of images). The data field stores the index of the frame in the referenced
+    Images object, and the timestamps array indicates when that image
+    was displayed.
   datasets:
   - name: data
-    dtype: int
+    dtype: uint32
     dims:
     - num_times
     shape:
     - null
-    doc: Index of the frame in the referenced ImageSeries.
+    doc: Index of the image (using zero-indexing) in the linked Images object.
+    attributes:
+    - name: conversion
+      dtype: float32
+      doc: This field is unused by IndexSeries.
+      required: false
+    - name: resolution
+      dtype: float32
+      doc: This field is unused by IndexSeries.
+      required: false
+    - name: offset
+      dtype: float32
+      doc: This field is unused by IndexSeries.
+      required: false
+    - name: unit
+      dtype: text
+      value: N/A
+      doc: This field is unused by IndexSeries and has the value N/A.
   links:
   - name: indexed_timeseries
     target_type: ImageSeries
-    doc: Link to ImageSeries object containing images that are indexed.
+    doc: Link to ImageSeries object containing images that are indexed. Use of this link
+      is discouraged and will be deprecated. Link to an Images type instead.
+    quantity: '?'
+  - name: indexed_images
+    target_type: Images
+    doc: Link to Images object containing an ordered set of images that are indexed. The Images object
+      must contain a 'ordered_images' dataset specifying the order of the images in the Images type.
+    quantity: '?'
