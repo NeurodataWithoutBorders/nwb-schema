@@ -1,2 +1,4 @@
 hdmf-docutils
 pynwb
+scipy>=1.4
+matplotlib
