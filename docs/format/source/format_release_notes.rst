@@ -4,13 +4,6 @@ Release Notes
 =============
 
 
-2.7.0 (Upcoming)
-----------------
-
-Minor changes
-^^^^^^^^^^^^^
-- Added requirements.txt to docs due to ReadtheDocs changes. (#548)
-
 2.6.0 (January 17, 2023)
 -----------------------
 
