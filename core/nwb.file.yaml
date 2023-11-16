@@ -443,7 +443,7 @@ groups:
   doc: Lab-specific meta-data.
 
 - neurodata_type_def: Subject
-  neurodata_type_inc: NWBContainer
+  neurodata_type_inc: NWBTermSetContainer
   doc: Information about the animal or person from which the data was measured.
   datasets:
   - name: age

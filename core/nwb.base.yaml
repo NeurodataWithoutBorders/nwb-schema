@@ -74,6 +74,18 @@ groups:
   doc: An abstract data type for a generic container storing collections of data and
     metadata. Base type for all data and metadata containers.
 
+- neurodata_type_def: NWBTermSetContainer
+  neurodata_type_inc: NWBContainer
+  doc: An abstract data type for a generic container storing collections of data and
+    metadata. Base type for all data and metadata containers. This also includes an
+    attribute for a TermSet.
+  attributes:
+    - name: termset_path
+      dtype: text
+      default_value: '...'
+      doc: The path to the termset used to validate data or attributes.
+      required: False
+
 - neurodata_type_def: NWBDataInterface
   neurodata_type_inc: NWBContainer
   doc: An abstract data type for a generic container storing collections of data,
