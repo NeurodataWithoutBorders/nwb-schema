@@ -3,6 +3,12 @@
 Release Notes
 =============
 
+2.7.0 (Upcoming)
+-----------------------
+
+Minor changes
+^^^^^^^^^^^^^
+- Added optional ``stimulus_template`` column to ``IntracellularRecordingsTable`` (#545)
 
 2.6.0 (January 17, 2023)
 -----------------------
