@@ -289,7 +289,7 @@ groups:
   - name: stimulus_template
     neurodata_type_inc: TimeSeriesReferenceVectorData
     doc: Column storing the reference to the stimulus template for the recording (rows).
-    quantity: ?
+    quantity: '?'
 
 - neurodata_type_def: IntracellularResponsesTable
   neurodata_type_inc: DynamicTable
