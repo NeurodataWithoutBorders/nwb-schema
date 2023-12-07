@@ -1,2 +1,3 @@
 hdmf-docutils
 pynwb
+matplotlib
