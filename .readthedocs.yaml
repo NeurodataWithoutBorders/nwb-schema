@@ -21,7 +21,6 @@ formats: all
 python:
   install:
     - requirements: requirements-doc.txt
-    - path: .
 
 # Optionally include all submodules
 submodules:
