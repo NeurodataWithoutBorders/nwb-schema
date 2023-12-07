@@ -3,6 +3,12 @@
 Release Notes
 =============
 
+2.7.0 (Upcoming)
+----------------
+
+Minor changes
+^^^^^^^^^^^^^
+- Fixed typos in docstrings. (#xxx)
 
 2.6.0 (January 17, 2023)
 -----------------------
