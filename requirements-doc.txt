@@ -2,3 +2,4 @@ hdmf-docutils
 pynwb
 sphinx
 sphinx_rtd_theme
+matplotlib
