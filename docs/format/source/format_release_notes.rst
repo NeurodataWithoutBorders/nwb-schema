@@ -9,7 +9,7 @@ Release Notes
 Minor changes
 ^^^^^^^^^^^^^
 - Fixed typos in docstrings. (#560)
-- Deprecated `ImagingRetinotopy` neurodata type.
+- Deprecated `ImagingRetinotopy` neurodata type. (#565)
 
 2.6.0 (January 17, 2023)
 -----------------------
