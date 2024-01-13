@@ -137,6 +137,9 @@ groups:
       - neurodata_type_inc: NWBDataInterface
         doc: Generic NWB data interfaces, usually from an extension, containing data of presented stimuli.
         quantity: '*'
+      # even though TimeSeries is a NWBDataInterface, we do not remove TimeSeries
+      # in order to maintain backwards compatibility in the APIs that
+      # use the neurodata_type_inc from the schema to set the variable name
     - name: templates
       doc: 'Template stimuli. Timestamps in templates are based on stimulus
         design and are relative to the beginning of the stimulus. When templates are
