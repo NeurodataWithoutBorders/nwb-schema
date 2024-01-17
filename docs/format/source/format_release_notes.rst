@@ -3,6 +3,15 @@
 Release Notes
 =============
 
+2.7.0 (Upcoming)
+----------------
+
+Minor changes
+^^^^^^^^^^^^^
+- Fixed typos in docstrings. (#560)
+- Deprecated `ImagingRetinotopy` neurodata type. (#565)
+- Modified `OptogeneticSeries` to allow 2D data, primarily in extensions of `OptogeneticSeries`. (#564)
+- Added optional ``stimulus_template`` column to ``IntracellularStimuliTable`` as part of the ``IntracellularRecordingsTable``. (#545)
 
 2.6.0 (January 17, 2023)
 -----------------------
@@ -170,7 +179,7 @@ Bug Fixes
 
 - Use "text" data type for electrode table columns "location" and "group_name". Previously, only ASCII was allowed.
 
-- Added to description to make electrode x,y,z consistent with CCF reference. http://help.brain-map.org/display/mousebrain/API#API-DownloadAtlas3-DReferenceModels
+- Added to description to make electrode x,y,z consistent with CCF reference. https://allensdk.readthedocs.io/en/latest/reference_space.html
 
 - Added "position" dataset with compound data type x,y,z in ElectrodeGroup.
 
@@ -281,7 +290,7 @@ Bug Fixes
   - NWB is cumbersome as a format for day-to-day work. There is a lot of overheard to save one-off analysis results to an NWB file. To save new datasets, a user has write an extension. This is a lot of work for a result that may just be tossed out.
   - "scratch" is now an optional top-level group under NWBFile that can hold NWBContainer groups and ScratchData datasets
   - The scratch space is explicitly for non-standardized data that is not intended for reuse
-    by others. Standard NWB:N types, and extensions if required, should always be used for any data that you
+    by others. Standard NWB types, and extensions if required, should always be used for any data that you
     intend to share. As such, published data should not include scratch data and a user should be able
     to ignore any data stored in scratch to use a file.
   - See https://github.com/NeurodataWithoutBorders/nwb-schema/issues/286 for details
@@ -338,13 +347,13 @@ Added new base data types: ``NWBContainer``, ``NWBData``, ``NWBDataInterface``
 **Specific Changes**
 
     * :ref:`NWBContainer <sec-NWBContainer>` defines a common base type for all Groups with a ``neurodata_type`` and
-      is now the base type of all main data group types in the NWB:N format,
+      is now the base type of all main data group types in the NWB format,
       including :ref:`TimeSeries <sec-TimeSeries>`. This also means that all group types now inherit the required
       ``help`` and ``source`` attribute from ``NWBContainer``. A number of neurodata_types have been updated
       to add the missing ``help`` (see
       https://github.com/NeurodataWithoutBorders/nwb-schema/pull/37/files for details)
     * :ref:`NWBDataInterface <sec-NWBDataInterface>` extends :ref:`NWBContainer <sec-NWBContainer>` and replaces
-      ``Interface`` from NWB:N 1.x. It has been renamed to ease intuition. :ref:`NWBDataInterface <sec-NWBDataInterface>`
+      ``Interface`` from NWB 1.x. It has been renamed to ease intuition. :ref:`NWBDataInterface <sec-NWBDataInterface>`
       serves as base type for primary data (e.g., experimental or analysis data) and is used to
       distinguish in the schema between non-metadata data containers and metadata containers.
       (see https://github.com/NeurodataWithoutBorders/nwb-schema/pull/116/files for details)
@@ -371,8 +380,8 @@ Support row-based and column-based tables
       rows via region-references to a single dataset (e.g., a set of electrodes), 2) make it
       easy to add rows by appending to a single dataset, 3) make it easy to read individual rows
       of a table (but require reading the full table to extract the data of a single column).
-      Row-based tables are used to simplify, e.g., the organization of electrode-metadata in NWB:N 2 (see above).
-      (See the `specification language release notes <http://schema-language.readthedocs.io/en/latest/specification_language_release_notes.html#release-notes>`_
+      Row-based tables are used to simplify, e.g., the organization of electrode-metadata in NWB 2 (see above).
+      (See the `specification language release notes <https://schema-language.readthedocs.io/en/latest/release_notes.html>`_
       for details about the addition of compound data types in the schema).
 
       * *Referencing rows in a row-based tables:* Subsets of rows can referenced directly via a region-reference to the
@@ -390,7 +399,7 @@ Support row-based and column-based tables
 
       * *Referencing rows in column-based tables:*  As :ref:`DynamicTable <sec-DynamicTable>` consist of multiple
         datasets (compared to row-based tables which consists of a single 1D dataset with a compound datatype)
-        is not possible to reference a set of rows with a single region reference. To address this issue, NWB:N defines
+        is not possible to reference a set of rows with a single region reference. To address this issue, NWB defines
         :ref:`DynamicTableRegion <sec-DynamicTableRegion>` (added later in `PR634 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/634>`_)
         dataset type, which stores a list of integer indices (row index) and also has an attribute ``table`` with
         the object reference to the corresponding :ref:`DynamicTable <sec-DynamicTable>`.
@@ -555,21 +564,21 @@ Improved storage of ROIs
   to produce the ROIs.
 * **Support 3D ROIs:** Allow users to add 3D ROIs collected from a multi-plane image.
 
-**Changes:** The main types for storing ROIs in NWB:N 2 are  :ref:`ImageSegmentation <sec-ImageSegmentation>`
+**Changes:** The main types for storing ROIs in NWB 2 are  :ref:`ImageSegmentation <sec-ImageSegmentation>`
 which stores 0 or more  :ref:`PlaneSegmentation <sec-PlaneSegmentation>`. :ref:`PlaneSegmentation <sec-PlaneSegmentation>`
 is a :ref:`DynamicTable <sec-DynamicTable>` for managing image segmentation results of a specific imaging plane.
 The ROIs are referenced by :ref:`RoiResponseSeries <sec-RoiResponseSeries>` which stores the ROI responses over an
-imaging plane. During the development of NWB:N 2 the management of ROIs has been improved several times. Here we
+imaging plane. During the development of NWB 2 the management of ROIs has been improved several times. Here we
 outline the main changes (several of which were ultimately merged together in the
 :ref:`PlaneSegmentation <sec-PlaneSegmentation>` type).
 
 
-1. Added neurodata_type  ``ImageMasks`` replacing ``ROI.img_mask`` (from NWB:N 1.x) with
+1. Added neurodata_type  ``ImageMasks`` replacing ``ROI.img_mask`` (from NWB 1.x) with
    **(a)** a 3D dataset with shape [num_rois, num_x_pixels, num_y_pixels] (i.e. an array of planar image masks) or
    **(b)** a 4D dataset with shape [num_rois, num_x_pixels, num_y_pixels, num_z_pixels] (i.e. an array of volumetric image masks)
    ``ImageMasks`` was subsequently merged with :ref:`PlaneSegmentation <sec-PlaneSegmentation>`
    and is represented by the :ref:`VectorData <sec-VectorData>` table column ``image_mask`` in the table.
-2. Added neurodata_type ``PixelMasks`` which replaces ROI.pix_mask/ROI.pix_mask_weight (from NWB:N 1.x)
+2. Added neurodata_type ``PixelMasks`` which replaces ROI.pix_mask/ROI.pix_mask_weight (from NWB 1.x)
    with a table that has columns “x”, “y”, and “weight” (i.e. combining ROI.pix_mask and ROI.pix_mask_weight
    into a single table).  ``PixelMasks`` was subsequently merged with :ref:`PlaneSegmentation <sec-PlaneSegmentation>`
    and is represented by the :ref:`VectorData <sec-VectorData>` dataset ``pixel__mask`` that is referenced from the table
@@ -581,7 +590,7 @@ outline the main changes (several of which were ultimately merged together in th
 4. Added neurodata_type ``ROITable`` which defines a table  for storing references to the image mask
    and pixel mask for each ROI (see item 1,2). The ``ROITable`` type was subsequently merged with the
    :ref:`PlaneSegmentation <sec-PlaneSegmentation>`  type and as such does no longer appear as a separate type in the
-   NWB:N 2 schema but :ref:`PlaneSegmentation <sec-PlaneSegmentation>` takes the function of ``ROITable``.
+   NWB 2 schema but :ref:`PlaneSegmentation <sec-PlaneSegmentation>` takes the function of ``ROITable``.
 5. Added neurodata_type ``ROITableRegion`` for referencing a subset of elements in an ROITable. Subsequently
    ``ROITableRegion`` has been replaced by :ref:`DynamicTableRegion <sec-DynamicTableRegion>` as the ``ROITable``
    changed to a :ref:`DynamicTable <sec-DynamicTable>` and was merged with
@@ -620,17 +629,17 @@ For additional details see also:
 Improved storage of unit-based data
 """""""""""""""""""""""""""""""""""
 
-In NWB:N 1.0.x data about spike units was stored across a number of different neurodata_types, specifically
+In NWB 1.0.x data about spike units was stored across a number of different neurodata_types, specifically
 ``UnitTimes``, ``ClusterWaveforms``, and ``Clustering``. This structure had several critical shortcomings,
-which were addressed in three main phases during the development of NWB:N 2.
+which were addressed in three main phases during the development of NWB 2.
 
-**Problem 1: Efficiency:** In NWB:N 1.x each unit was stored as a separate group ``unit_n`` containing the ``times``
+**Problem 1: Efficiency:** In NWB 1.x each unit was stored as a separate group ``unit_n`` containing the ``times``
 and ``unit_description`` for unit with index ``n``. In cases where users have a very large number of units, this
 was problematic with regard to performance. To address this challenge ``UnitTimes`` has been
-restructured in NWB:N 2 to use the new :ref:`VectorData <sec-VectorData>` ,
+restructured in NWB 2 to use the new :ref:`VectorData <sec-VectorData>` ,
 :ref:`VectorIndex <sec-VectorIndex>`, :ref:`ElementIdentifiers <sec-ElementIdentifiers>` data structures
-(see :ref:`sec-rn-vectordata-nwb2`).Specifically, NWB:N 2 replaced ``unit_n`` (from NWB:N 1.x, also referred to
-by neurodata_type ``SpikeUnit`` in NWB:N 2beta) groups in ``UnitTimes``  with the following data:
+(see :ref:`sec-rn-vectordata-nwb2`).Specifically, NWB 2 replaced ``unit_n`` (from NWB 1.x, also referred to
+by neurodata_type ``SpikeUnit`` in NWB 2beta) groups in ``UnitTimes``  with the following data:
 
     * ``unit_ids`` : :ref:`ElementIdentifiers <sec-ElementIdentifiers>` dataset for storing unique ids for each element
     * ``spike_times_index``: :ref:`VectorIndex <sec-VectorIndex>` dataset with region references into the spike times dataset
@@ -651,17 +660,17 @@ See also `I116 (nwb-schema) <https://github.com/NeurodataWithoutBorders/nwb-sche
    and :ref:`ElementIdentifiers <sec-ElementIdentifiers>` (``unit_ids``) data structures.
 
 **Problem 2: Dynamic Metadata:** Users indicated that it was not easy to store user-defined  metadata about units.
-To address this challenge, NWB:N 2 added an optional top-level group ``units/`` (which was subsequently moved to
+To address this challenge, NWB 2 added an optional top-level group ``units/`` (which was subsequently moved to
 ``/intervals/units``)  which is a :ref:`DynamicTable <sec-DynamicTable>`
 with ``id`` and ``description`` columns and optional additional user-defined table columns.
 See `PR597 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/597>`_ for detailed code changes. See
-the `PyNWB docs <https://pynwb.readthedocs.io/en/latest/tutorials/general/file.html#units>`__ for a
+the `PyNWB docs <https://pynwb.readthedocs.io/en/stable/tutorials/general/plot_read_basics.html#access-single-unit-data>`__ for a
 short tutorial on how to use unit metadata. See :ref:`NWBFile <sec-NWBFile>` *Groups: /units* for an overview of the
 unit schema.
 
 **Problem 3: Usability:** Finally, users found that storing unit data was
 challenging due to the fact that the information was distributed across a number of different
-types. To address this challenge, NWB:N 2.0 integrates ``UnitTimes``, ``ClusterWaveforms``, and ``Clustering`` (deprecated)
+types. To address this challenge, NWB 2.0 integrates ``UnitTimes``, ``ClusterWaveforms``, and ``Clustering`` (deprecated)
 into the new column-based table ``units/`` (i.e., ``intervals/units``) (which still uses the optimized vector data
 storage to efficiently store spike times). See for discussions and
 `I674 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/issues/674>`_
@@ -670,13 +679,13 @@ request `PR684 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/6
 
 
 Together these changes have resulted in the following improved structure for storing unit data and metadata in
-NWB:N 2.0.
+NWB 2.0.
 
 .. figure:: figures/unit_times_refactor_nwb2_release_notesV2_Part2.*
    :width: 100%
    :alt: Spiking units data structure overview
 
-   Overview of the data structure for storing spiking unit data and metadata in NWB:N 2.0.
+   Overview of the data structure for storing spiking unit data and metadata in NWB 2.0.
 
 In addition to ``spike_times``, the units table includes the following optional columns:
    - ``obs_intervals``: intervals indicating the time intervals over which this unit was recorded.
@@ -693,7 +702,7 @@ Improved support for sweep-based information
 
 **Reason:** In Icephys it is common to have sweeps (i.e., a group of PatchClampSeries belonging together, were up
 to two TimeSeries are from one electrode, including other TimeSeries not related to an electrode (aka TTL channels)).
-NWB:N 1.0.x did not support the concept of sweeps, so it was not possible to link different TimeSeries for sweeps.
+NWB 1.0.x did not support the concept of sweeps, so it was not possible to link different TimeSeries for sweeps.
 The goal of this change is to allow users to find the TimeSeries which are from one sweep without having to iterate
 over all present TimeSeries.
 
@@ -708,7 +717,7 @@ See `I499 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/issues/499>`
 Improved specification of reference time stamp(s)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To improve the specification of reference time, NWB:N adopts ISO8061 for storing datetimes and adds
+To improve the specification of reference time, NWB adopts ISO8061 for storing datetimes and adds
 ``timestamps_reference_time`` as explicit zero for all timestamps in addition to the ``session_start_time``.
 
 Improve standardization of reference time specification using ISO8061
@@ -753,9 +762,9 @@ Improved storage of epoch data
 TimeSeries that the Epoch applies to was stored as a single group. This structure is inefficient for storing
 large numbers of Epochs.
 
-**Format Changes:** In NWB:N 2 epochs are stored via a :ref:`TimeIntervals <sec-TimeIntervals>` table (i.e., a
+**Format Changes:** In NWB 2 epochs are stored via a :ref:`TimeIntervals <sec-TimeIntervals>` table (i.e., a
 :ref:`DynamicTable <sec-DynamicTable>` for storing time intervals) that is stored in the group ``/intervals/epochs``.
-Over the course of the development of NWB:N 2 the epoch storage has been refined in several phases:
+Over the course of the development of NWB 2 the epoch storage has been refined in several phases:
 
    - First, we create a new neurodata_type ``Epochs`` which was included in :ref:`NWBFile <sec-NWBFile>` as the group
      ``epochs``. This simplified the extension of the epochs structure. ``/epochs`` at that point contained a
@@ -781,12 +790,12 @@ Improved support for trial-based data
 
 **Change:** Add dedicated concept for storing trial data.
 
-**Reason:** Users indicated that it was not easy to store trial data in NWB:N 1.x.
+**Reason:** Users indicated that it was not easy to store trial data in NWB 1.x.
 
 **Format Changes:** Added optional group ``/intervals/trials/`` which is a :ref:`DynamicTable <sec-DynamicTable>`
 with ``id``, ``start_time``, and ``stop_time`` columns and optional additional user-defined table columns.
 See `PR536 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_ for detailed code changes. See
-the `PyNWB docs <https://pynwb.readthedocs.io/en/latest/tutorials/general/file.html?highlight=Trial#trials>`__ for a
+the `PyNWB docs <https://pynwb.readthedocs.io/en/stable/tutorials/general/plot_file.html#trials>`__ for a
 short tutorial on how to use trials. See :ref:`NWBFile <sec-NWBFile>` *Groups: /trials* for an overview of the trial
 schema. **Note:** Originally trials was added a top-level group trials which was then later moved to ``/intervals/trials``
 as part of the generalization of time interval storage as part of
@@ -821,7 +830,7 @@ Replaced Implicit Links/Data-Structures with Explicit Links
 
 **Change** Replace implicit links with explicit soft-links to the corresponding HDF5 objects where possible, i.e.,
 use explicit HDF5 mechanisms for expressing basic links between data rather than implicit ones that require
-users/developers to know how to use the specific data. In addition to links, NWB:N 2 adds support for object-
+users/developers to know how to use the specific data. In addition to links, NWB 2 adds support for object-
 and region references, enabling the creation of datasets (i.e., arrays) that store links to other data objects
 (groups or datasets) or regions (i.e., subsets) of datasets.
 
@@ -846,7 +855,7 @@ kind of links.
     - Integer array dataset ``electrode_idx`` of ``<ElectricalSeries>`` is now a dataset ``electrodes`` of type
       :ref:`DynamicTableRegion <sec-DynamicTableRegion>` pointing to a region of the ``ElectrodeTable`` stored in ``/general/extracellular_ephys/electrodes``.
     - Text dataset ``/general/extracellular_ephys/<electrode_group_X>/device`` is now a link ``<ElectrodeGroup>/device``
-    - The Epochs , Unit, Trial and other dynamic tables in NWB:N 2 also support (and use) region and object references
+    - The Epochs , Unit, Trial and other dynamic tables in NWB 2 also support (and use) region and object references
       to explicitly reference other data (e.g., vector data as part of the unit tables).
 
 
@@ -950,13 +959,13 @@ Removed ``source`` field
 
 **Change:** Remove required attribute ``source`` from all neurodata_types
 
-**Reason:** In NWB:N 1.0.x the attribute ``source`` was defined as a free text entry
+**Reason:** In NWB 1.0.x the attribute ``source`` was defined as a free text entry
 intended for storage of provenance information. In practice, however, this
 attribute was often either ignored, contained no useful information, and/or
 was misused to encode custom metadata (that should have been defined via extensions).
 
 **Specific Change:** Removed attribute ``source`` from the core base neurodata_types
-which effects a large number of the types throughout the NWB:N schema. For further
+which effects a large number of the types throughout the NWB schema. For further
 details see `PR695 (PyNWB) <https://github.com/NeurodataWithoutBorders/pynwb/pull/695>`_)
 
 
@@ -993,7 +1002,7 @@ Improved organization of processed data
     * With :ref:`NWBDataInterface <sec-NWBDataInterface>` now being a general base class of
       :ref:`TimeSeries <sec-TimeSeries>`, this means that it is now
       possible to define data processing types that directly inherit from :ref:`TimeSeries <sec-TimeSeries>`,
-      which was not possible in NWB:N 1.x.
+      which was not possible in NWB 1.x.
     * *Interface* has been renamed to *NWBDataInterface* to avoid confusion and ease intuition (see above)
     * All *Interface* types in the original format had fixed names. The fixed names have been replaced by
       specification of corresponding default names. This change enables storage of
@@ -1010,7 +1019,7 @@ Simplified organization of acquisition data
       (not just TimeSeries).
     * ``/acquisition/timeseries`` and ``/acquisition/images`` have been removed
     * Created a new neurodata_type :ref:`Images <sec-Images>` for storing a collection of images to replace
-      ``acquisition/images`` and provide a more general container for use elsewhere in NWB:N (i.e., this is not
+      ``acquisition/images`` and provide a more general container for use elsewhere in NWB (i.e., this is not
       meant to replace :ref:`ImageSeries <sec-ImageSeries>`)
 
 Other changes:
@@ -1022,20 +1031,20 @@ Other changes:
 Improved governance and accessibility
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Change:** Updated release and documentation mechanisms for the NWB:N format specification
+**Change:** Updated release and documentation mechanisms for the NWB format specification
 
-**Reason:** Improve governance, ease-of-use, extensibility, and accessibility of the NWB:N format specification
+**Reason:** Improve governance, ease-of-use, extensibility, and accessibility of the NWB format specification
 
 **Specific Changes**
 
-    - The NWB:N format specification is now released in separate Git repository
+    - The NWB format specification is now released in separate Git repository
     - Format specifications are released as YAML files (rather than via Python .py file included in the API)
     - Organized core types into a set of smaller YAML files to ease overview and maintenance
     - Converted all documentation documents to Sphinx reStructuredText to improve portability, maintainability,
       deployment, and public access
     - Sphinx documentation for the format are auto-generated from the YAML sources to ensure consistency between
       the specification and documentation
-    - The PyNWB API now provides dedicated data structured to interact with NWB:N specifications, enabling users to
+    - The PyNWB API now provides dedicated data structured to interact with NWB specifications, enabling users to
       programmatically access and generate format specifications
 
 
@@ -1043,10 +1052,10 @@ Improved governance and accessibility
 Specification language changes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Change:** Numerous changes have been made to the specification language itself in NWB:N 2.0. Most changes to
+**Change:** Numerous changes have been made to the specification language itself in NWB 2.0. Most changes to
 the specification language effect mainly how the format is specified, rather than the actual structure of the format.
 The changes that have implications on the format itself are described next. For an overview and discussion of the
-changes to the specification language see `specification language release notes <http://schema-language.readthedocs.io/en/latest/specification_language_release_notes.html#release-notes>`_.
+changes to the specification language see `specification language release notes <https://schema-language.readthedocs.io/en/latest/release_notes.html>`_.
 
 Specification of dataset dimensions
 """""""""""""""""""""""""""""""""""
@@ -1085,7 +1094,7 @@ Removed datasets defined via autogen
 of all datasets that were produced via autogen it was decided that all autogen datasets should be
 removed from the format.
 
-**Reason** The main reasons for removal of autogen dataset is to ease use and maintenance of NWB:N files by
+**Reason** The main reasons for removal of autogen dataset is to ease use and maintenance of NWB files by
 1) avoiding redundant storage of information (i.e., improve normalization of data) and 2) avoiding
 dependencies between data (i.e., datasets having to be updated due to changes in other locations in a file).
 
@@ -1134,7 +1143,7 @@ the specification, i.e., any objects that are not part of the specification are 
 1.0.x (09/2015 - 04/2017)
 -------------------------
 
-NWB:N 1.0.x has been deprecated. For documents relating to the 1.0.x schema please see
+NWB 1.0.x has been deprecated. For documents relating to the 1.0.x schema please see
 `https://github.com/NeurodataWithoutBorders/specification_nwbn_1_0_x <https://github.com/NeurodataWithoutBorders/specification_nwbn_1_0_x>`_.
 
 

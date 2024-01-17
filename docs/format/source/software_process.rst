@@ -128,7 +128,7 @@ could point to two different versions of the schema.
 For the same reason, it is important that all public releases of the APIs, PyNWB and MatNWB, contain a publicly
 released version of nwb-schema. Starting with nwb-schema version 2.2.0, the dev branch and all public releases of PyNWB
 and MatNWB include only publicly released versions of nwb-schema. For more details, see the
-[PyNWB software process documentation](https://pynwb.readthedocs.io/en/latest/software_process.html).
+[PyNWB software process documentation](https://pynwb.readthedocs.io/en/stable/software_process.html).
 
 The [NWB Extensions Versioning Guidelines](https://nwb-extensions.github.io/versioning_guidelines) are used to guide
 versioning of the NWB core schema, as well as extensions to NWB.
