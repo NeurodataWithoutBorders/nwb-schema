@@ -41,7 +41,7 @@ groups:
     - name: bounds
       dtype: float32
       doc: The boundary range for the data. The units are the same as the units for the data.
-      quantity: '?'
+      required: false
   - name: reference_frame
     dtype: text
     doc: Description defining what exactly 'straight-ahead' means.
