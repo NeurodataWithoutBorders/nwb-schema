@@ -39,7 +39,7 @@ groups:
         To access the data in these units, multiply 'data' by 'conversion' and add 'offset'.
       required: false
     - name: bounds
-      dtype: numeric
+      dtype: float32
       doc: The boundary range for the data. The units are the same as te units for the data.
       quantity: '?'
   - name: reference_frame
