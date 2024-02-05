@@ -132,7 +132,8 @@ groups:
       #   doc: TimeSeries objects containing data of presented stimuli.
       #   quantity: '*'
       - neurodata_type_inc: NWBDataInterface
-        doc: Generic NWB data interfaces, usually from an extension, containing data of presented stimuli.
+        doc: 'TimeSeries objects or generic NWB data interfaces, usually from an extension, '
+          'containing data of presented stimuli.'
         quantity: '*'
       - neurodata_type_inc: DynamicTable
         doc: DynamicTable objects containing data of presented stimuli.
