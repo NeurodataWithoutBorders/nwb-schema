@@ -128,11 +128,11 @@ groups:
     - name: presentation
       doc: Stimuli presented during the experiment.
       groups:
-      # - neurodata_type_inc: TimeSeries
-      #   doc: TimeSeries objects containing data of presented stimuli.
-      #   quantity: '*'
+      - neurodata_type_inc: TimeSeries
+        doc: TimeSeries objects containing data of presented stimuli.
+        quantity: '*'
       - neurodata_type_inc: NWBDataInterface
-        doc: 'TimeSeries objects or generic NWB data interfaces, usually from an extension, '
+        doc: 'Generic NWB data interfaces, usually from an extension, '
           'containing data of presented stimuli.'
         quantity: '*'
       - neurodata_type_inc: DynamicTable
