@@ -9,9 +9,10 @@ Release Notes
 Minor changes
 ^^^^^^^^^^^^^
 - Fixed typos in docstrings. (#560)
-- Deprecated `ImagingRetinotopy` neurodata type. (#565)
-- Modified `OptogeneticSeries` to allow 2D data, primarily in extensions of `OptogeneticSeries`. (#564)
+- Deprecated ``ImagingRetinotopy`` neurodata type. (#565)
+- Modified ``OptogeneticSeries`` to allow 2D data, primarily in extensions of ``OptogeneticSeries``. (#564)
 - Added optional ``stimulus_template`` column to ``IntracellularStimuliTable`` as part of the ``IntracellularRecordingsTable``. (#545)
+- Added support for ``NWBDataInterface`` and ``DynamicTable`` in ``NWBFile.stimulus``. (#559)
 
 2.6.0 (January 17, 2023)
 -----------------------
