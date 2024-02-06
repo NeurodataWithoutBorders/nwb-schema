@@ -27,7 +27,7 @@ The NWB 1.0 format and API are archived in the [NeurodataWithoutBorders/api-pyth
 License
 ========================
 
-“nwb-schema” Copyright (c) 2017-2023, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy).  All rights reserved.
+“nwb-schema” Copyright (c) 2017-2024, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy).  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
@@ -45,7 +45,7 @@ You are under no obligation whatsoever to provide any bug fixes, patches, or upg
 Copyright
 ========================
 
-“nwb-schema” Copyright (c) 2017-2023, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy).  All rights reserved.
+“nwb-schema” Copyright (c) 2017-2024, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy).  All rights reserved.
 
 If you have questions about your rights to use or distribute this software, please contact Berkeley Lab's Innovation & Partnerships Office at IPO@lbl.gov.
 
