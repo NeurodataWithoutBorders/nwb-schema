@@ -200,7 +200,7 @@ The mappings of data types is as follows
     |  * compound dtype        | HDF5 compound data type          |                |
     +--------------------------+----------------------------------+----------------+
     |  * "isodatetime"         | ASCII ISO8061 datetime string.   | variable       |
-    |                          | For example                      | encoding)      |
+    |                          | For example                      | encoding       |
     |                          | ``2018-09-28T14:43:54.123+02:00``|                |
     | * "datetime"             | Can be missing timezone. Can     |                |
     |                          | also be missing time.            |                |
