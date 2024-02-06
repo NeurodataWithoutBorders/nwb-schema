@@ -3,6 +3,16 @@
 Release Notes
 =============
 
+2.7.0 (Upcoming)
+----------------
+
+Minor changes
+^^^^^^^^^^^^^
+- Fixed typos in docstrings. (#560)
+- Deprecated ``ImagingRetinotopy`` neurodata type. (#565)
+- Modified ``OptogeneticSeries`` to allow 2D data, primarily in extensions of ``OptogeneticSeries``. (#564)
+- Added optional ``stimulus_template`` column to ``IntracellularStimuliTable`` as part of the ``IntracellularRecordingsTable``. (#545)
+- Added support for ``NWBDataInterface`` and ``DynamicTable`` in ``NWBFile.stimulus``. (#559)
 
 2.6.0 (January 17, 2023)
 -----------------------
@@ -170,7 +180,7 @@ Bug Fixes
 
 - Use "text" data type for electrode table columns "location" and "group_name". Previously, only ASCII was allowed.
 
-- Added to description to make electrode x,y,z consistent with CCF reference. http://help.brain-map.org/display/mousebrain/API#API-DownloadAtlas3-DReferenceModels
+- Added to description to make electrode x,y,z consistent with CCF reference. https://allensdk.readthedocs.io/en/latest/reference_space.html
 
 - Added "position" dataset with compound data type x,y,z in ElectrodeGroup.
 
@@ -372,7 +382,7 @@ Support row-based and column-based tables
       easy to add rows by appending to a single dataset, 3) make it easy to read individual rows
       of a table (but require reading the full table to extract the data of a single column).
       Row-based tables are used to simplify, e.g., the organization of electrode-metadata in NWB 2 (see above).
-      (See the `specification language release notes <http://schema-language.readthedocs.io/en/latest/specification_language_release_notes.html#release-notes>`_
+      (See the `specification language release notes <https://schema-language.readthedocs.io/en/latest/release_notes.html>`_
       for details about the addition of compound data types in the schema).
 
       * *Referencing rows in a row-based tables:* Subsets of rows can referenced directly via a region-reference to the
@@ -655,7 +665,7 @@ To address this challenge, NWB 2 added an optional top-level group ``units/`` (w
 ``/intervals/units``)  which is a :ref:`DynamicTable <sec-DynamicTable>`
 with ``id`` and ``description`` columns and optional additional user-defined table columns.
 See `PR597 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/597>`_ for detailed code changes. See
-the `PyNWB docs <https://pynwb.readthedocs.io/en/latest/tutorials/general/file.html#units>`__ for a
+the `PyNWB docs <https://pynwb.readthedocs.io/en/stable/tutorials/general/plot_read_basics.html#access-single-unit-data>`__ for a
 short tutorial on how to use unit metadata. See :ref:`NWBFile <sec-NWBFile>` *Groups: /units* for an overview of the
 unit schema.
 
@@ -786,7 +796,7 @@ Improved support for trial-based data
 **Format Changes:** Added optional group ``/intervals/trials/`` which is a :ref:`DynamicTable <sec-DynamicTable>`
 with ``id``, ``start_time``, and ``stop_time`` columns and optional additional user-defined table columns.
 See `PR536 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/536/files>`_ for detailed code changes. See
-the `PyNWB docs <https://pynwb.readthedocs.io/en/latest/tutorials/general/file.html?highlight=Trial#trials>`__ for a
+the `PyNWB docs <https://pynwb.readthedocs.io/en/stable/tutorials/general/plot_file.html#trials>`__ for a
 short tutorial on how to use trials. See :ref:`NWBFile <sec-NWBFile>` *Groups: /trials* for an overview of the trial
 schema. **Note:** Originally trials was added a top-level group trials which was then later moved to ``/intervals/trials``
 as part of the generalization of time interval storage as part of
@@ -1046,7 +1056,7 @@ Specification language changes
 **Change:** Numerous changes have been made to the specification language itself in NWB 2.0. Most changes to
 the specification language effect mainly how the format is specified, rather than the actual structure of the format.
 The changes that have implications on the format itself are described next. For an overview and discussion of the
-changes to the specification language see `specification language release notes <http://schema-language.readthedocs.io/en/latest/specification_language_release_notes.html#release-notes>`_.
+changes to the specification language see `specification language release notes <https://schema-language.readthedocs.io/en/latest/release_notes.html>`_.
 
 Specification of dataset dimensions
 """""""""""""""""""""""""""""""""""
