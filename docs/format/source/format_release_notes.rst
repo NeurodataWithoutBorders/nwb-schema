@@ -3,7 +3,7 @@
 Release Notes
 =============
 
-2.7.0 (Upcoming)
+2.7.0 (February 7, 2024)
 ----------------
 
 Minor changes
