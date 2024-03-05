@@ -40,7 +40,21 @@ groups:
       required: false
     - name: bounds
       dtype: float32
-      doc: The boundary range for the data. The units are the same as the units for the data.
+      doc: The boundary range (min, max) for each dimension of `data`. The units are the same as the units for the data.
+      shape:
+      - - 1
+        - 2
+      - - 2
+        - 2
+      - - 3
+        - 2 
+      dims:
+      - - x
+        - min,max
+      - - x,y
+        - min,max
+      - - x,y,z
+        - min,max
       required: false
   - name: reference_frame
     dtype: text
