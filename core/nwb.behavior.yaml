@@ -39,7 +39,7 @@ groups:
         To access the data in these units, multiply 'data' by 'conversion' and add 'offset'.
       required: false
     - name: bounds
-      dtype: float32
+      dtype: numeric
       doc: The boundary range (min, max) for each dimension of `data`. The units are the same as the units for the data.
       shape:
       - - 1
