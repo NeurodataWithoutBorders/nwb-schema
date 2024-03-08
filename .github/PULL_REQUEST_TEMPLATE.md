@@ -7,7 +7,7 @@
 For all schema changes:
 - [ ] Add release notes for the PR to `docs/format/source/format_release_notes.rst`.
 - [ ] Have you included the relevant issue number using "Fix #XXX" notation where XXX is the issue number? By including "Fix #XXX" you allow GitHub to close issue #XXX when the PR is merged.
-- [ ] `hdmf-common-schema` needs to point to the latest release and not the latest of the `main ` branch.
+- [ ] Make sure that `hdmf-common-schema` points to the latest release and not the latest commit on the `main` branch.
 
 If this is the first schema change after a schema release (i.e., the version string in `core/nwb.namespace.yaml` does not
 end in "-alpha"), then:
