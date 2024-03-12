@@ -3,8 +3,8 @@
 Release Notes
 =============
 
-2.7.0 (Upcoming)
-----------------
+2.7.0 (February 7, 2024)
+------------------------
 
 Minor changes
 ^^^^^^^^^^^^^
@@ -15,7 +15,7 @@ Minor changes
 - Added support for ``NWBDataInterface`` and ``DynamicTable`` in ``NWBFile.stimulus``. (#559)
 
 2.6.0 (January 17, 2023)
------------------------
+------------------------
 
 Minor changes
 ^^^^^^^^^^^^^
