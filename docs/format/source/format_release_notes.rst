@@ -3,6 +3,12 @@
 Release Notes
 =============
 
+2.8.0 (Upcoming)
+------------------------
+Minor changes
+^^^^^^^^^^^^^
+- Added support to set boundary metadata for ``SpatialSeries``. (#524)
+
 2.7.0 (February 7, 2024)
 ------------------------
 
