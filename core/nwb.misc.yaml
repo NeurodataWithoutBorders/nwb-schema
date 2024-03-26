@@ -254,6 +254,14 @@ groups:
       value: volts
       doc: Unit of measurement. This value is fixed to 'volts'.
       required: false
+    - name: conversion_factor
+      dtype: float32
+      doc: Scaling factor applied to waveform data to convert it to specified unit.
+      required: false
+    - name: offset
+      dtype: float32
+      doc: Offset applied to scaled waveform data to correct any shifts.
+      required: false
   - name: waveform_sd
     neurodata_type_inc: VectorData
     dtype: float32
@@ -280,6 +288,14 @@ groups:
       dtype: text
       value: volts
       doc: Unit of measurement. This value is fixed to 'volts'.
+      required: false
+    - name: conversion_factor
+      dtype: float32
+      doc: Scaling factor applied to waveform data to convert it to specified unit.
+      required: false
+    - name: offset
+      dtype: float32
+      doc: Offset applied to scaled waveform data to correct any shifts.
       required: false
   - name: waveforms
     neurodata_type_inc: VectorData
@@ -317,6 +333,14 @@ groups:
         dtype: text
         value: volts
         doc: Unit of measurement. This value is fixed to 'volts'.
+        required: false
+      - name: conversion_factor
+        dtype: float32
+        doc: Scaling factor applied to waveform data to convert it to specified unit.
+        required: false
+      - name: offset
+        dtype: float32
+        doc: Offset applied to scaled waveform data to correct any shifts.
         required: false
   - name: waveforms_index
     neurodata_type_inc: VectorIndex
