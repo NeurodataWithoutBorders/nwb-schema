@@ -280,72 +280,10 @@ groups:
         doc: Physical group of electrodes.
         quantity: '*'
       - name: electrodes
-        neurodata_type_inc: DynamicTable
-        doc: A table of all electrodes (i.e. channels) used for recording.
+        neurodata_type_inc: ElectrodesTable
+        doc: A table of all electrodes (i.e. channels) used for recording. Changed in NWB 2.7.0 to use the newly added
+          ElectrodesTable neurodata type instead of a DynamicTable with added columns.
         quantity: '?'
-        datasets:
-        - name: x
-          neurodata_type_inc: VectorData
-          dtype: float32
-          doc: x coordinate of the channel location in the brain (+x is posterior).
-          quantity: '?'
-        - name: y
-          neurodata_type_inc: VectorData
-          dtype: float32
-          doc: y coordinate of the channel location in the brain (+y is inferior).
-          quantity: '?'
-        - name: z
-          neurodata_type_inc: VectorData
-          dtype: float32
-          doc: z coordinate of the channel location in the brain (+z is right).
-          quantity: '?'
-        - name: imp
-          neurodata_type_inc: VectorData
-          dtype: float32
-          doc: Impedance of the channel, in ohms.
-          quantity: '?'
-        - name: location
-          neurodata_type_inc: VectorData
-          dtype: text
-          doc: Location of the electrode (channel). Specify the area, layer, comments
-            on estimation of area/layer, stereotaxic coordinates if in vivo, etc. Use
-            standard atlas names for anatomical regions when possible.
-        - name: filtering
-          neurodata_type_inc: VectorData
-          dtype: text
-          doc: Description of hardware filtering, including the filter name and frequency cutoffs.
-          quantity: '?'
-        - name: group
-          neurodata_type_inc: VectorData
-          dtype:
-            target_type: ElectrodeGroup
-            reftype: object
-          doc: Reference to the ElectrodeGroup this electrode is a part of.
-        - name: group_name
-          neurodata_type_inc: VectorData
-          dtype: text
-          doc: Name of the ElectrodeGroup this electrode is a part of.
-        - name: rel_x
-          neurodata_type_inc: VectorData
-          dtype: float32
-          doc: x coordinate in electrode group
-          quantity: '?'
-        - name: rel_y
-          neurodata_type_inc: VectorData
-          dtype: float32
-          doc: y coordinate in electrode group
-          quantity: '?'
-        - name: rel_z
-          neurodata_type_inc: VectorData
-          dtype: float32
-          doc: z coordinate in electrode group
-          quantity: '?'
-        - name: reference
-          neurodata_type_inc: VectorData
-          dtype: text
-          doc: Description of the reference electrode and/or reference scheme used for this electrode, e.g.,
-            "stainless steel skull screw" or "online common average referencing".
-          quantity: '?'
     - name: intracellular_ephys
       doc: Metadata related to intracellular electrophysiology.
       quantity: '?'
