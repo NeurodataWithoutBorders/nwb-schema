@@ -131,6 +131,7 @@ groups:
     quantity: '?'
   groups:
   - name: bands
+    neurodata_type_def: FrequencyBandsTable
     neurodata_type_inc: DynamicTable
     doc: Table for describing the bands that this series was generated from. There
       should be one row in this table for each band.
