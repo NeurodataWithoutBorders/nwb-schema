@@ -19,7 +19,7 @@ The NWB format uses the following main primitives to hierarchically organize neu
 
 The NWB format is formally described via formal specification documents using the `NWB specification language <http://schema-language.readthedocs.io/en/latest/>`_ .
 HDF5 currently serves as the main format for storing data in the NWB format (see http://nwb-storage.readthedocs.io/en/latest/ for details).
-The `PyNWB <http://pynwb.readthedocs.io/en/latest/>`_ API is available to enable users to efficiently interact with NWB format files.
+The `PyNWB <http://pynwb.readthedocs.io/en/stable/>`_ API is available to enable users to efficiently interact with NWB format files.
 
 The NWB format uses a modular design in which all main semantic components of the format have
 a unique *neurodata_type* (similar to a Class in object-oriented design)(:numref:`sec_neurodata_type_intro`).
@@ -172,7 +172,7 @@ To ease development of extensions, the PyNWB_
 (and `HDMF <https://github.com/hdmf-dev/hdmf>`_ used by PyNWB) API provides dedicated
 data structures that support programmatic creation and use of extensions. An
 example for extending NWB using PyNWB_ is available at
-https://pynwb.readthedocs.io/en/stable/extensions.html and
+https://pynwb.readthedocs.io/en/stable/tutorials/general/extensions.html and
 additional details are also available as part of the PyNWB_ tutorials
 https://pynwb.readthedocs.io/en/stable/tutorials/index.html .
 

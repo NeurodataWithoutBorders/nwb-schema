@@ -38,6 +38,24 @@ groups:
         is 'meters'. Actual stored values are not necessarily stored in these units.
         To access the data in these units, multiply 'data' by 'conversion' and add 'offset'.
       required: false
+    - name: bounds
+      dtype: numeric
+      doc: The boundary range (min, max) for each dimension of `data`. The units are the same as the units for the data.
+      shape:
+      - - 1
+        - 2
+      - - 2
+        - 2
+      - - 3
+        - 2 
+      dims:
+      - - x
+        - min,max
+      - - x,y
+        - min,max
+      - - x,y,z
+        - min,max
+      required: false
   - name: reference_frame
     dtype: text
     doc: Description defining what exactly 'straight-ahead' means.

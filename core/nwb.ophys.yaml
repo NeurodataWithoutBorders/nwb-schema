@@ -340,12 +340,12 @@ groups:
     each point in time is assumed to be 2-D (has only x & y dimensions).'
   groups:
   - neurodata_type_inc: CorrectedImageStack
-    doc: Reuslts from motion correction of an image stack.
+    doc: Results from motion correction of an image stack.
     quantity: '+'
 
 - neurodata_type_def: CorrectedImageStack
   neurodata_type_inc: NWBDataInterface
-  doc: Reuslts from motion correction of an image stack.
+  doc: Results from motion correction of an image stack.
   groups:
   - name: corrected
     neurodata_type_inc: ImageSeries

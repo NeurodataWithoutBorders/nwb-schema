@@ -6,10 +6,16 @@ groups:
   - name: data
     dtype: numeric
     dims:
-    - num_times
+    - - num_times
+    - - num_times
+      - num_rois
     shape:
-    - null
-    doc: Applied power for optogenetic stimulus, in watts.
+    - - null
+    - - null
+      - null
+    doc: Applied power for optogenetic stimulus, in watts. Shape can be 1D or 2D.
+      2D data is meant to be used in an extension of OptogeneticSeries that
+      defines what the second dimension represents.
     attributes:
     - name: unit
       dtype: text
