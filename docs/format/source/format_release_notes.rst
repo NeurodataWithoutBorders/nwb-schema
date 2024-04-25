@@ -8,6 +8,11 @@ Release Notes
 Minor changes
 ^^^^^^^^^^^^^
 - Added support to set boundary metadata for ``SpatialSeries``. (#524)
+- Added columns ``waveform_mean_index`` and ``waveform_sd_index`` to ``Units`` to make the ``waveform_mean`` and
+  ``waveform_sd`` columns ragged. This allows for a different number of waveform means/SDs per unit which is useful
+  when each unit is associated with a different number of electrodes and there is a waveform mean/SD for each
+  electrode and unit. (#576)
+
 
 2.7.0 (February 7, 2024)
 ------------------------
