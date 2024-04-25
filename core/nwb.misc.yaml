@@ -242,7 +242,13 @@ groups:
     - - null
       - null
       - null
-    doc: Spike waveform mean for each spike unit.
+    doc: Spike waveform mean for each spike unit. The 'waveform_mean_index'
+      column indexes which waveforms in this column belong to a given unit, where each waveform
+      was recorded from a different electrode. The 'electrodes' column should be used to indicate which
+      electrodes are associated with each unit, and the order of the mean waveforms for a given unit 
+      in the 'waveform_mean' dataset should be the same as the order of the electrodes referenced in
+      the 'electrodes' column of this table. The number of samples for each waveform mean must be the
+      same.
     quantity: '?'
     attributes:
     - name: sampling_rate
@@ -254,6 +260,11 @@ groups:
       value: volts
       doc: Unit of measurement. This value is fixed to 'volts'.
       required: false
+  - name: waveform_mean_index
+    neurodata_type_inc: VectorIndex
+    doc: Optional index into the 'waveform_mean' dataset to allow each unit to have a different number of mean
+      waveforms, one per electrode. See 'waveform_mean' for more details.
+    quantity: '?'
   - name: waveform_sd
     neurodata_type_inc: VectorData
     dtype: float32
@@ -269,7 +280,13 @@ groups:
     - - null
       - null
       - null
-    doc: Spike waveform standard deviation for each spike unit.
+    doc: Spike waveform standard deviation for each spike unit. The 'waveform_sd_index'
+      column indexes which waveforms in this column belong to a given unit, where each waveform
+      was recorded from a different electrode. The 'electrodes' column should be used to indicate which
+      electrodes are associated with each unit, and the order of the waveform standard deviations for a
+      given unit in the 'waveform_sd' dataset should be the same as the order of the electrodes referenced
+      in the 'electrodes' column of this table. The number of samples for each waveform standard deviation
+      must be the same.
     quantity: '?'
     attributes:
     - name: sampling_rate
@@ -281,6 +298,11 @@ groups:
       value: volts
       doc: Unit of measurement. This value is fixed to 'volts'.
       required: false
+  - name: waveform_sd_index
+    neurodata_type_inc: VectorIndex
+    doc: Optional index into the 'waveform_sd' dataset to allow each unit to have a different number of
+      waveform standard deviations, one per electrode. See 'waveform_sd' for more details.
+    quantity: '?'
   - name: waveforms
     neurodata_type_inc: VectorData
     dtype: numeric
@@ -305,7 +327,7 @@ groups:
       associated with a single waveform), then the 'waveforms_index' column will have values 1, 2, ..., N, where N is
       the number of spike events. The number of electrodes for each spike event should be the same within a given unit.
       The 'electrodes' column should be used to indicate which electrodes are associated with each unit, and the order
-      of the waveforms within a given unit x spike event should be in the same order as the electrodes referenced in
+      of the waveforms within a given unit x spike event should be the same as the order of the electrodes referenced in
       the 'electrodes' column of this table. The number of samples for each waveform must be the same."
     quantity: '?'
     attributes:
@@ -320,10 +342,10 @@ groups:
         required: false
   - name: waveforms_index
     neurodata_type_inc: VectorIndex
-    doc: Index into the waveforms dataset. One value for every spike event. See 'waveforms' for more detail.
+    doc: Index into the 'waveforms' dataset. One value for every spike event. See 'waveforms' for more detail.
     quantity: '?'
   - name: waveforms_index_index
     neurodata_type_inc: VectorIndex
-    doc: Index into the waveforms_index dataset. One value for every unit (row in the table). See 'waveforms' for more
+    doc: Index into the 'waveforms_index' dataset. One value for every unit (row in the table). See 'waveforms' for more
       detail.
     quantity: '?'
