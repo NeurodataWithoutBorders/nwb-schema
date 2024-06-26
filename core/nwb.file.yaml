@@ -241,6 +241,18 @@ groups:
       - name: file_name
         dtype: text
         doc: Name of script file.
+    - name: generated_by
+      dtype: text
+      doc: Software package names and versions used to generate data contained in
+       an NWB File. For each software pacakge or library, include the name of the
+       software in the first column and the version in the second column.
+      dims:
+      - num_sources
+      - name, version
+      shape:
+      - null
+      - 2
+      quantity: '?'
     - name: stimulus
       dtype: text
       doc: Notes about stimuli, such as how and where they were presented.
