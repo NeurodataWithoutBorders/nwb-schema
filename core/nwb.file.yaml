@@ -241,11 +241,11 @@ groups:
       - name: file_name
         dtype: text
         doc: Name of script file.
-    - name: generated_by
+    - name: was_generated_by
       dtype: text
-      doc: Software package names and versions used to generate data contained in
-       an NWB File. For each software pacakge or library, include the name of the
-       software in the first column and the version in the second column.
+      doc: Name and version of software package(s) used to generate data contained in
+       this NWB File. For each software package or library, include the name of the
+       software as the first value and the version as the second value.
       dims:
       - num_sources
       - name, version
