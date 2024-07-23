@@ -12,7 +12,7 @@ Minor changes
   ``waveform_sd`` columns ragged. This allows for a different number of waveform means/SDs per unit which is useful
   when each unit is associated with a different number of electrodes and there is a waveform mean/SD for each
   electrode and unit. (#576)
-- Deprecated ``ImageMaskSeries``. 
+- Deprecated ``ImageMaskSeries``. (#583)
 
 
 2.7.0 (February 7, 2024)
