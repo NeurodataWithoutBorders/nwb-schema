@@ -13,6 +13,7 @@ Minor changes
   when each unit is associated with a different number of electrodes and there is a waveform mean/SD for each
   electrode and unit. (#576)
 
+- Deprecated ``EventWaveform`` neurodata type. (#584)
 
 2.7.0 (February 7, 2024)
 ------------------------
