@@ -108,6 +108,22 @@ groups:
       \ 'Processing' refers to intermediate analysis of the acquired data to make\
       \ it more amenable to scientific analysis."
     groups:
+    - name: ecephys
+      neurodata_type_inc: ProcessingModule
+      doc: Processed extracellular electrophysiology data
+      quantity: '?'
+    - name: ophys
+      neurodata_type_inc: ProcessingModule
+      doc: Processed optical physiology data
+      quantity: '?'
+    - name: icephys
+      neurodata_type_inc: ProcessingModule
+      doc: Processed intracellular electrophysiology data
+      quantity: '?'
+    - name: behavior
+      neurodata_type_inc: ProcessingModule
+      doc: Processed behavioral data
+      quantity: '?'
     - neurodata_type_inc: ProcessingModule
       doc: Intermediate analysis of acquired data.
       quantity: '*'
