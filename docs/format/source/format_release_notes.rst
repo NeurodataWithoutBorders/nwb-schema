@@ -5,6 +5,7 @@ Release Notes
 
 2.8.0 (Upcoming)
 ------------------------
+
 Minor changes
 ^^^^^^^^^^^^^
 - Added support to set boundary metadata for ``SpatialSeries``. (#524)
@@ -13,6 +14,8 @@ Minor changes
   when each unit is associated with a different number of electrodes and there is a waveform mean/SD for each
   electrode and unit. (#576)
 - Added optional ``was_generated_by`` attribute to ``NWBFile`` to store provenance information (#578)
+
+- Deprecated ``ImageMaskSeries`` neurodata type. (#583)
 
 2.7.0 (February 7, 2024)
 ------------------------
