@@ -14,6 +14,7 @@ Minor changes
   when each unit is associated with a different number of electrodes and there is a waveform mean/SD for each
   electrode and unit. (#576)
 - Added optional ``was_generated_by`` attribute to ``NWBFile`` to store provenance information (#578)
+- Deprecated ``EventWaveform`` neurodata type. (#584)
 
 - Deprecated ``ImageMaskSeries`` neurodata type. (#583)
 
