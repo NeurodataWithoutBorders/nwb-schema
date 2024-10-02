@@ -7,7 +7,7 @@ groups:
   attributes:
   - name: nwb_version
     dtype: text
-    value: "2.7.0"
+    value: "2.8.0-alpha"
     doc: File version string. Use semantic versioning, e.g. 1.2.1. This will be the
       name of the format with trailing major, minor and patch numbers.
   datasets:
@@ -241,6 +241,18 @@ groups:
       - name: file_name
         dtype: text
         doc: Name of script file.
+    - name: was_generated_by
+      dtype: text
+      doc: Name and version of software package(s) used to generate data contained in
+       this NWB File. For each software package or library, include the name of the
+       software as the first value and the version as the second value.
+      dims:
+      - num_sources
+      - name, version
+      shape:
+      - null
+      - 2
+      quantity: '?'
     - name: stimulus
       dtype: text
       doc: Notes about stimuli, such as how and where they were presented.
