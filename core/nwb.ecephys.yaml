@@ -257,9 +257,10 @@ groups:
   - name: device
     target_type: Device
     doc: Link to the device that was used to record from this electrode group.
+
 - neurodata_type_def: ElectrodesTable
   neurodata_type_inc: DynamicTable
-  doc: A table of all electrodes (i.e. channels) used for recording. Introduced in NWB 2.7.0. Replaces the "electrodes"
+  doc: A table of all electrodes (i.e. channels) used for recording. Introduced in NWB 3.0.0. Replaces the "electrodes"
     table (neurodata_type_inc DynamicTable, no neurodata_type_def) that is part of NWBFile.
   datasets:
   - name: location
