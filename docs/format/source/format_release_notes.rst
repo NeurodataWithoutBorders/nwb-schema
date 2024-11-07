@@ -15,8 +15,8 @@ Minor changes
   electrode and unit. (#576)
 - Added optional ``was_generated_by`` attribute to ``NWBFile`` to store provenance information (#578)
 - Deprecated ``EventWaveform`` neurodata type. (#584)
-
 - Deprecated ``ImageMaskSeries`` neurodata type. (#583)
+- Made ``band_mean`` and ``band_std`` in ``DecompositionSeries`` optional. (#593)
 
 2.7.0 (February 7, 2024)
 ------------------------
