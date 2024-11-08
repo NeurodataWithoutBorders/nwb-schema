@@ -5,8 +5,8 @@ groups:
   attributes:
   - name: description
     dtype: text
-    doc: Description of the device (e.g., model, firmware version, processing software version, etc.)
-      as free-form text.
+    doc: Description of the device as free-form text. If there is any software/firmware associated
+      with the device, the names and versions of those can be added to NWBFile.was_generated_by. 
     required: false
   - name: manufacturer
     dtype: text
