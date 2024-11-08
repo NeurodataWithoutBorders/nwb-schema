@@ -158,6 +158,7 @@ groups:
       shape:
       - null
       doc: The mean Gaussian filters, in Hz.
+      quantity: '?'
     - name: band_stdev
       neurodata_type_inc: VectorData
       dtype: float32
@@ -166,6 +167,7 @@ groups:
       shape:
       - null
       doc: The standard deviation of Gaussian filters, in Hz.
+      quantity: '?'
   links:
   - name: source_timeseries
     target_type: TimeSeries
