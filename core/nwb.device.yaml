@@ -12,3 +12,7 @@ groups:
     dtype: text
     doc: The name of the manufacturer of the device.
     required: false
+  - name: model_number
+    dtype: text
+    doc: The model number of the device.
+    required: false
