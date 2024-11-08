@@ -10,9 +10,17 @@ groups:
     required: false
   - name: manufacturer
     dtype: text
-    doc: The name of the manufacturer of the device.
+    doc: The name of the manufacturer of the device, e.g., Imec, Plexon, Thorlabs.
     required: false
   - name: model_number
     dtype: text
-    doc: The model number of the device.
+    doc: The model number (or part/product number) of the device, e.g., PRB_1_4_0480_1, PLX-VP-32-15SE(75)-(260-80)(460-10)-300-(1)CON/32m-V, BERGAMO.
+    required: false
+  - name: model_name
+    dtype: text
+    doc: The model name of the device, e.g., Neuropixels 1.0, V-Probe, Bergamo III.
+    required: false
+  - name: serial_number
+    dtype: text
+    doc: The serial number of the device.
     required: false
