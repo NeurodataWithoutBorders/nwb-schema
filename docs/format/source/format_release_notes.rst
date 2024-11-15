@@ -9,10 +9,6 @@ Release Notes
 Minor changes
 ^^^^^^^^^^^^^
 - Added support to set boundary metadata for ``SpatialSeries``. (#524)
-- Added columns ``waveform_mean_index`` and ``waveform_sd_index`` to ``Units`` to make the ``waveform_mean`` and
-  ``waveform_sd`` columns ragged. This allows for a different number of waveform means/SDs per unit which is useful
-  when each unit is associated with a different number of electrodes and there is a waveform mean/SD for each
-  electrode and unit. (#576)
 - Added optional ``was_generated_by`` attribute to ``NWBFile`` to store provenance information (#578)
 - Deprecated ``EventWaveform`` neurodata type. (#584)
 - Deprecated ``ImageMaskSeries`` neurodata type. (#583)
