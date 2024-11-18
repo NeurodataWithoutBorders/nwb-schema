@@ -8,7 +8,6 @@ Release Notes
 
 Minor changes
 ^^^^^^^^^^^^^
-- Added support to set boundary metadata for ``SpatialSeries``. (#524)
 - Added optional ``was_generated_by`` attribute to ``NWBFile`` to store provenance information (#578)
 - Deprecated ``EventWaveform`` neurodata type. (#584)
 - Deprecated ``ImageMaskSeries`` neurodata type. (#583)
