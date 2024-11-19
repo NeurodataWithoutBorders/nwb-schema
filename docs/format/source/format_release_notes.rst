@@ -3,6 +3,13 @@
 Release Notes
 =============
 
+2.9.0 (Upcoming)
+------------------------
+
+Major changes
+^^^^^^^^^^^^^
+- Changed ``NWBFile.electrodes`` from a generic ``DynamicTable`` with added columns to an ``ElectrodesTable`` that extends ``DynamicTable`` with added columns. (#539)
+
 2.8.0 (Upcoming)
 ------------------------
 
@@ -10,7 +17,6 @@ Major changes
 ^^^^^^^^^^^^^
 - Deprecated ``EventWaveform`` neurodata type. (#584)
 - Deprecated ``ImageMaskSeries`` neurodata type. (#583)
-- Changed ``NWBFile.electrodes`` from a generic ``DynamicTable`` with added columns to an ``ElectrodesTable`` that extends ``DynamicTable`` with added columns. (#539)
 
 Minor changes
 ^^^^^^^^^^^^^
