@@ -1,21 +1,26 @@
 name: Validate schema
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-    - name: Set up Python 3.12
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.12"
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
 
-    - name: Install dev branch of HDMF
-      run: pip install git+https://github.com/hdmf-dev/hdmf.git
+      - name: Install dev branch of HDMF
+        run: pip install git+https://github.com/hdmf-dev/hdmf.git
 
-    - name: Validate schema specification
-      run: validate_hdmf_spec core -m nwb.schema.json
+      - name: Validate schema specification
+        run: validate_hdmf_spec core -m nwb.schema.json
