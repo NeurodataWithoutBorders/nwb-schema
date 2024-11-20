@@ -689,7 +689,7 @@ types. To address this challenge, NWB 2.0 integrates ``UnitTimes``, ``ClusterWav
 into the new column-based table ``units/`` (i.e., ``intervals/units``) (which still uses the optimized vector data
 storage to efficiently store spike times). See for discussions and
 `I674 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/issues/674>`_
-(and related `I675 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/issues/675>`_) and the pull
+(and related `I239 on NWB Schema <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/239>`_) and the pull
 request `PR684 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/684>`_ for detailed changes.
 
 

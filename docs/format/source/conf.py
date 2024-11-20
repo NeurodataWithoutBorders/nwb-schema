@@ -133,15 +133,11 @@ intersphinx_mapping = {
 #html_theme = 'default'
 #html_theme = "sphinxdoc"
 html_theme = "sphinx_rtd_theme"
-html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #html_theme_options = {}
-
-# Add any paths that contain custom themes here, relative to this directory.
-#html_theme_path = []
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -225,7 +221,7 @@ latex_elements = {
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{6}
 \\usepackage{enumitem}
-\setlistdepth{100}
+\\setlistdepth{100}
 \\addto\\captionsenglish{\\renewcommand{\\contentsname}{Table of contents}}
 """,
 }

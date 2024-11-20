@@ -8,16 +8,16 @@ To get started using NWB, please go to the `NWB overview website <https://nwb-ov
 This repo contains:
 
 * The core NWB schema
-* The `Documentation for the NWB schema <http://nwb-schema.readthedocs.io>`_ (editable `here <https://github.com/NeurodataWithoutBorders/nwb-schema/tree/dev/docs/format/source>`_)
+* The `Documentation for the NWB schema <https://nwb-schema.readthedocs.io>`_ (editable `here <https://github.com/NeurodataWithoutBorders/nwb-schema/tree/dev/docs/format/source>`_)
 * The `HDF5 storage specification <https://nwb-storage.readthedocs.io/en/latest/storage_hdf5.html>`_ (editable `here <https://github.com/NeurodataWithoutBorders/nwb-schema/blob/dev/docs/storage/source/storage_hdf5.rst>`_)
 
-The NWB schema uses the [NWB specification language](http://schema-language.readthedocs.io/),
+The NWB schema uses the [NWB specification language](https://schema-language.readthedocs.io/),
 which defines formal structures for describing the organization of
 complex data using basic concepts, e.g., Groups, Datasets, Attributes, and Links.
 
 For more information:
 
-- Learn more about NWB and `nwb.org <http://www.nwb.org/>`_.
+- Learn more about NWB and `nwb.org <https://www.nwb.org/>`_.
 - The PyNWB Python API for the NWB format is available on `Github <https://github.com/NeurodataWithoutBorders/pynwb>`_
 - The MatNWB Matlab API for the NWB format is available on `Github <https://github.com/NeurodataWithoutBorders/matnwb>`_
 

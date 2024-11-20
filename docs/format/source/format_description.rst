@@ -17,9 +17,9 @@ The NWB format uses the following main primitives to hierarchically organize neu
   store metadata specific to the object they are associated with, and
 * A *Link* is a reference to another group or dataset.
 
-The NWB format is formally described via formal specification documents using the `NWB specification language <http://schema-language.readthedocs.io/en/latest/>`_ .
-HDF5 currently serves as the main format for storing data in the NWB format (see http://nwb-storage.readthedocs.io/en/latest/ for details).
-The `PyNWB <http://pynwb.readthedocs.io/en/stable/>`_ API is available to enable users to efficiently interact with NWB format files.
+The NWB format is formally described via formal specification documents using the `NWB specification language <https://schema-language.readthedocs.io/en/latest/>`_ .
+HDF5 currently serves as the main format for storing data in the NWB format (see https://nwb-storage.readthedocs.io/en/latest/ for details).
+The `PyNWB <https://pynwb.readthedocs.io/en/stable/>`_ API is available to enable users to efficiently interact with NWB format files.
 
 The NWB format uses a modular design in which all main semantic components of the format have
 a unique *neurodata_type* (similar to a Class in object-oriented design)(:numref:`sec_neurodata_type_intro`).
@@ -167,7 +167,7 @@ allowing users to extend (i.e., add to) existing and create new neurodata_types
 definitions for storing custom data. To avoid collisions between extensions,
 extensions are defined as part of custom namespaces (which typically import
 the core NWB namespace). Extensions to the format are written using the
-`Specification Language <http://schema-language.readthedocs.io/en/latest/>`_ .
+`Specification Language <https://schema-language.readthedocs.io/en/latest/>`_ .
 To ease development of extensions, the PyNWB_
 (and `HDMF <https://github.com/hdmf-dev/hdmf>`_ used by PyNWB) API provides dedicated
 data structures that support programmatic creation and use of extensions. An
@@ -214,7 +214,7 @@ All NWB Groups and Datasets with an assigned neurodata_type have three required 
   namespace of an extension
 - ``object_id`` (variable-length string) is a universally unique identifier for this object within its hierarchy.
   It should be set to the string representation of a random UUID version 4 value
-  (see `RFC 4122 <https://tools.ietf.org/html/rfc4122>`_) upon first creation. It is **not** a hash of the data. Files
+  (see `RFC 4122 <https://datatracker.ietf.org/doc/html/rfc4122>`_) upon first creation. It is **not** a hash of the data. Files
   that contain the exact same data but were generated in different instances will have different ``object_id`` values.
   Currently, modification of an object does not require its ``object_id`` to be changed.
 
