@@ -3,16 +3,19 @@
 Release Notes
 =============
 
-2.8.0 (Upcoming)
-------------------------
+2.8.0 (November 19, 2024)
+-------------------------
+
+Major changes
+^^^^^^^^^^^^^
+- Deprecated ``EventWaveform`` neurodata type. (#584)
+- Deprecated ``ImageMaskSeries`` neurodata type. (#583)
 
 Minor changes
 ^^^^^^^^^^^^^
-- Added optional ``was_generated_by`` attribute to ``NWBFile`` to store provenance information (#578)
-- Deprecated ``EventWaveform`` neurodata type. (#584)
-- Deprecated ``ImageMaskSeries`` neurodata type. (#583)
+- Added optional ``was_generated_by`` attribute to ``NWBFile`` to store provenance information. (#578)
 - Made ``band_mean`` and ``band_std`` in ``DecompositionSeries`` optional. (#593)
-- Added ``Device.model_number``, ``Device.model_name``, ``Device.serial_number`` (#594)
+- Added ``Device.model_number``, ``Device.model_name``, ``Device.serial_number``. (#594)
 
 2.7.0 (February 7, 2024)
 ------------------------
