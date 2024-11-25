@@ -3,7 +3,7 @@
 Release Notes
 =============
 
-2.8.0 (November 19, 2024)
+2.8.0 (November 24, 2024)
 -------------------------
 
 Major changes
