@@ -11,8 +11,9 @@ Target release date: [date]
 - [ ] Update `docs/format/source/conf.py` as needed
 - [ ] Update release notes (set release date) in `docs/format/source/format_release_notes.rst` and any other docs as
   needed
-- [ ] Test docs locally (`cd docs/format; make fulldoc`) where the nwb-schema submodule in the local version of PyNWB
-  is fully up-to-date with the head of the dev branch.
+- [ ] Test docs locally (`cd docs/format; make fulldoc`) and check for warnings and errors
+- [ ] Ensure PyNWB and MatNWB have branches that have passing tests when using the head of the dev branch or this 
+  branch of nwb-schema
 - [ ] Push changes to this PR and make sure all PRs to be included in this release have been merged
 - [ ] Check that the readthedocs build for this PR succeeds (see auto-triggered PR build):
   https://readthedocs.org/projects/nwb-schema/builds/
