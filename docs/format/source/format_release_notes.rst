@@ -3,6 +3,13 @@
 Release Notes
 =============
 
+2.9.0 (Upcoming)
+----------------
+
+Minor changes
+^^^^^^^^^^^^^
+- Fixed typo and removed HTML tag from doc of behavioral neurodata types. (#600)
+
 2.8.0 (November 24, 2024)
 -------------------------
 
