@@ -293,7 +293,7 @@ groups:
         quantity: '*'
       - name: electrodes
         neurodata_type_inc: ElectrodesTable
-        doc: A table of all electrodes (i.e. channels) used for recording. Changed in NWB 2.7.0 to use the newly added
+        doc: A table of all electrodes (i.e. channels) used for recording. Changed in NWB 2.9.0 to use the newly added
           ElectrodesTable neurodata type instead of a DynamicTable with added columns.
         quantity: '?'
     - name: intracellular_ephys
