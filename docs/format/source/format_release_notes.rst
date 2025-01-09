@@ -10,6 +10,10 @@ Major changes
 ^^^^^^^^^^^^^
 - Changed ``NWBFile.electrodes`` from a generic ``DynamicTable`` with added columns to an ``ElectrodesTable`` that extends ``DynamicTable`` with added columns. (#539)
 
+Minor changes
+^^^^^^^^^^^^^
+- Fixed typo and removed HTML tag from doc of behavioral neurodata types. (#600)
+
 2.8.0 (November 24, 2024)
 -------------------------
 
@@ -23,7 +27,6 @@ Minor changes
 - Added optional ``was_generated_by`` attribute to ``NWBFile`` to store provenance information. (#578)
 - Made ``band_mean`` and ``band_std`` in ``DecompositionSeries`` optional. (#593)
 - Added ``Device.model_number``, ``Device.model_name``, ``Device.serial_number``. (#594)
-- Fixed typo and removed HTML tag from doc of behavioral neurodata types. (#600)
 
 2.7.0 (February 7, 2024)
 ------------------------
