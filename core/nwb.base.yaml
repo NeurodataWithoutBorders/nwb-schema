@@ -23,8 +23,17 @@ datasets:
     VectorData column stores the start_index and count to indicate the range in time
     to be selected as well as an object reference to the TimeSeries.
 
-- neurodata_type_def: Image
+- neurodata_type_def: BaseImage
   neurodata_type_inc: NWBData
+  doc: An abstract base type for image data. Parent type for Image and ExternalImage types.
+  attributes:
+  - name: description
+    dtype: text
+    doc: Description of the image.
+    required: false
+
+- neurodata_type_def: Image
+  neurodata_type_inc: BaseImage
   dtype: numeric
   dims:
   - - x
@@ -44,7 +53,7 @@ datasets:
   - - null
     - null
     - 4
-  doc: An abstract data type for an image. Shape can be 2-D (x, y), or 3-D where the
+  doc: A type for storing image data directly. Shape can be 2-D (x, y), or 3-D where the
     third dimension can have three or four elements, e.g. (x, y, (r, g, b)) or
     (x, y, (r, g, b, a)).
   attributes:
@@ -52,21 +61,26 @@ datasets:
     dtype: float32
     doc: Pixel resolution of the image, in pixels per centimeter.
     required: false
-  - name: description
+
+- neurodata_type_def: ExternalImage
+  neurodata_type_inc: BaseImage
+  doc: A type for referencing an external image file.
+  attributes:
+  - name: file_path
     dtype: text
-    doc: Description of the image.
-    required: false
+    doc: Path or URL to the external image file.
+    required: true
 
 - neurodata_type_def: ImageReferences
   neurodata_type_inc: NWBData
   dtype:
-    target_type: Image
+    target_type: BaseImage
     reftype: object
   dims:
   - num_images
   shape:
   - null
-  doc: Ordered dataset of references to Image objects.
+  doc: Ordered dataset of references to Image or ExternalImage objects.
 
 groups:
 - neurodata_type_def: NWBContainer
@@ -253,12 +267,12 @@ groups:
     dtype: text
     doc: Description of this collection of images.
   datasets:
-  - neurodata_type_inc: Image
-    doc: Images stored in this collection.
+  - neurodata_type_inc: BaseImage
+    doc: Images stored in this collection. Can be either Image or ExternalImage types.
     quantity: '+'
   - name: order_of_images
     neurodata_type_inc: ImageReferences
-    doc: Ordered dataset of references to Image objects stored in the parent group.
-      Each Image object in the Images group should be stored once and only once, so
+    doc: Ordered dataset of references to Image or ExternalImage objects stored in the parent group.
+      Each object in the Images group should be stored once and only once, so
       the dataset should have the same length as the number of images.
     quantity: '?'
