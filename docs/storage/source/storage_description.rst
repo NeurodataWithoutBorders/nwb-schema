@@ -8,8 +8,8 @@ NWB Storage
 What is the role of data storage?
 =================================
 
-The `NWB format specification <http://nwb-schema.readthedocs.io/en/latest/index.html>`_
-defined using the `NWB specification language <http://schema-language.readthedocs.io/en/latest/index.html>`_
+The `NWB format specification <https://nwb-schema.readthedocs.io/en/latest/index.html>`_
+defined using the `NWB specification language <https://schema-language.readthedocs.io/en/latest/index.html>`_
 describes how to organize large collections of neuroscience data using
 basic primitives, e.g., Files, Groups, Datasets, Attributes, and Links to describe and hierarchically group data.
 The role of the data storage then is to store large collections of neuroscience data. In other words,

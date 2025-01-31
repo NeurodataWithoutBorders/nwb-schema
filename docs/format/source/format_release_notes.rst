@@ -3,16 +3,26 @@
 Release Notes
 =============
 
-2.8.0 (Upcoming)
-------------------------
+2.9.0 (Upcoming)
+----------------
+
 Minor changes
 ^^^^^^^^^^^^^
-- Added support to set boundary metadata for ``SpatialSeries``. (#524)
-- Added columns ``waveform_mean_index`` and ``waveform_sd_index`` to ``Units`` to make the ``waveform_mean`` and
-  ``waveform_sd`` columns ragged. This allows for a different number of waveform means/SDs per unit which is useful
-  when each unit is associated with a different number of electrodes and there is a waveform mean/SD for each
-  electrode and unit. (#576)
+- Fixed typo and removed HTML tag from doc of behavioral neurodata types. (#600)
 
+2.8.0 (November 24, 2024)
+-------------------------
+
+Major changes
+^^^^^^^^^^^^^
+- Deprecated ``EventWaveform`` neurodata type. (#584)
+- Deprecated ``ImageMaskSeries`` neurodata type. (#583)
+
+Minor changes
+^^^^^^^^^^^^^
+- Added optional ``was_generated_by`` attribute to ``NWBFile`` to store provenance information. (#578)
+- Made ``band_mean`` and ``band_std`` in ``DecompositionSeries`` optional. (#593)
+- Added ``Device.model_number``, ``Device.model_name``, ``Device.serial_number``. (#594)
 
 2.7.0 (February 7, 2024)
 ------------------------
@@ -686,7 +696,7 @@ types. To address this challenge, NWB 2.0 integrates ``UnitTimes``, ``ClusterWav
 into the new column-based table ``units/`` (i.e., ``intervals/units``) (which still uses the optimized vector data
 storage to efficiently store spike times). See for discussions and
 `I674 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/issues/674>`_
-(and related `I675 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/issues/675>`_) and the pull
+(and related `I239 on NWB Schema <https://github.com/NeurodataWithoutBorders/nwb-schema/issues/239>`_) and the pull
 request `PR684 on PyNWB <https://github.com/NeurodataWithoutBorders/pynwb/pull/684>`_ for detailed changes.
 
 

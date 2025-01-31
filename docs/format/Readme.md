@@ -1,6 +1,6 @@
 **Overview**
 
-The NWB specification documentation uses Sphinx [http://www.sphinx-doc.org/en/stable/index.html](http://www.sphinx-doc.org/en/stable/index.html)
+The NWB specification documentation uses Sphinx [https://www.sphinx-doc.org/en/stable/index.html](https://www.sphinx-doc.org/en/stable/index.html)
 
 **Prerequisites**
 
