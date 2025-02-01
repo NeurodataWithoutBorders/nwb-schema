@@ -120,7 +120,7 @@ groups:
       or is pulled from an external stimulus library. Stimuli are here
       defined as any signal that is pushed into the system as part of the experiment
       (eg, sound, video, voltage, etc). Many different experiments can use the same
-      stimuli, and stimuli can be re-used during an experiment. The stimulus group
+      stimuli, and stimuli can be reused during an experiment. The stimulus group
       is organized so that one version of template stimuli can be stored and these
       be used multiple times. These templates can exist in the present file or can
       be linked to a remote library file.'
