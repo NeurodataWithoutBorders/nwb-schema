@@ -11,7 +11,7 @@ This repo contains:
 * The `Documentation for the NWB schema <https://nwb-schema.readthedocs.io>`_ (editable `here <https://github.com/NeurodataWithoutBorders/nwb-schema/tree/dev/docs/format/source>`_)
 * The `HDF5 storage specification <https://nwb-storage.readthedocs.io/en/latest/storage_hdf5.html>`_ (editable `here <https://github.com/NeurodataWithoutBorders/nwb-schema/blob/dev/docs/storage/source/storage_hdf5.rst>`_)
 
-The NWB schema uses the [NWB specification language](https://schema-language.readthedocs.io/),
+The NWB schema uses the `NWB specification language <https://schema-language.readthedocs.io>`_,
 which defines formal structures for describing the organization of
 complex data using basic concepts, e.g., Groups, Datasets, Attributes, and Links.
 
@@ -21,7 +21,7 @@ For more information:
 - The PyNWB Python API for the NWB format is available on `Github <https://github.com/NeurodataWithoutBorders/pynwb>`_
 - The MatNWB Matlab API for the NWB format is available on `Github <https://github.com/NeurodataWithoutBorders/matnwb>`_
 
-The NWB 1.0 format and API are archived in the [NeurodataWithoutBorders/api-python](https://github.com/NeurodataWithoutBorders/api-python) repository. https://github.com/NeurodataWithoutBorders/api-python/blob/master/nwb/nwb_core.py contains the reference schema for the NWB 1 format. 
+The NWB 1.0 format and API are archived in the `NeurodataWithoutBorders/api-python <https://github.com/NeurodataWithoutBorders/api-python>`_ repository. https://github.com/NeurodataWithoutBorders/api-python/blob/master/nwb/nwb_core.py contains the reference schema for the NWB 1 format. 
 
 
 License
