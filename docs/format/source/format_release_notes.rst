@@ -6,6 +6,11 @@ Release Notes
 2.9.0 (Upcoming)
 ----------------
 
+Major changes
+^^^^^^^^^^^^^
+- Deprecated ``Device.model_number``, ``Device.model_name``, ``Device.serial_number``. Use 
+  ``Device.model`` link and new ``DeviceModel`` neurodata type instead.
+
 Minor changes
 ^^^^^^^^^^^^^
 - Fixed typo and removed HTML tag from doc of behavioral neurodata types. (#600)
