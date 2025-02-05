@@ -41,6 +41,8 @@ groups:
   neurodata_type_inc: NWBContainer
   doc: Model properties of a data acquisition device, e.g., recording system, electrode, microscope.
     This should be extended for specific types of device models to include additional attributes specific to each type.
+    The name of the DeviceModel should be the most common representation of the model name, e.g.,
+    Neuropixels 1.0, V-Probe, Bergamo III.
   attributes:
   - name: manufacturer
     dtype: text
