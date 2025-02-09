@@ -280,6 +280,9 @@ groups:
       - neurodata_type_inc: Device
         doc: Data acquisition devices.
         quantity: '*'
+      - neurodata_type_inc: DeviceModel
+        doc: Data acquisition device models.
+        quantity: '*'
     - name: subject
       neurodata_type_inc: Subject
       doc: Information about the animal or person from which the data was measured.
