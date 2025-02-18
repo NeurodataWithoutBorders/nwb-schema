@@ -80,7 +80,7 @@ datasets:
   - num_images
   shape:
   - null
-  doc: Ordered dataset of references to Image or ExternalImage objects.
+  doc: Ordered dataset of references to BaseImage (e.g., Image or ExternalImage) objects.
 
 groups:
 - neurodata_type_def: NWBContainer
@@ -268,11 +268,11 @@ groups:
     doc: Description of this collection of images.
   datasets:
   - neurodata_type_inc: BaseImage
-    doc: Images stored in this collection. Can be either Image or ExternalImage types.
+    doc: Images stored in this collection.
     quantity: '+'
   - name: order_of_images
     neurodata_type_inc: ImageReferences
-    doc: Ordered dataset of references to Image or ExternalImage objects stored in the parent group.
+    doc: Ordered dataset of references to BaseImage objects stored in the parent group.
       Each object in the Images group should be stored once and only once, so
       the dataset should have the same length as the number of images.
     quantity: '?'
