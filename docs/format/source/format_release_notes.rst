@@ -9,11 +9,13 @@ Release Notes
 Major changes
 ^^^^^^^^^^^^^
 - Deprecated ``Device.model_number``, ``Device.model_name``, ``Device.serial_number``. Use 
-  ``Device.model`` link and new ``DeviceModel`` neurodata type instead.
+  ``Device.model`` link and new ``DeviceModel`` neurodata type instead. (#608)
 - Added ``DeviceModel`` neurodata type to represent the model of a device instead of a specific instance of a device.
   This deduplicates information when a session involves multiple instances of the same device model, and it helps
   combine data across sessions and experiments when the model is the same.
-  See https://github.com/NeurodataWithoutBorders/nwb-schema/issues/607 for details.
+  See https://github.com/NeurodataWithoutBorders/nwb-schema/issues/607 for details. (#608)
+- Added `BaseImage` and `ExternalImage` as new neurodata types. The first so both `Image` and `ExternalImage` can 
+  inherit from it. The second to store external images (#604)
 
 Minor changes
 ^^^^^^^^^^^^^
