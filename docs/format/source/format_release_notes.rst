@@ -10,6 +10,10 @@ Major changes
 ^^^^^^^^^^^^^
 - Deprecated ``Device.model_number``, ``Device.model_name``, ``Device.serial_number``. Use 
   ``Device.model`` link and new ``DeviceModel`` neurodata type instead.
+- Added ``DeviceModel`` neurodata type to represent the model of a device instead of a specific instance of a device.
+  This deduplicates information when a session involves multiple instances of the same device model, and it helps
+  combine data across sessions and experiments when the model is the same.
+  See https://github.com/NeurodataWithoutBorders/nwb-schema/issues/607 for details.
 
 Minor changes
 ^^^^^^^^^^^^^
