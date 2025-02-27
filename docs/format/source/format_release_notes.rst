@@ -10,6 +10,10 @@ Major changes
 ^^^^^^^^^^^^^
 - Changed ``NWBFile.electrodes`` from a generic ``DynamicTable`` with added columns to an ``ElectrodesTable`` that extends ``DynamicTable`` with added columns. (#539)
 
+Major changes
+^^^^^^^^^^^^^
+- Added `BaseImage` and `ExternalImage` as new neurodata types. The first so both `Image` and `ExternalImage` can inherit from it. The second to store external images (#604)
+
 Minor changes
 ^^^^^^^^^^^^^
 - Fixed typo and removed HTML tag from doc of behavioral neurodata types. (#600)
