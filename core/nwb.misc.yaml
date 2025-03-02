@@ -169,9 +169,10 @@ groups:
     doc: DynamicTableRegion pointer to the channels that this decomposition series was generated from.
     quantity: '?'
   groups:
-    neurodata_type_inc: BandsTable
-    doc: Table for describing the bands that this series was generated from.
-    quantity: '?'
+    - name: bands
+      neurodata_type_inc: BandsTable
+      doc: Table for describing the bands that this series was generated from.
+      quantity: '?'
   links:
   - name: source_timeseries
     target_type: TimeSeries
