@@ -13,7 +13,7 @@ Major changes
 Minor changes
 ^^^^^^^^^^^^^
 - Fixed typo and removed HTML tag from doc of behavioral neurodata types. (#600)
-- Improved the documentation of IndexedSeries (#614)
+- Improved the documentation of IndexSeries (#614)
 
 2.8.0 (November 24, 2024)
 -------------------------
