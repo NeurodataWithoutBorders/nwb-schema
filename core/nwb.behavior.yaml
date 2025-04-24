@@ -61,7 +61,7 @@ groups:
   groups:
   - neurodata_type_inc: IntervalSeries
     doc: IntervalSeries object containing start and stop times of epochs.
-    quantity: '*'
+    quantity: '+'
 
 - neurodata_type_def: BehavioralEvents
   neurodata_type_inc: NWBDataInterface
@@ -71,7 +71,7 @@ groups:
   groups:
   - neurodata_type_inc: TimeSeries
     doc: TimeSeries object containing behavioral events.
-    quantity: '*'
+    quantity: '+'
 
 - neurodata_type_def: BehavioralTimeSeries
   neurodata_type_inc: NWBDataInterface
@@ -81,7 +81,7 @@ groups:
   groups:
   - neurodata_type_inc: TimeSeries
     doc: TimeSeries object containing continuous behavioral data.
-    quantity: '*'
+    quantity: '+'
 
 - neurodata_type_def: PupilTracking
   neurodata_type_inc: NWBDataInterface
@@ -99,7 +99,7 @@ groups:
   groups:
   - neurodata_type_inc: SpatialSeries
     doc: SpatialSeries object containing data measuring direction of gaze.
-    quantity: '*'
+    quantity: '+'
 
 - neurodata_type_def: CompassDirection
   neurodata_type_inc: NWBDataInterface
@@ -112,7 +112,7 @@ groups:
   groups:
   - neurodata_type_inc: SpatialSeries
     doc: SpatialSeries object containing direction of gaze travel.
-    quantity: '*'
+    quantity: '+'
 
 - neurodata_type_def: Position
   neurodata_type_inc: NWBDataInterface
