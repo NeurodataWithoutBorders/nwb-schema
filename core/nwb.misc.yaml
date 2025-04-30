@@ -100,7 +100,7 @@ groups:
       doc: Base unit of measurement for working with the data. Annotations have
         no units, so the value is fixed to 'n/a'.
 
-- neurodata_type_def: BandsTable
+- neurodata_type_def: FrequencyBandsTable
   neurodata_type_inc: DynamicTable
   doc: Table for describing the bands that DecompositionSeries was generated from. There
     should be one row in this table for each band.
@@ -170,7 +170,7 @@ groups:
     quantity: '?'
   groups:
     - name: bands
-      neurodata_type_inc: BandsTable
+      neurodata_type_inc: FrequencyBandsTable
       doc: Table for describing the bands that this series was generated from.
       quantity: '?'
   links:
