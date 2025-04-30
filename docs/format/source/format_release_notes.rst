@@ -16,6 +16,7 @@ Major changes
 
 Minor changes
 ^^^^^^^^^^^^^
+- Made group quantities consistent ("1 or more") across data interfaces / wrapper types (#613)
 - Fixed typo and removed HTML tag from doc of behavioral neurodata types. (#600)
 
 2.8.0 (November 24, 2024)
