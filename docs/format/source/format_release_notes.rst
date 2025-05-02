@@ -4,11 +4,7 @@ Release Notes
 =============
 
 2.9.0 (Upcoming)
-------------------------
-
-Major changes
-^^^^^^^^^^^^^
-- Changed ``NWBFile.electrodes`` from a generic ``DynamicTable`` with added columns to an ``ElectrodesTable`` that extends ``DynamicTable`` with added columns. (#539)
+----------------
 
 Major changes
 ^^^^^^^^^^^^^
