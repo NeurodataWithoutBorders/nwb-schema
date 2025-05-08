@@ -64,12 +64,10 @@ datasets:
 
 - neurodata_type_def: ExternalImage
   neurodata_type_inc: BaseImage
-  doc: A type for referencing an external image file.
-  attributes:
-  - name: file_path
-    dtype: text
-    doc: Path or URL to the external image file.
-    required: true
+  doc: A type for referencing an external image file. The single file path or URL to the external image file should
+    be stored in the dataset.
+  dtype: text
+  # shape: scalar  # this will be supported in the NWB schema language 2.0
 
 - neurodata_type_def: ImageReferences
   neurodata_type_inc: NWBData
