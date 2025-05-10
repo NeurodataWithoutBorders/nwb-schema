@@ -8,12 +8,9 @@ Release Notes
 
 Major changes
 ^^^^^^^^^^^^^
-- Changed ``NWBFile.electrodes`` from a generic ``DynamicTable`` with added columns to an ``ElectrodesTable`` that extends ``DynamicTable`` with added columns. (#539)
-
-Major changes
-^^^^^^^^^^^^^
 - Added `BaseImage` and `ExternalImage` as new neurodata types. The first so both `Image` and `ExternalImage` can inherit from it. The second to store external images (#604)
-- Added `FrequencyBandsTable` as a new neurodata type.
+- Changed ``NWBFile.electrodes`` from a generic ``DynamicTable`` with added columns to an ``ElectrodesTable`` that extends ``DynamicTable`` with added columns. (#539, #624)
+- Changed ``DecompositionSeries.bands`` from a generic ``DynamicTable`` with added columns to a new ``FrequencyBandsTable`` neurodata type that extends ``DynamicTable`` with added columns. (#610)
 
 Minor changes
 ^^^^^^^^^^^^^
