@@ -8,7 +8,8 @@ Release Notes
 
 Major changes
 ^^^^^^^^^^^^^
-- Added `BaseImage` and `ExternalImage` as new neurodata types. The first so both `Image` and `ExternalImage` can inherit from it. The second to store external images (#604, #623)
+- Added `BaseImage` and `ExternalImage` as new neurodata types. The first so both `Image` and `ExternalImage` 
+  can inherit from it. The second to store external images (#604, #623, #627)
 
 Minor changes
 ^^^^^^^^^^^^^
