@@ -73,7 +73,7 @@ datasets:
   - name: image_mode
     dtype: text
     doc: Image mode (color mode) of the image, e.g., "RGB", "RGBA", "grayscale", and "LA".
-    required: true
+    required: false
   - name: image_format
     dtype: text
     doc: Common name of the image file format. Only widely readable, open file formats are allowed.
