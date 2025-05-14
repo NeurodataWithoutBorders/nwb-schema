@@ -77,7 +77,7 @@ datasets:
   - name: image_format
     dtype: text
     doc: Common name of the image file format. Only widely readable, open file formats are allowed.
-      Allowed values are "PNG", "JPEG", "GIF", and "TIFF".
+      Allowed values are "PNG", "JPEG", and "GIF".
     required: true
 
 - neurodata_type_def: ImageReferences
