@@ -4,12 +4,14 @@ Release Notes
 =============
 
 2.9.0 (Upcoming)
-----------------
+------------------------
 
 Major changes
 ^^^^^^^^^^^^^
-- Added `BaseImage` and `ExternalImage` as new neurodata types. The first so both `Image` and `ExternalImage` 
+- Added ``BaseImage`` and ``ExternalImage`` as new neurodata types. The first so both ``Image`` and ``ExternalImage`` 
   can inherit from it. The second to store external images (#604, #623, #627)
+- Changed ``NWBFile.electrodes`` from a generic ``DynamicTable`` with added columns to a new ``ElectrodesTable`` 
+  neurodata type that extends ``DynamicTable`` with added columns. (#539, #624)
 
 Minor changes
 ^^^^^^^^^^^^^
