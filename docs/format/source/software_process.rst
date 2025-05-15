@@ -130,5 +130,5 @@ released version of nwb-schema. Starting with nwb-schema version 2.2.0, the dev 
 and MatNWB include only publicly released versions of nwb-schema. For more details, see the
 [PyNWB software process documentation](https://pynwb.readthedocs.io/en/stable/software_process.html).
 
-The [NWB Extensions Versioning Guidelines](https://www.nwb.org/versioning-guidelines) are used to guide
-versioning of the NWB core schema, as well as extensions to NWB.
+The [NWB Extensions Versioning Guidelines](https://docs.google.com/document/d/19G5LKFsIPS4tiS5uaXKI5EOVVcdO91i5DCTQWLccyWI/edit?tab=t.0#heading=h.79kthomykd73)
+are used to guide versioning of the NWB core schema, as well as extensions to NWB.
