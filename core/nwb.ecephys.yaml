@@ -104,6 +104,7 @@ groups:
       common experiment master-clock stored in NWBFile.timestamps_reference_time.
       Timestamps are required for the events. Unlike for TimeSeries, timestamps are
       required for SpikeEventSeries and are thus re-specified here.
+    quantity: 1
     attributes:
     - name: interval
       dtype: int32

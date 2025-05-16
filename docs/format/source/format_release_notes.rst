@@ -12,6 +12,7 @@ Major changes
   can inherit from it. The second to store external images (#604, #623, #627)
 - Changed ``NWBFile.electrodes`` from a generic ``DynamicTable`` with added columns to a new ``ElectrodesTable`` 
   neurodata type that extends ``DynamicTable`` with added columns. (#539, #624)
+- Made SpikeEventSeries.timestamps explicitly required as described in the documentation. 
 
 Minor changes
 ^^^^^^^^^^^^^
