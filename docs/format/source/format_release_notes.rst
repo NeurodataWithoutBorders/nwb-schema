@@ -4,7 +4,7 @@ Release Notes
 =============
 
 2.9.0 (Upcoming)
-----------------
+------------------------
 
 Major changes
 ^^^^^^^^^^^^^
@@ -14,11 +14,16 @@ Major changes
   This deduplicates information when a session involves multiple instances of the same device model, and it helps
   combine data across sessions and experiments when the model is the same.
   See https://github.com/NeurodataWithoutBorders/nwb-schema/issues/607 for details. (#608)
-- Added `BaseImage` and `ExternalImage` as new neurodata types. The first so both `Image` and `ExternalImage` can 
-  inherit from it. The second to store external images (#604)
+- Added ``BaseImage`` and ``ExternalImage`` as new neurodata types. The first so both ``Image`` and ``ExternalImage`` 
+  can inherit from it. The second to store external images (#604, #623, #627)
+- Changed ``NWBFile.electrodes`` from a generic ``DynamicTable`` with added columns to a new ``ElectrodesTable`` 
+  neurodata type that extends ``DynamicTable`` with added columns. (#539, #624)
+- Changed ``DecompositionSeries.bands`` from a generic ``DynamicTable`` with added columns to a new ``FrequencyBandsTable``
+  neurodata type that extends ``DynamicTable`` with added columns. (#610)
 
 Minor changes
 ^^^^^^^^^^^^^
+- Made group quantities consistent ("1 or more") across data interfaces / wrapper types (#613)
 - Fixed typo and removed HTML tag from doc of behavioral neurodata types. (#600)
 
 2.8.0 (November 24, 2024)

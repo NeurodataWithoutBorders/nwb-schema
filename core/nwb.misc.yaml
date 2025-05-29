@@ -100,6 +100,45 @@ groups:
       doc: Base unit of measurement for working with the data. Annotations have
         no units, so the value is fixed to 'n/a'.
 
+- neurodata_type_def: FrequencyBandsTable
+  neurodata_type_inc: DynamicTable
+  doc: Table for describing the bands that DecompositionSeries was generated from. There
+    should be one row in this table for each band.
+  datasets:
+  - name: band_name
+    neurodata_type_inc: VectorData
+    dtype: text
+    doc: Name of the band, e.g. theta.
+  - name: band_limits
+    neurodata_type_inc: VectorData
+    dtype: float32
+    dims:
+    - num_bands
+    - low, high
+    shape:
+    - null
+    - 2
+    doc: Low and high limit of each band in Hz. If it is a Gaussian filter, use
+      2 SD on either side of the center.
+  - name: band_mean
+    neurodata_type_inc: VectorData
+    dtype: float32
+    dims:
+    - num_bands
+    shape:
+    - null
+    doc: The mean Gaussian filters, in Hz.
+    quantity: '?'
+  - name: band_stdev
+    neurodata_type_inc: VectorData
+    dtype: float32
+    dims:
+    - num_bands
+    shape:
+    - null
+    doc: The standard deviation of Gaussian filters, in Hz.
+    quantity: '?'
+
 - neurodata_type_def: DecompositionSeries
   neurodata_type_inc: TimeSeries
   doc: Spectral analysis of a time series, e.g. of an LFP or a speech signal.
@@ -130,43 +169,9 @@ groups:
     doc: DynamicTableRegion pointer to the channels that this decomposition series was generated from.
     quantity: '?'
   groups:
-  - name: bands
-    neurodata_type_inc: DynamicTable
-    doc: Table for describing the bands that this series was generated from. There
-      should be one row in this table for each band.
-    datasets:
-    - name: band_name
-      neurodata_type_inc: VectorData
-      dtype: text
-      doc: Name of the band, e.g. theta.
-    - name: band_limits
-      neurodata_type_inc: VectorData
-      dtype: float32
-      dims:
-      - num_bands
-      - low, high
-      shape:
-      - null
-      - 2
-      doc: Low and high limit of each band in Hz. If it is a Gaussian filter, use
-        2 SD on either side of the center.
-    - name: band_mean
-      neurodata_type_inc: VectorData
-      dtype: float32
-      dims:
-      - num_bands
-      shape:
-      - null
-      doc: The mean Gaussian filters, in Hz.
-      quantity: '?'
-    - name: band_stdev
-      neurodata_type_inc: VectorData
-      dtype: float32
-      dims:
-      - num_bands
-      shape:
-      - null
-      doc: The standard deviation of Gaussian filters, in Hz.
+    - name: bands
+      neurodata_type_inc: FrequencyBandsTable
+      doc: Table for describing the bands that this series was generated from.
       quantity: '?'
   links:
   - name: source_timeseries

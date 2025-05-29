@@ -1,7 +1,7 @@
 Overview
 ========
 
-The `NWB Format <https://www.nwb.org/nwb-neurophysiology/>`_ is a core component of the
+The NWB Format is a core component of the
 `Neurodata Without Borders (NWB) <https://www.nwb.org/nwb-software/>`_  project.
 The NWB format is designed to store general optical and electrical physiology data in a way that
 is both understandable to humans as well as accessible to programmatic interpretation. The format is
@@ -17,9 +17,9 @@ The NWB format uses the following main primitives to hierarchically organize neu
   store metadata specific to the object they are associated with, and
 * A *Link* is a reference to another group or dataset.
 
-The NWB format is formally described via formal specification documents using the `NWB specification language <https://schema-language.readthedocs.io/en/latest/>`_ .
-HDF5 currently serves as the main format for storing data in the NWB format (see https://nwb-storage.readthedocs.io/en/latest/ for details).
-The `PyNWB <https://pynwb.readthedocs.io/en/stable/>`_ API is available to enable users to efficiently interact with NWB format files.
+The NWB format is formally described via formal specification documents using the `NWB specification language <https://schema-language.readthedocs.io>`_ .
+HDF5 currently serves as the main format for storing data in the NWB format (see https://nwb-storage.readthedocs.io for details).
+The `PyNWB <https://pynwb.readthedocs.io>`_ API is available to enable users to efficiently interact with NWB format files.
 
 The NWB format uses a modular design in which all main semantic components of the format have
 a unique *neurodata_type* (similar to a Class in object-oriented design)(:numref:`sec_neurodata_type_intro`).
