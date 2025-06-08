@@ -1,0 +1,133 @@
+datasets:
+- neurodata_type_def: TimestampVectorData
+  neurodata_type_inc: VectorData
+  dtype: float
+  dims:
+  - num_times
+  shape:
+  - null
+  doc: A 1-dimensional VectorData that stores timestamps in seconds.
+  attributes:
+  - name: unit
+    dtype: text
+    value: seconds
+    doc: The unit of measurement for the timestamps, fixed to 'seconds'.
+  - name: resolution
+    dtype: float
+    doc: The smallest possible difference between two timestamps. Usually 1 divided
+      by the sampling rate for timestamps of the data acquisition system.
+    required: false
+
+- neurodata_type_def: DurationVectorData
+  neurodata_type_inc: VectorData
+  dtype: float
+  dims:
+  - num_events
+  shape:
+  - null
+  doc: A 1-dimensional VectorData that stores durations in seconds.
+  attributes:
+  - name: unit
+    dtype: text
+    value: seconds
+    doc: The unit of measurement for the durations, fixed to 'seconds'.
+  - name: resolution
+    dtype: float
+    doc: The smallest possible difference between two timestamps. Usually 1 divided
+      by the sampling rate for timestamps of the data acquisition system.
+    required: false
+
+- neurodata_type_def: CategoricalVectorData
+  neurodata_type_inc: VectorData
+  dims:
+  - num_events
+  shape:
+  - null
+  doc: A 1-dimensional VectorData that stores categorical data of any type. This is
+    an experimental type.
+  attributes:
+  - name: meanings
+    dtype:
+      target_type: MeaningsTable
+      reftype: object
+    doc: The MeaningsTable object that provides the meanings of the values in this
+      CategoricalVectorData object.
+  - name: filter_values
+    dtype: text
+    dims:
+    - num_events
+    shape:
+    - null
+    doc: Optional dataset containing possible values in the parent data that represent
+      missing or invalid values that should be filtered out during analysis. Currently,
+      only string values are allowed. For example, the filter values may contain the
+      values "undefined" or "None" to signal that those values in the data are missing
+      or invalid.
+    required: false
+
+groups:
+- neurodata_type_def: MeaningsTable
+  neurodata_type_inc: DynamicTable
+  doc: A table to store information about the meanings of categorical data. Intended
+    to be used as a lookup table for the meanings of values in a CategoricalVectorData
+    object. All possible values of the parent CategoricalVectorData object should
+    be present in the 'value' column of this table, even if the value is not observed
+    in the data. Additional columns may be added to store additional metadata about
+    each value.
+  datasets:
+  - name: value
+    neurodata_type_inc: VectorData
+    doc: The value of the parent CategoricalVectorData object.
+  - name: meaning
+    neurodata_type_inc: VectorData
+    dtype: text
+    doc: The meaning of the value in the parent CategoricalVectorData object.
+
+- neurodata_type_def: EventsTable
+  neurodata_type_inc: DynamicTable
+  doc: A column-based table to store information about events (event instances), one
+    event per row. Additional columns may be added to store metadata about each event,
+    such as the duration of the event.
+  attributes:
+  - name: description
+    dtype: text
+    doc: A description of the events stored in the table, including information about
+      how the event times were computed, especially if the times are the result of
+      processing or filtering raw data. For example, if the experimenter is encoding
+      different types of events using a strobed or N-bit encoding, then the description
+      should describe which channels were used and how the event time is computed,
+      e.g., as the rise time of the first bit.
+  datasets:
+  - name: timestamp
+    neurodata_type_inc: TimestampVectorData
+    doc: Column containing the time that each event occurred, in seconds, from the
+      session start time.
+  - name: duration
+    neurodata_type_inc: DurationVectorData
+    doc: Optional column containing the duration of each event, in seconds. A value
+      of NaN can be used for events without a duration or with a duration that is
+      not yet specified.
+    quantity: '?'
+  groups:
+  - neurodata_type_inc: MeaningsTable
+    doc: Lookup tables for the meanings of the values in any CategoricalVectorData
+      columns. The name of the table should be the name of the corresponding CategoricalVectorData
+      column followed by "_meanings".
+    quantity: '*'
+
+- neurodata_type_def: AnnotationsTable
+  neurodata_type_inc: EventsTable
+  doc: A column-based table to store user annotations about events, one event per row.
+    If annotations come from a fixed set of values (aka controlled vocabulary or enumeration),
+    make the "annotation" column a CategoricalVectorData and add a MeaningsTable named 
+    "annotation_meanings" to specify the meanings of the fixed set of values in the 
+    "annotation" column. 
+  datasets:
+  - name: annotation
+    neurodata_type_inc: VectorData
+    doc: Column containing the freeform text annotation.
+    dtype: text
+    dims:
+    - num_times
+    shape:
+    - null

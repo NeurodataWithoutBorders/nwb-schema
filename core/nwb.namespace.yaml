@@ -28,6 +28,9 @@ namespaces:
   - doc: This source module contains neurodata_types for epoch data.
     source: nwb.epoch.yaml
     title: Epochs
+  - doc: This source module contains neurodata_types for event data.
+    source: nwb.event.yaml
+    title: Events
   - doc: This source module contains neurodata_types for image data.
     source: nwb.image.yaml
     title: Image data
