@@ -47,6 +47,10 @@ groups:
       no timezone offset. Date accuracy is up to milliseconds. All times stored
       in the file use this time as reference (i.e., time zero).'
   groups:
+  - name: resources
+    neurodata_type_inc: HERD
+    doc: This is the HERD structure for this specific NWBFile, storing the mapped external resources.
+    quantity: "?"
   - name: acquisition
     doc: Data streams recorded from the system, including ephys, ophys, tracking,
       etc. This group should be read-only after the experiment is completed and
