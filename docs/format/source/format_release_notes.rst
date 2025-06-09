@@ -13,11 +13,13 @@ Major changes
 - Changed ``NWBFile.electrodes`` from a generic ``DynamicTable`` with added columns to a new ``ElectrodesTable`` 
   neurodata type that extends ``DynamicTable`` with added columns. (#539, #624)
 - Changed ``DecompositionSeries.bands`` from a generic ``DynamicTable`` with added columns to a new ``FrequencyBandsTable`` neurodata type that extends ``DynamicTable`` with added columns. (#610)
+- Allowed `EventDetection` to have shape (num_events, 2) to store the channel index of the detected event. (#620)
 
 Minor changes
 ^^^^^^^^^^^^^
 - Made group quantities consistent ("1 or more") across data interfaces / wrapper types (#613)
 - Fixed typo and removed HTML tag from doc of behavioral neurodata types. (#600)
+- Made `EventDetection.times` optional. (#620)
 
 2.8.0 (November 24, 2024)
 -------------------------
