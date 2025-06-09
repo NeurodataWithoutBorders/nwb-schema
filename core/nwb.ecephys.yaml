@@ -104,6 +104,7 @@ groups:
       common experiment master-clock stored in NWBFile.timestamps_reference_time.
       Timestamps are required for the events. Unlike for TimeSeries, timestamps are
       required for SpikeEventSeries and are thus re-specified here.
+    quantity: 1
     attributes:
     - name: interval
       dtype: int32
@@ -161,12 +162,16 @@ groups:
   - name: source_idx
     dtype: int32
     dims:
-    - num_events
+    - - num_events
+    - - num_events
+      - time_index, channel_index
     shape:
-    - null
-    doc: Indices (zero-based) into source ElectricalSeries::data array corresponding
-      to time of event. ''description'' should define what is meant by time of
-      event (e.g., .25 ms before action potential peak, zero-crossing time, etc).
+    - - null
+    - - null
+      - 2
+    doc: Indices (zero-based) into the linked source ElectricalSeries::data array corresponding
+      to time of event or time and channel of event. ''description'' should define what is meant
+      by time of event (e.g., .25 ms before action potential peak, zero-crossing time, etc).
       The index points to each event from the raw data.
   - name: times
     dtype: float64
@@ -180,6 +185,7 @@ groups:
       dtype: text
       value: seconds
       doc: Unit of measurement for event times, which is fixed to 'seconds'.
+    quantity: '?'
   links:
   - name: source_electricalseries
     target_type: ElectricalSeries
@@ -256,6 +262,75 @@ groups:
   - name: device
     target_type: Device
     doc: Link to the device that was used to record from this electrode group.
+
+- neurodata_type_def: ElectrodesTable
+  neurodata_type_inc: DynamicTable
+  doc: A table of all electrodes (i.e. channels) used for recording. Introduced in NWB 2.8.0. Replaces the "electrodes"
+    table (neurodata_type_inc DynamicTable, no neurodata_type_def) that is part of NWBFile.
+  datasets:
+  - name: location
+    neurodata_type_inc: VectorData
+    dtype: text
+    doc: Location of the electrode (channel). Specify the area, layer, comments
+      on estimation of area/layer, stereotaxic coordinates if in vivo, etc. Use
+      standard atlas names for anatomical regions when possible.
+  - name: group
+    neurodata_type_inc: VectorData
+    dtype:
+      target_type: ElectrodeGroup
+      reftype: object
+    doc: Reference to the ElectrodeGroup this electrode is a part of.
+  - name: group_name
+    neurodata_type_inc: VectorData
+    dtype: text
+    doc: Name of the ElectrodeGroup this electrode is a part of.
+    quantity: '?'
+  - name: x
+    neurodata_type_inc: VectorData
+    dtype: float32
+    doc: x coordinate of the channel location in the brain (+x is posterior).
+    quantity: '?'
+  - name: y
+    neurodata_type_inc: VectorData
+    dtype: float32
+    doc: y coordinate of the channel location in the brain (+y is inferior).
+    quantity: '?'
+  - name: z
+    neurodata_type_inc: VectorData
+    dtype: float32
+    doc: z coordinate of the channel location in the brain (+z is right).
+    quantity: '?'
+  - name: imp
+    neurodata_type_inc: VectorData
+    dtype: float32
+    doc: Impedance of the channel, in ohms.
+    quantity: '?'
+  - name: filtering
+    neurodata_type_inc: VectorData
+    dtype: text
+    doc: Description of hardware filtering, including the filter name and frequency cutoffs.
+    quantity: '?'
+  - name: rel_x
+    neurodata_type_inc: VectorData
+    dtype: float32
+    doc: x coordinate in electrode group
+    quantity: '?'
+  - name: rel_y
+    neurodata_type_inc: VectorData
+    dtype: float32
+    doc: y coordinate in electrode group
+    quantity: '?'
+  - name: rel_z
+    neurodata_type_inc: VectorData
+    dtype: float32
+    doc: z coordinate in electrode group
+    quantity: '?'
+  - name: reference
+    neurodata_type_inc: VectorData
+    dtype: text
+    doc: Description of the reference electrode and/or reference scheme used for this electrode, e.g.,
+      "stainless steel skull screw" or "online common average referencing".
+    quantity: '?'
 
 # The types below have been deprecated
 - neurodata_type_def: ClusterWaveforms

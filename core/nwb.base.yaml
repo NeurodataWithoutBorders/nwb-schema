@@ -64,11 +64,20 @@ datasets:
 
 - neurodata_type_def: ExternalImage
   neurodata_type_inc: BaseImage
-  doc: A type for referencing an external image file.
+  doc: A type for referencing an external image file. The single file path or URI to the
+    external image file should be stored in the dataset. This type should NOT be used if
+    the image is stored in another NWB file and that file is linked to this file.
+  dtype: text
+  # shape: scalar  # this will be supported in the NWB schema language 2.0
   attributes:
-  - name: file_path
+  - name: image_mode
     dtype: text
-    doc: Path or URL to the external image file.
+    doc: Image mode (color mode) of the image, e.g., "RGB", "RGBA", "grayscale", and "LA".
+    required: false
+  - name: image_format
+    dtype: text
+    doc: Common name of the image file format. Only widely readable, open file formats are allowed.
+      Allowed values are "PNG", "JPEG", and "GIF".
     required: true
 
 - neurodata_type_def: ImageReferences

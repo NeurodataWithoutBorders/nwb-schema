@@ -4,17 +4,31 @@ Release Notes
 =============
 
 2.9.0 (Upcoming)
-----------------
+------------------------
 
 Major changes
 ^^^^^^^^^^^^^
-- Added `BaseImage` and `ExternalImage` as new neurodata types. The first so both `Image` and `ExternalImage` can inherit from it. The second to store external images (#604)
+- Deprecated ``Device.model_number``, ``Device.model_name``, ``Device.serial_number``. Use 
+  ``Device.model`` link and new ``DeviceModel`` neurodata type instead. (#608)
+- Added ``DeviceModel`` neurodata type to represent the model of a device instead of a specific instance of a device.
+  This deduplicates information when a session involves multiple instances of the same device model, and it helps
+  combine data across sessions and experiments when the model is the same.
+  See https://github.com/NeurodataWithoutBorders/nwb-schema/issues/607 for details. (#608)
+- Added ``BaseImage`` and ``ExternalImage`` as new neurodata types. The first so both ``Image`` and ``ExternalImage`` 
+  can inherit from it. The second to store external images (#604, #623, #627)
+- Changed ``NWBFile.electrodes`` from a generic ``DynamicTable`` with added columns to a new ``ElectrodesTable`` 
+  neurodata type that extends ``DynamicTable`` with added columns. (#539, #624)
+- Changed ``DecompositionSeries.bands`` from a generic ``DynamicTable`` with added columns to a new ``FrequencyBandsTable``
+  neurodata type that extends ``DynamicTable`` with added columns. (#610)
+- Made ``SpikeEventSeries.timestamps`` explicitly required as described in the documentation. (#629)
+- Allowed ``EventDetection`` to have shape (num_events, 2) to store the channel index of the detected event. (#620)
 
 Minor changes
 ^^^^^^^^^^^^^
 - Made group quantities consistent ("1 or more") across data interfaces / wrapper types (#613)
 - Fixed typo and removed HTML tag from doc of behavioral neurodata types. (#600)
-- Improved the documentation of IndexSeries (#614)
+- Improved the documentation of ``IndexSeries``. (#614)
+- Made ``EventDetection.times`` optional. (#620)
 
 2.8.0 (November 24, 2024)
 -------------------------
