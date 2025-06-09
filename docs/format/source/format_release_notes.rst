@@ -21,13 +21,14 @@ Major changes
 - Changed ``DecompositionSeries.bands`` from a generic ``DynamicTable`` with added columns to a new ``FrequencyBandsTable``
   neurodata type that extends ``DynamicTable`` with added columns. (#610)
 - Made ``SpikeEventSeries.timestamps`` explicitly required as described in the documentation. (#629)
-- Allowed `EventDetection` to have shape (num_events, 2) to store the channel index of the detected event. (#620)
+- Allowed ``EventDetection`` to have shape (num_events, 2) to store the channel index of the detected event. (#620)
 
 Minor changes
 ^^^^^^^^^^^^^
 - Made group quantities consistent ("1 or more") across data interfaces / wrapper types (#613)
 - Fixed typo and removed HTML tag from doc of behavioral neurodata types. (#600)
-- Made `EventDetection.times` optional. (#620)
+- Improved the documentation of ``IndexSeries``. (#614)
+- Made ``EventDetection.times`` optional. (#620)
 
 2.8.0 (November 24, 2024)
 -------------------------

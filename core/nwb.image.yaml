@@ -177,13 +177,20 @@ groups:
 
 - neurodata_type_def: IndexSeries
   neurodata_type_inc: TimeSeries
-  doc: Stores indices to image frames stored in an ImageSeries. The purpose of the
-    IndexSeries is to allow a static image stack to be stored in an Images
-    object, and the images in the stack to be referenced out-of-order. This can be for
-    the display of individual images, or of movie segments (as a movie is simply a
-    series of images). The data field stores the index of the frame in the referenced
-    Images object, and the timestamps array indicates when that image
-    was displayed.
+  doc: Stores indices that reference images defined in other containers. The primary purpose
+    of the IndexSeries is to allow images stored in an Images container to be referenced in a 
+    specific sequence through the 'indexed_images' link. This approach avoids duplicating image data
+    when the same image needs to be presented multiple times or when images need to be shown in a
+    different order than they are stored. Since images in an Images container do not have an inherent 
+    order, the Images container needs to include an 'order_of_images' dataset (of type 
+    ImageReferences) when being referenced by an IndexSeries. This dataset establishes the ordered 
+    sequence that the indices in IndexSeries refer to. The 'data' field stores the index into this 
+    ordered sequence, and the 'timestamps' array indicates the precise presentation time of each 
+    indexed image during an experiment. This can be used for displaying individual images or creating 
+    movie segments by referencing a sequence of images with the appropriate timestamps. While 
+    IndexSeries can also reference frames from an ImageSeries through the 'indexed_timeseries' link, 
+    this usage is discouraged and will be deprecated in favor of using Images containers with 
+    'order_of_images'.
   datasets:
   - name: data
     dtype: uint32
