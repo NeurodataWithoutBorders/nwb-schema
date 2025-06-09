@@ -13,6 +13,7 @@ Major changes
 - Changed ``NWBFile.electrodes`` from a generic ``DynamicTable`` with added columns to a new ``ElectrodesTable`` 
   neurodata type that extends ``DynamicTable`` with added columns. (#539, #624)
 - Made SpikeEventSeries.timestamps explicitly required as described in the documentation. (#629)
+- Changed ``DecompositionSeries.bands`` from a generic ``DynamicTable`` with added columns to a new ``FrequencyBandsTable`` neurodata type that extends ``DynamicTable`` with added columns. (#610)
 
 Minor changes
 ^^^^^^^^^^^^^
