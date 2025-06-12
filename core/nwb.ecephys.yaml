@@ -179,7 +179,7 @@ groups:
     - num_events
     shape:
     - null
-    doc: Timestamps of events, in seconds.
+    doc: DEPRECATED. Timestamps of events, in seconds.
     attributes:
     - name: unit
       dtype: text
