@@ -179,12 +179,12 @@ groups:
     - num_events
     shape:
     - null
-    doc: Timestamps of events, in seconds.
+    doc: DEPRECATED. Timestamps of events, in seconds.
     attributes:
     - name: unit
       dtype: text
       value: seconds
-      doc: DEPRECATED. Unit of measurement for event times, which is fixed to 'seconds'.
+      doc: Unit of measurement for event times, which is fixed to 'seconds'.
     quantity: '?'
   links:
   - name: source_electricalseries
