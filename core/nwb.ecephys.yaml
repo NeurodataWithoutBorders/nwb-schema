@@ -184,7 +184,7 @@ groups:
     - name: unit
       dtype: text
       value: seconds
-      doc: Unit of measurement for event times, which is fixed to 'seconds'.
+      doc: DEPRECATED. Unit of measurement for event times, which is fixed to 'seconds'.
     quantity: '?'
   links:
   - name: source_electricalseries
