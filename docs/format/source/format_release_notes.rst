@@ -30,6 +30,7 @@ Minor changes
 - Fixed typo and removed HTML tag from doc of behavioral neurodata types. (#600)
 - Improved the documentation of ``IndexSeries``. (#614)
 - Made ``EventDetection.times`` optional and deprecated. Use `source_idx` instead. (#620)
+- Clarified documentation of ``PlaneSegmentation`` that at least one of ``image_mask``, ``pixel_mask``, and ``voxel_mask`` is required.
 
 2.8.0 (November 24, 2024)
 -------------------------
