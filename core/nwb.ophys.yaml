@@ -125,7 +125,7 @@ groups:
 - neurodata_type_def: PlaneSegmentation
   neurodata_type_inc: DynamicTable
   doc: Results from image segmentation of a specific imaging plane.
-    At least one of `image_mask`, `pixel_mask`, and `voxel_mask` is required.
+    At least one of `image_mask`, `pixel_mask`, or `voxel_mask` is required.
   datasets:
   - name: image_mask
     neurodata_type_inc: VectorData
@@ -147,7 +147,7 @@ groups:
       - null
     doc: ROI masks for each ROI. Each image mask is the size of the original imaging
       plane (or volume) and members of the ROI are finite non-zero.
-      At least one of `image_mask`, `pixel_mask`, and `voxel_mask` is required.
+      At least one of `image_mask`, `pixel_mask`, or `voxel_mask` is required.
     quantity: '?'
   - name: pixel_mask_index
     neurodata_type_inc: VectorIndex
@@ -167,7 +167,7 @@ groups:
       doc: Weight of the pixel.
     doc: 'Pixel masks for each ROI: a list of indices and weights for the ROI. Pixel
       masks are concatenated and parsing of this dataset is maintained by the PlaneSegmentation.
-      At least one of `image_mask`, `pixel_mask`, and `voxel_mask` is required.'
+      At least one of `image_mask`, `pixel_mask`, or `voxel_mask` is required.'
     quantity: '?'
   - name: voxel_mask_index
     neurodata_type_inc: VectorIndex
@@ -190,7 +190,7 @@ groups:
       doc: Weight of the voxel.
     doc: 'Voxel masks for each ROI: a list of indices and weights for the ROI. Voxel
       masks are concatenated and parsing of this dataset is maintained by the PlaneSegmentation.
-      At least one of `image_mask`, `pixel_mask`, and `voxel_mask` is required.'
+      At least one of `image_mask`, `pixel_mask`, or `voxel_mask` is required.'
     quantity: '?'
   groups:
   - name: reference_images
