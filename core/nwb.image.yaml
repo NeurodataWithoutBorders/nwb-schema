@@ -202,14 +202,17 @@ groups:
     attributes:
     - name: conversion
       dtype: float32
+      default_value: null  # reset default value inherited from TimeSeries
       doc: This field is unused by IndexSeries.
       required: false
     - name: resolution
       dtype: float32
+      default_value: null  # reset default value inherited from TimeSeries
       doc: This field is unused by IndexSeries.
       required: false
     - name: offset
       dtype: float32
+      default_value: null  # reset default value inherited from TimeSeries
       doc: This field is unused by IndexSeries.
       required: false
     - name: unit
