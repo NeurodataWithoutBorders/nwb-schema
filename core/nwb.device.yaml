@@ -1,7 +1,8 @@
 groups:
 - neurodata_type_def: Device
   neurodata_type_inc: NWBContainer
-  doc: Metadata about a data acquisition device, e.g., recording system, electrode, microscope.
+  doc: Metadata about a specific instance of a data acquisition device, e.g., recording system, electrode, microscope.
+    Link to a DeviceModel.model to represent information about the model of the device.
   attributes:
   - name: description
     dtype: text
@@ -10,17 +11,48 @@ groups:
     required: false
   - name: manufacturer
     dtype: text
-    doc: The name of the manufacturer of the device, e.g., Imec, Plexon, Thorlabs.
+    doc: DEPRECATED. The name of the manufacturer of the device, e.g., Imec, Plexon, Thorlabs.
+      Instead of using this field, store the value in DeviceModel.manufacturer and link to that 
+      DeviceModel from this Device. 
     required: false
   - name: model_number
     dtype: text
-    doc: The model number (or part/product number) of the device, e.g., PRB_1_4_0480_1, PLX-VP-32-15SE(75)-(260-80)(460-10)-300-(1)CON/32m-V, BERGAMO.
+    doc: DEPRECATED. The model number (or part/product number) of the device, e.g., PRB_1_4_0480_1, 
+      PLX-VP-32-15SE(75)-(260-80)(460-10)-300-(1)CON/32m-V, BERGAMO.
+      Instead of using this field, store the value in DeviceModel.model_number and link to that 
+      DeviceModel from this Device. 
     required: false
   - name: model_name
     dtype: text
-    doc: The model name of the device, e.g., Neuropixels 1.0, V-Probe, Bergamo III.
+    doc: DEPRECATED. The model name of the device, e.g., Neuropixels 1.0, V-Probe, Bergamo III.
+      Instead of using this field, create and add a new DeviceModel named the model name and 
+      link to that DeviceModel from this Device.
     required: false
   - name: serial_number
     dtype: text
     doc: The serial number of the device.
+    required: false
+  links:
+  - name: model
+    target_type: DeviceModel
+    doc: The model of the device.
+    quantity: '?'
+- neurodata_type_def: DeviceModel
+  neurodata_type_inc: NWBContainer
+  doc: Model properties of a data acquisition device, e.g., recording system, electrode, microscope.
+    This should be extended for specific types of device models to include additional attributes specific to each type.
+    The name of the DeviceModel should be the most common representation of the model name, e.g.,
+    Neuropixels 1.0, V-Probe, Bergamo III.
+  attributes:
+  - name: manufacturer
+    dtype: text
+    doc: The name of the manufacturer of the device model, e.g., Imec, Plexon, Thorlabs.
+  - name: model_number
+    dtype: text
+    doc: The model number (or part/product number) of the device, e.g., PRB_1_4_0480_1, 
+      PLX-VP-32-15SE(75)-(260-80)(460-10)-300-(1)CON/32m-V, BERGAMO.
+    required: false
+  - name: description
+    dtype: text
+    doc: Description of the device model as free-form text.
     required: false

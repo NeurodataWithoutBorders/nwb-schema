@@ -104,6 +104,7 @@ groups:
       common experiment master-clock stored in NWBFile.timestamps_reference_time.
       Timestamps are required for the events. Unlike for TimeSeries, timestamps are
       required for SpikeEventSeries and are thus re-specified here.
+    quantity: 1
     attributes:
     - name: interval
       dtype: int32
@@ -161,12 +162,16 @@ groups:
   - name: source_idx
     dtype: int32
     dims:
-    - num_events
+    - - num_events
+    - - num_events
+      - time_index, channel_index
     shape:
-    - null
-    doc: Indices (zero-based) into source ElectricalSeries::data array corresponding
-      to time of event. ''description'' should define what is meant by time of
-      event (e.g., .25 ms before action potential peak, zero-crossing time, etc).
+    - - null
+    - - null
+      - 2
+    doc: Indices (zero-based) into the linked source ElectricalSeries::data array corresponding
+      to time of event or time and channel of event. ''description'' should define what is meant
+      by time of event (e.g., .25 ms before action potential peak, zero-crossing time, etc).
       The index points to each event from the raw data.
   - name: times
     dtype: float64
@@ -174,12 +179,13 @@ groups:
     - num_events
     shape:
     - null
-    doc: Timestamps of events, in seconds.
+    doc: DEPRECATED. Timestamps of events, in seconds.
     attributes:
     - name: unit
       dtype: text
       value: seconds
       doc: Unit of measurement for event times, which is fixed to 'seconds'.
+    quantity: '?'
   links:
   - name: source_electricalseries
     target_type: ElectricalSeries
