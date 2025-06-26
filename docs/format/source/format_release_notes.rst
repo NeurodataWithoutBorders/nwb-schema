@@ -3,6 +3,15 @@
 Release Notes
 =============
 
+2.10.0 (Upcoming)
+-----------------
+
+Major changes
+^^^^^^^^^^^^^
+- Implemented NWBEP001 -- Added new neurodata types ``EventsTable``, ``AnnotationsTable``, ``TimestampsVectorData``, ``DurationVectorData``, ``CategoricalVectorData``, and ``MeaningsTable``.
+- Deprecated the use of "instantaneous" for ``TimeSeries/data.continuity``.
+- Deprecated ``BehavioralEvents`` in favor of placing ``EventsTable`` tables in ``NWBFile/events``.
+
 2.9.0 (June 26, 2025)
 ---------------------
 
@@ -23,10 +32,6 @@ Major changes
   neurodata type that extends ``DynamicTable`` with added columns. (#610)
 - Made ``SpikeEventSeries.timestamps`` explicitly required as described in the documentation. (#629)
 - Allowed ``EventDetection`` to have shape (num_events, 2) to store the channel index of the detected event. (#620)
-
-- Implemented NWBEP001 -- Added new neurodata types ``EventsTable``, ``AnnotationsTable``, ``TimestampsVectorData``, ``DurationVectorData``, ``CategoricalVectorData``, and ``MeaningsTable``.
-- Deprecated the use of "instantaneous" for ``TimeSeries/data.continuity``.
-- Deprecated ``BehavioralEvents`` in favor of placing ``EventsTable`` tables in ``NWBFile/events``.
 
 Minor changes
 ^^^^^^^^^^^^^
