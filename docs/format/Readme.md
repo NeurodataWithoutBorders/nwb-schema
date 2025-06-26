@@ -4,7 +4,7 @@ The NWB specification documentation uses Sphinx [https://www.sphinx-doc.org/en/s
 
 **Prerequisites**
 
-```pip install hdmf-docutils```
+```pip install ../../requirements-doc.txt```
 
 **Rebuilding All**
 
