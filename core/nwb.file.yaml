@@ -7,7 +7,7 @@ groups:
   attributes:
   - name: nwb_version
     dtype: text
-    value: "2.9.0-alpha"
+    value: "2.9.0"
     doc: File version string. Use semantic versioning, e.g. 1.2.1. This will be the
       name of the format with trailing major, minor and patch numbers.
   datasets:
@@ -284,6 +284,13 @@ groups:
       - neurodata_type_inc: Device
         doc: Data acquisition devices.
         quantity: '*'
+      - name: models
+        doc: Collection of data acquisition device models.
+        quantity: '?'
+        groups:
+        - neurodata_type_inc: DeviceModel
+          doc: Data acquisition device models.
+          quantity: '*'
     - name: subject
       neurodata_type_inc: Subject
       doc: Information about the animal or person from which the data was measured.
