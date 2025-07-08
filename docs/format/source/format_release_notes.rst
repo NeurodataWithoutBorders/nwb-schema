@@ -3,21 +3,28 @@
 Release Notes
 =============
 
+3.0.0 (Upcoming)
+---------------------
+
+Major changes
+^^^^^^^^^^^^^
+- Added HERD to be part of the core schema.
+
 2.9.0 (June 26, 2025)
 ---------------------
 
 Major changes
 ^^^^^^^^^^^^^
-- Deprecated ``Device.model_number``, ``Device.model_name``, ``Device.manufacturer``. Use 
-  ``Device.model`` link and new ``DeviceModel`` neurodata type instead. The old ``Device.model_name`` 
+- Deprecated ``Device.model_number``, ``Device.model_name``, ``Device.manufacturer``. Use
+  ``Device.model`` link and new ``DeviceModel`` neurodata type instead. The old ``Device.model_name``
   corresponds to the new ``DeviceModel.name``. (#608)
 - Added ``DeviceModel`` neurodata type to represent the model of a device instead of a specific instance of a device.
   This deduplicates information when a session involves multiple instances of the same device model, and it helps
   combine data across sessions and experiments when the model is the same.
   See https://github.com/NeurodataWithoutBorders/nwb-schema/issues/607 for details. (#608)
-- Added ``BaseImage`` and ``ExternalImage`` as new neurodata types. The first so both ``Image`` and ``ExternalImage`` 
+- Added ``BaseImage`` and ``ExternalImage`` as new neurodata types. The first so both ``Image`` and ``ExternalImage``
   can inherit from it. The second to store external images (#604, #623, #627)
-- Changed ``NWBFile.electrodes`` from a generic ``DynamicTable`` with added columns to a new ``ElectrodesTable`` 
+- Changed ``NWBFile.electrodes`` from a generic ``DynamicTable`` with added columns to a new ``ElectrodesTable``
   neurodata type that extends ``DynamicTable`` with added columns. (#539, #624)
 - Changed ``DecompositionSeries.bands`` from a generic ``DynamicTable`` with added columns to a new ``FrequencyBandsTable``
   neurodata type that extends ``DynamicTable`` with added columns. (#610)
