@@ -3,12 +3,12 @@
 Release Notes
 =============
 
-3.0.0 (Upcoming)
+2.10.0 (Upcoming)
 ---------------------
 
 Major changes
 ^^^^^^^^^^^^^
-- Added HERD to be part of the core schema.
+- Added support for an optional ``HERD`` object at ``/general/external_resources``.
 
 2.9.0 (June 26, 2025)
 ---------------------
