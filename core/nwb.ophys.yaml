@@ -29,6 +29,41 @@ groups:
     dtype: float32
     doc: Intensity of the excitation in mW/mm^2, if known.
     required: false
+  datasets:
+  - name: data
+    dtype: numeric
+    dims:
+    - - time
+      - x
+      - y
+    - - time
+      - x
+      - y
+      - z
+    shape:
+    - - null
+      - null
+      - null
+    - - null
+      - null
+      - null
+      - null
+    doc: Time-series of microscopy data as multidimensional arrays indexed as data[time, x, y].
+      The x dimension represents the first spatial axis and y represents the second spatial axis.
+      For raster-scanning systems (e.g., two-photon, confocal, or one-photon laser scanning
+      microscopy), the spatial dimensions have specific meanings related to the scanning pattern:
+      x typically corresponds to the fast scanning direction (horizontal, e.g., resonant mirror or
+      galvanometer X-axis within each scan line) and represents image width (number of columns),
+      while y corresponds to the slow scanning direction (vertical, advancing between scan
+      lines via galvanometer Y-axis) and represents image height (number of rows).
+      When a faster scanning axis is present, x usually refers to width (number of columns)
+      and y usually refers to height (number of rows), following standard imaging conventions.
+      For non-raster imaging modalities (e.g., wide-field, light-sheet, or random-access
+      scanning), x and y represent standard image plane coordinates without specific scanning
+      direction implications. Note that this indexing convention should not be confused with
+      mathematical matrix[row, column] notation where the first index represents rows; here,
+      data[time, x, y] follows image coordinate conventions where x represents the horizontal
+      axis (width/columns) and y represents the vertical axis (height/rows).
   links:
   - name: imaging_plane
     target_type: ImagingPlane
@@ -49,15 +84,51 @@ groups:
       w/ the actual data.
     required: false
   datasets:
+  - name: data
+    dtype: numeric
+    dims:
+    - - time
+      - x
+      - y
+    - - time
+      - x
+      - y
+      - z
+    shape:
+    - - null
+      - null
+      - null
+    - - null
+      - null
+      - null
+      - null
+    doc: Time-series of microscopy data as multidimensional arrays indexed as data[time, x, y].
+      The x dimension represents the first spatial axis and y represents the second spatial axis.
+      For raster-scanning systems (e.g., two-photon, confocal, or one-photon laser scanning
+      microscopy), the spatial dimensions have specific meanings related to the scanning pattern:
+      x typically corresponds to the fast scanning direction (horizontal, e.g., resonant mirror or
+      galvanometer X-axis within each scan line) and represents image width (number of columns),
+      while y corresponds to the slow scanning direction (vertical, advancing between scan
+      lines via galvanometer Y-axis) and represents image height (number of rows).
+      When a faster scanning axis is present, x usually refers to width (number of columns)
+      and y usually refers to height (number of rows), following standard imaging conventions.
+      For non-raster imaging modalities (e.g., wide-field, light-sheet, or random-access
+      scanning), x and y represent standard image plane coordinates without specific scanning
+      direction implications. Note that this indexing convention should not be confused with
+      mathematical matrix[row, column] notation where the first index represents rows; here,
+      data[time, x, y] follows image coordinate conventions where x represents the horizontal
+      axis (width/columns) and y represents the vertical axis (height/rows).
   - name: field_of_view
     dtype: float32
     dims:
-    - - width|height
-    - - width|height|depth
+    - - x|y
+    - - x|y|z
     shape:
     - - 2
     - - 3
-    doc: Width, height and depth of image, or imaged area, in meters.
+    doc: Physical dimensions of the imaging field of view in x, y, and optionally z directions,
+      in meters. The x dimension corresponds to the faster scanning axis, and the y dimension
+      corresponds to the slower scanning axis.
     quantity: '?'
   links:
   - name: imaging_plane
