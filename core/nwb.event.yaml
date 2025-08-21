@@ -77,7 +77,7 @@ groups:
   datasets:
   - name: value
     neurodata_type_inc: VectorData
-    doc: The value of the parent CategoricalVectorData object.
+    doc: The value of a row in the parent CategoricalVectorData object.
   - name: meaning
     neurodata_type_inc: VectorData
     dtype: text
