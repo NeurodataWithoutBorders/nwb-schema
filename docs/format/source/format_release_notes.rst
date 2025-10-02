@@ -1,9 +1,10 @@
+
 .. _nwb-schema-release-notes:
 
 Release Notes
 
-2.10.0 (Unreleased)
--------------------
+2.10.0 (Upcoming)
+-----------------
 
 Minor changes
 ^^^^^^^^^^^^^
