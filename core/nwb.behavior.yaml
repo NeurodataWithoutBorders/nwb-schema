@@ -220,7 +220,9 @@ groups:
 - neurodata_type_def: PupilTracking
   neurodata_type_inc: NWBDataInterface
   default_name: PupilTracking
-  doc: Eye-tracking data, representing pupil size.
+  doc: Eye-tracking data, representing pupil size. WARNING - Use the specialized
+    PupilTrackingSeries type for new data, which provides explicit semantics and
+    appropriate default units for pupil size measurements.
   groups:
   - neurodata_type_inc: TimeSeries
     doc: TimeSeries object containing time series data on pupil size.
@@ -229,7 +231,9 @@ groups:
 - neurodata_type_def: EyeTracking
   neurodata_type_inc: NWBDataInterface
   default_name: EyeTracking
-  doc: Eye-tracking data, representing direction of gaze.
+  doc: Eye-tracking data, representing direction of gaze. WARNING - Use the specialized
+    EyeTrackingSeries type for new data, which provides explicit semantics and appropriate
+    default units for gaze tracking.
   groups:
   - neurodata_type_inc: SpatialSeries
     doc: SpatialSeries object containing data measuring direction of gaze.
@@ -242,7 +246,9 @@ groups:
     representing a floating point value for theta. The SpatialSeries::reference_frame
     field should indicate what direction corresponds to 0 and which is the direction
     of rotation (this should be clockwise). The si_unit for the SpatialSeries should
-    be radians or degrees.
+    be radians or degrees. WARNING - Use the specialized CompassDirectionSeries type
+    for new data, which provides explicit semantics and appropriate default units for
+    directional heading measurements.
   groups:
   - neurodata_type_inc: SpatialSeries
     doc: SpatialSeries object containing direction of gaze travel.
@@ -251,7 +257,9 @@ groups:
 - neurodata_type_def: Position
   neurodata_type_inc: NWBDataInterface
   default_name: Position
-  doc: Position data, whether along the x, x/y or x/y/z axis.
+  doc: Position data, whether along the x, x/y or x/y/z axis. WARNING - Use the
+    specialized PositionSeries type for new data, which provides explicit semantics
+    and appropriate default units for spatial position measurements.
   groups:
   - neurodata_type_inc: SpatialSeries
     doc: SpatialSeries object containing position data.
