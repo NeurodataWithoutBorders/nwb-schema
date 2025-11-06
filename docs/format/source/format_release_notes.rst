@@ -26,6 +26,11 @@ Major changes
 
 Minor changes
 ^^^^^^^^^^^^^
+- Added specialized behavioral series types: ``PositionSeries``, ``CompassDirectionSeries``, ``EyeTrackingSeries``,
+  and ``PupilTrackingSeries``. These new types provide explicit semantics and appropriate default units for tracking
+  spatial position, head direction, gaze location, and pupil size, respectively. The legacy container types
+  (``Position``, ``CompassDirection``, ``EyeTracking``, ``PupilTracking``) remain for backward compatibility.
+  Users are encouraged to use the new specialized series types for new data. (@h-mayorquin, #655)
 - Made group quantities consistent ("1 or more") across data interfaces / wrapper types (#613)
 - Fixed typo and removed HTML tag from doc of behavioral neurodata types. (#600)
 - Improved the documentation of ``IndexSeries``. (#614)

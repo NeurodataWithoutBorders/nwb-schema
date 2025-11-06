@@ -47,15 +47,14 @@ groups:
   neurodata_type_inc: SpatialSeries
   doc: Specialized SpatialSeries for tracking the spatial position/location of a subject
     or object over time. Stores coordinates in 1D, 2D, or 3D space. Common use cases
-    include tracking animal position in an arena during behavioral experiments, monitoring
-    body part locations during movement, or recording object positions in the environment.
+    include tracking animal position in an arena during behavioral experiments
+    or recording object positions in the environment.
     The reference_frame field should specify the coordinate system and origin. Example
     reference frames might be 'origin at top-left corner of arena, x-axis pointing
     right, y-axis pointing down, as viewed from above' for 2D arena tracking, or 'origin
     at center of experimental chamber, x-axis pointing East, y-axis pointing North,
     z-axis pointing up' for 3D tracking. Units should be in spatial measurements (e.g.,
-    meters, centimeters, pixels). Commonly used in behavioral neuroscience, spatial
-    navigation studies, and motion tracking experiments.
+    meters, centimeters, pixels).
   datasets:
   - name: data
     dtype: numeric
@@ -93,9 +92,7 @@ groups:
     indicate what direction corresponds to 0 degrees/radians and specify the direction
     of rotation (clockwise is standard). Units should be 'radians' or 'degrees'. Example
     reference frames might be '0 radians is facing the reward port, rotation is clockwise
-    when viewed from above' or '0 degrees corresponds to magnetic North'. Commonly
-    used in spatial navigation research to track head direction cell activity or analyze
-    directional movement patterns.
+    when viewed from above' or '0 degrees corresponds to magnetic North'.
   datasets:
   - name: data
     dtype: numeric
@@ -127,9 +124,7 @@ groups:
     Example reference frames might be 'gaze position in pixels, origin at top-left
     corner of screen, x-axis pointing right, y-axis pointing down' for screen-based
     tracking, or 'eye rotation angles in degrees, origin at straight ahead from head,
-    positive x is rightward, positive y is upward' for head-centered coordinates. Commonly
-    used in vision research, attention studies, and experiments correlating gaze with
-    neural activity.
+    positive x is rightward, positive y is upward' for head-centered coordinates.
   datasets:
   - name: data
     dtype: numeric
