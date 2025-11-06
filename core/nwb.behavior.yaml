@@ -220,7 +220,6 @@ groups:
       default_value: millimeters
       doc: Base unit of measurement for pupil size. Common values are 'millimeters',
         'pixels', or 'arbitrary units'.
-        by 'conversion' and add 'offset'.
       required: false
 
 - neurodata_type_def: PupilTracking
