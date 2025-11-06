@@ -111,12 +111,18 @@ groups:
 
 - neurodata_type_def: EyeTrackingSeries
   neurodata_type_inc: SpatialSeries
-  doc: Specialized SpatialSeries for tracking direction of gaze. Stores 2D or 3D
-    coordinates representing gaze direction, which may be angular (gaze angles relative
-    to head) or spatial (screen/world coordinates). The reference_frame field should
-    indicate what 'straight-ahead' means (e.g., 'center of screen' or 'straight ahead
-    from head position'). Units may be degrees, radians, or pixels depending on the
-    eye tracking method.
+  doc: Specialized SpatialSeries for tracking gaze location or eye position. Eye tracking
+    measures where the subject is looking, which can be represented in different coordinate
+    systems depending on the experimental setup. Common representations include (1)
+    gaze position on a screen/monitor in pixels or screen coordinates, (2) eye rotation
+    angles relative to the head (horizontal and vertical), or (3) gaze position in
+    world coordinates. The reference_frame field should specify the coordinate system.
+    Example reference frames might be 'gaze position in pixels, origin at top-left
+    corner of screen, x-axis pointing right, y-axis pointing down' for screen-based
+    tracking, or 'eye rotation angles in degrees, origin at straight ahead from head,
+    positive x is rightward, positive y is upward' for head-centered coordinates. Commonly
+    used in vision research, attention studies, and experiments correlating gaze with
+    neural activity.
   datasets:
   - name: data
     dtype: numeric
