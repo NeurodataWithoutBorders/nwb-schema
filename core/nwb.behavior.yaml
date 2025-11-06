@@ -68,25 +68,27 @@ groups:
       - 2
     - - null
       - 3
-    doc: 1-D or 2-D array storing position data. First dimension is time, second dimension
-      represents spatial coordinates.
+    doc: 1-D or 2-D array storing position data. First dimension is time, and the remaining
+      dimension(s) represent spatial coordinates.
     attributes:
     - name: unit
       dtype: text
       default_value: meters
       doc: Base unit of measurement for position data. Common values are 'meters',
-        'centimeters', or 'pixels'. Actual stored values are not necessarily stored
-        in these units. To access the data in these units, multiply 'data' by 'conversion'
-        and add 'offset'.
+        'centimeters', or 'pixels'. 
       required: false
 
 - neurodata_type_def: CompassDirectionSeries
   neurodata_type_inc: SpatialSeries
-  doc: Specialized SpatialSeries for tracking directional heading or compass direction.
-    Stores a floating point value representing theta (heading angle). The reference_frame
-    field should indicate what direction corresponds to 0 degrees/radians and specify
-    the direction of rotation (clockwise is standard). Units should be 'radians' or
-    'degrees'.
+  doc: Specialized SpatialSeries for tracking directional heading or compass direction
+    of a subject (typically head direction in navigation studies). Stores a floating
+    point value representing theta (heading angle). The reference_frame field should
+    indicate what direction corresponds to 0 degrees/radians and specify the direction
+    of rotation (clockwise is standard). Units should be 'radians' or 'degrees'. Example
+    reference frames might be '0 radians is facing the reward port, rotation is clockwise
+    when viewed from above' or '0 degrees corresponds to magnetic North'. Commonly
+    used in spatial navigation research to track head direction cell activity or analyze
+    directional movement patterns.
   datasets:
   - name: data
     dtype: numeric
@@ -105,8 +107,6 @@ groups:
       dtype: text
       default_value: radians
       doc: Base unit of measurement for direction data. Should be 'radians' or 'degrees'.
-        Actual stored values are not necessarily stored in these units. To access
-        the data in these units, multiply 'data' by 'conversion' and add 'offset'.
       required: false
 
 - neurodata_type_def: EyeTrackingSeries
@@ -143,9 +143,7 @@ groups:
       dtype: text
       default_value: degrees
       doc: Base unit of measurement for gaze direction. Common values are 'degrees',
-        'radians', or 'pixels'. Actual stored values are not necessarily stored in
-        these units. To access the data in these units, multiply 'data' by 'conversion'
-        and add 'offset'.
+        'radians', or 'pixels'. 
       required: false
 
 - neurodata_type_def: BehavioralEpochs
@@ -208,8 +206,7 @@ groups:
       dtype: text
       default_value: millimeters
       doc: Base unit of measurement for pupil size. Common values are 'millimeters',
-        'pixels', or 'arbitrary units'. Actual stored values are not necessarily
-        stored in these units. To access the data in these units, multiply 'data'
+        'pixels', or 'arbitrary units'.
         by 'conversion' and add 'offset'.
       required: false
 
