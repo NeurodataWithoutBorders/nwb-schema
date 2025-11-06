@@ -43,6 +43,111 @@ groups:
     doc: Description defining what exactly 'straight-ahead' means.
     quantity: '?'
 
+- neurodata_type_def: PositionSeries
+  neurodata_type_inc: SpatialSeries
+  doc: Specialized SpatialSeries for tracking spatial position of a subject or object.
+    Stores coordinates in 1D, 2D, or 3D space (x, x/y, or x/y/z). The reference_frame
+    field should indicate the zero-position (e.g., 'top-left corner of enclosure').
+    Units should be in spatial measurements (e.g., meters, centimeters, pixels).
+  datasets:
+  - name: data
+    dtype: numeric
+    dims:
+    - - num_times
+    - - num_times
+      - x
+    - - num_times
+      - x,y
+    - - num_times
+      - x,y,z
+    shape:
+    - - null
+    - - null
+      - 1
+    - - null
+      - 2
+    - - null
+      - 3
+    doc: 1-D or 2-D array storing position data. First dimension is time, second dimension
+      represents spatial coordinates.
+    attributes:
+    - name: unit
+      dtype: text
+      default_value: meters
+      doc: Base unit of measurement for position data. Common values are 'meters',
+        'centimeters', or 'pixels'. Actual stored values are not necessarily stored
+        in these units. To access the data in these units, multiply 'data' by 'conversion'
+        and add 'offset'.
+      required: false
+
+- neurodata_type_def: CompassDirectionSeries
+  neurodata_type_inc: SpatialSeries
+  doc: Specialized SpatialSeries for tracking directional heading or compass direction.
+    Stores a floating point value representing theta (heading angle). The reference_frame
+    field should indicate what direction corresponds to 0 degrees/radians and specify
+    the direction of rotation (clockwise is standard). Units should be 'radians' or
+    'degrees'.
+  datasets:
+  - name: data
+    dtype: numeric
+    dims:
+    - - num_times
+    - - num_times
+      - theta
+    shape:
+    - - null
+    - - null
+      - 1
+    doc: 1-D or 2-D array storing heading/compass direction. Typically stores a single
+      angular value (theta) per timepoint.
+    attributes:
+    - name: unit
+      dtype: text
+      default_value: radians
+      doc: Base unit of measurement for direction data. Should be 'radians' or 'degrees'.
+        Actual stored values are not necessarily stored in these units. To access
+        the data in these units, multiply 'data' by 'conversion' and add 'offset'.
+      required: false
+
+- neurodata_type_def: EyeTrackingSeries
+  neurodata_type_inc: SpatialSeries
+  doc: Specialized SpatialSeries for tracking direction of gaze. Stores 2D or 3D
+    coordinates representing gaze direction, which may be angular (gaze angles relative
+    to head) or spatial (screen/world coordinates). The reference_frame field should
+    indicate what 'straight-ahead' means (e.g., 'center of screen' or 'straight ahead
+    from head position'). Units may be degrees, radians, or pixels depending on the
+    eye tracking method.
+  datasets:
+  - name: data
+    dtype: numeric
+    dims:
+    - - num_times
+    - - num_times
+      - x
+    - - num_times
+      - x,y
+    - - num_times
+      - x,y,z
+    shape:
+    - - null
+    - - null
+      - 1
+    - - null
+      - 2
+    - - null
+      - 3
+    doc: 1-D or 2-D array storing gaze direction. Typically 2D (x,y gaze angles or
+      screen coordinates), but can be 1D or 3D.
+    attributes:
+    - name: unit
+      dtype: text
+      default_value: degrees
+      doc: Base unit of measurement for gaze direction. Common values are 'degrees',
+        'radians', or 'pixels'. Actual stored values are not necessarily stored in
+        these units. To access the data in these units, multiply 'data' by 'conversion'
+        and add 'offset'.
+      required: false
+
 - neurodata_type_def: BehavioralEpochs
   neurodata_type_inc: NWBDataInterface
   default_name: BehavioralEpochs
@@ -82,6 +187,31 @@ groups:
   - neurodata_type_inc: TimeSeries
     doc: TimeSeries object containing continuous behavioral data.
     quantity: '+'
+
+- neurodata_type_def: PupilTrackingSeries
+  neurodata_type_inc: TimeSeries
+  doc: Specialized TimeSeries for tracking pupil size/diameter over time. Stores
+    scalar measurements of pupil diameter or area for a single pupil. For tracking
+    both eyes, use two separate PupilTrackingSeries instances (e.g., one for left
+    eye, one for right eye). Units should be in length measurements (e.g., millimeters,
+    pixels) or arbitrary units with appropriate conversion factors.
+  datasets:
+  - name: data
+    dtype: numeric
+    dims:
+    - - num_times
+    shape:
+    - - null
+    doc: 1-D array storing pupil size data over time.
+    attributes:
+    - name: unit
+      dtype: text
+      default_value: millimeters
+      doc: Base unit of measurement for pupil size. Common values are 'millimeters',
+        'pixels', or 'arbitrary units'. Actual stored values are not necessarily
+        stored in these units. To access the data in these units, multiply 'data'
+        by 'conversion' and add 'offset'.
+      required: false
 
 - neurodata_type_def: PupilTracking
   neurodata_type_inc: NWBDataInterface
