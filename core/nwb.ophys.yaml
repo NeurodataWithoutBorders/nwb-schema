@@ -34,12 +34,12 @@ groups:
     dtype: numeric
     dims:
     - - time
-      - x
-      - y
+      - width
+      - height
     - - time
-      - x
-      - y
-      - z
+      - width
+      - height
+      - depth
     shape:
     - - null
       - null
@@ -48,22 +48,40 @@ groups:
       - null
       - null
       - null
-    doc: Time-series of microscopy data as multidimensional arrays indexed as data[time, x, y].
-      The x dimension represents the first spatial axis and y represents the second spatial axis.
-      For raster-scanning systems (e.g., two-photon, confocal, or one-photon laser scanning
-      microscopy), the spatial dimensions have specific meanings related to the scanning pattern:
-      x typically corresponds to the fast scanning direction (horizontal, e.g., resonant mirror or
-      galvanometer X-axis within each scan line) and represents image width (number of columns),
-      while y corresponds to the slow scanning direction (vertical, advancing between scan
-      lines via galvanometer Y-axis) and represents image height (number of rows).
-      When a faster scanning axis is present, x usually refers to width (number of columns)
-      and y usually refers to height (number of rows), following standard imaging conventions.
-      For non-raster imaging modalities (e.g., wide-field, light-sheet, or random-access
-      scanning), x and y represent standard image plane coordinates without specific scanning
-      direction implications. Note that this indexing convention should not be confused with
-      mathematical matrix[row, column] notation where the first index represents rows; here,
-      data[time, x, y] follows image coordinate conventions where x represents the horizontal
-      axis (width/columns) and y represents the vertical axis (height/rows).
+
+
+    doc: |
+      Time-series of microscopy data indexed as data[time, width, height].
+
+      Indexing convention:
+        - width: first spatial axis (horizontal direction, columns)
+        - height: second spatial axis (vertical direction, rows)
+
+      For raster-scanning systems (two-photon, confocal, one-photon laser scanning):
+        - width: fast scan direction (horizontal)
+        - height: slow scan direction (vertical)
+
+      Coordinate system diagram:
+
+        height  ^
+        (slow)  |
+                |    +-----------------+
+                |    |                 |
+                |    |   Image plane   |
+                |    |                 |
+                |    +-----------------+
+                |
+                0 ----------------------> width (fast)
+
+
+      For non-raster systems (wide-field, light-sheet, random-access), width and height
+      are arbitrary coordinates of the image plane.
+
+      WARNING: This indexing convention conflicts with matrix[row, column] notation used
+      in common image analysis libraries (NumPy, scikit-image, OpenCV), where the first
+      index represents rows (vertical/height) and the second represents columns
+      (horizontal/width). Here, data[time, width, height] uses the first spatial index
+      for horizontal (width) and the second for vertical (height).
   links:
   - name: imaging_plane
     target_type: ImagingPlane
@@ -88,12 +106,12 @@ groups:
     dtype: numeric
     dims:
     - - time
-      - x
-      - y
+      - width
+      - height
     - - time
-      - x
-      - y
-      - z
+      - width
+      - height
+      - depth
     shape:
     - - null
       - null
@@ -102,32 +120,48 @@ groups:
       - null
       - null
       - null
-    doc: Time-series of microscopy data as multidimensional arrays indexed as data[time, x, y].
-      The x dimension represents the first spatial axis and y represents the second spatial axis.
-      For raster-scanning systems (e.g., two-photon, confocal, or one-photon laser scanning
-      microscopy), the spatial dimensions have specific meanings related to the scanning pattern:
-      x typically corresponds to the fast scanning direction (horizontal, e.g., resonant mirror or
-      galvanometer X-axis within each scan line) and represents image width (number of columns),
-      while y corresponds to the slow scanning direction (vertical, advancing between scan
-      lines via galvanometer Y-axis) and represents image height (number of rows).
-      When a faster scanning axis is present, x usually refers to width (number of columns)
-      and y usually refers to height (number of rows), following standard imaging conventions.
-      For non-raster imaging modalities (e.g., wide-field, light-sheet, or random-access
-      scanning), x and y represent standard image plane coordinates without specific scanning
-      direction implications. Note that this indexing convention should not be confused with
-      mathematical matrix[row, column] notation where the first index represents rows; here,
-      data[time, x, y] follows image coordinate conventions where x represents the horizontal
-      axis (width/columns) and y represents the vertical axis (height/rows).
+    doc: |
+      Time-series of microscopy data indexed as data[time, width, height].
+
+      Indexing convention:
+        - width: first spatial axis (horizontal direction, columns)
+        - height: second spatial axis (vertical direction, rows)
+
+      For raster-scanning systems (two-photon, confocal, one-photon laser scanning):
+        - width: fast scan direction (horizontal)
+        - height: slow scan direction (vertical)
+
+      Coordinate system diagram:
+
+        height  ^
+        (slow)  |
+                |    +-----------------+
+                |    |                 |
+                |    |   Image plane   |
+                |    |                 |
+                |    +-----------------+
+                |
+                0 ----------------------> width (fast)
+
+
+      For non-raster systems (wide-field, light-sheet, random-access), width and height
+      are arbitrary coordinates of the image plane.
+
+      WARNING: This indexing convention conflicts with matrix[row, column] notation used
+      in common image analysis libraries (NumPy, scikit-image, OpenCV), where the first
+      index represents rows (vertical/height) and the second represents columns
+      (horizontal/width). Here, data[time, width, height] uses the first spatial index
+      for horizontal (width) and the second for vertical (height).
   - name: field_of_view
     dtype: float32
     dims:
-    - - x|y
-    - - x|y|z
+    - - width|height
+    - - width|height|depth
     shape:
     - - 2
     - - 3
-    doc: Physical dimensions of the imaging field of view in x, y, and optionally z directions,
-      in meters. The x dimension corresponds to the faster scanning axis, and the y dimension
+    doc: Physical dimensions of the imaging field of view in width, height, and optionally depth directions,
+      in meters. The width dimension corresponds to the faster scanning axis, and the height dimension
       corresponds to the slower scanning axis.
     quantity: '?'
   links:
