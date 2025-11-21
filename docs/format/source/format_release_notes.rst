@@ -32,6 +32,8 @@ Minor changes
 - Made ``EventDetection.times`` optional and deprecated. Use `source_idx` instead. (#620)
 - Clarified documentation of ``PlaneSegmentation`` that at least one of ``image_mask``, ``pixel_mask``,
   and ``voxel_mask`` is required. (#636)
+- Specified that units for ``ElectrodesTable`` coordinate fields (``x``, ``y``, ``z``, ``rel_x``, ``rel_y``, ``rel_z``)
+  should be in microns. (#658)
 
 2.8.0 (November 24, 2024)
 -------------------------
