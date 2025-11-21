@@ -77,11 +77,16 @@ groups:
       For non-raster systems (wide-field, light-sheet, random-access), width and height
       are arbitrary coordinates of the image plane.
 
-      WARNING: This indexing convention conflicts with matrix[row, column] notation used
-      in common image analysis libraries (NumPy, scikit-image, OpenCV), where the first
-      index represents rows (vertical/height) and the second represents columns
-      (horizontal/width). Here, data[time, width, height] uses the first spatial index
-      for horizontal (width) and the second for vertical (height).
+      WARNING: This indexing convention conflicts with standard matrix[row, column] notation
+      where the first index moves vertically through rows and the second moves horizontally
+      through columns. In data[time, width, height], the first spatial index moves horizontally
+      (width) and the second moves vertically (height), which is transposed relative to matrix
+      convention. This means:
+        - data[t, w, h] follows image/Cartesian convention: data[time, x, y] where x is horizontal
+        - matrix[r, c] follows row-column convention: matrix[y, x] where row (y) is vertical
+        - To convert between them requires transposing the spatial dimensions
+      For array access, incrementing the first spatial index moves you horizontally across the
+      image, while in matrix notation it would move you vertically down rows.
   links:
   - name: imaging_plane
     target_type: ImagingPlane
@@ -147,11 +152,16 @@ groups:
       For non-raster systems (wide-field, light-sheet, random-access), width and height
       are arbitrary coordinates of the image plane.
 
-      WARNING: This indexing convention conflicts with matrix[row, column] notation used
-      in common image analysis libraries (NumPy, scikit-image, OpenCV), where the first
-      index represents rows (vertical/height) and the second represents columns
-      (horizontal/width). Here, data[time, width, height] uses the first spatial index
-      for horizontal (width) and the second for vertical (height).
+      WARNING: This indexing convention conflicts with standard matrix[row, column] notation
+      where the first index moves vertically through rows and the second moves horizontally
+      through columns. In data[time, width, height], the first spatial index moves horizontally
+      (width) and the second moves vertically (height), which is transposed relative to matrix
+      convention. This means:
+        - data[t, w, h] follows image/Cartesian convention: data[time, x, y] where x is horizontal
+        - matrix[r, c] follows row-column convention: matrix[y, x] where row (y) is vertical
+        - To convert between them requires transposing the spatial dimensions
+      For array access, incrementing the first spatial index moves you horizontally across the
+      image, while in matrix notation it would move you vertically down rows.
   - name: field_of_view
     dtype: float32
     dims:
