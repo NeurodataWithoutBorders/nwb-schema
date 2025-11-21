@@ -32,6 +32,10 @@ Minor changes
 - Made ``EventDetection.times`` optional and deprecated. Use `source_idx` instead. (#620)
 - Clarified documentation of ``PlaneSegmentation`` that at least one of ``image_mask``, ``pixel_mask``,
   and ``voxel_mask`` is required. (#636)
+- Improved documentation for ``OnePhotonSeries`` and ``TwoPhotonSeries``: added ``data`` dataset specification
+  with an ASCII diagram clarifying the meaning of the ``height`` and ``width`` dimensions; clarified that for
+  raster-based microscopy, width (columns) is the fast scan direction; contrasted this convention with standard
+  matrix notation where the first array dimension slices through rows. (#649)
 
 2.8.0 (November 24, 2024)
 -------------------------
