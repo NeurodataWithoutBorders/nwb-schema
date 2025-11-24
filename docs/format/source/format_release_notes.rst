@@ -33,9 +33,7 @@ Minor changes
 - Clarified documentation of ``PlaneSegmentation`` that at least one of ``image_mask``, ``pixel_mask``,
   and ``voxel_mask`` is required. (#636)
 - Improved documentation of ``ElectrodeGroup`` to clarify its purpose as a physical grouping of electrodes
-  that are typically used together for analysis, such as spike sorting. (#631)
-- Specified that units for ``ElectrodesTable`` coordinate fields (``x``, ``y``, ``z``, ``rel_x``, ``rel_y``, ``rel_z``)
-  should be in microns. (#659)
+  that are typically used together for analysis, such as spike sorting. (#659)
 
 2.8.0 (November 24, 2024)
 -------------------------
