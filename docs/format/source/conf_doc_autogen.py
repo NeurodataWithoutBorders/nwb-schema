@@ -80,10 +80,10 @@ spec_add_latex_clearpage_after_ndt_sections = True
 # or to show only the parts that are actually new to a current type while only linking to base types
 spec_resolve_type_inc = False
 
-# Default type map to be used. This is the type map where dependent namespaces are stored. In the case of
-# NWB this is spec_default_type_map = pynwb.get_type_map()
 import pynwb
-spec_default_type_map = pynwb.get_type_map()
+
+# Generate a clean TypeMap using the namespace from this repo
+spec_default_type_map = None
 
 # Default specification classes for groups datasets and namespaces. In the case of NWB these are the NWB-specfic
 # spec classes. In the general cases these are the spec classes from HDMF
