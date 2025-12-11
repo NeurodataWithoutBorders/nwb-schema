@@ -249,6 +249,14 @@ groups:
       stored external to the NWB file, in files storing raw data. Once timestamp
       data is calculated, the contents of 'sync' are mostly for archival purposes.
     quantity: '?'
+  links:
+  - name: device
+    target_type: Device
+    doc: Device used to record this time series. This should not be used to represent
+      a relationship between a stimulation time series and the device used for
+      stimulation; that relationship should be represented through other means in the
+      file.
+    quantity: '?'
 
 - neurodata_type_def: ProcessingModule
   neurodata_type_inc: NWBContainer

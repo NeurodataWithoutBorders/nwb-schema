@@ -12,6 +12,7 @@ Minor changes
   that are typically used together for analysis, such as spike sorting. (#659)
 - Specified that units for ``ElectrodesTable`` coordinate fields (``x``, ``y``, ``z``, ``rel_x``, ``rel_y``, ``rel_z``)
   should be in microns. (#658)
+- Added optional link from ``TimeSeries`` to ``Device`` to represent the device used to record the time series. (#662)
 
 
 2.9.0 (June 26, 2025)
