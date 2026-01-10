@@ -402,6 +402,7 @@ groups:
       quantity: '*'
   - name: events
     doc: Events that occurred during the session.
+    quantity: '?'
     groups:
     - neurodata_type_inc: EventsTable
       doc: Events that occurred during the session.
