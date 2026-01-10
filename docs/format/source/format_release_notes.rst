@@ -8,9 +8,18 @@ Release Notes
 
 Major changes
 ^^^^^^^^^^^^^
-- Implemented NWBEP001 -- Added new neurodata types ``EventsTable``, ``AnnotationsTable``, ``TimestampsVectorData``, ``DurationVectorData``, ``CategoricalVectorData``, and ``MeaningsTable``.
+- Implemented NWBEP001 -- Added new neurodata types ``EventsTable``, ``TimestampsVectorData``, and ``DurationVectorData``.
+- Incorporated HDMF Common Schema 1.9.0 which added new data types ``MeaningsTable`` and support for ``MeaningsTable`` in ``DynamicTable``.
 - Deprecated the use of "instantaneous" for ``TimeSeries/data.continuity``.
 - Deprecated ``BehavioralEvents`` in favor of placing ``EventsTable`` tables in ``NWBFile/events``.
+
+Minor changes
+^^^^^^^^^^^^^
+- Improved documentation of ``ElectrodeGroup`` to clarify its purpose as a physical grouping of electrodes
+  that are typically used together for analysis, such as spike sorting. (#659)
+- Specified that units for ``ElectrodesTable`` coordinate fields (``x``, ``y``, ``z``, ``rel_x``, ``rel_y``, ``rel_z``)
+  should be in microns. (#658)
+
 
 2.9.0 (June 26, 2025)
 ---------------------
@@ -41,6 +50,7 @@ Minor changes
 - Made ``EventDetection.times`` optional and deprecated. Use `source_idx` instead. (#620)
 - Clarified documentation of ``PlaneSegmentation`` that at least one of ``image_mask``, ``pixel_mask``,
   and ``voxel_mask`` is required. (#636)
+
 
 2.8.0 (November 24, 2024)
 -------------------------
