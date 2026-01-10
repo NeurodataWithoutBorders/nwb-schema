@@ -22,7 +22,7 @@ datasets:
   neurodata_type_inc: VectorData
   dtype: float
   dims:
-  - num_events
+  - num_times
   shape:
   - null
   doc: A 1-dimensional VectorData that stores durations in seconds.
@@ -37,52 +37,7 @@ datasets:
       by the sampling rate for timestamps of the data acquisition system.
     required: false
 
-- neurodata_type_def: CategoricalVectorData
-  neurodata_type_inc: VectorData
-  dims:
-  - num_events
-  shape:
-  - null
-  doc: A 1-dimensional VectorData that stores categorical data of any type. This is
-    an experimental type.
-  attributes:
-  - name: meanings
-    dtype:
-      target_type: MeaningsTable
-      reftype: object
-    doc: The MeaningsTable object that provides the meanings of the values in this
-      CategoricalVectorData object.
-  - name: filter_values
-    dtype: text
-    dims:
-    - num_events
-    shape:
-    - null
-    doc: Optional dataset containing possible values in the parent data that represent
-      missing or invalid values that should be filtered out during analysis. Currently,
-      only string values are allowed. For example, the filter values may contain the
-      values "undefined" or "None" to signal that those values in the data are missing
-      or invalid.
-    required: false
-
 groups:
-- neurodata_type_def: MeaningsTable
-  neurodata_type_inc: DynamicTable
-  doc: A table to store information about the meanings of categorical data. Intended
-    to be used as a lookup table for the meanings of values in a CategoricalVectorData
-    object. All possible values of the parent CategoricalVectorData object should
-    be present in the 'value' column of this table, even if the value is not observed
-    in the data. Additional columns may be added to store additional metadata about
-    each value.
-  datasets:
-  - name: value
-    neurodata_type_inc: VectorData
-    doc: The value of a row in the parent CategoricalVectorData object.
-  - name: meaning
-    neurodata_type_inc: VectorData
-    dtype: text
-    doc: The meaning of the value in the parent CategoricalVectorData object.
-
 - neurodata_type_def: EventsTable
   neurodata_type_inc: DynamicTable
   doc: A column-based table to store information about events (event instances), one
@@ -108,26 +63,12 @@ groups:
       of NaN can be used for events without a duration or with a duration that is
       not yet specified.
     quantity: '?'
-  groups:
-  - neurodata_type_inc: MeaningsTable
-    doc: Lookup tables for the meanings of the values in any CategoricalVectorData
-      columns. The name of the table should be the name of the corresponding CategoricalVectorData
-      column followed by "_meanings".
-    quantity: '*'
-
-- neurodata_type_def: AnnotationsTable
-  neurodata_type_inc: EventsTable
-  doc: A column-based table to store user annotations about events, one event per row.
-    If annotations come from a fixed set of values (aka controlled vocabulary or enumeration),
-    make the "annotation" column a CategoricalVectorData and add a MeaningsTable named 
-    "annotation_meanings" to specify the meanings of the fixed set of values in the 
-    "annotation" column. 
-  datasets:
   - name: annotation
     neurodata_type_inc: VectorData
-    doc: Column containing the freeform text annotation.
+    doc: Column containing user annotations about events.
     dtype: text
     dims:
     - num_times
     shape:
     - null
+    quantity: '?'
