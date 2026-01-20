@@ -199,10 +199,10 @@ groups:
     attributes:
     - name: resolution
       dtype: float64
-      doc: The smallest possible difference between two spike times. Usually 1 divided by the acquisition sampling rate
-        from which spike times were extracted, but could be larger if the acquisition time series was downsampled or
-        smaller if the acquisition time series was smoothed/interpolated and it is possible for the spike time to be
-        between samples.
+      doc: The temporal resolution of the spike times, in seconds. This is typically the sampling period (1/sampling_rate)
+        of the acquisition data from which spikes were extracted. Notes - (1) If the acquisition data was downsampled before
+        spike sorting, the resolution will be larger (coarser) than the original acquisition sampling period. (2) If
+        interpolation was applied during spike sorting, spike times may fall between samples of the acquisition data.
       required: false
   - name: obs_intervals_index
     neurodata_type_inc: VectorIndex
