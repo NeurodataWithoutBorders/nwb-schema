@@ -6,7 +6,8 @@ datasets:
   - num_times
   shape:
   - null
-  doc: A 1-dimensional VectorData that stores timestamps in seconds.
+  doc: A 1-dimensional VectorData that stores timestamps in seconds from the
+    session start time.
   attributes:
   - name: unit
     dtype: text
