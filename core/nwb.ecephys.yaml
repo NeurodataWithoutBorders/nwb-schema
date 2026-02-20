@@ -235,7 +235,10 @@ groups:
 
 - neurodata_type_def: ElectrodeGroup
   neurodata_type_inc: NWBContainer
-  doc: A physical grouping of electrodes, e.g. a shank of an array.
+  doc: A physical grouping of electrodes, e.g., a shank of an array. An electrode group is typically used to describe
+    electrodes that are physically connected on a single device and are often (but not always) used together for
+    analysis, such as for spike sorting. Note that this is descriptive metadata; electrodes from different groups
+    can still be spike-sorted together if needed.
   attributes:
   - name: description
     dtype: text
@@ -288,17 +291,17 @@ groups:
   - name: x
     neurodata_type_inc: VectorData
     dtype: float32
-    doc: x coordinate of the channel location in the brain (+x is posterior).
+    doc: x coordinate of the channel location in the brain (+x is posterior). Units should be specified in microns.
     quantity: '?'
   - name: y
     neurodata_type_inc: VectorData
     dtype: float32
-    doc: y coordinate of the channel location in the brain (+y is inferior).
+    doc: y coordinate of the channel location in the brain (+y is inferior). Units should be specified in microns.
     quantity: '?'
   - name: z
     neurodata_type_inc: VectorData
     dtype: float32
-    doc: z coordinate of the channel location in the brain (+z is right).
+    doc: z coordinate of the channel location in the brain (+z is right). Units should be specified in microns.
     quantity: '?'
   - name: imp
     neurodata_type_inc: VectorData
@@ -313,17 +316,17 @@ groups:
   - name: rel_x
     neurodata_type_inc: VectorData
     dtype: float32
-    doc: x coordinate in electrode group
+    doc: x coordinate in electrode group. Units should be specified in microns.
     quantity: '?'
   - name: rel_y
     neurodata_type_inc: VectorData
     dtype: float32
-    doc: y coordinate in electrode group
+    doc: y coordinate in electrode group. Units should be specified in microns.
     quantity: '?'
   - name: rel_z
     neurodata_type_inc: VectorData
     dtype: float32
-    doc: z coordinate in electrode group
+    doc: z coordinate in electrode group. Units should be specified in microns.
     quantity: '?'
   - name: reference
     neurodata_type_inc: VectorData

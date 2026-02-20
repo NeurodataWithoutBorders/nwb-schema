@@ -10,6 +10,13 @@ Major changes
 ^^^^^^^^^^^^^
 - Added support for an optional ``HERD`` object at ``/general/external_resources``.
 
+Minor changes
+^^^^^^^^^^^^^
+- Improved documentation of ``ElectrodeGroup`` to clarify its purpose as a physical grouping of electrodes
+  that are typically used together for analysis, such as spike sorting. (#659)
+- Specified that units for ``ElectrodesTable`` coordinate fields (``x``, ``y``, ``z``, ``rel_x``, ``rel_y``, ``rel_z``)
+  should be in microns. (#658)
+
 2.9.0 (June 26, 2025)
 ---------------------
 
@@ -39,6 +46,7 @@ Minor changes
 - Made ``EventDetection.times`` optional and deprecated. Use `source_idx` instead. (#620)
 - Clarified documentation of ``PlaneSegmentation`` that at least one of ``image_mask``, ``pixel_mask``,
   and ``voxel_mask`` is required. (#636)
+
 
 2.8.0 (November 24, 2024)
 -------------------------
