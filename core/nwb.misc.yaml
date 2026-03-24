@@ -194,7 +194,9 @@ groups:
   - name: spike_times
     neurodata_type_inc: VectorData
     dtype: float64
-    doc: Spike times for each unit in seconds.
+    doc: Spike times for each unit, in seconds, relative to the session reference
+      time (i.e. session_start_time or, if defined, timestamps_reference_time).
+      Times should be stored in ascending order.
     quantity: '?'
     attributes:
     - name: resolution
@@ -217,7 +219,9 @@ groups:
     shape:
     - null
     - 2
-    doc: Observation intervals for each unit.
+    doc: Observation intervals for each unit, in seconds, relative to the session
+      reference time (i.e. session_start_time or, if defined, timestamps_reference_time).
+      Intervals should be in ascending order and non-overlapping.
     quantity: '?'
   - name: electrodes_index
     neurodata_type_inc: VectorIndex
