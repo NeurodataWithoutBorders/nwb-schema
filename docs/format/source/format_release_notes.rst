@@ -16,8 +16,10 @@ Minor changes
   that are typically used together for analysis, such as spike sorting. (#659)
 - Specified that units for ``ElectrodesTable`` coordinate fields (``x``, ``y``, ``z``, ``rel_x``, ``rel_y``, ``rel_z``)
   should be in microns. (#658)
-- Expanded documentation for the ``Subject`` 'age' dataset, including details on ISO 8601 Duration format and 
+- Expanded documentation for the ``Subject`` 'age' dataset, including details on ISO 8601 Duration format and
   age range representation.
+- Clarified ``Units.spike_times`` and ``Units.obs_intervals`` documentation to specify that times are relative
+  to the session reference time and that values should be stored in ascending order. (#676)
 
 2.9.0 (June 26, 2025)
 ---------------------
