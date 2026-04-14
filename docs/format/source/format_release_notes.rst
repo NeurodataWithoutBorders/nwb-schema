@@ -11,7 +11,6 @@ Major changes
 - Implemented NWBEP001 -- Added new neurodata types ``EventsTable``, ``TimestampsVectorData``, and ``DurationVectorData``.
 - Incorporated HDMF Common Schema 1.9.0 which added new data types ``MeaningsTable`` and support for ``MeaningsTable`` in ``DynamicTable``.
 - Added support for an optional ``HERD`` object at ``/general/external_resources``.
-- Deprecated the use of "instantaneous" for ``TimeSeries/data.continuity``.
 - Deprecated ``BehavioralEvents`` in favor of placing ``EventsTable`` tables in ``NWBFile/events``.
 - Deprecated ``AnnotationSeries`` in favor of creating an ``EventsTable`` with an ``annotation`` column.
 
