@@ -201,9 +201,9 @@ groups:
       dtype: float64
       doc: The temporal resolution of the spike times, in seconds. This is typically the sampling period (1/sampling_rate)
         of the acquisition data from which spikes were extracted. If the acquisition data was downsampled before
-        spike sorting, the resolution should be the downsampled frequency (lower sampling frequency, larger resolution value). If interpolation
+        spike sorting, the resolution should be based on the downsampled sampling rate (lower sampling rate, larger resolution value). If interpolation
         was applied during spike sorting, then spike times may fall between samples of the acquisition data, so the
-        resolution should be the interpolation step size (higher sampling frequency, smaller resolution value).
+        resolution should be the interpolation step size (higher sampling rate, smaller resolution value).
       required: false
   - name: obs_intervals_index
     neurodata_type_inc: VectorIndex
