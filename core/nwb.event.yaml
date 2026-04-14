@@ -34,7 +34,7 @@ datasets:
     doc: The unit of measurement for the durations, fixed to 'seconds'.
   - name: resolution
     dtype: float
-    doc: The smallest possible difference between two timestamps. Usually 1 divided
+    doc: The smallest possible difference between two durations. Usually 1 divided
       by the sampling rate for timestamps of the data acquisition system.
     required: false
 
