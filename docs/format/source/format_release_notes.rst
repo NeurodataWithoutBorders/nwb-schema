@@ -20,6 +20,8 @@ Minor changes
   age range representation.
 - Clarified ``Units.spike_times`` and ``Units.obs_intervals`` documentation to specify that times are relative
   to the session reference time and that values should be stored in ascending order. (#676)
+- Improved documentation of ``Units.spike_times.resolution`` to clarify that it represents the temporal resolution
+  (sampling period) of the spike times. (#666)
 
 2.9.0 (June 26, 2025)
 ---------------------
