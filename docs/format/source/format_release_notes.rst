@@ -18,6 +18,8 @@ Minor changes
   should be in microns. (#658)
 - Expanded documentation for the ``Subject`` 'age' dataset, including details on ISO 8601 Duration format and
   age range representation.
+- Clarified ``Units.spike_times`` and ``Units.obs_intervals`` documentation to specify that times are relative
+  to the session reference time and that values should be stored in ascending order. (#676)
 - Improved documentation of ``Units.spike_times.resolution`` to clarify that it represents the temporal resolution
   (sampling period) of the spike times. (#666)
 
