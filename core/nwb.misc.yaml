@@ -47,7 +47,7 @@ groups:
 
 - neurodata_type_def: AnnotationSeries
   neurodata_type_inc: TimeSeries
-  doc: Stores user annotations made during an experiment. The data[]
+  doc: DEPRECATED. Use an EventsTable instead. Stores user annotations made during an experiment. The data[]
     field stores a text array, and timestamps are stored for each annotation (ie,
     interval=1). This is largely an alias to a standard TimeSeries storing a text
     array but that is identifiable as storing annotations in a machine-readable way.
