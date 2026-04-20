@@ -7,7 +7,7 @@ datasets:
   shape:
   - null
   doc: A 1-dimensional VectorData that stores timestamps in seconds from the
-    session start time.
+    session start time. Timestamp are not required to be sorted in time.
   attributes:
   - name: unit
     dtype: text
