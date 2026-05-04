@@ -1,0 +1,77 @@
+datasets:
+- neurodata_type_def: TimestampVectorData
+  neurodata_type_inc: VectorData
+  dtype: float
+  dims:
+  - num_times
+  shape:
+  - null
+  doc: A 1-dimensional VectorData that stores timestamps in seconds from the
+    session start time. Timestamp are not required to be sorted in time.
+  attributes:
+  - name: unit
+    dtype: text
+    value: seconds
+    doc: The unit of measurement for the timestamps, fixed to 'seconds'.
+  - name: resolution
+    dtype: float
+    doc: The temporal resolution of the timestamps, in seconds. This is typically the sampling period
+      (1 / sampling_rate), also known as the clock period, of the data acquisition system from which the
+      timestamps were recorded or derived.
+    required: false
+
+- neurodata_type_def: DurationVectorData
+  neurodata_type_inc: VectorData
+  dtype: float
+  dims:
+  - num_times
+  shape:
+  - null
+  doc: A 1-dimensional VectorData that stores durations in seconds.
+  attributes:
+  - name: unit
+    dtype: text
+    value: seconds
+    doc: The unit of measurement for the durations, fixed to 'seconds'.
+  - name: resolution
+    dtype: float
+    doc: The temporal resolution of the durations, in seconds. This is typically the sampling period
+      (1 / sampling_rate), also known as the clock period, of the data acquisition system from which the
+      durations were recorded or derived.
+    required: false
+
+groups:
+- neurodata_type_def: EventsTable
+  neurodata_type_inc: DynamicTable
+  doc: A column-based table to store information about events (event instances), one
+    event per row. Additional columns may be added to store metadata about each event,
+    such as the duration of the event.
+  attributes:
+  - name: description
+    dtype: text
+    doc: A description of the events stored in the table, including information about
+      how the event times were computed, especially if the times are the result of
+      processing or filtering raw data. For example, if the experimenter is encoding
+      different types of events using a strobed or N-bit encoding, then the description
+      should describe which channels were used and how the event time is computed,
+      e.g., as the rise time of the first bit.
+  datasets:
+  - name: timestamp
+    neurodata_type_inc: TimestampVectorData
+    doc: Column containing the time that each event occurred, in seconds, from the
+      session start time.
+  - name: duration
+    neurodata_type_inc: DurationVectorData
+    doc: Optional column containing the duration of each event, in seconds. A value
+      of NaN can be used for events without a duration or with a duration that is
+      not yet specified.
+    quantity: '?'
+  - name: annotation
+    neurodata_type_inc: VectorData
+    doc: Column containing user annotations about events.
+    dtype: text
+    dims:
+    - num_times
+    shape:
+    - null
+    quantity: '?'

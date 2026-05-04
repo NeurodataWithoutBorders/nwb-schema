@@ -404,6 +404,13 @@ groups:
     - neurodata_type_inc: TimeIntervals
       doc: Optional additional table(s) for describing other experimental time intervals.
       quantity: '*'
+  - name: events
+    doc: Events that occurred during the session.
+    quantity: '?'
+    groups:
+    - neurodata_type_inc: EventsTable
+      doc: Events that occurred during the session.
+      quantity: '*'
   - name: units
     neurodata_type_inc: Units
     doc: Data about sorted spike units.
