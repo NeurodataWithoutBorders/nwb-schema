@@ -29,6 +29,62 @@ groups:
     dtype: float32
     doc: Intensity of the excitation in mW/mm^2, if known.
     required: false
+  datasets:
+  - name: data
+    dtype: numeric
+    dims:
+    - - time
+      - width
+      - height
+    - - time
+      - width
+      - height
+      - depth
+    shape:
+    - - null
+      - null
+      - null
+    - - null
+      - null
+      - null
+      - null
+
+
+    doc: |
+      Time-series of microscopy data indexed as data[time, width, height].
+
+      Indexing convention:
+        - width: first spatial axis (horizontal direction, columns)
+        - height: second spatial axis (vertical direction, rows)
+
+      For raster-scanning systems (two-photon, confocal, one-photon laser scanning):
+        - width: fast scan direction (horizontal)
+        - height: slow scan direction (vertical)
+
+      Coordinate system diagram:
+
+        height  ^
+        (slow)  |
+                |    +-----------------+
+                |    |                 |
+                |    |   Image plane   |
+                |    |                 |
+                |    +-----------------+
+                |
+                0 ----------------------> width (fast)
+
+
+      For non-raster systems (wide-field, light-sheet, random-access), width and height
+      are arbitrary coordinates of the image plane.
+
+      Note: This indexing convention conflicts with standard matrix[row, column] notation
+      for array access where the first index moves vertically through rows and the second moves horizontally
+      through columns. In the schema, data[time, width, height] means that the first spatial
+      index moves horizontally (width) through columns and the second spatial index moves
+      vertically (height) through rows. In summary, incrementing the first spatial index 
+      moves you horizontally across the image, while in matrix notation it would move you 
+      vertically across the rows of the image. 
+      
   links:
   - name: imaging_plane
     target_type: ImagingPlane
@@ -49,6 +105,56 @@ groups:
       w/ the actual data.
     required: false
   datasets:
+  - name: data
+    dtype: numeric
+    dims:
+    - - time
+      - width
+      - height
+    - - time
+      - width
+      - height
+      - depth
+    shape:
+    - - null
+      - null
+      - null
+    - - null
+      - null
+      - null
+      - null
+    doc: |
+      Time-series of microscopy data indexed as data[time, width, height].
+
+      Indexing convention:
+        - width: first spatial axis (horizontal direction, columns)
+        - height: second spatial axis (vertical direction, rows)
+
+      For raster-scanning systems (two-photon, confocal, one-photon laser scanning):
+        - width: fast scan direction (horizontal)
+        - height: slow scan direction (vertical)
+
+      Coordinate system diagram:
+
+        height  ^
+        (slow)  |
+                |    +-----------------+
+                |    |                 |
+                |    |   Image plane   |
+                |    |                 |
+                |    +-----------------+
+                |
+                0 ----------------------> width (fast)
+
+
+      For non-raster systems (wide-field, light-sheet, random-access), width and height
+      are arbitrary coordinates of the image plane.
+
+      Note: This indexing convention conflicts with standard matrix[row, column] notation
+      for array access where the first index moves vertically through rows and the second moves horizontally
+      through columns. In the schema, data[time, width, height] means that the first spatial
+      index moves horizontally (width) through columns and the second spatial index moves
+      vertically (height) through rows.
   - name: field_of_view
     dtype: float32
     dims:
@@ -57,7 +163,9 @@ groups:
     shape:
     - - 2
     - - 3
-    doc: Width, height and depth of image, or imaged area, in meters.
+    doc: Physical dimensions of the imaging field of view in width, height, and optionally depth directions,
+      in meters. The width dimension corresponds to the faster scanning axis, and the height dimension
+      corresponds to the slower scanning axis.
     quantity: '?'
   links:
   - name: imaging_plane
