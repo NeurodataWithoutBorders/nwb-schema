@@ -82,7 +82,8 @@ spec_resolve_type_inc = False
 
 import pynwb
 
-# Generate a clean TypeMap using the namespace from this repo
+# `None` forces hdmf-docutils to build a fresh NamespaceCatalog from this repo's YAML,
+# avoiding stale-version conflicts when pynwb has an older `core` namespace already loaded.
 spec_default_type_map = None
 
 # Default specification classes for groups datasets and namespaces. In the case of NWB these are the NWB-specfic
