@@ -16,6 +16,10 @@ Major changes
 
 Minor changes
 ^^^^^^^^^^^^^
+- Added optional ``num_samples`` dataset (``uint32``) to ``ImageSeries`` to store the total number of frames
+  across all external files. This is needed when ``format='external'`` and timing is described using
+  ``starting_time`` and ``rate``, since ``data`` is empty and its first dimension cannot be used to determine
+  the number of frames. (#561, #543, #677, #678)
 - Improved documentation of ``ElectrodeGroup`` to clarify its purpose as a physical grouping of electrodes
   that are typically used together for analysis, such as spike sorting. (#659)
 - Specified that units for ``ElectrodesTable`` coordinate fields (``x``, ``y``, ``z``, ``rel_x``, ``rel_y``, ``rel_z``)
