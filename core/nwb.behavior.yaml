@@ -66,7 +66,8 @@ groups:
 - neurodata_type_def: BehavioralEvents
   neurodata_type_inc: NWBDataInterface
   default_name: BehavioralEvents
-  doc: TimeSeries for storing behavioral events. See description of BehavioralEpochs
+  doc: DEPRECATED. Use an EventsTable instead. 
+    TimeSeries for storing behavioral events. See description of BehavioralEpochs
     for more details.
   groups:
   - neurodata_type_inc: TimeSeries

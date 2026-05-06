@@ -268,6 +268,10 @@ groups:
         date made, injection location, volume, etc.
       quantity: '?'
     groups:
+    - name: external_resources
+      neurodata_type_inc: HERD
+      doc: This is the HERD structure for this specific NWBFile, storing the mapped external resources.
+      quantity: "?"
     - neurodata_type_inc: LabMetaData
       doc: Place-holder than can be extended so that lab-specific meta-data can be
         placed in /general.
@@ -400,6 +404,13 @@ groups:
     - neurodata_type_inc: TimeIntervals
       doc: Optional additional table(s) for describing other experimental time intervals.
       quantity: '*'
+  - name: events
+    doc: Events that occurred during the session.
+    quantity: '?'
+    groups:
+    - neurodata_type_inc: EventsTable
+      doc: Events that occurred during the session.
+      quantity: '*'
   - name: units
     neurodata_type_inc: Units
     doc: Data about sorted spike units.
@@ -415,7 +426,12 @@ groups:
   datasets:
   - name: age
     dtype: text
-    doc: Age of subject. Can be supplied instead of 'date_of_birth'.
+    doc: "Age of subject. Can be supplied instead of 'date_of_birth'.
+      The ISO 8601 Duration format is recommended, e.g., 'P90D' for 90 days old.
+      If the precise age is unknown, an age range can be given by '[lower bound]/[upper bound]' e.g.
+      'P10D/P20D' would mean that the age is in between 10 and 20 days. If only the lower bound is known,
+      then including only the slash after that lower bound can be used to indicate a missing bound.
+      For instance, 'P90Y/' would indicate that the age is 90 years or older."
     quantity: '?'
     attributes:
       - name: reference

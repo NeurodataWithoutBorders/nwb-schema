@@ -102,6 +102,14 @@ groups:
         attribute will have values [0, 5, 15]. If there is a single external file that
         holds all of the frames of the ImageSeries (and so there is a single element in
         the 'external_file' dataset), then this attribute should have value [0].
+  - name: num_samples
+    dtype: uint32
+    doc: Total number of frames across all external files. This is required when
+      format='external' and timing is described using starting_time and rate, since
+      data is empty and its first dimension cannot be used to determine the number
+      of frames. When timestamps is provided, len(timestamps) already serves this
+      purpose.
+    quantity: '?'
   - name: format
     dtype: text
     default_value: raw
