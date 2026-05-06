@@ -3,32 +3,49 @@
 Release Notes
 =============
 
-Upcoming
---------
+2.10.0 (Upcoming)
+-----------------
+
+Major changes
+^^^^^^^^^^^^^
+- Implemented NWBEP001 -- Added new neurodata types ``EventsTable``, ``TimestampVectorData``, and ``DurationVectorData``.
+- Incorporated HDMF Common Schema 1.9.0 which added new data types ``MeaningsTable`` and support for ``MeaningsTable`` in ``DynamicTable``.
+- Added support for an optional ``HERD`` object at ``/general/external_resources``.
+- Deprecated ``BehavioralEvents`` in favor of placing ``EventsTable`` tables in ``NWBFile/events``.
+- Deprecated ``AnnotationSeries`` in favor of creating an ``EventsTable`` with an ``annotation`` column.
 
 Minor changes
 ^^^^^^^^^^^^^
+- Added optional ``num_samples`` dataset (``uint32``) to ``ImageSeries`` to store the total number of frames
+  across all external files. This is needed when ``format='external'`` and timing is described using
+  ``starting_time`` and ``rate``, since ``data`` is empty and its first dimension cannot be used to determine
+  the number of frames. (#561, #543, #677, #678)
 - Improved documentation of ``ElectrodeGroup`` to clarify its purpose as a physical grouping of electrodes
   that are typically used together for analysis, such as spike sorting. (#659)
 - Specified that units for ``ElectrodesTable`` coordinate fields (``x``, ``y``, ``z``, ``rel_x``, ``rel_y``, ``rel_z``)
   should be in microns. (#658)
-
+- Expanded documentation for the ``Subject`` 'age' dataset, including details on ISO 8601 Duration format and
+  age range representation.
+- Clarified ``Units.spike_times`` and ``Units.obs_intervals`` documentation to specify that times are relative
+  to the session reference time and that values should be stored in ascending order. (#676)
+- Improved documentation of ``Units.spike_times.resolution`` to clarify that it represents the temporal resolution
+  (sampling period) of the spike times. (#666)
 
 2.9.0 (June 26, 2025)
 ---------------------
 
 Major changes
 ^^^^^^^^^^^^^
-- Deprecated ``Device.model_number``, ``Device.model_name``, ``Device.manufacturer``. Use 
-  ``Device.model`` link and new ``DeviceModel`` neurodata type instead. The old ``Device.model_name`` 
+- Deprecated ``Device.model_number``, ``Device.model_name``, ``Device.manufacturer``. Use
+  ``Device.model`` link and new ``DeviceModel`` neurodata type instead. The old ``Device.model_name``
   corresponds to the new ``DeviceModel.name``. (#608)
 - Added ``DeviceModel`` neurodata type to represent the model of a device instead of a specific instance of a device.
   This deduplicates information when a session involves multiple instances of the same device model, and it helps
   combine data across sessions and experiments when the model is the same.
   See https://github.com/NeurodataWithoutBorders/nwb-schema/issues/607 for details. (#608)
-- Added ``BaseImage`` and ``ExternalImage`` as new neurodata types. The first so both ``Image`` and ``ExternalImage`` 
+- Added ``BaseImage`` and ``ExternalImage`` as new neurodata types. The first so both ``Image`` and ``ExternalImage``
   can inherit from it. The second to store external images (#604, #623, #627)
-- Changed ``NWBFile.electrodes`` from a generic ``DynamicTable`` with added columns to a new ``ElectrodesTable`` 
+- Changed ``NWBFile.electrodes`` from a generic ``DynamicTable`` with added columns to a new ``ElectrodesTable``
   neurodata type that extends ``DynamicTable`` with added columns. (#539, #624)
 - Changed ``DecompositionSeries.bands`` from a generic ``DynamicTable`` with added columns to a new ``FrequencyBandsTable``
   neurodata type that extends ``DynamicTable`` with added columns. (#610)
