@@ -1,4 +1,4 @@
-hdmf-docutils
+hdmf-docutils>=0.4.10
 pynwb
 sphinx
 sphinx_rtd_theme

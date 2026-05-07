@@ -80,13 +80,28 @@ spec_add_latex_clearpage_after_ndt_sections = True
 # or to show only the parts that are actually new to a current type while only linking to base types
 spec_resolve_type_inc = False
 
-# Default type map to be used. This is the type map where dependent namespaces are stored. In the case of
-# NWB this is spec_default_type_map = pynwb.get_type_map()
 import pynwb
-spec_default_type_map = pynwb.get_type_map()
+from hdmf.build import TypeMap
+from hdmf.spec import NamespaceCatalog
 
 # Default specification classes for groups datasets and namespaces. In the case of NWB these are the NWB-specfic
 # spec classes. In the general cases these are the spec classes from HDMF
 spec_group_spec_cls = pynwb.spec.NWBGroupSpec
 spec_dataset_spec_cls = pynwb.spec.NWBDatasetSpec
 spec_namespace_spec_cls = pynwb.spec.NWBNamespace
+
+# Build a TypeMap whose catalog has only `hdmf-common` pre-loaded. When hdmf-docutils
+# layers `core` on top, the `hdmf-common` dependency resolves while `core` itself is read
+# fresh from this checkout's YAML. Do not use `pynwb.get_type_map()` because it includes
+# the `core` that is bundled with pynwb, which can lag this repo's version and silently
+# shadow it.
+_hdmf_common_namespace_file = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '../../../hdmf-common-schema/common/namespace.yaml')
+)
+_namespace_catalog = NamespaceCatalog(
+    group_spec_cls=spec_group_spec_cls,
+    dataset_spec_cls=spec_dataset_spec_cls,
+    spec_namespace_cls=spec_namespace_spec_cls,
+)
+_namespace_catalog.load_namespaces(_hdmf_common_namespace_file)
+spec_default_type_map = TypeMap(_namespace_catalog)
