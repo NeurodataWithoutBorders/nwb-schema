@@ -61,7 +61,7 @@ groups:
         - width: fast scan direction (horizontal)
         - height: slow scan direction (vertical)
 
-      Coordinate system diagram:
+      Coordinate system diagram::
 
         height  ^
         (slow)  |
@@ -81,10 +81,10 @@ groups:
       for array access where the first index moves vertically through rows and the second moves horizontally
       through columns. In the schema, data[time, width, height] means that the first spatial
       index moves horizontally (width) through columns and the second spatial index moves
-      vertically (height) through rows. In summary, incrementing the first spatial index 
-      moves you horizontally across the image, while in matrix notation it would move you 
-      vertically across the rows of the image. 
-      
+      vertically (height) through rows. In summary, incrementing the first spatial index
+      moves you horizontally across the image, while in matrix notation it would move you
+      vertically across the rows of the image.
+
   links:
   - name: imaging_plane
     target_type: ImagingPlane
@@ -134,7 +134,7 @@ groups:
         - width: fast scan direction (horizontal)
         - height: slow scan direction (vertical)
 
-      Coordinate system diagram:
+      Coordinate system diagram::
 
         height  ^
         (slow)  |
