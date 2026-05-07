@@ -1,0 +1,37 @@
+name: Check Sphinx documentation build
+on:
+  pull_request:
+  push:
+    branches:
+      - dev
+  workflow_dispatch:
+
+jobs:
+  check-sphinx-build:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout repo with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+          fetch-depth: 0  # tags are required for versioneer to determine the version
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Sphinx dependencies and package
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-doc.txt
+
+      - name: Generate RST sources from NWB spec
+        working-directory: docs/format
+        run: make apidoc
+
+      - name: Build HTML docs with warnings as errors
+        run: sphinx-build -n -W --keep-going -b html ./docs/format/source ./test_build
