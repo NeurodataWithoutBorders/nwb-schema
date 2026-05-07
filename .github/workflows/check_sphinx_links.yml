@@ -1,8 +1,7 @@
 name: Check Sphinx external links and references
 on:
   pull_request:
-  schedule:
-    - cron: '0 5 * * *'  # once per day at midnight ET
+  workflow_call:
   workflow_dispatch:
 
 jobs:

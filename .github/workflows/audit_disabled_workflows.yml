@@ -1,0 +1,67 @@
+name: Audit disabled workflows
+on:
+  push:
+    branches:
+      - dev
+  pull_request_target:
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  issues: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Find inactivity-disabled workflows and open an issue if any
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const workflows = await github.paginate(
+              github.rest.actions.listRepoWorkflows,
+              { owner, repo, per_page: 100 }
+            );
+            const disabled = workflows.filter(w => w.state === 'disabled_inactivity');
+            if (disabled.length === 0) {
+              core.info('No workflows in disabled_inactivity state.');
+              return;
+            }
+
+            const title = '[CI] Workflow(s) auto-disabled by GitHub for inactivity';
+            const existing = await github.paginate(
+              github.rest.issues.listForRepo,
+              { owner, repo, state: 'open', per_page: 100 }
+            );
+            if (existing.some(i => i.title === title)) {
+              core.info(`Open issue with title "${title}" already exists; skipping.`);
+              return;
+            }
+
+            const list = disabled
+              .map(w => `- **${w.name}** (\`${w.path}\`, id ${w.id})`)
+              .join('\n');
+            const body = [
+              'GitHub has auto-disabled the following workflow(s) for inactivity.',
+              'While in this state, the workflow does **not** run on any trigger,',
+              'including `pull_request` and `push`.',
+              '',
+              list,
+              '',
+              'To re-enable, run:',
+              '',
+              '```',
+              ...disabled.map(w => `gh workflow enable ${w.id} --repo ${owner}/${repo}`),
+              '```',
+              '',
+              'Or click "Enable workflow" in the Actions tab.',
+              '',
+              `Detected by \`${context.workflow}\` on ${new Date().toISOString()}.`,
+            ].join('\n');
+
+            await github.rest.issues.create({ owner, repo, title, body });
+            core.info(`Opened issue: ${title}`);
