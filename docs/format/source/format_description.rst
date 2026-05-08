@@ -347,6 +347,58 @@ time series, such as if timeseries A and timeseries B, each having
 different data (or time) share time (or data). This is much more
 important information as it shows structural associations in the data.
 
+**How should I store events, intervals, and other time-anchored experimental annotations?**
+
+NWB provides several ways to annotate time-anchored experimental data. The right
+choice depends on the structure of the experiment and the shape of the annotations.
+
+*Start with trial structure.* In trial-based experiments, most per-event annotations
+(stimulus onsets, stimulus IDs, response times, reward times, etc.) belong as columns
+of ``/intervals/trials``, not as separate ``EventsTable`` instances. The trials table
+is the organizing unit, and ``DynamicTable``'s sparse-column support is designed
+for metadata where some trials have a value and others do not.
+
+*Use TimeIntervals for period-shaped annotations.* When each row naturally has a
+start and stop time and represents a contiguous period of time, store the data in
+a ``TimeIntervals`` table. Examples include behavioral states ("running", "resting"),
+experimental conditions, and invalid recording windows. Place additional
+``TimeIntervals`` tables in ``/intervals/`` alongside the predefined ``epochs``,
+``trials``, and ``invalid_times`` subgroups.
+
+*Use EventsTable for timestamp-anchored annotations that don't fit a per-trial row.*
+``EventsTable`` is the right type when each row is anchored at a single timestamp and
+duration is absent, optional, or mixed across rows. Typical cases:
+
+- TTL pulses and event markers from acquisition systems (replaces the deprecated ``AnnotationSeries``).
+- Free-behavior events not anchored to trial structure (licks, rewards, detected behaviors in continuous recordings).
+- Algorithmically detected events (ripples, sharp waves, spike-of-interest detections).
+- Experimenter-added annotations (e.g., "subject was distracted here", "experimenter adjusted the stimulus here").
+- Events occurring multiple times per trial with variable count, where ragged trial columns would be awkward.
+
+*Continuous digital traces are TimeSeries, not EventsTable.* A digital line sampled
+continuously (e.g., a 30 kHz 0/1 trace of a TTL channel) is a ``TimeSeries``. Edge
+times derived from that trace are an ``EventsTable``. The continuous-vs-edges
+distinction is independent of where the data is stored in the file hierarchy.
+
+*Place EventsTable instances based on how the data was derived.* ``EventsTable`` is
+allowed in multiple groups, mirroring ``TimeSeries`` placement conventions:
+
+- ``/acquisition`` — events emitted directly by the acquisition system (Neuralynx ``.nev``, Open Ephys event channels, TTL edges parsed from a directly-recorded digital line).
+- ``/processing/<module>`` — events derived by user processing: filtering, debouncing, detection algorithms, or events annotated with experimental context.
+- ``/events`` — primary experimental event tables for the session, ready to be used in downstream analysis. The ``BehavioralEvents`` replacement case from NWBEP001.
+- ``/analysis`` — events tied to final scientific analysis.
+
+The ``/events`` versus ``/processing/behavior/`` choice is the most common source of
+confusion. Prefer ``/events`` when the table is a top-level experimental annotation
+ready for downstream analysis. Prefer ``/processing`` when the table is an
+intermediate output consumed by other processing steps.
+
+For the borderline case of edge times derived from a directly-recorded digital line,
+default to ``/acquisition``. Edge detection on a binary line is information-preserving
+— the events are what the acquisition system would have emitted if configured to do
+so. Reserve ``/processing`` for cases involving actual decisions (thresholding analog
+signals, debouncing, filtering, selection).
+
 
 Tables and ragged arrays
 ------------------------
