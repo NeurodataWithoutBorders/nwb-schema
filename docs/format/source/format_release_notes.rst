@@ -40,7 +40,7 @@ Minor changes
   (sampling period) of the spike times. (#666)
 - Harmonized ``/intervals/*`` group docstrings; rewrote ``TimeIntervals`` and ``EventsTable`` type
   docstrings; replaced the placeholder docstring on the ``/events`` group and its inner
-  ``EventsTable`` slot; added a FAQ entry on routing time-anchored experimental data. (#686, #687)
+  ``EventsTable`` slot; added a FAQ entry on routing time-anchored experimental data. (#688)
 
 2.9.0 (June 26, 2025)
 ---------------------
