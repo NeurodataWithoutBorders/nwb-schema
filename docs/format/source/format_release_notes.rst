@@ -12,7 +12,15 @@ Major changes
 - Incorporated HDMF Common Schema 1.9.0 which added new data types ``MeaningsTable`` and support for ``MeaningsTable`` in ``DynamicTable``.
 - Added support for an optional ``HERD`` object at ``/general/external_resources``.
 - Deprecated ``BehavioralEvents`` in favor of placing ``EventsTable`` tables in ``NWBFile/events``.
-- Deprecated ``AnnotationSeries`` in favor of creating an ``EventsTable`` with an ``annotation`` column.
+  Each ``TimeSeries`` formerly stored under ``BehavioralEvents`` becomes one ``EventsTable``: the
+  ``timestamps`` field maps to the ``timestamp`` column, and any per-event metadata becomes
+  additional columns. See the schema docs FAQ for guidance on choosing between ``/events/``,
+  ``/acquisition/``, ``/processing/``, and ``/analysis/``.
+- Deprecated ``AnnotationSeries`` in favor of creating an ``EventsTable`` with an ``annotation``
+  column. The ``timestamps`` field maps to the ``timestamp`` column, and the ``data`` field
+  (annotation strings) maps to the new ``annotation`` column. Event markers from acquisition systems
+  that were previously stored as ``AnnotationSeries`` typically belong in ``/acquisition/`` rather
+  than ``/events/``.
 
 Minor changes
 ^^^^^^^^^^^^^
@@ -30,6 +38,9 @@ Minor changes
   to the session reference time and that values should be stored in ascending order. (#676)
 - Improved documentation of ``Units.spike_times.resolution`` to clarify that it represents the temporal resolution
   (sampling period) of the spike times. (#666)
+- Harmonized ``/intervals/*`` group docstrings; rewrote ``TimeIntervals`` and ``EventsTable`` type
+  docstrings; replaced the placeholder docstring on the ``/events`` group and its inner
+  ``EventsTable`` slot; added a FAQ entry on routing time-anchored experimental data. (#688)
 
 2.9.0 (June 26, 2025)
 ---------------------
