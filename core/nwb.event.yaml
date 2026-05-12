@@ -43,9 +43,11 @@ datasets:
 groups:
 - neurodata_type_def: EventsTable
   neurodata_type_inc: DynamicTable
-  doc: A column-based table to store information about events (event instances), one
-    event per row. Additional columns may be added to store metadata about each event,
-    such as the duration of the event.
+  doc: A column-based table to store information about events, one event per row.
+    Use `EventsTable` when each row is anchored at a single timestamp and duration
+    is absent, optional, or mixed across rows. Additional columns may be added to
+    store metadata about each event, such as the duration of the event. Examples
+    include TTL pulses, licks, rewards, stimulus onsets, and detected ripples.
   attributes:
   - name: description
     dtype: text

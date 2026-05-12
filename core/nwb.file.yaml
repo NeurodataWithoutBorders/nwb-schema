@@ -390,12 +390,13 @@ groups:
     groups:
     - name: epochs
       neurodata_type_inc: TimeIntervals
-      doc: Divisions in time marking experimental stages or sub-divisions of a single
-        recording session.
+      doc: Time intervals marking coarse-grained experimental phases or subdivisions
+        of a recording session, such as baseline, task, rest, or sleep stages.
       quantity: '?'
     - name: trials
       neurodata_type_inc: TimeIntervals
-      doc: Repeated experimental events that have a logical grouping.
+      doc: Time intervals corresponding to repeated experimental units with consistent
+        structure, such as individual stimulus-response-reward cycles.
       quantity: '?'
     - name: invalid_times
       neurodata_type_inc: TimeIntervals
@@ -405,11 +406,23 @@ groups:
       doc: Optional additional table(s) for describing other experimental time intervals.
       quantity: '*'
   - name: events
-    doc: Events that occurred during the session.
+    doc: Primary experimental event tables for the session, stored as `EventsTable`
+      instances. This location is intended for event data that are ready to be used
+      in downstream analysis. It replaces the deprecated `BehavioralEvents` placement.
+      Events emitted directly by the acquisition system (TTL edges, hardware event
+      channels) belong in `/acquisition/`. Events derived by user processing
+      (filtering, detection algorithms, annotation with experimental context) belong
+      in a `ProcessingModule` under `/processing/`. For periods with required start
+      and stop times, see `/intervals/`. For continuous acquired signals or stimulus
+      templates from which events may have been derived, see `/acquisition/` or
+      `/stimulus/`. For more guidance on choosing between `/events/`, `/acquisition/`,
+      `/processing/`, and `/analysis/`, see the schema docs FAQ.
     quantity: '?'
     groups:
     - neurodata_type_inc: EventsTable
-      doc: Events that occurred during the session.
+      doc: An EventsTable holding a collection of event times of a particular type
+        (e.g., licks, rewards, stimulus presentations) along with their per-event
+        metadata.
       quantity: '*'
   - name: units
     neurodata_type_inc: Units
