@@ -406,17 +406,18 @@ groups:
       doc: Optional additional table(s) for describing other experimental time intervals.
       quantity: '*'
   - name: events
-    doc: Primary experimental event tables for the session, stored as `EventsTable`
-      instances. This location is intended for event data that are ready to be used
-      in downstream analysis. It replaces the deprecated `BehavioralEvents` placement.
-      Events emitted directly by the acquisition system (TTL edges, hardware event
-      channels) belong in `/acquisition/`. Events derived by user processing
-      (filtering, detection algorithms, annotation with experimental context) belong
-      in a `ProcessingModule` under `/processing/`. For periods with required start
-      and stop times, see `/intervals/`. For continuous acquired signals or stimulus
+    doc: Experimental event tables for the session, stored as `EventsTable`
+      instances. This is the recommended location for all event tables in the file,
+      regardless of whether the events were emitted directly by the acquisition
+      system (TTL edges, hardware event channels), derived by user processing
+      (filtering, detection algorithms), or added as post-hoc annotations. The
+      provenance of each table can be recorded in the `source` attribute of the
+      `EventsTable` and described in more detail in its `description`. Each
+      `EventsTable` should hold events of a single type (i.e., events sharing the
+      same per-event metadata columns). For periods with required start and stop
+      times, see `/intervals/`. For continuous acquired signals or stimulus
       templates from which events may have been derived, see `/acquisition/` or
-      `/stimulus/`. For more guidance on choosing between `/events/`, `/acquisition/`,
-      `/processing/`, and `/analysis/`, see the schema docs FAQ.
+      `/stimulus/`.
     quantity: '?'
     groups:
     - neurodata_type_inc: EventsTable
