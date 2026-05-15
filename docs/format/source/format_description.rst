@@ -384,8 +384,8 @@ distinction is independent of where the data is stored in the file hierarchy.
 modality, not by processing stage. All ``EventsTable`` instances for the session
 go in the top-level ``/events`` group.
 
-Use the optional ``source`` attribute on each ``EventsTable`` to record where the
-events came from, as a short human-readable phrase. Examples:
+Use the optional ``source_description`` attribute on each ``EventsTable`` to record
+where the events came from, as a short human-readable phrase. Examples:
 
 - ``"Acquisition system"``
 - ``"Thresholding of analog signal ANALOG1 at 3 V"``

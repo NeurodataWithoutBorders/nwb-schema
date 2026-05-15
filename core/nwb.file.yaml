@@ -411,8 +411,9 @@ groups:
       regardless of whether the events were emitted directly by the acquisition
       system (TTL edges, hardware event channels), derived by user processing
       (filtering, detection algorithms), or added as post-hoc annotations. The
-      provenance of each table can be recorded in the `source` attribute of the
-      `EventsTable` and described in more detail in its `description`. Each
+      provenance of each table can be recorded in the `source_description`
+      attribute of the `EventsTable` and described in more detail in its
+      `description`. Each
       `EventsTable` should hold events of a single type (i.e., events sharing the
       same per-event metadata columns). For periods with required start and stop
       times, see `/intervals/`. For continuous acquired signals or stimulus

@@ -72,8 +72,8 @@ groups:
     the `timestamp` column, and the `data` field maps to an additional column
     named after the event marker (e.g., `reward_magnitude`, `port_number`); for
     multi-dimensional `data`, use one column per field. Any other per-event
-    metadata becomes additional columns. Use the `source` attribute on the
-    `EventsTable` to record where the events came from (e.g., "Acquisition
+    metadata becomes additional columns. Use the `source_description` attribute
+    on the `EventsTable` to record where the events came from (e.g., "Acquisition
     system", "Thresholding of analog signal ANALOG1 at 3 V", "Manual video
     review"). Original definition: TimeSeries for storing behavioral events. See
     description of BehavioralEpochs for more details.'

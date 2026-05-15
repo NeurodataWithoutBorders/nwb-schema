@@ -50,8 +50,8 @@ groups:
   doc: 'DEPRECATED. Use an `EventsTable` instead, placed in the top-level `/events`
     group of the `NWBFile`. The `timestamps` field maps to the `timestamp` column,
     and the `data` field (annotation strings) maps to the `annotation` column on
-    `EventsTable`. Use the `source` attribute on the `EventsTable` to record where
-    the events came from (e.g., "Acquisition system", "Thresholding of analog
+    `EventsTable`. Use the `source_description` attribute on the `EventsTable` to
+    record where the events came from (e.g., "Acquisition system", "Thresholding of analog
     signal ANALOG1 at 3 V", "Manual video review"). Original definition: Stores
     user annotations made during an experiment. The data[] field stores a text
     array, and timestamps are stored for each annotation (ie, interval=1). This

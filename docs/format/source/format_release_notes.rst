@@ -13,8 +13,8 @@ Major changes
 - Added support for an optional ``HERD`` object at ``/general/external_resources``. (#646)
 - Deprecated ``BehavioralEvents`` and ``AnnotationSeries`` in favor of ``EventsTable``. All
   ``EventsTable`` instances for a session belong in the top-level ``/events`` group of the
-  ``NWBFile``, regardless of provenance; the optional ``source`` attribute on each table
-  captures where the events came from (e.g., ``"Acquisition system"``, ``"Thresholding of
+  ``NWBFile``, regardless of provenance; the optional ``source_description`` attribute on each
+  table captures where the events came from (e.g., ``"Acquisition system"``, ``"Thresholding of
   analog signal ANALOG1 at 3 V"``, ``"Manual video review"``). For ``BehavioralEvents``:
   each ``TimeSeries`` formerly stored under ``BehavioralEvents`` becomes one ``EventsTable``,
   with ``timestamps`` mapping to the ``timestamp`` column and any per-event metadata mapping
