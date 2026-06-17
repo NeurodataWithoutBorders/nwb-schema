@@ -480,6 +480,13 @@ groups:
     dtype: text
     doc: Strain of subject.
     quantity: '?'
+    attributes:
+      - name: rrid
+        doc: "Research Resource Identifier (RRID) of the strain, 
+          e.g., 'RRID:IMSR_JAX:000664'. This allows for standardized 
+          identification and referencing of the strain."
+        dtype: text
+        required: false
   - name: subject_id
     dtype: text
     doc: ID of animal/person used/participating in experiment (lab convention).

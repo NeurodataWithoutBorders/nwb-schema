@@ -1,7 +1,17 @@
+
 .. _nwb-schema-release-notes:
 
 Release Notes
-=============
+
+2.10.0 (Upcoming)
+-----------------
+
+Minor changes
+^^^^^^^^^^^^^
+- Added optional ``rrid`` attribute to ``Subject.strain`` to store Research Resource Identifiers (RRIDs) 
+  for animal strains (e.g., 'RRID:IMSR_JAX:000664'). This enables standardized identification and 
+  referencing of strains, facilitating integration with DANDI metadata and allowing queries by strain. (#652)
+
 
 2.10.0 (Upcoming)
 -----------------
