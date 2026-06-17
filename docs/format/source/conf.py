@@ -217,12 +217,12 @@ latex_elements = {
 
 # Additional stuff for the LaTeX preamble.
 'preamble':
-"""
+r"""
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{6}
-\\usepackage{enumitem}
-\\setlistdepth{100}
-\\addto\\captionsenglish{\\renewcommand{\\contentsname}{Table of contents}}
+\usepackage{enumitem}
+\setlistdepth{100}
+\addto\captionsenglish{\renewcommand{\contentsname}{Table of contents}}
 """,
 }
 # \\renewlist{itemize}{itemize}{100}
