@@ -1,8 +1,12 @@
 groups:
 - neurodata_type_def: TimeIntervals
   neurodata_type_inc: DynamicTable
-  doc: A container for aggregating epoch data and the TimeSeries that each epoch applies
-    to.
+  doc: A column-based table to store information about time intervals, one interval
+    per row. Use `TimeIntervals` when each row naturally has a start and stop time
+    and represents a contiguous period of time, often encompassing an experimental
+    condition. Rows can optionally reference `TimeSeries` data via the `timeseries`
+    column. Examples include trials, epochs, behavioral states (e.g., "running",
+    "resting"), and invalid recording windows.
   datasets:
   - name: start_time
     neurodata_type_inc: VectorData

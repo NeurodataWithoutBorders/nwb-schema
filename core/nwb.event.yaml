@@ -43,9 +43,15 @@ datasets:
 groups:
 - neurodata_type_def: EventsTable
   neurodata_type_inc: DynamicTable
-  doc: A column-based table to store information about events (event instances), one
-    event per row. Additional columns may be added to store metadata about each event,
-    such as the duration of the event.
+  doc: A column-based table to store information about events, one event per row.
+    Use `EventsTable` when each row is anchored at a single timestamp and duration
+    is absent, optional, or mixed across rows. Additional columns may be added to
+    store metadata about each event, such as the duration of the event. Examples
+    include TTL pulses, licks, rewards, stimulus onsets, and detected ripples.
+    Each `EventsTable` should hold events of a single type, so that all rows share
+    the same set of per-event metadata columns. Events of different types (e.g.,
+    licks and stimulus presentations) should be stored in separate `EventsTable`
+    instances.
   attributes:
   - name: description
     dtype: text
@@ -55,6 +61,18 @@ groups:
       different types of events using a strobed or N-bit encoding, then the description
       should describe which channels were used and how the event time is computed,
       e.g., as the rise time of the first bit.
+  - name: source_description
+    dtype: text
+    doc: Optional short text description of where the events came from, applying
+      to every row in the table. For example, "Acquisition system" for events
+      emitted directly by the acquisition system (e.g., TTL edges or hardware
+      event channels); "Thresholding of analog signal ANALOG1 at 3 V" for events
+      produced by a detection algorithm run on acquired data; or "Manual video
+      review" for events added by a human annotator. This is a free-text label of
+      origin only; use `description` for the longer narrative of how the event
+      times were computed (channels used, encoding scheme, algorithm parameters,
+      etc.).
+    required: false
   datasets:
   - name: timestamp
     neurodata_type_inc: TimestampVectorData

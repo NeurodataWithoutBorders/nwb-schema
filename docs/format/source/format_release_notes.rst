@@ -8,11 +8,19 @@ Release Notes
 
 Major changes
 ^^^^^^^^^^^^^
-- Implemented NWBEP001 -- Added new neurodata types ``EventsTable``, ``TimestampVectorData``, and ``DurationVectorData``.
+- Implemented NWBEP001 -- Added new neurodata types ``EventsTable``, ``TimestampVectorData``, and ``DurationVectorData``. (#645)
 - Incorporated HDMF Common Schema 1.9.0 which added new data types ``MeaningsTable`` and support for ``MeaningsTable`` in ``DynamicTable``.
-- Added support for an optional ``HERD`` object at ``/general/external_resources``.
-- Deprecated ``BehavioralEvents`` in favor of placing ``EventsTable`` tables in ``NWBFile/events``.
-- Deprecated ``AnnotationSeries`` in favor of creating an ``EventsTable`` with an ``annotation`` column.
+- Added support for an optional ``HERD`` object at ``/general/external_resources``. (#646)
+- Deprecated ``BehavioralEvents`` and ``AnnotationSeries`` in favor of ``EventsTable``. All
+  ``EventsTable`` instances for a session belong in the top-level ``/events`` group of the
+  ``NWBFile``, regardless of provenance; the optional ``source_description`` attribute on each
+  table captures where the events came from (e.g., ``"Acquisition system"``, ``"Thresholding of
+  analog signal ANALOG1 at 3 V"``, ``"Manual video review"``). For ``BehavioralEvents``:
+  each ``TimeSeries`` formerly stored under ``BehavioralEvents`` becomes one ``EventsTable``,
+  with ``timestamps`` mapping to the ``timestamp`` column and any per-event metadata mapping
+  to additional columns. For ``AnnotationSeries``: ``timestamps`` maps to the ``timestamp``
+  column and ``data`` (annotation strings) maps to the new ``annotation`` column. See the
+  schema docs FAQ for details. (#688, #690)
 
 Minor changes
 ^^^^^^^^^^^^^
@@ -30,6 +38,9 @@ Minor changes
   to the session reference time and that values should be stored in ascending order. (#676)
 - Improved documentation of ``Units.spike_times.resolution`` to clarify that it represents the temporal resolution
   (sampling period) of the spike times. (#666)
+- Harmonized ``/intervals/*`` group docstrings; rewrote ``TimeIntervals`` and ``EventsTable`` type
+  docstrings; replaced the placeholder docstring on the ``/events`` group and its inner
+  ``EventsTable`` slot; added a FAQ entry on routing time-anchored experimental data. (#688)
 
 2.9.0 (June 26, 2025)
 ---------------------
