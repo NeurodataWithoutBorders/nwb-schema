@@ -8,19 +8,19 @@ Release Notes
 
 Major changes
 ^^^^^^^^^^^^^
-- Implemented NWBEP001 -- Added new neurodata types ``EventsTable``, ``TimestampVectorData``, and ``DurationVectorData``.
+- Implemented NWBEP001 -- Added new neurodata types ``EventsTable``, ``TimestampVectorData``, and ``DurationVectorData``. (#645)
 - Incorporated HDMF Common Schema 1.9.0 which added new data types ``MeaningsTable`` and support for ``MeaningsTable`` in ``DynamicTable``.
-- Added support for an optional ``HERD`` object at ``/general/external_resources``.
-- Deprecated ``BehavioralEvents`` in favor of placing ``EventsTable`` tables in ``NWBFile/events``.
-  Each ``TimeSeries`` formerly stored under ``BehavioralEvents`` becomes one ``EventsTable``: the
-  ``timestamps`` field maps to the ``timestamp`` column, and any per-event metadata becomes
-  additional columns. See the schema docs FAQ for guidance on choosing between ``/events/``,
-  ``/acquisition/``, ``/processing/``, and ``/analysis/``.
-- Deprecated ``AnnotationSeries`` in favor of creating an ``EventsTable`` with an ``annotation``
-  column. The ``timestamps`` field maps to the ``timestamp`` column, and the ``data`` field
-  (annotation strings) maps to the new ``annotation`` column. Event markers from acquisition systems
-  that were previously stored as ``AnnotationSeries`` typically belong in ``/acquisition/`` rather
-  than ``/events/``.
+- Added support for an optional ``HERD`` object at ``/general/external_resources``. (#646)
+- Deprecated ``BehavioralEvents`` and ``AnnotationSeries`` in favor of ``EventsTable``. All
+  ``EventsTable`` instances for a session belong in the top-level ``/events`` group of the
+  ``NWBFile``, regardless of provenance; the optional ``source_description`` attribute on each
+  table captures where the events came from (e.g., ``"Acquisition system"``, ``"Thresholding of
+  analog signal ANALOG1 at 3 V"``, ``"Manual video review"``). For ``BehavioralEvents``:
+  each ``TimeSeries`` formerly stored under ``BehavioralEvents`` becomes one ``EventsTable``,
+  with ``timestamps`` mapping to the ``timestamp`` column and any per-event metadata mapping
+  to additional columns. For ``AnnotationSeries``: ``timestamps`` maps to the ``timestamp``
+  column and ``data`` (annotation strings) maps to the new ``annotation`` column. See the
+  schema docs FAQ for details. (#688, #690)
 
 Minor changes
 ^^^^^^^^^^^^^
