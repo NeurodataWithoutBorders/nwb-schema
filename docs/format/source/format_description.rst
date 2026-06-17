@@ -380,24 +380,25 @@ continuously (e.g., a 30 kHz 0/1 trace of a TTL channel) is a ``TimeSeries``. Ed
 times derived from that trace are an ``EventsTable``. The continuous-vs-edges
 distinction is independent of where the data is stored in the file hierarchy.
 
-*Place EventsTable instances based on how the data was derived.* ``EventsTable`` is
-allowed in multiple groups, mirroring ``TimeSeries`` placement conventions:
+*Place all EventsTable instances in /events.* Event tables are organized by data
+modality, not by processing stage. All ``EventsTable`` instances for the session
+go in the top-level ``/events`` group.
 
-- ``/acquisition`` — events emitted directly by the acquisition system (Neuralynx ``.nev``, Open Ephys event channels, TTL edges parsed from a directly-recorded digital line).
-- ``/processing/<module>`` — events derived by user processing: filtering, debouncing, detection algorithms, or events annotated with experimental context.
-- ``/events`` — primary experimental event tables for the session, ready to be used in downstream analysis. The ``BehavioralEvents`` replacement case from NWBEP001.
-- ``/analysis`` — events tied to final scientific analysis.
+Use the optional ``source_description`` attribute on each ``EventsTable`` to record
+where the events came from, as a short human-readable phrase. Examples:
 
-The ``/events`` versus ``/processing/behavior/`` choice is the most common source of
-confusion. Prefer ``/events`` when the table is a top-level experimental annotation
-ready for downstream analysis. Prefer ``/processing`` when the table is an
-intermediate output consumed by other processing steps.
+- ``"Acquisition system"``
+- ``"Thresholding of analog signal ANALOG1 at 3 V"``
+- ``"Manual video review"``
 
-For the borderline case of edge times derived from a directly-recorded digital line,
-default to ``/acquisition``. Edge detection on a binary line is information-preserving
-— the events are what the acquisition system would have emitted if configured to do
-so. Reserve ``/processing`` for cases involving actual decisions (thresholding analog
-signals, debouncing, filtering, selection).
+Use the longer ``description`` attribute for the narrative of how the event times
+were computed (channels used, encoding scheme, algorithm parameters, etc.).
+
+*Each EventsTable holds events of a single type.* All rows in a given table should
+share the same set of per-event metadata columns. Store events of different types
+(licks vs. stimulus presentations vs. rewards) in separate ``EventsTable``
+instances within ``/events``. APIs may provide helpers to merge tables across
+sources for downstream analysis.
 
 
 Tables and ragged arrays
