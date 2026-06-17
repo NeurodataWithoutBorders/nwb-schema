@@ -1,0 +1,9 @@
+name: Check Sphinx external links and references (scheduled)
+on:
+  schedule:
+    - cron: '0 5 * * *'  # once per day at midnight ET
+  workflow_dispatch:
+
+jobs:
+  call-linkcheck:
+    uses: ./.github/workflows/check_sphinx_links.yml
