@@ -20,7 +20,7 @@ Major changes
   with ``timestamps`` mapping to the ``timestamp`` column and any per-event metadata mapping
   to additional columns. For ``AnnotationSeries``: ``timestamps`` maps to the ``timestamp``
   column and ``data`` (annotation strings) maps to the new ``annotation`` column. See the
-  schema docs FAQ for details. (#688, #X)
+  schema docs FAQ for details. (#688, #690)
 
 Minor changes
 ^^^^^^^^^^^^^
@@ -41,7 +41,6 @@ Minor changes
 - Harmonized ``/intervals/*`` group docstrings; rewrote ``TimeIntervals`` and ``EventsTable`` type
   docstrings; replaced the placeholder docstring on the ``/events`` group and its inner
   ``EventsTable`` slot; added a FAQ entry on routing time-anchored experimental data. (#688)
-
 
 2.9.0 (June 26, 2025)
 ---------------------
