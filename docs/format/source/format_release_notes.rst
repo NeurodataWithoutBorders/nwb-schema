@@ -3,13 +3,14 @@
 Release Notes
 =============
 
-2.10.0 (Upcoming)
------------------
+2.10.0 (June 18, 2026)
+----------------------
 
 Major changes
 ^^^^^^^^^^^^^
 - Implemented NWBEP001 -- Added new neurodata types ``EventsTable``, ``TimestampVectorData``, and ``DurationVectorData``. (#645)
-- Incorporated HDMF Common Schema 1.9.0 which added new data types ``MeaningsTable`` and support for ``MeaningsTable`` in ``DynamicTable``.
+- Incorporated HDMF Common Schema 1.9.0 which added new data type ``MeaningsTable`` and support for ``MeaningsTable`` in
+  ``DynamicTable``, and promoted ``HERD`` from the HDMF-experimental namespace to a stable data type in HDMF-common.
 - Added support for an optional ``HERD`` object at ``/general/external_resources``. (#646)
 - Deprecated ``BehavioralEvents`` and ``AnnotationSeries`` in favor of ``EventsTable``. All
   ``EventsTable`` instances for a session belong in the top-level ``/events`` group of the
@@ -33,7 +34,7 @@ Minor changes
 - Specified that units for ``ElectrodesTable`` coordinate fields (``x``, ``y``, ``z``, ``rel_x``, ``rel_y``, ``rel_z``)
   should be in microns. (#658)
 - Expanded documentation for the ``Subject`` 'age' dataset, including details on ISO 8601 Duration format and
-  age range representation.
+  age range representation. (#669)
 - Clarified ``Units.spike_times`` and ``Units.obs_intervals`` documentation to specify that times are relative
   to the session reference time and that values should be stored in ascending order. (#676)
 - Improved documentation of ``Units.spike_times.resolution`` to clarify that it represents the temporal resolution
@@ -41,6 +42,10 @@ Minor changes
 - Harmonized ``/intervals/*`` group docstrings; rewrote ``TimeIntervals`` and ``EventsTable`` type
   docstrings; replaced the placeholder docstring on the ``/events`` group and its inner
   ``EventsTable`` slot; added a FAQ entry on routing time-anchored experimental data. (#688)
+- Improved documentation for ``OnePhotonSeries`` and ``TwoPhotonSeries``: added ``data`` dataset specification
+  with an ASCII diagram clarifying the meaning of the ``height`` and ``width`` dimensions; clarified that for
+  raster-based microscopy, width (columns) is the fast scan direction; contrasted this convention with standard
+  matrix notation where the first array dimension slices through rows. (#649)
 
 2.9.0 (June 26, 2025)
 ---------------------
@@ -71,10 +76,6 @@ Minor changes
 - Made ``EventDetection.times`` optional and deprecated. Use `source_idx` instead. (#620)
 - Clarified documentation of ``PlaneSegmentation`` that at least one of ``image_mask``, ``pixel_mask``,
   and ``voxel_mask`` is required. (#636)
-- Improved documentation for ``OnePhotonSeries`` and ``TwoPhotonSeries``: added ``data`` dataset specification
-  with an ASCII diagram clarifying the meaning of the ``height`` and ``width`` dimensions; clarified that for
-  raster-based microscopy, width (columns) is the fast scan direction; contrasted this convention with standard
-  matrix notation where the first array dimension slices through rows. (#649)
 
 
 2.8.0 (November 24, 2024)
