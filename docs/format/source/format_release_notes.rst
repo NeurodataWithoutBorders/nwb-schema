@@ -3,6 +3,20 @@
 Release Notes
 =============
 
+2.10.1 (Upcoming)
+-----------------
+
+Bug fixes
+^^^^^^^^^
+- Fixed copy-paste error in ``VoltageClampSeries.capacitance_slow`` unit attribute doc, which incorrectly
+  referenced ``capacitance_fast``.
+- Fixed ``IntervalSeries.data`` resolution and unit attribute docs, which were verbatim copy-paste from
+  ``AnnotationSeries`` and incorrectly described the field as storing annotations.
+- Fixed ``IndexSeries.indexed_images`` link doc, which referenced the non-existent dataset name
+  ``'ordered_images'``; corrected to ``'order_of_images'`` to match the actual field in ``Images``.
+- Fixed ``ImagingPlane.device`` link doc, which incorrectly described the device as being used to
+  "record from this electrode"; updated to reflect optical physiology imaging context.
+
 2.10.0 (June 18, 2026)
 ----------------------
 
