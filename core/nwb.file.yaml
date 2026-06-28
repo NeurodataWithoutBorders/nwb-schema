@@ -470,7 +470,7 @@ groups:
     quantity: '?'
   - name: sex
     dtype: text
-    doc: Gender of subject.
+    doc: Biological sex of subject.
     quantity: '?'
   - name: species
     dtype: text
