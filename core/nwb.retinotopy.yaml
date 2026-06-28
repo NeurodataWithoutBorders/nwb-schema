@@ -135,7 +135,7 @@ groups:
     shape:
     - 2
     doc: Two-element array describing the contents of the two response axis fields.
-      Description should be something like ['altitude', 'azimuth'] or '['radius',
+      Description should be something like ['altitude', 'azimuth'] or ['radius',
       'theta'].
   - name: focal_depth_image
     dtype: uint16
