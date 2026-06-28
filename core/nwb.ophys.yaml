@@ -190,8 +190,8 @@ groups:
     doc: Signals from ROIs.
   - name: rois
     neurodata_type_inc: DynamicTableRegion
-    doc: DynamicTableRegion referencing into an ROITable containing information on the ROIs
-      stored in this timeseries.
+    doc: DynamicTableRegion referencing into a PlaneSegmentation table containing information on the ROIs
+      stored in this TimeSeries.
 
 - neurodata_type_def: DfOverF
   neurodata_type_inc: NWBDataInterface

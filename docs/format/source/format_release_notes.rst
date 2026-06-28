@@ -16,6 +16,8 @@ Bug fixes
   ``'ordered_images'``; corrected to ``'order_of_images'`` to match the actual field in ``Images``.
 - Fixed ``ImagingPlane.device`` link doc, which incorrectly described the device as being used to
   "record from this electrode"; updated to reflect optical physiology imaging context.
+- Fixed ``RoiResponseSeries.rois`` doc, which referenced the non-existent type ``ROITable``; corrected
+  to ``PlaneSegmentation`` to match the actual type used for ROI segmentation results.
 
 2.10.0 (June 18, 2026)
 ----------------------
