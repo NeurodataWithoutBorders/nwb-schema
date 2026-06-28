@@ -72,7 +72,7 @@ groups:
   attributes:
   - name: stimulus_description
     dtype: text
-    doc: An IZeroClampSeries has no stimulus, so this attribute is automatically set to "N/A"
+    doc: An IZeroClampSeries has no stimulus, so this attribute is automatically set to "N/A".
     value: N/A
   datasets:
   - name: bias_current
@@ -302,7 +302,7 @@ groups:
   datasets:
   - name: response
     neurodata_type_inc: TimeSeriesReferenceVectorData
-    doc: Column storing the reference to the recorded response for the recording (rows)
+    doc: Column storing the reference to the recorded response for the recording (rows).
 
 - neurodata_type_def: IntracellularRecordingsTable
   neurodata_type_inc: AlignedDynamicTable

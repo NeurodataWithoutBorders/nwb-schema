@@ -213,7 +213,7 @@ groups:
     - name: bits_per_pixel
       dtype: int32
       doc: Number of bits used to represent each value. This is necessary to determine
-        maximum (white) pixel value
+        maximum (white) pixel value.
     - name: dimension
       dtype: int32
       dims:
