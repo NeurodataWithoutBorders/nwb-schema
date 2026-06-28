@@ -19,6 +19,15 @@ Bug fixes
 - Fixed ``RoiResponseSeries.rois`` doc, which referenced the non-existent type ``ROITable``; corrected
   to ``PlaneSegmentation`` to match the actual type used for ROI segmentation results.
 
+Documentation improvements
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+- Corrected grammar, spelling, and punctuation errors across all core schema doc strings, including
+  typos (``stimuluation``, ``zero- filled``), broken syntax (``as as``, ``the a sequence``),
+  missing terminal periods, inconsistent ``DEPRECATED.`` tag formatting, ``i.e,`` → ``i.e.,``,
+  informal abbreviations (``w/``, ``&``, ``it's``, ``Right now``), missing words and wrong words
+  (``allows to group``, ``these be used``, ``than`` vs ``that``), subject-verb disagreement
+  (``larger numbers … means``), and missing articles.
+
 2.10.0 (June 18, 2026)
 ----------------------
 
