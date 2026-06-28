@@ -173,7 +173,7 @@ groups:
       doc: Focal depth offset, in meters.
     - name: format
       dtype: text
-      doc: Format of image. Right now only 'raw' is supported.
+      doc: Format of image. Currently only 'raw' is supported.
   - name: sign_map
     dtype: float32
     dims:
@@ -231,4 +231,4 @@ groups:
       doc: Size of viewing area, in meters.
     - name: format
       dtype: text
-      doc: Format of image. Right now only 'raw' is supported.
+      doc: Format of image. Currently only 'raw' is supported.

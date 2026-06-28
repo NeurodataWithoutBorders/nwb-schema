@@ -191,7 +191,7 @@ groups:
     target_type: ElectricalSeries
     doc: Link to the ElectricalSeries that this data was calculated from. Metadata
       about electrodes and their position can be read from that ElectricalSeries so
-      it's not necessary to include that information here.
+      it is not necessary to include that information here.
 
 - neurodata_type_def: EventWaveform
   neurodata_type_inc: NWBDataInterface

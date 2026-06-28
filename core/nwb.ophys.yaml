@@ -10,8 +10,8 @@ groups:
   - name: scan_line_rate
     dtype: float32
     doc: Lines imaged per second. This is also stored in /general/optophysiology but
-      is kept here as it is useful information for analysis, and so good to be stored
-      w/ the actual data.
+      is kept here as it is useful information for analysis, and is therefore stored
+      with the actual data.
     required: false
   - name: exposure_time
     dtype: float32
@@ -101,8 +101,8 @@ groups:
   - name: scan_line_rate
     dtype: float32
     doc: Lines imaged per second. This is also stored in /general/optophysiology but
-      is kept here as it is useful information for analysis, and so good to be stored
-      w/ the actual data.
+      is kept here as it is useful information for analysis, and is therefore stored
+      with the actual data.
     required: false
   datasets:
   - name: data
@@ -449,7 +449,7 @@ groups:
   default_name: MotionCorrection
   doc: 'An image stack where all frames are shifted (registered) to a common coordinate
     system, to account for movement and drift between frames. Note: each frame at
-    each point in time is assumed to be 2-D (has only x & y dimensions).'
+    each point in time is assumed to be 2-D (has only x and y dimensions).'
   groups:
   - neurodata_type_inc: CorrectedImageStack
     doc: Results from motion correction of an image stack.
