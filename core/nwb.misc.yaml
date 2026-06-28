@@ -97,13 +97,13 @@ groups:
     - name: resolution
       dtype: float32
       value: -1.0
-      doc: Smallest meaningful difference between values in data. Annotations have
-        no units, so the value is fixed to -1.0.
+      doc: Smallest meaningful difference between values in data. IntervalSeries
+        stores integer markers, so the value is fixed to -1.0.
     - name: unit
       dtype: text
       value: n/a
-      doc: Base unit of measurement for working with the data. Annotations have
-        no units, so the value is fixed to 'n/a'.
+      doc: Base unit of measurement for working with the data. IntervalSeries
+        stores integer markers with no physical unit, so the value is fixed to 'n/a'.
 
 - neurodata_type_def: FrequencyBandsTable
   neurodata_type_inc: DynamicTable

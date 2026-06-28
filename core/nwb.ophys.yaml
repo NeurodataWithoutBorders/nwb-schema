@@ -431,7 +431,7 @@ groups:
   links:
   - name: device
     target_type: Device
-    doc: Link to the Device object that was used to record from this electrode.
+    doc: Link to the Device object (e.g. microscope) used to acquire images from this imaging plane.
 
 - neurodata_type_def: OpticalChannel
   neurodata_type_inc: NWBContainer
