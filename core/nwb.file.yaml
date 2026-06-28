@@ -8,7 +8,7 @@ groups:
   - name: nwb_version
     dtype: text
     value: "2.10.1-alpha"
-    doc: File version string. Use semantic versioning, e.g. 1.2.1. This will be the
+    doc: File version string. Use semantic versioning, e.g., 1.2.1. This will be the
       name of the format with trailing major, minor and patch numbers.
   datasets:
   - name: file_create_date
@@ -112,14 +112,14 @@ groups:
       doc: Intermediate analysis of acquired data.
       quantity: '*'
   - name: stimulus
-    doc: 'Data pushed into the system (eg, video stimulus, sound, voltage, etc) and
-      secondary representations of that data (eg, measurements of something used as
+    doc: 'Data pushed into the system (e.g., video stimulus, sound, voltage, etc.) and
+      secondary representations of that data (e.g., measurements of something used as
       a stimulus). This group should be made read-only after experiment complete and timestamps
       are corrected to common timebase. Stores both presented stimuli and stimulus
       templates, the latter in case the same stimulus is presented multiple times,
       or is pulled from an external stimulus library. Stimuli are here
       defined as any signal that is pushed into the system as part of the experiment
-      (eg, sound, video, voltage, etc). Many different experiments can use the same
+      (e.g., sound, video, voltage, etc.). Many different experiments can use the same
       stimuli, and stimuli can be reused during an experiment. The stimulus group
       is organized so that one version of template stimuli can be stored and these
       be used multiple times. These templates can exist in the present file or can
@@ -304,7 +304,7 @@ groups:
         quantity: '*'
       - name: electrodes
         neurodata_type_inc: ElectrodesTable
-        doc: A table of all electrodes (i.e. channels) used for recording. Changed in NWB 2.9.0 to use the newly added
+        doc: A table of all electrodes (i.e., channels) used for recording. Changed in NWB 2.9.0 to use the newly added
           ElectrodesTable neurodata type instead of a DynamicTable with added columns.
         quantity: '?'
     - name: intracellular_ephys

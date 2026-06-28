@@ -2,7 +2,7 @@ groups:
 - neurodata_type_def: SpatialSeries
   neurodata_type_inc: TimeSeries
   doc: "Direction, e.g., of gaze or travel, or position. The TimeSeries::data field\
-    \ is a 2D array storing position or direction relative to some reference frame.\
+    \ is a 2-D array storing position or direction relative to some reference frame.\
     \ Array structure: [num measurements] [num dimensions]. Each SpatialSeries has\
     \ a text dataset reference_frame that indicates the zero-position, or the zero-axes\
     \ for direction. For example, if representing gaze direction, 'straight-ahead'\
@@ -47,7 +47,7 @@ groups:
   neurodata_type_inc: NWBDataInterface
   default_name: BehavioralEpochs
   doc: TimeSeries for storing behavioral epochs.  The objective of this and the other
-    two Behavioral interfaces (e.g. BehavioralEvents and BehavioralTimeSeries) is
+    two Behavioral interfaces (e.g., BehavioralEvents and BehavioralTimeSeries) is
     to provide generic hooks for software tools/scripts. This allows a tool/script
     to take the output one specific interface (e.g., UnitTimes) and plot that data
     relative to another data modality (e.g., behavioral events) without having to

@@ -6,8 +6,8 @@ datasets:
   - num_times
   shape:
   - null
-  doc: A 1-dimensional VectorData that stores timestamps in seconds from the
-    session start time. Timestamp are not required to be sorted in time.
+  doc: A 1-D VectorData that stores timestamps in seconds from the
+    session start time. Timestamps are not required to be sorted in time.
   attributes:
   - name: unit
     dtype: text
@@ -27,7 +27,7 @@ datasets:
   - num_times
   shape:
   - null
-  doc: A 1-dimensional VectorData that stores durations in seconds.
+  doc: A 1-D VectorData that stores durations in seconds.
   attributes:
   - name: unit
     dtype: text

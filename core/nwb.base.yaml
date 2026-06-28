@@ -54,7 +54,7 @@ datasets:
     - null
     - 4
   doc: A type for storing image data directly. Shape can be 2-D (x, y), or 3-D where the
-    third dimension can have three or four elements, e.g. (x, y, (r, g, b)) or
+    third dimension can have three or four elements, e.g., (x, y, (r, g, b)) or
     (x, y, (r, g, b, a)).
   attributes:
   - name: resolution
@@ -152,7 +152,7 @@ groups:
       doc: Scalar to multiply each element in data to convert it to the specified 'unit'.
         If the data are stored in acquisition system units or other units
         that require a conversion to be interpretable, multiply the data by 'conversion'
-        to convert the data to the specified 'unit'. e.g. if the data acquisition system
+        to convert the data to the specified 'unit'. For example, if the data acquisition system
         stores values in this object as signed 16-bit integers (int16 range
         -32,768 to 32,767) that correspond to a 5V range (-2.5V to 2.5V), and the data
         acquisition system gain is 8000X, then the 'conversion' multiplier to get from
