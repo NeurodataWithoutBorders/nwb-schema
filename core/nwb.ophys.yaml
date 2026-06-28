@@ -355,7 +355,7 @@ groups:
       - null
       - null
       - 3
-    doc: "DEPRECATED Physical position of each pixel. 'xyz' represents the position\
+    doc: "DEPRECATED. Physical position of each pixel. 'xyz' represents the position\
       \ of the pixel relative to the defined coordinate space. Deprecated in favor of origin_coords and grid_spacing."
     quantity: '?'
     attributes:
