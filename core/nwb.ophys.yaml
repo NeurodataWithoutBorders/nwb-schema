@@ -416,8 +416,8 @@ groups:
       If origin_coords and grid_spacing are not present, then this field is not required.
       For example, if the microscope takes 10 x 10 x 2 images, where the first value of the data matrix
       (index (0, 0, 0)) corresponds to (-1.2, -0.6, -2) mm relative to bregma, the spacing between pixels is 0.2 mm in
-      x, 0.2 mm in y and 0.5 mm in z, and larger numbers in x means more anterior, larger numbers in y means more
-      rightward, and larger numbers in z means more ventral, then enter the following --
+      x, 0.2 mm in y and 0.5 mm in z, and larger numbers in x mean more anterior, larger numbers in y mean more
+      rightward, and larger numbers in z mean more ventral, then enter the following --
       origin_coords = (-1.2, -0.6, -2)
       grid_spacing = (0.2, 0.2, 0.5)
       reference_frame = "Origin coordinates are relative to bregma. First dimension corresponds to anterior-posterior
