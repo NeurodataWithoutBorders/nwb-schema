@@ -142,10 +142,10 @@ groups:
       # in order to maintain backwards compatibility in the APIs that
       # use the neurodata_type_inc from the schema to set the variable name
     - name: templates
-      doc: 'Template stimuli. Timestamps in templates are based on stimulus
+      doc: Template stimuli. Timestamps in templates are based on stimulus
         design and are relative to the beginning of the stimulus. When templates are
         used, the stimulus instances must convert presentation times to the experiment's
-        time reference frame.'
+        time reference frame.
       groups:
       - neurodata_type_inc: TimeSeries
         doc: TimeSeries objects containing template data of presented stimuli.
