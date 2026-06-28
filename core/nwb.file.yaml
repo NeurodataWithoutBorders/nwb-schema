@@ -114,15 +114,15 @@ groups:
   - name: stimulus
     doc: 'Data pushed into the system (e.g., video stimulus, sound, voltage, etc.) and
       secondary representations of that data (e.g., measurements of something used as
-      a stimulus). This group should be made read-only after experiment complete and timestamps
-      are corrected to common timebase. Stores both presented stimuli and stimulus
+      a stimulus). This group should be made read-only after the experiment is complete and timestamps
+      are corrected to a common timebase. Stores both presented stimuli and stimulus
       templates, the latter in case the same stimulus is presented multiple times,
       or is pulled from an external stimulus library. Stimuli are here
       defined as any signal that is pushed into the system as part of the experiment
       (e.g., sound, video, voltage, etc.). Many different experiments can use the same
       stimuli, and stimuli can be reused during an experiment. The stimulus group
       is organized so that one version of template stimuli can be stored and these
-      be used multiple times. These templates can exist in the present file or can
+      can be used multiple times. These templates can exist in the present file or can
       be linked to a remote library file.'
     groups:
     - name: presentation
@@ -158,7 +158,7 @@ groups:
       \ device(s).  The metadata stored in this section should be used to\
       \ describe the experiment. Metadata necessary for interpreting the data is stored\
       \ with the data. General experimental metadata, including animal\
-      \ strain, experimental protocols, experimenter, devices, etc, are stored under\
+      \ strain, experimental protocols, experimenter, devices, etc. are stored under\
       \ 'general'. Core metadata (e.g., that required to interpret data fields) is\
       \ stored with the data itself, and implicitly defined by the file specification\
       \ (e.g., time is in seconds). The strategy used here for storing non-core metadata\
@@ -273,7 +273,7 @@ groups:
       doc: This is the HERD structure for this specific NWBFile, storing the mapped external resources.
       quantity: "?"
     - neurodata_type_inc: LabMetaData
-      doc: Place-holder than can be extended so that lab-specific meta-data can be
+      doc: Place-holder that can be extended so that lab-specific meta-data can be
         placed in /general.
       quantity: '*'
     - name: devices
@@ -335,7 +335,7 @@ groups:
           and a single simultaneous recording. Each row in the table represents a
           single recording consisting typically of a stimulus and a corresponding
           response. In some cases, however, only a stimulus or a response are recorded
-          as part of an experiment. In this case both, the stimulus and response
+          as part of an experiment. In this case, both the stimulus and response
           will point to the same TimeSeries while the idx_start and count of the invalid
           column will be set to -1, thus, indicating that no values have been recorded
           for the stimulus or response, respectively. Note, a recording MUST contain

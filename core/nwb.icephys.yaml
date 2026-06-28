@@ -9,7 +9,7 @@ groups:
     doc: Protocol/stimulus name for this patch-clamp dataset.
   - name: sweep_number
     dtype: uint32
-    doc: Sweep number, allows to group different PatchClampSeries together.
+    doc: Sweep number, allows users to group different PatchClampSeries together.
     required: false
   datasets:
   - name: data
@@ -205,7 +205,7 @@ groups:
     quantity: '?'
   - name: description
     dtype: text
-    doc: Description of electrode (e.g.,  whole-cell, sharp, etc.).
+    doc: Description of electrode (e.g., whole-cell, sharp, etc.).
   - name: filtering
     dtype: text
     doc: Electrode specific filtering.
