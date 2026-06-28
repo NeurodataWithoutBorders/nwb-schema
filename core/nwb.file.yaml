@@ -244,7 +244,7 @@ groups:
     - name: was_generated_by
       dtype: text
       doc: Name and version of software package(s) used to generate data contained in
-       this NWB File. For each software package or library, include the name of the
+       this NWB file. For each software package or library, include the name of the
        software as the first value and the version as the second value.
       dims:
       - num_sources
@@ -383,9 +383,9 @@ groups:
         doc: An imaging plane.
         quantity: '*'
   - name: intervals
-    doc: Experimental intervals, whether that be logically distinct sub-experiments
+    doc: Experimental intervals, whether these are logically distinct sub-experiments
       having a particular scientific goal, trials (see trials subgroup) during an
-      experiment, or epochs (see epochs subgroup) deriving from analysis of data.
+      experiment, or epochs (see epochs subgroup) derived from analysis of data.
     quantity: '?'
     groups:
     - name: epochs

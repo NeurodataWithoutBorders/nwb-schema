@@ -51,7 +51,7 @@ namespaces:
       data.
     source: nwb.icephys.yaml
     title: Intracellular electrophysiology
-  - doc: This source module contains neurodata_types for opto-genetics data.
+  - doc: This source module contains neurodata_types for optogenetics data.
     source: nwb.ogen.yaml
     title: Optogenetics
   - doc: This source module contains neurodata_types for optical physiology data.

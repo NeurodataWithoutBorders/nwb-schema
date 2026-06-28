@@ -132,7 +132,7 @@ groups:
     - num_bands
     shape:
     - null
-    doc: The mean Gaussian filters, in Hz.
+    doc: The center frequency (mean) of each Gaussian filter, in Hz.
     quantity: '?'
   - name: band_stdev
     neurodata_type_inc: VectorData
@@ -141,7 +141,7 @@ groups:
     - num_bands
     shape:
     - null
-    doc: The standard deviation of Gaussian filters, in Hz.
+    doc: The standard deviation (bandwidth) of each Gaussian filter, in Hz.
     quantity: '?'
 
 - neurodata_type_def: DecompositionSeries

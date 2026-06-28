@@ -170,7 +170,7 @@ groups:
     - - null
       - 2
     doc: Indices (zero-based) into the linked source ElectricalSeries::data array corresponding
-      to time of event or time and channel of event. ''description'' should define what is meant
+      to the time of each event, or the time and channel of each event. ''description'' should define what is meant
       by time of event (e.g., .25 ms before action potential peak, zero-crossing time, etc.).
       The index points to each event from the raw data.
   - name: times
@@ -213,7 +213,7 @@ groups:
     set of channels. The name of each ElectricalSeries is arbitrary but should be
     informative. The source of the filtered data, whether this is from analysis of
     another time series or as acquired by hardware, should be noted in the TimeSeries::description field of each
-    field. There is no assumed 1:1 correspondence between filtered ephys signals
+    ElectricalSeries. There is no assumed 1:1 correspondence between filtered ephys signals
     and electrodes, as a single signal can apply to many nearby electrodes, and one
     electrode may have different filtered (e.g., theta and/or gamma) signals represented.
     Filter properties should be noted in the ElectricalSeries 'filtering' attribute.
@@ -259,7 +259,7 @@ groups:
     - name: z
       dtype: float32
       doc: z coordinate
-    doc: stereotaxic or common framework coordinates
+    doc: Stereotaxic or common framework coordinates of the electrode group position.
     quantity: '?'
   links:
   - name: device
