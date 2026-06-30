@@ -190,8 +190,8 @@ groups:
     doc: Signals from ROIs.
   - name: rois
     neurodata_type_inc: DynamicTableRegion
-    doc: DynamicTableRegion referencing into an ROITable containing information on the ROIs
-      stored in this timeseries.
+    doc: DynamicTableRegion referencing into a PlaneSegmentation table containing information on the ROIs
+      stored in this TimeSeries.
 
 - neurodata_type_def: DfOverF
   neurodata_type_inc: NWBDataInterface
@@ -431,7 +431,7 @@ groups:
   links:
   - name: device
     target_type: Device
-    doc: Link to the Device object that was used to record from this electrode.
+    doc: Link to the Device object (e.g., microscope) used to acquire images from this imaging plane.
 
 - neurodata_type_def: OpticalChannel
   neurodata_type_inc: NWBContainer
