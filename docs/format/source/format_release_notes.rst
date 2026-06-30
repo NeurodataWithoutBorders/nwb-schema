@@ -26,7 +26,7 @@ Documentation improvements
   missing terminal periods, inconsistent ``DEPRECATED.`` tag formatting, ``i.e,`` → ``i.e.,``,
   informal abbreviations (``w/``, ``&``, ``it's``, ``Right now``), missing words and wrong words
   (``allows to group``, ``these be used``, ``than`` vs ``that``), subject-verb disagreement
-  (``larger numbers … means``), and missing articles.
+  (``larger numbers … means``), and missing articles. (#704)
 
 2.10.0 (June 18, 2026)
 ----------------------
