@@ -43,6 +43,117 @@ groups:
     doc: Description defining what exactly 'straight-ahead' means.
     quantity: '?'
 
+- neurodata_type_def: PositionSeries
+  neurodata_type_inc: SpatialSeries
+  doc: Specialized SpatialSeries for tracking the spatial position/location of a subject
+    or object over time. Stores coordinates in 1D, 2D, or 3D space. Common use cases
+    include tracking animal position in an arena during behavioral experiments
+    or recording object positions in the environment.
+    The reference_frame field should specify the coordinate system and origin. Example
+    reference frames might be 'origin at top-left corner of arena, x-axis pointing
+    right, y-axis pointing down, as viewed from above' for 2D arena tracking, or 'origin
+    at center of experimental chamber, x-axis pointing East, y-axis pointing North,
+    z-axis pointing up' for 3D tracking. Units should be in spatial measurements (e.g.,
+    meters, centimeters, pixels).
+  datasets:
+  - name: data
+    dtype: numeric
+    dims:
+    - - num_times
+    - - num_times
+      - x
+    - - num_times
+      - x,y
+    - - num_times
+      - x,y,z
+    shape:
+    - - null
+    - - null
+      - 1
+    - - null
+      - 2
+    - - null
+      - 3
+    doc: 1-D or 2-D array storing position data. First dimension is time, and the remaining
+      dimension(s) represent spatial coordinates.
+    attributes:
+    - name: unit
+      dtype: text
+      default_value: meters
+      doc: Base unit of measurement for position data. Common values are 'meters',
+        'centimeters', or 'pixels'. 
+      required: false
+
+- neurodata_type_def: CompassDirectionSeries
+  neurodata_type_inc: SpatialSeries
+  doc: Specialized SpatialSeries for tracking directional heading or compass direction
+    of a subject (typically head direction in navigation studies). Stores a floating
+    point value representing theta (heading angle). The reference_frame field should
+    indicate what direction corresponds to 0 degrees/radians and specify the direction
+    of rotation (clockwise is standard). Units should be 'radians' or 'degrees'. Example
+    reference frames might be '0 radians is facing the reward port, rotation is clockwise
+    when viewed from above' or '0 degrees corresponds to magnetic North'.
+  datasets:
+  - name: data
+    dtype: numeric
+    dims:
+    - - num_times
+    - - num_times
+      - theta
+    shape:
+    - - null
+    - - null
+      - 1
+    doc: 1-D or 2-D array storing heading/compass direction. Typically stores a single
+      angular value (theta) per timepoint.
+    attributes:
+    - name: unit
+      dtype: text
+      default_value: radians
+      doc: Base unit of measurement for direction data. Should be 'radians' or 'degrees'.
+      required: false
+
+- neurodata_type_def: EyeTrackingSeries
+  neurodata_type_inc: SpatialSeries
+  doc: Specialized SpatialSeries for tracking gaze location or eye position. Eye tracking
+    measures where the subject is looking, which can be represented in different coordinate
+    systems depending on the experimental setup. Common representations include (1)
+    gaze position on a screen/monitor in pixels or screen coordinates, (2) eye rotation
+    angles relative to the head (horizontal and vertical), or (3) gaze position in
+    world coordinates. The reference_frame field should specify the coordinate system.
+    Example reference frames might be 'gaze position in pixels, origin at top-left
+    corner of screen, x-axis pointing right, y-axis pointing down' for screen-based
+    tracking, or 'eye rotation angles in degrees, origin at straight ahead from head,
+    positive x is rightward, positive y is upward' for head-centered coordinates.
+  datasets:
+  - name: data
+    dtype: numeric
+    dims:
+    - - num_times
+    - - num_times
+      - x
+    - - num_times
+      - x,y
+    - - num_times
+      - x,y,z
+    shape:
+    - - null
+    - - null
+      - 1
+    - - null
+      - 2
+    - - null
+      - 3
+    doc: 1-D or 2-D array storing gaze direction. Typically 2D (x,y gaze angles or
+      screen coordinates), but can be 1D or 3D.
+    attributes:
+    - name: unit
+      dtype: text
+      default_value: degrees
+      doc: Base unit of measurement for gaze direction. Common values are 'degrees',
+        'radians', or 'pixels'. 
+      required: false
+
 - neurodata_type_def: BehavioralEpochs
   neurodata_type_inc: NWBDataInterface
   default_name: BehavioralEpochs
@@ -92,10 +203,35 @@ groups:
     doc: TimeSeries object containing continuous behavioral data.
     quantity: '+'
 
+- neurodata_type_def: PupilTrackingSeries
+  neurodata_type_inc: TimeSeries
+  doc: Specialized TimeSeries for tracking pupil size/diameter over time. Stores
+    scalar measurements of pupil diameter or area for a single pupil. For tracking
+    both eyes, use two separate PupilTrackingSeries instances (e.g., one for left
+    eye, one for right eye). Units should be in length measurements (e.g., millimeters,
+    pixels) or arbitrary units with appropriate conversion factors.
+  datasets:
+  - name: data
+    dtype: numeric
+    dims:
+    - - num_times
+    shape:
+    - - null
+    doc: 1-D array storing pupil size data over time.
+    attributes:
+    - name: unit
+      dtype: text
+      default_value: millimeters
+      doc: Base unit of measurement for pupil size. Common values are 'millimeters',
+        'pixels', or 'arbitrary units'.
+      required: false
+
 - neurodata_type_def: PupilTracking
   neurodata_type_inc: NWBDataInterface
   default_name: PupilTracking
-  doc: Eye-tracking data, representing pupil size.
+  doc: Eye-tracking data, representing pupil size. WARNING - Use the specialized
+    PupilTrackingSeries type for new data, which provides explicit semantics and
+    appropriate default units for pupil size measurements.
   groups:
   - neurodata_type_inc: TimeSeries
     doc: TimeSeries object containing time series data on pupil size.
@@ -104,7 +240,9 @@ groups:
 - neurodata_type_def: EyeTracking
   neurodata_type_inc: NWBDataInterface
   default_name: EyeTracking
-  doc: Eye-tracking data, representing direction of gaze.
+  doc: Eye-tracking data, representing direction of gaze. WARNING - Use the specialized
+    EyeTrackingSeries type for new data, which provides explicit semantics and appropriate
+    default units for gaze tracking.
   groups:
   - neurodata_type_inc: SpatialSeries
     doc: SpatialSeries object containing data measuring direction of gaze.
@@ -117,7 +255,9 @@ groups:
     representing a floating point value for theta. The SpatialSeries::reference_frame
     field should indicate what direction corresponds to 0 and which is the direction
     of rotation (this should be clockwise). The si_unit for the SpatialSeries should
-    be radians or degrees.
+    be radians or degrees. WARNING - Use the specialized CompassDirectionSeries type
+    for new data, which provides explicit semantics and appropriate default units for
+    directional heading measurements.
   groups:
   - neurodata_type_inc: SpatialSeries
     doc: SpatialSeries object containing direction of gaze travel.
@@ -126,7 +266,9 @@ groups:
 - neurodata_type_def: Position
   neurodata_type_inc: NWBDataInterface
   default_name: Position
-  doc: Position data, whether along the x, x/y or x/y/z axis.
+  doc: Position data, whether along the x, x/y or x/y/z axis. WARNING - Use the
+    specialized PositionSeries type for new data, which provides explicit semantics
+    and appropriate default units for spatial position measurements.
   groups:
   - neurodata_type_inc: SpatialSeries
     doc: SpatialSeries object containing position data.

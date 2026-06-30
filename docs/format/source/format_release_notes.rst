@@ -83,6 +83,11 @@ Major changes
   neurodata type that extends ``DynamicTable`` with added columns. (#610)
 - Made ``SpikeEventSeries.timestamps`` explicitly required as described in the documentation. (#629)
 - Allowed ``EventDetection`` to have shape (num_events, 2) to store the channel index of the detected event. (#620)
+- Added specialized behavioral series types: ``PositionSeries``, ``CompassDirectionSeries``, ``EyeTrackingSeries``,
+  and ``PupilTrackingSeries``. These new types provide explicit semantics and appropriate default units for tracking
+  spatial position, head direction, gaze location, and pupil size, respectively. The legacy container types
+  (``Position``, ``CompassDirection``, ``EyeTracking``, ``PupilTracking``) remain for backward compatibility.
+  Users are encouraged to use the new specialized series types for new data. (#655)
 
 Minor changes
 ^^^^^^^^^^^^^
