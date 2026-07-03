@@ -135,7 +135,7 @@ groups:
     shape:
     - 2
     doc: Two-element array describing the contents of the two response axis fields.
-      Description should be something like ['altitude', 'azimuth'] or '['radius',
+      Description should be something like ['altitude', 'azimuth'] or ['radius',
       'theta'].
   - name: focal_depth_image
     dtype: uint16
@@ -145,7 +145,7 @@ groups:
     shape:
     - null
     - null
-    doc: 'Gray-scale image taken with same settings/parameters (e.g., focal depth,
+    doc: 'Gray-scale image taken with the same settings/parameters (e.g., focal depth,
       wavelength) as data collection. Array format: [rows][columns].'
     quantity: '?'
     attributes:
@@ -173,7 +173,7 @@ groups:
       doc: Focal depth offset, in meters.
     - name: format
       dtype: text
-      doc: Format of image. Right now only 'raw' is supported.
+      doc: Format of image. Currently only 'raw' is supported.
   - name: sign_map
     dtype: float32
     dims:
@@ -213,7 +213,7 @@ groups:
     - name: bits_per_pixel
       dtype: int32
       doc: Number of bits used to represent each value. This is necessary to determine
-        maximum (white) pixel value
+        maximum (white) pixel value.
     - name: dimension
       dtype: int32
       dims:
@@ -231,4 +231,4 @@ groups:
       doc: Size of viewing area, in meters.
     - name: format
       dtype: text
-      doc: Format of image. Right now only 'raw' is supported.
+      doc: Format of image. Currently only 'raw' is supported.

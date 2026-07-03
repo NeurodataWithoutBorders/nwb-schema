@@ -8,7 +8,7 @@ groups:
   - name: nwb_version
     dtype: text
     value: "2.10.1-alpha"
-    doc: File version string. Use semantic versioning, e.g. 1.2.1. This will be the
+    doc: File version string. Use semantic versioning, e.g., 1.2.1. This will be the
       name of the format with trailing major, minor and patch numbers.
   datasets:
   - name: file_create_date
@@ -112,17 +112,17 @@ groups:
       doc: Intermediate analysis of acquired data.
       quantity: '*'
   - name: stimulus
-    doc: 'Data pushed into the system (eg, video stimulus, sound, voltage, etc) and
-      secondary representations of that data (eg, measurements of something used as
-      a stimulus). This group should be made read-only after experiment complete and timestamps
-      are corrected to common timebase. Stores both presented stimuli and stimulus
+    doc: 'Data pushed into the system (e.g., video stimulus, sound, voltage, etc.) and
+      secondary representations of that data (e.g., measurements of something used as
+      a stimulus). This group should be made read-only after the experiment is complete and timestamps
+      are corrected to a common timebase. Stores both presented stimuli and stimulus
       templates, the latter in case the same stimulus is presented multiple times,
       or is pulled from an external stimulus library. Stimuli are here
       defined as any signal that is pushed into the system as part of the experiment
-      (eg, sound, video, voltage, etc). Many different experiments can use the same
+      (e.g., sound, video, voltage, etc.). Many different experiments can use the same
       stimuli, and stimuli can be reused during an experiment. The stimulus group
       is organized so that one version of template stimuli can be stored and these
-      be used multiple times. These templates can exist in the present file or can
+      can be used multiple times. These templates can exist in the present file or can
       be linked to a remote library file.'
     groups:
     - name: presentation
@@ -142,10 +142,10 @@ groups:
       # in order to maintain backwards compatibility in the APIs that
       # use the neurodata_type_inc from the schema to set the variable name
     - name: templates
-      doc: 'Template stimuli. Timestamps in templates are based on stimulus
+      doc: Template stimuli. Timestamps in templates are based on stimulus
         design and are relative to the beginning of the stimulus. When templates are
-        used, the stimulus instances must convert presentation times to the experiment`s
-        time reference frame.'
+        used, the stimulus instances must convert presentation times to the experiment's
+        time reference frame.
       groups:
       - neurodata_type_inc: TimeSeries
         doc: TimeSeries objects containing template data of presented stimuli.
@@ -158,7 +158,7 @@ groups:
       \ device(s).  The metadata stored in this section should be used to\
       \ describe the experiment. Metadata necessary for interpreting the data is stored\
       \ with the data. General experimental metadata, including animal\
-      \ strain, experimental protocols, experimenter, devices, etc, are stored under\
+      \ strain, experimental protocols, experimenter, devices, etc. are stored under\
       \ 'general'. Core metadata (e.g., that required to interpret data fields) is\
       \ stored with the data itself, and implicitly defined by the file specification\
       \ (e.g., time is in seconds). The strategy used here for storing non-core metadata\
@@ -244,7 +244,7 @@ groups:
     - name: was_generated_by
       dtype: text
       doc: Name and version of software package(s) used to generate data contained in
-       this NWB File. For each software package or library, include the name of the
+       this NWB file. For each software package or library, include the name of the
        software as the first value and the version as the second value.
       dims:
       - num_sources
@@ -273,7 +273,7 @@ groups:
       doc: This is the HERD structure for this specific NWBFile, storing the mapped external resources.
       quantity: "?"
     - neurodata_type_inc: LabMetaData
-      doc: Place-holder than can be extended so that lab-specific meta-data can be
+      doc: Place-holder that can be extended so that lab-specific meta-data can be
         placed in /general.
       quantity: '*'
     - name: devices
@@ -304,7 +304,7 @@ groups:
         quantity: '*'
       - name: electrodes
         neurodata_type_inc: ElectrodesTable
-        doc: A table of all electrodes (i.e. channels) used for recording. Changed in NWB 2.9.0 to use the newly added
+        doc: A table of all electrodes (i.e., channels) used for recording. Changed in NWB 2.9.0 to use the newly added
           ElectrodesTable neurodata type instead of a DynamicTable with added columns.
         quantity: '?'
     - name: intracellular_ephys
@@ -335,7 +335,7 @@ groups:
           and a single simultaneous recording. Each row in the table represents a
           single recording consisting typically of a stimulus and a corresponding
           response. In some cases, however, only a stimulus or a response are recorded
-          as as part of an experiment. In this case both, the stimulus and response
+          as part of an experiment. In this case, both the stimulus and response
           will point to the same TimeSeries while the idx_start and count of the invalid
           column will be set to -1, thus, indicating that no values have been recorded
           for the stimulus or response, respectively. Note, a recording MUST contain
@@ -353,7 +353,7 @@ groups:
         neurodata_type_inc: SequentialRecordingsTable
         doc: A table for grouping different sequential recordings from the SimultaneousRecordingsTable
           table together. This is typically used to group together sequential recordings
-          where the a sequence of stimuli of the same type with varying parameters
+          where a sequence of stimuli of the same type with varying parameters
           have been presented in a sequence.
         quantity: '?'
       - name: repetitions
@@ -366,10 +366,10 @@ groups:
       - name: experimental_conditions
         neurodata_type_inc: ExperimentalConditionsTable
         doc: A table for grouping different intracellular recording repetitions together
-          that belong to the same experimental experimental_conditions.
+          that belong to the same experimental conditions.
         quantity: '?'
     - name: optogenetics
-      doc: Metadata describing optogenetic stimuluation.
+      doc: Metadata describing optogenetic stimulation.
       quantity: '?'
       groups:
       - neurodata_type_inc: OptogeneticStimulusSite
@@ -383,9 +383,9 @@ groups:
         doc: An imaging plane.
         quantity: '*'
   - name: intervals
-    doc: Experimental intervals, whether that be logically distinct sub-experiments
+    doc: Experimental intervals, whether these are logically distinct sub-experiments
       having a particular scientific goal, trials (see trials subgroup) during an
-      experiment, or epochs (see epochs subgroup) deriving from analysis of data.
+      experiment, or epochs (see epochs subgroup) derived from analysis of data.
     quantity: '?'
     groups:
     - name: epochs
@@ -470,7 +470,7 @@ groups:
     quantity: '?'
   - name: sex
     dtype: text
-    doc: Gender of subject.
+    doc: Biological sex of subject.
     quantity: '?'
   - name: species
     dtype: text

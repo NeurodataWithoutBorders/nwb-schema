@@ -13,15 +13,15 @@ datasets:
       TimeSeries. The first dimension of those arrays is always time.
   - name: count
     dtype: int32
-    doc: Number of data samples available in this time series, during this epoch
+    doc: Number of data samples available in this time series, during this epoch.
   - name: timeseries
     dtype:
       target_type: TimeSeries
       reftype: object
-    doc: The TimeSeries that this index applies to
-  doc: Column storing references to a TimeSeries (rows). For each TimeSeries this
-    VectorData column stores the start_index and count to indicate the range in time
-    to be selected as well as an object reference to the TimeSeries.
+    doc: The TimeSeries object that this reference refers to.
+  doc: Column storing references into one or more TimeSeries objects. Each row of
+    this column stores a start index and count into a referenced TimeSeries and an
+    object reference to that TimeSeries.
 
 - neurodata_type_def: BaseImage
   neurodata_type_inc: NWBData
@@ -54,7 +54,7 @@ datasets:
     - null
     - 4
   doc: A type for storing image data directly. Shape can be 2-D (x, y), or 3-D where the
-    third dimension can have three or four elements, e.g. (x, y, (r, g, b)) or
+    third dimension can have three or four elements, e.g., (x, y, (r, g, b)) or
     (x, y, (r, g, b, a)).
   attributes:
   - name: resolution
@@ -152,7 +152,7 @@ groups:
       doc: Scalar to multiply each element in data to convert it to the specified 'unit'.
         If the data are stored in acquisition system units or other units
         that require a conversion to be interpretable, multiply the data by 'conversion'
-        to convert the data to the specified 'unit'. e.g. if the data acquisition system
+        to convert the data to the specified 'unit'. For example, if the data acquisition system
         stores values in this object as signed 16-bit integers (int16 range
         -32,768 to 32,767) that correspond to a 5V range (-2.5V to 2.5V), and the data
         acquisition system gain is 8000X, then the 'conversion' multiplier to get from
@@ -171,7 +171,7 @@ groups:
       dtype: float32
       default_value: -1.0
       doc: Smallest meaningful difference between values in data, stored in the specified
-        by unit, e.g., the change in value of the least significant bit, or a larger
+        unit, e.g., the change in value of the least significant bit, or a larger
         number if signal noise is known to be present. If unknown, use -1.0.
       required: false
     - name: unit
@@ -212,7 +212,7 @@ groups:
     shape:
     - null
     doc: Timestamps for samples stored in data, in seconds, relative to the
-      common experiment master-clock stored in NWBFile.timestamps_reference_time.
+      common experiment master clock stored in NWBFile.timestamps_reference_time.
     quantity: '?'
     attributes:
     - name: interval
@@ -231,7 +231,7 @@ groups:
     - null
     doc: Numerical labels that apply to each time point in data for the purpose of
       querying and slicing data by these values. If present, the length of this
-      array should be the same size as the first dimension of data.
+      array should be the same as the length of the first dimension of data.
     quantity: '?'
   - name: control_description
     dtype: text

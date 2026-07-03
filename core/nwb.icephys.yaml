@@ -9,7 +9,7 @@ groups:
     doc: Protocol/stimulus name for this patch-clamp dataset.
   - name: sweep_number
     dtype: uint32
-    doc: Sweep number, allows to group different PatchClampSeries together.
+    doc: Sweep number, allows users to group different PatchClampSeries together.
     required: false
   datasets:
   - name: data
@@ -47,12 +47,12 @@ groups:
     - name: unit
       dtype: text
       value: volts
-      doc: Base unit of measurement for working with the data. which is fixed to 'volts'.
+      doc: Base unit of measurement for working with the data, which is fixed to 'volts'.
         Actual stored values are not necessarily stored in these units. To access the data in these units,
         multiply 'data' by 'conversion' and add 'offset'.
   - name: bias_current
     dtype: float32
-    doc: Bias current, in amps.
+    doc: Bias current, in amperes.
     quantity: '?'
   - name: bridge_balance
     dtype: float32
@@ -72,13 +72,13 @@ groups:
   attributes:
   - name: stimulus_description
     dtype: text
-    doc: An IZeroClampSeries has no stimulus, so this attribute is automatically set to "N/A"
+    doc: An IZeroClampSeries has no stimulus, so this attribute is automatically set to "N/A".
     value: N/A
   datasets:
   - name: bias_current
     dtype: float32
     value: 0.0
-    doc: Bias current, in amps, fixed to 0.0.
+    doc: Bias current, in amperes, fixed to 0.0.
   - name: bridge_balance
     dtype: float32
     value: 0.0
@@ -98,7 +98,7 @@ groups:
     - name: unit
       dtype: text
       value: amperes
-      doc: Base unit of measurement for working with the data. which is fixed to 'amperes'.
+      doc: Base unit of measurement for working with the data, which is fixed to 'amperes'.
         Actual stored values are not necessarily stored in these units. To access the data in these units,
         multiply 'data' by 'conversion' and add 'offset'.
 
@@ -114,7 +114,7 @@ groups:
     - name: unit
       dtype: text
       value: amperes
-      doc: Base unit of measurement for working with the data. which is fixed to 'amperes'.
+      doc: Base unit of measurement for working with the data, which is fixed to 'amperes'.
         Actual stored values are not necessarily stored in these units. To access the data in these units,
         multiply 'data' by 'conversion' and add 'offset'.
   - name: capacitance_fast
@@ -191,7 +191,7 @@ groups:
     - name: unit
       dtype: text
       value: volts
-      doc: Base unit of measurement for working with the data. which is fixed to 'volts'.
+      doc: Base unit of measurement for working with the data, which is fixed to 'volts'.
         Actual stored values are not necessarily stored in these units. To access the data in these units,
         multiply 'data' by 'conversion' and add 'offset'.
 
@@ -201,11 +201,11 @@ groups:
   datasets:
   - name: cell_id
     dtype: text
-    doc: unique ID of the cell
+    doc: Unique identifier of the cell.
     quantity: '?'
   - name: description
     dtype: text
-    doc: Description of electrode (e.g.,  whole-cell, sharp, etc.).
+    doc: Description of electrode (e.g., whole-cell, sharp, etc.).
   - name: filtering
     dtype: text
     doc: Electrode specific filtering.
@@ -302,7 +302,7 @@ groups:
   datasets:
   - name: response
     neurodata_type_inc: TimeSeriesReferenceVectorData
-    doc: Column storing the reference to the recorded response for the recording (rows)
+    doc: Column storing the reference to the recorded response for the recording (rows).
 
 - neurodata_type_def: IntracellularRecordingsTable
   neurodata_type_inc: AlignedDynamicTable

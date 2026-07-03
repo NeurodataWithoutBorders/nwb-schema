@@ -64,7 +64,7 @@ groups:
       - null
       - null
     doc: Binary data representing images across frames. If data are stored in an external
-      file, this should be an empty 3D array.
+      file, this should be an empty 3-D array.
   - name: dimension
     dtype: int32
     dims:
@@ -129,7 +129,7 @@ groups:
   doc: DEPRECATED. An alpha mask that is applied to a presented visual stimulus. The 'data' array
     contains an array of mask values that are applied to the displayed image. Mask
     values are stored as RGBA. Mask can vary with time. The timestamps array indicates
-    the starting time of a mask, and that mask pattern continues until it's explicitly
+    the starting time of a mask, and that mask pattern continues until it is explicitly
     changed.
   links:
   - name: masked_imageseries
@@ -141,7 +141,7 @@ groups:
   doc: Image data that is presented or recorded. A stimulus template movie will be
     stored only as an image. When the image is presented as stimulus, additional data
     is required, such as field of view (e.g., how much of the visual field the image
-    covers, or how what is the area of the target being imaged). If the OpticalSeries
+    covers, or how large the imaged area of the target is). If the OpticalSeries
     represents acquired imaging data, orientation is also important.
   datasets:
   - name: distance
@@ -191,7 +191,7 @@ groups:
     when the same image needs to be presented multiple times or when images need to be shown in a
     different order than they are stored. Since images in an Images container do not have an inherent 
     order, the Images container needs to include an 'order_of_images' dataset (of type 
-    ImageReferences) when being referenced by an IndexSeries. This dataset establishes the ordered 
+    ImageReferences) whenever it is referenced by an IndexSeries. This dataset establishes the ordered 
     sequence that the indices in IndexSeries refer to. The 'data' field stores the index into this 
     ordered sequence, and the 'timestamps' array indicates the precise presentation time of each 
     indexed image during an experiment. This can be used for displaying individual images or creating 
@@ -233,5 +233,5 @@ groups:
   - name: indexed_images
     target_type: Images
     doc: Link to Images object containing an ordered set of images that are indexed. The Images object
-      must contain a 'order_of_images' dataset specifying the order of the images in the Images type.
+      must contain an 'order_of_images' dataset specifying the order of the images in the Images type.
     quantity: '?'
