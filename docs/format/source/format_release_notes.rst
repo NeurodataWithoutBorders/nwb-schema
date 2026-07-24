@@ -8,6 +8,8 @@ Release Notes
 
 Bug fixes
 ^^^^^^^^^
+- ``Units.waveform_mean``, ``Units.waveform_sd``, and ``Units.waveforms`` now accept a unit other than the default
+  value, ``volts``.
 - Fixed copy-paste error in ``VoltageClampSeries.capacitance_slow`` unit attribute doc, which incorrectly
   referenced ``capacitance_fast``.
 - Fixed ``IntervalSeries.data`` resolution and unit attribute docs, which were verbatim copy-paste from

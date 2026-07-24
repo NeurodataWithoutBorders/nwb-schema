@@ -268,8 +268,8 @@ groups:
       required: false
     - name: unit
       dtype: text
-      value: volts
-      doc: Unit of measurement. This value is fixed to 'volts'.
+      default_value: volts
+      doc: Unit of measurement. The default value is 'volts'.
       required: false
   - name: waveform_sd
     neurodata_type_inc: VectorData
@@ -295,8 +295,8 @@ groups:
       required: false
     - name: unit
       dtype: text
-      value: volts
-      doc: Unit of measurement. This value is fixed to 'volts'.
+      default_value: volts
+      doc: Unit of measurement. The default value is 'volts'.
       required: false
   - name: waveforms
     neurodata_type_inc: VectorData
@@ -332,8 +332,8 @@ groups:
         required: false
       - name: unit
         dtype: text
-        value: volts
-        doc: Unit of measurement. This value is fixed to 'volts'.
+        default_value: volts
+        doc: Unit of measurement. The default value is 'volts'.
         required: false
   - name: waveforms_index
     neurodata_type_inc: VectorIndex
