@@ -266,6 +266,13 @@ groups:
       dtype: float32
       doc: Sampling rate, in hertz.
       required: false
+    - name: waveform_peak_time_ms
+      dtype: float32
+      doc: Time, in milliseconds, from the start of the waveform to the spike peak. The peak is the alignment point
+        used during spike sorting, typically the sample of maximum absolute amplitude. The same value applies to every
+        unit in the table. Together with 'sampling_rate' and the number of samples, this fully specifies where each
+        waveform sample falls relative to the spike event.
+      required: false
     - name: unit
       dtype: text
       default_value: volts
@@ -292,6 +299,13 @@ groups:
     - name: sampling_rate
       dtype: float32
       doc: Sampling rate, in hertz.
+      required: false
+    - name: waveform_peak_time_ms
+      dtype: float32
+      doc: Time, in milliseconds, from the start of the waveform to the spike peak. The peak is the alignment point
+        used during spike sorting, typically the sample of maximum absolute amplitude. The same value applies to every
+        unit in the table. Together with 'sampling_rate' and the number of samples, this fully specifies where each
+        waveform sample falls relative to the spike event.
       required: false
     - name: unit
       dtype: text
