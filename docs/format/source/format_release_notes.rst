@@ -8,10 +8,10 @@ Release Notes
 
 Minor changes
 ^^^^^^^^^^^^^
-- Added optional ``time_before_peak_in_ms`` attribute (``float32``) to ``Units.waveform_mean`` and
-  ``Units.waveform_sd`` to record the time from the start of the waveform to the spike peak, i.e., the alignment
-  point used during spike sorting. Previously, ``sampling_rate`` and the number of samples gave the duration of the
-  waveform window but not where the spike event falls within it. (#667, #709)
+- Added optional ``time_before_peak_in_ms`` attribute (``float32``) to ``Units.waveform_mean``,
+  ``Units.waveform_sd``, and ``Units.waveforms`` to record the time from the start of the waveform to the spike peak,
+  i.e., the alignment point used during spike sorting. Previously, ``sampling_rate`` and the number of samples gave
+  the duration of the waveform window but not where the spike event falls within it. (#667, #709)
 
 Bug fixes
 ^^^^^^^^^
