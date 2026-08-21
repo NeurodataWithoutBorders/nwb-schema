@@ -3,20 +3,26 @@
 Release Notes
 =============
 
-2.10.1 (Upcoming)
------------------
+2.11.0 (August 21, 2026)
+------------------------
+
+Major changes
+^^^^^^^^^^^^^
+- Incorporated HDMF Common Schema 1.10.0, which changed ``MeaningsTable.target`` from a link to an object-reference
+  attribute (``dtype`` with ``reftype: object``, ``target_type: VectorData``). This is a breaking change for files
+  written with the 1.9.0 definition of ``MeaningsTable``, which was introduced in NWB 2.10.0.
 
 Minor changes
 ^^^^^^^^^^^^^
 - Added optional ``time_before_peak_in_ms`` attribute (``float32``) to ``Units.waveform_mean``,
   ``Units.waveform_sd``, and ``Units.waveforms`` to record the time from the start of the waveform to the spike peak,
-  i.e., the alignment point used during spike sorting. Previously, ``sampling_rate`` and the number of samples gave
+  i.e., the alignment point used during spike sorting. ``sampling_rate`` and the number of samples give
   the duration of the waveform window but not where the spike event falls within it. (#667, #709)
+- The ``unit`` attribute on ``Units.waveform_mean``, ``Units.waveform_sd``, and ``Units.waveforms`` is a
+  ``default_value`` of ``volts`` rather than a fixed ``value``, so waveforms may be stored in other units. (#707)
 
 Bug fixes
 ^^^^^^^^^
-- ``Units.waveform_mean``, ``Units.waveform_sd``, and ``Units.waveforms`` now accept a unit other than the default
-  value, ``volts``.
 - Fixed copy-paste error in ``VoltageClampSeries.capacitance_slow`` unit attribute doc, which incorrectly
   referenced ``capacitance_fast``.
 - Fixed ``IntervalSeries.data`` resolution and unit attribute docs, which were verbatim copy-paste from
