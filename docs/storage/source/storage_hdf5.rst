@@ -199,9 +199,10 @@ The mappings of data types is as follows
     +--------------------------+----------------------------------+----------------+
     |  * compound dtype        | HDF5 compound data type          |                |
     +--------------------------+----------------------------------+----------------+
-    |  * "isodatetime"         | ASCII ISO8061 datetime string.   | variable       |
-    |                          | For example                      |                |
-    |                          | ``2018-09-28T14:43:54.123+02:00``|                |
+    |  * "isodatetime"         | ISO 8601 datetime string.        | variable       |
+    |                          | For example,                     | (ASCII         |
+    |                          | ``2018-09-28T14:43:54.123+02:00``| encoding)      |
+    | * "datetime"             | Can be missing time.             |                |
     +--------------------------+----------------------------------+----------------+
 
 
