@@ -3,7 +3,7 @@
 Release Notes
 =============
 
-2.11.0 (August 20, 2026)
+2.11.0 (August 21, 2026)
 ------------------------
 
 Major changes
