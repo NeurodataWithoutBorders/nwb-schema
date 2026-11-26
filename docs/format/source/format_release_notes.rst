@@ -3,6 +3,15 @@
 Release Notes
 =============
 
+2.11.1 (Upcoming)
+-----------------
+
+Bug fixes
+^^^^^^^^^
+- Fixed ``ElectricalSeries.channel_conversion`` doc, whose formula for converting ``data`` to volts omitted
+  ``data.offset``; it now reads ``data * data.conversion * channel_conversion + data.offset``, matching the
+  ``ElectricalSeries.data.unit`` doc. (#698)
+
 2.11.0 (August 21, 2026)
 ------------------------
 
